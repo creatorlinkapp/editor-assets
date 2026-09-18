@@ -4790,7 +4790,7 @@
         <div class="fld sfold" id="sgCardAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">카드<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">폭</span><input class="rng" type="range" id="sgCw" min="320" max="720" step="10" value="560"><span class="v" id="sgCwV">560px</span></div>
+            <div class="srow"><span class="k">폭</span><input class="rng" type="range" id="sgCw" min="320" max="720" step="10" value="530"><span class="v" id="sgCwV">530px</span></div>
             <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="sgChh" min="220" max="520" step="10" value="380"><span class="v" id="sgChhV">380px</span></div>
             <div class="srow"><span class="k">라운드</span><input class="rng" type="range" id="sgRad" min="0" max="24" step="1" value="6"><span class="v" id="sgRadV">6px</span></div>
             <div class="srow"><span class="k">측면 밝기</span><input class="rng" type="range" id="sgDim" min="20" max="100" step="1" value="62"><span class="v" id="sgDimV">62%</span></div>
@@ -4800,10 +4800,10 @@
         <div class="fld sfold" id="sgLayoutAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">배치<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">간격</span><input class="rng" type="range" id="sgGap" min="140" max="460" step="5" value="300"><span class="v" id="sgGapV">300px</span></div>
-            <div class="srow"><span class="k">깊이</span><input class="rng" type="range" id="sgDepth" min="100" max="620" step="10" value="320"><span class="v" id="sgDepthV">320px</span></div>
+            <div class="srow"><span class="k">간격</span><input class="rng" type="range" id="sgGap" min="140" max="460" step="5" value="295"><span class="v" id="sgGapV">295px</span></div>
+            <div class="srow"><span class="k">깊이</span><input class="rng" type="range" id="sgDepth" min="100" max="620" step="10" value="200"><span class="v" id="sgDepthV">200px</span></div>
             <div class="srow"><span class="k">회전</span><input class="rng" type="range" id="sgRot" min="0" max="80" step="1" value="48"><span class="v" id="sgRotV">48°</span></div>
-            <div class="srow"><span class="k">원근</span><input class="rng" type="range" id="sgPersp" min="800" max="2600" step="20" value="1600"><span class="v" id="sgPerspV">1600px</span></div>
+            <div class="srow"><span class="k">원근</span><input class="rng" type="range" id="sgPersp" min="800" max="2600" step="20" value="1300"><span class="v" id="sgPerspV">1300px</span></div>
           </div></div>
         </div>
 
@@ -4840,7 +4840,7 @@
         <div class="fld sfold" id="sgBoxAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">블럭 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="sgHt" min="320" max="820" step="10" value="520"><span class="v" id="sgHtV">520px</span></div>
+            <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="sgHt" min="320" max="820" step="10" value="600"><span class="v" id="sgHtV">600px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="sgPt" min="0" max="160" step="2" value="0"><span class="v" id="sgPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="sgPb" min="0" max="160" step="2" value="0"><span class="v" id="sgPbV">0px</span></div>
           </div></div>
@@ -8964,7 +8964,7 @@
   })();
 
 
-  var BA_SMEAR_THUMB=ED_IMG+'ba/text01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_SMEAR_THUMB=ED_IMG+'ba/text01-3.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
 
   /* ══════════════════════════════════════════════════════════════════
      260824 추가 — 커서 스미어 텍스트 블럭
@@ -9190,7 +9190,7 @@
     gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);   /* aUV.y=1 이 화면 아래이므로 뒤집지 않는다 */
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);   /* 260918 수정 — vUv.y=0 이 화면 아래이고 uMouse 도 아래 기준(S.H-y)이라 텍스처는 뒤집어 올려야 한다. false 로 두면 글자가 위아래로 뒤집혀 보였다 */
     gl.uniform1i(U.uTex,0);
     S.U=U;
     S.upload=function(){ gl.bindTexture(gl.TEXTURE_2D,tex); gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,S.tex2d); };
@@ -9383,7 +9383,7 @@
   BA_ARC_THUMB=ED_IMG+'ba/text04.jpg';   /* 260918 교체 — 미리보기 영상 마지막 프레임 (첫 컷은 글자가 아직 없어 빈 화면. 위의 SVG 그림은 더 쓰지 않는다) */
   BA_RISE_THUMB=ED_IMG+'ba/text06.jpg';   /* 260918 교체 — 미리보기 영상 마지막 프레임 (첫 컷은 글자가 아직 없어 빈 화면. 위의 SVG 그림은 더 쓰지 않는다) */
   var BA_CARDS_TEXT=[
-    {no:1, kind:'smeartext', label:'TEXT01', badge:'NEW', ar:'920/306', img:BA_SMEAR_THUMB, vid:'ba/text01'},
+    {no:1, kind:'smeartext', label:'TEXT01', badge:'NEW', ar:'920/306', img:BA_SMEAR_THUMB, vid:'ba/text01-3'}   /* 260918 재녹화 — 첫 컷은 번짐 없이, 롤오버 때 글귀 바깥을 원 그리듯(눈→윗줄→리→아랫줄→눈) */,
     {no:2, kind:'polytext', label:'TEXT02', badge:'NEW', tag:'3D', ar:'552/194', img:BA_POLY_THUMB, vid:'ba/text02'},
     {no:3, kind:'typetext', label:'TEXT03', badge:'NEW', ar:'552/212', img:BA_TYPE_THUMB, vid:'ba/text03'},
     {no:4, kind:'arctext', label:'TEXT04', badge:'NEW', ar:'552/230', img:BA_ARC_THUMB, vid:'ba/text04'},
@@ -9395,7 +9395,7 @@
     {no:1, kind:'moto3d', label:'IMAGE01', badge:'NEW', tag:'3D', ar:'920/320', img:BA_MOTO_THUMB, vid:'ba/image01-6'}   /* 260918 재녹화 — 제목 글꼴 Arial Black (윈도우 크롬은 Arial 굵기 800 을 Arial Black 으로 그린다) */
   ];
   /* 슬라이드쇼 카테고리 카드 (3D 스트립 갤러리) — 썸네일은 인라인 SVG */
-  var BA_STRIP_THUMB=ED_IMG+'ba/slide01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_STRIP_THUMB=ED_IMG+'ba/slide01-2.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 갤러리 카테고리 카드 (플로팅 3D 갤러리) — 썸네일은 인라인 SVG */
   var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-8.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260826 추가 / 260827 교체 — 3D 카드 회전 썸네일 (실제 블럭 스크린샷) */
@@ -9410,7 +9410,7 @@
   /* 260915 추가 — 스크롤 슬라이더 카드 썸네일 (실제 블럭 스크린샷) */
   var BA_SLIDER_THUMB=ED_IMG+'ba/gallery04.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_CARDS_SLIDE=[
-    {no:1, kind:'stripgal', label:'SLIDE01', badge:'NEW', tag:'3D', ar:'552/274', img:BA_STRIP_THUMB, vid:'ba/slide01'},
+    {no:1, kind:'stripgal', label:'SLIDE01', badge:'NEW', tag:'3D', ar:'552/230', img:BA_STRIP_THUMB, vid:'ba/slide01-2'}   /* 260918 재녹화 — 샘플 12장(영상 3)·새 기본값, 1→8→3 */,
     {no:2, kind:'cardring', label:'SLIDE02', badge:'NEW', tag:'3D', ar:'552/274', img:BA_RING_THUMB, vid:'ba/slide02-4'}   /* 260918 재녹화 — 느린 드래그 + 관성, 원본 25fps 그대로(30fps 변환 시 프레임 중복으로 끊겨 보였다) */,
     {no:3, kind:'bookflip2', label:'SLIDE03', badge:'NEW', tag:'3D', ar:'552/304', img:BA_BOOK2_THUMB, vid:'ba/slide03'}
   ];
@@ -10682,24 +10682,29 @@
      ══════════════════════════════════════════════════════════════════ */
   var SG_DEF={
     items:[
-      /* 260831 수정 — 샘플 사진을 picsum → Unsplash 큐레이션으로 교체 (캡션 주제에 맞춰 배치) */
+      /* 260831 수정 — 샘플 사진을 picsum → Unsplash 큐레이션으로 교체 (캡션 주제에 맞춰 배치)
+         260918 수정 — 12장으로 늘리고 3·5·6번은 Pexels 영상 */
       {src:'https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?q=80&w=900&h=620&auto=format&fit=crop', t:'Casa Di Solare',  s:'Interior · 2026'},
       {src:'https://images.unsplash.com/photo-1483366774565-c783b9f70e2c?q=80&w=900&h=620&auto=format&fit=crop', t:'The Lookback',    s:'Editorial · 2026'},
+      {src:'https://videos.pexels.com/video-files/34345704/14550227_2560_1440_24fps.mp4', t:'Glass Atrium',   s:'Architecture · 2026'},
       {src:'https://images.unsplash.com/photo-1506452305024-9d3f02d1c9b5?q=80&w=900&h=620&auto=format&fit=crop', t:'Northern Drift',  s:'Landscape · 2025'},
+      {src:'https://videos.pexels.com/video-files/10135156/10135156-hd_1920_1080_30fps.mp4', t:'Living Light',   s:'Interior Film · 2026'},
+      {src:'https://videos.pexels.com/video-files/3770054/3770054-hd_1920_1080_25fps.mp4', t:'Shelf Life',      s:'Interior Film · 2025'},
       {src:'https://images.unsplash.com/photo-1648993880088-37d4a048e6d5?q=80&w=900&h=620&auto=format&fit=crop', t:'Quiet Materials', s:'Product · 2026'},
       {src:'https://images.unsplash.com/photo-1546414701-81cc6963c67f?q=80&w=900&h=620&auto=format&fit=crop', t:'After Hours',     s:'Photography · 2025'},
       {src:'https://images.unsplash.com/photo-1521459467264-802e2ef3141f?q=80&w=900&h=620&auto=format&fit=crop', t:'Field Notes',     s:'Archive · 2024'},
       {src:'https://images.unsplash.com/photo-1496493616164-31becad29fab?q=80&w=900&h=620&auto=format&fit=crop', t:'Open Water',      s:'Travel · 2026'},
-      {src:'https://images.unsplash.com/photo-1657208431551-cbf415b8ef26?q=80&w=900&h=620&auto=format&fit=crop', t:'Slow Motion',     s:'Motion · 2025'}
+      {src:'https://images.unsplash.com/photo-1657208431551-cbf415b8ef26?q=80&w=900&h=620&auto=format&fit=crop', t:'Slow Motion',     s:'Motion · 2025'},
+      {src:'https://images.unsplash.com/photo-1667312939978-64cf31718a6e?q=80&w=900&h=560&auto=format&fit=crop', t:'Warm Interior',   s:'Interior · 2025'}
     ],
-    cw:560, chh:380, rad:6, dim:62,
-    gap:300, depth:320, rot:48, persp:1600,
+    cw:530, chh:380, rad:6, dim:62,   /* 260918 수정 — 폭 560 → 530 */
+    gap:295, depth:200, rot:48, persp:1300,   /* 260918 수정 — 간격 300 → 295 · 깊이 320 → 200 · 원근 1600 → 1300 */
     autoplay:false, aspd:3,
     caption:true, arrows:true, counter:true, zoom:true,
     bg1:'#000000', floorOn:true,
-    ht:520, pt:0, pb:0
+    ht:600, pt:0, pb:0   /* 260918 수정 — 높이 520 → 600 */
   };
-  var SG_MAX=12, SG_MIN=2;
+  var SG_MAX=20, SG_MIN=2;   /* 260918 수정 — 최대 12 → 20 */
   /* 260906 추가 — 이미지/동영상 섞인 목록: 주소(확장자·blob 의 data-kind)로 동영상 여부를 가른다 */
   function sgIsVideo(u){ u=String(u||'').trim(); return /\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(u) || /^data:video\//i.test(u) || /^blob:.*#video$/i.test(u); }
   function sgNum(v,d){ var n=parseFloat(v); return isFinite(n)?n:d; }
