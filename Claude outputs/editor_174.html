@@ -1040,6 +1040,8 @@
   .bklb-img{max-width:100%;max-height:100%;transform-origin:center center;will-change:transform;
     cursor:zoom-in;-webkit-user-drag:none;border-radius:2px;box-shadow:0 30px 80px rgba(0,0,0,.45);}
   .bklb.is-zoom .bklb-img{cursor:zoom-out;}
+  .bklb-vid{max-width:100%;max-height:100%;display:block;background:#000;}   /* 260918 추가 */
+  .bklb.is-video .bklb-zoom{display:none;}
   .bklb.is-drag .bklb-img{cursor:grabbing;}
   .bklb-img.is-anim{transition:transform .22s cubic-bezier(.2,.7,.3,1);}
   /* 좌·우 넘김 띠는 화면 높이를 다 쓰므로 닫기·확대·장수 표시를 한 층 위로 올린다 */
@@ -9395,7 +9397,7 @@
     {no:1, kind:'moto3d', label:'IMAGE01', badge:'NEW', tag:'3D', ar:'920/320', img:BA_MOTO_THUMB, vid:'ba/image01-6'}   /* 260918 재녹화 — 제목 글꼴 Arial Black (윈도우 크롬은 Arial 굵기 800 을 Arial Black 으로 그린다) */
   ];
   /* 슬라이드쇼 카테고리 카드 (3D 스트립 갤러리) — 썸네일은 인라인 SVG */
-  var BA_STRIP_THUMB=ED_IMG+'ba/slide01-2.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_STRIP_THUMB=ED_IMG+'ba/slide01-3.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 갤러리 카테고리 카드 (플로팅 3D 갤러리) — 썸네일은 인라인 SVG */
   var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-8.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260826 추가 / 260827 교체 — 3D 카드 회전 썸네일 (실제 블럭 스크린샷) */
@@ -9410,7 +9412,7 @@
   /* 260915 추가 — 스크롤 슬라이더 카드 썸네일 (실제 블럭 스크린샷) */
   var BA_SLIDER_THUMB=ED_IMG+'ba/gallery04.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_CARDS_SLIDE=[
-    {no:1, kind:'stripgal', label:'SLIDE01', badge:'NEW', tag:'3D', ar:'552/230', img:BA_STRIP_THUMB, vid:'ba/slide01-2'}   /* 260918 재녹화 — 샘플 12장(영상 3)·새 기본값, 1→8→3 */,
+    {no:1, kind:'stripgal', label:'SLIDE01', badge:'NEW', tag:'3D', ar:'552/230', img:BA_STRIP_THUMB, vid:'ba/slide01-3'}   /* 260918 재녹화 — 샘플 12장(영상 3)·새 기본값, 드래그 스와이프 1→6→8→3 */,
     {no:2, kind:'cardring', label:'SLIDE02', badge:'NEW', tag:'3D', ar:'552/274', img:BA_RING_THUMB, vid:'ba/slide02-4'}   /* 260918 재녹화 — 느린 드래그 + 관성, 원본 25fps 그대로(30fps 변환 시 프레임 중복으로 끊겨 보였다) */,
     {no:3, kind:'bookflip2', label:'SLIDE03', badge:'NEW', tag:'3D', ar:'552/304', img:BA_BOOK2_THUMB, vid:'ba/slide03'}
   ];
@@ -10405,7 +10407,8 @@
   var openImageViewer=(function(){
     var MIN=1, MAX=8;
     var list=[], at=0, scale=1, tx=0, ty=0, hooks=null;
-    var lb, stage, img, navL, navR, count, pct, zin, zout, lastFocus=null;
+    var lb, stage, img, vid, navL, navR, count, pct, zin, zout, lastFocus=null;
+    function isVidSrc(u){ u=String(u||''); return /\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(u) || /^data:video\//i.test(u) || /#video$/i.test(u); }   /* 260918 추가 */
 
     function isOpen(){ return !!lb && lb.classList.contains('is-open'); }
     function dist(a,b){ var x=a.x-b.x, y=a.y-b.y; return Math.sqrt(x*x+y*y); }
@@ -10419,7 +10422,7 @@
       lb.setAttribute('aria-label','사진 확대 보기');
       lb.setAttribute('tabindex','-1');
       lb.innerHTML=
-          '<div class="bklb-stage"><img class="bklb-img" alt=""></div>'
+          '<div class="bklb-stage"><img class="bklb-img" alt=""><video class="bklb-vid" muted loop playsinline controls hidden></video></div>'   /* 260918 추가 — 동영상 항목도 확대 보기 */
         + '<div class="bklb-count"></div>'
         + '<button type="button" class="bklb-close" aria-label="닫기" title="닫기 (Esc)">✕</button>'
         + '<button type="button" class="bklb-nav l" aria-label="이전 사진" title="이전 사진 (←)">⟨</button>'
@@ -10433,6 +10436,7 @@
 
       stage=lb.querySelector('.bklb-stage');
       img  =lb.querySelector('.bklb-img');
+      vid  =lb.querySelector('.bklb-vid');
       navL =lb.querySelector('.bklb-nav.l');
       navR =lb.querySelector('.bklb-nav.r');
       count=lb.querySelector('.bklb-count');
@@ -10506,7 +10510,7 @@
     function preload(i){
       if(list.length<2) return;
       var it=list[(i+list.length)%list.length];
-      if(!it||it.pre) return;
+      if(!it||it.pre||isVidSrc(it.src)) return;
       it.pre=new Image();
       it.pre.src=it.src;
     }
@@ -10514,9 +10518,18 @@
       if(!list.length) return;
       at=(i+list.length)%list.length;
       img.style.width=''; img.style.height='';
-      img.src=list[at].src;
-      img.alt=list[at].alt||'';
-      if(img.complete) fit();
+      var isV=isVidSrc(list[at].src);   /* 260918 추가 — 동영상 항목: 확대/이동 없이 화면에 맞춰 재생 */
+      lb.classList.toggle('is-video',isV);
+      if(isV){
+        img.hidden=true; img.removeAttribute('src'); img.alt='';
+        vid.hidden=false; vid.src=String(list[at].src).replace(/#video$/,''); try{ var pv=vid.play(); if(pv&&pv.catch) pv.catch(function(){}); }catch(e){}
+      } else {
+        vid.hidden=true; try{ vid.pause(); }catch(e){} vid.removeAttribute('src'); try{ vid.load(); }catch(e){}
+        img.hidden=false;
+        img.src=list[at].src;
+        img.alt=list[at].alt||'';
+        if(img.complete) fit();
+      }
       count.textContent = list.length>1 ? (at+1)+' / '+list.length : '';
       navL.hidden=navR.hidden=(list.length<2);
       reset(false);
@@ -10544,6 +10557,7 @@
     }
     function close(){
       if(!isOpen()) return;
+      if(vid){ try{ vid.pause(); }catch(e){} }
       lb.classList.remove('is-in');
       document.documentElement.classList.remove('bklb-open');
       document.body.classList.remove('bklb-open');
@@ -10557,6 +10571,7 @@
     function bindStage(){
       stage.addEventListener('wheel',function(e){
         e.preventDefault();
+        if(lb.classList.contains('is-video')) return;   /* 260918 추가 — 동영상은 확대 없음 */
         var f=Math.exp(-e.deltaY*(e.deltaMode===1?.05:.0016));
         zoomTo(scale*f,e.clientX,e.clientY,false);
       },{passive:false});
@@ -10644,6 +10659,7 @@
 
       stage.addEventListener('click',function(e){
         if(moved>6){ moved=0; return; }
+        if(lb.classList.contains('is-video')){ if(e.target!==vid) close(); return; }   /* 260918 추가 — 영상 위 클릭은 컨트롤에 맡기고, 바깥 클릭은 닫기 */
         if(onImage(e)){
           if(scale>1.001) reset(); else zoomTo(2.4,e.clientX,e.clientY);
         }else{
@@ -10755,23 +10771,22 @@
       el.addEventListener('click',function(){
         var S=blk._sg; if(!S||S.moved) return;
         if(i!==S.active){ sgGo(blk,i); return; }
-        if(sgCfg(blk).zoom!==false && !sgIsVideo(it.src)) sgZoom(blk,i);
+        if(sgCfg(blk).zoom!==false) sgZoom(blk,i);   /* 260918 수정 — 동영상도 확대 보기 */
       });
       track.appendChild(el);
     });
   }
 
   /* 260909 추가 — 카드 → 확대 뷰어.
-     · 동영상 항목은 확대 대상이 아니므로 목록에서 빼고, 그만큼 시작 번호를 다시 센다.
+     · 260918 수정 — 동영상 항목도 확대 뷰어에서 재생한다 (이전/다음이 건너뛰지 않음).
      · Unsplash 사진은 같은 사진 ID 로 큰 판을 다시 받아 넘긴다(다른 블럭과 같은 매너).
      · 열려 있는 동안에는 자동 재생을 멈춘다. */
   function sgZoom(blk,i){
     var c=sgCfg(blk), items=[], start=0;
     c.items.forEach(function(it,k){
-      if(sgIsVideo(it.src)) return;
       if(k===i) start=items.length;
       var src=String(it.src||'');
-      items.push({ src:(unsResize(src,2000,1400)||src), alt:it.t||'' });
+      items.push({ src:(sgIsVideo(src)?src:(unsResize(src,2000,1400)||src)), alt:it.t||'' });   /* 260918 수정 — 동영상도 목록에 포함 (건너뛰지 않는다) */
     });
     if(!items.length || typeof openImageViewer!=='function') return;
     openImageViewer(items,start,{
