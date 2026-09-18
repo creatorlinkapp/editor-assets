@@ -4849,8 +4849,8 @@
         <div class="fld sfold" id="flCardAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">카드<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">개수</span><input class="rng" type="range" id="flCnt" min="6" max="24" step="1" value="14"><span class="v" id="flCntV">14</span></div>
-            <div class="srow"><span class="k">크기</span><input class="rng" type="range" id="flSize" min="60" max="260" step="5" value="150"><span class="v" id="flSizeV">150%</span></div>
+            <div class="srow"><span class="k">개수</span><input class="rng" type="range" id="flCnt" min="6" max="24" step="1" value="12"><span class="v" id="flCntV">12</span></div>
+            <div class="srow"><span class="k">크기</span><input class="rng" type="range" id="flSize" min="60" max="260" step="5" value="215"><span class="v" id="flSizeV">215%</span></div>
             <div class="srow"><span class="k">퍼짐</span><input class="rng" type="range" id="flSpread" min="60" max="180" step="5" value="100"><span class="v" id="flSpreadV">100%</span></div>
             <div class="srow"><span class="k">깊이</span><input class="rng" type="range" id="flDepth" min="0" max="200" step="5" value="100"><span class="v" id="flDepthV">100%</span></div>
             <div class="sline" style="margin-top:10px;"><span class="lbl">베젤 (액자 프레임)</span><button class="sw on" id="flBezSw" onclick="flSw(this,'bez')"></button></div>
@@ -4898,7 +4898,7 @@
         <div class="fld sfold" id="flBoxAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">블럭 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="flHt" min="360" max="1400" step="10" value="760"><span class="v" id="flHtV">760px</span></div>
+            <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="flHt" min="360" max="1400" step="10" value="890"><span class="v" id="flHtV">890px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="flPt" min="0" max="160" step="2" value="0"><span class="v" id="flPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="flPb" min="0" max="160" step="2" value="0"><span class="v" id="flPbV">0px</span></div>
           </div></div>
@@ -9383,7 +9383,7 @@
   /* 슬라이드쇼 카테고리 카드 (3D 스트립 갤러리) — 썸네일은 인라인 SVG */
   var BA_STRIP_THUMB=ED_IMG+'ba/slide01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 갤러리 카테고리 카드 (플로팅 3D 갤러리) — 썸네일은 인라인 SVG */
-  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-4.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-5.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260826 추가 / 260827 교체 — 3D 카드 회전 썸네일 (실제 블럭 스크린샷) */
   var BA_RING_THUMB=ED_IMG+'ba/slide02-4.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260831 추가 / 260901 교체 — 나선형 3D 갤러리 카드 썸네일 (실제 블럭 스크린샷) */
@@ -9411,7 +9411,7 @@
      @main 은 캐시(최대 12시간·7일)가 길어 갱신이 늦으므로, 파일을 바꾼 뒤에는 커밋 SHA 로 고정할 것 (fonts 와 같은 방식) */
   var BA_ASSET_BASE='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/';   /* 260918 수정 — 이미지(ED_IMG)와 같은 규칙으로 @main: 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다 */
   var BA_CARDS_GALLERY=[
-    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/322', img:BA_FLOAT_THUMB, vid:'ba/gallery01-4'}   /* 260918 재녹화 — 고정 샘플·한글 캡션, 대각선 드래그 */,
+    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/322', img:BA_FLOAT_THUMB, vid:'ba/gallery01-5'}   /* 260918 재녹화 — 새 견본(사진 9·영상 3)·크기 215%·높이 890 */   /* 260918 재녹화 — 고정 샘플·한글 캡션, 대각선 드래그 */,
     {no:2, kind:'spiralgal', label:'GALLERY02', badge:'NEW', tag:'3D', ar:'552/248', img:BA_SPIRAL_THUMB, vid:'ba/gallery02'},
     {no:3, kind:'depthgal', label:'GALLERY03', badge:'NEW', tag:'3D', ar:'552/266', img:BA_DEPTH_THUMB, vid:'ba/gallery03'},   /* 260915 추가 — 깊이 갤러리 */
     {no:4, kind:'scrollslider', label:'GALLERY04', badge:'NEW', ar:'552/278', img:BA_SLIDER_THUMB, vid:'ba/gallery04'},   /* 260915 추가 — 스크롤 슬라이더 */
@@ -11132,12 +11132,12 @@
   var FL_MAX=15, FL_MIN=3;
   var FL_DEF={
     items:[],
-    cnt:14, size:150, spread:100, depth:100,
+    cnt:12, size:215, spread:100, depth:100,   /* 260918 수정 — 크기 150 → 215 · 개수 14 → 12 (견본 12개와 맞춤) */
     bez:true, bezW:2,
     spin:14, bobS:100, bobA:10, inert:50,
     cap:true, trail:true, zoom:72,
     theme:'light', bg1:'#faf9f7', bg2:'#e4e1db', vig:true,
-    ht:760, pt:0, pb:0
+    ht:890, pt:0, pb:0   /* 260918 수정 — 높이 760 → 890 */
   };
   /* 동영상 URL 감지 (mp4/webm 등) — 카드에 muted 루프 재생으로 적용 */
   function flIsVideo(u){ u=String(u||'').trim(); return /\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(u) || /^data:video\//i.test(u) || /#video$/i.test(u); }   /* 260906 수정 — 보관함 업로드(blob) 동영상은 #video 표식으로 구분 */
@@ -11158,36 +11158,35 @@
   }
   function flNum(v,d){ var n=parseFloat(v); return isFinite(n)?n:d; }
   /* ── 샘플 풀: 블럭을 추가할 때마다 이미지 시드·동영상 조합이 랜덤으로 구성됨 ── */
-  /* 260918 수정 — 샘플 캡션을 한글로, 샘플 구성을 고정으로.
+  /* 260918 수정 — 견본 구성 고정 (Pexels 사진 9 + 영상 3, 한글 캡션).
      예전엔 블럭을 추가할 때마다 사진·크기·순서가 랜덤이라 카드 미리보기 영상과 실제 블럭이 매번 달랐다.
-     이제 첫 구성은 항상 같고(미리보기 영상과 동일), 사용자는 항목 설정에서 자유롭게 바꾼다. */
-  var FL_IMG_META=[
-    ['블롭','3D 탐구','형태와 빛, 재질과 구도를 실험한 3D 습작입니다. 제품 시각화 감각을 다듬기 위해 개인 연구로 만들었습니다.'],
-    ['모노','편집 디자인','서체 하나와 흑백 팔레트만으로 짠 편집 시스템입니다. 색과 장식 없이 리듬과 여백만으로 지면이 서는지를 살폈습니다.'],
-    ['고사리','사진','이른 아침 빛 속에서 찍은 조용한 연작입니다. 유기적인 질감과 부드러운 그림자의 관계를 한 장씩 들여다봅니다.'],
-    ['시그널','비주얼 아이덴티티','독립 음반 레이블의 아이덴티티입니다. 파형을 가장 단순한 기하로 줄여, 인쇄와 화면과 바이닐 어디에나 놓이게 했습니다.'],
-    ['조각','아트 디렉션','주운 이미지와 깨진 그리드로 엮은 아트 디렉션 습작입니다. 찢긴 가장자리와 어긋남을 그대로 언어로 삼았습니다.'],
-    ['그릇','제품 디자인','무게와 균형, 손이 다가가는 방식을 살핀 도자 제품 콘셉트입니다. 흙을 만지기 전에 렌더링으로 비례를 먼저 시험했습니다.'],
-    ['현장 노트','인쇄물','한 여름 동안 모은 관찰을 엮은 인쇄 저널입니다. 넉넉한 여백의 한 단 조판으로, 천천히 보게 하는 지면을 만들었습니다.'],
-    ['유물','3D 탐구','디자인된 것이 아니라 발굴된 듯한 사물들을 상상한 연구입니다. 재질과 마모, 녹을 겹겹이 쌓아 그럴듯한 과거를 입혔습니다.'],
-    ['자취','웹사이트 디자인','커서가 지나간 자리에 흔적이 남았다 사라지는 포트폴리오 콘셉트입니다. 내비게이션은 몸짓으로 녹아들고, 헤매는 쪽이 보상받습니다.'],
-    ['입자','사진','거친 입자를 결점이 아닌 주제로 삼은 필름 연작입니다. 유효기간이 지난 필름으로 찍어, 기억과 기록 사이 어딘가에 놓입니다.'],
-    ['후광','비주얼 아이덴티티','맥락에 따라 색이 바뀌는 빛의 고리를 중심에 둔 아이덴티티입니다. 같은 색으로 두 번 나타나지 않으면서도 늘 알아볼 수 있습니다.'],
-    ['슬레이트','편집 디자인','느리게 읽기 위해 설계한 장문 편집 템플릿입니다. 조용한 세리프와 넓은 행간으로 첫 줄부터 끝 줄까지 서두르지 않게 했습니다.']
-  ];
-  var FL_VIDS=[
-    {src:'https://mdn.github.io/shared-assets/videos/flower.mp4', t:'개화', s:'루프 스터디',
-     d:'꽃이 실시간으로 피어나는 짧은 루프입니다. 한 번 찍어 영원히 반복하며, 반복 자체를 주제로 삼았습니다.'},
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', t:'불꽃', s:'모션 루프',
-     d:'불과 움직임의 짧은 조각입니다. 이음새 없이 반복되도록 잘라, 몇 초의 움직임이 얼마나 오래 시선을 붙드는지 살폈습니다.'},
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', t:'탈출', s:'모션 루프',
-     d:'탈출 장면을 본질적인 움직임만 남기고 줄인 루프입니다. 반복은 서사를 리듬으로, 리듬을 질감으로 바꿉니다.'},
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', t:'놀이', s:'루프 스터디',
-     d:'하나의 몸짓을 끝없이 반복해 만든 장난스러운 루프입니다. 행동으로 시작한 것이 어느새 눈이 쉬는 무늬가 됩니다.'},
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', t:'드라이브', s:'모션 루프',
-     d:'목적지 없는 주행의 루프입니다. 출발과 도착을 걷어내고, 지나가는 즐거움만 남겼습니다.'},
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', t:'붕괴', s:'루프 스터디',
-     d:'무너지는 순간을 천천히 반복하는 루프입니다. 끝없이 되풀이되면 붕괴도 안무가 됩니다.'}
+     첫 구성은 항상 같고(미리보기 영상과 동일), 사용자는 항목 설정에서 자유롭게 바꾼다. */
+  function pxImg(id,w){ return 'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&w='+(w||800); }
+  var FL_SAMPLE=[   /* 260918 수정 — 사진 9 + 영상 3 (세로 1080×1920 영상은 한 편에 15~30MB 라 영상 넷은 Pexels 인테리어 사진으로 바꿨다) */
+    {src:pxImg(6615808), t:'아치의 방', s:'인테리어',
+     d:'아치와 흰 벽만으로 이룬 조용한 실내. 장식을 덜어낼수록 빛이 만드는 곡선이 또렷해집니다.'},
+    {src:pxImg(29651943), t:'찻잔과 책', s:'라이프스타일',
+     d:'따뜻한 톤의 실내에서 책을 읽는 한때. 오래 머무는 공간이 가진 리듬을 정물처럼 기록했습니다.'},
+    {src:pxImg(3049121), t:'나무 좌석', s:'인테리어',
+     d:'목재 가구와 화분 식물로 채운 좌석 공간. 재료의 결이 그대로 분위기가 되는 자리입니다.'},
+    {src:pxImg(35812095), t:'원목과 식물', s:'인테리어',
+     d:'원목 가구와 식물, 창으로 드는 자연광. 재료 세 가지만으로 완성된 카페의 낮을 담았습니다.'},
+    {src:'https://videos.pexels.com/video-files/28514873/12405154_1080_1920_30fps.mp4', t:'테이블 정리', s:'브랜드 필름',
+     d:'영업 전 테이블을 정돈하는 손. 카페의 하루가 시작되기 직전의 조용한 준비를 짧게 담았습니다.'},
+    {src:pxImg(30567244), t:'나무의 방', s:'인테리어',
+     d:'부드러운 조명과 최소한의 목재로 이룬 공간. 비워 둔 자리가 오히려 형태를 또렷하게 만듭니다.'},
+    {src:pxImg(5793641), t:'라탄 의자', s:'라이프스타일',
+     d:'라탄 의자와 중성색 소품으로 꾸민 밝은 거실. 가볍고 느슨한 오후의 온도를 담았습니다.'},
+    {src:pxImg(36079468), t:'레트로 카페', s:'인테리어',
+     d:'빈티지 조명과 가구를 현대적으로 배치한 카페. 따뜻한 빛이 시간을 조금 뒤로 돌려놓습니다.'},
+    {src:'https://videos.pexels.com/video-files/4990437/4990437-hd_1920_1080_30fps.mp4', t:'검은 무용', s:'퍼포먼스 필름',
+     d:'오래된 건물 안에서 춤추는 무용수를 흑백으로 찍었습니다. 빛과 그림자만 남긴 움직임의 초상입니다.'},
+    {src:pxImg(34992754), t:'빛의 거실', s:'라이프스타일',
+     d:'자연광과 화분 몇 개로 채운 거실. 꾸미지 않은 것들이 만드는 밝고 조용한 아침입니다.'},
+    {src:pxImg(36475846), t:'벤치와 램프', s:'인테리어',
+     d:'나무 벤치 하나, 램프 하나, 화분 하나. 세 가지 물건이 놓인 자리만으로 방의 성격이 정해집니다.'},
+    {src:'https://videos.pexels.com/video-files/35862372/15208634_1920_1080_30fps.mp4', t:'노을의 실루엣', s:'퍼포먼스 필름',
+     d:'해질녘 해변에서 춤추는 실루엣. 색이 사라지기 직전, 형태만 남는 순간을 잡았습니다.'}
   ];
   /* 동영상 로드 실패 시 순서대로 시도하는 대체 소스 (호스트 분산) */
   var FL_VID_ALTS=[
@@ -11200,30 +11199,13 @@
     return a;
   }
   var FL_POOL=UNS_MIX;
-  /* 고정 샘플 — 사진 12장(id, w, h) + 동영상 3편. 위치는 FL_LAYOUT 순서를 따른다 */
-  var FL_SAMPLE=[
-    ['1611570884860-6f9d61c3a64d',440,440],['1515895309288-a3815ab7cf81',520,520],['1496493616164-31becad29fab',560,520],
-    'v0',
-    ['1561211974-8a2737b4dcac',560,640],['1610813835315-9a93c5035c81',620,640],['1506452305024-9d3f02d1c9b5',620,820],
-    ['1750056661722-8381f9012079',620,660],
-    'v1',
-    ['1591394197887-b27e1ba3b2f9',480,660],['1612733399020-e2194e3dbfda',620,660],['1602128110234-2d11c0aaadfe',420,640],
-    'v2',
-    ['1542273917363-3b1817f69a2d',420,440],['1673313649330-705bfae0a0ee',440,440]
-  ];
   function flSampleItems(){
-    var items=[], mi=0, altPool=FL_VID_ALTS.slice();
-    FL_SAMPLE.forEach(function(e){
-      if(typeof e==='string'){
-        var v=JSON.parse(JSON.stringify(FL_VIDS[+e.slice(1)])); v.alt=[];
-        for(var k=0;k<altPool.length;k++){ if(altPool[k]!==v.src){ v.alt=[altPool[k]]; altPool.splice(k,1); break; } }
-        items.push(v);
-      } else {
-        var m=FL_IMG_META[mi++ % FL_IMG_META.length];
-        items.push({src:unsById(e[0],e[1],e[2]), t:m[0], s:m[1], d:m[2]});
-      }
+    var altPool=FL_VID_ALTS.slice();
+    return FL_SAMPLE.map(function(e){
+      var it=JSON.parse(JSON.stringify(e));
+      if(flIsVideo(it.src)){ it.alt=[]; for(var k=0;k<altPool.length;k++){ if(altPool[k]!==it.src){ it.alt=[altPool[k]]; altPool.splice(k,1); break; } } }
+      return it;
     });
-    return items;
   }
   function flCfg(blk){
     if(!blk._flCfg){
