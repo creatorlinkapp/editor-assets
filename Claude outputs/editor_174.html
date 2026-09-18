@@ -36,6 +36,20 @@
   /* 260918 추가 — 편집기에 박혀 있던 이미지(카드 썸네일·기본 템플릿 사진·카드 뒷면 등)를 editor-assets/img 로 빼고 주소로 참조한다.
      @main 은 jsDelivr 캐시(최대 7일)가 길어, 이미지를 바꿀 때는 덮어쓰지 말고 새 이름으로 올려 이 파일의 참조를 바꿀 것 */
   var ED_IMG='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/';
+
+  /* 260918 추가 — 종속 행: data-dep="스위치 id" 를 단 행은 그 스위치가 꺼지면 숨는다 (베젤 두께 · 확대 글자 크기 등).
+     스위치 버튼의 class 변화를 관찰하므로 블럭마다 따로 손볼 것이 없다 */
+  (function(){
+    function sync(root){ (root||document).querySelectorAll('[data-dep]').forEach(function(row){ var sw=document.getElementById(row.getAttribute('data-dep')); if(sw) row.style.display=sw.classList.contains('on')?'':'none'; }); }
+    function bind(){
+      sync();
+      if(!window.MutationObserver) return;
+      new MutationObserver(function(ms){ var hit=false; ms.forEach(function(m){ if(m.target.classList&&m.target.classList.contains('sw')) hit=true; }); if(hit) sync(); })
+        .observe(document.body,{attributes:true,attributeFilter:['class'],subtree:true});
+    }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
+    window.smDepSync=sync;
+  })();
 (function(){
   try{
     if(window.name==='clMobileView' || /(^|[#&])clmview(=|&|$)/.test(location.hash)){
@@ -4854,7 +4868,7 @@
             <div class="srow"><span class="k">퍼짐</span><input class="rng" type="range" id="flSpread" min="60" max="180" step="5" value="100"><span class="v" id="flSpreadV">100%</span></div>
             <div class="srow"><span class="k">깊이</span><input class="rng" type="range" id="flDepth" min="0" max="200" step="5" value="100"><span class="v" id="flDepthV">100%</span></div>
             <div class="sline" style="margin-top:10px;"><span class="lbl">베젤 (액자 프레임)</span><button class="sw on" id="flBezSw" onclick="flSw(this,'bez')"></button></div>
-            <div class="srow"><span class="k">베젤 두께</span><input class="rng" type="range" id="flBezW" min="0" max="16" step="1" value="2"><span class="v" id="flBezWV">2%</span></div>
+            <div class="srow" data-dep="flBezSw"><span class="k">베젤 두께</span><input class="rng" type="range" id="flBezW" min="0" max="16" step="1" value="2"><span class="v" id="flBezWV">2%</span></div>
           </div></div>
         </div>
 
@@ -4898,7 +4912,7 @@
         <div class="fld sfold" id="flBoxAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">블럭 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="flHt" min="360" max="1400" step="10" value="890"><span class="v" id="flHtV">890px</span></div>
+            <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="flHt" min="360" max="1400" step="10" value="740"><span class="v" id="flHtV">740px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="flPt" min="0" max="160" step="2" value="0"><span class="v" id="flPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="flPb" min="0" max="160" step="2" value="0"><span class="v" id="flPbV">0px</span></div>
           </div></div>
@@ -5844,7 +5858,7 @@
             <div class="srow cap-row"><span class="k">제목 크기</span><input class="rng" type="range" id="dgCapT" min="50" max="200" step="5" value="100"><span class="v" id="dgCapTV">100%</span></div>
             <div class="srow cap-row"><span class="k">색</span><span class="sw-col"><input type="color" id="dgCapC" value="#ffffff"><span class="hex" id="dgCapCV">기본</span><button type="button" class="sw-reset off" id="dgCapCR" title="기본색으로" aria-label="기본색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
             <div class="sline" style="margin-bottom:8px;"><span class="lbl">확대 보기 캡션</span><button type="button" class="sw on" id="dgCapLbSw" onclick="dgSw(this,'capLb')"></button></div>
-            <div class="srow cap-row"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="dgCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="dgCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
+            <div class="srow cap-row" data-dep="dgCapLbSw"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="dgCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="dgCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
             <div class="mt-imglist" id="dgImgList"></div>
             <button type="button" class="mt-imgadd" id="dgImgAdd" onclick="dgImgAddRow()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>이미지 추가 <span class="mt-imgcount" id="dgImgCount"></span></button>
             <input type="file" id="dgListUp" accept="image/*" multiple style="display:none;" onchange="blkListUpload(this,'dg')"><button type="button" class="mt-imgadd mt-imgup" onclick="document.getElementById('dgListUp').click()" title="내 컴퓨터의 파일을 보관함과 이 목록에 함께 넣습니다"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
@@ -5949,7 +5963,7 @@
             <div class="srow cap-row"><span class="k">제목 크기</span><input class="rng" type="range" id="igCapT" min="50" max="200" step="5" value="100"><span class="v" id="igCapTV">100%</span></div>
             <div class="srow cap-row"><span class="k">색</span><span class="sw-col"><input type="color" id="igCapC" value="#ffffff"><span class="hex" id="igCapCV">기본</span><button type="button" class="sw-reset off" id="igCapCR" title="기본색으로" aria-label="기본색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
             <div class="sline" style="margin-bottom:8px;"><span class="lbl">확대 보기 캡션</span><button type="button" class="sw on" id="igCapLbSw" onclick="igSw(this,'capLb')"></button></div>
-            <div class="srow cap-row"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="igCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="igCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
+            <div class="srow cap-row" data-dep="igCapLbSw"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="igCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="igCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
             <div class="mt-imglist" id="igImgList"></div>
             <button type="button" class="mt-imgadd" id="igImgAdd" onclick="igImgAddRow()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>이미지 추가 <span class="mt-imgcount" id="igImgCount"></span></button>
             <input type="file" id="igListUp" accept="image/*" multiple style="display:none;" onchange="blkListUpload(this,'ig')"><button type="button" class="mt-imgadd mt-imgup" onclick="document.getElementById('igListUp').click()" title="내 컴퓨터의 파일을 보관함과 이 목록에 함께 넣습니다"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
@@ -6038,7 +6052,7 @@
             <div class="srow"><span class="k">그림자</span><input class="rng" type="range" id="wcShadow" min="0" max="100" step="1" value="0"><span class="v" id="wcShadowV">0%</span></div>
             <div class="sline"><span class="lbl">제목</span><button type="button" class="sw on" id="wcCapSw" onclick="wcSw(this,'cap')"></button></div>
             <div class="sline"><span class="lbl">확대 보기 캡션</span><button type="button" class="sw on" id="wcCapLbSw" onclick="wcSw(this,'capLb')"></button></div>
-            <div class="srow cap-row"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="wcCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="wcCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
+            <div class="srow cap-row" data-dep="wcCapLbSw"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="wcCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="wcCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
             <div class="srow"><span class="k">제목 색</span><span class="sw-col"><input type="color" id="wcCapC" value="#ffffff"><span class="hex" id="wcCapCV">#FFFFFF</span></span></div>
             <!-- 260917 추가 — 캡션 글꼴·크기(·색): 갤러리 공통 행 (capRows) -->
             <div class="srow cap-row"><span class="k">글꼴</span><div class="sdd" id="wcCapF"><button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">사이트 글꼴</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="sdd-menu"></div></div></div>
@@ -6119,7 +6133,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="sline"><span class="lbl">라벨 표시</span><button type="button" class="sw on" id="hgLabelsSw" onclick="hgSw(this,'labels')"></button></div>
             <div class="sline"><span class="lbl">확대 보기 캡션</span><button type="button" class="sw on" id="hgCapLbSw" onclick="hgSw(this,'capLb')"></button></div>
-            <div class="srow cap-row"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="hgCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="hgCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
+            <div class="srow cap-row" data-dep="hgCapLbSw"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="hgCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="hgCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
             <div class="sline"><span class="lbl">클릭 시 확대</span><button type="button" class="sw on" id="hgZoomSw" onclick="hgSw(this,'zoom')"></button></div>
             <div class="srow"><span class="k">정면 근처만 표시</span><input class="rng" type="range" id="hgFade" min="0" max="10" step="1" value="7"><span class="v" id="hgFadeV">7</span></div>
             <!-- 260917 추가 — 캡션 글꼴·크기(·색): 갤러리 공통 행 (capRows) -->
@@ -6172,7 +6186,7 @@
             <div class="srow cap-row"><span class="k">제목 크기</span><input class="rng" type="range" id="ssCapT" min="50" max="200" step="5" value="100"><span class="v" id="ssCapTV">100%</span></div>
             <div class="srow cap-row"><span class="k">색</span><span class="sw-col"><input type="color" id="ssCapC" value="#ffffff"><span class="hex" id="ssCapCV">기본</span><button type="button" class="sw-reset off" id="ssCapCR" title="기본색으로" aria-label="기본색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
             <div class="sline" style="margin-bottom:8px;"><span class="lbl">확대 보기 캡션</span><button type="button" class="sw on" id="ssCapLbSw" onclick="ssSw(this,'capLb')"></button></div>
-            <div class="srow cap-row"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="ssCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="ssCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
+            <div class="srow cap-row" data-dep="ssCapLbSw"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="ssCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="ssCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
             <div class="mt-imglist" id="ssImgList"></div>
             <button type="button" class="mt-imgadd" id="ssImgAdd" onclick="ssImgAddRow()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>이미지 추가 <span class="mt-imgcount" id="ssImgCount"></span></button>
             <input type="file" id="ssListUp" accept="image/*" multiple style="display:none;" onchange="blkListUpload(this,'ss')"><button type="button" class="mt-imgadd mt-imgup" onclick="document.getElementById('ssListUp').click()" title="내 컴퓨터의 파일을 보관함과 이 목록에 함께 넣습니다"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
@@ -6255,7 +6269,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="sline"><span class="lbl">정보 패널 표시</span><button class="sw on" id="vcSideSw" onclick="vcSw(this,'sideOn')"></button></div>
             <div class="sline"><span class="lbl">확대 보기 캡션</span><button class="sw on" id="vcCapLbSw" onclick="vcSw(this,'capLb')"></button></div>
-            <div class="srow cap-row"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="vcCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="vcCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
+            <div class="srow cap-row" data-dep="vcCapLbSw"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="vcCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="vcCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
             <div class="mt-seg" id="vcPosSeg" style="margin:11px 0 12px;">
               <button type="button" class="mt-seg-b active" data-m="right" onclick="vcPos('right')">오른쪽</button>
               <button type="button" class="mt-seg-b" data-m="left" onclick="vcPos('left')">왼쪽</button>
@@ -6385,7 +6399,7 @@
             <div class="srow cap-row"><span class="k">제목 크기</span><input class="rng" type="range" id="hxCapT" min="50" max="200" step="5" value="100"><span class="v" id="hxCapTV">100%</span></div>
             <div class="srow cap-row"><span class="k">색</span><span class="sw-col"><input type="color" id="hxCapC" value="#ffffff"><span class="hex" id="hxCapCV">기본</span><button type="button" class="sw-reset off" id="hxCapCR" title="기본색으로" aria-label="기본색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
             <div class="sline" style="margin-bottom:8px;"><span class="lbl">확대 보기 캡션</span><button class="sw on" id="hxCapLbSw" onclick="hxSw(this,'capLb')"></button></div>
-            <div class="srow cap-row"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="hxCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="hxCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
+            <div class="srow cap-row" data-dep="hxCapLbSw"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="hxCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="hxCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
             <div class="mt-imglist" id="hxImgList"></div>
             <button type="button" class="mt-imgadd" id="hxImgAdd" onclick="hxImgAddRow()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>이미지·동영상 추가 <span class="mt-imgcount" id="hxImgCount"></span></button>
             <input type="file" id="hxListUp" accept="image/*,video/*" multiple style="display:none;" onchange="blkListUpload(this,'hx')"><button type="button" class="mt-imgadd mt-imgup" id="hxListUpBtn" onclick="document.getElementById('hxListUp').click()" title="내 컴퓨터의 파일을 보관함과 이 목록에 함께 넣습니다"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
@@ -9383,7 +9397,7 @@
   /* 슬라이드쇼 카테고리 카드 (3D 스트립 갤러리) — 썸네일은 인라인 SVG */
   var BA_STRIP_THUMB=ED_IMG+'ba/slide01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 갤러리 카테고리 카드 (플로팅 3D 갤러리) — 썸네일은 인라인 SVG */
-  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-5.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-6.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260826 추가 / 260827 교체 — 3D 카드 회전 썸네일 (실제 블럭 스크린샷) */
   var BA_RING_THUMB=ED_IMG+'ba/slide02-4.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260831 추가 / 260901 교체 — 나선형 3D 갤러리 카드 썸네일 (실제 블럭 스크린샷) */
@@ -9411,7 +9425,7 @@
      @main 은 캐시(최대 12시간·7일)가 길어 갱신이 늦으므로, 파일을 바꾼 뒤에는 커밋 SHA 로 고정할 것 (fonts 와 같은 방식) */
   var BA_ASSET_BASE='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/';   /* 260918 수정 — 이미지(ED_IMG)와 같은 규칙으로 @main: 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다 */
   var BA_CARDS_GALLERY=[
-    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/322', img:BA_FLOAT_THUMB, vid:'ba/gallery01-5'}   /* 260918 재녹화 — 새 견본(사진 9·영상 3)·크기 215%·높이 890 */   /* 260918 재녹화 — 고정 샘플·한글 캡션, 대각선 드래그 */,
+    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/284', img:BA_FLOAT_THUMB, vid:'ba/gallery01-6'}   /* 260918 재녹화 — 새 견본(사진 9·영상 3)·크기 215%·높이 740 */   /* 260918 재녹화 — 고정 샘플·한글 캡션, 대각선 드래그 */,
     {no:2, kind:'spiralgal', label:'GALLERY02', badge:'NEW', tag:'3D', ar:'552/248', img:BA_SPIRAL_THUMB, vid:'ba/gallery02'},
     {no:3, kind:'depthgal', label:'GALLERY03', badge:'NEW', tag:'3D', ar:'552/266', img:BA_DEPTH_THUMB, vid:'ba/gallery03'},   /* 260915 추가 — 깊이 갤러리 */
     {no:4, kind:'scrollslider', label:'GALLERY04', badge:'NEW', ar:'552/278', img:BA_SLIDER_THUMB, vid:'ba/gallery04'},   /* 260915 추가 — 스크롤 슬라이더 */
@@ -11137,7 +11151,7 @@
     spin:14, bobS:100, bobA:10, inert:50,
     cap:true, trail:true, zoom:72,
     theme:'light', bg1:'#faf9f7', bg2:'#e4e1db', vig:true,
-    ht:890, pt:0, pb:0   /* 260918 수정 — 높이 760 → 890 */
+    ht:740, pt:0, pb:0   /* 260918 수정 — 높이 760 → 740 */
   };
   /* 동영상 URL 감지 (mp4/webm 등) — 카드에 muted 루프 재생으로 적용 */
   function flIsVideo(u){ u=String(u||'').trim(); return /\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(u) || /^data:video\//i.test(u) || /#video$/i.test(u); }   /* 260906 수정 — 보관함 업로드(blob) 동영상은 #video 표식으로 구분 */
