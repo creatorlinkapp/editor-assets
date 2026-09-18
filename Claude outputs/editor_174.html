@@ -9376,16 +9376,16 @@
     {no:5, kind:'idxlist', label:'TEXT05', badge:'NEW', ar:'552/230', img:BA_IDX_THUMB, vid:'ba/text05'},
     {no:6, kind:'risetext', label:'TEXT06', badge:'NEW', ar:'552/212', img:BA_RISE_THUMB, vid:'ba/text06'}   /* 260916 추가 — 글자 올라오기 */
   ];
-  var BA_MOTO_THUMB=ED_IMG+'ba/image01-5.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_MOTO_THUMB=ED_IMG+'ba/image01-6.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_CARDS_IMAGE=[
-    {no:1, kind:'moto3d', label:'IMAGE01', badge:'NEW', tag:'3D', ar:'920/320', img:BA_MOTO_THUMB, vid:'ba/image01-5'}   /* 260918 재녹화 — 제목 글꼴 Arial Black (윈도우 크롬은 Arial 굵기 800 을 Arial Black 으로 그린다) */
+    {no:1, kind:'moto3d', label:'IMAGE01', badge:'NEW', tag:'3D', ar:'920/320', img:BA_MOTO_THUMB, vid:'ba/image01-6'}   /* 260918 재녹화 — 제목 글꼴 Arial Black (윈도우 크롬은 Arial 굵기 800 을 Arial Black 으로 그린다) */
   ];
   /* 슬라이드쇼 카테고리 카드 (3D 스트립 갤러리) — 썸네일은 인라인 SVG */
   var BA_STRIP_THUMB=ED_IMG+'ba/slide01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 갤러리 카테고리 카드 (플로팅 3D 갤러리) — 썸네일은 인라인 SVG */
-  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-3.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-4.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260826 추가 / 260827 교체 — 3D 카드 회전 썸네일 (실제 블럭 스크린샷) */
-  var BA_RING_THUMB=ED_IMG+'ba/slide02-3.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_RING_THUMB=ED_IMG+'ba/slide02-4.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260831 추가 / 260901 교체 — 나선형 3D 갤러리 카드 썸네일 (실제 블럭 스크린샷) */
   var BA_SPIRAL_THUMB=ED_IMG+'ba/gallery02.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260901 수정 — 3D 카드 회전은 컨텐츠 → 슬라이드쇼 카테고리로 이동 */
@@ -9397,11 +9397,11 @@
   var BA_SLIDER_THUMB=ED_IMG+'ba/gallery04.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_CARDS_SLIDE=[
     {no:1, kind:'stripgal', label:'SLIDE01', badge:'NEW', tag:'3D', ar:'552/274', img:BA_STRIP_THUMB, vid:'ba/slide01'},
-    {no:2, kind:'cardring', label:'SLIDE02', badge:'NEW', tag:'3D', ar:'552/274', img:BA_RING_THUMB, vid:'ba/slide02-3'}   /* 260918 재녹화 — 드래그로 돌리고 관성으로 잦아드는 6초 */,
+    {no:2, kind:'cardring', label:'SLIDE02', badge:'NEW', tag:'3D', ar:'552/274', img:BA_RING_THUMB, vid:'ba/slide02-4'}   /* 260918 재녹화 — 느린 드래그 + 관성, 원본 25fps 그대로(30fps 변환 시 프레임 중복으로 끊겨 보였다) */,
     {no:3, kind:'bookflip2', label:'SLIDE03', badge:'NEW', tag:'3D', ar:'552/304', img:BA_BOOK2_THUMB, vid:'ba/slide03'}
   ];
   /* 260916 교체 — 세로 스크롤 갤러리 카드 썸네일 (실제 블럭 스크린샷. 예전 SVG 그림은 없앴다) */
-  var BA_VCAR_THUMB=ED_IMG+'ba/gallery05-2.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_VCAR_THUMB=ED_IMG+'ba/gallery05-3.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260916 추가 — 휠 캐러셀 카드 썸네일 (실제 블럭 스크린샷) */
   var BA_WHEEL_THUMB=ED_IMG+'ba/gallery07.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260918 교체 — 나선형 갤러리 2 카드 썸네일 (실제 블럭 스크린샷) */
@@ -9411,11 +9411,11 @@
      @main 은 캐시(최대 12시간·7일)가 길어 갱신이 늦으므로, 파일을 바꾼 뒤에는 커밋 SHA 로 고정할 것 (fonts 와 같은 방식) */
   var BA_ASSET_BASE='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/';   /* 260918 수정 — 이미지(ED_IMG)와 같은 규칙으로 @main: 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다 */
   var BA_CARDS_GALLERY=[
-    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/322', img:BA_FLOAT_THUMB, vid:'ba/gallery01-3'}   /* 260918 재녹화 — 고정 샘플·한글 캡션, 대각선 드래그 */,
+    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/322', img:BA_FLOAT_THUMB, vid:'ba/gallery01-4'}   /* 260918 재녹화 — 고정 샘플·한글 캡션, 대각선 드래그 */,
     {no:2, kind:'spiralgal', label:'GALLERY02', badge:'NEW', tag:'3D', ar:'552/248', img:BA_SPIRAL_THUMB, vid:'ba/gallery02'},
     {no:3, kind:'depthgal', label:'GALLERY03', badge:'NEW', tag:'3D', ar:'552/266', img:BA_DEPTH_THUMB, vid:'ba/gallery03'},   /* 260915 추가 — 깊이 갤러리 */
     {no:4, kind:'scrollslider', label:'GALLERY04', badge:'NEW', ar:'552/278', img:BA_SLIDER_THUMB, vid:'ba/gallery04'},   /* 260915 추가 — 스크롤 슬라이더 */
-    {no:5, kind:'vcgal', label:'GALLERY05', badge:'NEW', ar:'552/286', img:BA_VCAR_THUMB, vid:'ba/gallery05-2'}   /* 260918 재녹화 — 견본이 공연 영상·한글 라벨로 바뀐 뒤의 블럭 */,   /* 260915 추가 — 세로 스크롤 갤러리 (editor_36 에서 이식) */
+    {no:5, kind:'vcgal', label:'GALLERY05', badge:'NEW', ar:'552/286', img:BA_VCAR_THUMB, vid:'ba/gallery05-3'}   /* 260918 재녹화 — 견본이 공연 영상·한글 라벨로 바뀐 뒤의 블럭 */,   /* 260915 추가 — 세로 스크롤 갤러리 (editor_36 에서 이식) */
     {no:6, kind:'infgal', label:'GALLERY06', badge:'NEW', tag:'3D', ar:'552/300', img:BA_INF_THUMB, vid:'ba/gallery06'},   /* 260916 추가 — 곡면 갤러리 */
     {no:7, kind:'wheelcar', label:'GALLERY07', badge:'NEW', tag:'3D', ar:'552/300', img:BA_WHEEL_THUMB, vid:'ba/gallery07'},   /* 260916 추가 — 휠 캐러셀 (editor_65 5 에서 이식) */
     {no:8, kind:'helixgal', label:'GALLERY08', badge:'NEW', tag:'3D', ar:'552/300', img:BA_HELIX_THUMB, vid:'ba/gallery08'}   /* 260916 추가 — 헬릭스 갤러리 */
