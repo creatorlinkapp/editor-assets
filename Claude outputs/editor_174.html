@@ -9376,16 +9376,16 @@
     {no:5, kind:'idxlist', label:'TEXT05', badge:'NEW', ar:'552/230', img:BA_IDX_THUMB, vid:'ba/text05'},
     {no:6, kind:'risetext', label:'TEXT06', badge:'NEW', ar:'552/212', img:BA_RISE_THUMB, vid:'ba/text06'}   /* 260916 추가 — 글자 올라오기 */
   ];
-  var BA_MOTO_THUMB=ED_IMG+'ba/image01-3.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_MOTO_THUMB=ED_IMG+'ba/image01-4.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_CARDS_IMAGE=[
-    {no:1, kind:'moto3d', label:'IMAGE01', badge:'NEW', tag:'3D', ar:'920/320', img:BA_MOTO_THUMB, vid:'ba/image01-3'}   /* 260918 재녹화 — 제목 글꼴 Arial Black (윈도우 크롬은 Arial 굵기 800 을 Arial Black 으로 그린다) */
+    {no:1, kind:'moto3d', label:'IMAGE01', badge:'NEW', tag:'3D', ar:'920/320', img:BA_MOTO_THUMB, vid:'ba/image01-4'}   /* 260918 재녹화 — 제목 글꼴 Arial Black (윈도우 크롬은 Arial 굵기 800 을 Arial Black 으로 그린다) */
   ];
   /* 슬라이드쇼 카테고리 카드 (3D 스트립 갤러리) — 썸네일은 인라인 SVG */
   var BA_STRIP_THUMB=ED_IMG+'ba/slide01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 갤러리 카테고리 카드 (플로팅 3D 갤러리) — 썸네일은 인라인 SVG */
-  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-2.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260826 추가 / 260827 교체 — 3D 카드 회전 썸네일 (실제 블럭 스크린샷) */
-  var BA_RING_THUMB=ED_IMG+'ba/slide02-2.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_RING_THUMB=ED_IMG+'ba/slide02-3.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260831 추가 / 260901 교체 — 나선형 3D 갤러리 카드 썸네일 (실제 블럭 스크린샷) */
   var BA_SPIRAL_THUMB=ED_IMG+'ba/gallery02.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260901 수정 — 3D 카드 회전은 컨텐츠 → 슬라이드쇼 카테고리로 이동 */
@@ -9397,7 +9397,7 @@
   var BA_SLIDER_THUMB=ED_IMG+'ba/gallery04.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_CARDS_SLIDE=[
     {no:1, kind:'stripgal', label:'SLIDE01', badge:'NEW', tag:'3D', ar:'552/274', img:BA_STRIP_THUMB, vid:'ba/slide01'},
-    {no:2, kind:'cardring', label:'SLIDE02', badge:'NEW', tag:'3D', ar:'552/274', img:BA_RING_THUMB, vid:'ba/slide02-2'}   /* 260918 재녹화 — 회전 속도를 블럭 기본값(16)으로, 카드 한 장 넘어가는 길이(5.36초)가 한 루프 */,
+    {no:2, kind:'cardring', label:'SLIDE02', badge:'NEW', tag:'3D', ar:'552/274', img:BA_RING_THUMB, vid:'ba/slide02-3'}   /* 260918 재녹화 — 드래그로 돌리고 관성으로 잦아드는 6초 */,
     {no:3, kind:'bookflip2', label:'SLIDE03', badge:'NEW', tag:'3D', ar:'552/304', img:BA_BOOK2_THUMB, vid:'ba/slide03'}
   ];
   /* 260916 교체 — 세로 스크롤 갤러리 카드 썸네일 (실제 블럭 스크린샷. 예전 SVG 그림은 없앴다) */
@@ -9411,7 +9411,7 @@
      @main 은 캐시(최대 12시간·7일)가 길어 갱신이 늦으므로, 파일을 바꾼 뒤에는 커밋 SHA 로 고정할 것 (fonts 와 같은 방식) */
   var BA_ASSET_BASE='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/';   /* 260918 수정 — 이미지(ED_IMG)와 같은 규칙으로 @main: 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다 */
   var BA_CARDS_GALLERY=[
-    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/322', img:BA_FLOAT_THUMB, vid:'ba/gallery01'},
+    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/322', img:BA_FLOAT_THUMB, vid:'ba/gallery01-2'}   /* 260918 재녹화 — 고정 샘플·한글 캡션, 대각선 드래그 */,
     {no:2, kind:'spiralgal', label:'GALLERY02', badge:'NEW', tag:'3D', ar:'552/248', img:BA_SPIRAL_THUMB, vid:'ba/gallery02'},
     {no:3, kind:'depthgal', label:'GALLERY03', badge:'NEW', tag:'3D', ar:'552/266', img:BA_DEPTH_THUMB, vid:'ba/gallery03'},   /* 260915 추가 — 깊이 갤러리 */
     {no:4, kind:'scrollslider', label:'GALLERY04', badge:'NEW', ar:'552/278', img:BA_SLIDER_THUMB, vid:'ba/gallery04'},   /* 260915 추가 — 스크롤 슬라이더 */
@@ -11158,33 +11158,36 @@
   }
   function flNum(v,d){ var n=parseFloat(v); return isFinite(n)?n:d; }
   /* ── 샘플 풀: 블럭을 추가할 때마다 이미지 시드·동영상 조합이 랜덤으로 구성됨 ── */
+  /* 260918 수정 — 샘플 캡션을 한글로, 샘플 구성을 고정으로.
+     예전엔 블럭을 추가할 때마다 사진·크기·순서가 랜덤이라 카드 미리보기 영상과 실제 블럭이 매번 달랐다.
+     이제 첫 구성은 항상 같고(미리보기 영상과 동일), 사용자는 항목 설정에서 자유롭게 바꾼다. */
   var FL_IMG_META=[
-    ['Blob','3D Exploration','A 3D design exploration focused on experimenting with form, lighting, materials, and composition. Created as a personal study to explore visual aesthetics and refine product visualization techniques.'],
-    ['Mono','Editorial Design','An editorial system built around a single typeface and a strict monochrome palette. The project examines how rhythm and negative space alone can carry a layout without color or ornament.'],
-    ['Fern','Photography','A quiet photographic series shot in early morning light. Each frame studies the relationship between organic texture and soft shadow, favoring stillness over spectacle.'],
-    ['Signal','Visual Identity','A visual identity for an independent audio label. The mark distills a waveform into its simplest geometric gesture, flexible enough to live across print, screen, and vinyl.'],
-    ['Fragment','Art Direction','An art direction study assembled from found imagery and broken grids. Fragment embraces incompleteness, letting torn edges and misalignments become the language of the piece.'],
-    ['Vessel','Product Design','A ceramic product concept exploring weight, balance, and the way a form invites the hand. Rendered studies were used to test proportion before any clay was thrown.'],
-    ['Field Notes','Print','A printed journal of observations collected over one summer. Set in a single column with generous margins, it treats the page as a place to slow down and look closer.'],
-    ['Relic','3D Exploration','A study of imagined artifacts — objects that feel excavated rather than designed. Materials, wear, and patina were layered digitally to give each relic a plausible past.'],
-    ['Trace','Website Design','A portfolio website concept where the cursor leaves a fading trace across the page. Navigation dissolves into gesture, and the interface rewards wandering over efficiency.'],
-    ['Grain','Photography','A film photography series embracing grain as subject rather than flaw. Shot on expired stock, the images sit somewhere between memory and document.'],
-    ['Halo','Visual Identity','An identity built around a ring of light — a halo that shifts hue with context. The system stays recognizable while never appearing in the same color twice.'],
-    ['Slate','Editorial Design','A long-form editorial template designed for slow reading. Slate pairs a quiet serif with wide leading, keeping the text unhurried from the first line to the last.']
+    ['블롭','3D 탐구','형태와 빛, 재질과 구도를 실험한 3D 습작입니다. 제품 시각화 감각을 다듬기 위해 개인 연구로 만들었습니다.'],
+    ['모노','편집 디자인','서체 하나와 흑백 팔레트만으로 짠 편집 시스템입니다. 색과 장식 없이 리듬과 여백만으로 지면이 서는지를 살폈습니다.'],
+    ['고사리','사진','이른 아침 빛 속에서 찍은 조용한 연작입니다. 유기적인 질감과 부드러운 그림자의 관계를 한 장씩 들여다봅니다.'],
+    ['시그널','비주얼 아이덴티티','독립 음반 레이블의 아이덴티티입니다. 파형을 가장 단순한 기하로 줄여, 인쇄와 화면과 바이닐 어디에나 놓이게 했습니다.'],
+    ['조각','아트 디렉션','주운 이미지와 깨진 그리드로 엮은 아트 디렉션 습작입니다. 찢긴 가장자리와 어긋남을 그대로 언어로 삼았습니다.'],
+    ['그릇','제품 디자인','무게와 균형, 손이 다가가는 방식을 살핀 도자 제품 콘셉트입니다. 흙을 만지기 전에 렌더링으로 비례를 먼저 시험했습니다.'],
+    ['현장 노트','인쇄물','한 여름 동안 모은 관찰을 엮은 인쇄 저널입니다. 넉넉한 여백의 한 단 조판으로, 천천히 보게 하는 지면을 만들었습니다.'],
+    ['유물','3D 탐구','디자인된 것이 아니라 발굴된 듯한 사물들을 상상한 연구입니다. 재질과 마모, 녹을 겹겹이 쌓아 그럴듯한 과거를 입혔습니다.'],
+    ['자취','웹사이트 디자인','커서가 지나간 자리에 흔적이 남았다 사라지는 포트폴리오 콘셉트입니다. 내비게이션은 몸짓으로 녹아들고, 헤매는 쪽이 보상받습니다.'],
+    ['입자','사진','거친 입자를 결점이 아닌 주제로 삼은 필름 연작입니다. 유효기간이 지난 필름으로 찍어, 기억과 기록 사이 어딘가에 놓입니다.'],
+    ['후광','비주얼 아이덴티티','맥락에 따라 색이 바뀌는 빛의 고리를 중심에 둔 아이덴티티입니다. 같은 색으로 두 번 나타나지 않으면서도 늘 알아볼 수 있습니다.'],
+    ['슬레이트','편집 디자인','느리게 읽기 위해 설계한 장문 편집 템플릿입니다. 조용한 세리프와 넓은 행간으로 첫 줄부터 끝 줄까지 서두르지 않게 했습니다.']
   ];
   var FL_VIDS=[
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', t:'Blaze', s:'Motion Loop',
-     d:'A short looping fragment of fire and motion. Cut to loop seamlessly, the piece studies how a few seconds of movement can hold attention indefinitely.'},
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', t:'Escape', s:'Motion Loop',
-     d:'A looping escape sequence reduced to its essential motion. The repetition turns narrative into rhythm, and rhythm into texture.'},
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', t:'Play', s:'Loop Study',
-     d:'A playful loop built from a single gesture repeated forever. What begins as an action slowly becomes a pattern the eye rests on.'},
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', t:'Joyride', s:'Motion Loop',
-     d:'A looping drive with no destination. The motion study strips the journey of its endpoints, leaving only the pleasure of passing through.'},
-    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', t:'Meltdown', s:'Loop Study',
-     d:'A slow-burn loop about the moment things come apart. Looped endlessly, collapse becomes choreography.'},
-    {src:'https://mdn.github.io/shared-assets/videos/flower.mp4', t:'Bloom', s:'Loop Study',
-     d:'A short looping study of a bloom opening in real time. Shot once and looped forever, the piece treats repetition itself as the subject.'}
+    {src:'https://mdn.github.io/shared-assets/videos/flower.mp4', t:'개화', s:'루프 스터디',
+     d:'꽃이 실시간으로 피어나는 짧은 루프입니다. 한 번 찍어 영원히 반복하며, 반복 자체를 주제로 삼았습니다.'},
+    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', t:'불꽃', s:'모션 루프',
+     d:'불과 움직임의 짧은 조각입니다. 이음새 없이 반복되도록 잘라, 몇 초의 움직임이 얼마나 오래 시선을 붙드는지 살폈습니다.'},
+    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', t:'탈출', s:'모션 루프',
+     d:'탈출 장면을 본질적인 움직임만 남기고 줄인 루프입니다. 반복은 서사를 리듬으로, 리듬을 질감으로 바꿉니다.'},
+    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', t:'놀이', s:'루프 스터디',
+     d:'하나의 몸짓을 끝없이 반복해 만든 장난스러운 루프입니다. 행동으로 시작한 것이 어느새 눈이 쉬는 무늬가 됩니다.'},
+    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', t:'드라이브', s:'모션 루프',
+     d:'목적지 없는 주행의 루프입니다. 출발과 도착을 걷어내고, 지나가는 즐거움만 남겼습니다.'},
+    {src:'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', t:'붕괴', s:'루프 스터디',
+     d:'무너지는 순간을 천천히 반복하는 루프입니다. 끝없이 되풀이되면 붕괴도 안무가 됩니다.'}
   ];
   /* 동영상 로드 실패 시 순서대로 시도하는 대체 소스 (호스트 분산) */
   var FL_VID_ALTS=[
@@ -11196,35 +11199,31 @@
     for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
     return a;
   }
-  /* 260831 수정 — 고유 사진 풀을 picsum ID → Unsplash 사진 ID 로 교체.
-     ID 가 다르면 항상 서로 다른 사진이고, 같은 ID 는 크기만 바꿔도 같은 사진이라
-     확대할 때 고해상도로 갈아끼우기도 안전하다. (자연·건축·인테리어·텍스처 혼합) */
   var FL_POOL=UNS_MIX;
-  /* 이미지+동영상 15개(FL_MAX)를 모두 서로 다른 소스로 구성 — 같은 사진/영상 중복 없음 */
+  /* 고정 샘플 — 사진 12장(id, w, h) + 동영상 3편. 위치는 FL_LAYOUT 순서를 따른다 */
+  var FL_SAMPLE=[
+    ['1611570884860-6f9d61c3a64d',440,440],['1515895309288-a3815ab7cf81',520,520],['1496493616164-31becad29fab',560,520],
+    'v0',
+    ['1561211974-8a2737b4dcac',560,640],['1610813835315-9a93c5035c81',620,640],['1506452305024-9d3f02d1c9b5',620,820],
+    ['1750056661722-8381f9012079',620,660],
+    'v1',
+    ['1591394197887-b27e1ba3b2f9',480,660],['1612733399020-e2194e3dbfda',620,660],['1602128110234-2d11c0aaadfe',420,640],
+    'v2',
+    ['1542273917363-3b1817f69a2d',420,440],['1673313649330-705bfae0a0ee',440,440]
+  ];
   function flSampleItems(){
-    var metas=flShuffle(FL_IMG_META.slice());
-    var vids=flShuffle(FL_VIDS.slice());
-    var ids=flShuffle(FL_POOL.slice());
-    var total=FL_MAX, nV=3+(Math.random()<0.5?1:0);
-    if(nV>vids.length) nV=vids.length;
-    var items=[], i;
-    for(i=0;i<total-nV;i++){
-      var m=metas[i%metas.length];
-      var w=[420,440,480,520,560,620][Math.floor(Math.random()*6)];
-      var h=[440,520,600,640,660,820][Math.floor(Math.random()*6)];
-      items.push({src:unsById(ids[i],w,h), t:m[0], s:m[1], d:m[2]});
-    }
-    /* 대체 소스는 동영상마다 서로 다른 것을 하나씩만 배정 — 로드 실패 시 같은 영상으로 몰리지 않음 */
-    var altPool=FL_VID_ALTS.slice();
-    for(i=0;i<nV;i++){
-      var v=JSON.parse(JSON.stringify(vids[i]));
-      v.alt=[];
-      for(var k=0;k<altPool.length;k++){
-        if(altPool[k]!==v.src){ v.alt=[altPool[k]]; altPool.splice(k,1); break; }
+    var items=[], mi=0, altPool=FL_VID_ALTS.slice();
+    FL_SAMPLE.forEach(function(e){
+      if(typeof e==='string'){
+        var v=JSON.parse(JSON.stringify(FL_VIDS[+e.slice(1)])); v.alt=[];
+        for(var k=0;k<altPool.length;k++){ if(altPool[k]!==v.src){ v.alt=[altPool[k]]; altPool.splice(k,1); break; } }
+        items.push(v);
+      } else {
+        var m=FL_IMG_META[mi++ % FL_IMG_META.length];
+        items.push({src:unsById(e[0],e[1],e[2]), t:m[0], s:m[1], d:m[2]});
       }
-      items.push(v);
-    }
-    return flShuffle(items);
+    });
+    return items;
   }
   function flCfg(blk){
     if(!blk._flCfg){
