@@ -12932,27 +12932,30 @@
   function hgClamp(v,a,b){ return Math.min(b,Math.max(a,v)); }
   function hgIsVid(u){ return typeof vcIsVid==='function'?vcIsVid(u):/\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(String(u||'')); }
   function hgLocal(c){ return !!(c && c.smode==='local'); }
+  /* 260918 추가 — 확대보기는 고화질 벌로. 자체 호스팅 견본(hg/…-sd.mp4)만 -hd 로 바꾸고 사용자가 넣은 주소는 그대로 */
+  function hgLbSrc(u){ u=String(u||''); return (u.indexOf(BA_ASSET_BASE+'hg/')===0)?u.replace(/-sd\.mp4$/,'-hd.mp4'):u; }
   function hgItemNew(i){ var n=HG_NAMES[i%HG_NAMES.length]; return {src:'', t1:n[0], t2:n[1]}; }   /* 260916 수정 — 라벨은 이름 + 서브텍스트 한 줄 */
   function hgCfg(blk){
     if(!blk._hgCfg){
       blk._hgCfg=JSON.parse(JSON.stringify(HG_DEF));
       var c0=blk._hgCfg;
       /* 260917 수정 — 기본 12장 전부 Pexels 무료 공연 영상 1080p (Pexels 라이선스 · 출처 표기 불필요) */
-      /* 260918 수정 — 견본 영상을 Pexels 1080p 핫링크에서 자체 호스팅 540p H.264(8초 · 무음)로 교체.
+      /* 260918 수정 — 견본 영상을 Pexels 1080p 핫링크에서 자체 호스팅 H.264(8초 · 무음) 두 벌로 교체.
+         카드는 -sd(960×540), 확대보기는 hgLbSrc() 가 -hd(1920×1080)로 바꿔 연다.
          editor-assets 저장소 hg/ 폴더, _make_hg.ps1 로 생성. 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다(@main 캐시) */
       var HG_VIDS=[
-        BA_ASSET_BASE+'hg/hg-01.mp4',   /* Milan Kiro · pexels 31540264 */
-        BA_ASSET_BASE+'hg/hg-02.mp4',   /* Sai Sankar Shanmugavelu · 클럽 · pexels 28551470 */
-        BA_ASSET_BASE+'hg/hg-03.mp4',   /* Milan Kiro · pexels 31540263 */
-        BA_ASSET_BASE+'hg/hg-04.mp4',   /* Gilmer Diaz Estela · 스마트폰 든 관객 · pexels 12719510 */
-        BA_ASSET_BASE+'hg/hg-05.mp4',   /* Gilmer Diaz Estela · 환호하는 관객 · pexels 13082773 */
-        BA_ASSET_BASE+'hg/hg-06.mp4',   /* Milan Kiro · pexels 31540267 */
-        BA_ASSET_BASE+'hg/hg-07.mp4',   /* Pietro Henricky · 붉은 조명 · pexels 30805503 */
-        BA_ASSET_BASE+'hg/hg-08.mp4',   /* RDNE Stock project · 관객 · pexels 6174198 */
-        BA_ASSET_BASE+'hg/hg-09.mp4',   /* Gabrielli Pereira · 록 밴드 · pexels 26620363 */
-        BA_ASSET_BASE+'hg/hg-10.mp4',   /* Pietro Henricky · 보컬+기타 · pexels 30815459 */
-        BA_ASSET_BASE+'hg/hg-11.mp4',   /* WeStarMoney Rec · 나이트클럽 · pexels 31342504 */
-        BA_ASSET_BASE+'hg/hg-12.mp4'    /* RDNE Stock project · 록 밴드 · pexels 6174235 */
+        BA_ASSET_BASE+'hg/hg-01-sd.mp4',   /* Milan Kiro · pexels 31540264 */
+        BA_ASSET_BASE+'hg/hg-02-sd.mp4',   /* Sai Sankar Shanmugavelu · 클럽 · pexels 28551470 */
+        BA_ASSET_BASE+'hg/hg-03-sd.mp4',   /* Milan Kiro · pexels 31540263 */
+        BA_ASSET_BASE+'hg/hg-04-sd.mp4',   /* Gilmer Diaz Estela · 스마트폰 든 관객 · pexels 12719510 */
+        BA_ASSET_BASE+'hg/hg-05-sd.mp4',   /* Gilmer Diaz Estela · 환호하는 관객 · pexels 13082773 */
+        BA_ASSET_BASE+'hg/hg-06-sd.mp4',   /* Milan Kiro · pexels 31540267 */
+        BA_ASSET_BASE+'hg/hg-07-sd.mp4',   /* Pietro Henricky · 붉은 조명 · pexels 30805503 */
+        BA_ASSET_BASE+'hg/hg-08-sd.mp4',   /* RDNE Stock project · 관객 · pexels 6174198 */
+        BA_ASSET_BASE+'hg/hg-09-sd.mp4',   /* Gabrielli Pereira · 록 밴드 · pexels 26620363 */
+        BA_ASSET_BASE+'hg/hg-10-sd.mp4',   /* Pietro Henricky · 보컬+기타 · pexels 30815459 */
+        BA_ASSET_BASE+'hg/hg-11-sd.mp4',   /* WeStarMoney Rec · 나이트클럽 · pexels 31342504 */
+        BA_ASSET_BASE+'hg/hg-12-sd.mp4'    /* RDNE Stock project · 록 밴드 · pexels 6174235 */
       ];
       for(var i=0;i<12;i++){ var it=hgItemNew(i); it.src=HG_VIDS[i%HG_VIDS.length]; c0.items.push(it); }
     }
@@ -13073,7 +13076,7 @@
       var idx=-1; S.cards.forEach(function(cd,j){ if(cd.el===card) idx=j; }); if(idx<0) return;
       if(hgCfg(blk).zoom===false) return;
       var r=card.getBoundingClientRect();
-      igLbOpen({ srcs:hgCfg(blk).items.map(function(x){ return String((x&&x.src)||'').trim(); }), caps:(hgCfg(blk).capLb!==false)?hgCfg(blk).items.map(function(x){ return {t1:(x&&x.t1)||'', t2:(x&&x.t2)||''}; }):null, idx:idx, from:{x:r.left+r.width/2,y:r.top+r.height/2,w:r.width}, radius:0, wide:true });
+      igLbOpen({ srcs:hgCfg(blk).items.map(function(x){ return hgLbSrc(String((x&&x.src)||'').trim()); }), caps:(hgCfg(blk).capLb!==false)?hgCfg(blk).items.map(function(x){ return {t1:(x&&x.t1)||'', t2:(x&&x.t2)||''}; }):null, idx:idx, from:{x:r.left+r.width/2,y:r.top+r.height/2,w:r.width}, radius:0, wide:true });
     });
     if(window.IntersectionObserver){ try{ S.io=new IntersectionObserver(function(es){ es.forEach(function(en){ S.vis=en.isIntersecting; }); },{root:document.getElementById('stage'),rootMargin:'200px'}); S.io.observe(wrap); }catch(e){} }
     if(window.ResizeObserver){ try{ S.ro=new ResizeObserver(function(){ if(S.alive) hgApply(blk); }); S.ro.observe(wrap); }catch(e){} }

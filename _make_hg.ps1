@@ -1,5 +1,9 @@
 # 260918 — 나선형 갤러리 2(helixgal) 견본 영상 12편
-# 원본을 _src\hg\ 에 받고(.gitignore 처리됨) hg\ 에 540p H.264 mp4 로 인코딩한다.
+# 원본을 _src\hg\ 에 받고(.gitignore 처리됨) hg\ 에 H.264 mp4 두 벌로 인코딩한다.
+#   hg-NN-sd.mp4  960×540   나선 카드용
+#   hg-NN-hd.mp4  1920×1080 확대보기용(클릭할 때만 받는다)
+# 세 번째 시도. 첫 벌(hg-NN.mp4 · crf 30 · 900k 상한)은 화질이 부족해 버림 —
+# jsDelivr @main 캐시 때문에 같은 이름으로 덮지 않고 새 이름으로 간다. 옛 hg-NN.mp4 12편은 저장소에서 지운다.
 # 저장소 루트(editor-assets\)에서 실행:  .\_make_hg.ps1
 # 필요: ffmpeg  (없으면  winget install Gyan.FFmpeg  후 터미널 재시작)
 
@@ -30,29 +34,35 @@ $vids = @(
 )
 
 # 인코딩 결정
-#   -t 8            루프 배경이라 8초면 충분. 용량을 가장 크게 좌우한다(7초짜리 11번은 그대로)
+#   -t 8            루프 배경이라 8초면 충분. 두 벌 모두 같은 구간이라 확대해도 같은 장면이 이어진다
 #   -an             muted 재생이므로 오디오 제거
-#   scale=-2:540    960×540. 카드가 블럭 폭의 35% 로 보여 이 이상은 낭비
-#   crf 30 + 900k   첫 시도 crf 27 은 콘서트 영상(조명·군중)이라 편당 2MB 까지 나왔다(합계 14MB).
-#                   상한 900k 를 걸어 편당 1MB 아래로. 카드 크기(블럭 폭 35%)에서는 차이가 안 보인다
+#   sd  540p crf 23 콘서트 영상(조명·군중)은 비트가 많이 든다. 상한을 걸면 뭉개져서 crf 만으로 간다 → 편당 1.5~2.5MB
+#   hd 1080p crf 22 확대 칸이 최대 1400px(레티나 2800px)라 1080p 가 필요. jsDelivr 파일당 20MB 제한 안에 두려고 상한 14M
 #   +faststart      moov 를 앞으로 — 첫 프레임이 빨리 뜬다 (예열의 전제)
-#   profile main    구형 기기까지 재생
+#   profile main/high  sd 는 구형 기기까지, hd 는 high 로 효율 우선
 foreach ($v in $vids) {
   $raw = Join-Path $src "hg-$($v.n).mp4"
-  $dst = Join-Path $out "hg-$($v.n).mp4"
+  $sd  = Join-Path $out "hg-$($v.n)-sd.mp4"
+  $hd  = Join-Path $out "hg-$($v.n)-hd.mp4"
   if (-not (Test-Path $raw)) {
     Write-Host "받는 중  hg-$($v.n)"
     Invoke-WebRequest -Uri $v.u -OutFile $raw
   }
-  $vf = 'scale=-2:540'
-  if ($v.fps) { $vf += ",fps=$($v.fps)" }
-  Write-Host "인코딩   hg-$($v.n)"
+  $fps = if ($v.fps) { ",fps=$($v.fps)" } else { '' }
+  Write-Host "인코딩   hg-$($v.n)-sd"
   & ffmpeg -y -hide_banner -loglevel error -i $raw -t 8 -an `
-    -vf $vf -c:v libx264 -profile:v main -preset slow -crf 30 -maxrate 900k -bufsize 1800k -pix_fmt yuv420p `
-    -movflags +faststart $dst
+    -vf "scale=-2:540$fps" -c:v libx264 -profile:v main -preset slow -crf 23 -pix_fmt yuv420p `
+    -movflags +faststart $sd
+  Write-Host "인코딩   hg-$($v.n)-hd"
+  & ffmpeg -y -hide_banner -loglevel error -i $raw -t 8 -an `
+    -vf "scale=-2:1080$fps" -c:v libx264 -profile:v high -preset slow -crf 22 -maxrate 14M -bufsize 28M -pix_fmt yuv420p `
+    -movflags +faststart $hd
 }
 
 Write-Host ''
-Get-ChildItem $out -Filter 'hg-*.mp4' | Sort-Object Name |
-  Select-Object Name, @{ n='KB'; e={ [math]::Round($_.Length / 1KB) } } | Format-Table -AutoSize
-Write-Host ("합계 {0} KB" -f [math]::Round(((Get-ChildItem $out -Filter 'hg-*.mp4' | Measure-Object Length -Sum).Sum) / 1KB))
+$made = Get-ChildItem $out -Filter 'hg-*-?d.mp4' | Sort-Object Name
+$made | Select-Object Name, @{ n='KB'; e={ [math]::Round($_.Length / 1KB) } } | Format-Table -AutoSize
+Write-Host ("sd 합계 {0} KB" -f [math]::Round((($made | Where-Object Name -like '*-sd.mp4' | Measure-Object Length -Sum).Sum) / 1KB))
+Write-Host ("hd 합계 {0} KB" -f [math]::Round((($made | Where-Object Name -like '*-hd.mp4' | Measure-Object Length -Sum).Sum) / 1KB))
+$big = $made | Where-Object Length -gt 20MB
+if ($big) { Write-Warning ("20MB 초과(jsDelivr 가 안 내보냄): " + ($big.Name -join ', ')) }
