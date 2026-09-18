@@ -9397,7 +9397,7 @@
   /* 슬라이드쇼 카테고리 카드 (3D 스트립 갤러리) — 썸네일은 인라인 SVG */
   var BA_STRIP_THUMB=ED_IMG+'ba/slide01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 갤러리 카테고리 카드 (플로팅 3D 갤러리) — 썸네일은 인라인 SVG */
-  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-7.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-8.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260826 추가 / 260827 교체 — 3D 카드 회전 썸네일 (실제 블럭 스크린샷) */
   var BA_RING_THUMB=ED_IMG+'ba/slide02-4.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260831 추가 / 260901 교체 — 나선형 3D 갤러리 카드 썸네일 (실제 블럭 스크린샷) */
@@ -9425,7 +9425,7 @@
      @main 은 캐시(최대 12시간·7일)가 길어 갱신이 늦으므로, 파일을 바꾼 뒤에는 커밋 SHA 로 고정할 것 (fonts 와 같은 방식) */
   var BA_ASSET_BASE='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/';   /* 260918 수정 — 이미지(ED_IMG)와 같은 규칙으로 @main: 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다 */
   var BA_CARDS_GALLERY=[
-    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/284', img:BA_FLOAT_THUMB, vid:'ba/gallery01-7'}   /* 260918 재녹화 — 새 견본(사진 9·영상 3, 영상은 큰 칸)·크기 215%·높이 740·드래그 우상→좌하→우상→우측끝하단 */   /* 260918 재녹화 — 고정 샘플·한글 캡션, 대각선 드래그 */,
+    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/284', img:BA_FLOAT_THUMB, vid:'ba/gallery01-8'}   /* 260918 재녹화 — 새 견본(사진 9·영상 3, 영상은 큰 칸)·크기 215%·높이 740·드래그 우상→좌하→우상→우측끝하단 */   /* 260918 재녹화 — 고정 샘플·한글 캡션, 대각선 드래그 */,
     {no:2, kind:'spiralgal', label:'GALLERY02', badge:'NEW', tag:'3D', ar:'552/248', img:BA_SPIRAL_THUMB, vid:'ba/gallery02'},
     {no:3, kind:'depthgal', label:'GALLERY03', badge:'NEW', tag:'3D', ar:'552/266', img:BA_DEPTH_THUMB, vid:'ba/gallery03'},   /* 260915 추가 — 깊이 갤러리 */
     {no:4, kind:'scrollslider', label:'GALLERY04', badge:'NEW', ar:'552/278', img:BA_SLIDER_THUMB, vid:'ba/gallery04'},   /* 260915 추가 — 스크롤 슬라이더 */
@@ -11230,11 +11230,12 @@
   }
   var flCurBlk=null, flBound=false;
 
-  /* 기본 흩뿌림 레이아웃 [x,y,z,w,h] — 초과분은 시드 난수로 생성 */
+  /* 기본 흩뿌림 레이아웃 [x,y,z,w,h] — 초과분은 시드 난수로 생성
+     260918 수정 — 겹치는 칸끼리 z 가 10~20 밖에 안 차이 나면(4·11, 9·11, 11·13) 살짝 기울 때 앞뒤가 뒤집혀 경계가 떨린다. 겹치는 칸은 z 를 50 이상 벌린다 */
   var FL_LAYOUT=[[0,-230,-60,56,110],[0,-160,60,64,64],[145,-125,-40,58,76],[-185,-30,40,92,70],
     [-45,-25,120,70,100],[75,-5,-20,42,62],[190,25,90,104,138],[165,65,-80,80,74],
-    [-170,110,-30,52,74],[-90,120,70,36,60],[50,110,-60,38,56],[-35,155,110,58,66],
-    [145,145,20,46,74],[0,200,30,50,62]];
+    [-170,110,-30,52,74],[-90,120,0,36,60],[50,110,-60,38,56],[-35,155,60,58,66],
+    [145,145,20,46,74],[0,200,-20,50,62]];
   function flRand(seed){ var x=Math.sin(seed*127.1+311.7)*43758.5453; return x-Math.floor(x); }
   function flLayout(n){
     var out=[], i;
