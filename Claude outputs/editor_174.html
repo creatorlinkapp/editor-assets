@@ -8950,7 +8950,7 @@
   })();
 
 
-  var BA_SMEAR_THUMB=ED_IMG+'ba/thumb-smear.jpg';
+  var BA_SMEAR_THUMB=ED_IMG+'ba/text01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
 
   /* ══════════════════════════════════════════════════════════════════
      260824 추가 — 커서 스미어 텍스트 블럭
@@ -9331,10 +9331,10 @@
   }
 
   /* 260825 수정 — 3D 텍스트 썸네일(舊 컨텐츠 카테고리) → 텍스트 카테고리로 이동 */
-  var BA_POLY_THUMB=ED_IMG+'ba/thumb-poly.jpg';
+  var BA_POLY_THUMB=ED_IMG+'ba/text02.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* ── 블럭추가: 텍스트 카테고리 카드 ── */
   /* 260826 추가 / 260827 교체 — 타이핑 텍스트 썸네일 (실제 블럭 스크린샷) */
-  var BA_TYPE_THUMB=ED_IMG+'ba/thumb-type.jpg';
+  var BA_TYPE_THUMB=ED_IMG+'ba/text03.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260831 추가 — 곡선 흐르는 텍스트 썸네일.
      기본값(대문자 · 굵기 800 · 테두리만 #FF780A · 위로 볼록)을 그대로 축소해,
      문장이 화면 한가운데를 지나는 순간으로 그려 둔다. */
@@ -9349,7 +9349,7 @@
   /* 260831 추가 / 260901 교체 — 인덱스 리스트 썸네일 (실제 블럭 스크린샷).
      기본값을 바꾼 뒤의 모습이다 — 번호 붙이기 켬 · 롤오버 배경+막대 · 항목 5개 ·
      우측 아이콘 대각선 화살표. */
-  var BA_IDX_THUMB=ED_IMG+'ba/thumb-idx.jpg';
+  var BA_IDX_THUMB=ED_IMG+'ba/text05.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260916 추가 — 글자 올라오기 썸네일 (기본값 축소 · 마지막 줄 글자가 올라오는 중) */
   var BA_RISE_THUMB=(function(){
     var L1='WE DESIGN DIGITAL EXPERIENCES', L2='THAT MOVE WITH YOUR STORY,', L3='ONE LETTER AT A TIME.';
@@ -9366,57 +9366,59 @@
       +'<text x="275.5" y="157" dy="'+dys.join(' ')+'">'+L3+'</text></g>'
       +'</svg>');
   })();
+  BA_ARC_THUMB=ED_IMG+'ba/text04.jpg';   /* 260918 교체 — 미리보기 영상 마지막 프레임 (첫 컷은 글자가 아직 없어 빈 화면. 위의 SVG 그림은 더 쓰지 않는다) */
+  BA_RISE_THUMB=ED_IMG+'ba/text06.jpg';   /* 260918 교체 — 미리보기 영상 마지막 프레임 (첫 컷은 글자가 아직 없어 빈 화면. 위의 SVG 그림은 더 쓰지 않는다) */
   var BA_CARDS_TEXT=[
-    {no:1, kind:'smeartext', label:'TEXT01', badge:'NEW', ar:'920/305', img:BA_SMEAR_THUMB, vid:'ba/text01'},
-    {no:2, kind:'polytext', label:'TEXT02', badge:'NEW', tag:'3D', ar:'551/194', img:BA_POLY_THUMB, vid:'ba/text02'},
-    {no:3, kind:'typetext', label:'TEXT03', badge:'NEW', ar:'551/211', img:BA_TYPE_THUMB, vid:'ba/text03'},
-    {no:4, kind:'arctext', label:'TEXT04', badge:'NEW', ar:'551/230', img:BA_ARC_THUMB, vid:'ba/text04'},
-    {no:5, kind:'idxlist', label:'TEXT05', badge:'NEW', ar:'551/230', img:BA_IDX_THUMB, vid:'ba/text05'},
-    {no:6, kind:'risetext', label:'TEXT06', badge:'NEW', ar:'551/211', img:BA_RISE_THUMB, vid:'ba/text06'}   /* 260916 추가 — 글자 올라오기 */
+    {no:1, kind:'smeartext', label:'TEXT01', badge:'NEW', ar:'920/306', img:BA_SMEAR_THUMB, vid:'ba/text01'},
+    {no:2, kind:'polytext', label:'TEXT02', badge:'NEW', tag:'3D', ar:'552/194', img:BA_POLY_THUMB, vid:'ba/text02'},
+    {no:3, kind:'typetext', label:'TEXT03', badge:'NEW', ar:'552/212', img:BA_TYPE_THUMB, vid:'ba/text03'},
+    {no:4, kind:'arctext', label:'TEXT04', badge:'NEW', ar:'552/230', img:BA_ARC_THUMB, vid:'ba/text04'},
+    {no:5, kind:'idxlist', label:'TEXT05', badge:'NEW', ar:'552/230', img:BA_IDX_THUMB, vid:'ba/text05'},
+    {no:6, kind:'risetext', label:'TEXT06', badge:'NEW', ar:'552/212', img:BA_RISE_THUMB, vid:'ba/text06'}   /* 260916 추가 — 글자 올라오기 */
   ];
-  var BA_MOTO_THUMB=ED_IMG+'ba/thumb-moto.jpg';
+  var BA_MOTO_THUMB=ED_IMG+'ba/image01-2.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_CARDS_IMAGE=[
     {no:1, kind:'moto3d', label:'IMAGE01', badge:'NEW', tag:'3D', ar:'920/320', img:BA_MOTO_THUMB, vid:'ba/image01-2'}   /* 260918 재녹화 — 제목 글꼴을 실제 블럭(Arial 계열)과 맞춤 */
   ];
   /* 슬라이드쇼 카테고리 카드 (3D 스트립 갤러리) — 썸네일은 인라인 SVG */
-  var BA_STRIP_THUMB=ED_IMG+'ba/thumb-strip-3.jpg';   /* 260918 교체 — 영상(slide01.webm) 첫 프레임 그대로. 썸네일과 영상의 비율·구도가 다르면 롤오버 때 튄다 */
+  var BA_STRIP_THUMB=ED_IMG+'ba/slide01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 갤러리 카테고리 카드 (플로팅 3D 갤러리) — 썸네일은 인라인 SVG */
-  var BA_FLOAT_THUMB=ED_IMG+'ba/thumb-float.jpg';
+  var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260826 추가 / 260827 교체 — 3D 카드 회전 썸네일 (실제 블럭 스크린샷) */
-  var BA_RING_THUMB=ED_IMG+'ba/thumb-ring.jpg';
+  var BA_RING_THUMB=ED_IMG+'ba/slide02.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260831 추가 / 260901 교체 — 나선형 3D 갤러리 카드 썸네일 (실제 블럭 스크린샷) */
-  var BA_SPIRAL_THUMB=ED_IMG+'ba/thumb-spiral.jpg';
+  var BA_SPIRAL_THUMB=ED_IMG+'ba/gallery02.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260901 수정 — 3D 카드 회전은 컨텐츠 → 슬라이드쇼 카테고리로 이동 */
   /* 260907 추가 — 책자 넘김 카드 썸네일 (실제 블럭 스크린샷) */
-  var BA_BOOK2_THUMB=ED_IMG+'ba/thumb-book2.jpg';
+  var BA_BOOK2_THUMB=ED_IMG+'ba/slide03.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260915 추가 — 깊이 갤러리 카드 썸네일 (실제 블럭 스크린샷) */
-  var BA_DEPTH_THUMB=ED_IMG+'ba/thumb-depth.jpg';   /* 260916 교체 — 깊이 갤러리 카드 썸네일 */
+  var BA_DEPTH_THUMB=ED_IMG+'ba/gallery03.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260915 추가 — 스크롤 슬라이더 카드 썸네일 (실제 블럭 스크린샷) */
-  var BA_SLIDER_THUMB=ED_IMG+'ba/thumb-slider.jpg';   /* 260916 교체 — 스크롤 슬라이더 카드 썸네일 */
+  var BA_SLIDER_THUMB=ED_IMG+'ba/gallery04.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_CARDS_SLIDE=[
     {no:1, kind:'stripgal', label:'SLIDE01', badge:'NEW', tag:'3D', ar:'552/274', img:BA_STRIP_THUMB, vid:'ba/slide01'},
-    {no:2, kind:'cardring', label:'SLIDE02', badge:'NEW', tag:'3D', ar:'551/255', img:BA_RING_THUMB, vid:'ba/slide02'},
-    {no:3, kind:'bookflip2', label:'SLIDE03', badge:'NEW', tag:'3D', ar:'551/303', img:BA_BOOK2_THUMB, vid:'ba/slide03'}
+    {no:2, kind:'cardring', label:'SLIDE02', badge:'NEW', tag:'3D', ar:'552/256', img:BA_RING_THUMB, vid:'ba/slide02'},
+    {no:3, kind:'bookflip2', label:'SLIDE03', badge:'NEW', tag:'3D', ar:'552/304', img:BA_BOOK2_THUMB, vid:'ba/slide03'}
   ];
   /* 260916 교체 — 세로 스크롤 갤러리 카드 썸네일 (실제 블럭 스크린샷. 예전 SVG 그림은 없앴다) */
-  var BA_VCAR_THUMB=ED_IMG+'ba/thumb-vcar.jpg';
+  var BA_VCAR_THUMB=ED_IMG+'ba/gallery05.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260916 추가 — 휠 캐러셀 카드 썸네일 (실제 블럭 스크린샷) */
-  var BA_WHEEL_THUMB=ED_IMG+'ba/thumb-wheel.jpg';   /* 260917 수정 — 썸네일 교체 (551×300, 가운데 자름) */
+  var BA_WHEEL_THUMB=ED_IMG+'ba/gallery07.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260918 교체 — 나선형 갤러리 2 카드 썸네일 (실제 블럭 스크린샷) */
-  var BA_HELIX_THUMB=ED_IMG+'ba/thumb-helix.jpg';   /* 260916 추가 — 헬릭스 갤러리 카드 썸네일 (실제 블럭 스크린샷) */
-  var BA_INF_THUMB=ED_IMG+'ba/thumb-inf.jpg';   /* 260917 수정 — 썸네일 교체 (551×300) */   /* 260916 추가 — 곡면 갤러리 카드 썸네일 (실제 블럭 스크린샷) */
+  var BA_HELIX_THUMB=ED_IMG+'ba/gallery08.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
+  var BA_INF_THUMB=ED_IMG+'ba/gallery06.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260917 추가 — 편집기 정적 자산(블럭 미리보기 영상 등). 공개 저장소 creatorlinkapp/editor-assets 를 jsDelivr 로 받는다.
      @main 은 캐시(최대 12시간·7일)가 길어 갱신이 늦으므로, 파일을 바꾼 뒤에는 커밋 SHA 로 고정할 것 (fonts 와 같은 방식) */
   var BA_ASSET_BASE='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/';   /* 260918 수정 — 이미지(ED_IMG)와 같은 규칙으로 @main: 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다 */
   var BA_CARDS_GALLERY=[
-    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'551/321', img:BA_FLOAT_THUMB, vid:'ba/gallery01'},
-    {no:2, kind:'spiralgal', label:'GALLERY02', badge:'NEW', tag:'3D', ar:'551/248', img:BA_SPIRAL_THUMB, vid:'ba/gallery02'},
-    {no:3, kind:'depthgal', label:'GALLERY03', badge:'NEW', tag:'3D', ar:'551/267', img:BA_DEPTH_THUMB, vid:'ba/gallery03'},   /* 260915 추가 — 깊이 갤러리 */
-    {no:4, kind:'scrollslider', label:'GALLERY04', badge:'NEW', ar:'551/278', img:BA_SLIDER_THUMB, vid:'ba/gallery04'},   /* 260915 추가 — 스크롤 슬라이더 */
-    {no:5, kind:'vcgal', label:'GALLERY05', badge:'NEW', ar:'551/286', img:BA_VCAR_THUMB, vid:'ba/gallery05'},   /* 260915 추가 — 세로 스크롤 갤러리 (editor_36 에서 이식) */
-    {no:6, kind:'infgal', label:'GALLERY06', badge:'NEW', tag:'3D', ar:'551/300', img:BA_INF_THUMB, vid:'ba/gallery06'},   /* 260916 추가 — 곡면 갤러리 */
-    {no:7, kind:'wheelcar', label:'GALLERY07', badge:'NEW', tag:'3D', ar:'551/300', img:BA_WHEEL_THUMB, vid:'ba/gallery07'},   /* 260916 추가 — 휠 캐러셀 (editor_65 5 에서 이식) */
-    {no:8, kind:'helixgal', label:'GALLERY08', badge:'NEW', tag:'3D', ar:'551/300', img:BA_HELIX_THUMB, vid:'ba/gallery08'}   /* 260916 추가 — 헬릭스 갤러리 */
+    {no:1, kind:'floatgal', label:'GALLERY01', badge:'NEW', tag:'3D', ar:'552/322', img:BA_FLOAT_THUMB, vid:'ba/gallery01'},
+    {no:2, kind:'spiralgal', label:'GALLERY02', badge:'NEW', tag:'3D', ar:'552/248', img:BA_SPIRAL_THUMB, vid:'ba/gallery02'},
+    {no:3, kind:'depthgal', label:'GALLERY03', badge:'NEW', tag:'3D', ar:'552/266', img:BA_DEPTH_THUMB, vid:'ba/gallery03'},   /* 260915 추가 — 깊이 갤러리 */
+    {no:4, kind:'scrollslider', label:'GALLERY04', badge:'NEW', ar:'552/278', img:BA_SLIDER_THUMB, vid:'ba/gallery04'},   /* 260915 추가 — 스크롤 슬라이더 */
+    {no:5, kind:'vcgal', label:'GALLERY05', badge:'NEW', ar:'552/286', img:BA_VCAR_THUMB, vid:'ba/gallery05'},   /* 260915 추가 — 세로 스크롤 갤러리 (editor_36 에서 이식) */
+    {no:6, kind:'infgal', label:'GALLERY06', badge:'NEW', tag:'3D', ar:'552/300', img:BA_INF_THUMB, vid:'ba/gallery06'},   /* 260916 추가 — 곡면 갤러리 */
+    {no:7, kind:'wheelcar', label:'GALLERY07', badge:'NEW', tag:'3D', ar:'552/300', img:BA_WHEEL_THUMB, vid:'ba/gallery07'},   /* 260916 추가 — 휠 캐러셀 (editor_65 5 에서 이식) */
+    {no:8, kind:'helixgal', label:'GALLERY08', badge:'NEW', tag:'3D', ar:'552/300', img:BA_HELIX_THUMB, vid:'ba/gallery08'}   /* 260916 추가 — 헬릭스 갤러리 */
   ];
   /* 260825 수정 — 3D 텍스트 카드는 텍스트 카테고리로 이동
      260827 수정 — 3D 카드 회전은 갤러리 → 컨텐츠 카테고리로 이동
