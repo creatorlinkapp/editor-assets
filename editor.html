@@ -1102,8 +1102,9 @@
     align-items:baseline;white-space:nowrap;opacity:0;transition:opacity .45s ease;pointer-events:none;z-index:60;}
   .fl-capline.show{opacity:1;}
   /* 확대 시 캡션 위에 표시되는 내용 텍스트 */
-  .fl-desc{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);width:min(560px,84%);
-    text-align:center;font-family:Georgia,'Times New Roman',serif;font-size:14.5px;line-height:1.65;
+  /* 260918 수정 — 가급적 한 줄: 폭을 글 길이만큼(max-content) 쓰고 블럭 폭 92%·960px 에서만 줄바꿈. 넘치면 줄 길이를 고르게(balance) */
+  .fl-desc{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);width:max-content;max-width:min(1040px,94%);
+    text-wrap:balance;word-break:keep-all;text-align:center;font-family:Georgia,'Times New Roman',serif;font-size:14.5px;line-height:1.65;
     color:var(--flink,#1c1c1c);opacity:0;transition:opacity .5s ease .12s,color .3s ease;
     pointer-events:none;z-index:60;}
   .fl-desc.show{opacity:1;}
@@ -1215,6 +1216,18 @@
   .ig-lb-nav:hover{color:#fff;border-color:rgba(255,255,255,.4);}
   .ig-lb.one .ig-lb-nav{display:none;}   /* 사진이 한 장이면 감춘다 */
   .ig-lb-x{position:absolute;top:clamp(12px,2.4vh,28px);right:clamp(12px,2.4vw,28px);z-index:2;width:44px;height:44px;display:grid;place-items:center;padding:0;border:1px solid rgba(255,255,255,.16);border-radius:50%;background:rgba(20,20,20,.66);backdrop-filter:blur(14px);color:rgba(255,255,255,.75);font-size:22px;line-height:1;cursor:pointer;opacity:0;}  /* 다섯 칸짜리(차례) 세그먼트가 줄바꿈되지 않게 */
+  /* 260918 추가 — 확대보기 영상 컨트롤: 정지/재생 · 진행바(스크럽) · 소리. 확대보기에서만, 영상일 때만 보인다. 나선 카드에는 없다 */
+  .ig-lb-vc{position:absolute;left:0;right:0;bottom:0;z-index:2;display:none;align-items:center;gap:10px;padding:10px 14px 12px;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0));}
+  .ig-lb.vid .ig-lb-vc{display:flex;}
+  .ig-lb.vid .ig-lb-cap{bottom:46px;padding-bottom:6px;background:none;}   /* 캡션은 컨트롤 위로 */
+  .ig-lb.vid .ig-lb-fig video{cursor:pointer;}   /* 영상 위 탭 = 정지/재생. 닫기는 X · 배경 · Esc */
+  .ig-lb-vc button{flex:none;width:36px;height:36px;display:grid;place-items:center;padding:0;border:1px solid rgba(255,255,255,.16);border-radius:50%;background:rgba(20,20,20,.66);backdrop-filter:blur(14px);color:rgba(255,255,255,.85);cursor:pointer;}
+  .ig-lb-vc button:hover{color:#fff;border-color:rgba(255,255,255,.4);}
+  .ig-lb-snd.na{opacity:.35;}   /* 260918 추가 — 오디오 트랙이 없는 영상: 흐리게만. 판정이 틀릴 수 있어 눌리기는 한다 */
+  .ig-lb-vc svg{width:16px;height:16px;fill:currentColor;display:block;}
+  .ig-lb-bar{flex:1;height:24px;display:flex;align-items:center;cursor:pointer;touch-action:none;}
+  .ig-lb-bar i{display:block;position:relative;width:100%;height:3px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden;}
+  .ig-lb-bar b{position:absolute;left:0;top:0;bottom:0;width:0;background:#fff;}
   .tfx-play-row{display:flex;justify-content:flex-start;margin:-4px 0 14px;}
   /* 커서 효과 설정 패널 — 블럭설정과 같은 매너(.bset) 를 그대로 입는다 */
   #cfxPanel .bset-b{padding-top:18px;}
@@ -3183,19 +3196,20 @@
   .vc-sticky{position:sticky;top:0;height:var(--vc-vh,100vh);display:flex;flex-direction:column;justify-content:center;}
   .vc-body{transition:opacity .2s ease,transform .2s ease;}
   .vc-body.out{opacity:0;transform:translateY(7px);}
-  .vc-ttl{font-family:Georgia,"Times New Roman",serif;font-size:36px;line-height:1.12;letter-spacing:.01em;word-break:keep-all;}
+  /* 260918 수정 — 정보 패널 글꼴·크기: --cap-f(글꼴) · --cap-t(제목 배율) · --cap-s(정보 줄·버튼 배율). 비우면 예전 그대로(제목 명조) */
+  .vc-ttl{font-family:var(--cap-f,Georgia,"Times New Roman",serif);font-size:calc(36px * var(--cap-t,1));line-height:1.12;letter-spacing:.01em;word-break:keep-all;}
   .vc-meta{margin-top:34px;}
   .vc-mrow{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:11px 0;
-    border-bottom:1px solid var(--vc-line,rgba(255,255,255,.18));font-size:13.5px;}
+    border-bottom:1px solid var(--vc-line,rgba(255,255,255,.18));font-family:var(--cap-f,inherit);font-size:calc(13.5px * var(--cap-s,1));}
   .vc-mrow .l{opacity:.7;}
   .vc-mrow .v{color:var(--vc-acc,#C8F14B);font-weight:600;text-align:right;}
-  .vc-btn{align-self:flex-start;margin-top:30px;display:inline-flex;align-items:center;height:42px;padding:0 22px;
-    border-radius:999px;background:var(--vc-acc,#C8F14B);color:#10131A;font-size:13.5px;font-weight:600;
+  .vc-btn{align-self:flex-start;margin-top:30px;display:inline-flex;align-items:center;height:calc(42px * var(--cap-s,1));padding:0 calc(22px * var(--cap-s,1));
+    border-radius:999px;background:var(--vc-acc,#C8F14B);color:#10131A;font-family:var(--cap-f,inherit);font-size:calc(13.5px * var(--cap-s,1));font-weight:600;
     text-decoration:none;transition:transform .16s,filter .16s;}
   .vc-btn:hover{transform:translateY(-1px);filter:brightness(1.06);}
   /* 항목마다 딸린 정보 — 좁은 화면에서만 미디어 밑에 나온다 */
   .vc-iinfo{display:none;margin-top:18px;}
-  .vc-iinfo .vc-ttl{font-size:23px;}
+  .vc-iinfo .vc-ttl{font-size:calc(23px * var(--cap-t,1));}
   .vc-iinfo .vc-meta{margin-top:16px;}
 
   @media (max-width:900px){
@@ -5933,7 +5947,7 @@
             <div class="srow"><span class="k">부드러움</span><input class="rng" type="range" id="dgSmooth" min="0" max="10" step="1" value="6"><span class="v" id="dgSmoothV">6</span></div>
             <div class="srow"><span class="k">커서 반응</span><input class="rng" type="range" id="dgPointer" min="0" max="10" step="1" value="5"><span class="v" id="dgPointerV">5</span></div>
             <div class="srow"><span class="k">흔들림</span><input class="rng" type="range" id="dgBreath" min="0" max="10" step="1" value="5"><span class="v" id="dgBreathV">5</span></div>
-            <div class="sline"><span class="lbl">클릭 시 확대</span><button type="button" class="sw on" id="dgZoomSw" onclick="dgSw(this,'zoom')"></button></div>   /* 260917 추가 — 클릭 시 확대 */
+            <div class="sline"><span class="lbl">클릭 시 확대</span><button type="button" class="sw on" id="dgZoomSw" onclick="dgSw(this,'zoom')"></button></div>   <!-- 260917 추가 — 클릭 시 확대 · 260918 수정 — JS 주석이 HTML 본문에 있어 도크에 글자로 보였다 -->
             <div class="sline" id="dgRowRelock"><span class="lbl">다시 지날 때 또 고정</span><button type="button" class="sw on" id="dgRelockSw" onclick="dgSw(this,'relock')"></button></div>
             <div class="sline" id="dgRowProg"><span class="lbl">진행 막대 표시</span><button type="button" class="sw on" id="dgProgSw" onclick="dgSw(this,'prog')"></button></div>
             <div class="mtk-hint" id="dgHintPage" style="display:none;"><b>전체 스크롤 연동</b>은 블럭이 화면을 지나가는 동안 사진이 몇 장 넘어갈지 정합니다. 페이지 스크롤을 가로채지 않으므로 블럭 위에서도 평소처럼 스크롤됩니다.</div>
@@ -6124,7 +6138,7 @@
             <div class="sline"><span class="lbl">휠로 넘기기</span><button type="button" class="sw on" id="wcWheelSw" onclick="wcSw(this,'wheel')"></button></div>
             <div class="sline"><span class="lbl">무한 반복</span><button type="button" class="sw on" id="wcLoopSw" onclick="wcSw(this,'loop')"></button></div>
             <div class="sline"><span class="lbl">점 표시</span><button type="button" class="sw on" id="wcDotsSw" onclick="wcSw(this,'dots')"></button></div>
-            <div class="sline"><span class="lbl">클릭 시 확대</span><button type="button" class="sw on" id="wcZoomSw" onclick="wcSw(this,'zoom')"></button></div>   /* 260917 추가 — 클릭 시 확대 */
+            <div class="sline"><span class="lbl">클릭 시 확대</span><button type="button" class="sw on" id="wcZoomSw" onclick="wcSw(this,'zoom')"></button></div>   <!-- 260917 추가 — 클릭 시 확대 · 260918 수정 — JS 주석이 HTML 본문에 있어 도크에 글자로 보였다 -->
             <div class="mtk-hint">위아래로 끌거나, 카드 위에서 휠을 굴려 넘깁니다. 자동 넘김 0 은 끔.</div>
           </div></div>
         </div>
@@ -6266,7 +6280,7 @@
             <div class="srow" id="ssRowLock"><span class="k">한 개 넘김 거리</span><input class="rng" type="range" id="ssLock" min="30" max="400" step="10" value="80"><span class="v" id="ssLockV">80px</span></div>
             <div class="srow"><span class="k">드래그 감도</span><input class="rng" type="range" id="ssSens" min="0" max="10" step="1" value="8"><span class="v" id="ssSensV">8</span></div>
             <div class="srow"><span class="k">부드러움</span><input class="rng" type="range" id="ssSmooth" min="0" max="10" step="1" value="6"><span class="v" id="ssSmoothV">6</span></div>
-            <div class="sline"><span class="lbl">클릭 시 확대</span><button type="button" class="sw on" id="ssZoomSw" onclick="ssSw(this,'zoom')"></button></div>   /* 260917 추가 — 클릭 시 확대 */
+            <div class="sline"><span class="lbl">클릭 시 확대</span><button type="button" class="sw on" id="ssZoomSw" onclick="ssSw(this,'zoom')"></button></div>   <!-- 260917 추가 — 클릭 시 확대 · 260918 수정 — JS 주석이 HTML 본문에 있어 도크에 글자로 보였다 -->
             <div class="sline" id="ssRowRelock"><span class="lbl">다시 지날 때 또 고정</span><button type="button" class="sw on" id="ssRelockSw" onclick="ssSw(this,'relock')"></button></div>
             <div class="sline" id="ssRowProg"><span class="lbl">진행 막대 표시</span><button type="button" class="sw on" id="ssProgSw" onclick="ssSw(this,'prog')"></button></div>
             <div class="mtk-hint" id="ssHintPage" style="display:none;"><b>전체 스크롤 연동</b>은 블럭이 화면을 지나가는 동안 슬라이드가 몇 장 흐를지 정합니다. 페이지 스크롤을 가로채지 않으므로 블럭 위에서도 평소처럼 스크롤됩니다.</div>
@@ -6309,6 +6323,10 @@
           <div class="fld-h fold-h" onclick="smAcc(this)">정보 패널<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
             <div class="sline"><span class="lbl">정보 패널 표시</span><button class="sw on" id="vcSideSw" onclick="vcSw(this,'sideOn')"></button></div>
+            <!-- 260918 추가 — 정보 패널 글꼴·크기: 갤러리 공통 행(capRows) 재사용. 제목=capT · 정보 줄·버튼=capS -->
+            <div class="srow cap-row" data-dep="vcSideSw"><span class="k">글꼴</span><div class="sdd" id="vcCapF"><button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">기본</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="sdd-menu"></div></div></div>
+            <div class="srow cap-row" data-dep="vcSideSw"><span class="k">제목 크기</span><input class="rng" type="range" id="vcCapT" min="50" max="200" step="5" value="100"><span class="v" id="vcCapTV">100%</span></div>
+            <div class="srow cap-row" data-dep="vcSideSw"><span class="k">정보 크기</span><input class="rng" type="range" id="vcCapS" min="50" max="200" step="5" value="100"><span class="v" id="vcCapSV">100%</span></div>
             <div class="sline"><span class="lbl">확대 보기 캡션</span><button class="sw on" id="vcCapLbSw" onclick="vcSw(this,'capLb')"></button></div>
             <div class="srow cap-row" data-dep="vcCapLbSw"><span class="k">확대 글자 크기</span><input class="rng" type="range" id="vcCapLbT" min="50" max="200" step="5" value="100"><span class="v" id="vcCapLbTV">100%</span></div>   <!-- 260917 추가 — 확대 보기 캡션 크기 (capLbT) -->
             <div class="mt-seg" id="vcPosSeg" style="margin:11px 0 12px;">
@@ -6372,7 +6390,7 @@
               <button type="button" class="mt-seg-b" data-m="local" onclick="vcSmode('local')">블럭 안에서 넘기기</button>
             </div>
             <div class="srow" id="vcRowLock" style="display:none;"><span class="k">한 개 넘김 거리</span><input class="rng" type="range" id="vcLock" min="30" max="400" step="10" value="120"><span class="v" id="vcLockV">120px</span></div>
-            <div class="sline"><span class="lbl">클릭 시 확대</span><button type="button" class="sw on" id="vcZoomSw" onclick="vcSw(this,'zoom')"></button></div>   /* 260917 추가 — 클릭 시 확대 */
+            <div class="sline"><span class="lbl">클릭 시 확대</span><button type="button" class="sw on" id="vcZoomSw" onclick="vcSw(this,'zoom')"></button></div>   <!-- 260917 추가 — 클릭 시 확대 · 260918 수정 — JS 주석이 HTML 본문에 있어 도크에 글자로 보였다 -->
             <div class="sline" id="vcRowRelock" style="display:none;"><span class="lbl">다시 지날 때 또 고정</span><button type="button" class="sw on" id="vcRelockSw" onclick="vcSw(this,'relock')"></button></div>
             <div class="sline" id="vcRowProg" style="display:none;"><span class="lbl">진행 막대 표시</span><button type="button" class="sw on" id="vcProgSw" onclick="vcSw(this,'prog')"></button></div>
             <div class="mtk-hint" id="vcHintPage"><b>전체 스크롤 연동</b>은 항목이 페이지에 그대로 쌓여 있어 스크롤한 만큼 지나갑니다. 넘어가는 속도는 레이아웃의 <b>항목 간격</b>이 정하고, 페이지 스크롤을 가로채지 않으므로 블럭 위에서도 평소처럼 스크롤됩니다.</div>
@@ -6478,7 +6496,7 @@
             <div class="srow"><span class="k">드래그 감도</span><input class="rng" type="range" id="hxDrag" min="0" max="200" step="5" value="70"><span class="v" id="hxDragV">70%</span></div>
             <div class="srow"><span class="k">관성</span><input class="rng" type="range" id="hxInert" min="500" max="990" step="5" value="940"><span class="v" id="hxInertV">940</span></div>
             <div class="srow"><span class="k">자동 회전</span><input class="rng" type="range" id="hxSpeed" min="-30" max="30" step="1" value="0"><span class="v" id="hxSpeedV">0</span></div>
-            <div class="sline"><span class="lbl">클릭 시 확대</span><button class="sw on" id="hxZoomSw" onclick="hxSw(this,'zoom')"></button></div>   /* 260917 추가 — 클릭 시 확대 */
+            <div class="sline"><span class="lbl">클릭 시 확대</span><button class="sw on" id="hxZoomSw" onclick="hxSw(this,'zoom')"></button></div>   <!-- 260917 추가 — 클릭 시 확대 · 260918 수정 — JS 주석이 HTML 본문에 있어 도크에 글자로 보였다 -->
             <div class="sline" id="hxRowRelock" style="display:none;"><span class="lbl">다시 지날 때 또 고정</span><button class="sw on" id="hxRelockSw" onclick="hxSw(this,'relock')"></button></div>
             <div class="sline" id="hxRowProg" style="display:none;"><span class="lbl">진행 막대 표시</span><button class="sw on" id="hxProgSw" onclick="hxSw(this,'prog')"></button></div>
             <div class="mtk-hint" id="hxHintPage"><b>전체 스크롤 연동</b>은 블럭이 화면을 지나가는 동안 카드가 몇 장 넘어갈지 정합니다. 페이지 스크롤을 가로채지 않으므로 블럭 위에서도 평소처럼 스크롤됩니다.</div>
@@ -9041,14 +9059,14 @@
     depthgal:    {p:'dg', sub:false, color:true,  cfg:function(b){ return dgCfg(b); }, apply:function(b){ dgApply(b); }},
     scrollslider:{p:'ss', sub:false, color:true,  cfg:function(b){ return ssCfg(b); }, apply:function(b){ ssApply(b); }},
     infgal:      {p:'ig', sub:false, color:true,  cfg:function(b){ return igCfg(b); }, apply:function(b){ igApply(b); }, bake:true},
-    vcgal:       {p:'vc', sub:false, color:false, cfg:function(b){ return vcCfg(b); }, apply:function(b){ vcApply(b); }, lbOnly:true}   /* 카드 캡션 없음 · 확대 보기 크기만 */
+    vcgal:       {p:'vc', sub:true,  color:false, cfg:function(b){ return vcCfg(b); }, apply:function(b){ vcApply(b); }, defN:'기본'}   /* 260918 수정 — 카드 캡션 대신 정보 패널에 글꼴·제목·정보 크기. 글꼴 미지정은 '기본'(제목 명조 · 정보 사이트 글꼴) */
   };
   function capFontStack(v){   /* cfg 값 → font-family 문자열 ('' 이면 기본) */
     if(v==='head') return 'var(--st-hfont, inherit)';
     if(typeof v==='number' && v>=0) return smStack(v);
     return '';
   }
-  function capFontName(v){ if(v==='head') return '제목 글꼴'; if(typeof v==='number' && v>=0 && SM_FONTS[v]) return SM_FONTS[v].n; return '사이트 글꼴'; }
+  function capFontName(v,defN){ if(v==='head') return '제목 글꼴'; if(typeof v==='number' && v>=0 && SM_FONTS[v]) return SM_FONTS[v].n; return defN||'사이트 글꼴'; }   /* 260918 수정 — defN: 블럭마다 미지정 글꼴 이름(vc 는 '기본') */
   function capVars(blk,c){
     if(!blk||!c) return;
     var f=capFontStack(c.capFont); if(f) blk.style.setProperty('--cap-f',f); else blk.style.removeProperty('--cap-f');
@@ -9066,7 +9084,7 @@
   }
   function capFill(kind,blk){
     var m=CAP_MAP[kind]; if(!m||!blk) return; var p=m.p, c=m.cfg(blk);
-    var dd=document.querySelector('#'+p+'CapF .sdd-btn .lbl'); if(dd) dd.textContent=capFontName(c.capFont);
+    var dd=document.querySelector('#'+p+'CapF .sdd-btn .lbl'); if(dd) dd.textContent=capFontName(c.capFont,m.defN);
     document.querySelectorAll('#'+p+'CapF .sdd-menu button').forEach(function(b){ var v=b.getAttribute('data-v'); b.classList.toggle('on', v===String(c.capFont==null?'body':c.capFont)); });
     function rng(id,v,unit){ var el=document.getElementById(id); if(!el) return; el.value=v; if(typeof smRng==='function') smRng(el); var o=document.getElementById(id+'V'); if(o) o.textContent=v+unit; }
     rng(p+'CapT',(c.capT==null)?100:c.capT,'%'); if(m.sub) rng(p+'CapS',(c.capS==null)?100:c.capS,'%'); rng(p+'CapLbT',(c.capLbT==null)?100:c.capLbT,'%');
@@ -9077,7 +9095,7 @@
       var m=CAP_MAP[kind], p=m.p;
       var menu=document.querySelector('#'+p+'CapF .sdd-menu');
       if(menu && !menu.children.length){
-        menu.innerHTML='<button type="button" data-v="body" class="on">사이트 글꼴</button><button type="button" data-v="head">제목 글꼴</button>'
+        menu.innerHTML='<button type="button" data-v="body" class="on">'+(m.defN||'사이트 글꼴')+'</button><button type="button" data-v="head">제목 글꼴</button>'
           +SM_FONTS.map(function(f,i){ return '<button type="button" data-v="'+i+'" style="font-family:'+f.f.replace(/"/g,'&quot;')+','+f.fb+'">'+f.n+'</button>'; }).join('');
         menu.querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){ var v=b.getAttribute('data-v'); capSet(kind,'capFont',(v==='body')?'':(v==='head'?'head':parseInt(v,10))); var dd=b.closest('.sdd'); if(dd) dd.classList.remove('open'); }); });
       }
@@ -11371,8 +11389,17 @@
     if(c.cap) flCapShow(blk,it);
     var d=(Array.isArray(c.items)&&c.items.length)?c.items[it.di%c.items.length]:null;
     S.descEl.textContent=(d&&d.d)||'';
+    flDescFit(S.descEl);   /* 260918 추가 — 가급적 한 줄 */
     S.descEl.classList.add('show');
     S.closeEl.classList.add('show');
+  }
+  /* 260918 추가 — 설명글을 가급적 한 줄로: 두 줄이 되면 글자를 14.5px → 최소 12px 까지 줄여 본다. 그래도 넘치면 원래 크기로 두 줄(balance) */
+  function flDescFit(el){
+    if(!el) return; el.style.fontSize='';
+    var lh=parseFloat(getComputedStyle(el).lineHeight)||24;
+    if(el.offsetHeight<lh*1.5) return;
+    for(var f=14;f>=12;f-=0.5){ el.style.fontSize=f+'px'; if(el.offsetHeight<parseFloat(getComputedStyle(el).lineHeight)*1.5) return; }
+    el.style.fontSize='';
   }
   function flCollapse(blk){
     var S=blk._fl; if(!S||!S.expanded) return;
@@ -11817,7 +11844,7 @@
        현재 표시 중이면 즉시 갱신 */
     var S=flCurBlk._fl;
     if(S){
-      if(key==='d'){ if(S.descEl && S.descEl.classList.contains('show')) S.descEl.textContent=v; }
+      if(key==='d'){ if(S.descEl && S.descEl.classList.contains('show')){ S.descEl.textContent=v; flDescFit(S.descEl); } }
       else if(S.capline.classList.contains('show')){
         if(key==='t') S.capName.textContent=v; else S.capCat.textContent=v;
       }
@@ -12668,14 +12695,83 @@
     cap.style.display=(t1||t2)?'':'none';
   }
   function igLbIsVid(u){ return typeof vcIsVid==='function'?vcIsVid(u):/\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(String(u||'')); }
+  /* ── 260918 추가 — 확대보기 영상 컨트롤(정지/재생 · 진행바 · 소리) + 고화질 교체 ──
+     컨트롤은 확대보기에만 둔다(카드는 그대로 무음 루프). 브라우저 기본 controls 는 생김새가 제각각이고
+     볼륨·전체화면·속도·PiP 가 다 딸려 와서 쓰지 않는다. 필요한 셋만. */
+  var igLbSnd=false;   /* 소리 켠 상태를 다음/이전 영상에도 이어 간다. 닫으면 다시 무음 */
+  var IG_LB_ICO={
+    play:'<svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>',
+    pause:'<svg viewBox="0 0 24 24"><path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/></svg>',
+    on:'<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9z"/><path d="M15.5 8.5a5 5 0 010 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    off:'<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9z"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+  };
+  function igLbVid(){ var f=igLb&&igLb.querySelector('.ig-lb-fig'); return f?f.querySelector('video'):null; }
+  /* 버튼·진행바를 지금 영상 상태에 맞춘다 (영상 이벤트마다 호출) */
+  function igLbSync(){
+    var lb=igLb, v=igLbVid(); if(!lb) return;
+    lb.classList.toggle('vid',!!v); if(!v) return;
+    lb.querySelector('.ig-lb-play').innerHTML=v.paused?IG_LB_ICO.play:IG_LB_ICO.pause;
+    var sb=lb.querySelector('.ig-lb-snd'); sb.innerHTML=v.muted?IG_LB_ICO.off:IG_LB_ICO.on;
+    var ha=igLbHasAudio(v); sb.classList.toggle('na',ha===false); sb.title=(ha===false)?'소리 없는 영상':'';   /* 260918 추가 */
+    var d=v.duration; lb.querySelector('.ig-lb-bar b').style.width=(d>0?(v.currentTime/d*100):0).toFixed(2)+'%';
+  }
+  /* 260918 추가 — 오디오 트랙 유무. true/false, 아직 모르면 null.
+     표준 API 가 없어 브라우저별로: Firefox mozHasAudio · Safari audioTracks · Chrome/Safari webkitAudioDecodedByteCount(재생하며 디코드된 만큼 늘어난다).
+     Chrome 은 1.5초쯤 재생해도 0 이면 없는 것으로 본다. 셋 다 없으면 모름 → 버튼 그대로 */
+  function igLbHasAudio(v){
+    if(typeof v.mozHasAudio!=='undefined') return !!v.mozHasAudio;
+    if(v.audioTracks&&typeof v.audioTracks.length==='number') return v.audioTracks.length>0;
+    if(typeof v.webkitAudioDecodedByteCount!=='undefined'){ if(v.webkitAudioDecodedByteCount>0) return true; return (v.currentTime>1.5)?false:null; }
+    return null;
+  }
+  function igLbBind(v){ ['timeupdate','play','pause','volumechange','loadedmetadata','durationchange'].forEach(function(t){ v.addEventListener(t,igLbSync); }); }
+  function igLbPlay(v){ try{ var p=v.play(); if(p&&p.catch) p.catch(function(){ v.muted=true; igLbSnd=false; try{ v.play().catch(function(){}); }catch(e){} }); }catch(e){} }   /* 소리 켠 자동재생이 막히면 무음으로 */
+  function igLbToggle(){ var v=igLbVid(); if(!v) return; if(v.paused) igLbPlay(v); else v.pause(); }
+  function igLbSeek(e){
+    var v=igLbVid(); if(!v||!(v.duration>0)) return;
+    var r=igLb.querySelector('.ig-lb-bar').getBoundingClientRect(), k=Math.max(0,Math.min(1,(e.clientX-r.left)/Math.max(1,r.width)));
+    v.currentTime=k*v.duration; igLbSync();
+  }
+  /* 고화질 교체 — sd 로 즉시 열고(카드가 이미 받아 둔 것), hd 가 재생 가능해지면 같은 시점에서 바꿔 끼운다.
+     지역마다 첫 방문자가 겪는 CDN 콜드 3초를 화면에서 없앤다. 그새 닫히거나 다음으로 넘어가면 받던 걸 버린다 */
+  function igLbUpgrade(fig,el,hdSrc,radius){
+    var h=document.createElement('video'); h.src=hdSrc; h.muted=true; h.loop=true; h.playsInline=true; h.controls=false; h.preload='auto'; h.setAttribute('muted',''); h.setAttribute('playsinline','');
+    h.style.borderRadius=radius+'px';
+    var done=false;
+    function drop(){ if(done) return; done=true; try{ h.removeAttribute('src'); h.load(); }catch(e){} }
+    el._hdDrop=drop;
+    h.addEventListener('error',drop);
+    h.addEventListener('canplay',function onCan(){
+      h.removeEventListener('canplay',onCan);
+      if(done||fig.querySelector('video')!==el){ drop(); return; }
+      h.addEventListener('seeked',function onSk(){
+        h.removeEventListener('seeked',onSk);
+        if(done||fig.querySelector('video')!==el){ drop(); return; }
+        done=true;
+        var playing=!el.paused&&!el.ended;
+        h.muted=el.muted; if(!h.muted) h.removeAttribute('muted');
+        igLbBind(h); el.replaceWith(h); try{ el.pause(); }catch(e){}
+        if(playing) igLbPlay(h);
+        igLbSync();
+      });
+      try{ h.currentTime=el.currentTime; }catch(e){ drop(); }
+    });
+    try{ h.load(); }catch(e){}
+  }
   /* 그림 칸 안의 매체를 주소에 맞춰 img / video 로 바꿔 끼운다 */
   function igLbMedia(fig,src,radius){
     var old=fig.querySelector('img,video'), el;
-    if(igLbIsVid(src)){ el=document.createElement('video'); el.src=String(src).replace(/#video$/,''); el.muted=true; el.loop=true; el.playsInline=true; el.autoplay=true; el.controls=false; el.setAttribute('muted',''); el.setAttribute('playsinline',''); }
+    if(old&&old._hdDrop) old._hdDrop();   /* 260918 추가 — 이전 영상이 받던 고화질 벌은 버린다 */
+    if(igLbIsVid(src)){ el=document.createElement('video'); el.src=String(src).replace(/#video$/,''); el.muted=!igLbSnd; el.loop=true; el.playsInline=true; el.autoplay=true; el.controls=false; if(el.muted) el.setAttribute('muted',''); el.setAttribute('playsinline',''); }
     else { el=document.createElement('img'); el.alt=''; el.draggable=false; el.src=src; }
     el.style.borderRadius=radius+'px';
     if(old){ try{ if(old.tagName==='VIDEO') old.pause(); }catch(e){} old.replaceWith(el); } else fig.insertBefore(el,fig.firstChild);
-    if(el.tagName==='VIDEO'){ try{ var pr=el.play(); if(pr&&pr.catch) pr.catch(function(){}); }catch(e){} }
+    if(el.tagName==='VIDEO'){
+      igLbBind(el); igLbPlay(el);
+      var hd=(igLbOpts&&typeof igLbOpts.hd==='function')?igLbOpts.hd(src):null;   /* 260918 추가 — 여는 블럭이 고화질 벌 주소를 주면 준비되는 대로 교체 */
+      if(hd&&hd!==src) igLbUpgrade(fig,el,hd,radius);
+    }
+    igLbSync();
     return el;
   }
   /* 좌우 버튼·화살표 키 — 갤러리로 돌아가지 않고 목록의 다음/이전으로. 살짝 밀리며 바뀐다 */
@@ -12696,13 +12792,24 @@
   function igLbEl(){
     if(igLb) return igLb;
     igLb=document.createElement('div'); igLb.className='ig-lb'; igLb.hidden=true;
-    igLb.innerHTML='<div class="ig-lb-scrim"></div><figure class="ig-lb-fig"><figcaption class="ig-lb-cap" style="display:none"><span class="ig-lb-c1"></span><span class="ig-lb-c2"></span></figcaption></figure><button type="button" class="ig-lb-x" aria-label="닫기">×</button>'
+    igLb.innerHTML='<div class="ig-lb-scrim"></div><figure class="ig-lb-fig"><figcaption class="ig-lb-cap" style="display:none"><span class="ig-lb-c1"></span><span class="ig-lb-c2"></span></figcaption>'
+      +'<div class="ig-lb-vc"><button type="button" class="ig-lb-play" aria-label="정지/재생"></button><div class="ig-lb-bar"><i><b></b></i></div><button type="button" class="ig-lb-snd" aria-label="소리"></button></div>'   /* 260918 추가 — 영상 컨트롤 */
+      +'</figure><button type="button" class="ig-lb-x" aria-label="닫기">×</button>'
       +'<button type="button" class="ig-lb-nav l" aria-label="이전">‹</button><button type="button" class="ig-lb-nav r" aria-label="다음">›</button>';
     igLb.querySelector('.ig-lb-nav.l').addEventListener('click',function(e){ e.stopPropagation(); igLbNav(-1); });
     igLb.querySelector('.ig-lb-nav.r').addEventListener('click',function(e){ e.stopPropagation(); igLbNav(1); });
+    /* 260918 추가 — 영상 컨트롤. 컨트롤 안 클릭은 닫기로 새지 않게 */
+    igLb.querySelector('.ig-lb-vc').addEventListener('click',function(e){ e.stopPropagation(); });
+    igLb.querySelector('.ig-lb-play').addEventListener('click',igLbToggle);
+    igLb.querySelector('.ig-lb-snd').addEventListener('click',function(){ var v=igLbVid(); if(!v) return; v.muted=!v.muted; igLbSnd=!v.muted; if(!v.muted) v.removeAttribute('muted'); igLbSync(); });
+    (function(){ var bar=igLb.querySelector('.ig-lb-bar'), drag=false;
+      bar.addEventListener('pointerdown',function(e){ drag=true; try{ bar.setPointerCapture(e.pointerId); }catch(x){} igLbSeek(e); });
+      bar.addEventListener('pointermove',function(e){ if(drag) igLbSeek(e); });
+      bar.addEventListener('pointerup',function(){ drag=false; }); bar.addEventListener('pointercancel',function(){ drag=false; }); })();
+    igLb.querySelector('.ig-lb-fig').addEventListener('click',function(e){ if(e.target&&e.target.tagName==='VIDEO'){ e.stopPropagation(); igLbToggle(); } });   /* 영상 위 탭 = 정지/재생 (사진은 그대로 닫기) */
     document.body.appendChild(igLb);
     igLb.addEventListener('click',function(){ igLbClose(); });
-    document.addEventListener('keydown',function(e){ if(!igLb||igLb.hidden) return; if(e.key==='Escape') igLbClose(); else if(e.key==='ArrowLeft') igLbNav(-1); else if(e.key==='ArrowRight') igLbNav(1); });
+    document.addEventListener('keydown',function(e){ if(!igLb||igLb.hidden) return; if(e.key==='Escape') igLbClose(); else if(e.key==='ArrowLeft') igLbNav(-1); else if(e.key==='ArrowRight') igLbNav(1); else if(e.key===' '&&igLbVid()){ e.preventDefault(); igLbToggle(); } });
     return igLb;
   }
   function igLbOpen(o){
@@ -12741,7 +12848,8 @@
     igLbAnim.forEach(function(a){ try{ a.cancel(); }catch(e){} }); igLbAnim=[];
     var a1=fig.animate([{transform:'scale(1)',opacity:1},{transform:'scale(.92)',opacity:0}],{duration:260,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
     igLbAnim.push(a1, scrim.animate([{opacity:1},{opacity:0}],{duration:260,easing:'ease-in',fill:'forwards'}), x.animate([{opacity:1},{opacity:0}],{duration:200,fill:'forwards'}));
-    a1.onfinish=function(){ lb.hidden=true; lb.classList.remove('on'); var v=fig.querySelector('video'); if(v){ try{ v.pause(); }catch(e){} } };
+    a1.onfinish=function(){ lb.hidden=true; lb.classList.remove('on'); var v=fig.querySelector('video'); if(v){ try{ v.pause(); }catch(e){} if(v._hdDrop) v._hdDrop(); } };   /* 260918 수정 — 받던 고화질 벌도 중단 */
+    igLbSnd=false;   /* 260918 추가 — 다음에 열 때는 다시 무음으로 */
     var o=igLbOpts; igLbOpts=null; if(o && typeof o.onClose==='function'){ try{ o.onClose(); }catch(e){} }
   }
   function igStop(blk){
@@ -12932,7 +13040,7 @@
   function hgClamp(v,a,b){ return Math.min(b,Math.max(a,v)); }
   function hgIsVid(u){ return typeof vcIsVid==='function'?vcIsVid(u):/\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(String(u||'')); }
   function hgLocal(c){ return !!(c && c.smode==='local'); }
-  /* 260918 추가 — 확대보기는 고화질 벌로. 자체 호스팅 견본(hg/…-sd.mp4)만 -hd 로 바꾸고 사용자가 넣은 주소는 그대로 */
+  /* 260918 추가 — 확대보기 고화질 벌 주소. 자체 호스팅 견본(hg/…-sd.mp4)만 -hd 로 바꾸고 사용자가 넣은 주소는 그대로(같은 주소를 돌려주면 교체 없음). igLbOpen 의 hd 로 넘긴다 */
   function hgLbSrc(u){ u=String(u||''); return (u.indexOf(BA_ASSET_BASE+'hg/')===0)?u.replace(/-sd\.mp4$/,'-hd.mp4'):u; }
   function hgItemNew(i){ var n=HG_NAMES[i%HG_NAMES.length]; return {src:'', t1:n[0], t2:n[1]}; }   /* 260916 수정 — 라벨은 이름 + 서브텍스트 한 줄 */
   function hgCfg(blk){
@@ -12941,7 +13049,7 @@
       var c0=blk._hgCfg;
       /* 260917 수정 — 기본 12장 전부 Pexels 무료 공연 영상 1080p (Pexels 라이선스 · 출처 표기 불필요) */
       /* 260918 수정 — 견본 영상을 Pexels 1080p 핫링크에서 자체 호스팅 H.264(8초 · 무음) 두 벌로 교체.
-         카드는 -sd(960×540), 확대보기는 hgLbSrc() 가 -hd(1920×1080)로 바꿔 연다.
+         카드는 -sd(960×540). 확대보기는 sd 로 즉시 열고 hgLbSrc() 가 준 -hd(1920×1080)가 준비되면 바꿔 끼운다.
          editor-assets 저장소 hg/ 폴더, _make_hg.ps1 로 생성. 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다(@main 캐시) */
       var HG_VIDS=[
         BA_ASSET_BASE+'hg/hg-01-sd.mp4',   /* Milan Kiro · pexels 31540264 */
@@ -13076,7 +13184,7 @@
       var idx=-1; S.cards.forEach(function(cd,j){ if(cd.el===card) idx=j; }); if(idx<0) return;
       if(hgCfg(blk).zoom===false) return;
       var r=card.getBoundingClientRect();
-      igLbOpen({ srcs:hgCfg(blk).items.map(function(x){ return hgLbSrc(String((x&&x.src)||'').trim()); }), caps:(hgCfg(blk).capLb!==false)?hgCfg(blk).items.map(function(x){ return {t1:(x&&x.t1)||'', t2:(x&&x.t2)||''}; }):null, idx:idx, from:{x:r.left+r.width/2,y:r.top+r.height/2,w:r.width}, radius:0, wide:true });
+      igLbOpen({ hd:hgLbSrc, srcs:hgCfg(blk).items.map(function(x){ return String((x&&x.src)||'').trim(); }), caps:(hgCfg(blk).capLb!==false)?hgCfg(blk).items.map(function(x){ return {t1:(x&&x.t1)||'', t2:(x&&x.t2)||''}; }):null, idx:idx, from:{x:r.left+r.width/2,y:r.top+r.height/2,w:r.width}, radius:0, wide:true });
     });
     if(window.IntersectionObserver){ try{ S.io=new IntersectionObserver(function(es){ es.forEach(function(en){ S.vis=en.isIntersecting; }); },{root:document.getElementById('stage'),rootMargin:'200px'}); S.io.observe(wrap); }catch(e){} }
     if(window.ResizeObserver){ try{ S.ro=new ResizeObserver(function(){ if(S.alive) hgApply(blk); }); S.ro.observe(wrap); }catch(e){} }
@@ -14063,19 +14171,21 @@
   /* 260918 수정 — 견본을 공연 영상(나선형 갤러리 2와 같은 Pexels 1080p 무료 영상)으로 바꾸고, 제목은 영문 곡명으로 */
   var VC_TITLES=['NEON PULSE','MIDNIGHT STATIC','WILDFIRE','ECHO CHAMBER','FALLING UP','LAST CALL',
                  'BURNING SKY','VELVET NOISE','HEARTBEAT CITY','AFTER HOURS','SATELLITE','GOLDEN DUST'];
+  /* 260918 수정 — 나선형 갤러리 2 와 같은 12편이라 자체 호스팅 벌(editor-assets hg/)을 그대로 쓴다. 순서는 예전 VC_VIDS 그대로(4번째·11번째만 hg 와 자리가 다르다).
+     카드는 -sd(960×540 · 최대 카드폭 640 이면 충분), 확대보기는 hgLbSrc() 가 준 -hd 로 교체 */
   var VC_VIDS=[
-    'https://videos.pexels.com/video-files/31540264/13442342_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/28551470/12417619_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/31540263/13442363_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/31342504/13377149_1920_1080_30fps.mp4',   /* 260918 수정 — 4번째 견본 교체 (12719510 은 뒤로) */
-    'https://videos.pexels.com/video-files/13082773/13082773-hd_1920_1080_60fps.mp4',
-    'https://videos.pexels.com/video-files/31540267/13442340_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/30805503/13175480_1920_1080_25fps.mp4',
-    'https://videos.pexels.com/video-files/6174198/6174198-hd_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/26620363/11976368_1920_1080_30fps.mp4',
-    'https://videos.pexels.com/video-files/30815459/13179751_1920_1080_25fps.mp4',
-    'https://videos.pexels.com/video-files/12719510/12719510-hd_1920_1080_60fps.mp4',
-    'https://videos.pexels.com/video-files/6174235/6174235-hd_1920_1080_30fps.mp4'
+    BA_ASSET_BASE+'hg/hg-01-sd.mp4',   /* pexels 31540264 */
+    BA_ASSET_BASE+'hg/hg-02-sd.mp4',   /* pexels 28551470 */
+    BA_ASSET_BASE+'hg/hg-03-sd.mp4',   /* pexels 31540263 */
+    BA_ASSET_BASE+'hg/hg-11-sd.mp4',   /* pexels 31342504 · 4번째 견본(12719510 은 뒤로) */
+    BA_ASSET_BASE+'hg/hg-05-sd.mp4',   /* pexels 13082773 */
+    BA_ASSET_BASE+'hg/hg-06-sd.mp4',   /* pexels 31540267 */
+    BA_ASSET_BASE+'hg/hg-07-sd.mp4',   /* pexels 30805503 */
+    BA_ASSET_BASE+'hg/hg-08-sd.mp4',   /* pexels 6174198 */
+    BA_ASSET_BASE+'hg/hg-09-sd.mp4',   /* pexels 26620363 */
+    BA_ASSET_BASE+'hg/hg-10-sd.mp4',   /* pexels 30815459 */
+    BA_ASSET_BASE+'hg/hg-04-sd.mp4',   /* pexels 12719510 */
+    BA_ASSET_BASE+'hg/hg-12-sd.mp4'    /* pexels 6174235 */
   ];
   var VC_VALS=[
     ['A. Rhodes','A. Rhodes','Mira Chen','Studio Riot'],
@@ -14526,7 +14636,7 @@
         var m=e.target.closest && e.target.closest('.vc-media'), it=m&&m.closest('.vc-item'); if(!m||!it) return;
         var c=vcCfg(blk); if(c.zoom===false) return;
         var idx=+it.getAttribute('data-i')||0, r=m.getBoundingClientRect(), rt=/^(\d+)\/(\d+)$/.exec(String(c.ratio||'')), ar=rt?(+rt[1]/+rt[2]):(16/9);
-        igLbOpen({ srcs:(c.items||[]).map(function(x){ return String((x&&x.src)||'').trim(); }), caps:(c.capLb!==false)?(c.items||[]).map(function(x){ return {t1:(x&&x.t)||'', t2:''}; }):null, idx:idx, from:{x:r.left+r.width/2,y:r.top+r.height/2,w:r.width}, radius:Math.max(0,vcNum(c.rad,0)), ar:ar });
+        igLbOpen({ hd:hgLbSrc, srcs:(c.items||[]).map(function(x){ return String((x&&x.src)||'').trim(); }), caps:(c.capLb!==false)?(c.items||[]).map(function(x){ return {t1:(x&&x.t)||'', t2:''}; }):null, idx:idx, from:{x:r.left+r.width/2,y:r.top+r.height/2,w:r.width}, radius:Math.max(0,vcNum(c.rad,0)), ar:ar });   /* 260918 수정 — 자체 호스팅 견본은 확대보기에서 -hd 로 교체(hd:hgLbSrc) */
         return;
       }
       if(!a.getAttribute('href') || a.getAttribute('href')==='#' || document.getElementById('bset')) e.preventDefault();
