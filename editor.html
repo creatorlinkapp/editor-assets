@@ -17122,30 +17122,7 @@
   /* 260825 수정 — 3D 텍스트 카드는 텍스트 카테고리로 이동
      260827 수정 — 3D 카드 회전은 갤러리 → 컨텐츠 카테고리로 이동
      260901 수정 — 3D 카드 회전은 컨텐츠 → 슬라이드쇼 카테고리로 이동 */
-  /* 260923 추가 — 스택 카드(CONTENT01) 카드 썸네일 (인라인 SVG · 세 장이 쌓인 순간 · 미리보기 영상은 아직 없다) */
-  var BA_SC_THUMB=(function(){
-    var ff="Noto Sans KR,Apple SD Gothic Neo,Malgun Gothic,sans-serif", W=552, H=300;
-    function card(x,y,w,h,fill){ return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="7" fill="'+fill+'"/>'; }
-    var fx=48, fy=74, fw=456, fh=204, mx=fx+fw/2;
-    var s='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'">'
-      +'<defs><clipPath id="c"><rect x="'+fx+'" y="'+fy+'" width="'+fw+'" height="'+fh+'" rx="7"/></clipPath>'
-      +'<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b6f86"/><stop offset="1" stop-color="#1d2733"/></linearGradient></defs>'
-      +'<rect width="'+W+'" height="'+H+'" fill="#ffffff"/>'
-      +card(76,30,400,210,'#d9e1ea')+card(62,52,428,210,'#e2e9f0')
-      +'<g clip-path="url(#c)">'+card(fx,fy,fw,fh,'#ebf0f5')
-      +'<rect x="'+mx+'" y="'+fy+'" width="'+(fw/2)+'" height="'+fh+'" fill="url(#g)"/>'
-      +'<g fill="none" stroke="#c9d4e0" stroke-opacity=".55" stroke-width="7">'
-      +'<ellipse cx="'+(mx+150)+'" cy="'+(fy+70)+'" rx="120" ry="44" transform="rotate(-28 '+(mx+150)+' '+(fy+70)+')"/>'
-      +'<ellipse cx="'+(mx+150)+'" cy="'+(fy+70)+'" rx="120" ry="44" transform="rotate(8 '+(mx+150)+' '+(fy+70)+')" stroke-opacity=".3"/></g>'
-      +'</g>'
-      +'<g font-family="'+ff+'" fill="#131a22"><text x="'+(fx+30)+'" y="'+(fy+74)+'" font-size="19" font-weight="700" letter-spacing="-.6">규모 있는</text>'
-      +'<text x="'+(fx+30)+'" y="'+(fy+98)+'" font-size="19" font-weight="700" letter-spacing="-.6">컴퓨팅 인프라</text></g>'
-      +'<rect x="'+(fx+30)+'" y="'+(fy+114)+'" width="160" height="3.4" rx="1.7" fill="#4d5866" opacity=".35"/>'
-      +'<rect x="'+(fx+30)+'" y="'+(fy+123)+'" width="140" height="3.4" rx="1.7" fill="#4d5866" opacity=".35"/>'
-      +'<rect x="'+(fx+30)+'" y="'+(fy+132)+'" width="96" height="3.4" rx="1.7" fill="#4d5866" opacity=".35"/>'
-      +'<rect x="'+(fx+30)+'" y="'+(fy+152)+'" width="84" height="20" rx="10" fill="#2f4a66"/>';
-    return 'data:image/svg+xml;utf8,'+encodeURIComponent(s+'</svg>');
-  })();
+  var BA_SC_THUMB=ED_IMG+'ba/content01-4.jpg';   /* 261022 교체 — 실제 블럭 캡처 (세 장이 쌓인 순간 · 1104x600). 예전 SVG 그림은 없앴다 */
   var BA_CARDS_CONTENT=[
     {no:1, kind:'stackcard', label:'CONTENT01', badge:'NEW', ar:'552/300', img:BA_SC_THUMB}   /* 260923 추가 — 스택 카드 (terawulf.com 참조) · 미리보기 영상은 아직 없다 */
   ];
