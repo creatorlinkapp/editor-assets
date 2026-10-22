@@ -2414,6 +2414,182 @@
   #baGrid .ba-card[data-kind="formblk"]{border-radius:var(--r-xl);}
   .ba-thumb.fm-live{overflow:hidden;background:#fff;align-items:flex-start;}
   .fm-pv{position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;}
+  /* ══ 261022 추가 — 컨텐츠 블럭 (cnblk · CONTENT04~) — 좌측 사이트 컨텐츠 카테고리를 한 블럭 + 배치 6 + 시작값으로 ══ */
+  .cn-wrap{position:relative;container-type:inline-size;font-family:var(--cnbf);color:var(--cnsc);--cnitc2:var(--cnitc,var(--cntc));}
+  .cn-in{max-width:var(--cncw,1140px);margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:content-box;}
+  .cn-wrap p{margin:0;}
+  .cn-hl{font-weight:700;color:var(--cnhl,inherit);font-style:inherit;}
+  .cn-ph{display:block;width:100%;aspect-ratio:4/3;background:#E9ECF0;}
+  /* 글 묶음 — 라벨 · 막대 · 제목 · 부제 · 본문 · 목록 · 아래 글 · 버튼 */
+  .cn-eb{font-size:13px;line-height:1.5;color:var(--cnac);letter-spacing:.04em;margin:0 0 14px!important;}
+  .cn-bar{display:block;width:40px;height:2px;background:var(--cnac);margin:0 0 24px;}
+  .cn-tt{margin:0;font-family:var(--cntf);font-size:min(var(--cnfs),9cqw);font-weight:var(--cnfw);color:var(--cntc);letter-spacing:var(--cntls,0);line-height:1.3;word-break:keep-all;}
+  .cn-wrap[data-fi="1"] .cn-tt{font-style:italic;}
+  .cn-sub{margin:12px 0 0!important;font-size:calc(var(--cnbs) + 2px);line-height:1.6;color:var(--cnsc);}
+  .cn-ds{margin-top:26px;}
+  .cn-eb + .cn-ds,.cn-bar + .cn-ds,.cn-txt > .cn-ds:first-child,.cn-head > .cn-ds:first-child{margin-top:0;}
+  .cn-ds p{font-size:var(--cnbs);line-height:1.75;color:var(--cnsc);word-break:keep-all;}
+  .cn-ds p + p{margin-top:1em;}
+  .cn-ds.c2{columns:2;column-gap:32px;} .cn-ds.c2 p{break-inside:avoid;}
+  .cn-note{margin:22px 0 0!important;font-family:var(--cntf);font-size:var(--cnns);font-weight:700;line-height:1.5;color:var(--cnac);}
+  .cn-bw{margin-top:34px;}
+  .cn-btn{display:inline-flex;align-items:center;justify-content:center;gap:20px;min-width:120px;height:40px;padding:0 24px;box-sizing:border-box;font-size:13px;line-height:1;text-decoration:none;color:var(--cnbc);border:1px solid var(--cnbc);background:transparent;transition:background .2s,color .2s,opacity .2s;cursor:pointer;}
+  .cn-btn[data-st="line"]:hover{background:var(--cnbc);color:var(--cnbt);}
+  .cn-btn[data-st="fill"]{background:var(--cnbc);color:var(--cnbt);} .cn-btn[data-st="fill"]:hover{opacity:.85;}
+  .cn-btn:is([data-st="text"],[data-st="arrow"]){border:0;padding:0;min-width:0;height:auto;}
+  .cn-btn[data-st="text"]{text-decoration:underline;text-underline-offset:5px;}
+  .cn-btn[data-st="arrow"]::before{content:"";width:60px;height:1px;background:currentColor;transition:width .2s;} .cn-btn[data-st="arrow"]:hover::before{width:76px;}
+  .cn-wrap[data-al="center"] :is(.cn-txt,.cn-stk){text-align:center;} .cn-wrap[data-al="right"] .cn-txt{text-align:right;}
+  .cn-wrap[data-al="center"] .cn-txt .cn-bar,.cn-wrap[data-al="center"] .cn-stk .cn-bar{margin-left:auto;margin-right:auto;} .cn-wrap[data-al="right"] .cn-txt .cn-bar{margin-left:auto;}
+  .cn-timg img{display:inline-block;max-width:100%;height:auto;margin-bottom:40px;}
+  /* 좌우(split) — 이미지 칸 + 글 칸. 좌우 반전 = 순서만 바꾼다 */
+  .cn-split{display:grid;grid-template-columns:var(--cnmw) minmax(0,1fr);column-gap:var(--cngap);align-items:center;}
+  .cn-wrap[data-va="top"] .cn-split{align-items:start;} .cn-wrap[data-va="bottom"] .cn-split{align-items:end;}
+  .cn-wrap[data-flip="1"] .cn-split{grid-template-columns:minmax(0,1fr) var(--cnmw);} .cn-wrap[data-flip="1"] .cn-split > .cn-media{order:2;}
+  .cn-media{min-width:0;}
+  .cn-media img{display:block;width:100%;height:auto;border-radius:var(--cnrd);}
+  .cn-media.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;} .cn-media.grid{display:grid;grid-template-columns:1fr 1fr;gap:36px 30px;}
+  .cn-fig{margin:0;position:relative;min-width:0;}
+  .cn-cap{margin-top:18px;} .cn-wrap[data-al="center"] .cn-cap,.cn-media.two .cn-cap{text-align:center;}
+  .cn-cap-t{font-family:var(--cntf);font-size:var(--cnts);font-weight:var(--cnifw);color:var(--cnitc2);line-height:1.45;}
+  .cn-cap-s{margin-top:6px!important;font-size:var(--cnbs);color:var(--cnsc);line-height:1.5;}
+  .cn-cap-s:first-child{margin:0 0 6px!important;}
+  .cn-wrap[data-mcap="over"] .cn-cap{position:absolute;left:0;right:0;bottom:10%;margin:0;padding:0 16px;text-align:center;}
+  .cn-wrap[data-md="bleed"] .cn-in{max-width:none;padding:0!important;}
+  .cn-wrap[data-md="bleed"] .cn-split{column-gap:0;align-items:stretch;}
+  .cn-media.bleed{min-height:420px;background:#E9ECF0 center/cover no-repeat;}
+  .cn-wrap[data-md="bleed"] .cn-txt{padding:var(--cnpt) clamp(24px,8cqw,150px) var(--cnpb);display:flex;flex-direction:column;justify-content:center;}
+  .cn-wrap[data-md="bleed"][data-va="top"] .cn-txt{justify-content:flex-start;} .cn-wrap[data-md="bleed"][data-va="bottom"] .cn-txt{justify-content:flex-end;}
+  .cn-wrap[data-md="bleed"] .cn-txt > *{max-width:460px;} .cn-wrap[data-md="bleed"][data-al="center"] .cn-txt{align-items:center;}
+  .cn-wrap[data-ibox="1"] .cn-split{background:var(--cncb);padding:60px;} .cn-wrap[data-ibox="1"] .cn-media{margin-top:calc(var(--cnlift,0px) * -1);align-self:start;}
+  .cn-txt{min-width:0;}
+  /* 글 칸 목록 — 번호 · 연도 · 소제목 */
+  .cn-lst{margin-top:30px;display:flex;flex-direction:column;gap:22px;}
+  .cn-txt > .cn-lst:first-child{margin-top:0;}
+  .cn-li-t{font-family:var(--cntf);font-size:var(--cnts);font-weight:var(--cnifw);color:var(--cnitc2);line-height:1.45;word-break:keep-all;}
+  .cn-li-d{margin-top:8px!important;font-size:var(--cnbs);line-height:1.75;color:var(--cnsc);word-break:keep-all;}
+  .cn-lst[data-l="num"] .cn-li{display:grid;grid-template-columns:37px minmax(0,1fr);column-gap:16px;}
+  .cn-no{grid-row:span 2;width:37px;height:37px;border-radius:50%;background:var(--cnac);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--cntf);font-size:18px;}
+  .cn-lst[data-l="year"]{gap:12px;} .cn-lst[data-l="year"] .cn-li{display:grid;grid-template-columns:calc(var(--cnts) * 3.6) minmax(0,1fr);column-gap:24px;align-items:baseline;}
+  .cn-lst[data-l="year"] .cn-li-t{color:var(--cnac);} .cn-lst[data-l="year"] .cn-li-d{margin:0!important;}
+  .cn-lst[data-l="head"]{gap:30px;}
+  .cn-wrap[data-al="right"] .cn-lst[data-l="num"] .cn-li{text-align:left;}
+  /* 제목 묶음(칸 · 이미지 위 글 · 바둑판 · 글 목록 위) */
+  .cn-head{margin-bottom:var(--cnhg);text-align:left;} .cn-wrap[data-hal="center"] .cn-head{text-align:center;} .cn-wrap[data-hal="right"] .cn-head{text-align:right;}
+  .cn-wrap[data-hal="center"] .cn-head .cn-bar{margin-left:auto;margin-right:auto;}
+  .cn-wrap[data-hal="center"] .cn-head .cn-ds{max-width:760px;margin-left:auto;margin-right:auto;}
+  .cn-head .cn-bw{margin-top:26px;}
+  /* 칸(cols) */
+  .cn-grid{display:grid;grid-template-columns:repeat(var(--cnn),minmax(0,1fr));gap:var(--cngy,48px) var(--cngap);}
+  .cn-wrap[data-flush="1"] .cn-grid{column-gap:0;}
+  .cn-it{min-width:0;display:flex;flex-direction:column;}
+  .cn-wrap[data-al="center"] .cn-it{text-align:center;} .cn-wrap[data-al="right"] .cn-it{text-align:right;}
+  .cn-m{position:relative;overflow:hidden;border-radius:var(--cnrd);flex:none;}
+  .cn-m img{display:block;width:100%;height:100%;object-fit:var(--cnfit,cover);}
+  .cn-wrap[data-shape="rect"] .cn-m{aspect-ratio:var(--cnar);}
+  .cn-wrap[data-shape="circle"] .cn-m{aspect-ratio:1;border-radius:50%;width:var(--cncs);max-width:100%;}
+  .cn-wrap[data-shape="circle"][data-al="center"] .cn-m{margin:0 auto;}
+  .cn-wrap[data-shape="icon"] .cn-m{overflow:visible;border-radius:0;}
+  .cn-wrap[data-shape="icon"] .cn-m img{width:auto;height:var(--cnis);max-width:100%;display:inline-block;object-fit:contain;}
+  .cn-tx{padding-top:24px;min-width:0;}
+  .cn-wrap[data-shape="none"] .cn-tx{padding-top:0;}
+  .cn-wrap[data-tfirst="1"] .cn-tx{padding:0 0 24px;flex:1;}   /* 글이 위면 글 높이가 달라도 이미지 윗선이 맞게 */
+  .cn-wrap[data-card="line"] .cn-tx{border:1px solid #E5E5E5;border-top:0;padding:20px 20px 24px;flex:1;}
+  .cn-wrap[data-card="box"] .cn-tx{background:var(--cncb);padding:28px 24px 30px;flex:1;}
+  .cn-wrap[data-mpos="side"] .cn-it{flex-direction:row;align-items:flex-start;gap:28px;}
+  .cn-wrap[data-mpos="side"][data-shape="rect"] .cn-m{width:var(--cnsw);} .cn-wrap[data-mpos="side"][data-shape="circle"] .cn-m{width:min(var(--cncs),40%);margin:0;}
+  .cn-wrap[data-mpos="side"] .cn-tx{padding-top:0;flex:1;}
+  .cn-wrap[data-mpos="side"][data-card="box"] .cn-it{gap:0;align-items:stretch;} .cn-wrap[data-mpos="side"][data-card="box"] .cn-tx{padding:24px 26px;}
+  .cn-it-t{font-family:var(--cntf);font-size:var(--cnts);font-weight:var(--cnifw);color:var(--cnitc2);line-height:1.45;word-break:keep-all;}
+  .cn-it-s{margin-top:8px!important;font-size:var(--cnbs);line-height:1.6;color:var(--cnac);word-break:keep-all;}
+  .cn-it-d{margin-top:16px!important;font-size:var(--cnbs);line-height:1.75;color:var(--cnsc);word-break:keep-all;}
+  .cn-tx > :first-child{margin-top:0!important;}
+  .cn-wrap[data-sit="1"] .cn-it-s{font-style:italic;}
+  .cn-deco{display:block;margin:16px 0 0;max-width:100%;} .cn-wrap[data-al="center"] .cn-deco{margin-left:auto;margin-right:auto;}
+  .cn-more{display:inline-block;margin-top:22px;font-size:13px;line-height:1;color:var(--cnitc2);text-decoration:none;padding-bottom:4px;border-bottom:1px solid currentColor;}
+  .cn-strip{display:grid;grid-template-columns:repeat(var(--cnsn),minmax(0,1fr));margin-bottom:44px;}
+  .cn-strip .cn-m{border-radius:0;}
+  /* 이미지 위 글(tiles) */
+  .cn-tiles{display:grid;grid-template-columns:repeat(var(--cnn),minmax(0,1fr));gap:var(--cngap);}
+  .cn-tile{position:relative;aspect-ratio:var(--cnar);background:#9AA0A8 center/cover no-repeat;overflow:hidden;border-radius:var(--cnrd);}
+  .cn-tile::before{content:"";position:absolute;inset:0;background:#000;opacity:var(--cnov);pointer-events:none;}
+  .cn-tiles.one{background:#3a3d42 center/cover no-repeat;border-radius:var(--cnrd);overflow:hidden;gap:0;}
+  .cn-tiles.one .cn-tile{background-color:transparent;border-radius:0;} .cn-tiles.one .cn-tile + .cn-tile{border-left:1px solid rgba(255,255,255,.22);}
+  .cn-tile .cn-tx{position:absolute;inset:0;padding:30px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+  .cn-wrap[data-tpos="bl"] .cn-tile .cn-tx{justify-content:flex-end;align-items:flex-start;text-align:left;}
+  .cn-tile .cn-tx .cn-more{margin-top:26px;}
+  /* 바둑판(mosaic) — 이미지 칸과 글 칸이 번갈아 */
+  .cn-mos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));}
+  .cn-mi{aspect-ratio:1;background:#E9ECF0 center/cover no-repeat;}
+  .cn-mt{aspect-ratio:1;background:var(--cncb);padding:min(38px,3cqw);box-sizing:border-box;overflow:hidden;}
+  /* 가운데(stack) — 기본 · 액자 · 프로필 */
+  .cn-stk{display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .cn-wrap[data-al="left"] .cn-stk{align-items:flex-start;text-align:left;}
+  .cn-stk > .cn-txt{max-width:900px;}
+  .cn-sm{width:100%;max-width:var(--cniw);} .cn-sm img{display:block;width:100%;height:auto;border-radius:var(--cnrd);}
+  .cn-stk > .cn-sm + .cn-txt{margin-top:28px;} .cn-stk > .cn-txt + .cn-sm{margin-top:44px;}
+  .cn-frame{display:inline-flex;flex-direction:column;align-items:center;text-align:center;border:2px solid var(--cntc);padding:48px 84px;}
+  .cn-vl{display:block;width:1px;height:56px;background:var(--cntc);margin:22px auto;}
+  .cn-wrap[data-st="profile"] .cn-in{max-width:none;padding-left:0;padding-right:0;}
+  .cn-ban{position:relative;width:100%;height:var(--cnbh);background:#9AA0A8 center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:0 24px;box-sizing:border-box;}
+  .cn-av{position:relative;width:var(--cnav);height:var(--cnav);border-radius:50%;background:#C9CDD3 center/cover no-repeat;margin:calc(var(--cnav) / -2) auto 0;}
+  .cn-prof-tx{max-width:var(--cncw,1140px);margin:30px auto 0;padding:0 40px;}
+  /* 글 목록(list) */
+  .cn-cols{display:grid;grid-template-columns:repeat(var(--cnn),minmax(0,1fr));gap:44px var(--cngap);}
+  .cn-wrap[data-al="center"] .cn-col{text-align:center;}
+  .cn-col{min-width:0;} .cn-col > .cn-it-t{margin-bottom:18px!important;}
+  .cn-lhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px;}
+  .cn-wrap[data-lline="1"] .cn-lhead{border-bottom:1px solid color-mix(in srgb,var(--cnitc2) 22%,transparent);padding-bottom:16px;}
+  .cn-ltail img{display:block;height:18px;width:auto;}
+  .cn-lico img{display:inline-block;height:var(--cnis);width:auto;margin-bottom:28px;}
+  .cn-lstrip{height:60px;background:#9AA0A8 center/cover no-repeat;display:flex;align-items:center;justify-content:center;margin-bottom:24px;}
+  .cn-lstrip span{color:#fff;font-family:var(--cntf);font-size:var(--cnts);}
+  .cn-lines p{font-size:var(--cnbs);line-height:2;color:var(--cnsc);word-break:keep-all;}
+  .cn-lines .cn-lh{margin-top:22px;color:var(--cnitc2);font-family:var(--cntf);} .cn-lines .cn-lh:first-child{margin-top:0;}
+  .cn-yr{color:var(--cnac);margin-right:10px;font-variant-numeric:tabular-nums;}
+  .cn-wrap > .cn-in > .cn-note:last-child{margin-top:44px!important;}
+  /* 261022 추가 — 히스토리(hist · 라이브 contents149): 가운데 세로선 · 연도별 항목 · 이미지가 좌우로 번갈아 */
+  .cn-tl{position:relative;display:flex;flex-direction:column;gap:var(--cngap);}
+  .cn-tl::before{content:"";position:absolute;left:50%;top:8px;bottom:0;width:1px;background:color-mix(in srgb,var(--cnitc2) 16%,transparent);}
+  .cn-tl-i{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(48px,9cqw,112px);align-items:start;}
+  .cn-tl-i::before{content:"";position:absolute;left:50%;top:10px;width:9px;height:9px;margin-left:-4px;border-radius:50%;background:var(--cnac);}
+  .cn-tl-tx{min-width:0;text-align:right;}
+  .cn-tl-i:nth-child(even) .cn-tl-tx{order:2;text-align:left;}
+  .cn-tl-yr{font-family:var(--cntf);font-size:calc(var(--cnts) * 2.4);font-weight:300;line-height:1;letter-spacing:-.01em;color:var(--cnitc2);font-variant-numeric:tabular-nums;margin-bottom:22px!important;}
+  .cn-tl-ln{display:flex;justify-content:flex-start;flex-direction:row-reverse;gap:16px;font-size:var(--cnbs);line-height:1.7;color:var(--cnsc);word-break:keep-all;}
+  .cn-tl-ln + .cn-tl-ln{margin-top:10px!important;}
+  .cn-tl-i:nth-child(even) .cn-tl-ln{flex-direction:row;justify-content:flex-start;}
+  .cn-tl-mo{flex:none;min-width:22px;color:var(--cnac);font-variant-numeric:tabular-nums;}
+  .cn-tl-m{aspect-ratio:var(--cnar);overflow:hidden;border-radius:var(--cnrd);background:#E9ECF0;}
+  .cn-tl-m img{display:block;width:100%;height:100%;object-fit:cover;}
+  /* 좁은 화면 — 좌우는 위아래로, 칸은 2칸 · 1칸으로 */
+  @container (max-width:760px){
+    .cn-tl::before{left:4px;}   /* 261022 추가 — 히스토리: 선은 왼쪽, 글 → 이미지 차례로 */
+    .cn-tl-i,.cn-tl-i:nth-child(even){grid-template-columns:minmax(0,1fr);row-gap:20px;padding-left:32px;}
+    .cn-tl-i::before{left:4px;}
+    .cn-tl-tx,.cn-tl-i:nth-child(even) .cn-tl-tx{order:0;text-align:left;}
+    .cn-tl-ln,.cn-tl-i:nth-child(even) .cn-tl-ln{flex-direction:row;justify-content:flex-start;}
+    .cn-split,.cn-wrap[data-flip="1"] .cn-split{grid-template-columns:minmax(0,1fr);row-gap:30px;}
+    .cn-wrap[data-flip="1"] .cn-split > .cn-media{order:0;}
+    .cn-wrap[data-md="bleed"] .cn-media.bleed{min-height:300px;}
+    .cn-wrap[data-md="bleed"] .cn-txt{padding:48px 24px;}
+    .cn-wrap[data-ibox="1"] .cn-split{padding:28px;} .cn-wrap[data-ibox="1"] .cn-media{margin-top:0;}
+    .cn-grid,.cn-tiles,.cn-cols{grid-template-columns:repeat(var(--cnnm),minmax(0,1fr));}
+    .cn-mos{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .cn-mt{aspect-ratio:auto;padding:22px 18px;}   /* 좁으면 글 칸은 글 높이만큼 */
+    .cn-ds.c2{columns:1;}
+    .cn-frame{padding:36px 40px;}
+  }
+  @container (max-width:480px){
+    .cn-grid,.cn-cols{grid-template-columns:minmax(0,1fr);}
+    .cn-wrap[data-shape="rect"][data-mpos="side"] .cn-it{flex-direction:column;} .cn-wrap[data-shape="rect"][data-mpos="side"] .cn-m{width:100%;}
+    .cn-in{padding-left:20px;padding-right:20px;}
+  }
+  #bset :is(#cnItemList,#cnMediaList) .mt-imgrow{align-items:center;}
+  #bset :is(#cnItemList,#cnMediaList) .mt-imgdrag,#bset :is(#cnItemList,#cnMediaList) .mt-imgthumb,#bset :is(#cnItemList,#cnMediaList) .mt-imgdel{margin-top:0;}
+  #bset :is(#cnItemList,#cnMediaList) .vc-caps > input.cn-src{display:none;}
+  #bset #cnMediaList .cn-mlb{flex:none;width:36px;font-size:11px;font-weight:700;color:var(--ink-3);text-align:center;}
+  #bset .cn-r[hidden]{display:none!important;}
   /* ══ 261022 추가 — 소셜 블럭 (snblk · SOCIAL01~15) — 아이콘 · 배너 · 이미지 피드. 좌측 사이트 소셜 36장을 세 종류로 묶었다 ══ */
   .sn-wrap{position:relative;container-type:inline-size;font-family:var(--snf);color:var(--sntc);}
   .sn-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box;}
@@ -9866,6 +10042,201 @@
         </div>
 
       </div>
+      <!-- 261022 추가 — 컨텐츠 블럭 설정 (CONTENT04~ · 접두어 cn). 배치 · 문구 · 이미지 · 항목 · 모양 · 배경 · 여백. data-for = 그 배치에서만 보이는 행(cnRows) -->
+      <div id="bsetCn" style="display:none;">
+
+        <div class="fld sfold open acc-flush" id="cnLayAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">배치<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
+            <div class="srow srow-dd" style="margin-top:0;"><span class="k">배치</span>
+              <div class="sdd" id="cnLayDD">
+                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">좌우</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="sdd-menu"></div>
+              </div>
+            </div>
+            <div class="srow cn-r" data-for="split mosaic"><span class="k">좌우 반전</span><button type="button" class="sw" id="cnFlipSw" style="margin-left:auto;" onclick="cnSw(this,'flip')" aria-label="좌우 반전"></button></div>
+            <div class="srow cn-r" data-for="split" style="margin:12px 0 6px;"><span class="k">이미지</span></div>
+            <div class="mt-seg cn-r" data-for="split" id="cnMdSeg">
+              <button type="button" class="mt-seg-b" data-m="one" onclick="cnSeg('md','cnMdSeg','one')">한 장</button>
+              <button type="button" class="mt-seg-b" data-m="two" onclick="cnSeg('md','cnMdSeg','two')">두 장</button>
+              <button type="button" class="mt-seg-b" data-m="grid" onclick="cnSeg('md','cnMdSeg','grid')">네 장</button>
+              <button type="button" class="mt-seg-b" data-m="bleed" onclick="cnSeg('md','cnMdSeg','bleed')">끝까지</button>
+            </div>
+            <div class="srow cn-r" data-for="split"><span class="k">이미지 폭</span><input class="rng" type="range" id="cnMw" min="15" max="75" step="1" value="50"><span class="v" id="cnMwV">50%</span></div>
+            <div class="srow cn-r" data-for="split" style="margin:12px 0 6px;"><span class="k">세로 정렬</span></div>
+            <div class="mt-seg cn-r" data-for="split" id="cnVaSeg">
+              <button type="button" class="mt-seg-b" data-m="top" onclick="cnSeg('va','cnVaSeg','top')">위</button>
+              <button type="button" class="mt-seg-b" data-m="center" onclick="cnSeg('va','cnVaSeg','center')">가운데</button>
+              <button type="button" class="mt-seg-b" data-m="bottom" onclick="cnSeg('va','cnVaSeg','bottom')">아래</button>
+            </div>
+            <div class="srow cn-r" data-for="stack" style="margin:12px 0 6px;"><span class="k">모양</span></div>
+            <div class="mt-seg cn-r" data-for="stack" id="cnStSeg">
+              <button type="button" class="mt-seg-b" data-m="plain" onclick="cnSeg('st','cnStSeg','plain')">기본</button>
+              <button type="button" class="mt-seg-b" data-m="frame" onclick="cnSeg('st','cnStSeg','frame')">액자</button>
+              <button type="button" class="mt-seg-b" data-m="profile" onclick="cnSeg('st','cnStSeg','profile')">프로필</button>
+            </div>
+            <div class="srow cn-r" data-for="stack" data-st="plain" style="margin:12px 0 6px;"><span class="k">순서</span></div>
+            <div class="mt-seg cn-r" data-for="stack" data-st="plain" id="cnOrdSeg">
+              <button type="button" class="mt-seg-b" data-m="ti" onclick="cnSeg('ord','cnOrdSeg','ti')">글 먼저</button>
+              <button type="button" class="mt-seg-b" data-m="it" onclick="cnSeg('ord','cnOrdSeg','it')">이미지 먼저</button>
+            </div>
+            <div class="srow cn-r" data-for="stack" data-st="plain"><span class="k">이미지 폭</span><input class="rng" type="range" id="cnIw" min="60" max="1140" step="10" value="600"><span class="v" id="cnIwV">600px</span></div>
+            <div class="srow cn-r" data-for="stack" data-st="profile"><span class="k">배너 높이</span><input class="rng" type="range" id="cnBh" min="200" max="700" step="10" value="420"><span class="v" id="cnBhV">420px</span></div>
+            <div class="srow cn-r" data-for="stack" data-st="profile"><span class="k">프로필 크기</span><input class="rng" type="range" id="cnAv" min="80" max="260" step="2" value="140"><span class="v" id="cnAvV">140px</span></div>
+            <div class="srow cn-r" data-for="cols tiles list" style="margin:12px 0 6px;"><span class="k">칸 수</span></div>
+            <div class="mt-seg cn-r" data-for="cols tiles list" id="cnNSeg">
+              <button type="button" class="mt-seg-b" data-m="1" onclick="cnSeg('n','cnNSeg',1)">1</button>
+              <button type="button" class="mt-seg-b" data-m="2" onclick="cnSeg('n','cnNSeg',2)">2</button>
+              <button type="button" class="mt-seg-b" data-m="3" onclick="cnSeg('n','cnNSeg',3)">3</button>
+              <button type="button" class="mt-seg-b" data-m="4" onclick="cnSeg('n','cnNSeg',4)">4</button>
+              <button type="button" class="mt-seg-b" data-m="5" onclick="cnSeg('n','cnNSeg',5)">5</button>
+            </div>
+            <div class="srow cn-r" data-for="cols" style="margin:12px 0 6px;"><span class="k">이미지 모양</span></div>
+            <div class="mt-seg cn-r" data-for="cols" id="cnShapeSeg">
+              <button type="button" class="mt-seg-b" data-m="rect" onclick="cnSeg('shape','cnShapeSeg','rect')">사각</button>
+              <button type="button" class="mt-seg-b" data-m="circle" onclick="cnSeg('shape','cnShapeSeg','circle')">원형</button>
+              <button type="button" class="mt-seg-b" data-m="icon" onclick="cnSeg('shape','cnShapeSeg','icon')">아이콘</button>
+              <button type="button" class="mt-seg-b" data-m="none" onclick="cnSeg('shape','cnShapeSeg','none')">없음</button>
+            </div>
+            <div class="srow cn-r" data-for="cols tiles hist" data-shape="rect" style="margin:12px 0 6px;"><span class="k">이미지 비율</span></div>
+            <div class="mt-seg cn-r" data-for="cols tiles hist" data-shape="rect" id="cnArSeg">
+              <button type="button" class="mt-seg-b" data-m="w" onclick="cnAr('w')">가로</button>
+              <button type="button" class="mt-seg-b" data-m="s" onclick="cnAr('s')">정사각</button>
+              <button type="button" class="mt-seg-b" data-m="t" onclick="cnAr('t')">세로</button>
+            </div>
+            <div class="srow cn-r" data-for="cols" data-shape="circle"><span class="k">원 크기</span><input class="rng" type="range" id="cnCs" min="60" max="400" step="2" value="200"><span class="v" id="cnCsV">200px</span></div>
+            <div class="srow cn-r" data-for="cols list" data-shape="icon"><span class="k">아이콘 크기</span><input class="rng" type="range" id="cnIs" min="16" max="160" step="2" value="46"><span class="v" id="cnIsV">46px</span></div>
+            <div class="srow cn-r" data-for="cols" data-shape="rect icon circle" style="margin:12px 0 6px;"><span class="k">이미지 위치</span></div>
+            <div class="mt-seg cn-r" data-for="cols" data-shape="rect icon circle" id="cnMposSeg">
+              <button type="button" class="mt-seg-b" data-m="top" onclick="cnSeg('mpos','cnMposSeg','top')">위</button>
+              <button type="button" class="mt-seg-b" data-m="side" onclick="cnSeg('mpos','cnMposSeg','side')">옆</button>
+            </div>
+            <div class="srow cn-r" data-for="cols" style="margin:12px 0 6px;"><span class="k">글 상자</span></div>
+            <div class="mt-seg cn-r" data-for="cols" id="cnCardSeg">
+              <button type="button" class="mt-seg-b" data-m="none" onclick="cnSeg('card','cnCardSeg','none')">없음</button>
+              <button type="button" class="mt-seg-b" data-m="line" onclick="cnSeg('card','cnCardSeg','line')">선</button>
+              <button type="button" class="mt-seg-b" data-m="box" onclick="cnSeg('card','cnCardSeg','box')">상자</button>
+            </div>
+            <div class="srow cn-r" data-for="tiles"><span class="k">어둡게</span><input class="rng" type="range" id="cnOv" min="0" max="80" step="5" value="30"><span class="v" id="cnOvV">30%</span></div>
+            <div class="srow cn-r" data-for="tiles" style="margin:12px 0 6px;"><span class="k">글 위치</span></div>
+            <div class="mt-seg cn-r" data-for="tiles" id="cnTposSeg">
+              <button type="button" class="mt-seg-b" data-m="c" onclick="cnSeg('tpos','cnTposSeg','c')">가운데</button>
+              <button type="button" class="mt-seg-b" data-m="bl" onclick="cnSeg('tpos','cnTposSeg','bl')">왼쪽 아래</button>
+            </div>
+            <div class="srow cn-r" data-for="cols tiles mosaic list hist" style="margin:12px 0 6px;"><span class="k">제목 정렬</span></div>
+            <div class="mt-seg cn-r" data-for="cols tiles mosaic list hist" id="cnHalSeg">
+              <button type="button" class="mt-seg-b" data-m="left" onclick="cnSeg('hal','cnHalSeg','left')">왼쪽</button>
+              <button type="button" class="mt-seg-b" data-m="center" onclick="cnSeg('hal','cnHalSeg','center')">가운데</button>
+              <button type="button" class="mt-seg-b" data-m="right" onclick="cnSeg('hal','cnHalSeg','right')">오른쪽</button>
+            </div>
+            <div class="srow" style="margin:12px 0 6px;"><span class="k" id="cnAlLbl">글 정렬</span></div>
+            <div class="mt-seg" id="cnAlSeg">
+              <button type="button" class="mt-seg-b" data-m="left" onclick="cnSeg('al','cnAlSeg','left')">왼쪽</button>
+              <button type="button" class="mt-seg-b" data-m="center" onclick="cnSeg('al','cnAlSeg','center')">가운데</button>
+              <button type="button" class="mt-seg-b" data-m="right" onclick="cnSeg('al','cnAlSeg','right')">오른쪽</button>
+            </div>
+            <div class="srow cn-r" data-for="split cols tiles list hist"><span class="k">간격</span><input class="rng" type="range" id="cnGap" min="0" max="160" step="2" value="30"><span class="v" id="cnGapV">30px</span></div>
+            <div class="srow cn-r" data-for="split cols tiles stack hist"><span class="k">모서리</span><input class="rng" type="range" id="cnRd" min="0" max="40" step="1" value="0"><span class="v" id="cnRdV">0px</span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="cnTextAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">문구<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="fm-fin" style="margin-top:0;"><span class="k">라벨</span><input type="text" id="cnEb" maxlength="60" spellcheck="false" autocomplete="off" oninput="cnTxt('eb',this.value)"></div>
+            <div class="fm-fin" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">제목</span><textarea rows="2" id="cnTt" maxlength="120" spellcheck="false" oninput="cnTxt('tt',this.value)"></textarea></div>
+            <div class="fm-fin"><span class="k">부제</span><input type="text" id="cnSub" maxlength="80" spellcheck="false" autocomplete="off" oninput="cnTxt('sub',this.value)"></div>
+            <div class="fm-fin" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">본문</span><textarea rows="4" id="cnDs" maxlength="1200" spellcheck="false" oninput="cnTxt('ds',this.value)"></textarea></div>
+            <div class="fm-fin"><span class="k">아래 글</span><input type="text" id="cnNote" maxlength="80" spellcheck="false" autocomplete="off" oninput="cnTxt('note',this.value)"></div>
+            <div class="fm-fin"><span class="k">버튼</span><input type="text" id="cnBtn" maxlength="30" placeholder="비우면 버튼 없음" spellcheck="false" autocomplete="off" oninput="cnTxt('btn',this.value)"></div>
+            <div class="fm-fin cn-r" data-btn="1"><span class="k">링크</span><input type="text" id="cnHref" maxlength="300" placeholder="https://" spellcheck="false" autocomplete="off" oninput="cnTxt('href',this.value)"></div>
+            <div class="srow cn-r" data-btn="1" style="margin:12px 0 6px;"><span class="k">버튼 모양</span></div>
+            <div class="mt-seg cn-r" data-btn="1" id="cnBstSeg">
+              <button type="button" class="mt-seg-b" data-m="line" onclick="cnSeg('bst','cnBstSeg','line')">선</button>
+              <button type="button" class="mt-seg-b" data-m="fill" onclick="cnSeg('bst','cnBstSeg','fill')">채움</button>
+              <button type="button" class="mt-seg-b" data-m="text" onclick="cnSeg('bst','cnBstSeg','text')">글자</button>
+              <button type="button" class="mt-seg-b" data-m="arrow" onclick="cnSeg('bst','cnBstSeg','arrow')">화살표</button>
+            </div>
+            <div class="fm-fin cn-r" data-for="cols tiles"><span class="k">항목 링크</span><input type="text" id="cnMore" maxlength="24" placeholder="예: 더 보기 (비우면 없음)" spellcheck="false" autocomplete="off" oninput="cnTxt('more',this.value)"></div>
+            <div class="mtk-hint">제목에서 *별표*로 감싼 글자는 굵게(강조 색) 보입니다. 비운 칸은 블럭에서 빠집니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold cn-r" data-for="split stack" id="cnMediaAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">이미지<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="mt-imglist" id="cnMediaList" data-rowcard="1"></div>
+            <div class="mtk-hint">썸네일을 누르고 보관함에서 고르거나, 보관함 이미지를 블럭의 이미지 위에 끌어다 놓으면 바뀝니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold cn-r" data-for="split cols tiles mosaic list hist" id="cnItemAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">항목 <span class="n" id="cnItemCount"></span><span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow cn-r" data-for="split" style="margin:0 0 6px;"><span class="k">목록 모양</span></div>
+            <div class="mt-seg cn-r" data-for="split" id="cnLstSeg">
+              <button type="button" class="mt-seg-b" data-m="none" onclick="cnSeg('lst','cnLstSeg','none')">없음</button>
+              <button type="button" class="mt-seg-b" data-m="num" onclick="cnSeg('lst','cnLstSeg','num')">번호</button>
+              <button type="button" class="mt-seg-b" data-m="year" onclick="cnSeg('lst','cnLstSeg','year')">연도</button>
+              <button type="button" class="mt-seg-b" data-m="head" onclick="cnSeg('lst','cnLstSeg','head')">소제목</button>
+            </div>
+            <div class="mt-imglist" id="cnItemList" data-rowcard="1"></div>
+            <div class="im-addrow">
+              <button type="button" class="btn-sm" id="cnItemAdd" onclick="cnItemAdd()" title="항목을 하나 더 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button>
+            </div>
+            <div class="mtk-hint" id="cnItemHint">비워 둔 칸은 블럭에서 빠집니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="cnLookAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">모양<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow srow-dd" style="margin-top:0;"><span class="k">제목 폰트</span>
+              <div class="sdd" id="cnTfDD">
+                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">본고딕 KR (한글 고딕)</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="sdd-menu"></div>
+              </div>
+            </div>
+            <div class="srow srow-dd"><span class="k">본문 폰트</span>
+              <div class="sdd" id="cnBfDD">
+                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">본고딕 KR (한글 고딕)</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="sdd-menu"></div>
+              </div>
+            </div>
+            <div class="srow"><span class="k">제목 크기</span><input class="rng" type="range" id="cnFs" min="12" max="120" step="1" value="28"><span class="v" id="cnFsV">28px</span></div>
+            <div class="srow cn-r" data-items="1"><span class="k">항목 제목</span><input class="rng" type="range" id="cnTs" min="10" max="48" step="1" value="18"><span class="v" id="cnTsV">18px</span></div>
+            <div class="srow"><span class="k">본문 크기</span><input class="rng" type="range" id="cnBs" min="10" max="24" step="1" value="14"><span class="v" id="cnBsV">14px</span></div>
+            <div class="srow"><span class="k">제목 색</span><span class="sw-col"><input type="color" id="cnTc" value="#333333" data-cp-title="제목 색"><span class="hex" id="cnTcV">#333333</span></span></div>
+            <div class="srow cn-r" data-items="1"><span class="k">항목 제목 색</span><span class="sw-col"><input type="color" id="cnItc" value="#333333" data-cp-title="항목 제목 색"><span class="hex" id="cnItcV">#333333</span></span></div>
+            <div class="srow"><span class="k">본문 색</span><span class="sw-col"><input type="color" id="cnSc" value="#999999" data-cp-title="본문 색"><span class="hex" id="cnScV">#999999</span></span></div>
+            <div class="srow"><span class="k">포인트 색</span><span class="sw-col"><input type="color" id="cnAc" value="#999999" data-cp-title="포인트 색 — 라벨 · 번호 · 연도 · 아래 글"><span class="hex" id="cnAcV">#999999</span></span></div>
+            <div class="srow cn-r" data-hl="1"><span class="k">강조 색</span><span class="sw-col"><input type="color" id="cnHl" value="#333333" data-cp-title="강조 색 — 제목의 *별표* 글자"><span class="hex" id="cnHlV">#333333</span></span></div>
+            <div class="srow cn-r" data-btn="1"><span class="k">버튼 색</span><span class="sw-col"><input type="color" id="cnBc" value="#141414" data-cp-title="버튼 색"><span class="hex" id="cnBcV">#141414</span></span></div>
+            <div class="srow cn-r" data-cb="1"><span class="k">상자 색</span><span class="sw-col"><input type="color" id="cnCb" value="#ffffff" data-cp-title="글 상자 색"><span class="hex" id="cnCbV">#FFFFFF</span></span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="cnBgAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">배경<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="cnt-list rt-bgbox">
+              <div class="im-th empty" id="cnBgTh" onclick="bpBgPick('cn')" title="보관함에서 이미지·동영상 고르기" role="button" aria-label="배경 이미지·동영상 고르기"></div>
+              <div class="im-addrow">
+                <input type="file" id="cnBgUp" accept="image/*,video/*" style="display:none;" onchange="bpBgUpload('cn',this)">
+                <span class="im-tb off" id="cnBgDel"><button type="button" class="danger" onclick="bpBgClear('cn')" title="배경 이미지·동영상 없애기" aria-label="배경 없애기"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg></button></span>
+                <button type="button" class="ghost" onclick="bpBgUrl('cn')" title="이미지·동영상 파일 주소(URL)로 넣습니다">URL</button>
+                <button type="button" class="ghost" onclick="document.getElementById('cnBgUp').click()" title="내 컴퓨터의 파일을 보관함과 블럭 배경에 함께 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
+              </div>
+            </div>
+            <div class="srow" id="cnBgGrayRow"><span class="k">흑백</span><button type="button" class="sw" id="cnBgGraySw" style="margin-left:auto;" onclick="bpSw('cn',this,'bgGray')" aria-label="배경 흑백"></button></div>
+            <div class="srow" id="cnBgDimRow"><span class="k">어둡게</span><input class="rng" type="range" id="cnBgDim" min="0" max="80" step="5" value="0"><span class="v" id="cnBgDimV">0%</span></div>
+            <div class="srow"><span class="k">배경색</span><span class="sw-col"><input type="color" id="cnBg" value="#ffffff" data-cp-title="배경색"><span class="hex" id="cnBgV">#FFFFFF</span></span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="cnBoxAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="cnPt" min="0" max="300" step="2" value="100"><span class="v" id="cnPtV">100px</span></div>
+            <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="cnPb" min="0" max="300" step="2" value="100"><span class="v" id="cnPbV">100px</span></div>
+          </div></div>
+        </div>
+
+      </div>
       <!-- 261022 추가 — 소셜 블럭 설정 (SOCIAL01~15 · 접두어 sn). data-for = 그 종류(아이콘 icon · 배너 banner · 이미지 피드 feed)에서만 보이는 행(snRows) -->
       <div id="bsetSn" style="display:none;">
         <div class="fld sfold open acc-flush" id="snMainAcc">
@@ -14855,6 +15226,7 @@
     if(blk.getAttribute('data-block')==='beforeafter') return {el:blk,kind:'bcrep'};
     if(blk.getAttribute('data-block')==='imgring'){ var irc=el.closest('.ir-item'); return irc?{el:irc,kind:'irrep'}:{el:blk,kind:'iradd'}; }   /* 260923 추가 — 3D 이미지 링: 이미지 위면 그 이미지 교체, 빈 곳이면 목록에 추가 */
     if(blk.getAttribute('data-block')==='crumple') return {el:blk,kind:'ckrep'};   /* 260923 추가 — 구김 이미지: 지금 보이는 항목 교체 */
+    if(blk.getAttribute('data-block')==='cnblk'){ var cnn=el.closest('[data-cn]'); return cnn?{el:cnn,kind:'cnrep'}:{el:blk,kind:'cnbg'}; }   /* 261022 추가 — 컨텐츠 블럭: 이미지 자리면 그 이미지, 빈 곳이면 블럭 배경 */
     if(blk.getAttribute('data-block')==='formblk'){ var fmi=el.closest('.fm-img'); return fmi?{el:fmi,kind:'fmimg'}:{el:blk,kind:'bg'}; }   /* 260929 추가 — 폼 블럭: 옆 이미지 자리면 그 이미지 교체, 그 밖이면 블럭 배경(설정값으로) */
     if(blk.getAttribute('data-block')==='stackcard'){ var scc=el.closest('.sc-card'); return scc?{el:scc,kind:'screp'}:{el:blk,kind:'scadd'}; }   /* 260923 추가 — 스택 카드: 카드 위면 그 카드 이미지 교체, 그 밖이면 새 카드 */   /* 260923 추가 — 이전·이후 비교 */
     if(blk.getAttribute('data-block')==='stackgal') return {el:blk,kind:'skadd'};   /* 260923 추가 — 스택 갤러리: 목록에 추가 */   /* 260922 추가 — 게이지 슬라이더: 목록에 추가 */
@@ -14912,6 +15284,11 @@
       if(kind!=='img' && kind!=='vid'){ clToast('게이지 슬라이더에는 이미지·동영상만 넣을 수 있습니다.'); return; }
       if(typeof selectBlock==='function') try{ selectBlock(blk); }catch(x){}
       gsLibDrop(blk, kind==='vid'?(typeof libVidMark==='function'?libVidMark(p.src,true):p.src+'#video'):p.src); return;
+    }
+    if(tg.kind==='cnrep'||tg.kind==='cnbg'){   /* 261022 추가 — 컨텐츠 블럭 */
+      if(kind!=='img' && kind!=='vid'){ clToast('이미지·동영상만 넣을 수 있습니다.'); return; }
+      if(typeof selectBlock==='function') try{ selectBlock(blk); }catch(x){}
+      if(tg.kind==='cnrep') cnLibRep(tg.el,libVidMark(p.src,kind==='vid')); else cnLibDrop(blk,libVidMark(p.src,kind==='vid')); return;
     }
     if(tg.kind==='bcrep'){   /* 260923 추가 — 이전·이후 비교 · 경계선 왼쪽이면 이전, 오른쪽이면 이후 이미지 */
       if(kind!=='img'){ clToast('이전·이후 비교에는 이미지만 넣을 수 있습니다.'); return; }
@@ -16444,6 +16821,7 @@
     if(card.getAttribute('data-kind')==='crumple'){ baInsertCrumple(card); return; }   /* 260923 추가 — 구김 이미지(IMAGE04) */
     if(card.getAttribute('data-kind')==='imgring'){ baInsertImgRing(card); return; }   /* 260923 추가 — 3D 이미지 링 */
     if(card.getAttribute('data-kind')==='formblk'){ baInsertForm(card); return; }   /* 260929 추가 — 폼 블럭(FORM01~10) */
+    if(card.getAttribute('data-kind')==='cnblk'){ baInsertCn(card); return; }   /* 261022 추가 — 컨텐츠 블럭(CONTENT04~71) */
     if(card.getAttribute('data-kind')==='snblk'){ baInsertSn(card); return; }   /* 261022 추가 — 소셜 블럭(SOCIAL01~15) */
     if(card.getAttribute('data-kind')==='calblk'){ baInsertCal(card); return; }   /* 260929 추가 — 캘린더 블럭(CALENDAR01) */
     if(card.getAttribute('data-kind')==='ctblk'){ baInsertCt(card); return; }   /* 260929 추가 — 컨택트/지점 블럭(CONTACT01~18) */
@@ -17021,6 +17399,7 @@
     if(clone && clone.getAttribute('data-block')==='imgring'){ if(typeof irCloneInit==='function') irCloneInit(src,clone); return; }   /* 260923 추가 — 3D 이미지 링 */
     if(clone && clone.getAttribute('data-block')==='crumple'){ if(typeof ckCloneInit==='function') ckCloneInit(src,clone); return; }   /* 260923 추가 — 구김 이미지 */
     if(clone && clone.getAttribute('data-block')==='formblk'){ if(typeof fmCloneInit==='function') fmCloneInit(src,clone); return; }   /* 260929 추가 — 폼 블럭 */
+    if(clone && clone.getAttribute('data-block')==='cnblk'){ if(typeof cnCloneInit==='function') cnCloneInit(src,clone); return; }   /* 261022 추가 — 컨텐츠 블럭 */
     if(clone && clone.getAttribute('data-block')==='snblk'){ if(typeof snCloneInit==='function') snCloneInit(src,clone); return; }   /* 261022 추가 — 소셜 블럭 */
     if(clone && clone.getAttribute('data-block')==='calblk'){ if(typeof caCloneInit==='function') caCloneInit(src,clone); return; }   /* 260929 추가 — 캘린더 블럭 */
     if(clone && clone.getAttribute('data-block')==='ctblk'){ if(typeof ctCloneInit==='function') ctCloneInit(src,clone); return; }   /* 260929 추가 — 컨택트/지점 블럭 */
@@ -17338,6 +17717,113 @@
                         ['strip-red','상담 신청'],['strip-yellow','상담 신청'],['strip-green','상담 신청'],['strip-navy','상담 신청'],['br-titlel','지점'],['br-mapl','지점'],['br-center','지점'],['br-detail','지점']].map(function(p,i){   /* 시작값 이름은 CT_PRESETS(아래 모듈)와 같아야 한다 — 이 목록은 모듈보다 먼저 실행되므로 여기 직접 적는다 */
     return {no:i+1, kind:'ctblk', preset:p[0], label:'CONTACT'+(i<9?'0':'')+(i+1), badge:'NEW', tag:p[1], ar:'552/300'};
   });
+  /* 261022 추가 — 컨텐츠 블럭 시작값 (좌측 사이트 contentsNN 견본 그대로 — 문구 · 사진 · 글꼴 크기 · 색). 키 = 'k' + 사이트 번호.
+     좌우 반전 짝(4↔5 · 25↔26 · 27↔28 · 31↔32 · 33↔34 · 35↔36 · 37↔38 · 39↔40 · 93↔94 · 95↔96 · 110↔111 · 112↔113 · 114↔115 · 116↔117 · 121↔122 · 123↔124 · 125↔126 · 118↔119↔120 · 29↔30 · 59↔60)은 「좌우 반전」으로,
+     칸 수만 다른 묶음(6·7·8 · 11·12·13 · 16·17·18 · 19·20·21 · 41·42·43 · 44·45·46 · 47·48·49 · 50·51·52 · 53·54·55 · 61·62·63 · 67·68·69 · 73·74·75 · 77·78·79 · 80·81·82 · 83·84·85 · 97·98·99 · 102·103·104 · 106·107·108)은 「칸 수」로 합쳤다.
+     글꼴 번호 = SM_FONTS (0 Instrument Serif · 1 Playfair · 7 본명조 · 8 본고딕 · 9 Helvetica Neue) */
+  var CN_PRESETS=(function(){
+    var G=8, M=7, E=9, P=1, R=0;
+    function its(a){ return a.map(function(x){ return (typeof x==='string')?{img:x,t:'',s:'',d:''}:{img:x.img||'',t:x.t||'',s:x.s||'',d:x.d||''}; }); }
+    function md(a){ return a.map(function(x){ return (typeof x==='string')?{img:x,t:'',s:''}:{img:x.img||'',t:x.t||'',s:x.s||''}; }); }
+    var L1='프랑시스 밤을 잔디가 경, 새워 청춘이 파란 언덕 어머님, 계십니다. 가을로 나는 계집애들의 까닭이요, 이름을 않은 동경과 가을 다하지 있습니다.';
+    var L2='내 추억과 아름다운 버리었습니다. 이름과, 딴은 별들을 쉬이 지나고 별을 계절이 이름자를 아직 거외다. 패, 하나에 멀리 버리었습니다.';
+    var L3='이름과, 별빛이 이름자를 이네들은 멀듯이, 둘 남은 부끄러운 버리었습니다. 별 토끼, 마리아 계십니다. 그리고 오면 하나의 까닭입니다.';
+    var L4='피어나듯이 멀듯이, 헤일 북간도에 아침이 이국 지나가는 별 봅니다. 어머니, 사람들의 어머님, 벌레는 같이 봅니다. 노루, 덮어 아직 잔디가 피어나듯이 나는 거외다.';
+    return {
+      /* ── 좌우 (split) ── */
+      k4:{lay:'split', mw:48, media:md(['contents4_1.png']), tt:'도자기를 빚는 이유', tls:2, fw:400, fs:28, ds:'창작은 모두 어렵겠지만, 내게는 도자기를 빚는 일이 글을 쓰는 일보다 훨씬 더 힘겹게 느껴집니다. 도예 작업을 하면서 틈틈이 글을 적어볼 때는 내가 쓴 몇 줄의 문장을 자랑스럽게 여기며 혼자 흐뭇해하곤 했지만, 도자기를 좋아하게 될수록 오히려 좋은 재료와 점점 멀어지는 느낌을 받습니다.\n\n글쓰기는 종이와 펜만 있으면 언제 어디서든 시작할 수 있어서, 도자기보다 시작이 쉬워 보이지만 시작이 쉽다고 해서 완성도 쉬운 것은 아닙니다.', btn:'더보기', bst:'line', bc:'#141414', tc:'#333333', sc:'#696c71', pt:80, pb:80},
+      k15:{lay:'split', md:'bleed', mw:50, media:md(['contents15_1.jpg']), bg:'#f1f0ee', tt:'감성을 담는 페이스 스튜디오', tf:M, fs:22, tc:'#5d8416', sc:'#656565', ds:'풀잎 사이로 바람이 스쳐 지나가면, 들리지 않을 것 같은 소리가 가만히 귓가에 머뭅니다. 그 속을 천천히 걸어가다 보면 어느새 발걸음이 느려지고, 마음 깊은 곳에서 오래 묵혀 두었던 생각들이 차분히 고개를 듭니다.\n\n들판 위에 서 있는 한 사람의 모습은, 마치 자기 자신과 대화를 나누고 있는 듯 보입니다. 끝없이 펼쳐진 초록빛 물결은 때로는 희망이 되고, 때로는 쉼이 되며, 때로는 우리가 어디로 가야 할지 알려주는 이정표가 되기도 합니다.\n\n우리는 이 공간에서 잠시 멈추어 섭니다. 삶은 거대한 도약보다 작은 걸음 하나에 담긴 진심에서 시작되고, 그 걸음을 이어가는 힘은 결국 우리 자신을 믿는 데서 비롯됩니다.', pt:160, pb:160},
+      k22:{lay:'split', flip:true, mw:48, va:'top', gap:40, media:md(['contents22_1.jpg']), bgImg:'content_image_22_1.jpg', tt:'W H O  W E  A R E', tf:E, fw:400, fs:45, tc:'#424242', eb:'', sub:'건 축 스 튜 디 오 [ 공 간 ] : 건 축 디 자 이 너', ds:'알렉스 마살로프 & 벨벳 베리타스\n\n디자인의 일반적인 정의는 \'디자인이란 물품의 형상·모양·색채 또는 이들을 결합한 것으로서 시각을 통하여 미감을 일으키게 하는 것\'을 말합니다. 그렇지만 엄밀히 따지면 디자인에 대해 한가지의 정의가 존재하는 것 보다 여러 분야에서 디자인이라는 용어가 각자 다양한 의미로 해석, 활용되고 있습니다.\n\n이렇듯 디자인과 건축을 결합한 건축물은 우리의 삶에서 하나의 예술로서 인간의 삶을 풍요롭게 만들어줍니다. 건축을 디자인하는 것은 단순히 \'건축을 하나 세운다\'의 개념을 넘어 구조적 안정, 기능적 편리함, 미적 아름다움을 함께 만족시키는 창작 예술 분야입니다.', bs:13, sc:'#424242', ac:'#919191', lst:'year', ts:12, ifw:400, itc:'#424242', items:its([{t:'2005',d:'프랑스 파리대학교 석사'},{t:'2011',d:'하마다 다케시 조수'},{t:'2013',d:'아크건설 구조설계팀'},{t:'2016',d:'아크건설 건축설계팀'},{t:'2017',d:'IBI 그룹'},{t:'2019',d:'P&T 아키텍쳐'},{t:'2020',d:'미디어아트 스튜디오'},{t:'2021',d:'건축 스튜디오 [공간] 대표'}]), pt:100, pb:100},
+      k25:{lay:'split', mw:15, va:'top', media:md(['contents25_1.png']), tt:'아바 픽쳐스 코퍼레이션', fw:400, fs:24, tc:'#333333', ds:'아바 픽쳐스는 런던에서 가장 오래 운영되고 유일하게 남아있는 메이저 스튜디오로서 영화의 출현에서 텔레비전의 출현, 디지털 혁명에 이르기까지 영화의 모든 주요 발전의 1층에 있습니다. 100년의 역사 동안 우리는 수천 편의 유명한 영화와 TV 프로그램의 제작 현장입니다.\n\n오늘날 우리는 유명한 영화, TV 프로그램 및 광고를 만들기 위한 끊임없는 노력으로 크고 작은 프로젝트와 계속 협력하고 있습니다. 우리 스튜디오 부지는 26에이커와 4단계에서 65에이커와 30단계로 확장하면서 수년에 걸쳐 상당히 성장했습니다.', bs:13, pt:60, pb:60},
+      k27:{lay:'split', flip:true, mw:32, rd:12, media:md(['contents27_1.jpg']), tt:'빛은 어디서 태어날까?', fs:22, ds:'빛은 단순히 어둠을 밀어내는 존재가 아니라, 세상을 물들이고 감각을 깨우는 시작점입니다. 바다의 파동처럼 번져 나가는 빛의 결은 시간의 흐름과 맞물려 끝없이 변주되며, 보는 이로 하여금 새로운 감각을 불러일으킵니다. 눈에 보이지 않는 작은 입자들이 모여 찬란한 장면을 이루듯, 우리의 기억 또한 수많은 파편들이 모여 하나의 이야기를 완성합니다.', pt:60, pb:60},
+      k31:{lay:'split', mw:49, va:'top', media:md(['contents31_1.png']), tt:'에드워드 문', tf:M, fs:24, ds:'에드워드 문은 프랑스의 비스바덴에서 태어나, 블랙 회사의 수석 디자이너로 일했던 프랑스의 대표적인 산업 디자이너입니다. 에드워드 문(Edwards Moon)은 좋은 디자인을 위한 7가지 원칙으로도 유명합니다.\n\n에드워드 문은 전자 기기 제조업체인 블랙(Black)에 합류할 때까지 몇 년 동안 건축가로 일하고 훈련을 받았습니다. 재임 기간 동안 그와 그의 팀은 레코드 플레이어에서 가구, 보관 시스템에 이르기까지 많은 상징적인 장치를 설계했습니다.\n\n그는 또한 기본적으로 "더 적지만 더 나은"으로 번역되는 기억에 남는 문구 "Weniger, aber besser"로 인정됩니다.', bs:13},
+      k33:{lay:'split', mw:66, va:'top', media:md(['contents33_1.jpg']), tt:'비록 태양은 사라졌지만,\n내게 빛이 있어요.', fs:16, ds:'별 아스라히 쉬이 가을 계십니다. 불러 그러나 별들을 풀이 같이 프랑시스 없이 하나에 듯합니다. 강아지, 옥 아이들의 언덕 까닭입니다. 이웃 말 다하지 듯합니다. 별이 그러나 속의 이제 밤을 아름다운 듯합니다.\n\n애기 아이들의 이 있습니다. 나는 책상을 걱정도 북간도에 가을 내일 불러 써 봅니다. 북간도에 별 노루, 하늘에는 별에도 프랑시스 헤일 당신은 자랑처럼 있습니다.', bs:12},
+      k35:{lay:'split', mw:49, media:md(['contents35_1.jpg']), lst:'num', ts:18, ifw:500, itc:'#333333', ac:'#000000', items:its([{t:'한번의 클릭으로 가져오기',d:'한번의 클릭으로 데이터를 가져올 수 있는 원클릭 임폴트 기능으로 사용자의 시간과 비용을 동시에 절약할 수 있습니다.'},{t:'강력한 옵션',d:'델타 및 감마와 같은 모바일에 대한 주요 정보를 확인하고 필터를 조정하여 표시되는 전략을 미세 조정할 수 있습니다.'},{t:'무제한 포트폴리오',d:'사용자가 원하는 포트폴리오를 무제한으로 사용할 수 있습니다. 언제 어디서든 최신 트랜드가 반영된 포트폴리오 제작이 가능합니다.'}])},
+      k37:{lay:'split', mw:57, va:'top', media:md(['contents37_1.png']), lst:'head', ts:22, ifw:400, itc:'#333333', bs:13, items:its([{t:'그레이 스케일',d:'회색조는 다른 회색 음영만 사용하는 흑백 단색입니다. 회색 음영이 다른 이러한 인쇄물은 일반적으로 사진 업계에서 흑백이라고 불리는 반면 디자인 업계에서는 그레이스케일이라는 용어를 선호합니다.'},{t:'스펙트럼',d:'전체 스펙트럼 사진은 일반 카메라보다 더 많은 빛을 포착하는 카메라를 사용합니다. 그리고 이것이 사진가가 가시광선뿐만 아니라 자외선 및 근적외선도 얻는 이유입니다.'},{t:'색도 변환',d:'색상 공간 변환은 CMM(색상 관리 모듈)이 한 장치의 공간에서 다른 장치 공간으로 색상을 변환할 때 발생합니다. 이러한 근사값이 어떻게 작동하는지 알면 사진이 어떻게 변하는지 제어하는 데 도움이 될 수 있습니다.'}])},
+      k39:{lay:'split', mw:49, al:'center', media:md(['contents39_1.png']), tt:'Estepa', tf:P, fi:true, fw:400, fs:75, tc:'#222222', ds:'대부분의 와인은 포도로 만들어지지만 식료품점에서 볼 수 있는 것과는 다릅니다. 와인 포도는 작고 달콤하며 껍질이 두껍고 씨가 들어 있습니다. 상업적 생산에 사용되는 와인 포도 품종은 1,300가지가 넘지만 이 중 100가지 정도만이 전 세계 포도원의 75%를 차지합니다.', bs:13, note:'브 랜 딩 ｜ 웹 디 자 인', ns:13, ac:'#676767', pt:60, pb:60},
+      k57:{lay:'split', flip:true, mw:57, va:'top', media:md(['contents57_1.jpg']), bg:'#000000', tt:'전시', tf:M, fw:400, fs:20, tls:.65, tc:'#ffffff', lst:'head', ts:13, ifw:400, itc:'#919191', sc:'#919191', bs:12, items:its([{t:'단독 전시',d:'2021 전시설계 : 린더 팜므/오브젯 - 창의적 검토\n2021 크로이돈 미술관 by FAT｜드진\n2020 뉴욕의 롤링 스톤즈\n2018 밀라노 박람회'},{t:'그룹 전시',d:'2021 아름답고 유쾌한 디자인의 크리에이티브 에이전시\n등각투영 전시회를 위한 토마스의 그래픽 포스터 디자인\n2020 그라피탈리아 : 그래픽 아트, 인쇄 매체 및 커뮤니케이션 전시회\n2019 비엔날레 디자인 그래픽 드 쇼몽\n2018 로스앤젤레스, "그래픽 디자인: 현재 생산 중"\n마스야마 시로 전'}])},
+      k64:{lay:'split', flip:true, mw:49, media:md(['contents64_1.jpg']), bg:'#4b572a', tt:'빛과 그림자 사이의 시선', fw:600, fs:34, tc:'#ffffff', sc:'#ffffff', ds:'자연은 예상치 못한 순간에 가장 깊은 이야기를 들려줍니다. 한 줄기 빛이 잎사귀를 비집고 들어와 얼굴 위에 그림자를 남길 때, 그 장면은 단순한 풍경을 넘어 새로운 의미가 됩니다.\n\n성장은 거대한 성취 속에서만 이루어지는 것이 아닙니다. 바람이 흔들고 빛과 어둠이 교차하는 작은 순간 속에서 우리는 삶의 본질을 배웁니다. 아이의 눈빛 속에서 우리는 아직 정의되지 않은 가능성과, 여전히 살아 숨 쉬는 희망을 발견합니다.', pt:80, pb:80},
+      k72:{lay:'split', mw:40, gap:95, media:md(['contents72_1.png']), bgImg:'graysoni_showcase_bg2.jpg', eb:'그래픽 디자인 & 아트 디렉션', ac:'#333333', tt:'*NORGIAN*CLUE\nSTUDIO', tf:E, fw:400, fs:70, tc:'#000000', sc:'#888888', ds:'\'나는 그림을 그릴줄 모르는데\'라고 생각할 수 있습니다. 하지만 당신은 디자이너입니다.\n\n왜냐면 매일매일의 생활을 통해 수 없이 디자인 원리를 활용하고 있기 때문입니다. 당신은 당신의 방을 효과적으로 정돈합니다. 근사해 보일 뿐 아니라 편안하게 느껴지는 옷을 선택합니다.\n\n깨닫고 있든, 그렇지 않든, 당신은 디자이너입니다.', btn:'더 보 기', bst:'arrow', bc:'#000000', pt:200, pb:200},
+      k93:{lay:'split', flip:true, mw:45, gap:50, media:md(['contents93_1.png']), bg:'#f5f5f5', tt:'FIORE CARLA', tf:E, fw:400, fs:70, tc:'#313131', sub:'아트 디렉션, 브랜딩, 일러스트레이션, 그래픽스', sc:'#696c71', ds:'이 전시는 2007년 이후 제주에서 이루어진 그래픽 디자인 전반을 공평하게 다루지는 않습니다. 예를 들어 회사 보고서나 지역 상품 광고, 기업 홍보용 팜플렛과 같은 작업은 이 전시에서 찾아볼 수 없습니다.\n\n대신 전시는 문화 영역을 중심으로 활동해 온 소수의 개인 디자이너들의 작업에 주목합니다. 이들은 미술, 사진, 건축, 출판 등 서로 다른 영역을 넘나들며 자신만의 시각 언어를 구축해 왔습니다.', btn:'프로젝트 보기', bst:'line', bc:'#333333', pt:110, pb:110},
+      k95:{lay:'split', flip:true, mw:49, media:md(['contents95_1.png']), bg:'#ecebeb', tt:'이제 새롭게 만나는 순간', fw:400, fs:42, tc:'#202020', ds:'오늘이 더 행복으로 느껴지게 하는 것, 그것이 우리의 디자인이 되었으면 합니다.\n사소한 일상의 숨겨진 아름다움을 발견하는 것이 행복입니다.', btn:'더보기', bst:'fill', bc:'#000000', pt:60, pb:60},
+      k110:{lay:'split', flip:true, mw:61, gap:85, al:'right', bar:true, ac:'#03c75a', media:md(['contents110_1.jpg']), tt:'산은 정복하는게 아니라\n정상을 잠시\n빌려주는 것이다.', fs:28, tc:'#666666', ds:'자연은 정복 대상이 아니라, 탐험을 통한 이해의 대상입니다.\n우주와 자연의 원리에서 배운 도전 정신은\n그 곳이 어디든 사람을 그 곳으로 이끕니다.\n사람과 자연의 더 나은 공존을 위해\n탐험은 계속됩니다.', bs:13, va:'top', pt:60, pb:60},
+      k112:{lay:'split', flip:true, mw:49, media:md(['contents112_1.jpg']), bg:'#31333f', tt:'멀고, 두렵고, 무거운 산을\n즐거움의 대상으로 승화시키다.', fs:28, tc:'#ffffff', sc:'#aaaaaa', bs:13, va:'top', ds:'에베레스트산(영어: Mount Everest)은 높이가 해발 8,849 m로 지구에서 가장 높은 산입니다.\n\n네팔에서는 사가르마타라 부르고, 티베트어로는 초모랑마, 중국어에서는 티베트어 \'초모랑마\'를 그대로 차용해 주무랑마봉이라고 부릅니다. \'에베레스트\'는 영국의 조지 에버리스트 경의 이름을 따서 붙여졌습니다. 에베레스트산은 가장 높은 산으로 알려져있지만, 지구의 중심에서 가장 멀리 떨어진 산은 아닙니다.', pt:60, pb:60},
+      k114:{lay:'split', flip:true, mw:49, media:md(['contents114_1.png']), eb:'Aenean felis', ac:'#c5ac82', tt:'소개', fw:400, fs:28, tc:'#505050', ds:'서울 전경을 그대로 만끽할 수 있는 국내 유일의 레스토랑 레스트 입니다. 레스트의 핵심 가치인 건강, 즐거움, 편안함을 바탕으로 고객 삶의 중요한 순간을 함께하겠습니다. L타워에서도 가장 높은 자리에 위치한 레스트는 서울의 전경을 360도로 즐길 수 있는 국내 유일의 레스토랑입니다. 클래식한 프렌치 코스 요리와 함께 보석 같은 야경을 바라보며 잊지 못할 시간을 즐기실 수 있습니다.', pt:60, pb:60},
+      k116:{lay:'split', flip:true, mw:64, va:'bottom', media:md(['contents116_1.png']), eb:'A B O U T  U S', ac:'#555555', tt:'*스타일리시한 디자인*과\n*합리적인 가격*의 가구전문 브랜드', fw:400, fs:20, tc:'#202020', pt:60, pb:60},
+      k118:{lay:'split', flip:true, mw:42, ibox:true, lift:60, cb:'#f8f8f8', media:md(['contents118_1.png']), eb:'SERVICES', ac:'#555555', tt:'헤르만 가구는 1:1 전문 맞춤 상담과 컨셉비교,\n안전한 배송까지 *올인원 서비스 시스템*을 제공합니다.', fw:400, fs:20, tc:'#202020', dcol:2, ds:'국내 최초로 해외(이태리, 프랑스, 독일) 젊은 오너들이 열정적으로 만드는 전문성 있는 브랜드들을 함께 모아서 구성했습니다. 국내 최고의 가구 편집샵으로 발돋움 하기 위해 다양한 아이디어 가구부터 유럽 명품 가구와 국내디자인 가구를 발굴, 개발하여 전시하였습니다.\n\n센스있는 고객들을 위한 대한민국 유일의 Italian Luxury 가구 편집샵이며, 침대, 쇼파, 식탁, 조명, 쿠션, 러그 등 다양한 가구들과 소품들을 합리적인 가격대로 구성하였습니다.', bs:12, sc:'#888888', pt:80, pb:40},
+      k121:{lay:'split', flip:true, mw:49, va:'top', media:md(['contents121_1.jpg']), tt:'유람선에서 산토리니 투어', fw:400, fs:32, tc:'#505050', sub:'유람선 승객을 위한 유용한 정보', ds:'모든 유람선은 피라(Fira) 항구 근처의 바다에 있습니다. 당신의 시간을 절약하고 산토리니 일일 투어를 최대한 활용하려면 유람선에서 빠른 시간내 항구에 도착해야 합니다. 항구에 빠르게 도착하기 위해서 전날부터 유람선에서 항구까지 데려다 줄 텐더 보트 티켓 구매가 필요합니다. 텐더 보트 티켓은 모든 유람선 승객에게 무료입니다.', bs:13, btn:'더 보 기', bst:'line', bc:'#000000', pt:60, pb:60},
+      k123:{lay:'split', mw:49, va:'top', media:md(['contents123_1.jpg']), lst:'year', ts:20, ifw:400, tf:P, ac:'#555555', bs:12, sc:'#888888', items:its([{t:'2021',d:'디에이치 미세먼지 저감 상품 ‘클린존(The Clean Zone)’ 세계 3대 디자인어워드 iF Design Award 2021 본상 수상'},{t:'2020',d:'‘CDP Korea 명예의 전당’ 3년 연속 입성, 2020년 한국기업지배구조원(KCGS) ESG 통합평가 3년 연속 A등급 달성'},{t:'2019',d:'다우존스 지속가능경영지수(DJSI) 평가서 11년 연속 DJSI World 편입, 건설·엔지니어링 부문 세계 1위'},{t:'2018',d:'‘2018 우수 디자인상(Good Design Awards)’ 6관왕 수상 (디에이치 아너힐즈 ‘헤리티지 가든 연하원’ 외 5건)'},{t:'2017',d:'싱가포르 노동부, WSH Council 주관, 2019 SHARP Award 3관왕 달성 (싱가포르 투아스 핑거원 매립공사, 창이 동부 매립, MRT 동부선 T308 공구)'}]), pt:60, pb:60},
+      k125:{lay:'split', mw:50, gap:40, media:md(['contents125_1.jpg']), tt:'최소한의 불행을 겪으면서, 가장 큰 행복을 얻는 방법은 작은 것을 관찰함으로써 얻을 수 있습니다.', fs:14, tc:'#202020', ds:'아침에 여유롭게 내려 마시는 고소한 커피, 퇴근길 전철에서 내다보이는 석양을 바라보며 감상에 잠기는 일, 사각거리는 포근한 이불과 함께하는 예정 없는 주말아침', sc:'#5d5d5d', pt:60, pb:60},
+      k127:{lay:'split', flip:true, mw:50, gap:30, media:md(['contents127_1.jpg']), tt:'The story of\nEunoia', tf:R, fw:400, fs:60, tc:'#010101', ds:'유노이아(Eunoia)는 스킨케어에서 가격 및 커뮤니케이션 무결성을 높이기 위해 친숙하고 효과적인 임상 기술을 제공하는 진화하는 트리트먼트 브랜드입니다.', bs:13, sc:'#a6a6a6', btn:'자세히보기', bst:'text', bc:'#555555', pt:60, pb:60},
+      k129:{lay:'split', mw:50, gap:40, media:md(['contents129_1.jpg']), bg:'#f3f3f3', tt:'Bracelets 20% off', tf:E, fw:400, fs:45, tc:'#2b2b2b', ds:'프로포즈, 기념일과 같은 특별한 순간에\n당신을 빛나게 해주는 아이템', sc:'#707070', btn:'상품 보기', bst:'fill', bc:'#81d8d0', pt:120, pb:120},
+      k132:{lay:'split', md:'two', mcap:'over', mw:52, gap:60, al:'center', media:md([{img:'contents132_1.jpg',s:'이달의 특가 상품',t:'달콤한 수제 딸기 초콜릿 도넛'},{img:'contents132_2.jpg',t:'비타민 C가 풍부한 프리미엄 생 체리'}]), bg:'#f5f5f5', eb:'NEW ARRIVALS', ac:'#222222', tt:'FRESH *한정 특가*', fw:300, fs:42, tc:'#222222', ts:22, ifw:300, itc:'#222222', ds:'과즙이 풍부하고 아삭아삭한 식감의 붉은 빛깔 체리와\n달콤한 딸기맛 초콜릿을 얹은 도넛 ( ~ 6/31 )', sc:'#222222', btn:'자세히 보기', bst:'text', bc:'#222222', pt:40, pb:40},
+      k135:{lay:'split', md:'grid', flip:true, mw:67, va:'top', media:md([{img:'contents135_1.jpg',t:'줄리아노 데 메디치',s:'카모마일 2관'},{img:'contents135_2.jpg',t:'미켈란젤로 부오나로티',s:'라벤더 4관'},{img:'contents135_3.jpg',t:'레오나르도 다 빈치',s:'데이지 1관'},{img:'contents135_4.jpg',t:'라파엘로 산치오',s:'로즈 2관'}]), tt:'아트 뮤지엄', fs:45, tc:'#222222', ts:24, ifw:400, itc:'#000000', sc:'#707070', ds:'그리스 조각은 여러 시대에 걸쳐 예술에 지대한 영향을 미쳤습니다. 현대 관람가들이 지금까지 살았던 가장 훌륭한 예술가에 의해 복제 되었습니다. 그 중 가장 좋은 예는 미켈란젤로입니다.\n\n현대 학문이 그리스 조각의 3가지 주요 발전 단계로 구분하고 있습니다. 이 3가지 단계는 고대, 고전, 헬레니즘으로 구분됩니다. 주요 주제는 역사적으로 고대 그리스로 알려진 지역의 전투, 신화 및 통치자였습니다.', pt:40, pb:40},
+      k140:{lay:'split', md:'bleed', flip:true, mw:60, al:'center', media:md(['contents_140_2.png']), timg:'contents_140_3.png', bg:'#efefef', eb:'스프링 컬렉션', ac:'#322e30', ds:'맑은 봄날처럼 프로포즈, 기념일과 같은 특별한 순간에\n당신을 빛나게 해주는 아이템', bs:13, sc:'#140e14', btn:'Shop', bst:'text', bc:'#322e30', pt:150, pb:150},
+      k146:{lay:'split', md:'two', flip:true, mw:51, va:'top', media:md([{img:'contents146_1.jpg',t:'홍합 크림 스프'},{img:'contents146_2.jpg',t:'홍합탕'}]), tt:'메뉴 소개', tf:M, fs:50, tc:'#222222', ts:18, itc:'#404040', ds:'오늘도 조개만의 차별화된 맛을 매장에서 직접 확인해보세요. 오늘도 조개의 대표 메뉴를 소개합니다.', bs:18, sc:'#707070', pt:80, pb:80},
+      /* ── 칸 (cols) ── */
+      k6:{lay:'cols', n:4, ar:'650/370', al:'center', ts:16, itc:'#333333', bs:12, items:its([{img:'contents6_1.jpg',t:'베 네 치 아',d:L1},{img:'contents6_2.jpg',t:'크 레 타',d:L1},{img:'contents6_3.jpg',t:'바 르 셀 로 나',d:L1},{img:'contents6_4.jpg',t:'플 로 렌 스',d:L1}])},
+      k11:{lay:'cols', n:4, ar:'700/500', ts:18, ifw:400, itc:'#333333', bs:13, items:its([{img:'contents11_1.jpg',t:'로즈마리',d:L2},{img:'contents11_2.jpg',t:'애플민트',d:L2},{img:'contents11_3.jpg',t:'라벤더',d:L2},{img:'contents11_4.jpg',t:'페니로얄',d:L2}])},
+      k16:{lay:'cols', n:4, ar:'700/500', ts:12, ifw:400, itc:'#333333', items:its([{img:'contents16_1.jpg',t:'히말라야(Himalayas)'},{img:'contents16_2.jpg',t:'솔산(Pine Mountain)'},{img:'contents16_3.jpg',t:'몽블랑(Mont Blanc)'},{img:'contents16_4.jpg',t:'알파마요산(Alpamayo)'}])},
+      k19:{lay:'cols', n:4, ar:'650/370', al:'center', tf:M, ts:14, itc:'#1f1f1f', bs:12, sc:'#565656', items:its([{img:'contents19_1.jpg',t:'풍 경',d:L3},{img:'contents19_2.jpg',t:'동 물',d:L3},{img:'contents19_3.jpg',t:'사 람',d:L3},{img:'contents19_4.jpg',t:'자 연',d:L3}])},
+      k41:{lay:'cols', n:4, ar:'650/370', bf:M, bs:12, items:its([{img:'contents41_1.jpg',d:L4},{img:'contents41_2.jpg',d:L4},{img:'contents41_3.jpg',d:L4},{img:'contents41_4.jpg',d:L4}])},
+      k44:{lay:'cols', n:4, ar:'700/500', al:'center', ts:18, itc:'#222222', sit:true, bf:M, bs:12, more:'더 보 기', items:its([{img:'contents44_1.jpg',t:'그 래 비 티',s:'정상에 벗어날때 영화는 개인적인 것이 된다.'},{img:'contents44_2.jpg',t:'노 엘 갤 러 거',s:'정상에 벗어날때 영화는 개인적인 것이 된다.'},{img:'contents44_3.jpg',t:'힐 링 프 로 세 스',s:'정상에 벗어날때 영화는 개인적인 것이 된다.'},{img:'contents44_4.jpg',t:'아 이 스 로 드',s:'정상에 벗어날때 영화는 개인적인 것이 된다.'}])},
+      k47:{lay:'cols', n:4, shape:'circle', cs:400, al:'center', iord:'dts', ts:16, itc:'#333333', ac:'#676767', bs:14, items:its([{img:'contents47_1.jpg',t:'멜리사 에더리지',s:'아트 디렉터',d:'프로젝트의 전체 무드를 정의하고 세밀한 디테일까지 브랜드의 정체성을 담아내며, 예술적 시선으로 팀의 방향을 이끌고 조율합니다.'},{img:'contents47_2.jpg',t:'포터 로빈슨',s:'웹 디자이너',d:'감각적인 인터페이스와 유연한 화면 흐름을 설계하여 브랜드가 생동감 있게 드러나도록 돕고, 세밀한 사용자 경험을 아름답게 완성합니다.'},{img:'contents47_3.jpg',t:'애니 레녹스',s:'테크니컬 디렉터',d:'복잡한 문제를 해결하는 기술적 기반을 마련하고 창의적인 아이디어가 실제로 구현될 수 있도록 프로젝트 전 과정을 지휘합니다.'},{img:'contents47_4.jpg',t:'올라퍼 아르날즈',s:'웹 개발자',d:'아이디어를 안정적이고 빠른 코드로 구현하면서 세심한 구조와 효율적인 성능을 구축하고, 보이지 않는 부분까지 철저히 다듬습니다.'}])},
+      k50:{lay:'cols', n:4, ar:'1200/856', rd:12, al:'center', ts:15, ifw:600, itc:'#222222', items:its([{img:'contents50_1.jpg',t:'언덕 위의 신전',d:'기둥은 언덕 위에서 도시를 바라보며\n인간의 이상을 드러냅니다.'},{img:'contents50_2.jpg',t:'사막의 피라미드',d:'모래 위에 솟은 삼각의 형상은\n인류가 남긴 장엄한 흔적입니다.'},{img:'contents50_3.jpg',t:'돌의 원형 극장',d:'원형의 무대는 환호와 이야기를 품어\n세월을 이어갑니다.'},{img:'contents50_4.jpg',t:'도시의 성전',d:'거대한 곡선은 빛과 소리를 담아내며\n예술이 되는 공간이 됩니다.'}])},
+      k53:{lay:'cols', n:4, ar:'670/979', ts:16, ifw:400, itc:'#222222', bs:13, items:its([{img:'contents53_1.jpg',t:'디지털 아이덴티티',d:'디지털 아이덴티티는 당신이 안전하게 접속할 수 있는 방법으로 신원을 확인하고 정부 및 기타 서비스를 온라인으로 이용하는 데 도움이 됩니다.'},{img:'contents53_2.jpg',t:'사용자 경험',d:'사용자 경험(UX) 디자인은 디자인 팀이 사용자에게 의미 있고 관련성 있는 경험을 제공하는 제품을 만드는 데 사용하는 프로세스입니다.'},{img:'contents53_3.jpg',t:'비주얼 디자인',d:'비주얼 디자인은 이미지, 색상, 글꼴 및 기타 요소를 전략적으로 구현하여 사이트 및 관련 자료의 미학에 중점을 둡니다.'},{img:'contents53_4.jpg',t:'브랜딩',d:'브랜딩은 소비자의 마음 속에 브랜드를 만들고 형성함으로써 특정 조직, 회사, 제품 또는 서비스에 의미를 부여하는 과정입니다.'}])},
+      k61:{lay:'cols', n:2, strip:true, ar:'1/1', ts:20, ifw:400, itc:'#222222', bs:15, items:its([{img:'contents61_1.jpg',t:'01. 스타일과 무드',d:'색과 질감, 그리고 동반자의 존재가 하나의 장면을 완성합니다. 브랜드의 개성을 시각적으로 드러내며, 보는 순간 감각적인 인상을 남깁니다.'},{img:'contents61_2.jpg',t:'02. 관계의 기록',d:'사람과 반려동물의 교감은 단순한 사진을 넘어 하나의 서사가 됩니다. 빛과 구도를 통해 관계의 따뜻한 순간을 오래도록 간직할 수 있습니다.'},'contents61_3.jpg','contents61_4.jpg','contents61_5.jpg']), gap:60},
+      k77:{lay:'cols', n:4, ar:'650/370', card:'box', cb:'#ffffff', al:'center', hal:'center', bgImg:'saola_main_bg.jpg', tt:'당신을 위한 특별한 디자인', tf:E, fw:400, fs:48, tc:'#ffffff', hg:70, ts:16, itc:'#46505d', ac:'#949fab', sc:'#949fab', bs:12, items:its([{img:'contents77_1.jpg',t:'폴 랜드',s:'단순하게 유지하세요. 정직하세요.',d:'이 말은 당신의 작품에 대해 완전하게 객관적이 되라는 말입니다. 그리고 그 작업에 최선을 다하세요.'},{img:'contents77_2.jpg',t:'마틴 다비셔',s:'보이지 않는 디자인이 진짜 디자인입니다.',d:'훌륭한 디자인은 당신이 느끼지 못하는 사이에 당신을 이끄는 것입니다.'},{img:'contents77_3.jpg',t:'노먼 포터',s:'질문하기, 그리고 좋은 질문 찾기는',d:'디자이너라는 역할이 상상할 수 있는 최고의 존엄성과 적합성을 획득하기 위한 근본 요소입니다.'},{img:'contents77_4.png',t:'데이비드 카슨',d:'디자인이라는 분야는 재미있는 사람들이 몸담고 있는 지극히 창조적인 잠재력을 가진 분야입니다. 여기에서는 모든 형태의 자유와 기묘한 실험이 가능합니다.'}]), pt:110, pb:110},
+      k80:{lay:'cols', n:4, shape:'circle', cs:200, al:'center', deco:'content_image_74_5.png', ts:16, itc:'#333333', sc:'#919191', items:its([{img:'contents80_1.jpg',t:'컨셉 아티스트',d:'세상을 다른 시선으로 바라봅니다. 색과 형태로 일상에 낯선 즐거움을 불어넣습니다.'},{img:'contents80_2.jpg',t:'비주얼 스토리텔러',d:'이미지 한 장으로 이야기를 전합니다. 보는 순간 감정과 상상이 함께 흐릅니다.'},{img:'contents80_3.jpg',t:'크리에이티브 퍼포머',d:'아이디어는 무대 위에서 완성됩니다. 과감한 연출로 브랜드의 얼굴을 다시 정의합니다.'},{img:'contents80_4.jpg',t:'아이덴티티 디자이너',d:'브랜드는 곧 성격과 태도입니다. 우리는 오래 기억되는 개성과 진정성을 만듭니다.'}])},
+      k83:{lay:'cols', n:4, flush:true, ar:'670/980', tt:'하이라이트', tf:E, fw:400, fs:14, tc:'#303030', hg:18, ts:13, itc:'#303030', ac:'#303030', bs:13, items:its([{img:'contents83_1.jpg',t:'이성과 상상력',s:'All'},{img:'contents83_2.jpg',t:'실재와 환상',s:'Party'},{img:'contents83_3.jpg',t:'감각 이상',s:'Music'},{img:'contents83_4.jpg',t:'오늘이 내일에게',s:'Book'}])},
+      k97:{lay:'cols', n:4, ar:'355/165', fit:'contain', al:'center', bgImg:'content_image_86_bg.jpg', ts:20, itc:'#fb4045', sc:'#ffffff', bs:13, items:its([{img:'contents97_1.png',t:'브 랜 딩',d:'Sed in ante varius, sagittis magna at\negestas nisi convallis arcu.'},{img:'contents97_2.png',t:'디자인 & 개발',d:'Praesent iaculis dignissim ullamcorper\nDonec ut facilisis ipsum.'},{img:'contents97_3.png',t:'비주얼 아이덴티티',d:'Curabitur elit massa,\niaculis sed fermentum vitae'},{img:'contents97_4.png',t:'전 략',d:'Maecenas interdum justo ante,\net hendrerit dui efficitur quis.'}])},
+      k102:{lay:'cols', n:4, ar:'700/500', card:'line', ts:15, itc:'#333333', bs:13, items:its([{img:'contents102_1.jpg',t:'디지털 아이덴티티',d:'디지털 아이덴티티는 당신이 안전하게 접속할 수 있는 방법으로 신원을 확인하고 정부 및 기타 서비스를 온라인으로 이용할 수 있으며, 직접 방문할 필요가 없기 때문에 시간과 비용이 절약됩니다.'},{img:'contents102_2.jpg',t:'사용자 경험',d:'사용자 경험(UX) 디자인은 디자인 팀이 사용자에게 의미 있고 관련성 있는 경험을 제공하는 제품을 만드는 데 사용하는 프로세스입니다. 여기에는 제품을 구입하는 전체 프로세스의 디자인이 포함됩니다.'},{img:'contents102_3.jpg',t:'비주얼 디자인',d:'비주얼 디자인은 이미지, 색상, 글꼴 및 기타 요소를 전략적으로 구현하여 사이트 및 관련 자료의 미학에 중점을 둡니다. 성공적인 비주얼 디자인은 페이지 또는 기능의 내용을 빼앗아가지 않습니다.'},{img:'contents102_4.jpg',t:'브랜딩',d:'브랜딩은 소비자의 마음 속에 브랜드를 만들고 형성함으로써 특정 조직, 회사, 제품 또는 서비스에 의미를 부여하는 과정입니다. 사람들이 자신의 브랜드를 빠르게 식별하고 경험할 수 있도록 도와줍니다.'}])},
+      k105:{lay:'cols', n:3, shape:'icon', is:52, mpos:'side', hal:'center', bgImg:'content_image_96_bg.png', tt:'주요 서비스', tf:M, fs:28, tc:'#ffffff', hg:80, ts:18, ifw:400, itc:'#ffffff', sc:'#aaaaaa', bs:12, items:its([{img:'contents105_1.png',t:'인테리어 전문지식',d:'Vivamus tempus nunc vel venenatis Quisque vel quam euismod.'},{img:'contents105_2.png',t:'무료 컨설팅',d:'Sed scelerisque volutpat tortor, et ornare lectus condimentum eget.'},{img:'contents105_3.png',t:'창의적인 디자인',d:'Maecenas ut mollis mi ln consequat, metus sed aliquet tincidunt.'},{img:'contents105_4.png',t:'합리적인 가격',d:'Vivamus tempus nunc vel venenatis Quisque vel quam euismod.'},{img:'contents105_5.png',t:'어워드 수상경력',d:'non ornare nibh porta cursus nisi egestas metus condimentum vehicula.'},{img:'contents105_6.png',t:'보증된 결과물',d:'non pretium orci quisque dignissim commodo turpis eu faucibus.'}]), pt:40, pb:60},
+      k106:{lay:'cols', n:4, ar:'700/500', tf:M, ts:12, ifw:400, itc:'#676767', items:its([{img:'contents106_1.jpg',t:'시간의 풍경'},{img:'contents106_2.jpg',t:'당신의 하루'},{img:'contents106_3.jpg',t:'자유의 여신상'},{img:'contents106_4.jpg',t:'겨울의 꽃'}])},
+      k109:{lay:'cols', n:4, shape:'icon', is:34, bgImg:'content_image_100_bg.jpg', tt:'인생은 *과감한 모험*이던가,\n아니면 아무것도 아니다.', fs:36, tc:'#ffffff', hl:'#03d663', hg:330, ts:13, ifw:400, itc:'#ffffff', sc:'#ffffff', bs:13, items:its([{img:'contents109_1.png',t:'에베레스트 트래킹은',d:'로체, 아마다 설산을 보며 걷는 길입니다.'},{img:'contents109_2.png',t:'등산코스',d:'루크라 - 남체 - 딩보체 - 고락셉'},{img:'contents109_3.png',t:'도달고도',d:'1,380 m / 2,610 m / 3,440 m'},{img:'contents109_4.png',t:'도착지',d:'칼라파트라 + 베이스캠프 트래킹'}]), pt:120, pb:120},
+      k134:{lay:'cols', n:4, ar:'730/524', tfirst:true, iord:'std', ts:24, ifw:300, itc:'#313942', ac:'#626a6e', items:its([{img:'contents134_1.jpg',s:'Chapter 1',t:'수 많은 행복이\n가득 피어나는 *봄*'},{img:'contents134_2.jpg',s:'Chapter 2',t:'사랑하는 사람들과\n함께 떠나는 *여름*'},{img:'contents134_3.jpg',s:'Chapter 3',t:'맑고 푸른 하늘에 떠나는\n*가을* 여행'},{img:'contents134_4.jpg',s:'Chapter 4',t:'하얀 눈꽃이\n피어나는 *겨울*'}]), gap:70},
+      k138:{lay:'cols', n:2, shape:'icon', is:50, mpos:'side', ts:24, itc:'#3f3f3f', sc:'#626a6e', items:its([{img:'contents138_1.png',t:'단순한',d:'디자인의 미적 수준을 결정하는 요소 중 하나는 구성입니다. 좋은 구성을 가질수록 불필요한 요소와 중요하지 않은 디테일들을 제외한 단순한 해결책을 제시합니다.'},{img:'contents138_2.png',t:'블럭',d:'홈페이지 제작에 필요한 대부분의 템플릿에는 블럭으로 구성되어 있습니다. 기본적인 편집 기능들을 이용하여 자유롭게 홈페이지를 만들 수 있습니다.'},{img:'contents138_3.png',t:'쉬운',d:'전문 웹디자이너가 만든 멋진 디자인의 템플릿들을 제공하여, 디자인을 할 줄 몰라도 나만의 예쁜 홈페이지를 만들 수 있습니다.'},{img:'contents138_4.png',t:'빠른',d:'컨텐츠가 많지 않은 홈페이지는 원페이지 구조로 제작해보세요. 크리에이터링크는 쉽고 빠른 홈페이지 제작 및 구성이 가능합니다.'}]), gap:80, pt:60, pb:60},
+      k29:{lay:'cols', n:2, ar:'1/1', mpos:'side', sw:42, card:'box', cb:'#ffffff', tf:M, ts:22, itc:'#333333', bs:12, items:its([{img:'contents29_1.png',t:'에베레스트',d:'에베레스트 산은 히말라야 산맥의 봉우리 입니다. 네팔과 중국의 자치구인 티베트 사이에 위치하고 있습니다. 8,849미터(29,032피트)로 지구에서 가장 높은 지점으로 간주됩니다.'},{img:'contents29_2.png',t:'마리나트렌치',d:'마리아나 트렌치는 서태평양에 위치합니다. 지구상에서 가장 깊은 해구이며 초승달 모양으로 길이는 약 2,550km, 너비는 69km입니다.'}])},
+      k137:{lay:'cols', n:3, ar:'375/812', rd:22, gap:160, cw:980, bg:'#7b8177', items:its(['contents137_1.jpg','contents137_2.jpg','contents137_3.jpg']), pt:140, pb:140},
+      /* ── 바둑판 (mosaic) ── */
+      k58:{lay:'mosaic', cb:'#f1f1f1', ts:15, itc:'#222222', bs:14, items:its([{img:'contents58_1.jpg',t:'여정의 빛',d:'낯선 공간에서 마주한 빛은 언제나 새로운 이야기를 품고 있습니다. 움직임 속에 반짝이는 조각들은 우리에게 또 다른 시작을 예고합니다.'},{img:'contents58_2.jpg',t:'경험의 잔상',d:'시간은 흐르지만, 순간의 흔적은 사라지지 않습니다. 빛과 형체가 남긴 인상은 오래도록 감각 속에 머물며 우리를 변화시킵니다.'},{img:'contents58_3.jpg',t:'형태와 울림',d:'차가운 표면 위에 머무는 빛은 예술의 언어로 변해 울려 퍼집니다. 포착된 장면은 단순한 기록을 넘어 감각의 울림을 만들어냅니다.'},{img:'contents58_4.jpg',t:'기억의 파편',d:'남겨진 조각들은 지나간 시간의 이야기를 담아냅니다. 형태와 빛이 맞물린 풍경 속에서 우리는 오래된 기억과 새로운 가능성을 마주합니다.'}])},
+      k59:{lay:'mosaic', cb:'#f1f1f1', ts:15, itc:'#222222', bs:14, items:its([{img:'contents58_1.jpg',t:'여정의 빛',d:'낯선 공간에서 마주한 빛은 언제나 새로운 이야기를 품고 있습니다. 움직임 속에 반짝이는 조각들은 우리에게 또 다른 시작을 예고합니다.'},{img:'contents58_2.jpg',t:'경험의 잔상',d:'시간은 흐르지만, 순간의 흔적은 사라지지 않습니다. 빛과 형체가 남긴 인상은 오래도록 감각 속에 머물며 우리를 변화시킵니다.'}])},
+      /* ── 이미지 위 글 (tiles) ── */
+      k128:{lay:'tiles', n:2, ar:'1/1', gap:0, ov:20, tf:E, ts:24, ifw:400, itc:'#ffffff', sc:'#ffffff', more:'상품 보기', items:its([{img:'contents128_1.jpg',t:'Sunshine'},{img:'contents128_2.jpg',t:'Sand'}]), pt:60, pb:60},
+      k130:{lay:'tiles', n:3, ar:'380/355', gap:0, ov:0, tbg:'main_3-block.png', ts:24, ifw:400, itc:'#ffffff', sc:'#dbdbdb', bs:13, more:'더보기', items:its([{t:'회사소개',d:'고객에게 신뢰를 주는 기업\n국제회의, 전시기획 전문 헥스입니다.'},{t:'프로젝트',d:'풍부한 경험과 기술을 기반으로\n완벽한 행사를 제공합니다.'},{t:'프로모션',d:'대한민국 컨벤션 산업의 선두주자\n헥스를 소개합니다.'}]), pt:60, pb:60},
+      k133:{lay:'tiles', n:4, ar:'670/980', gap:0, ov:40, tpos:'bl', iord:'std', tf:M, ts:26, ifw:400, itc:'#ffffff', ac:'#ffffff', items:its([{img:'contents_133_5.jpg',s:'웨딩드레스',t:'조르쥬\n호베이카'},{img:'contents_133_6.jpg',t:'오스카\n드 라 렌타'},{img:'contents_133_7.jpg',t:'캐롤리나\n헤레라'},{img:'contents_133_8.jpg',t:'베라 왕'}]), pt:60, pb:60},
+      /* ── 가운데 (stack) ── */
+      k3:{lay:'stack', ord:'ti', iw:800, al:'center', media:md(['contents3_1.png']), tt:'반응형 홈페이지 제작', fs:40, tc:'#333333', ds:'블럭을 쌓아 멋진 포트폴리오 사이트를 만들어보세요! 코딩을 몰라도 누구나 쉽게 멋진 홈페이지를 만들 수 있습니다.\n원하는 디자인 블럭들을 쌓아서 나만의 반응형 홈페이지를 무료로 만들어보세요.', pt:60, pb:60},
+      k23:{lay:'stack', ord:'it', iw:560, al:'center', media:md(['contents23_1.png']), bgImg:'content_image_23_2.jpg', tt:'M A T T  K E A T O N', tf:E, fw:400, fs:62, tc:'#1f1f1f', sub:'감 성 을 자 극 하 는 감 미 로 운 사 운 드', sc:'#505050', note:'맷 키 튼 의 지 니 라 이 브 인 콘 서 트', ns:20, ac:'#907b53', pt:60, pb:60},
+      k90:{lay:'stack', ord:'ti', iw:149, al:'center', media:md(['contents90_1.png']), ds:'좋은 품질, 다양한 컨셉트, 합리적인 가격대의 제품을 더 빠르게 제공하는\nMICAELA.R은 글로벌 SPA 브랜드들과 함께 나란히 어깨를 견주는 대한민국 패션업계의 자존심입니다.\n한국인들의 일상 속 Fashion Groove를 실현해 주는 브랜드입니다.', sc:'#111111', pt:40, pb:40},
+      k100:{lay:'stack', st:'profile', al:'center', bh:420, av:170, media:md(['content_image_90_1.jpg','content_image_90_2.jpg']), tt:'나를 소개합니다', fw:400, fs:50, tc:'#ffffff', pt:0, pb:40},
+      k86:{lay:'stack', st:'frame', al:'center', bgImg:'content_text_8_1.jpg', bg:'#000000', tt:'Héctor.', tf:E, fs:20, tc:'#191919', ds:'제너럴 웍스 15', bs:12, sc:'#191919', pt:200, pb:200},
+      k89:{lay:'stack', ord:'it', iw:380, al:'center', media:md(['contents89_1.jpg']), bgImg:'content_image_80_2.jpg', ds:'지난 60여 년간 저의 디자인 철학은 변하지 않았으며, 여전히 이것이 옳다고 믿고 있습니다.\n디자인의 중심엔 언제나 인간이 있지만, 사회의 변화와 함께하고,\n그것은 디자이너의 책임 변화로 이어집니다.', bs:18, sc:'#ffffff', pt:130, pb:100},
+      /* ── 글 목록 (list) ── */
+      k56:{lay:'list', n:3, bgImg:'content_text_3_1.jpg', tt:'연혁', tf:M, fw:700, fs:20, tls:2.3, tc:'#ffffff', hg:60, itc:'#919191', sc:'#919191', ac:'#919191', bs:12, items:its([{d:'아트디렉션\n그래픽디자인\n모션그래픽\n포토그래피\n일러스트레이션'},{d:'#EDUCATION\n2010 Pharetra enim sed justo ultricies, ac egestas leo\n2008 Fusce id lorem ac risus faucibus porta id sed\n2006 Nunc sem tortor, rutrum in facilisis ut, placerat\n#RESIDENCIES & AWARDS\n2015 Sed bibendum turpis sed erat tincidunt\n2014 luctus magna bibendum, non vulputate aliquet\n2012 Congue erat et, malesuada nulla. Etiam viverra\n#Lecturer\n2015 Class aptent taciti sociosqu ad litora torquent\n2013 Etiam scelerisque consectetur suscipit ex.'},{d:'#학력\n2010 프랑스 셍떼띠엔느 에싸스 장학생\n2008 프랑스 스트라스부르크 에사드 그래픽디자인 전공\n2006 독일 슈트트가르트 미술대학 시각디자인과 졸업\n#수상 및 경력\n2015 브루노 그래픽 디자인비엔날레 그랑프리 수상\n2014 국제아트페스티벌 특별상\n2012 뉴욕 아트페스티벌 은상\n#작품소장\n2015 영국 런던 빅토리아 & 알버트 미술관\n2013 미국 뉴욕 M.O.M.A.'}]), note:'申珍嬉 Elizabeth Shin', ns:16, pt:70, pb:70},
+      k147:{lay:'list', n:3, lshape:'tail', lline:true, tf:E, ts:24, ifw:400, itc:'#404040', sc:'#737373', bs:15, gap:60, items:its([{t:'Design',img:'temp_portfolio_23_13.png',d:'일러스트레이션\n아트 디렉션\n애니메이션\n포토그래피'},{t:'Stratesy',img:'temp_portfolio_23_14.png',d:'브랜딩\n카피라이팅\n마케팅\n컨설팅'},{t:'Clients',img:'temp_portfolio_23_15.png',d:'스페이스9\n레미 킴\nD.P. 컴퍼니\n디지털 스튜디오'}]), pt:40, pb:40},
+      k24:{lay:'list', n:3, hal:'center', bgImg:'diazi_about_bg.jpg', tt:'About', tf:E, fs:30, tc:'#000000', ds:'\'MARK ROSSOU\' 갤러리는 ‘일상이 예술이 되는 미술관’이라는 비전 아래,\n대중들이 일상 속에서 예술을 즐길 수 있는 전시 컨텐츠를 만들어내고자 노력하고 있습니다.', hg:90, ts:13, itc:'#000000', sc:'#1b1b1b', bs:13, items:its([{t:'[전시 관람 시간]',d:'화-일요일 10:00AM – 7:00PM\n목, 토요일 (연장운영) 10:00AM – 8:00PM\n관람요금 : 무료\n마지막 입장 : 전시 종료 1시간 전\n매주 월요일 휴관'},{t:'[입장 및 예매방법]',d:'본 전시는 \'CHANGEWEMAKE\' 캠페인 참여 인증이\n입장료를 대신합니다.\n#< CHANGEWEMAKE 캠페인 참여방법 >\n환경을 위한 나의 작은 실천이 담긴 사진을\n해시태그와 함께 SNS에 업로드'},{t:'[관람 유의 사항]',d:'안전하고 쾌적한 관람을 위해 사전 예약자 입장을 진행합니다.\n현장 발권은, 해당일 예약 잔여분이 있을 경우에만 진행 가능합니다.\n마스크를 착용해주시기 바랍니다.'}]), pt:160, pb:160},
+      k73:{lay:'list', n:4, lshape:'icon', is:46, al:'center', tf:E, ts:13, itc:'#1f1f1f', sc:'#888888', bs:12, items:its([{img:'contents73_1.png',t:'A W A R D S',d:'레드닷 디자인 어워드 대상\n인터내셔널 포럼 디자인 우수상\n인터내셔널 엑설런스 어워드 은상\n굿디자인 어워드 금상\n인덱스 어워드 우수상\n케이디자인 어워드 최우수상'},{img:'contents73_2.png',t:'B O O K & M A G A Z I N E',d:'오늘도 나무를 그리다\n아이디어는 어떻게 디자인하는가\n브랜드 경험 디자인 바이블\n유투브 운영을 위한 포토샵 디자인\n버려지는 디자인 통과되는 디자인\n월간 디자인 DESIGN 517호'},{img:'contents73_3.png',t:'P R E S S',d:'제6회 큐몬디자인 그라운드 은상\n서울메트로 상상디자인공모전 장려상\n2009 경륜정정 광고공모전 금상\n전국건강증진 홍보디자인대회 대상\n제11회 광고대상 은상\n대한민국디자인전람회 공모전 입선'},{img:'contents73_4.png',t:'M E D I A',d:'내셔널 어뮤즈먼트\n파라마운트 픽쳐스\nCBS 코퍼레이션\n바이어컴 CBS\nAMC 시어터스\nNBC 유니버셜'}]), pt:60, pb:60},
+      k67:{lay:'list', n:4, lshape:'strip', al:'center', ts:14, itc:'#505050', sc:'#505050', ac:'#b8b7b7', bs:12, gap:30, items:its([{img:'content_image_63_1.jpg',t:'전 시',d:'2021 파리 루브르박물관 전시\n2020 로댕미술관 전시\n영국박물관 전시\n고흐, 모네 학습 및 뉴욕 전시회\n2019 국립아트박물관 전시\n제주 디자인전시관\n2018 국립중앙박물관 기획전시\n2017 미디어아트 스튜디오'},{img:'content_image_63_2.jpg',t:'어 워 드',d:'INNA 글로벌 미디어 어워드\n현대인상사진공모전 금상\n유네스코사진공모전 UCC상\n니콘(Nikon) D850\n오피셜 리뷰어 대상\n월드 포토그래피 어워드 금상\n캐나다 비디오그래픽 대회 대상\nUCLA 미디어아트상'},{img:'content_image_63_3.jpg',t:'강 의',d:'저널리즘 및 미디어 강의 시리즈\n디스이즈 포토그래퍼 사진강좌\n도쿄 아트앤스터디 특강\nMIT < 오픈코스웨어 코스웨어 >\n탐색 디지털 미디어 강의 1\n소셜 미디어 강의\n인플루언서 마케팅\n마스터 강의: 소셜미디어'},{img:'content_image_63_4.jpg',t:'컬 렉 션',d:'라디오 더빙\n트윈 < 더 더블 유 >\n태어난 쾌락주의자\n피아트 러시아\n보쉬 모스크바\n시노그라피 대학원 연구\n요덱스\n플레이, 쿡, 키스'}]), pt:60, pb:60},
+      /* 261022 추가 — 라이브 contents149(히스토리)를 새 문구 · 사진(견본 브랜드 「Studio Rue」)으로 다시 짰다. 사진 = Unsplash(editor-assets img/content-sample/contents149_1~3) */
+      k149:{lay:'hist', eb:'HISTORY', tt:'걸어온 길', hal:'center', tf:5, bf:5, fw:600, fs:32, ts:16, itc:'#1f1f1f', tc:'#111111', sc:'#6b7280', ac:'#8a9099', bs:14, ar:'4/3', rd:8, gap:88, hg:84, items:its([
+        {t:'2024', d:'03 두 번째 스튜디오 오픈 — 성수\n09 브랜드 리뉴얼 프로젝트 12건 완료', img:'contents149_1.jpg'},
+        {t:'2023', d:'05 디자인 어워드 브랜딩 부문 수상\n11 팀 8명으로 확장', img:'contents149_2.jpg'},
+        {t:'2022', d:'02 Studio Rue 시작\n07 첫 브랜드 아이덴티티 프로젝트', img:'contents149_3.jpg'}]), pt:120, pb:120}
+    };
+  })();
+  /* 카드 차례 · 위 탭(grp) · 썸네일 크기(사이트 썸네일 원본 800 폭 — 106 · 112 는 512 폭) */
+  var CN_CARDS=[
+    ['k4',360,'좌우'],['k15',417,'좌우'],['k22',663,'히스토리'],['k25',205,'좌우'],['k27',170,'좌우'],['k31',323,'좌우'],['k33',376,'좌우'],['k35',297,'좌우'],['k37',379,'좌우'],['k39',316,'좌우'],
+    ['k57',448,'히스토리'],['k64',271,'좌우'],['k72',449,'좌우'],['k93',328,'좌우'],['k95',231,'좌우'],['k110',394,'좌우'],['k112',197,'좌우',512],['k114',259,'좌우'],['k116',249,'좌우'],['k118',404,'좌우'],
+    ['k121',332,'좌우'],['k123',299,'히스토리'],['k125',267,'좌우'],['k127',301,'좌우'],['k129',227,'좌우'],['k132',288,'좌우'],['k135',561,'좌우'],['k140',367,'좌우'],['k146',295,'좌우'],
+    ['k6',262,'칸'],['k11',283,'칸'],['k16',227,'칸'],['k19',283,'칸'],['k41',259,'칸'],['k44',298,'칸'],['k47',352,'칸'],['k50',223,'칸'],['k53',449,'칸'],['k61',264,'칸'],
+    ['k77',380,'칸'],['k80',240,'칸'],['k83',444,'칸'],['k97',234,'칸'],['k102',270,'칸'],['k105',375,'칸'],['k106',122,'칸',512],['k109',513,'칸'],['k134',300,'칸'],['k138',285,'칸'],['k29',221,'칸'],['k137',383,'칸'],
+    ['k58',403,'칸'],['k59',215,'칸'],['k128',299,'칸'],['k130',172,'칸'],['k133',331,'칸'],
+    ['k3',513,'가운데'],['k23',585,'가운데'],['k90',200,'가운데'],['k100',272,'가운데'],['k86',400,'가운데'],['k89',521,'가운데'],
+    ['k56',475,'히스토리'],['k147',169,'목록'],['k24',314,'목록'],['k73',233,'목록'],['k67',283,'히스토리'],
+    ['k149',614,'히스토리']   /* 261022 추가 — CONTENT71 히스토리 · 261022 수정 — 연혁 블럭 6장(22 · 56 · 57 · 67 · 123 · 149)은 위 탭 「히스토리」로 모았다. 73(수상 · 출간 · 언론 목록)은 연도가 없어 「목록」에 둔다. 썸네일 = 실제 블럭 캡처(img/ba/content71.jpg · 800×614) */
+  ];
+  /* 261022 추가 — 컨텐츠 블럭 카드 67장(CONTENT04~70). 썸네일 = 좌측 사이트 블럭 목록 썸네일 원본(editor-assets img/ba/contentNN.jpg · ar = 원본 크기). grp = 위 탭(좌우 · 칸 · 가운데 · 목록) */
+  CN_CARDS.forEach(function(p,i){ var no=4+i, nn=(no<10?'0':'')+no; BA_CARDS_CONTENT.push({no:no, kind:'cnblk', preset:p[0], label:'CONTENT'+nn, ar:(p[3]||800)+'/'+p[1], img:ED_IMG+'ba/content'+nn+'.jpg', grp:p[2]}); });
   /* 261022 추가 — 소셜 카테고리: 소셜 블럭(snblk) 15장. 시작값 이름 = SN_PRESETS(아래 모듈). 위 탭 = 종류(아이콘 · 배너 · 이미지 피드) · 보라 태그 = 모양 */
   var BA_CARDS_SOCIAL=[['brand','아이콘','브랜드 색'],['circle','아이콘','원'],['round','아이콘','둥근 사각'],['mono','아이콘','검정'],['monoc','아이콘','검정 원'],['line','아이콘','외곽선'],['tile','아이콘','흰 사각'],['photo','아이콘','사진 위'],
     ['brow','배너','글 왼쪽'],['bover','배너','사진 위'],['bcard','배너','가운데'],['f6','이미지 피드','6열'],['f7','이미지 피드','7열 한 줄'],['f4','이미지 피드','4열'],['fhead','이미지 피드','계정 머리줄']].map(function(p,i){
@@ -17450,6 +17936,7 @@
   var smCurBlk=null, smBound=false;
   var SM_KIND={gridgal:'그리드 갤러리', hero:'이미지', gal:'이미지', slideshow:'이미지', intro:'텍스트', cred:'텍스트', smeartext:'커서 번짐 텍스트', moto3d:'3D 배경 이미지', imggrid:'이미지', stripgallery:'3D 스트립 갤러리', floatgal:'플로팅 3D 갤러리', polytext:'3D 텍스트', typetext:'타이핑 텍스트', risetext:'글자 올라오기', fxbutton:'버튼', cardring:'3D 카드 회전', bookflip2:'책자 넘김', spiralgal:'나선형 갤러리 1', depthgal:'깊이 갤러리', scrollslider:'스크롤 슬라이더', vcgal:'세로 스크롤 갤러리', infgal:'곡면 갤러리', wheelcar:'휠 캐러셀', helixgal:'나선형 갤러리 2', gaugeslider:'게이지 슬라이더', hscrollgal:'가로 스크롤 갤러리', tiltgal:'틸트 갤러리', stackgal:'스택 갤러리', arctext:'곡선 흐르는 텍스트', idxlist:'인덱스 리스트', faqacc:'FAQ 아코디언', qnaacc:'QnA 아코디언', scrollread:'스크롤 문장 등장', beforeafter:'이전·이후 비교', crumple:'구김 이미지', imgring:'3D 이미지 링', stackcard:'스택 카드', formblk:'폼', calblk:'캘린더', ctblk:'컨택트'};   /* 260929 수정 — 폼·캘린더·컨택트 */
   SM_KIND.snblk='소셜';   /* 261022 추가 — 소셜 블럭 */
+  SM_KIND.cnblk='컨텐츠';   /* 261022 추가 — 컨텐츠 블럭 */
   function bsetSync(blk){
     var kindAttr=blk?(blk.getAttribute('data-block')||''):'';
     var isSm=(kindAttr==='smeartext');
@@ -17486,11 +17973,12 @@
     var isSc=(kindAttr==='stackcard');   /* 260923 추가 — 스택 카드(CONTENT01) */
     var isFm=(kindAttr==='formblk');   /* 260929 추가 — 폼 블럭(FORM01~10) */
     var isSn=(kindAttr==='snblk');   /* 261022 추가 — 소셜 블럭(SOCIAL01~15) */
+    var isCn=(kindAttr==='cnblk');   /* 261022 추가 — 컨텐츠 블럭(CONTENT04~71) */
     var isCa=(kindAttr==='calblk');   /* 260929 추가 — 캘린더 블럭(CALENDAR01) */
     var isCt=(kindAttr==='ctblk');   /* 260929 추가 — 컨택트/지점 블럭 */
     var isRt=(kindAttr==='cred');   /* 260905 추가 — 이력 텍스트 블럭 */
     var d=document.getElementById('bsetDefault'), s=document.getElementById('bsetSmear'), m=document.getElementById('bsetMoto'), g=document.getElementById('bsetStrip'), fl=document.getElementById('bsetFloat'), pt=document.getElementById('bsetPoly'), tw=document.getElementById('bsetType'), cr=document.getElementById('bsetRing'), hx=document.getElementById('bsetSpiral'), ax=document.getElementById('bsetArc'), ix=document.getElementById('bsetIdx');
-    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt||isSn)?'none':'';   /* 260929 수정 — 폼·캘린더·컨택트 */
+    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt||isSn||isCn)?'none':'';   /* 260929 수정 — 폼·캘린더·컨택트 */
     var rsp=document.getElementById('bsetRise'); if(rsp) rsp.style.display=isRs?'':'none';
     var fqp=document.getElementById('bsetFaq'); if(fqp) fqp.style.display=isFq?'':'none';   /* 260923 추가 */
     var qnp=document.getElementById('bsetQna'); if(qnp) qnp.style.display=isQn?'':'none';   /* 260923 추가 — QnA 아코디언 */
@@ -17501,6 +17989,7 @@
     var scp=document.getElementById('bsetStackCard'); if(scp) scp.style.display=isSc?'':'none';   /* 260923 추가 — 스택 카드 */
     var fmp=document.getElementById('bsetForm'); if(fmp) fmp.style.display=isFm?'':'none';   /* 260929 추가 — 폼 블럭 */
     var snp=document.getElementById('bsetSn'); if(snp) snp.style.display=isSn?'':'none';   /* 261022 추가 — 소셜 블럭 */
+    var cnp=document.getElementById('bsetCn'); if(cnp) cnp.style.display=isCn?'':'none';   /* 261022 추가 — 컨텐츠 블럭 */
     var cap=document.getElementById('bsetCal'); if(cap) cap.style.display=isCa?'':'none';   /* 260929 추가 — 캘린더 블럭 */
     var ctp=document.getElementById('bsetCt'); if(ctp) ctp.style.display=isCt?'':'none';   /* 260929 추가 — 컨택트/지점 블럭 */
     var btp=document.getElementById('bsetBtn'); if(btp) btp.style.display=isBt?'':'none';   /* 260919 추가 — 효과 버튼 블럭(FX BUTTON) */
@@ -17570,6 +18059,8 @@
     fmCurBlk=isFm?blk:null;   /* 260929 추가 — 폼 블럭 */
     if(libThumbMode && snCurBlk!==(isSn?blk:null) && /^(snBg|snImgList)$/.test(libThumbMode.listId||'')) libThumbEnd(false);   /* 261022 추가 — 다른 블럭으로 가면 소셜 블럭의 이미지 고르기를 끝낸다 */
     snCurBlk=isSn?blk:null;   /* 261022 추가 — 소셜 블럭 */
+    if(libThumbMode && cnCurBlk!==(isCn?blk:null) && /^(cnBg|cnItemList|cnMediaList)$/.test(libThumbMode.listId||'')) libThumbEnd(false);   /* 261022 추가 — 다른 블럭으로 가면 컨텐츠 블럭의 이미지 고르기를 끝낸다 */
+    cnCurBlk=isCn?blk:null;
     if(caCurBlk && caCurBlk!==(isCa?blk:null)){ var caPrev=caCurBlk; caCurBlk=null; if(caPrev.isConnected){ var cw=caPrev.querySelector('.ca-wrap'); if(cw) cw.classList.remove('can-add'); } if(typeof caPopClose==='function') caPopClose(); }   /* 260929 추가 — 다른 블럭으로 가면 날짜 칸 클릭 추가 표시를 끈다 */
     caCurBlk=isCa?blk:null;   /* 260929 추가 — 캘린더 블럭 */
     if(ctCurBlk!==(isCt?blk:null) && libThumbMode && /^(ctBg|ctBrList)$/.test(libThumbMode.listId||'')) libThumbEnd(false);   /* 260929 추가 — 다른 블럭으로 가면 컨택트 소재 고르기를 끝낸다 */
@@ -17608,6 +18099,7 @@
     if(isSc){ scBuildBset(); scFillBset(); }   /* 260923 추가 — 스택 카드 */
     if(isFm){ fmBuildBset(); fmFillBset(); }   /* 260929 추가 — 폼 블럭 */
     if(isSn){ snBuildBset(); snFillBset(); }   /* 261022 추가 — 소셜 블럭 */
+    if(isCn){ cnBuildBset(); cnFillBset(); }   /* 261022 추가 — 컨텐츠 블럭 */
     if(isCa){ caBuildBset(); caFillBset(); }   /* 260929 추가 — 캘린더 블럭 */
     if(isCt){ ctBuildBset(); ctFillBset(); }   /* 260929 추가 — 컨택트/지점 블럭 */
     if(typeof rtEditEnd==='function' && rtEditBlk && rtEditBlk!==blk) rtEditEnd();   /* 다른 블럭을 고르면 문구 편집을 마친다 */
@@ -35943,6 +36435,502 @@ global.PolyFX = API;
     ckRows();
   }
 
+  /* ══ 261022 추가 — 컨텐츠 블럭(cnblk)이 쓰는 공통 조각 — 데스크탑 editor.html 의 숫자 카운터 · QR 공통부에서 옮겼다(배경 소재 · 블럭 넣기). 이 파일에는 숫자 카운터 · QR 이 없어 BGP 는 비어서 시작 ══ */
+  function blkBgApply(blk,c,fallback){
+    blk.style.background=c.bg||fallback; blk.classList.toggle('own-bg',!!c.bg);
+    var bm=String(c.bgImg||'').trim(), bmV=bm&&rtBgIsVid(bm), bv=blk.querySelector(':scope > .rt-bgvid');
+    if(bm){ blk.classList.add('rt-bgimg'); blk.style.setProperty('--rt-dim',String(Math.max(0,Math.min(90,txNum(c.bgDim,0)))/100)); blk.setAttribute('data-bgdim',String(txNum(c.bgDim,30))); }
+    else { blk.classList.remove('rt-bgimg'); blk.style.removeProperty('--rt-dim'); blk.removeAttribute('data-bgdim'); }
+    var gray=!!(bm && c.bgGray); blk.classList.toggle('rt-bggray',gray); if(gray) blk.setAttribute('data-bggray','1'); else blk.removeAttribute('data-bggray');
+    if(bm && bmV){
+      var vs=bm.replace(/#video$/i,'');
+      if(!bv){ bv=document.createElement('video'); bv.className='rt-bgvid'; ['autoplay','muted','loop','playsinline'].forEach(function(k){ bv.setAttribute(k,''); }); bv.setAttribute('preload','auto'); bv.setAttribute('draggable','false'); bv.muted=true; blk.insertBefore(bv,blk.firstChild); }
+      if(bv.getAttribute('src')!==vs){ bv.setAttribute('src',vs); try{ bv.load(); }catch(x){} }
+      if(typeof rtBgVidKick==='function') rtBgVidKick(blk);
+      blk.style.backgroundImage='none'; blk.classList.add('rt-bgvid-on'); blk.setAttribute('data-bgvid',bm); blk.removeAttribute('data-bgimg');
+    } else {
+      if(bv) bv.remove(); blk.classList.remove('rt-bgvid-on'); blk.removeAttribute('data-bgvid');
+      if(bm){ blk.style.backgroundImage='url("'+bm.replace(/"/g,'%22')+'")'; blk.setAttribute('data-bgimg',bm); }
+      else { blk.style.backgroundImage=''; blk.removeAttribute('data-bgimg'); }
+    }
+  }
+  function baInsertKind(card,kind,cls,html,cfgKey,cfg,init){
+    var stage=document.getElementById('stage'), site=stage?stage.querySelector('.site'):null;
+    if(!site){ closeBlockAdd(); return null; }
+    var blk=document.createElement('div'); blk.className='blk '+cls; blk.setAttribute('data-block',kind); blk.setAttribute('onclick','selectBlock(this)');
+    blk.innerHTML=html; blk[cfgKey]=cfg;
+    var addbar=document.createElement('div'); addbar.className='addbar';
+    addbar.innerHTML='<button class="addbtn" onclick="event.stopPropagation();openBlockAdd(this)"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>';
+    if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar); }
+    if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
+    closeBlockAdd(); init(blk);
+    if(typeof selectBlock==='function') selectBlock(blk);
+    blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300);
+    setTimeout(function(){ try{ blk.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} },180);
+    baPendingAddbar=null; if(typeof showToast==='function') showToast('블럭을 추가했습니다.');
+    return blk;
+  }
+  var BGP={};
+  function bpRows(px){}   /* 숫자 카운터 · QR 전용 행 정리 — 여기서는 할 일이 없다 */
+  function bpUpd(px,key,val){ var B=BGP[px], blk=B.cur(); if(!blk) return; B.cfg(blk)[key]=val; B.apply(blk); bpRows(px); if(typeof markDirty==='function') markDirty(); }
+  function bpSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
+  function bpSeg(px,key,id,m){ bpSegSync(id,m); bpUpd(px,key,m); }
+  function bpSw(px,el,key){ var on=!el.classList.contains('on'); el.classList.toggle('on',on); bpUpd(px,key,on); if(key==='bgGray') bgPanelSync(px); }
+  function bgPanelSync(px){
+    var B=BGP[px], blk=B.cur(), th=document.getElementById(px+'BgTh'); if(!th||!blk) return; var c=B.cfg(blk);
+    var u=String(c.bgImg||'').trim(), vid=rtBgIsVid(u);
+    th.classList.toggle('empty',!u); th.style.backgroundImage=(u&&!vid)?('url("'+u.replace(/"/g,'%22')+'")'):'';
+    th.innerHTML=vid?('<video src="'+_mtAttr(u.replace(/#video$/i,''))+'#t=0.1" muted playsinline preload="metadata"></video>'):(u?'':'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>');
+    th.classList.toggle('picking', !!(libThumbMode && libThumbMode.listId===px+'Bg')); th.style.filter=(u && c.bgGray)?'grayscale(1)':'';
+    var d=document.getElementById(px+'BgDel'); if(d) d.classList.toggle('off',!u);
+    var dr=document.getElementById(px+'BgDimRow'); if(dr) dr.style.display=u?'':'none';
+    var gr=document.getElementById(px+'BgGrayRow'), gs=document.getElementById(px+'BgGraySw'); if(gr) gr.style.display=u?'':'none'; if(gs) gs.classList.toggle('on',!!c.bgGray);
+  }
+  function bpBgSet(px,blk,src){ if(!blk||!blk.isConnected) return; BGP[px].cfg(blk).bgImg=src; BGP[px].apply(blk); if(blk===BGP[px].cur()) bgPanelSync(px); if(typeof markDirty==='function') markDirty(); }
+  function bpBgPick(px){
+    var blk=BGP[px].cur(); if(!blk) return; var id=px+'Bg';
+    if(libThumbMode && libThumbMode.listId===id){ libThumbEnd(false); bgPanelSync(px); clToast('선택을 끝냈습니다.'); return; }
+    if(libThumbMode) libThumbEnd(false);
+    libThumbMode={listId:id, idx:null, only:'', vidOk:true, quiet:true, apply:function(src){ if(!blk.isConnected || blk!==BGP[px].cur()) return; bpBgSet(px,blk,src); clToast((rtBgIsVid(src)?'블럭 배경 동영상을':'블럭 배경 이미지를')+' 넣었습니다. 다른 항목을 누르면 다시 바뀝니다.'); }};
+    document.documentElement.classList.add('rt-lib-ins'); if(typeof libTab==='function') libTab('img');
+    if(open!=='lib' && typeof togglePanel==='function'){ window.libWantR=true; togglePanel('lib'); libOpenedByBset=true; }
+    bgPanelSync(px); clToast('보관함에서 이미지를 고르거나 드래그하세요.');
+  }
+  function bpBgClear(px){ var blk=BGP[px].cur(); if(!blk) return; if(libThumbMode && libThumbMode.listId===px+'Bg') libThumbEnd(false); bpBgSet(px,blk,''); }
+  function bpBgUpload(px,input){ var blk=BGP[px].cur(); if(!blk || !input || !input.files || !input.files[0]){ if(input) input.value=''; return; } var added=blkLibUpload([input.files[0]]); input.value=''; if(added.length){ bpBgSet(px,blk,added[0].src); clToast('블럭 배경에 넣었습니다. 보관함에도 함께 들어갔습니다.'); } }
+  function bpBgUrl(px){
+    var blk=BGP[px].cur(); if(!blk) return; if(libThumbMode && libThumbMode.listId===px+'Bg') libThumbEnd(false);
+    rtUrlModalOpen({title:'주소로 배경 넣기', label:'이미지·동영상 파일 주소(URL)를 입력해주세요.', placeholder:'https://… .jpg · .mp4', value:String(BGP[px].cfg(blk).bgImg||'').replace(/#video$/i,'').replace(/^(blob|data):.*$/,''),
+      apply:function(u){
+        if(!/^https?:\/\//i.test(u)){ clToast('주소는 http:// 또는 https:// 로 시작해야 합니다.'); return false; }
+        function put(src){ bpBgSet(px,blk,src); clToast('넣었습니다.'); }
+        if(rtBgIsVid(u) || /\.(jpe?g|png|gif|webp|avif|svg|bmp)(\?|#|$)/i.test(u)){ put(u); return; }
+        clToast('주소를 확인하고 있습니다…');
+        var im=new Image(); im.onload=function(){ put(u); };
+        im.onerror=function(){ var v=document.createElement('video'); v.muted=true; v.preload='metadata'; v.onloadedmetadata=function(){ put(u+'#video'); }; v.onerror=function(){ clToast('이미지나 동영상 파일 주소가 아닙니다.'); }; v.src=u; };
+        im.src=u;
+      }});
+  }
+  window.bpUpd=bpUpd; window.bpSeg=bpSeg; window.bpSw=bpSw; window.bpBgPick=bpBgPick; window.bpBgClear=bpBgClear; window.bpBgUpload=bpBgUpload; window.bpBgUrl=bpBgUrl;
+
+  /* ══════════════════════════════════════════════════════════════════
+     261022 추가 — 컨텐츠 블럭 (CONTENT04~70 · 접두어 cn · cfg _cnCfg) — 블럭추가 「컨텐츠」
+     · 좌측 사이트(addblock) 블럭추가 > 컨텐츠 contents1~149 를 한 블럭 종류(cnblk) + 배치(lay) 6 + 시작값(CN_PRESETS) 67 벌로 옮겼다.
+       - 좌우(split) : 이미지 칸 + 글 칸. 좌우 반전 · 이미지 한 장/두 장/네 장/끝까지(가장자리까지 꽉 참) · 이미지 폭 · 세로 정렬 · 글 칸 목록(번호 · 연도 · 소제목)
+       - 칸(cols)    : 이미지 + 제목 · 부제 · 설명. 칸 수 1~5 · 이미지 모양(사각 · 원형 · 아이콘 · 없음) · 비율 · 위치(위 · 옆) · 글 상자(선 · 상자)
+       - 이미지 위 글(tiles) · 바둑판(mosaic: 이미지 칸과 글 칸이 번갈아) · 가운데(stack: 기본 · 액자 · 프로필) · 글 목록(list: 칸마다 제목 + 줄 목록)
+     · 좌우 반전 짝과 칸 수만 다른 묶음은 하나로 합쳤다(시작값 주석 참고). 다른 카테고리에 이미 있는 꼴(배경 사진 + 가운데 큰 글 = TEXT18 · 이미지 + 캡션 = IMAGE08 등)은 뺐다.
+     · 견본 사진 = 좌측 사이트 견본 그대로 — editor-assets 의 img/content-sample/ (사이트 파일 이름 그대로, 이름 없는 구글 사진은 contentsNN_k). 카드 썸네일 = 사이트 블럭 목록 썸네일 원본(img/ba/contentNN.jpg)
+     · 이미지 · 문구 · 항목은 PC·모바일 공유, 배치 옵션 · 크기 · 색 · 여백은 기기별 (MV_CONTENT)
+     · 블럭 위 이미지에 보관함 이미지를 끌어다 놓으면 그 이미지가 바뀐다(data-cn 자리) · 빈 곳에 놓으면 블럭 배경
+     ══════════════════════════════════════════════════════════════════ */
+  var CN_SITE=ED_IMG+'content-sample/';
+  var CN_DEF={ lay:'split', flip:false, md:'one', mw:50, va:'center', ibox:false, lift:0, lst:'none', dcol:1, mcap:'below', timg:'',
+    n:4, shape:'rect', ar:'4/3', fit:'cover', card:'none', mpos:'top', sw:40, gap:30, flush:false, strip:false, cs:200, is:46, tfirst:false, iord:'tsd', deco:'', more:'', sit:false, hg:48,
+    ov:30, tpos:'c', tbg:'', st:'plain', ord:'ti', iw:600, bh:420, av:140, lshape:'none', lline:false, cw:1140,
+    eb:'', tt:'', sub:'', ds:'', note:'', btn:'', href:'', bst:'line', bar:false,
+    media:[], items:[],
+    al:'left', hal:'', tf:8, bf:8, fw:700, ifw:700, fi:false, tls:0, fs:28, ts:18, bs:14, ns:14,
+    tc:'#333333', itc:'', sc:'#999999', ac:'#999999', hl:'', bc:'#141414', cb:'#ffffff', rd:0,
+    bg:'#ffffff', bgImg:'', bgDim:0, bgGray:false, pt:100, pb:100 };
+  var CN_MAX=12;
+  var CN_LAYS=[['split','좌우'],['cols','칸'],['tiles','이미지 위 글'],['mosaic','바둑판'],['stack','가운데'],['list','글 목록'],['hist','히스토리']];   /* 261022 수정 — 히스토리 */
+  var CN_LAYNM={}; CN_LAYS.forEach(function(p){ CN_LAYNM[p[0]]=p[1]; });
+  /* 견본 파일 이름 → 주소 (http · data · blob · // 로 시작하면 그대로) */
+  function cnU(f){ f=String(f||''); return (!f || /^(https?:|data:|blob:|\/\/)/i.test(f))?f:CN_SITE+f; }
+  function cnPresetCfg(id){
+    var c=JSON.parse(JSON.stringify(CN_DEF)), p=CN_PRESETS[id]||CN_PRESETS.k4;
+    Object.keys(p).forEach(function(k){ c[k]=JSON.parse(JSON.stringify(p[k])); });
+    c.media=(c.media||[]).map(function(m){ m.img=cnU(m.img); return m; });
+    c.items=(c.items||[]).map(function(it){ it.img=cnU(it.img); return it; });
+    ['bgImg','tbg','timg','deco'].forEach(function(k){ c[k]=cnU(c[k]); });
+    if(!c.hal) c.hal=c.al;
+    c.preset=CN_PRESETS[id]?id:'k4';
+    return c;
+  }
+  var cnCurBlk=null, cnBound=false;
+  function cnCfg(blk){
+    if(!blk._cnCfg) blk._cnCfg=cnPresetCfg('k4');
+    var c=blk._cnCfg; Object.keys(CN_DEF).forEach(function(k){ if(c[k]==null) c[k]=JSON.parse(JSON.stringify(CN_DEF[k])); });
+    if(!Array.isArray(c.items)) c.items=[]; if(!Array.isArray(c.media)) c.media=[];
+    if(!c.hal) c.hal=c.al;
+    return c;
+  }
+  function cnEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  /* 글 — *별표* = 강조(굵게 · 강조 색), 줄바꿈 = <br> */
+  function cnTx(s){ return cnEsc(s).replace(/\*([^*\n]+)\*/g,'<b class="cn-hl">$1</b>').replace(/ {2}/g,' &nbsp;').replace(/\n/g,'<br>'); }   /* 두 칸 띄움(자간 넓힌 영문 제목의 낱말 사이)은 그대로 보이게 */
+  function cnParas(s){ return String(s||'').split(/\n\s*\n/).filter(function(p){ return p.trim(); }).map(function(p){ return '<p>'+cnTx(p.trim())+'</p>'; }).join(''); }
+  /* 줄 목록 — #로 시작하면 소제목, 앞이 연도(4자리)면 연도를 포인트 색으로 */
+  function cnLines(s){
+    return String(s||'').split('\n').filter(function(l){ return l.trim(); }).map(function(l){
+      l=l.trim();
+      if(l.charAt(0)==='#') return '<p class="cn-lh">'+cnTx(l.slice(1).trim())+'</p>';
+      var m=l.match(/^(\d{4})\s+(.+)$/); if(m) return '<p class="cn-ln"><span class="cn-yr">'+m[1]+'</span>'+cnTx(m[2])+'</p>';
+      return '<p class="cn-ln">'+cnTx(l)+'</p>';
+    }).join('');
+  }
+  function cnImg(u){ return u?'<img src="'+_mtAttr(u)+'" alt="" draggable="false" loading="lazy">':'<span class="cn-ph"></span>'; }
+  function cnBgU(u){ return u?'background-image:url(&quot;'+_mtAttr(String(u).replace(/"/g,'%22'))+'&quot;)':''; }
+  function cnLink(e,a){ var h=a.getAttribute('href')||''; if(!window.CL_MVIEW || h==='#' || !h){ e.preventDefault(); return false; } return true; }
+  function cnHref(u){ u=String(u||'').trim(); if(!u) return '#'; if(!/^(https?:|mailto:|tel:|\/|#)/i.test(u)) u='https://'+u; return _mtAttr(u); }
+  /* 글 묶음 */
+  function cnTextHTML(c,list){
+    var h='';
+    if(c.timg) h+='<div class="cn-timg" data-cn="t">'+cnImg(c.timg)+'</div>';
+    if(c.eb) h+='<p class="cn-eb">'+cnTx(c.eb)+'</p>';
+    if(c.bar) h+='<i class="cn-bar"></i>';
+    if(c.tt) h+='<h3 class="cn-tt">'+cnTx(c.tt)+'</h3>';
+    if(c.sub) h+='<p class="cn-sub">'+cnTx(c.sub)+'</p>';
+    if(String(c.ds||'').trim()) h+='<div class="cn-ds'+(+c.dcol>1?' c2':'')+'">'+cnParas(c.ds)+'</div>';
+    if(list) h+=cnListHTML(c);
+    if(c.note) h+='<p class="cn-note">'+cnTx(c.note)+'</p>';
+    if(c.btn) h+='<div class="cn-bw"><a class="cn-btn" data-st="'+c.bst+'" href="'+cnHref(c.href)+'" onclick="return cnLink(event,this)">'+cnEsc(c.btn)+'</a></div>';
+    return h;
+  }
+  function cnHeadHTML(c){ var h=cnTextHTML(c,false); return h?'<div class="cn-head">'+h+'</div>':''; }
+  /* 글 칸 목록(좌우 배치) */
+  function cnListHTML(c){
+    if(!c.lst || c.lst==='none') return '';
+    var rows=c.items.filter(function(it){ return String(it.t||'').trim() || String(it.d||'').trim(); });
+    if(!rows.length) return '';
+    return '<div class="cn-lst" data-l="'+c.lst+'">'+rows.map(function(it,i){
+      return '<div class="cn-li">'+(c.lst==='num'?'<span class="cn-no">'+(i+1)+'</span>':'')
+        +(it.t?'<p class="cn-li-t">'+cnTx(it.t)+'</p>':'')+(it.d?'<p class="cn-li-d">'+cnTx(it.d)+'</p>':'')+'</div>';
+    }).join('')+'</div>';
+  }
+  function cnCapHTML(m){ if(!m || (!m.t && !m.s)) return ''; return '<figcaption class="cn-cap">'+(m.s?'<p class="cn-cap-s">'+cnTx(m.s)+'</p>':'')+(m.t?'<p class="cn-cap-t">'+cnTx(m.t)+'</p>':'')+'</figcaption>'; }
+  /* 좌우: 캡션은 「부제 → 제목」(132) 또는 「제목 → 부제」(135) — 부제가 제목보다 먼저 적혀 있으면(목록의 첫 칸) 위에 */
+  function cnSplitHTML(c){
+    var M=c.media||[], media;
+    if(c.md==='bleed'){ var m0=M[0]||{}; media='<div class="cn-media bleed" data-cn="m0" style="'+cnBgU(m0.img)+'"></div>'; }
+    else {
+      var k=(c.md==='two')?2:((c.md==='grid')?4:1), arr=[];
+      for(var i=0;i<k;i++) arr.push(M[i]||{img:''});
+      media='<div class="cn-media '+c.md+'">'+arr.map(function(m,i){
+        var cap='';
+        if(m.t||m.s) cap='<figcaption class="cn-cap">'+(c.mcap==='over'?((m.s?'<p class="cn-cap-s">'+cnTx(m.s)+'</p>':'')+(m.t?'<p class="cn-cap-t">'+cnTx(m.t)+'</p>':'')):((m.t?'<p class="cn-cap-t">'+cnTx(m.t)+'</p>':'')+(m.s?'<p class="cn-cap-s">'+cnTx(m.s)+'</p>':'')))+'</figcaption>';
+        return '<figure class="cn-fig" data-cn="m'+i+'">'+cnImg(m.img)+cap+'</figure>';
+      }).join('')+'</div>';
+    }
+    return '<div class="cn-split">'+media+'<div class="cn-txt">'+cnTextHTML(c,true)+'</div></div>';
+  }
+  /* 칸 */
+  function cnItemText(c,it){
+    var T=it.t?'<p class="cn-it-t">'+cnTx(it.t)+'</p>':'', S=it.s?'<p class="cn-it-s">'+cnTx(it.s)+'</p>':'', D=it.d?'<p class="cn-it-d">'+cnTx(it.d)+'</p>':'';
+    var deco=(c.deco && T)?'<img class="cn-deco" src="'+_mtAttr(c.deco)+'" alt="" draggable="false">':'';
+    var body=(c.iord==='dts')?(D+T+S):((c.iord==='std')?(S+T+D):(T+deco+S+D));
+    var more=c.more?'<a class="cn-more" href="#" onclick="return cnLink(event,this)">'+cnEsc(c.more)+'</a>':'';
+    return (body||more)?'<div class="cn-tx">'+body+more+'</div>':'';
+  }
+  function cnColsHTML(c){
+    var it=c.items||[];
+    if(c.strip){
+      var im=it.map(function(x,i){ return x.img?'<div class="cn-m" data-cn="i'+i+'">'+cnImg(x.img)+'</div>':''; }).join('');
+      var tx=it.filter(function(x){ return x.t||x.s||x.d; }).map(function(x){ return '<div class="cn-it">'+cnItemText(c,x)+'</div>'; }).join('');
+      return cnHeadHTML(c)+(im?'<div class="cn-strip" style="--cnsn:'+Math.max(1,it.filter(function(x){ return x.img; }).length)+'">'+im+'</div>':'')+(tx?'<div class="cn-grid">'+tx+'</div>':'');
+    }
+    return cnHeadHTML(c)+'<div class="cn-grid">'+it.map(function(x,i){
+      var m=(c.shape==='none')?'':('<div class="cn-m" data-cn="i'+i+'">'+(c.shape==='icon'?(x.img?'<img src="'+_mtAttr(x.img)+'" alt="" draggable="false">':'<span class="cn-ph" style="width:var(--cnis);height:var(--cnis);aspect-ratio:auto;display:inline-block"></span>'):cnImg(x.img))+'</div>');
+      var t=cnItemText(c,x);
+      return '<div class="cn-it">'+(c.tfirst?t+m:m+t)+'</div>';
+    }).join('')+'</div>';
+  }
+  /* 이미지 위 글 */
+  function cnTilesHTML(c){
+    var one=!!c.tbg;
+    return cnHeadHTML(c)+'<div class="cn-tiles'+(one?' one':'')+'"'+(one?' style="'+cnBgU(c.tbg)+'"':'')+'>'+(c.items||[]).map(function(x,i){
+      return '<div class="cn-tile" data-cn="i'+i+'" style="'+((x.img)?cnBgU(x.img):'')+'">'+cnItemText(c,x)+'</div>';
+    }).join('')+'</div>';
+  }
+  /* 바둑판 — 한 줄에 두 쌍(이미지 + 글). 둘째 줄은 글이 먼저 */
+  function cnMosHTML(c){
+    return cnHeadHTML(c)+'<div class="cn-mos">'+(c.items||[]).map(function(x,i){
+      var row=Math.floor(i/2), tf=((row%2)===1)!==!!c.flip;
+      var im='<div class="cn-mi" data-cn="i'+i+'" style="'+cnBgU(x.img)+'"></div>', tx='<div class="cn-mt">'+(cnItemText(c,x)||'')+'</div>';
+      return tf?(tx+im):(im+tx);
+    }).join('')+'</div>';
+  }
+  /* 가운데 */
+  function cnStackHTML(c){
+    var M=c.media||[];
+    if(c.st==='frame'){
+      return '<div class="cn-stk"><div class="cn-frame">'+(c.tt?'<h3 class="cn-tt">'+cnTx(c.tt)+'</h3>':'')+'<i class="cn-vl"></i>'+(String(c.ds||'').trim()?'<div class="cn-ds">'+cnParas(c.ds)+'</div>':'')+'</div></div>';
+    }
+    if(c.st==='profile'){
+      var b=M[0]||{}, a=M[1]||{}, rest=Object.assign({},c,{tt:''});
+      var txt=cnTextHTML(rest,false);
+      return '<div class="cn-prof"><div class="cn-ban" data-cn="m0" style="'+cnBgU(b.img)+'">'+(c.tt?'<h3 class="cn-tt">'+cnTx(c.tt)+'</h3>':'')+'</div><div class="cn-av" data-cn="m1" style="'+cnBgU(a.img)+'"></div>'
+        +(txt?'<div class="cn-prof-tx cn-stk"><div class="cn-txt">'+txt+'</div></div>':'')+'</div>';
+    }
+    var m0=M[0]||{}, im='<div class="cn-sm" data-cn="m0">'+cnImg(m0.img)+'</div>', tx=cnTextHTML(c,false);
+    tx=tx?'<div class="cn-txt">'+tx+'</div>':'';
+    return '<div class="cn-stk">'+(c.ord==='it'?im+tx:tx+im)+'</div>';
+  }
+  /* 글 목록 */
+  function cnListColsHTML(c){
+    var cols=(c.items||[]).map(function(x,i){
+      var hd='', T=x.t?cnTx(x.t):'';
+      if(c.lshape==='strip') hd='<div class="cn-lstrip" data-cn="i'+i+'" style="'+cnBgU(x.img)+'">'+(T?'<span>'+T+'</span>':'')+'</div>';
+      else if(c.lshape==='icon') hd=(x.img?'<div class="cn-lico" data-cn="i'+i+'"><img src="'+_mtAttr(x.img)+'" alt="" draggable="false"></div>':'')+(T?'<p class="cn-it-t">'+T+'</p>':'');
+      else if(c.lshape==='tail') hd=(T||x.img)?('<div class="cn-lhead"><p class="cn-it-t">'+T+'</p>'+(x.img?'<span class="cn-ltail" data-cn="i'+i+'"><img src="'+_mtAttr(x.img)+'" alt="" draggable="false"></span>':'')+'</div>'):'';
+      else hd=T?'<p class="cn-it-t">'+T+'</p>':'';
+      if(c.lshape==='icon' && T) hd=hd.replace('<p class="cn-it-t">','<p class="cn-it-t" style="margin-bottom:18px">');
+      return '<div class="cn-col">'+hd+'<div class="cn-lines">'+cnLines(x.d)+'</div></div>';
+    }).join('');
+    var head=cnHeadHTML(Object.assign({},c,{note:''}));
+    return head+'<div class="cn-cols">'+cols+'</div>'+(c.note?'<p class="cn-note">'+cnTx(c.note)+'</p>':'');
+  }
+  /* 261022 추가 — 히스토리(hist · 라이브 contents149): 항목 = 연도(t) · 줄 목록(d · 줄 앞 숫자 = 월) · 이미지. 짝수 째는 좌우가 바뀐다 */
+  function cnHistLines(s){
+    return String(s||'').split('\n').filter(function(l){ return l.trim(); }).map(function(l){
+      l=l.trim(); var m=l.match(/^(\d{1,2})[.\s]\s*(.+)$/);
+      return '<p class="cn-tl-ln">'+(m?('<span class="cn-tl-mo">'+(m[1].length<2?'0'+m[1]:m[1])+'</span><span>'+cnTx(m[2])+'</span>'):('<span>'+cnTx(l)+'</span>'))+'</p>';
+    }).join('');
+  }
+  function cnHistHTML(c){
+    return cnHeadHTML(c)+'<div class="cn-tl">'+(c.items||[]).map(function(x,i){
+      return '<div class="cn-tl-i"><div class="cn-tl-tx">'+(x.t?'<p class="cn-tl-yr">'+cnTx(x.t)+'</p>':'')+cnHistLines(x.d)+'</div>'
+        +'<div class="cn-tl-mw">'+(x.img?'<div class="cn-tl-m" data-cn="i'+i+'">'+cnImg(x.img)+'</div>':'')+'</div></div>';
+    }).join('')+'</div>';
+  }
+  function cnInnerHTML(c){
+    var pt=txNum(c.pt,100), pb=txNum(c.pb,100), body;
+    switch(c.lay){
+      case 'hist': body=cnHistHTML(c); break;
+      case 'cols': body=cnColsHTML(c); break;
+      case 'tiles': body=cnTilesHTML(c); break;
+      case 'mosaic': body=cnMosHTML(c); break;
+      case 'stack': body=cnStackHTML(c); break;
+      case 'list': body=cnListColsHTML(c); break;
+      default: body=cnSplitHTML(c);
+    }
+    var bleed=(c.lay==='split' && c.md==='bleed');
+    return '<div class="cn-in" style="padding-top:'+(bleed?0:pt)+'px;padding-bottom:'+(bleed?0:pb)+'px">'+body+'</div>';
+  }
+  function cnLum(h){ h=String(h||'#000').replace('#',''); if(h.length===3) h=h.replace(/./g,'$&$&'); var r=parseInt(h.substr(0,2),16), g=parseInt(h.substr(2,2),16), b=parseInt(h.substr(4,2),16); return (r*299+g*587+b*114)/1000; }
+  function cnStyleStr(c){
+    var n=Math.max(1,Math.min(5,txNum(c.n,4)));
+    return '--cntf:'+smStack(txNum(c.tf,8))+';--cnbf:'+smStack(txNum(c.bf,8))+';--cnfs:'+txNum(c.fs,28)+'px;--cnts:'+txNum(c.ts,18)+'px;--cnbs:'+txNum(c.bs,14)+'px;--cnns:'+txNum(c.ns,14)+'px;'
+      +'--cnfw:'+txNum(c.fw,700)+';--cnifw:'+txNum(c.ifw,700)+';--cntls:'+txNum(c.tls,0)+'px;'
+      +'--cntc:'+(c.tc||'#333')+';--cnitc:'+(c.itc||c.tc||'#333')+';--cnsc:'+(c.sc||'#999')+';--cnac:'+(c.ac||'#999')+';'+(c.hl?'--cnhl:'+c.hl+';':'')
+      +'--cnbc:'+(c.bc||'#141414')+';--cnbt:'+(cnLum(c.bc)>150?'#111111':'#ffffff')+';--cncb:'+(c.cb||'#fff')+';--cnrd:'+txNum(c.rd,0)+'px;'
+      +'--cnmw:'+txNum(c.mw,50)+'%;--cngap:'+txNum(c.gap,30)+'px;--cnn:'+n+';--cnnm:'+Math.min(n,2)+';--cnar:'+(c.ar||'4/3')+';--cnfit:'+(c.fit||'cover')+';'
+      +'--cncs:'+txNum(c.cs,200)+'px;--cnis:'+txNum(c.is,46)+'px;--cnsw:'+txNum(c.sw,40)+'%;--cnov:'+(txNum(c.ov,30)/100)+';--cniw:'+txNum(c.iw,600)+'px;'
+      +'--cnbh:'+txNum(c.bh,420)+'px;--cnav:'+txNum(c.av,140)+'px;--cnhg:'+txNum(c.hg,48)+'px;--cncw:'+txNum(c.cw,1140)+'px;--cnlift:'+txNum(c.lift,0)+'px;'
+      +'--cnpt:'+txNum(c.pt,100)+'px;--cnpb:'+txNum(c.pb,100)+'px;';
+  }
+  function cnAttrs(el,c){
+    var A={lay:c.lay, flip:c.flip?'1':'0', md:c.md, va:c.va, shape:c.shape, card:c.card, mpos:c.mpos, flush:c.flush?'1':'0', al:c.al||'left', hal:c.hal||c.al||'left', tpos:c.tpos, st:c.st,
+           ibox:c.ibox?'1':'0', fi:c.fi?'1':'0', mcap:c.mcap, lline:c.lline?'1':'0', tfirst:c.tfirst?'1':'0', sit:c.sit?'1':'0'};
+    Object.keys(A).forEach(function(k){ el.setAttribute('data-'+k,A[k]); });
+  }
+  function cnBlockHTML(){ return '<span class="tag-badge">컨텐츠</span>'+SM_GEAR+'<div class="cn-wrap"></div>'; }
+  function cnApply(blk){
+    if(!blk) return;
+    var c=cnCfg(blk), wrap=blk.querySelector('.cn-wrap'); if(!wrap) return;
+    blk.style.padding='0';
+    wrap.style.cssText=cnStyleStr(c); cnAttrs(wrap,c);
+    wrap.innerHTML=cnInnerHTML(c);
+    blkBgApply(blk,c,'#ffffff');
+  }
+  function cnInit(blk){ if(blk) cnApply(blk); }
+  function cnCloneInit(src,clone){
+    if(!clone || clone.getAttribute('data-block')!=='cnblk') return;
+    try{ clone._cnCfg=JSON.parse(JSON.stringify(cnCfg(src))); }catch(e){ clone._cnCfg=null; }
+    setTimeout(function(){ cnInit(clone); },0);
+  }
+  /* 보관함 끌어다 놓기 — 빈 곳 = 블럭 배경 · 이미지 자리(data-cn) = 그 이미지 */
+  function cnLibDrop(blk,src){ cnCfg(blk).bgImg=src; cnApply(blk); if(cnCurBlk===blk) bgPanelSync('cn'); clToast((rtBgIsVid(src)?'블럭 배경 동영상을':'블럭 배경 이미지를')+' 넣었습니다.'); if(typeof markDirty==='function') markDirty(); return true; }
+  function cnLibRep(el,src){
+    var blk=el.closest('.blk'); if(!blk) return;
+    if(rtBgIsVid(src)){ clToast('이 자리에는 이미지만 넣을 수 있습니다.'); return; }
+    var c=cnCfg(blk), k=el.getAttribute('data-cn')||'';
+    if(k==='t') c.timg=src;
+    else if(k.charAt(0)==='m'){ var i=+k.slice(1); while(c.media.length<=i) c.media.push({img:'',t:'',s:''}); c.media[i].img=src; }
+    else if(k.charAt(0)==='i'){ var it=c.items[+k.slice(1)]; if(!it) return; it.img=src; }
+    cnApply(blk); if(cnCurBlk===blk){ cnMediaRender(); cnItemsRender(); }
+    if(typeof markDirty==='function') markDirty(); clToast('이미지를 바꿨습니다.');
+  }
+  function baInsertCn(card){ baInsertKind(card,'cnblk','cn-blk',cnBlockHTML(),'_cnCfg',cnPresetCfg(card.getAttribute('data-preset')||'k4'),cnInit); }
+
+  /* ── 설정창 ── */
+  var CN_RNG=[['cnMw','mw','%'],['cnIw','iw','px'],['cnBh','bh','px'],['cnAv','av','px'],['cnCs','cs','px'],['cnIs','is','px'],['cnOv','ov','%'],['cnGap','gap','px'],['cnRd','rd','px'],
+              ['cnFs','fs','px'],['cnTs','ts','px'],['cnBs','bs','px'],['cnBgDim','bgDim','%'],['cnPt','pt','px'],['cnPb','pb','px']];
+  var CN_COL=[['cnTc','tc'],['cnItc','itc'],['cnSc','sc'],['cnAc','ac'],['cnHl','hl'],['cnBc','bc'],['cnCb','cb'],['cnBg','bg']];
+  var CN_DI={
+    drag:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>',
+    del:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg>'
+  };
+  function cnDirty(){ if(typeof markDirty==='function') markDirty(); }
+  function cnUpd(key,val){ var blk=cnCurBlk; if(!blk) return; cnCfg(blk)[key]=val; cnApply(blk); cnRows(); cnDirty(); }
+  var _cnT=0;
+  function cnTxt(key,val){ var blk=cnCurBlk; if(!blk) return; cnCfg(blk)[key]=val; clearTimeout(_cnT); _cnT=setTimeout(function(){ if(blk.isConnected){ cnApply(blk); cnRows(); cnDirty(); } },150); }
+  function cnSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
+  function cnSeg(key,id,m){
+    var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
+    cnSegSync(id,m); c[key]=m;
+    if(key==='md'){ var k=(m==='two')?2:((m==='grid')?4:1); while(c.media.length<k) c.media.push({img:'',t:'',s:''}); cnMediaRender(); }
+    if(key==='st' && m==='profile'){ while(c.media.length<2) c.media.push({img:'',t:'',s:''}); }
+    if(key==='st'){ cnMediaRender(); }
+    if(key==='lst' || key==='shape'){ cnItemsRender(); }
+    cnApply(blk); cnRows(); cnDirty();
+  }
+  function cnSw(el,key){ var on=!el.classList.contains('on'); el.classList.toggle('on',on); cnUpd(key,on); }
+  /* 비율 — 가로 · 정사각 · 세로 (시작값의 비율이 이 셋 중 어디에 가까운지로 표시) */
+  function cnArKind(ar){ var p=String(ar||'4/3').split('/'), r=(+p[0]||4)/(+p[1]||3); return r>1.08?'w':(r<0.92?'t':'s'); }
+  function cnAr(k){ var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk); if(cnArKind(c.ar)===k) return; c.ar={w:'4/3',s:'1/1',t:'2/3'}[k]; cnSegSync('cnArSeg',k); cnApply(blk); cnDirty(); }
+  function cnPickLay(e,k){
+    if(e) e.stopPropagation(); var dd=document.getElementById('cnLayDD'); if(dd) dd.classList.remove('open');
+    var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk); if(c.lay===k) return;
+    c.lay=k;
+    if(k==='stack' && !c.media.length) c.media.push({img:'',t:'',s:''});
+    if(k==='split' && !c.media.length) c.media.push({img:(c.items[0]&&c.items[0].img)||'',t:'',s:''});
+    if(k!=='split' && k!=='stack' && !c.items.length){ for(var i=0;i<3;i++) c.items.push({img:(c.media[i]&&c.media[i].img)||'',t:'제목',s:'',d:'설명을 적어 보세요.'}); }
+    if(k==='cols' || k==='tiles') c.n=Math.max(1,Math.min(5,c.items.length||3));
+    if(k==='hist') c.items.forEach(function(it,i){ if(!/^\d{4}/.test(String(it.t||''))) it.t=String(new Date().getFullYear()-i); });   /* 261022 추가 — 히스토리로 바꾸면 항목 제목을 연도로 */
+    cnApply(blk); cnFillBset(); cnDirty();
+  }
+  function cnPickFont(e,key,i){
+    if(e) e.stopPropagation(); var dd=document.getElementById(key==='tf'?'cnTfDD':'cnBfDD');
+    if(dd){ dd.classList.remove('open'); cnFontSync(dd,i); }
+    cnUpd(key,i);
+  }
+  function cnFontSync(dd,i){ var lb=dd.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=(SM_FONTS[i]||SM_FONTS[0]).n; dd.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', +b.getAttribute('data-i')===i); }); }
+  function cnBuildBset(){
+    if(cnBound) return; cnBound=true;
+    var ld=document.getElementById('cnLayDD'), lm=ld&&ld.querySelector('.sdd-menu');
+    if(lm) lm.innerHTML=CN_LAYS.map(function(p){ return '<button type="button" data-k="'+p[0]+'" onclick="cnPickLay(event,\''+p[0]+'\')">'+p[1]+'</button>'; }).join('');
+    ['tf','bf'].forEach(function(key){
+      var dd=document.getElementById(key==='tf'?'cnTfDD':'cnBfDD'), m=dd&&dd.querySelector('.sdd-menu');
+      if(m) m.innerHTML=SM_FONTS.map(function(f,i){ return '<button type="button" data-i="'+i+'" style="font-family:'+f.f+','+f.fb+'" onclick="cnPickFont(event,\''+key+'\','+i+')">'+f.n+'</button>'; }).join('');
+    });
+    CN_RNG.forEach(function(r){
+      var el=document.getElementById(r[0]); if(!el) return;
+      el.addEventListener('input',function(){ var v=parseFloat(el.value); smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[2]; var blk=cnCurBlk; if(!blk) return; cnCfg(blk)[r[1]]=v; cnApply(blk); if(r[1]==='bgDim') bgPanelSync('cn'); cnDirty(); });
+    });
+    CN_COL.forEach(function(r){
+      var el=document.getElementById(r[0]); if(!el) return;
+      el.addEventListener('input',function(){ var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(el.value); cnUpd(r[1],el.value); });
+    });
+  }
+  /* 지금 배치에서 쓰지 않는 행은 감춘다. data-for = 배치 · data-st = 가운데 모양 · data-shape = 칸 이미지 모양 · data-btn = 버튼이 있을 때 · data-items · data-hl · data-cb */
+  function cnRows(){
+    var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk), box=document.getElementById('bsetCn'); if(!box) return;
+    var hasItems=(c.lay!=='stack') && !(c.lay==='split' && (!c.lst || c.lst==='none'));
+    box.querySelectorAll('.cn-r').forEach(function(el){
+      var ok=true, f=el.getAttribute('data-for'), st=el.getAttribute('data-st'), sh=el.getAttribute('data-shape');
+      if(f && f.split(' ').indexOf(c.lay)<0) ok=false;
+      if(ok && st && c.lay==='stack' && st.split(' ').indexOf(c.st)<0) ok=false;
+      if(ok && sh && c.lay==='cols' && sh.split(' ').indexOf(c.shape)<0) ok=false;
+      if(ok && sh && c.lay==='list' && c.lshape!=='icon') ok=false;
+      if(ok && el.hasAttribute('data-btn') && !String(c.btn||'').trim()) ok=false;
+      if(ok && el.hasAttribute('data-items') && !hasItems && c.lay!=='split') ok=false;
+      if(ok && el.hasAttribute('data-hl') && String(c.tt||'').indexOf('*')<0 && !(c.items||[]).some(function(it){ return String(it.t||'').indexOf('*')>=0; })) ok=false;
+      if(ok && el.hasAttribute('data-cb') && !(c.card==='box' && c.lay==='cols') && c.lay!=='mosaic' && !(c.lay==='split' && c.ibox)) ok=false;
+      el.hidden=!ok;
+    });
+    var ia=document.getElementById('cnItemAcc'); if(ia && c.lay==='split'){ var l=document.getElementById('cnItemList'), ad=document.querySelector('#cnItemAcc .im-addrow'), on=!!(c.lst && c.lst!=='none'); if(l) l.style.display=on?'':'none'; if(ad) ad.style.display=on?'':'none'; }
+    else { var l2=document.getElementById('cnItemList'), ad2=document.querySelector('#cnItemAcc .im-addrow'); if(l2) l2.style.display=''; if(ad2) ad2.style.display=''; }
+    var ma=document.getElementById('cnMediaAcc'); if(ma && c.lay==='stack' && c.st==='frame') ma.hidden=true;
+    var al=document.getElementById('cnAlLbl'); if(al) al.textContent=(c.lay==='split'||c.lay==='stack')?'글 정렬':'항목 정렬';
+    var alRow=al&&al.closest('.srow'), alSeg=document.getElementById('cnAlSeg'), noAl=(c.lay==='hist'); if(alRow) alRow.hidden=noAl; if(alSeg) alSeg.hidden=noAl;   /* 261022 추가 — 히스토리는 좌우가 번갈아 정렬이 정해져 있다 */
+    var ht=document.getElementById('cnItemHint'); if(ht) ht.textContent=(c.lay==='hist')?'연도마다 줄 목록을 적습니다. 줄 앞 숫자는 월로 보입니다 (예: 03 스튜디오 오픈). 짝수 째 항목은 좌우가 바뀝니다.':'비워 둔 칸은 블럭에서 빠집니다.';   /* 261022 추가 */
+  }
+  /* 이미지 목록(좌우 · 가운데) — 개수는 배치가 정한다 */
+  function cnMediaSlots(c){
+    if(c.lay==='stack') return c.st==='profile'?[['배너',0],['프로필',1]]:(c.st==='frame'?[]:[['이미지',0]]);
+    var k=(c.md==='two')?2:((c.md==='grid')?4:1), a=[]; for(var i=0;i<k;i++) a.push([k>1?String(i+1):'이미지',i]);
+    a.push(['글 위','t']); return a;
+  }
+  function cnMediaRender(){
+    var blk=cnCurBlk, list=document.getElementById('cnMediaList'); if(!blk||!list) return; var c=cnCfg(blk);
+    var cap=(c.lay==='split' && c.md!=='bleed');
+    list.innerHTML=cnMediaSlots(c).map(function(s){
+      var isT=(s[1]==='t'), m=isT?{img:c.timg}:(c.media[s[1]]||{img:'',t:'',s:''}), u=String(m.img||''), key=isT?'t':('m'+s[1]);
+      return '<div class="mt-imgrow" data-i="'+key+'">'
+        +'<span class="cn-mlb">'+s[0]+'</span>'
+        +'<span class="mt-imgthumb"'+(u?' style="background-image:url(&quot;'+_mtAttr(u)+'&quot;)"':'')+'></span>'
+        +'<div class="vc-caps"><input type="text" class="cn-src" value="'+_mtAttr(u)+'" oninput="cnMediaSet(\''+key+'\',\'img\',this.value)">'
+        +((cap && !isT)?('<input type="text" class="s-in" value="'+_mtAttr(m.t||'')+'" placeholder="캡션 제목" maxlength="60" spellcheck="false" oninput="cnMediaSet(\''+key+'\',\'t\',this.value)">'
+          +'<input type="text" class="s-in" value="'+_mtAttr(m.s||'')+'" placeholder="캡션 설명" maxlength="80" spellcheck="false" oninput="cnMediaSet(\''+key+'\',\'s\',this.value)">'):(isT?'<span class="mtk-hint" style="margin:0">제목 위 작은 이미지 (선택)</span>':''))
+        +'</div>'
+        +((isT && u)?'<button type="button" class="mt-imgdel" title="빼기" aria-label="빼기" onclick="cnMediaSet(\'t\',\'img\',\'\');cnMediaRender()">'+CN_DI.del+'</button>':'')
+        +'</div>';
+    }).join('');
+  }
+  var _cnMT=0;
+  function cnMediaSet(key,k,v){
+    var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
+    if(key==='t'){ c.timg=v; }
+    else { var i=+String(key).slice(1); while(c.media.length<=i) c.media.push({img:'',t:'',s:''}); c.media[i][k]=v; }
+    clearTimeout(_cnMT); _cnMT=setTimeout(function(){ if(blk.isConnected){ cnApply(blk); cnDirty(); } },k==='img'?0:150);
+  }
+  /* 항목 목록 */
+  function cnItemImgOn(c){
+    if(c.lay==='split') return false;
+    if(c.lay==='cols') return c.shape!=='none';
+    if(c.lay==='list') return c.lshape && c.lshape!=='none';
+    if(c.lay==='tiles') return !c.tbg;
+    return true;
+  }
+  function cnItemsRender(){
+    var blk=cnCurBlk, list=document.getElementById('cnItemList'); if(!blk||!list) return; var c=cnCfg(blk);
+    var img=cnItemImgOn(c), isList=(c.lay==='list'), isSplit=(c.lay==='split'), isHist=(c.lay==='hist');   /* 261022 수정 — 히스토리 */
+    list.innerHTML=c.items.map(function(it,i){
+      var u=String(it.img||'');
+      return '<div class="mt-imgrow" data-i="'+i+'">'
+        +'<span class="mt-imgdrag" title="드래그하여 순서 변경">'+CN_DI.drag+'</span>'
+        +(img?'<span class="mt-imgthumb"'+(u?' style="background-image:url(&quot;'+_mtAttr(u)+'&quot;)"':'')+'></span>':'')
+        +'<div class="vc-caps">'+(img?'<input type="text" class="cn-src" value="'+_mtAttr(u)+'" oninput="cnItemSet('+i+',\'img\',this.value)">':'')
+        +'<textarea class="sc-ta" rows="1" placeholder="'+((isSplit&&c.lst==='year')||isHist?'연도':'제목')+'" spellcheck="false" oninput="cnItemSet('+i+',&#39;t&#39;,this.value)">'+_mtAttr(it.t||'')+'</textarea>'
+        +((isList||isSplit||isHist)?'':'<input type="text" class="s-in" value="'+_mtAttr(it.s||'')+'" placeholder="부제" maxlength="80" spellcheck="false" oninput="cnItemSet('+i+',&#39;s&#39;,this.value)">')
+        +'<textarea class="sc-ta" rows="'+((isList||isHist)?4:2)+'" placeholder="'+(isList?'한 줄에 하나씩 (#소제목)':(isHist?'한 줄에 하나씩 · 앞 숫자는 월':'설명'))+'" spellcheck="false" oninput="cnItemSet('+i+',&#39;d&#39;,this.value)">'+_mtAttr(it.d||'')+'</textarea>'
+        +'</div>'
+        +'<button type="button" class="mt-imgdel" onclick="cnItemDel('+i+')" title="삭제" aria-label="삭제"'+(c.items.length<=1?' disabled':'')+'>'+CN_DI.del+'</button>'
+        +'</div>';
+    }).join('');
+    var cnt=document.getElementById('cnItemCount'); if(cnt) cnt.textContent=c.items.length+'/'+CN_MAX;
+    var add=document.getElementById('cnItemAdd'); if(add) add.disabled=(c.items.length>=CN_MAX);
+    if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',function(a,b){ var m=c.items.splice(a,1)[0]; c.items.splice(b,0,m); cnItemsRender(); cnApply(blk); cnDirty(); });
+    if(typeof libThumbKeep==='function' && libThumbMode && libThumbMode.listId==='cnItemList') libThumbKeep();
+  }
+  var _cnIT=0;
+  function cnItemSet(i,k,v){
+    var blk=cnCurBlk; if(!blk) return; var it=cnCfg(blk).items[i]; if(!it) return; it[k]=v;
+    clearTimeout(_cnIT); _cnIT=setTimeout(function(){ if(blk.isConnected){ cnApply(blk); if(k==='t') cnRows(); cnDirty(); } },k==='img'?0:150);
+  }
+  function cnItemAdd(){
+    var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk); if(c.items.length>=CN_MAX){ clToast('항목은 최대 '+CN_MAX+'개까지 넣을 수 있습니다.'); return; }
+    var last=c.items[c.items.length-1]||{};
+    c.items.push({img:last.img||'', t:'새 항목', s:'', d:''});
+    cnApply(blk); cnItemsRender(); cnDirty();
+    var rows=document.querySelectorAll('#cnItemList .mt-imgrow'), r=rows[rows.length-1]; if(r){ var ta=r.querySelector('textarea'); if(ta){ ta.focus(); ta.select(); } }
+  }
+  function cnItemDel(i){
+    var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk); if(c.items.length<=1){ clToast('항목은 최소 1개가 있어야 합니다.'); return; }
+    var gone=c.items.splice(i,1)[0]; cnApply(blk); cnItemsRender(); cnDirty();
+    clToast('「'+(String(gone.t||'항목').replace(/\*/g,'').split('\n')[0])+'」을 삭제했습니다.',{label:'되돌리기',fn:function(){ if(!blk.isConnected) return; cnCfg(blk).items.splice(i,0,gone); cnApply(blk); if(cnCurBlk===blk) cnItemsRender(); }});
+  }
+  function cnFillBset(){
+    var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
+    function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
+    var ld=document.getElementById('cnLayDD'); if(ld){ var lb=ld.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=CN_LAYNM[c.lay]||'좌우'; ld.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-k')===c.lay); }); }
+    var tdd=document.getElementById('cnTfDD'); if(tdd) cnFontSync(tdd,txNum(c.tf,8));
+    var bdd=document.getElementById('cnBfDD'); if(bdd) cnFontSync(bdd,txNum(c.bf,8));
+    var fs=document.getElementById('cnFlipSw'); if(fs) fs.classList.toggle('on',!!c.flip);
+    cnSegSync('cnMdSeg',c.md); cnSegSync('cnVaSeg',c.va); cnSegSync('cnStSeg',c.st); cnSegSync('cnOrdSeg',c.ord); cnSegSync('cnNSeg',String(txNum(c.n,4)));
+    cnSegSync('cnShapeSeg',c.shape); cnSegSync('cnArSeg',cnArKind(c.ar)); cnSegSync('cnMposSeg',c.mpos); cnSegSync('cnCardSeg',c.card); cnSegSync('cnTposSeg',c.tpos);
+    cnSegSync('cnHalSeg',c.hal||c.al); cnSegSync('cnAlSeg',c.al); cnSegSync('cnBstSeg',c.bst); cnSegSync('cnLstSeg',c.lst||'none');
+    CN_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
+    CN_COL.forEach(function(r){ var v=c[r[1]]||((r[1]==='itc'||r[1]==='hl')?c.tc:'#ffffff'); set(r[0],v); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(v); });
+    set('cnEb',c.eb||''); set('cnTt',c.tt||''); set('cnSub',c.sub||''); set('cnDs',c.ds||''); set('cnNote',c.note||''); set('cnBtn',c.btn||''); set('cnHref',c.href||''); set('cnMore',c.more||'');
+    cnMediaRender(); cnItemsRender(); bgPanelSync('cn'); cnRows();
+  }
+  if(typeof BGP==='object' && BGP) BGP.cn={cur:function(){ return cnCurBlk; }, cfg:cnCfg, apply:cnApply};
+  window.cnCfg=cnCfg; window.cnApply=cnApply; window.cnCloneInit=cnCloneInit; window.cnLibDrop=cnLibDrop; window.cnLibRep=cnLibRep; window.baInsertCn=baInsertCn; window.cnLink=cnLink;
+  window.cnUpd=cnUpd; window.cnTxt=cnTxt; window.cnSeg=cnSeg; window.cnSw=cnSw; window.cnAr=cnAr; window.cnPickLay=cnPickLay; window.cnPickFont=cnPickFont;
+  window.cnBuildBset=cnBuildBset; window.cnFillBset=cnFillBset; window.cnMediaSet=cnMediaSet; window.cnMediaRender=cnMediaRender; window.cnItemSet=cnItemSet; window.cnItemAdd=cnItemAdd; window.cnItemDel=cnItemDel;
+
   /* ══════════════════════════════════════════════════════════════════
      261022 추가 — 소셜 블럭 (SOCIAL01~15 · 접두어 sn · cfg _snCfg) — 블럭추가 「소셜」
      · 좌측 사이트 소셜 36장을 한 블럭 종류(snblk) + 종류(st) 3 + 시작값(SN_PRESETS) 15 벌로 옮겼다
@@ -46952,6 +47940,7 @@ global.PolyFX = API;
       stackcard   :{cfg:'_scCfg', apply:function(b){ scApply(b); }},   /* 260923 추가 — 스택 카드 */
       formblk     :{cfg:'_fmCfg', apply:function(b){ fmApply(b); }},   /* 260929 추가 — 폼 블럭 */
       snblk       :{cfg:'_snCfg', apply:function(b){ snApply(b); }},   /* 261022 추가 — 소셜 블럭 */
+      cnblk       :{cfg:'_cnCfg', apply:function(b){ cnApply(b); }},   /* 261022 추가 — 컨텐츠 블럭 */
       calblk      :{cfg:'_caCfg', apply:function(b){ caApply(b); }},   /* 260929 추가 — 캘린더 블럭 */
       ctblk       :{cfg:'_ctCfg', apply:function(b){ ctApply(b); }},   /* 260929 추가 — 컨택트/지점 블럭 */
       cred        :{cfg:'_rtCfg', apply:function(b){ rtApply(b); }},   /* 260905 추가 — 이력 텍스트 블럭 */
@@ -47429,6 +48418,7 @@ global.PolyFX = API;
       ctblk       :{kind:1, preset:1, fields:1, info:1, branches:1, map:1, title:1, desc:1, lead:1, phone:1, leadL:1, fix:1, btnT:1, done:1, mailOn:1, mails:1, privacy:1, privTxt:1, captcha:1, srRegion:1, srKw:1, srPh:1, bgImg:1, bgGray:1},   /* 260929 추가 — 컨택트/지점 · 항목·지점·연락처·지도·문구·제출 옵션은 PC·모바일 공유, 배치·색·크기·여백은 기기별 */
       calblk      :{events:1, view:1, nav:1, hol:1, ws:1, perm:1, gid:1, gkey:1, gc:1, sync:1},   /* 260929 추가 — 캘린더 블럭 · 일정·보기·권한·연동은 PC·모바일이 함께 쓴다. 색·크기·여백은 기기별 */
       snblk       :{icons:1, eb:1, desc:1, ebH:1, descH:1, introTH:1, acct:1, href:1, imgs:1, introT:1, moreT:1, bgImg:1},   /* 261022 추가 — 소셜 블럭 · 아이콘·문구·계정·이미지·배경 소재는 PC·모바일 공유, 모양·크기·열·색·여백은 기기별 */
+      cnblk       :{preset:1, lay:1, st:1, lst:1, media:1, items:1, timg:1, tbg:1, deco:1, eb:1, tt:1, sub:1, ds:1, note:1, btn:1, href:1, more:1, bgImg:1, bgGray:1},   /* 261022 추가 — 컨텐츠 블럭 · 배치 종류 · 이미지 · 문구 · 항목 · 배경 소재는 PC·모바일 공유, 배치 옵션 · 크기 · 색 · 여백은 기기별 */
       formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, privacy:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블럭 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
     };
     /* 텍스트 문구 키 — 기본은 PC 와 공유하고, 블럭별 '문구 따로 쓰기'(blk._mvTextSplit)를 켠 경우에만 모바일 전용이 된다 */
