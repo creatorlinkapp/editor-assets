@@ -2414,6 +2414,91 @@
   #baGrid .ba-card[data-kind="formblk"]{border-radius:var(--r-xl);}
   .ba-thumb.fm-live{overflow:hidden;background:#fff;align-items:flex-start;}
   .fm-pv{position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;}
+  /* ══ 261022 추가 — 소셜 블럭 (snblk · SOCIAL01~15) — 아이콘 · 배너 · 이미지 피드. 좌측 사이트 소셜 36장을 세 종류로 묶었다 ══ */
+  .sn-wrap{position:relative;container-type:inline-size;font-family:var(--snf);color:var(--sntc);}
+  .sn-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box;}
+  /* 아이콘 — 모양(없음 · 원 · 둥근 사각 · 외곽선) × 색(브랜드 색 · 단색). --c = 아이콘(또는 판) 색 · --ink = 판 위 아이콘 색 */
+  .sn-ics{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--sngap);}
+  .sn-wrap[data-st="icon"][data-al="left"] .sn-ics{justify-content:flex-start;}
+  .sn-wrap[data-st="icon"][data-al="right"] .sn-ics{justify-content:flex-end;}
+  .sn-ic{--box:var(--snisz);width:var(--box);height:var(--box);display:inline-flex;align-items:center;justify-content:center;flex:none;box-sizing:border-box;border-radius:50%;color:var(--c);text-decoration:none;transition:transform .2s ease,opacity .2s ease;}
+  .sn-ic svg{display:block;width:var(--snisz);height:var(--snisz);fill:currentColor;}
+  .sn-ics:not([data-sh="none"]) .sn-ic{--box:calc(var(--snisz) * 2.1);}
+  .sn-ics:is([data-sh="circle"],[data-sh="round"]) .sn-ic{background:var(--c);color:var(--ink);}
+  .sn-ics[data-sh="round"] .sn-ic{border-radius:28%;}
+  .sn-ics[data-sh="line"] .sn-ic{border:1.5px solid var(--c);}
+  .sn-ics[data-sh="line"] .sn-ic svg{width:calc(var(--snisz) * .9);height:calc(var(--snisz) * .9);}
+  .sn-ic:hover{transform:translateY(-2px);opacity:.85;}
+  /* 글 — 블럭 위에서 텍스트 편집기(서식 툴바)로 고친다(.cred · 그리드 갤러리 제목·설명과 같은 규칙). .cred 전역값(14.5px · 가운데 · 회색)은 쓰지 않는다 */
+  .sn-wrap .cred{color:inherit;text-align:inherit;}
+  .sn-wrap .cred p{margin:0;}
+  /* 사이트 테마 글자색(.site[data-theme] .cred)보다 앞서게 — 기본 색은 설정창 「글자」를 따른다. 편집기에서 칠한 색(span)은 그 위에 */
+  .sn-wrap[data-st] .cred[data-sn-ed]{color:var(--sntc);}
+  .sn-wrap[data-st] .sn-desc[data-sn-ed]{color:var(--snsc);}
+  .sn-wrap[data-st] .sn-intro .cred[data-sn-ed]{color:#fff;}
+  .sn-wrap .sn-eb{margin:0;font-size:24px;font-weight:600;line-height:1.4;white-space:pre-line;}
+  .sn-wrap .sn-desc{margin:8px 0 0;font-size:14px;line-height:1.7;color:var(--snsc);white-space:pre-line;}
+  #stage .sn-blk .cred{outline:1.5px dashed transparent;outline-offset:4px;cursor:text;min-width:1em;transition:outline-color .12s;}
+  #stage .sn-blk:not(.rt-editing) .cred:hover{outline-color:var(--green-line);}
+  #stage .sn-blk.rt-editing .cred:focus{outline:1.5px solid var(--green);}
+  .sn-wrap .cred.rt-ph:empty::before{content:attr(data-ph);opacity:.45;}
+  html.pview #stage .sn-blk .cred,html.pview #stage .sn-blk .cred:hover{outline-color:transparent !important;cursor:inherit;}
+  html.pview #stage .sn-wrap .cred.rt-ph{display:none;}
+  /* 배너 — 글 왼쪽(row: 글 왼쪽 · 아이콘 오른쪽) · 글 오른쪽(rowr: 아이콘 왼쪽 · 글 오른쪽) · 가운데(글 위 · 아이콘 아래) */
+  .sn-bn{display:flex;align-items:center;justify-content:space-between;gap:40px;}
+  .sn-bn .sn-txt{min-width:0;}
+  .sn-bn[data-lay="row"] .sn-ics{flex:none;justify-content:flex-end;}
+  .sn-bn[data-lay="rowr"]{flex-direction:row-reverse;text-align:right;}   /* 261022 추가 — 글 오른쪽(좌측 사이트 social35) */
+  .sn-bn[data-lay="rowr"] .sn-ics{flex:none;justify-content:flex-start;}
+  .sn-bn[data-lay="center"]{flex-direction:column;justify-content:center;text-align:center;gap:28px;}
+  .sn-wrap .sn-bn[data-lay="center"] .sn-eb{font-size:30px;}
+  .sn-bn[data-lay="center"] .sn-desc{max-width:540px;margin-left:auto;margin-right:auto;}
+  /* 이미지 피드 — 계정 머리줄 + 정사각 그리드(소개 카드 한 칸) + 더보기 */
+  .sn-fh{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .sn-av{width:52px;height:52px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(45deg,#feda75,#fa7e1e 30%,#d62976 60%,#962fbf 85%,#4f5bd5);}
+  .sn-av svg{width:24px;height:24px;fill:currentColor;}
+  .sn-acc{flex:1;min-width:0;}
+  .sn-acc b{display:block;font-size:16px;font-weight:600;line-height:1.4;}
+  .sn-wrap .sn-acc .sn-desc{margin-top:2px;font-size:13px;line-height:1.55;}
+  .sn-fbtn{flex:none;padding:9px 18px;border-radius:999px;background:var(--sntc);color:var(--snbt);font-size:13px;font-weight:600;line-height:1;text-decoration:none;}
+  .sn-grid{display:grid;grid-template-columns:repeat(var(--sncols),minmax(0,1fr));gap:var(--snfg);}
+  .sn-cell{position:relative;display:block;aspect-ratio:1/1;border-radius:var(--snr);overflow:hidden;background:#eceef1 center/cover no-repeat;}
+  a.sn-cell::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.18);opacity:0;transition:opacity .2s ease;}
+  a.sn-cell:hover::after{opacity:1;}
+  .sn-intro{display:flex;flex-direction:column;justify-content:center;gap:8px;padding:0 10%;background:#1d1f24;color:#fff;container-type:size;}   /* 261022 수정 — 칸 크기(cq)에 맞춰 글자 크기 · 줄 수를 정한다 */
+  .sn-intro .sn-ig{display:block;width:20px;height:20px;}
+  .sn-intro .sn-ig svg{display:block;width:100%;height:100%;fill:#fff;}
+  .sn-wrap .sn-introt{margin:0;flex:0 1 auto;min-height:0;font-size:clamp(12px,7.5cqw,14px);line-height:1.5;white-space:pre-line;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;overflow:hidden;}   /* 261022 수정 — 칸이 좁으면 글자를 줄이고, 그래도 넘치면 말줄임(…) */
+  #stage .sn-blk.rt-editing .sn-introt{-webkit-line-clamp:unset;overflow:visible;}   /* 고치는 동안에는 자르지 않는다 */
+  @container (max-height:150px){ .sn-intro .sn-ig{display:none;} .sn-wrap .sn-introt{-webkit-line-clamp:7;} }   /* 작은 칸: 인스타그램 표시를 빼고 글에 자리를 준다 */
+  .sn-moreW{display:flex;justify-content:center;margin-top:24px;}
+  .sn-more{display:inline-flex;align-items:center;padding:10px 22px;border-radius:999px;border:1px solid color-mix(in srgb,var(--sntc) 22%,transparent);color:var(--sntc);font-size:13px;font-weight:600;line-height:1;text-decoration:none;}
+  .sn-hint{padding:18px 16px;border:1.5px dashed color-mix(in srgb,var(--sntc) 28%,transparent);border-radius:10px;text-align:center;font:500 13px/1.5 'CreatorlinkSansKR',sans-serif;color:color-mix(in srgb,var(--sntc) 60%,transparent);}   /* 261022 추가 — 편집 화면 전용 안내 */
+  html.pview #stage .sn-hint,html.pview #stage .sn-ph{display:none;}   /* 261022 추가 — 미리보기에서는 안내 · 피드 빈 칸을 감춘다 */
+  @container (max-width:480px){
+    .sn-in{padding-left:20px;padding-right:20px;}
+    .sn-bn:is([data-lay="row"],[data-lay="rowr"]){flex-direction:column;align-items:flex-start;gap:20px;text-align:left;}   /* 좁은 화면: 글 왼쪽 · 오른쪽 모두 글 위 · 아이콘 아래 */
+    .sn-bn:is([data-lay="row"],[data-lay="rowr"]) .sn-ics{justify-content:flex-start;}
+    .sn-grid{grid-template-columns:repeat(var(--sncolsm),minmax(0,1fr));}
+    .sn-grid .sn-mx{display:none;}   /* 261022 추가 — 좁은 화면 열 수의 배수로 맞추고 남는 칸(마지막 줄의 빈자리)은 감춘다 */
+  }
+  /* 블럭추가 카드 — 실제 블럭을 절반 크기로 */
+  .fm-pv > .sn-wrap{width:200%;transform:scale(.5);transform-origin:0 0;background-size:cover;background-position:center;}
+  #baGrid .ba-card[data-kind="snblk"]{border-radius:var(--r-xl);}
+  /* 설정창 — 아이콘 목록은 푸터 SNS 목록(#ftSnsList)과 같은 모양 */
+  #snIcList{margin-top:0;}
+  #snIcList .mt-imgthumb{display:flex;align-items:center;justify-content:center;background-image:none;color:var(--ink-2s);cursor:default;box-shadow:none;}
+  #snIcList .mt-imgthumb svg{width:18px;height:18px;fill:currentColor;}
+  #bset #snIcList .mt-imgrow:hover .mt-imgthumb,#snIcList .mt-imgthumb:hover{box-shadow:none;border-color:rgba(20,24,32,.10);}   /* 261022 추가 — 아이콘 그림은 보관함 선택 대상이 아니라 행 호버의 초록 테두리(블럭설정 목록 공통)를 뺀다. 행 배경·손잡이·입력칸 호버는 그대로 */
+  html.lib-dragging #snIcList .mt-imgthumb{outline:none;}   /* 261022 추가 — 보관함에서 끌 때 받는 자리 표시(점선)도 뺀다 */
+  #snIcList .mtk-field{flex:1;min-width:0;}
+  #snIcAdd{position:relative;}
+  #snIcAdd .sdd-menu{left:auto;right:0;width:168px;}
+  #snIcAdd .sdd-menu button{display:flex;align-items:center;gap:8px;}
+  #snIcAdd .sdd-menu button svg{width:15px;height:15px;fill:currentColor;flex:none;}
+  #snImgList .vc-caps > input.sn-src{display:none;}
+  #snImgList .mt-imgrow{align-items:center;}
+  #snImgList .mt-imgdrag,#snImgList .mt-imgthumb,#snImgList .mt-imgdel{margin-top:0;}
   .fm-pv > .fm-wrap,.fm-pv > .ca-wrap{width:200%;transform:scale(.5);transform-origin:0 0;background-size:cover;background-position:center;}   /* 260929 수정 — 캘린더 카드도 같은 방식 */
   .fm-pv > .fm-wrap.gray{background-blend-mode:luminosity;}
   .fm-pv .fm-pvdim{position:absolute;inset:0;background:#000;pointer-events:none;}
@@ -9781,6 +9866,108 @@
         </div>
 
       </div>
+      <!-- 261022 추가 — 소셜 블럭 설정 (SOCIAL01~15 · 접두어 sn). data-for = 그 종류(아이콘 icon · 배너 banner · 이미지 피드 feed)에서만 보이는 행(snRows) -->
+      <div id="bsetSn" style="display:none;">
+        <div class="fld sfold open acc-flush" id="snMainAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">소셜<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
+            <div class="srow" style="margin:0 0 6px;"><span class="k">종류</span></div>
+            <div class="mt-seg" id="snStSeg">
+              <button type="button" class="mt-seg-b active" data-m="icon" onclick="snSt('icon')">아이콘</button>
+              <button type="button" class="mt-seg-b" data-m="banner" onclick="snSt('banner')">배너</button>
+              <button type="button" class="mt-seg-b" data-m="feed" onclick="snSt('feed')">이미지 피드</button>
+            </div>
+            <div data-for="banner">
+              <div class="srow" style="margin:12px 0 6px;"><span class="k">배치</span></div>
+              <div class="mt-seg" id="snLaySeg">
+                <button type="button" class="mt-seg-b active" data-m="row" onclick="snSeg('lay','snLaySeg','row')">글 왼쪽</button>
+                <button type="button" class="mt-seg-b" data-m="rowr" onclick="snSeg('lay','snLaySeg','rowr')">글 오른쪽</button>
+                <button type="button" class="mt-seg-b" data-m="center" onclick="snSeg('lay','snLaySeg','center')">가운데</button>
+              </div>
+            </div>
+            <div data-for="icon">
+              <div class="srow" style="margin:12px 0 6px;"><span class="k">정렬</span></div>
+              <div class="mt-seg" id="snAlSeg">
+                <button type="button" class="mt-seg-b" data-m="left" onclick="snSeg('al','snAlSeg','left')">왼쪽</button>
+                <button type="button" class="mt-seg-b active" data-m="center" onclick="snSeg('al','snAlSeg','center')">가운데</button>
+                <button type="button" class="mt-seg-b" data-m="right" onclick="snSeg('al','snAlSeg','right')">오른쪽</button>
+              </div>
+            </div>
+            <div class="tx-hint" data-for="banner feed">제목 · 설명 · 소개 글은 블럭 위에서 바로 고칩니다. 비운 줄은 나오지 않습니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold open" id="snIcAcc" data-for="icon banner">
+          <div class="fld-h fold-h" onclick="smAcc(this)">아이콘 <span class="n" id="snIcCount">5/7</span><span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="mt-imglist" id="snIcList"></div>
+            <div class="im-addrow"><div class="sdd" id="snIcAdd"><button type="button" class="btn-sm" id="snIcAddBtn" onclick="smDDToggle(event,this)"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button><div class="sdd-menu"></div></div></div>
+            <div class="srow" style="margin:14px 0 6px;"><span class="k">모양</span></div>
+            <div class="mt-seg" id="snShSeg">
+              <button type="button" class="mt-seg-b active" data-m="none" onclick="snSeg('sh','snShSeg','none')">없음</button>
+              <button type="button" class="mt-seg-b" data-m="circle" onclick="snSeg('sh','snShSeg','circle')">원</button>
+              <button type="button" class="mt-seg-b" data-m="round" onclick="snSeg('sh','snShSeg','round')">둥근 사각</button>
+              <button type="button" class="mt-seg-b" data-m="line" onclick="snSeg('sh','snShSeg','line')">외곽선</button>
+            </div>
+            <div class="srow" style="margin:12px 0 6px;"><span class="k">색</span></div>
+            <div class="mt-seg" id="snCmSeg">
+              <button type="button" class="mt-seg-b active" data-m="brand" onclick="snSeg('cm','snCmSeg','brand')">브랜드 색</button>
+              <button type="button" class="mt-seg-b" data-m="mono" onclick="snSeg('cm','snCmSeg','mono')">단색</button>
+            </div>
+            <div class="srow" id="snIcRow"><span class="k">아이콘 색</span><span class="sw-col"><input type="color" id="snIc" value="#1d1f24" data-cp-title="아이콘 색"><span class="hex" id="snIcV">#1D1F24</span></span></div>
+            <div class="srow"><span class="k">크기</span><input class="rng" type="range" id="snIsz" min="12" max="48" step="1" value="22"><span class="v" id="snIszV">22px</span></div>
+            <div class="srow"><span class="k">간격</span><input class="rng" type="range" id="snGap" min="4" max="72" step="2" value="28"><span class="v" id="snGapV">28px</span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold open" id="snFeedAcc" data-for="feed">
+          <div class="fld-h fold-h" onclick="smAcc(this)">이미지 피드 <span class="n" id="snImgCount"></span><span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="fm-fin" style="margin-top:0;"><span class="k">계정</span><input type="text" id="snAcct" maxlength="40" placeholder="creatorlink" spellcheck="false" autocomplete="off" oninput="snTxt('acct',this.value)"></div>
+            <div class="fm-fin"><span class="k">주소</span><input type="text" id="snHref" placeholder="https://www.instagram.com/…" spellcheck="false" autocomplete="off" oninput="snTxt('href',this.value)"></div>
+            <div class="mtk-hint">팔로우 · 더보기 버튼과, 링크를 비워 둔 이미지가 이 주소로 연결됩니다.</div>
+            <div class="mt-imglist" id="snImgList" style="margin-top:12px;"></div>
+            <div class="im-addrow"><button type="button" class="btn-sm" id="snImgAddBtn" onclick="snImgAdd()"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
+            <div class="mtk-hint">썸네일을 누르고 보관함에서 고르면 바뀝니다. 손잡이를 끌어 순서를 바꿉니다.</div>
+            <div class="srow"><span class="k">열</span><input class="rng" type="range" id="snCols" min="2" max="8" step="1" value="6"><span class="v" id="snColsV">6</span></div>
+            <div class="srow"><span class="k">줄</span><input class="rng" type="range" id="snRows" min="1" max="3" step="1" value="2"><span class="v" id="snRowsV">2</span></div>
+            <div class="srow"><span class="k">간격</span><input class="rng" type="range" id="snFgap" min="0" max="24" step="1" value="8"><span class="v" id="snFgapV">8px</span></div>
+            <div class="srow"><span class="k">모서리</span><input class="rng" type="range" id="snRad" min="0" max="24" step="1" value="0"><span class="v" id="snRadV">0px</span></div>
+            <div class="sline"><span class="lbl">계정 머리줄</span><button type="button" class="sw" id="snHdSw" onclick="snSw(this,'hd')" aria-label="계정 머리줄"></button></div>
+            <div class="sline"><span class="lbl">소개 카드</span><button type="button" class="sw" id="snIntroSw" onclick="snSw(this,'intro')" aria-label="소개 카드"></button></div>
+            <div class="srow" id="snIntroAtRow"><span class="k">소개 위치</span><input class="rng" type="range" id="snIntroAt" min="1" max="12" step="1" value="3"><span class="v" id="snIntroAtV">3번째</span></div>
+            <div class="sline"><span class="lbl">더보기 버튼</span><button type="button" class="sw" id="snMoreSw" onclick="snSw(this,'more')" aria-label="더보기 버튼"></button></div>
+            <div class="fm-fin" id="snMoreTRow"><span class="k">버튼 글</span><input type="text" id="snMoreT" maxlength="24" spellcheck="false" autocomplete="off" oninput="snTxt('moreT',this.value)"></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="snTextAcc" data-for="banner feed">
+          <div class="fld-h fold-h" onclick="smAcc(this)">글자<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow" style="margin-top:0;"><span class="k">글자 색</span><span class="sw-col"><input type="color" id="snTc" value="#1d1f24" data-cp-title="글자 색"><span class="hex" id="snTcV">#1D1F24</span></span></div>
+            <div class="srow"><span class="k">보조 글자</span><span class="sw-col"><input type="color" id="snSc" value="#6b7280" data-cp-title="보조 글자 색"><span class="hex" id="snScV">#6B7280</span></span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="snBgAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">배경<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="cnt-list rt-bgbox">
+              <div class="im-th empty" id="snBgTh" onclick="snBgPick()" title="보관함에서 이미지 고르기" role="button" aria-label="배경 이미지 고르기"></div>
+              <div class="im-addrow">
+                <input type="file" id="snBgUp" accept="image/*" style="display:none;" onchange="snBgUpload(this)">
+                <span class="im-tb off" id="snBgDel"><button type="button" class="danger" onclick="snBgClear()" title="배경 이미지 없애기" aria-label="배경 없애기"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg></button></span>
+                <button type="button" class="ghost" onclick="document.getElementById('snBgUp').click()" title="내 컴퓨터의 파일을 보관함과 블럭 배경에 함께 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
+              </div>
+            </div>
+            <div class="srow" id="snBgDimRow"><span class="k">어둡게</span><input class="rng" type="range" id="snBgDim" min="0" max="80" step="5" value="30"><span class="v" id="snBgDimV">30%</span></div>
+            <div class="srow"><span class="k">배경색</span><span class="sw-col"><input type="color" id="snBg" value="#ffffff" data-cp-title="배경색"><span class="hex" id="snBgV">#FFFFFF</span></span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="snBoxAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="snPt" min="0" max="240" step="2" value="64"><span class="v" id="snPtV">64px</span></div>
+            <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="snPb" min="0" max="240" step="2" value="64"><span class="v" id="snPbV">64px</span></div>
+          </div></div>
+        </div>
+      </div>
       <!-- 260923 추가 — 스택 카드 컨텐츠 블럭 설정 (CONTENT01) -->
       <div id="bsetStackCard" style="display:none;">
 
@@ -16257,6 +16444,7 @@
     if(card.getAttribute('data-kind')==='crumple'){ baInsertCrumple(card); return; }   /* 260923 추가 — 구김 이미지(IMAGE04) */
     if(card.getAttribute('data-kind')==='imgring'){ baInsertImgRing(card); return; }   /* 260923 추가 — 3D 이미지 링 */
     if(card.getAttribute('data-kind')==='formblk'){ baInsertForm(card); return; }   /* 260929 추가 — 폼 블럭(FORM01~10) */
+    if(card.getAttribute('data-kind')==='snblk'){ baInsertSn(card); return; }   /* 261022 추가 — 소셜 블럭(SOCIAL01~15) */
     if(card.getAttribute('data-kind')==='calblk'){ baInsertCal(card); return; }   /* 260929 추가 — 캘린더 블럭(CALENDAR01) */
     if(card.getAttribute('data-kind')==='ctblk'){ baInsertCt(card); return; }   /* 260929 추가 — 컨택트/지점 블럭(CONTACT01~18) */
     if(card.getAttribute('data-kind')==='stackcard'){ baInsertStackCard(card); return; }   /* 260923 추가 — 스택 카드(CONTENT01) */   /* 260923 추가 — 이전·이후 비교 */
@@ -16833,6 +17021,7 @@
     if(clone && clone.getAttribute('data-block')==='imgring'){ if(typeof irCloneInit==='function') irCloneInit(src,clone); return; }   /* 260923 추가 — 3D 이미지 링 */
     if(clone && clone.getAttribute('data-block')==='crumple'){ if(typeof ckCloneInit==='function') ckCloneInit(src,clone); return; }   /* 260923 추가 — 구김 이미지 */
     if(clone && clone.getAttribute('data-block')==='formblk'){ if(typeof fmCloneInit==='function') fmCloneInit(src,clone); return; }   /* 260929 추가 — 폼 블럭 */
+    if(clone && clone.getAttribute('data-block')==='snblk'){ if(typeof snCloneInit==='function') snCloneInit(src,clone); return; }   /* 261022 추가 — 소셜 블럭 */
     if(clone && clone.getAttribute('data-block')==='calblk'){ if(typeof caCloneInit==='function') caCloneInit(src,clone); return; }   /* 260929 추가 — 캘린더 블럭 */
     if(clone && clone.getAttribute('data-block')==='ctblk'){ if(typeof ctCloneInit==='function') ctCloneInit(src,clone); return; }   /* 260929 추가 — 컨택트/지점 블럭 */
     if(clone && clone.getAttribute('data-block')==='stackcard'){ if(typeof scCloneInit==='function') scCloneInit(src,clone); return; }   /* 260923 추가 — 스택 카드 */   /* 260923 추가 — 이전·이후 비교 */
@@ -17149,8 +17338,15 @@
                         ['strip-red','상담 신청'],['strip-yellow','상담 신청'],['strip-green','상담 신청'],['strip-navy','상담 신청'],['br-titlel','지점'],['br-mapl','지점'],['br-center','지점'],['br-detail','지점']].map(function(p,i){   /* 시작값 이름은 CT_PRESETS(아래 모듈)와 같아야 한다 — 이 목록은 모듈보다 먼저 실행되므로 여기 직접 적는다 */
     return {no:i+1, kind:'ctblk', preset:p[0], label:'CONTACT'+(i<9?'0':'')+(i+1), badge:'NEW', tag:p[1], ar:'552/300'};
   });
+  /* 261022 추가 — 소셜 카테고리: 소셜 블럭(snblk) 15장. 시작값 이름 = SN_PRESETS(아래 모듈). 위 탭 = 종류(아이콘 · 배너 · 이미지 피드) · 보라 태그 = 모양 */
+  var BA_CARDS_SOCIAL=[['brand','아이콘','브랜드 색'],['circle','아이콘','원'],['round','아이콘','둥근 사각'],['mono','아이콘','검정'],['monoc','아이콘','검정 원'],['line','아이콘','외곽선'],['tile','아이콘','흰 사각'],['photo','아이콘','사진 위'],
+    ['brow','배너','글 왼쪽'],['bover','배너','사진 위'],['bcard','배너','가운데'],['f6','이미지 피드','6열'],['f7','이미지 피드','7열 한 줄'],['f4','이미지 피드','4열'],['fhead','이미지 피드','계정 머리줄']].map(function(p,i){
+    return {no:i+1, kind:'snblk', preset:p[0], label:'SOCIAL'+(i<9?'0':'')+(i+1), grp:p[1], tag:p[2], ar:'552/'+(p[1]==='아이콘'?110:(p[1]==='배너'?190:300))};
+  });
   var BA_CAT_CARDS={ text: BA_CARDS_TEXT, image: BA_CARDS_IMAGE, gallery: BA_CARDS_GALLERY, content: BA_CARDS_CONTENT, button: BA_CARDS_BUTTON, form: BA_CARDS_FORM, calendar: BA_CARDS_CALENDAR, map: BA_CARDS_CONTACT };   /* 260929 수정 — 폼·캘린더·컨택트 */
   var BA_CAT_PFX={ text:'TEXT', image:'IMAGE', gallery:'GALLERY', content:'CONTENT', button:'BUTTON', form:'FORM', calendar:'CALENDAR', map:'CONTACT' };   /* 260929 수정 — 폼·캘린더·컨택트 */
+  BA_CAT_CARDS.social=BA_CARDS_SOCIAL; BA_CAT_PFX.social='SOCIAL';   /* 261022 추가 — 소셜 */
+  if(typeof BA_CAT_FILTERS!=='undefined') BA_CAT_FILTERS.social=['전체','아이콘','배너','이미지 피드'];   /* 261022 추가 — 소셜 위 탭 */
   var baCurCat='slide';
 
   var baSwapNext=false;
@@ -17235,7 +17431,8 @@
         +'<span class="ba-label">'+(c.label||(pfx+no))+'</span></div>';
     }).join('')+'</div>';
     host.scrollTop=0;
-    if((cat==='form'||cat==='calendar'||cat==='map') && typeof fmCardFit==='function') fmCardFit(host);   /* 260929 추가 — 폼 카드 높이를 그린 폼에 맞춘다 */
+    if(cat==='social' && typeof snCardHTML==='function') host.querySelectorAll('.ba-card[data-kind="snblk"] .ba-thumb').forEach(function(t){ var cd=t.closest('.ba-card'); t.classList.add('fm-live'); t.style.backgroundImage='none'; t.insertAdjacentHTML('afterbegin',snCardHTML(cd.getAttribute('data-preset'))); });   /* 261022 추가 — 소셜 카드: 이미지 대신 실제 블럭 */
+    if((cat==='social'||cat==='form'||cat==='calendar'||cat==='map') && typeof fmCardFit==='function') fmCardFit(host);   /* 260929 추가 — 폼 카드 높이를 그린 폼에 맞춘다 */
     /* 260918 추가 — 풀의 <video> 를 자리에 옮겨 넣는다 (받아 둔 데이터가 그대로 살아 있다) */
     [].slice.call(host.querySelectorAll('.ba-vid-slot')).forEach(function(sl){ var v=baVidEl(sl.getAttribute('data-vid')); v.setAttribute('data-vid',sl.getAttribute('data-vid')); v.classList.remove('ready'); try{ v.pause(); }catch(e){} sl.parentNode.replaceChild(v,sl); });
     baVidBind(host);
@@ -17252,6 +17449,7 @@
   /* ── 블럭설정 패널 전환 ── */
   var smCurBlk=null, smBound=false;
   var SM_KIND={gridgal:'그리드 갤러리', hero:'이미지', gal:'이미지', slideshow:'이미지', intro:'텍스트', cred:'텍스트', smeartext:'커서 번짐 텍스트', moto3d:'3D 배경 이미지', imggrid:'이미지', stripgallery:'3D 스트립 갤러리', floatgal:'플로팅 3D 갤러리', polytext:'3D 텍스트', typetext:'타이핑 텍스트', risetext:'글자 올라오기', fxbutton:'버튼', cardring:'3D 카드 회전', bookflip2:'책자 넘김', spiralgal:'나선형 갤러리 1', depthgal:'깊이 갤러리', scrollslider:'스크롤 슬라이더', vcgal:'세로 스크롤 갤러리', infgal:'곡면 갤러리', wheelcar:'휠 캐러셀', helixgal:'나선형 갤러리 2', gaugeslider:'게이지 슬라이더', hscrollgal:'가로 스크롤 갤러리', tiltgal:'틸트 갤러리', stackgal:'스택 갤러리', arctext:'곡선 흐르는 텍스트', idxlist:'인덱스 리스트', faqacc:'FAQ 아코디언', qnaacc:'QnA 아코디언', scrollread:'스크롤 문장 등장', beforeafter:'이전·이후 비교', crumple:'구김 이미지', imgring:'3D 이미지 링', stackcard:'스택 카드', formblk:'폼', calblk:'캘린더', ctblk:'컨택트'};   /* 260929 수정 — 폼·캘린더·컨택트 */
+  SM_KIND.snblk='소셜';   /* 261022 추가 — 소셜 블럭 */
   function bsetSync(blk){
     var kindAttr=blk?(blk.getAttribute('data-block')||''):'';
     var isSm=(kindAttr==='smeartext');
@@ -17287,11 +17485,12 @@
     var isIr=(kindAttr==='imgring');   /* 260923 추가 — 3D 이미지 링 */
     var isSc=(kindAttr==='stackcard');   /* 260923 추가 — 스택 카드(CONTENT01) */
     var isFm=(kindAttr==='formblk');   /* 260929 추가 — 폼 블럭(FORM01~10) */
+    var isSn=(kindAttr==='snblk');   /* 261022 추가 — 소셜 블럭(SOCIAL01~15) */
     var isCa=(kindAttr==='calblk');   /* 260929 추가 — 캘린더 블럭(CALENDAR01) */
     var isCt=(kindAttr==='ctblk');   /* 260929 추가 — 컨택트/지점 블럭 */
     var isRt=(kindAttr==='cred');   /* 260905 추가 — 이력 텍스트 블럭 */
     var d=document.getElementById('bsetDefault'), s=document.getElementById('bsetSmear'), m=document.getElementById('bsetMoto'), g=document.getElementById('bsetStrip'), fl=document.getElementById('bsetFloat'), pt=document.getElementById('bsetPoly'), tw=document.getElementById('bsetType'), cr=document.getElementById('bsetRing'), hx=document.getElementById('bsetSpiral'), ax=document.getElementById('bsetArc'), ix=document.getElementById('bsetIdx');
-    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt)?'none':'';   /* 260929 수정 — 폼·캘린더·컨택트 */
+    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt||isSn)?'none':'';   /* 260929 수정 — 폼·캘린더·컨택트 */
     var rsp=document.getElementById('bsetRise'); if(rsp) rsp.style.display=isRs?'':'none';
     var fqp=document.getElementById('bsetFaq'); if(fqp) fqp.style.display=isFq?'':'none';   /* 260923 추가 */
     var qnp=document.getElementById('bsetQna'); if(qnp) qnp.style.display=isQn?'':'none';   /* 260923 추가 — QnA 아코디언 */
@@ -17301,6 +17500,7 @@
     var ckp=document.getElementById('bsetCk'); if(ckp) ckp.style.display=isCk?'':'none';   /* 260923 추가 — 구김 이미지 */
     var scp=document.getElementById('bsetStackCard'); if(scp) scp.style.display=isSc?'':'none';   /* 260923 추가 — 스택 카드 */
     var fmp=document.getElementById('bsetForm'); if(fmp) fmp.style.display=isFm?'':'none';   /* 260929 추가 — 폼 블럭 */
+    var snp=document.getElementById('bsetSn'); if(snp) snp.style.display=isSn?'':'none';   /* 261022 추가 — 소셜 블럭 */
     var cap=document.getElementById('bsetCal'); if(cap) cap.style.display=isCa?'':'none';   /* 260929 추가 — 캘린더 블럭 */
     var ctp=document.getElementById('bsetCt'); if(ctp) ctp.style.display=isCt?'':'none';   /* 260929 추가 — 컨택트/지점 블럭 */
     var btp=document.getElementById('bsetBtn'); if(btp) btp.style.display=isBt?'':'none';   /* 260919 추가 — 효과 버튼 블럭(FX BUTTON) */
@@ -17368,6 +17568,8 @@
     scCurBlk=isSc?blk:null;   /* 260923 추가 — 스택 카드 */
     if(fmCurBlk!==(isFm?blk:null) && libThumbMode && /^fm:/.test(libThumbMode.listId||'')) libThumbEnd(false);   /* 260929 추가 — 다른 블럭으로 가면 폼의 소재 고르기를 끝낸다 */
     fmCurBlk=isFm?blk:null;   /* 260929 추가 — 폼 블럭 */
+    if(libThumbMode && snCurBlk!==(isSn?blk:null) && /^(snBg|snImgList)$/.test(libThumbMode.listId||'')) libThumbEnd(false);   /* 261022 추가 — 다른 블럭으로 가면 소셜 블럭의 이미지 고르기를 끝낸다 */
+    snCurBlk=isSn?blk:null;   /* 261022 추가 — 소셜 블럭 */
     if(caCurBlk && caCurBlk!==(isCa?blk:null)){ var caPrev=caCurBlk; caCurBlk=null; if(caPrev.isConnected){ var cw=caPrev.querySelector('.ca-wrap'); if(cw) cw.classList.remove('can-add'); } if(typeof caPopClose==='function') caPopClose(); }   /* 260929 추가 — 다른 블럭으로 가면 날짜 칸 클릭 추가 표시를 끈다 */
     caCurBlk=isCa?blk:null;   /* 260929 추가 — 캘린더 블럭 */
     if(ctCurBlk!==(isCt?blk:null) && libThumbMode && /^(ctBg|ctBrList)$/.test(libThumbMode.listId||'')) libThumbEnd(false);   /* 260929 추가 — 다른 블럭으로 가면 컨택트 소재 고르기를 끝낸다 */
@@ -17405,6 +17607,7 @@
     if(isCk){ ckBuildBset(); ckFillBset(); }   /* 260923 추가 — 구김 이미지 */
     if(isSc){ scBuildBset(); scFillBset(); }   /* 260923 추가 — 스택 카드 */
     if(isFm){ fmBuildBset(); fmFillBset(); }   /* 260929 추가 — 폼 블럭 */
+    if(isSn){ snBuildBset(); snFillBset(); }   /* 261022 추가 — 소셜 블럭 */
     if(isCa){ caBuildBset(); caFillBset(); }   /* 260929 추가 — 캘린더 블럭 */
     if(isCt){ ctBuildBset(); ctFillBset(); }   /* 260929 추가 — 컨택트/지점 블럭 */
     if(typeof rtEditEnd==='function' && rtEditBlk && rtEditBlk!==blk) rtEditEnd();   /* 다른 블럭을 고르면 문구 편집을 마친다 */
@@ -35741,6 +35944,338 @@ global.PolyFX = API;
   }
 
   /* ══════════════════════════════════════════════════════════════════
+     261022 추가 — 소셜 블럭 (SOCIAL01~15 · 접두어 sn · cfg _snCfg) — 블럭추가 「소셜」
+     · 좌측 사이트 소셜 36장을 한 블럭 종류(snblk) + 종류(st) 3 + 시작값(SN_PRESETS) 15 벌로 옮겼다
+       - 아이콘(icon)  : social1~21 — 모양·색만 다른 SNS 아이콘 줄 21장 → 모양(없음 · 원 · 둥근 사각 · 외곽선) × 색(브랜드 색 · 단색) 설정으로
+       - 배너(banner)  : social34~36 — 문구 + 아이콘. 한 줄(글 왼쪽 · 아이콘 오른쪽) · 가운데(사진 위 글 + 아이콘)
+       - 이미지 피드(feed): social23~33 — 인스타그램형 정사각 그리드 + 소개 카드 한 칸 + 더보기. 직접 올린 이미지로 그린다(인스타그램 자동 연동은 따로)
+       - 텍스트 피드(social22 · 25: 트위터 연동 글 목록)는 뺐다
+     · 아이콘 목록 설정은 푸터 SNS 설정(ftSnsRender)과 같은 모양 — 손잡이로 순서 · 주소 · 삭제 · 「추가」는 남은 종류에서. 아이콘 그림·이름도 푸터 것(FT_SVG · FT_NM)
+     · 제목 · 설명 · 소개 글은 블럭 위에서 바로 고친다(푸터 .ft-ed 와 같은 방식)
+     ══════════════════════════════════════════════════════════════════ */
+  var SN_KINDS=['instagram','facebook','youtube','x','kakao','blog','tiktok'];
+  var SN_BRAND={instagram:'#E4405F', facebook:'#1877F2', youtube:'#FF0000', x:'#111111', kakao:'#FEE500', blog:'#03C75A', tiktok:'#111111'};
+  var SN_INTRO='작업 과정과 새 소식을\n인스타그램에 올리고 있어요.\n팔로우하고 먼저 만나 보세요.';
+  var SN_DEF={ st:'icon', lay:'row', al:'center', icons:null, sh:'none', cm:'brand', ic:'#1d1f24', isz:22, gap:28,
+    eb:'', desc:'', tf:5, tc:'#1d1f24', sc:'#6b7280',
+    acct:'creatorlink', href:'', hd:false, imgs:null, cols:6, rows:2, fgap:8, rad:0, intro:true, introT:SN_INTRO, introAt:3, more:true, moreT:'인스타그램에서 더 보기',
+    bg:'#ffffff', bgImg:'', bgDim:30, pt:64, pb:64 };
+  /* 시작값 — 주석의 번호는 좌측 사이트 소셜 번호(socialN). bgImg '@photo' · '@banner' 는 견본 사진(Unsplash 풀)으로 바꿔 넣는다 */
+  var SN_PRESETS={
+    brand :{st:'icon', sh:'none',   cm:'brand', isz:26, gap:40, pt:48, pb:48},                                          /* social10 · 5 — 브랜드 색 아이콘 */
+    circle:{st:'icon', sh:'circle', cm:'brand', isz:20, gap:22, pt:48, pb:48},                                          /* social20 · 3 — 브랜드 색 원 */
+    round :{st:'icon', sh:'round',  cm:'brand', isz:20, gap:22, pt:48, pb:48},                                          /* social21 · 4 — 브랜드 색 둥근 사각 */
+    mono  :{st:'icon', sh:'none',   cm:'mono', ic:'#1d1f24', isz:22, gap:40, pt:48, pb:48},                             /* social13 — 검정 아이콘 */
+    monoc :{st:'icon', sh:'circle', cm:'mono', ic:'#2b2e33', isz:18, gap:20, pt:48, pb:48},                             /* social6 · 16 · 18 — 검정 원 */
+    line  :{st:'icon', sh:'line',   cm:'mono', ic:'#ffffff', isz:18, gap:24, bg:'#111214', pt:48, pb:48},               /* social7 · 17 · 19 — 어두운 바탕 외곽선 */
+    tile  :{st:'icon', sh:'round',  cm:'mono', ic:'#ffffff', isz:18, gap:24, bg:'#2b2e33', pt:44, pb:44},               /* social2 · 11 · 15 — 어두운 바탕 흰 사각 */
+    photo :{st:'icon', sh:'line',   cm:'mono', ic:'#ffffff', isz:18, gap:26, bgImg:'@photo', bgDim:25, pt:72, pb:72},   /* social8 · 9 — 사진 위 */
+    brow  :{st:'banner', lay:'row', sh:'circle', cm:'mono', ic:'#1d1f24', isz:16, gap:12, eb:'소셜미디어에서 소식을 확인하세요', desc:'새 작업과 소식을 SNS 에 가장 먼저 올립니다.', pt:56, pb:56},   /* social34 · 35 — 한 줄 */
+    bover :{st:'banner', lay:'center', sh:'none', cm:'mono', ic:'#ffffff', isz:22, gap:36, tc:'#ffffff', sc:'#e4e6ea', eb:'소셜미디어에서 소식을 확인하세요', desc:'새 작업과 소식을 SNS 에 가장 먼저 올립니다. 팔로우하고 함께해 주세요.', bgImg:'@banner', bgDim:45, pt:120, pb:120},   /* social36 — 사진 위 가운데 */
+    bcard :{st:'banner', lay:'center', sh:'circle', cm:'brand', isz:18, gap:14, bg:'#f4f5f7', eb:'함께 이야기 나눠요', desc:'궁금한 점은 SNS 메시지로 편하게 남겨 주세요.', pt:88, pb:88},   /* 추가 — 연한 바탕 가운데 */
+    f6    :{st:'feed', cols:6, rows:2, fgap:8, intro:true, introAt:4, hd:false, more:true},                         /* social31 · 33 — 6열 2줄 */
+    f7    :{st:'feed', cols:7, rows:1, fgap:6, intro:true, introAt:4, hd:false, more:true},                         /* social28 · 32 — 7열 한 줄 */
+    f4    :{st:'feed', cols:4, rows:2, fgap:12, intro:true, introAt:2, hd:false, more:true},                        /* social30 — 4열 크게 */
+    fhead :{st:'feed', cols:5, rows:1, fgap:10, rad:6, intro:false, hd:true, more:false, desc:'공간과 사물, 작업 기록'}    /* social29 · 22 — 계정 머리줄 */
+  };
+  function snUns(t,i,w,h){ return (typeof unsUrl==='function')?unsUrl(t,i,w,h):''; }
+  function snIconsDef(){ return ['instagram','facebook','youtube','blog','kakao'].map(function(k){ return {k:k,url:''}; }); }
+  function snImgsDef(){ var a=[]; for(var i=0;i<12;i++) a.push({src:snUns('interior',i,600,600),url:''}); return a; }
+  function snPresetCfg(id){
+    var c=JSON.parse(JSON.stringify(SN_DEF)), p=SN_PRESETS[id]||SN_PRESETS.brand;
+    Object.keys(p).forEach(function(k){ c[k]=p[k]; });
+    if(c.bgImg==='@photo') c.bgImg=snUns('nature',2,1600,600); else if(c.bgImg==='@banner') c.bgImg=snUns('arch',5,1600,800);
+    c.icons=snIconsDef(); c.imgs=snImgsDef(); c.preset=SN_PRESETS[id]?id:'brand';
+    return c;
+  }
+  var snCurBlk=null, snBound=false;
+  function snCfg(blk){
+    if(!blk._snCfg) blk._snCfg=snPresetCfg('brand');
+    var c=blk._snCfg; Object.keys(SN_DEF).forEach(function(k){ if(c[k]==null) c[k]=(k==='icons')?snIconsDef():((k==='imgs')?snImgsDef():SN_DEF[k]); });
+    return c;
+  }
+  function snEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function snSvg(k){ return (typeof FT_SVG!=='undefined' && FT_SVG && FT_SVG[k])||''; }
+  function snNm(k){ return (typeof FT_NM!=='undefined' && FT_NM && FT_NM[k])||k; }
+  /* 판 위 아이콘 색 — 판이 밝으면(카카오 노랑 · 흰 판) 검정, 어두우면 흰색 */
+  function snInk(hex){
+    var m=String(hex||'').replace('#',''); if(m.length===3) m=m.replace(/(.)/g,'$1$1');
+    var n=parseInt(m,16); if(m.length!==6 || !isFinite(n)) return '#ffffff';
+    return (0.299*((n>>16)&255)+0.587*((n>>8)&255)+0.114*(n&255))>170?'#1d1f24':'#ffffff';
+  }
+  function snHref(u){ u=String(u||'').trim(); return u?(' href="'+snEsc(u)+'" target="_blank" rel="noopener noreferrer"'):''; }
+  function snIconsHTML(c,hint){
+    var list=(c.icons||[]).filter(function(s){ return snSvg(s.k); }); if(!list.length) return (hint && !window.CL_MVIEW)?'<div class="sn-hint">설정창 「아이콘」에서 SNS 아이콘을 추가해 주세요.</div>':'';   /* 261022 추가 — 아이콘 종류에서 다 지웠을 때 편집 화면에만 안내 */
+    return '<div class="sn-ics" data-sh="'+(c.sh||'none')+'" style="--snisz:'+txNum(c.isz,22)+'px;--sngap:'+txNum(c.gap,28)+'px">'+list.map(function(s){
+      var col=(c.cm==='brand')?(SN_BRAND[s.k]||'#1d1f24'):(c.ic||'#1d1f24');
+      return '<a class="sn-ic" data-k="'+s.k+'" title="'+snNm(s.k)+'" aria-label="'+snNm(s.k)+'" style="--c:'+col+';--ink:'+snInk(col)+'"'+snHref(s.url)+'>'+snSvg(s.k)+'</a>';
+    }).join('')+'</div>';
+  }
+  /* 글 — 편집 화면에서는 블럭 위에서 텍스트 편집기(서식 툴바 · rtEditStart)로 고친다(그리드 갤러리 제목·설명 ggRtSave 와 같은 방식).
+     일반 글은 c[k], 서식(색 · 굵게 · 크기 · 링크 …)이 있으면 HTML 을 c[k+'H'] 에. 빈 값은 편집 화면에서 자리표시(.rt-ph)로 남기고 미리보기·모바일에서는 숨긴다. 카드(card)는 그림만 */
+  function snTxtOf(h){ return String(h||'').replace(/<br\s*\/?>/gi,'\n').replace(/<\/(p|div|h[1-6]|li)>/gi,'\n').replace(/<[^>]*>/g,'').replace(/&nbsp;|\u00a0/g,' ').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/\n{3,}/g,'\n\n').trim(); }
+  function snEd(c,k,tag,cls,ph,card){
+    var t=String(c[k]||''), rich=String(c[k+'H']||'');
+    if(card) return t.trim()?('<'+tag+' class="'+cls+'">'+snEsc(t)+'</'+tag+'>'):'';
+    var empty=!t.trim(), h=(rich && snTxtOf(rich)===t.trim())?rich:snEsc(t).replace(/\n/g,'<br>');
+    return '<'+tag+' class="'+cls+' cred'+(empty?' rt-ph':'')+'" data-sn-ed="'+k+'" data-ph="'+ph+'"'+((empty && window.CL_MVIEW)?' style="display:none"':'')+'>'+(empty?'':h)+'</'+tag+'>';
+  }
+  function snBannerHTML(c,card){
+    return '<div class="sn-bn" data-lay="'+((c.lay==='center'||c.lay==='rowr')?c.lay:'row')+'"><div class="sn-txt">'+snEd(c,'eb','p','sn-eb','제목',card)+snEd(c,'desc','p','sn-desc','설명',card)+'</div>'+snIconsHTML(c)+'</div>';
+  }
+  function snFeedHTML(c,card){
+    var cols=Math.max(2,Math.min(8,Math.round(txNum(c.cols,6)))), rows=Math.max(1,Math.min(3,Math.round(txNum(c.rows,2)))), n=cols*rows, h='';
+    var imgs=(c.imgs||[]).filter(function(m){ return m && String(m.src||'').trim(); });
+    var home=String(c.href||'').trim(), acct=String(c.acct||'').trim().replace(/^@+/,'');
+    if(c.hd) h+='<div class="sn-fh"><span class="sn-av">'+snSvg('instagram')+'</span><div class="sn-acc"><b>@'+snEsc(acct||'account')+'</b>'+snEd(c,'desc','p','sn-desc','소개 한 줄',card)+'</div><a class="sn-fbtn"'+snHref(home)+'>팔로우</a></div>';
+    var total=imgs.length?Math.min(n, imgs.length+(c.intro?1:0)):n;   /* 이미지가 모자라면 그만큼만 · 하나도 없으면 빈 칸으로 자리를 보인다 */
+    var at=c.intro?Math.max(1,Math.min(total,Math.round(txNum(c.introAt,3)))):0, cells=[], ii=0;
+    for(var i=1;i<=total;i++){
+      if(i===at){ cells.push('<div class="sn-cell sn-intro"><span class="sn-ig">'+snSvg('instagram')+'</span>'+snEd(c,'introT','p','sn-introt','소개 글',card)+'</div>'); continue; }
+      var m=imgs[ii++];
+      if(m) cells.push('<a class="sn-cell" style="background-image:url(&quot;'+_mtAttr(m.src)+'&quot;)"'+snHref(String(m.url||'').trim()||home)+'></a>');
+      else if(!window.CL_MVIEW) cells.push('<div class="sn-cell sn-ph"></div>');   /* 261022 수정 — 빈 칸은 편집 화면에서만(미리보기 · 모바일 화면에서는 감춘다) */
+    }
+    /* 261022 추가 — 좁은 화면 열 수(최대 3)의 배수로 맞춘다: 마지막 줄의 남는 칸은 뒤에서부터 감춘다(소개 카드는 남긴다) */
+    var mc=Math.min(cols,3), hide=(cells.length>mc)?cells.length%mc:0;
+    for(var j=cells.length-1;j>=0 && hide>0;j--){ if(cells[j].indexOf('sn-intro')<0){ cells[j]=cells[j].replace('class="sn-cell','class="sn-cell sn-mx'); hide--; } }
+    h+='<div class="sn-grid">'+cells.join('')+'</div>';
+    if(c.more) h+='<div class="sn-moreW"><a class="sn-more"'+snHref(home)+'>'+snEsc(c.moreT||'더 보기')+'</a></div>';
+    return h;
+  }
+  function snInnerHTML(c,card){
+    var pt=txNum(c.pt,64), pb=txNum(c.pb,64); if(card){ pt=Math.min(pt,56); pb=Math.min(pb,56); }
+    var body=(c.st==='feed')?snFeedHTML(c,card):((c.st==='banner')?snBannerHTML(c,card):snIconsHTML(c,!card));
+    return '<div class="sn-in" style="padding-top:'+pt+'px;padding-bottom:'+pb+'px">'+body+'</div>';
+  }
+  function snStyleStr(c){
+    var cols=Math.max(2,Math.min(8,Math.round(txNum(c.cols,6))));
+    return '--snf:'+smStack(txNum(c.tf,5))+';--sntc:'+(c.tc||'#1d1f24')+';--snsc:'+(c.sc||'#6b7280')+';--snbt:'+snInk(c.tc||'#1d1f24')
+      +';--sncols:'+cols+';--sncolsm:'+Math.min(cols,3)+';--snfg:'+txNum(c.fgap,8)+'px;--snr:'+txNum(c.rad,0)+'px;';
+  }
+  /* 배경 — 색 + 이미지(어둡게). 카드와 블럭이 같은 식 */
+  function snBgImg(c){ var u=String(c.bgImg||'').trim(); if(!u) return ''; var d=(Math.max(0,Math.min(90,txNum(c.bgDim,30)))/100).toFixed(2); return 'linear-gradient(rgba(0,0,0,'+d+'),rgba(0,0,0,'+d+')),url("'+u.replace(/"/g,'%22')+'")'; }
+  function snBgApply(el,c){
+    var bi=snBgImg(c); el.style.backgroundColor=c.bg||'#ffffff'; el.style.backgroundImage=bi;
+    el.style.backgroundSize=bi?'cover':''; el.style.backgroundPosition=bi?'center':''; el.classList.toggle('own-bg',true);
+  }
+  function snBlockHTML(){ return '<span class="tag-badge">소셜</span>'+SM_GEAR+'<div class="sn-wrap"></div>'; }
+  function snApply(blk){
+    if(!blk) return;
+    if(blk.classList.contains('rt-editing') && typeof rtEditEnd==='function' && typeof rtEditBlk!=='undefined' && rtEditBlk===blk) rtEditEnd();   /* 글 편집 중에 설정을 바꾸면 편집을 끝내고(저장) 다시 그린다 */
+    var c=snCfg(blk), wrap=blk.querySelector('.sn-wrap'); if(!wrap) return;
+    blk.style.padding='0'; snBgApply(blk,c);
+    wrap.style.cssText=snStyleStr(c); wrap.setAttribute('data-st',c.st||'icon'); wrap.setAttribute('data-al',c.al||'center');
+    wrap.innerHTML=snInnerHTML(c,false);
+  }
+  function snInit(blk){ if(blk) snApply(blk); }
+  function snCloneInit(src,clone){
+    if(!clone || clone.getAttribute('data-block')!=='snblk') return;
+    try{ clone._snCfg=JSON.parse(JSON.stringify(snCfg(src))); }catch(e){ clone._snCfg=null; }
+    setTimeout(function(){ snInit(clone); },0);
+  }
+  /* ── 카드 (블럭추가) — 시작값대로 실제 블럭을 절반 크기로 ── */
+  function snCardHTML(preset){
+    var c=snPresetCfg(preset||'brand'), bi=snBgImg(c).replace(/"/g,"'");
+    return '<div class="fm-pv"><div class="sn-wrap" data-st="'+c.st+'" data-al="'+(c.al||'center')+'" style="'+snStyleStr(c)+'background-color:'+(c.bg||'#ffffff')+';'+(bi?('background-image:'+bi+';'):'')+'">'+snInnerHTML(c,true)+'</div></div>';
+  }
+  function baInsertSn(card){
+    var stage=document.getElementById('stage'), site=stage?stage.querySelector('.site'):null;
+    if(!site){ closeBlockAdd(); return; }
+    var blk=document.createElement('div'); blk.className='blk sn-blk'; blk.setAttribute('data-block','snblk'); blk.setAttribute('onclick','selectBlock(this)');
+    blk.innerHTML=snBlockHTML(); blk._snCfg=snPresetCfg(card.getAttribute('data-preset')||'brand');
+    var addbar=document.createElement('div'); addbar.className='addbar';
+    addbar.innerHTML='<button class="addbtn" onclick="event.stopPropagation();openBlockAdd(this)"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>';
+    if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar); }
+    if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
+    closeBlockAdd(); snInit(blk);
+    if(typeof selectBlock==='function') selectBlock(blk);
+    blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300);
+    setTimeout(function(){ try{ blk.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} },180);
+    baPendingAddbar=null; if(typeof showToast==='function') showToast('블럭을 추가했습니다.');
+  }
+  /* ── 블럭 위 글 고치기(텍스트 편집기 · 서식 툴바) · 편집 화면에서 링크로 나가지 않기 ── */
+  function snRtSave(blk){   /* 편집 중·끝날 때 rtSaveRegions 가 부른다 */
+    var c=snCfg(blk);
+    blk.querySelectorAll('.sn-wrap .cred[data-sn-ed]').forEach(function(r){
+      try{ if(typeof rtCleanFonts==='function') rtCleanFonts(r); }catch(x){}
+      var k=r.getAttribute('data-sn-ed'), h=(typeof rtHtmlOf==='function')?rtHtmlOf(r):r.innerHTML, plain=snTxtOf(h);
+      c[k]=plain; c[k+'H']=(plain && /<(?!br\s*\/?>)[a-z]/i.test(h))?h:'';   /* 태그(줄바꿈 <br> 제외)가 있을 때만 서식 HTML 로 */
+      if(typeof rtPhSync==='function') rtPhSync(r);
+    });
+    snDirty();
+  }
+  if(!window.CL_MVIEW) document.addEventListener('mousedown',function(e){
+    if(e.button!==0 || typeof rtEditStart!=='function') return;
+    var r=e.target.closest && e.target.closest('#stage .blk[data-block="snblk"] .cred[data-sn-ed]'); if(!r) return;
+    var blk=r.closest('.blk');
+    if(rtEditBlk===blk){ if(blk._rtActive!==r){ blk._rtActive=r; setTimeout(function(){ rtTbPlace(true); rtTbState(); rtPlusPlace(); },0); } return; }
+    if(typeof selectBlock==='function' && !blk.classList.contains('sel')) selectBlock(blk);
+    rtEditStart(blk,true,r);
+  });
+  document.addEventListener('click',function(e){
+    var a=e.target.closest && e.target.closest('#stage .sn-blk a[href]'); if(!a) return;
+    if(!document.documentElement.classList.contains('pview')) e.preventDefault();
+  },true);
+  /* ── 블럭설정 ── */
+  function snDirty(){ if(typeof markDirty==='function') markDirty(); }
+  function snUpd(key,val){ var blk=snCurBlk; if(!blk) return; var c=snCfg(blk); c[key]=val; var ink=(key==='bg' || key==='cm') && snAutoInk(c); snApply(blk); snRows(); if(ink) snInkSync(c); snDirty(); }   /* 261022 수정 — 배경색 · 색 방식을 바꿀 때 밝기 맞춤 */
+  function snInkSync(c){ [['snIc','ic'],['snTc','tc'],['snSc','sc']].forEach(function(r){ var el=document.getElementById(r[0]), o=document.getElementById(r[0]+'V'); if(el) el.value=c[r[1]]; if(o) o.textContent=smHex(c[r[1]]); }); }
+  var _snT=0;
+  function snTxt(key,val){ var blk=snCurBlk; if(!blk) return; snCfg(blk)[key]=val; clearTimeout(_snT); _snT=setTimeout(function(){ if(blk.isConnected){ snApply(blk); snDirty(); } },150); }
+  function snSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
+  function snSeg(key,id,m){ snSegSync(id,m); snUpd(key,m); }
+  function snSw(el,key){ if(!snCurBlk) return; var on=!el.classList.contains('on'); el.classList.toggle('on',on); snUpd(key,on); }
+  /* 종류 바꾸기 — 배너로 처음 바꾸면 견본 문구를 넣어 빈 블럭이 되지 않게 */
+  /* 261022 추가 — 배경과 글자·아이콘 밝기가 같은 편이면(검정 바탕 + 검정 글자 등) 보이게 맞춘다. 대비가 충분한 색(직접 고른 색 포함)은 그대로 둔다.
+     배경 이미지가 있으면 어두운 바탕(어둡게 처리)으로 본다 */
+  function snLum(h){ var m=String(h||'').replace('#',''); if(m.length===3) m=m.replace(/(.)/g,'$1$1'); var v=parseInt(m,16); if(m.length!==6||!isFinite(v)) return 255; return 0.299*((v>>16)&255)+0.587*((v>>8)&255)+0.114*(v&255); }
+  function snAutoInk(c){
+    var dark=!!String(c.bgImg||'').trim() || snLum(c.bg||'#ffffff')<128, ch=false;
+    if(dark && snLum(c.tc)<150){ c.tc='#ffffff'; c.sc='#e4e6ea'; ch=true; }
+    else if(!dark && snLum(c.tc)>190){ c.tc='#1d1f24'; c.sc='#6b7280'; ch=true; }
+    if(c.cm==='mono'){ if(dark && snLum(c.ic)<150){ c.ic='#ffffff'; ch=true; } else if(!dark && snLum(c.ic)>190){ c.ic='#1d1f24'; ch=true; } }
+    return ch;
+  }
+  function snSt(m){
+    var blk=snCurBlk; if(!blk) return; var c=snCfg(blk); if(c.st===m) return;
+    c.st=m; if(m==='banner' && !String(c.eb||'').trim()){ c.eb='소셜미디어에서 소식을 확인하세요'; if(!String(c.desc||'').trim()) c.desc='새 작업과 소식을 SNS 에 가장 먼저 올립니다.'; }
+    var ink=snAutoInk(c);   /* 261022 추가 — 어두운 바탕 아이콘을 배너로 바꾸면 글이 묻히던 것 */
+    snSegSync('snStSeg',m); snApply(blk); snRows(); if(ink) snFillBset(); snDirty();
+  }
+  /* 지금 종류 · 조합에서 쓰는 항목만 보인다 */
+  function snRows(){
+    var blk=snCurBlk, box=document.getElementById('bsetSn'); if(!blk||!box) return; var c=snCfg(blk);
+    box.querySelectorAll('[data-for]').forEach(function(el){ el.style.display=(' '+el.getAttribute('data-for')+' ').indexOf(' '+(c.st||'icon')+' ')>=0?'':'none'; });
+    function show(id,on){ var el=document.getElementById(id); if(el) el.style.display=on?'':'none'; }
+    show('snIcRow', c.cm==='mono');
+    show('snIntroAtRow', !!c.intro); show('snMoreTRow', !!c.more);
+    show('snBgDimRow', !!String(c.bgImg||'').trim());
+    var at=document.getElementById('snIntroAt'); if(at){ var mx=Math.max(1,Math.round(txNum(c.cols,6))*Math.round(txNum(c.rows,2))); if(+at.max!==mx){ at.max=mx; if(typeof smRng==='function') smRng(at); } }
+  }
+  /* 아이콘 목록 — 푸터 SNS 설정과 같은 모양. 추가는 아직 쓰지 않은 종류에서(최대 7) */
+  var SN_I_DRAG='<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>';
+  var SN_I_DEL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg>';
+  function snIcRender(){
+    var blk=snCurBlk, list=document.getElementById('snIcList'); if(!blk||!list) return; var c=snCfg(blk);
+    list.innerHTML=c.icons.map(function(s,i){
+      return '<div class="mt-imgrow" data-i="'+i+'"><span class="mt-imgdrag" title="드래그하여 순서 변경">'+SN_I_DRAG+'</span>'
+        +'<span class="mt-imgthumb" title="'+snNm(s.k)+'">'+snSvg(s.k)+'</span>'
+        +'<div class="mtk-field"><input type="text" value="'+snEsc(s.url||'')+'" placeholder="'+snNm(s.k)+' 주소" spellcheck="false" oninput="snIcSet('+i+',this.value)"></div>'
+        +'<button type="button" class="mt-imgdel" title="삭제" aria-label="삭제" onclick="snIcDel('+i+')">'+SN_I_DEL+'</button></div>';
+    }).join('');
+    var used={}; c.icons.forEach(function(s){ used[s.k]=1; });
+    var rest=SN_KINDS.filter(function(k){ return !used[k]; }), full=!rest.length;
+    var cnt=document.getElementById('snIcCount'); if(cnt) cnt.textContent=c.icons.length+'/'+SN_KINDS.length;
+    var add=document.getElementById('snIcAdd'), btn=document.getElementById('snIcAddBtn'); if(btn) btn.disabled=full;
+    if(add){ if(full) add.classList.remove('open'); add.querySelector('.sdd-menu').innerHTML=rest.map(function(k){ return '<button type="button" onclick="snIcAdd(\''+k+'\')">'+snSvg(k)+snNm(k)+'</button>'; }).join(''); }
+    if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',snIcReorder);
+  }
+  function snIcSet(i,url){ var blk=snCurBlk; if(!blk) return; var s=snCfg(blk).icons[i]; if(!s) return; s.url=String(url||'').trim(); clearTimeout(_snT); _snT=setTimeout(function(){ if(blk.isConnected){ snApply(blk); snDirty(); } },150); }   /* 목록은 다시 그리지 않는다(입력 중 포커스 유지) */
+  function snIcAdd(k){
+    var blk=snCurBlk; if(!blk || !snSvg(k)) return; var c=snCfg(blk); if(c.icons.some(function(s){ return s.k===k; })) return;
+    c.icons.push({k:k,url:''}); var add=document.getElementById('snIcAdd'); if(add) add.classList.remove('open');
+    snIcRender(); snApply(blk); snDirty();
+    var rows=document.querySelectorAll('#snIcList .mt-imgrow'), last=rows[rows.length-1], inp=last&&last.querySelector('input'); if(inp) inp.focus();
+  }
+  function snIcDel(i){
+    var blk=snCurBlk; if(!blk) return; var c=snCfg(blk), it=c.icons.splice(i,1)[0]; if(!it) return; snIcRender(); snApply(blk); snDirty();
+    clToast('「'+snNm(it.k)+'」 아이콘을 삭제했습니다.',{label:'되돌리기',fn:function(){ if(!blk.isConnected) return; var cc=snCfg(blk); cc.icons.splice(Math.min(i,cc.icons.length),0,it); snApply(blk); if(snCurBlk===blk) snIcRender(); }});
+  }
+  function snIcReorder(from,to){
+    var blk=snCurBlk; if(!blk) return; var L=snCfg(blk).icons; if(from==null||to==null||from===to||from<0||to<0||from>=L.length||to>=L.length) return;
+    var it=L.splice(from,1)[0]; L.splice(to,0,it); snIcRender(); snApply(blk); snDirty();
+  }
+  /* 피드 이미지 목록 — 썸네일을 누르면 보관함에서 고른다(설정창 목록 공통 libThumbPick → 숨은 주소 칸 input) */
+  var SN_IMG_MAX=24;
+  function snImgRender(){
+    var blk=snCurBlk, list=document.getElementById('snImgList'); if(!blk||!list) return; var c=snCfg(blk);
+    list.innerHTML=c.imgs.map(function(m,i){
+      var u=String(m.src||'');
+      return '<div class="mt-imgrow" data-i="'+i+'"><span class="mt-imgdrag" title="드래그하여 순서 변경">'+SN_I_DRAG+'</span>'
+        +'<span class="mt-imgthumb"'+(u?' style="background-image:url(&quot;'+_mtAttr(u)+'&quot;)"':'')+' title="보관함에서 이미지 고르기"></span>'
+        +'<div class="vc-caps"><input type="text" class="sn-src" value="'+_mtAttr(u)+'" oninput="snImgSet('+i+',\'src\',this.value)">'
+        +'<input type="text" class="s-in" value="'+_mtAttr(m.url||'')+'" placeholder="링크 (비우면 계정 주소)" spellcheck="false" oninput="snImgSet('+i+',\'url\',this.value)"></div>'
+        +'<button type="button" class="mt-imgdel" title="삭제" aria-label="삭제" onclick="snImgDel('+i+')">'+SN_I_DEL+'</button></div>';
+    }).join('');
+    var cnt=document.getElementById('snImgCount'); if(cnt) cnt.textContent=c.imgs.length+'장';
+    var add=document.getElementById('snImgAddBtn'); if(add) add.disabled=c.imgs.length>=SN_IMG_MAX;
+    if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',snImgReorder);
+  }
+  function snImgSet(i,k,v){
+    var blk=snCurBlk; if(!blk) return; var m=snCfg(blk).imgs[i]; if(!m) return; m[k]=String(v||'').trim();
+    clearTimeout(_snT); _snT=setTimeout(function(){ if(blk.isConnected){ snApply(blk); snDirty(); } },k==='src'?0:150);
+  }
+  function snImgAdd(){
+    var blk=snCurBlk; if(!blk) return; var c=snCfg(blk); if(c.imgs.length>=SN_IMG_MAX){ clToast('이미지는 최대 '+SN_IMG_MAX+'장까지 넣을 수 있습니다.'); return; }
+    c.imgs.push({src:'',url:''}); snImgRender();
+    var rows=document.querySelectorAll('#snImgList .mt-imgrow'), last=rows[rows.length-1], th=last&&last.querySelector('.mt-imgthumb');
+    if(th && typeof libThumbPick==='function') libThumbPick(th);   /* 새 칸은 바로 보관함에서 고르게 */
+  }
+  function snImgDel(i){
+    var blk=snCurBlk; if(!blk) return; var c=snCfg(blk), gone=c.imgs.splice(i,1)[0]; if(!gone) return;
+    if(libThumbMode && libThumbMode.listId==='snImgList') libThumbEnd(false);
+    snImgRender(); snApply(blk); snDirty();
+    clToast('이미지를 삭제했습니다.',{label:'되돌리기',fn:function(){ if(!blk.isConnected) return; snCfg(blk).imgs.splice(i,0,gone); snApply(blk); if(snCurBlk===blk) snImgRender(); }});
+  }
+  function snImgReorder(from,to){
+    var blk=snCurBlk; if(!blk) return; var L=snCfg(blk).imgs; if(from==null||to==null||from===to||from<0||to<0||from>=L.length||to>=L.length) return;
+    var it=L.splice(from,1)[0]; L.splice(to,0,it); snImgRender(); snApply(blk); snDirty();
+  }
+  /* 배경 이미지 — 보관함에서 고르기 · 업로드 · 없애기 */
+  function snBgSync(){
+    var blk=snCurBlk, th=document.getElementById('snBgTh'); if(!blk||!th) return; var c=snCfg(blk), u=String(c.bgImg||'').trim();
+    th.classList.toggle('empty',!u); th.style.backgroundImage=u?('url("'+u.replace(/"/g,'%22')+'")'):'';
+    th.innerHTML=u?'':'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
+    th.classList.toggle('picking', !!(libThumbMode && libThumbMode.listId==='snBg'));
+    var d=document.getElementById('snBgDel'); if(d) d.classList.toggle('off',!u);
+  }
+  function snBgSet(blk,src){ if(!blk||!blk.isConnected) return; var c=snCfg(blk); c.bgImg=src; var ink=snAutoInk(c); snApply(blk); if(blk===snCurBlk){ snBgSync(); snRows(); if(ink) snInkSync(c); } snDirty(); }   /* 261022 수정 — 배경 이미지를 넣거나 빼면 밝기 맞춤 */
+  function snBgPick(){
+    var blk=snCurBlk; if(!blk) return;
+    if(libThumbMode && libThumbMode.listId==='snBg'){ libThumbEnd(false); snBgSync(); clToast('선택을 끝냈습니다.'); return; }
+    if(libThumbMode) libThumbEnd(false);
+    libThumbMode={listId:'snBg', idx:null, only:'img', vidOk:false, quiet:true, apply:function(src){ if(!blk.isConnected || blk!==snCurBlk) return; snBgSet(blk,src); clToast('블럭 배경 이미지를 넣었습니다. 다른 이미지를 누르면 다시 바뀝니다.'); }};
+    document.documentElement.classList.add('rt-lib-ins'); if(typeof libTab==='function') libTab('img');
+    if(open!=='lib' && typeof togglePanel==='function'){ window.libWantR=true; togglePanel('lib'); libOpenedByBset=true; }
+    snBgSync(); clToast('보관함에서 이미지를 고르세요.');
+  }
+  function snBgClear(){ var blk=snCurBlk; if(!blk) return; if(libThumbMode && libThumbMode.listId==='snBg') libThumbEnd(false); snBgSet(blk,''); }
+  function snBgUpload(input){
+    var blk=snCurBlk; if(!blk || !input || !input.files || !input.files[0]){ if(input) input.value=''; return; }
+    var added=(typeof blkLibUpload==='function')?blkLibUpload([input.files[0]]):[]; input.value='';
+    if(added && added.length){ snBgSet(blk,added[0].src); clToast('블럭 배경에 넣었습니다. 보관함에도 함께 들어갔습니다.'); }
+  }
+  var SN_RNG=[['snIsz','isz','px'],['snGap','gap','px'],['snCols','cols',''],['snRows','rows',''],['snFgap','fgap','px'],['snRad','rad','px'],['snIntroAt','introAt','번째'],['snBgDim','bgDim','%'],['snPt','pt','px'],['snPb','pb','px']];
+  var SN_COL=[['snIc','ic'],['snTc','tc'],['snSc','sc'],['snBg','bg']];
+  function snBuildBset(){
+    if(snBound) return; snBound=true;
+    SN_RNG.forEach(function(r){
+      var el=document.getElementById(r[0]); if(!el) return;
+      el.addEventListener('input',function(){ var v=parseFloat(el.value); if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[2]; snUpd(r[1],v); });
+    });
+    SN_COL.forEach(function(r){
+      var el=document.getElementById(r[0]); if(!el) return;
+      el.addEventListener('input',function(){ var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(el.value); snUpd(r[1],el.value); });
+    });
+  }
+  function snFillBset(){
+    var blk=snCurBlk; if(!blk) return; var c=snCfg(blk);
+    function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng') && typeof smRng==='function') smRng(el); } }
+    snRows();   /* 소개 위치의 최댓값을 먼저 맞춘다 */
+    SN_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
+    SN_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
+    set('snAcct',c.acct||''); set('snHref',c.href||''); set('snMoreT',c.moreT||'');
+    snSegSync('snStSeg',c.st||'icon'); snSegSync('snLaySeg',c.lay||'row'); snSegSync('snAlSeg',c.al||'center'); snSegSync('snShSeg',c.sh||'none'); snSegSync('snCmSeg',c.cm||'brand');
+    [['snHdSw','hd'],['snIntroSw','intro'],['snMoreSw','more']].forEach(function(p){ var el=document.getElementById(p[0]); if(el) el.classList.toggle('on',!!c[p[1]]); });
+    snIcRender(); snImgRender(); snBgSync(); snRows();
+  }
+  window.snCfg=snCfg; window.snApply=snApply; window.snCloneInit=snCloneInit; window.snCardHTML=snCardHTML; window.baInsertSn=baInsertSn;
+  window.snUpd=snUpd; window.snTxt=snTxt; window.snSeg=snSeg; window.snSw=snSw; window.snSt=snSt; window.snFillBset=snFillBset; window.snBuildBset=snBuildBset;
+  window.snIcSet=snIcSet; window.snIcAdd=snIcAdd; window.snIcDel=snIcDel; window.snImgSet=snImgSet; window.snImgAdd=snImgAdd; window.snImgDel=snImgDel;
+  window.snBgPick=snBgPick; window.snBgClear=snBgClear; window.snBgUpload=snBgUpload; window.snRtSave=snRtSave;
+
+  /* ══════════════════════════════════════════════════════════════════
      260923 추가 — 스택 카드 컨텐츠 블럭 (CONTENT01 · 접두어 sc · cfg _scCfg)
      · 참조 사이트(terawulf.com) WHAT WE DO 의 세 카드(Our Expertise · Compute Infrastructure at Scale · Strategic Sites)를 분리
      · 카드 = 글(제목·본문·버튼 하나) + 이미지/동영상. 스크롤하면 카드가 위쪽에 멈추고 다음 카드가 올라와 덮는다.
@@ -36244,7 +36779,7 @@ global.PolyFX = API;
   /* 카드 높이를 그린 폼 높이(절반 배율)에 맞춘다 — 목록을 그린 직후 호출 (글꼴이 늦게 오면 한 번 더) */
   function fmCardFit(host){
     var th=host.querySelectorAll('.ba-thumb.fm-live'); if(!th.length) return;
-    function fit(){ th.forEach(function(t){ var w=t.querySelector('.fm-pv > .fm-wrap,.fm-pv > .ca-wrap,.fm-pv > .ct-wrap'); if(!w) return; var h=Math.round(w.offsetHeight*0.5); if(h>24){ t.style.aspectRatio='auto'; t.style.height=h+'px'; }   /* 260929 수정 — 상담 신청 띠처럼 낮은 블럭도 */ }); }
+    function fit(){ th.forEach(function(t){ var w=t.querySelector('.fm-pv > .fm-wrap,.fm-pv > .sn-wrap,.fm-pv > .ca-wrap,.fm-pv > .ct-wrap'); if(!w) return; var h=Math.round(w.offsetHeight*0.5); if(h>24){ t.style.aspectRatio='auto'; t.style.height=h+'px'; }   /* 260929 수정 — 상담 신청 띠처럼 낮은 블럭도 */ }); }
     fit(); setTimeout(fit,400); if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ setTimeout(fit,0); });
   }
   function fmApply(blk){
@@ -43561,6 +44096,7 @@ global.PolyFX = API;
     /* 260907 추가 — 책자 넘김: 페이지 글 편집은 텍스트 블럭 편집기를 빌려 쓴다 */
     if(blk.getAttribute('data-block')==='bookflip2'){ if(!blk.classList.contains('rt-editing') && typeof b2Apply==='function') b2Apply(blk); return; }
     if(blk.getAttribute('data-block')==='imggrid'){ if(!blk.classList.contains('rt-editing') && typeof imApply==='function') imApply(blk); return; }   /* 260922 추가 — 이미지 블럭 하단 텍스트 */
+    if(blk.getAttribute('data-block')==='snblk'){ if(!blk.classList.contains('rt-editing') && typeof snApply==='function') snApply(blk); return; }   /* 261022 추가 — 소셜 블럭 */
     var c=rtCfg(blk);
     if(c.layout==='dual'){ c.layout='single'; if(!(c.cols>1)) c.cols=2; }   /* 260915 수정 — 옛 '본문 2단' → 2열 */
     rtColsSync(blk,c); rtLayoutSync(blk,c);
@@ -43840,7 +44376,7 @@ global.PolyFX = API;
     if(rtEditBlk && rtEditBlk!==blk) rtEditEnd();
     if(region && blk.contains(region)) blk._rtActive=region; else if(!fromClick) blk._rtActive=null;
     var b=rtBody(blk); if(!b) return;
-    if(!rtIsFix(blk) && !/^(bookflip2|imggrid)$/.test(blk.getAttribute('data-block')||'')) rtCfg(blk); rtTbBuild();   /* 261006 수정 — 탭메뉴 문구도 */   /* 260922 수정 — 이미지 블럭 하단 텍스트도 제 cfg 를 쓴다 */
+    if(!rtIsFix(blk) && !/^(bookflip2|imggrid|snblk)$/.test(blk.getAttribute('data-block')||'')) rtCfg(blk); rtTbBuild();   /* 261006 수정 — 탭메뉴 문구도 */   /* 260922 수정 — 이미지 블럭 하단 텍스트도 제 cfg 를 쓴다 */
     rtEditBlk=blk; blk.classList.add('rt-editing');
     /* 260906 수정 — 글 영역이 여럿(라벨 + 본문)이면 모두 편집 가능하게. 툴바는 커서가 있는 영역을 따른다 */
     blk.querySelectorAll('.cred').forEach(function(el){ el.setAttribute('contenteditable','true'); el.setAttribute('spellcheck','false'); });
@@ -43883,6 +44419,7 @@ global.PolyFX = API;
   function rtSaveRegions(blk){
     if(blk.getAttribute('data-block')==='bookflip2'){ if(typeof b2RtSave==='function') b2RtSave(blk); return; }
     if(blk.getAttribute('data-block')==='imggrid'){ if(typeof imRtSave==='function') imRtSave(blk); return; }   /* 260922 추가 */
+    if(blk.getAttribute('data-block')==='snblk'){ if(typeof snRtSave==='function') snRtSave(blk); return; }   /* 261022 추가 — 소셜 블럭 제목·설명·소개 글 */
     if(rtIsTm(blk)){ if(typeof tmRtSave==='function') tmRtSave(blk); return; }   /* 261006 추가 — 탭메뉴 문구 */
     if(rtIsGd(blk)){ if(typeof gdRtSave==='function') gdRtSave(blk); return; }   /* 261007 추가 — 상세 페이지 타이틀 */
     var c=rtCfg(blk), m=rtMain(blk), lb=rtLabelEl(blk);
@@ -43914,7 +44451,7 @@ global.PolyFX = API;
       if(e.key==='Tab'){
         var n=e.shiftKey?i-1:i+1; if(n<0||n>=regs.length) return;
         e.preventDefault(); rtSaveRegions(rtEditBlk); rtCaretTo(regs[n], e.shiftKey);
-      } else if(e.key==='Backspace' && i>0 && rtAtStart(cur) && rtEditBlk.getAttribute('data-block')!=='imggrid' && !rtIsFix(rtEditBlk)){   /* 260922 — 이미지 블럭 하단 텍스트는 칸마다 따로라 앞 칸으로 넘어가지 않는다 */
+      } else if(e.key==='Backspace' && i>0 && rtAtStart(cur) && rtEditBlk.getAttribute('data-block')!=='imggrid' && rtEditBlk.getAttribute('data-block')!=='snblk' && !rtIsFix(rtEditBlk)){   /* 260922 — 이미지 블럭 하단 텍스트는 칸마다 따로라 앞 칸으로 넘어가지 않는다 */
         e.preventDefault(); rtCaretTo(regs[i-1], true);
       }
     },true);
@@ -45545,6 +46082,7 @@ global.PolyFX = API;
       if(!th) return false;
       if(th.id==='rtBgTh'||th.id==='imBgTh') return (kind==='img'||kind==='vid');   /* 260928 추가 — 텍스트·이미지 블럭 배경 썸네일: 이미지·동영상 모두 */
       if(th.closest('#ixItemList')) return false;   /* 인덱스 리스트의 썸네일 자리는 번호 배지 — 이미지 대상이 아니다 */
+      if(th.closest('#snIcList')) return false;   /* 261022 추가 — 소셜 블럭 아이콘 목록의 그림은 SNS 아이콘 — 이미지 대상이 아니다(놓으면 주소 칸에 이미지 주소가 들어갔다) */
       var lst=th.closest('.mt-imgrow,.sg-imgrow,.fl-imgrow'), both=!!(lst&&lst.parentElement&&LIB_VID_LISTS.test(lst.parentElement.id||''));   /* 260921 수정 — 공통 목록(LIB_VID_LISTS)으로 */   /* 260915 수정 — 세로 스크롤 갤러리(#vcItemList) 추가. 플로팅 3D·나선형·3D 스트립·세로 스크롤 갤러리는 이미지·동영상 모두 */
       if(kind==='vid') return both;
       return kind==='img';
@@ -45581,6 +46119,7 @@ global.PolyFX = API;
   document.addEventListener('click',function(e){
     var th=e.target.closest && e.target.closest('#bset .mt-imgrow .mt-imgthumb,#bset .fl-imgrow .fl-imgthumb'); if(!th) return;   /* 260905 수정 — 플로팅 3D 갤러리 썸네일도 보관함 선택 */
     if(th.closest('#ixItemList')) return;   /* 인덱스 번호 배지는 보관함 선택 대상이 아니다 */
+    if(th.closest('#snIcList')) return;   /* 261022 추가 — 소셜 블럭 아이콘 목록의 그림은 보관함 선택 대상이 아니다 */
     e.preventDefault(); e.stopPropagation(); libThumbPick(th);
   },true);
   function rtLibEnd(closePanel){
@@ -46412,6 +46951,7 @@ global.PolyFX = API;
       crumple     :{cfg:'_ckCfg', apply:function(b){ ckApply(b); }},   /* 260923 추가 — 구김 이미지 */
       stackcard   :{cfg:'_scCfg', apply:function(b){ scApply(b); }},   /* 260923 추가 — 스택 카드 */
       formblk     :{cfg:'_fmCfg', apply:function(b){ fmApply(b); }},   /* 260929 추가 — 폼 블럭 */
+      snblk       :{cfg:'_snCfg', apply:function(b){ snApply(b); }},   /* 261022 추가 — 소셜 블럭 */
       calblk      :{cfg:'_caCfg', apply:function(b){ caApply(b); }},   /* 260929 추가 — 캘린더 블럭 */
       ctblk       :{cfg:'_ctCfg', apply:function(b){ ctApply(b); }},   /* 260929 추가 — 컨택트/지점 블럭 */
       cred        :{cfg:'_rtCfg', apply:function(b){ rtApply(b); }},   /* 260905 추가 — 이력 텍스트 블럭 */
@@ -46888,6 +47428,7 @@ global.PolyFX = API;
       stackcard   :{items:1},   /* 260923 추가 — 스택 카드 · 카드 목록(이미지·문구·링크)은 PC·모바일이 함께 쓴다. 쌓임·모양·색·여백은 기기별 */
       ctblk       :{kind:1, preset:1, fields:1, info:1, branches:1, map:1, title:1, desc:1, lead:1, phone:1, leadL:1, fix:1, btnT:1, done:1, mailOn:1, mails:1, privacy:1, privTxt:1, captcha:1, srRegion:1, srKw:1, srPh:1, bgImg:1, bgGray:1},   /* 260929 추가 — 컨택트/지점 · 항목·지점·연락처·지도·문구·제출 옵션은 PC·모바일 공유, 배치·색·크기·여백은 기기별 */
       calblk      :{events:1, view:1, nav:1, hol:1, ws:1, perm:1, gid:1, gkey:1, gc:1, sync:1},   /* 260929 추가 — 캘린더 블럭 · 일정·보기·권한·연동은 PC·모바일이 함께 쓴다. 색·크기·여백은 기기별 */
+      snblk       :{icons:1, eb:1, desc:1, ebH:1, descH:1, introTH:1, acct:1, href:1, imgs:1, introT:1, moreT:1, bgImg:1},   /* 261022 추가 — 소셜 블럭 · 아이콘·문구·계정·이미지·배경 소재는 PC·모바일 공유, 모양·크기·열·색·여백은 기기별 */
       formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, privacy:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블럭 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
     };
     /* 텍스트 문구 키 — 기본은 PC 와 공유하고, 블럭별 '문구 따로 쓰기'(blk._mvTextSplit)를 켠 경우에만 모바일 전용이 된다 */
