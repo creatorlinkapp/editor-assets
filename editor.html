@@ -2559,6 +2559,151 @@
   #baGrid .ba-card[data-kind="formblk"]{border-radius:var(--r-xl);}
   .ba-thumb.fm-live{overflow:hidden;background:#fff;align-items:flex-start;}
   .fm-pv{position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;}
+  /* ══ 261023 추가 — 탭 블럭 (tkblk · TAB01~08) — 좌측 사이트 탭 카테고리 tab1~8 을 한 블럭 + 디자인 8 로. 탭을 누르면 그 탭의 내용(텍스트 편집기 영역)이 보인다 ══ */
+  :where(.tk-wrap) .cred{font-size:inherit;line-height:inherit;color:inherit;text-align:inherit;}   /* .cred 공통값(14.5px · 가운데 · 회색)은 받지 않는다 — :where 로 낮춰 아래 규칙이 이긴다 */
+  .tk-wrap{position:relative;container-type:inline-size;color:var(--tktc);}
+  .tk-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box;}
+  .tk-bar{position:relative;display:flex;align-items:center;width:var(--tkbw);margin:0 auto;}
+  .tk-wrap[data-al="left"] .tk-bar{margin-left:0;}
+  .tk-wrap[data-al="right"] .tk-bar{margin-right:0;}
+  .tk-sc{position:relative;flex:1;min-width:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;}
+  .tk-sc::-webkit-scrollbar{display:none;}
+  .tk-list{--g:0px;display:flex;gap:var(--g);min-width:100%;box-sizing:border-box;}
+  .tk-tab{flex:0 0 calc((100% - var(--g) * (var(--tkcols) - 1)) / var(--tkcols));min-width:0;height:var(--tkh);display:flex;align-items:center;justify-content:center;margin:0;padding:0 14px;box-sizing:border-box;border:0;background:none;
+    font-family:var(--tkf);font-size:var(--tkfs);font-weight:var(--tkfw);line-height:1.2;letter-spacing:-.01em;color:var(--tkfg);cursor:pointer;-webkit-tap-highlight-color:transparent;
+    transition:color .2s ease,background-color .2s ease,box-shadow .2s ease,border-color .2s ease;}
+  .tk-tab span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:opacity .15s ease;}
+  .tk-tab:not(.on):hover span{opacity:.68;}
+  .tk-tab:focus-visible{outline:2px solid var(--tkac);outline-offset:-2px;}
+  /* 여러 줄 — 가로 개수마다 줄을 바꾼다 */
+  .tk-wrap[data-wrap="multi"] .tk-sc{overflow:visible;}
+  .tk-wrap[data-wrap="multi"] .tk-list{display:grid;grid-template-columns:repeat(var(--tkcols),minmax(0,1fr));row-gap:max(var(--g),6px);}
+  .tk-wrap[data-wrap="multi"] .tk-tab{flex:none;}
+  /* 화살표 — 한 줄에서 탭이 넘칠 때만(JS 가 .ov) */
+  .tk-ar{display:none;flex:none;width:36px;height:36px;align-items:center;justify-content:center;margin:0;padding:0;border:0;background:none;color:var(--tkarc);cursor:pointer;transition:opacity .2s ease;}
+  .tk-ar svg{width:22px;height:22px;display:block;}
+  .tk-ar.next svg{transform:scaleX(-1);}
+  .tk-bar.ov .tk-ar{display:flex;}
+  .tk-bar.ov.at-s .tk-ar.prev,.tk-bar.ov.at-e .tk-ar.next{opacity:.22;pointer-events:none;}
+  .tk-bar.ov .tk-tab:last-child{margin-right:2px;}   /* 넘칠 때 끝까지 밀어도 마지막 탭 오른쪽 선이 소수점 반올림으로 잘리지 않게 */
+  /* 디자인 8 — 밑줄 · 채움 · 알약 · 테두리 · 블럭 · 구분선 · 폴더 · 세그먼트 (좌측 사이트 tab1 · 2 · 3 · 4 · 5 · 6 · 7 · 8) */
+  /* 바닥 선 · 세그먼트 바탕은 스크롤 틀(.tk-sc)에 — 탭이 넘쳐 밀어도 보이는 폭 전체에 남는다 */
+  .tk-wrap[data-ds="under"] .tk-sc,.tk-wrap[data-ds="fill"] .tk-sc,.tk-wrap[data-ds="folder"] .tk-sc{box-shadow:inset 0 -1px 0 var(--tklc);}
+  .tk-wrap[data-ds="under"] .tk-tab.on{color:var(--tkafg);box-shadow:inset 0 -2px 0 var(--tkac);}
+  .tk-wrap[data-ds="fill"] .tk-tab.on{color:var(--tkafg);background:var(--tkac);}
+  .tk-wrap[data-ds="pill"] .tk-list{--g:10px;}
+  .tk-wrap[data-ds="pill"] .tk-tab{border-radius:999px;box-shadow:inset 0 0 0 1px var(--tklc);}
+  .tk-wrap[data-ds="pill"] .tk-tab.on{color:var(--tkafg);background:var(--tkac);box-shadow:none;}
+  .tk-wrap[data-ds="box"] .tk-list{--g:10px;}
+  .tk-wrap[data-ds="box"] .tk-tab{border-radius:4px;box-shadow:inset 0 0 0 1px var(--tklc);}
+  .tk-wrap[data-ds="box"] .tk-tab.on{color:var(--tkafg);box-shadow:inset 0 0 0 1.5px var(--tkac);}
+  .tk-wrap[data-ds="block"] .tk-list{--g:8px;}
+  .tk-wrap[data-ds="block"] .tk-tab{border-radius:4px;background:var(--tkbb);}
+  .tk-wrap[data-ds="block"] .tk-tab.on{color:var(--tkafg);background:var(--tkac);}
+  .tk-wrap[data-ds="bar"] .tk-tab{position:relative;}
+  .tk-wrap[data-ds="bar"] .tk-tab + .tk-tab::before{content:"";position:absolute;left:0;top:50%;width:1px;height:14px;transform:translateY(-50%);background:var(--tklc);}
+  .tk-wrap[data-ds="bar"][data-wrap="multi"] .tk-tab::before{display:none;}
+  .tk-wrap[data-ds="bar"] .tk-tab.on{color:var(--tkafg);}
+  .tk-wrap[data-ds="folder"] .tk-tab{border-radius:6px 6px 0 0;}
+  .tk-wrap[data-ds="folder"] .tk-tab.on{color:var(--tkafg);background:var(--tkpg);box-shadow:inset 1px 0 0 var(--tklc),inset -1px 0 0 var(--tklc),inset 0 1px 0 var(--tklc);}   /* 선택 탭이 바닥 선을 덮는다(바탕색). 테두리는 안쪽 그림자로 — 스크롤 틀 끝에서 잘리지 않게 */
+  .tk-wrap[data-ds="seg"] .tk-list{--g:4px;}
+  .tk-wrap[data-ds="seg"] .tk-sc{padding:4px;border-radius:12px;background:var(--tkbb);}
+  .tk-wrap[data-ds="seg"] .tk-tab{height:calc(var(--tkh) - 8px);border-radius:9px;}
+  .tk-wrap[data-ds="seg"] .tk-tab.on{color:var(--tkafg);background:var(--tkac);box-shadow:0 1px 3px rgba(20,24,32,.08),0 1px 2px rgba(20,24,32,.06);}
+  /* 내용 — 탭마다 한 칸(텍스트 편집기 영역). 지금 탭만 보인다 */
+  .tk-panes{margin-top:var(--tkgap);}
+  .tk-pane{display:none;max-width:820px;margin:0 auto;font-size:var(--tkcs);line-height:1.75;color:var(--tktc);text-align:var(--tkcal);word-break:keep-all;}
+  .site[data-theme] .tk-wrap .tk-pane.cred{color:var(--tktc);}   /* 사이트 테마 글자색(.site[data-theme] .cred)보다 앞서게 — 기본 색은 설정창 「내용」 */
+  .tk-pane.on{display:block;animation:tkIn .35s ease both;}
+  @keyframes tkIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .tk-pane > :first-child{margin-top:0;}
+  .tk-pane > :last-child{margin-bottom:0;}
+  .tk-pane h1,.tk-pane h2,.tk-pane h3{margin:.35em 0 .45em;}
+  .tk-pane p{margin:0;}
+  #stage .tk-blk .tk-pane.cred{outline:1.5px dashed transparent;outline-offset:10px;cursor:text;min-height:1.75em;transition:outline-color .12s;}
+  #stage .tk-blk:not(.rt-editing) .tk-pane.cred:hover{outline-color:var(--green-line);}
+  #stage .tk-blk.rt-editing .tk-pane.cred:focus{outline:1.5px solid var(--green);}
+  .tk-pane.rt-ph:empty::before{content:attr(data-ph);opacity:.45;}
+  html.pview #stage .tk-blk .tk-pane.cred,html.pview #stage .tk-blk .tk-pane.cred:hover{outline-color:transparent !important;cursor:inherit;}
+  html.pview .tk-pane.rt-ph::before{content:none;}
+  /* 세로 탭(탭 위치 = 왼쪽) — 왼쪽 탭 목록 · 오른쪽 내용. 스타일 8 은 세로로 놓아도 같은 말을 쓴다(선은 왼쪽 세로선, 구분선은 가로선) */
+  .tk-wrap[data-pos="left"] .tk-in{display:grid;grid-template-columns:var(--tkvw) minmax(0,1fr);column-gap:var(--tkgap);align-items:start;}
+  .tk-wrap[data-pos="left"] .tk-bar{width:auto;margin:0;}
+  .tk-wrap[data-pos="left"] .tk-sc{overflow:visible;}
+  .tk-wrap[data-pos="left"] .tk-list,.tk-wrap[data-pos="left"][data-wrap] .tk-list{display:flex;flex-direction:column;row-gap:var(--g);}
+  .tk-wrap[data-pos="left"] .tk-tab{flex:none;width:100%;justify-content:flex-start;text-align:left;padding:0 18px;}
+  .tk-wrap[data-pos="left"] .tk-bar .tk-ar{display:none;}
+  .tk-wrap[data-pos="left"] .tk-panes{margin-top:0;}
+  .tk-wrap[data-pos="left"] .tk-pane{max-width:none;margin:0;}
+  .tk-wrap[data-pos="left"][data-ds="under"] .tk-sc{box-shadow:inset 1px 0 0 var(--tklc);}
+  .tk-wrap[data-pos="left"][data-ds="fill"] .tk-sc{box-shadow:none;}   /* 세로 채움 = 바탕 강조(카드) — 선 없이 선택 칸만 둥근 바탕 */
+  .tk-wrap[data-pos="left"][data-ds="fill"] .tk-list{--g:4px;}
+  .tk-wrap[data-pos="left"][data-ds="fill"] .tk-tab{border-radius:8px;}
+  .tk-wrap[data-pos="left"][data-ds="under"] .tk-tab.on{box-shadow:inset 2px 0 0 var(--tkac);}
+  .tk-wrap[data-pos="left"][data-ds="folder"] .tk-sc{box-shadow:inset -1px 0 0 var(--tklc);}
+  .tk-wrap[data-pos="left"][data-ds="folder"] .tk-tab{border-radius:6px 0 0 6px;}
+  .tk-wrap[data-pos="left"][data-ds="folder"] .tk-tab.on{box-shadow:inset 1px 0 0 var(--tklc),inset 0 1px 0 var(--tklc),inset 0 -1px 0 var(--tklc);}
+  .tk-wrap[data-pos="left"][data-ds="bar"] .tk-tab + .tk-tab::before{left:18px;right:18px;top:0;width:auto;height:1px;transform:none;}
+  .tk-wrap[data-pos="left"][data-ds="seg"] .tk-sc{padding:4px;}
+  /* 세로 탭 → 760px 아래(좁은 창 · 태블릿 · 모바일)에서는 위쪽 가로 탭(밀어서 넘기기)으로 — 목록 폭 때문에 내용 칸이 좁아지지 않게 */
+  @container (max-width:760px){
+    .tk-wrap[data-pos="left"] .tk-in{display:block;}
+    .tk-wrap[data-pos="left"] .tk-bar{width:100%;}
+    .tk-wrap[data-pos="left"] .tk-sc{overflow-x:auto;}
+    .tk-wrap[data-pos="left"] .tk-list,.tk-wrap[data-pos="left"][data-wrap] .tk-list{flex-direction:row;row-gap:0;}
+    .tk-wrap[data-pos="left"] .tk-tab{flex:0 0 calc((100% - var(--g) * (var(--tkcolsm) - 1)) / var(--tkcolsm));width:auto;justify-content:center;padding:0 12px;}
+    .tk-wrap[data-pos="left"] .tk-bar.ov .tk-ar{display:flex;}
+    .tk-wrap[data-pos="left"] .tk-panes{margin-top:calc(var(--tkgap) * .5);}
+    .tk-wrap[data-pos="left"][data-ds="under"] .tk-sc,.tk-wrap[data-pos="left"][data-ds="folder"] .tk-sc{box-shadow:inset 0 -1px 0 var(--tklc);}   /* 세로 카드(채움)는 가로로 바뀌어도 선 없이 둥근 바탕 칸 */
+    .tk-wrap[data-pos="left"][data-ds="under"] .tk-tab.on{box-shadow:inset 0 -2px 0 var(--tkac);}
+    .tk-wrap[data-pos="left"][data-ds="folder"] .tk-tab{border-radius:6px 6px 0 0;}
+    .tk-wrap[data-pos="left"][data-ds="folder"] .tk-tab.on{box-shadow:inset 1px 0 0 var(--tklc),inset -1px 0 0 var(--tklc),inset 0 1px 0 var(--tklc);}
+    .tk-wrap[data-pos="left"][data-ds="bar"] .tk-tab + .tk-tab::before{left:0;right:auto;top:50%;width:1px;height:14px;transform:translateY(-50%);}
+  }
+  /* 좁은 화면(모바일) — 한 줄에 최대 4칸, 넘치면 밀어서 넘긴다. 탭 높이는 손가락으로 누르기 좋게 40px 아래로 줄이지 않는다 */
+  @container (max-width:560px){
+    .tk-in{padding-left:20px;padding-right:20px;}
+    .tk-bar{width:100%;}
+    .tk-tab{flex-basis:calc((100% - var(--g) * (var(--tkcolsm) - 1)) / var(--tkcolsm));height:max(40px,calc(var(--tkh) * .82));padding:0 8px;font-size:calc(var(--tkfs) * .9);}
+    .tk-wrap[data-pos="left"] .tk-tab{padding:0 8px;}
+    .tk-wrap[data-wrap="multi"] .tk-list{grid-template-columns:repeat(var(--tkcolsm),minmax(0,1fr));}
+    .tk-wrap[data-ds="seg"] .tk-tab{height:max(36px,calc(var(--tkh) * .82 - 8px));}   /* 바탕 4px 안쪽 칸 — 바탕까지 44px */
+    .tk-ar{width:26px;}
+    .tk-panes{margin-top:calc(var(--tkgap) * .75);}
+  }
+  /* 아주 좁은 화면(320px 대) — 글자가 덜 잘리게 탭 안쪽 여백을 줄인다 */
+  @container (max-width:400px){
+    .tk-tab,.tk-wrap[data-pos="left"] .tk-tab{padding:0 4px;}
+  }
+  /* 블럭추가 카드 — 실제 블럭(탭 줄)을 절반 크기로 */
+  .fm-pv > .tk-wrap{width:200%;transform:scale(.5);transform-origin:0 0;}
+  #baGrid .ba-card[data-kind="tkblk"]{border-radius:var(--r-xl);}
+  /* 설정창 — 탭 목록은 소셜 아이콘 목록(#snIcList)과 같은 줄 모양. 줄을 누르면 그 탭으로 */
+  #tkList .mt-imgrow{cursor:pointer;}
+  #tkList .mtk-field{flex:1;min-width:0;}
+  /* 스타일 고르기 — 탭 줄 미니 미리보기(첫 칸 = 선택된 탭) */
+  #tkDsGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;}
+  #tkDsGrid button{display:flex;flex-direction:column;align-items:center;gap:7px;padding:10px 4px 8px;border:1px solid var(--border-2);border-radius:var(--r-md);background:var(--surface);color:var(--ink-2s);font:500 var(--fs-xs)/1.2 var(--font);cursor:pointer;}
+  #tkDsGrid button:hover{border-color:var(--border-hover);}
+  #tkDsGrid button.on{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green);color:var(--ink);background:var(--green-tint);}
+  .tk-mini{--a:var(--ink);--o:var(--ink-3);display:flex;align-items:stretch;gap:0;width:46px;height:14px;}
+  .tk-mini i{flex:1;position:relative;}
+  .tk-mini[data-ds="under"],.tk-mini[data-ds="fill"],.tk-mini[data-ds="folder"]{box-shadow:inset 0 -1px 0 var(--o);}
+  .tk-mini[data-ds="under"] i:first-child{box-shadow:inset 0 -2px 0 var(--a);}
+  .tk-mini[data-ds="fill"] i:first-child{background:var(--a);}
+  .tk-mini[data-ds="pill"],.tk-mini[data-ds="box"],.tk-mini[data-ds="block"]{gap:2px;}
+  .tk-mini[data-ds="pill"] i{border-radius:999px;box-shadow:inset 0 0 0 1px var(--o);}
+  .tk-mini[data-ds="pill"] i:first-child{background:var(--a);box-shadow:none;}
+  .tk-mini[data-ds="box"] i{border-radius:2px;box-shadow:inset 0 0 0 1px var(--o);}
+  .tk-mini[data-ds="box"] i:first-child{box-shadow:inset 0 0 0 1.5px var(--a);}
+  .tk-mini[data-ds="block"] i{border-radius:2px;background:var(--bg-3);}
+  .tk-mini[data-ds="block"] i:first-child{background:var(--green);}
+  .tk-mini[data-ds="bar"] i + i::before{content:"";position:absolute;left:0;top:3px;bottom:3px;width:1px;background:var(--o);}
+  .tk-mini[data-ds="bar"] i:first-child::after{content:"";position:absolute;left:30%;right:30%;top:6px;height:2px;border-radius:1px;background:var(--danger);}
+  .tk-mini[data-ds="folder"] i:first-child{border:1px solid var(--o);border-bottom:0;border-radius:3px 3px 0 0;background:var(--surface);}
+  .tk-mini[data-ds="seg"]{padding:2px;gap:2px;border-radius:5px;background:var(--bg-3);box-sizing:border-box;}
+  .tk-mini[data-ds="seg"] i{border-radius:3px;}
+  .tk-mini[data-ds="seg"] i:first-child{background:var(--surface);box-shadow:0 1px 2px rgba(20,24,32,.15);}
   /* ══ 261022 추가 — 소셜 블럭 (snblk · SOCIAL01~15) — 아이콘 · 배너 · 이미지 피드. 좌측 사이트 소셜 36장을 세 종류로 묶었다 ══ */
   .sn-wrap{position:relative;container-type:inline-size;font-family:var(--snf);color:var(--sntc);}
   .sn-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box;}
@@ -11665,6 +11810,132 @@
 
       </div>
       <!-- 261022 추가 — 소셜 블럭 설정 (SOCIAL01~15 · 접두어 sn). data-for = 그 종류(아이콘 icon · 배너 banner · 이미지 피드 feed)에서만 보이는 행(snRows) -->
+      <!-- 261023 추가 — 탭 블럭 설정 (TAB01~08 · 접두어 tk). 탭 · 디자인 · 배치 · 글자 · 색 · 내용 · 배경 · 여백 -->
+      <div id="bsetTk" style="display:none;">
+        <div class="fld sfold open acc-flush" id="tkTabAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">탭 <span class="n" id="tkCount"></span><span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
+            <!-- 스타일 = 탭 줄 미니 미리보기 8칸(모양이 한눈에 보이게). 기본 탭은 탭메뉴 「기본 탭」과 같은 드롭다운 -->
+            <div class="srow" style="margin:0 0 6px;"><span class="k">스타일</span></div>
+            <div id="tkDsGrid"></div>
+            <div class="srow srow-dd"><span class="k">기본 탭</span>
+              <div class="sdd" id="tkDefDD">
+                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl"></span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="sdd-menu"></div>
+              </div>
+            </div>
+            <div class="tx-hint">페이지를 열면 처음 보이는 탭입니다.</div>
+            <div class="mt-imglist" id="tkList" style="margin-top:12px;"></div>
+            <div class="im-addrow"><button type="button" class="btn-sm" id="tkAddBtn" onclick="tkAdd()" title="탭을 하나 더 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
+            <div class="mtk-hint">탭 이름은 여기서, 내용은 블럭 위에서 바로 고칩니다. 줄을 누르면 블럭이 그 탭으로 바뀌고, 블럭 위 탭 이름을 두 번 누르면 여기 이름 칸으로 옵니다. 손잡이를 끌어 순서를 바꿉니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="tkLayAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">배치<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow" style="margin:0 0 6px;"><span class="k">탭 위치</span></div>
+            <div class="mt-seg" id="tkPosSeg">
+              <button type="button" class="mt-seg-b active" data-m="top" onclick="tkSeg('pos','tkPosSeg','top')">위</button>
+              <button type="button" class="mt-seg-b" data-m="left" onclick="tkSeg('pos','tkPosSeg','left')">왼쪽 (세로)</button>
+            </div>
+            <div id="tkTopRows">
+              <div class="srow" style="margin:12px 0 6px;"><span class="k">탭 줄</span></div>
+              <div class="mt-seg" id="tkWrapSeg">
+                <button type="button" class="mt-seg-b active" data-m="line" onclick="tkSeg('wrap','tkWrapSeg','line')">한 줄</button>
+                <button type="button" class="mt-seg-b" data-m="multi" onclick="tkSeg('wrap','tkWrapSeg','multi')">여러 줄</button>
+              </div>
+              <div class="srow"><span class="k">가로 개수</span><input class="rng" type="range" id="tkCols" min="1" max="8" step="1" value="4"><span class="v" id="tkColsV">4</span></div>
+              <div class="srow"><span class="k">탭 줄 너비</span><input class="rng" type="range" id="tkBw" min="30" max="100" step="5" value="100"><span class="v" id="tkBwV">100%</span></div>
+            </div>
+            <div class="srow" id="tkVwRow"><span class="k">탭 목록 너비</span><input class="rng" type="range" id="tkVw" min="140" max="360" step="10" value="220"><span class="v" id="tkVwV">220px</span></div>
+            <div id="tkAlRow">
+              <div class="srow" style="margin:12px 0 6px;"><span class="k">정렬</span></div>
+              <div class="mt-seg" id="tkAlSeg">
+                <button type="button" class="mt-seg-b" data-m="left" onclick="tkSeg('al','tkAlSeg','left')">왼쪽</button>
+                <button type="button" class="mt-seg-b active" data-m="center" onclick="tkSeg('al','tkAlSeg','center')">가운데</button>
+                <button type="button" class="mt-seg-b" data-m="right" onclick="tkSeg('al','tkAlSeg','right')">오른쪽</button>
+              </div>
+            </div>
+            <div class="srow"><span class="k">탭 높이</span><input class="rng" type="range" id="tkH" min="32" max="96" step="2" value="60"><span class="v" id="tkHV">60px</span></div>
+            <div class="srow"><span class="k">탭 · 내용 간격</span><input class="rng" type="range" id="tkGapB" min="0" max="120" step="2" value="40"><span class="v" id="tkGapBV">40px</span></div>
+            <div id="tkMvRow">
+              <div class="srow" style="margin:12px 0 6px;"><span class="k">화살표 이동</span></div>
+              <div class="mt-seg" id="tkMvSeg">
+                <button type="button" class="mt-seg-b active" data-m="one" onclick="tkSeg('mv','tkMvSeg','one')">한 칸씩</button>
+                <button type="button" class="mt-seg-b" data-m="page" onclick="tkSeg('mv','tkMvSeg','page')">한 화면씩</button>
+              </div>
+            </div>
+            <div class="mtk-hint" id="tkLayHint">한 줄에서 탭이 가로 개수보다 많으면 양옆에 화살표가 생기고, 밀어서 넘길 수 있습니다. 모바일 화면은 한 줄에 최대 4칸이며, 모바일 편집에서 따로 정할 수 있습니다.</div>
+            <div class="mtk-hint" id="tkLayHintL">탭 목록이 왼쪽에, 내용이 오른쪽에 나옵니다. 폭이 좁은 화면(좁은 창 · 태블릿 · 모바일)에서는 내용이 좁아지지 않게 위쪽 가로 탭(밀어서 넘기기)으로 바뀝니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="tkTxtAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">글자<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow srow-dd" style="margin-top:0;"><span class="k">폰트</span>
+              <div class="sdd" id="tkFDD">
+                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Creatorlink Sans (본문)</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="sdd-menu"></div>
+              </div>
+            </div>
+            <div class="srow"><span class="k">크기</span><input class="rng" type="range" id="tkFs" min="12" max="24" step="1" value="16"><span class="v" id="tkFsV">16px</span></div>
+            <div class="srow" style="margin:12px 0 6px;"><span class="k">굵기</span></div>
+            <div class="mt-seg" id="tkFwSeg">
+              <button type="button" class="mt-seg-b" data-m="400" onclick="tkSeg('fw','tkFwSeg',400)">보통</button>
+              <button type="button" class="mt-seg-b active" data-m="500" onclick="tkSeg('fw','tkFwSeg',500)">중간</button>
+              <button type="button" class="mt-seg-b" data-m="700" onclick="tkSeg('fw','tkFwSeg',700)">굵게</button>
+            </div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="tkColAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">색<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow" style="margin-top:0;"><span class="k">글자</span><span class="sw-col"><input type="color" id="tkFg" value="#8a8f98" data-cp-title="탭 글자 색"><span class="hex" id="tkFgV">#8A8F98</span></span></div>
+            <div class="srow"><span class="k">선택한 탭 글자</span><span class="sw-col"><input type="color" id="tkAfg" value="#222428" data-cp-title="선택한 탭 글자 색"><span class="hex" id="tkAfgV">#222428</span></span></div>
+            <div class="srow"><span class="k" id="tkAcLbl">선택 표시</span><span class="sw-col"><input type="color" id="tkAc" value="#222428" data-cp-title="선택 표시 색"><span class="hex" id="tkAcV">#222428</span></span></div>
+            <div class="srow" id="tkLcRow"><span class="k">선</span><span class="sw-col"><input type="color" id="tkLc" value="#e5e7eb" data-cp-title="선 색"><span class="hex" id="tkLcV">#E5E7EB</span></span></div>
+            <div class="srow" id="tkBbRow"><span class="k">탭 바탕</span><span class="sw-col"><input type="color" id="tkBb" value="#f1f2f5" data-cp-title="탭 바탕색"><span class="hex" id="tkBbV">#F1F2F5</span></span></div>
+            <div class="srow" id="tkArcRow"><span class="k">화살표</span><span class="sw-col"><input type="color" id="tkArc" value="#222428" data-cp-title="화살표 색"><span class="hex" id="tkArcV">#222428</span></span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="tkPaneAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">내용<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow" style="margin:0 0 6px;"><span class="k">정렬</span></div>
+            <div class="mt-seg" id="tkCalSeg">
+              <button type="button" class="mt-seg-b" data-m="left" onclick="tkSeg('cal','tkCalSeg','left')">왼쪽</button>
+              <button type="button" class="mt-seg-b active" data-m="center" onclick="tkSeg('cal','tkCalSeg','center')">가운데</button>
+            </div>
+            <div class="srow"><span class="k">글자 크기</span><input class="rng" type="range" id="tkCs" min="12" max="20" step="1" value="15"><span class="v" id="tkCsV">15px</span></div>
+            <div class="srow"><span class="k">글자 색</span><span class="sw-col"><input type="color" id="tkTc" value="#222428" data-cp-title="내용 글자 색"><span class="hex" id="tkTcV">#222428</span></span></div>
+            <div class="mtk-hint">탭 내용은 블럭 위에서 바로 고칩니다. 드래그하면 텍스트 편집기로 제목 · 색 · 링크를 바꾸고, + 로 이미지 · 버튼 · 표를 넣을 수 있습니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="tkBgAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">배경<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="cnt-list rt-bgbox">
+              <div class="im-th empty" id="tkBgTh" onclick="bpBgPick('tk')" title="보관함에서 이미지·동영상 고르기" role="button" aria-label="배경 이미지·동영상 고르기"></div>
+              <div class="im-addrow">
+                <input type="file" id="tkBgUp" accept="image/*,video/*" style="display:none;" onchange="bpBgUpload('tk',this)">
+                <span class="im-tb off" id="tkBgDel"><button type="button" class="danger" onclick="bpBgClear('tk')" title="배경 이미지·동영상 없애기" aria-label="배경 없애기"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg></button></span>
+                <button type="button" class="ghost" onclick="bpBgUrl('tk')" title="이미지·동영상 파일 주소(URL)로 넣습니다">URL</button>
+                <button type="button" class="ghost" onclick="document.getElementById('tkBgUp').click()" title="내 컴퓨터의 파일을 보관함과 블럭 배경에 함께 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
+              </div>
+            </div>
+            <div class="srow" id="tkBgGrayRow"><span class="k">흑백</span><button type="button" class="sw" id="tkBgGraySw" style="margin-left:auto;" onclick="bpSw('tk',this,'bgGray')" aria-label="배경 흑백"></button></div>
+            <div class="srow" id="tkBgDimRow"><span class="k">어둡게</span><input class="rng" type="range" id="tkBgDim" min="0" max="80" step="5" value="0"><span class="v" id="tkBgDimV">0%</span></div>
+            <div class="srow"><span class="k">배경색</span><span class="sw-col"><input type="color" id="tkBg" value="#ffffff" data-cp-title="배경색"><span class="hex" id="tkBgV">#FFFFFF</span></span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="tkBoxAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="tkPt" min="0" max="240" step="2" value="80"><span class="v" id="tkPtV">80px</span></div>
+            <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="tkPb" min="0" max="240" step="2" value="80"><span class="v" id="tkPbV">80px</span></div>
+          </div></div>
+        </div>
+      </div>
       <div id="bsetSn" style="display:none;">
         <div class="fld sfold open acc-flush" id="snMainAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">소셜<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
@@ -18140,6 +18411,7 @@
     if(blk.getAttribute('data-block')==='imgring'){ var irc=el.closest('.ir-item'); return irc?{el:irc,kind:'irrep'}:{el:blk,kind:'iradd'}; }   /* 260923 추가 — 3D 이미지 링: 이미지 위면 그 이미지 교체, 빈 곳이면 목록에 추가 */
     if(blk.getAttribute('data-block')==='crumple') return {el:blk,kind:'ckrep'};   /* 260923 추가 — 구김 이미지: 지금 보이는 항목 교체 */
     if(blk.getAttribute('data-block')==='cnblk'){ var cnn=el.closest('[data-cn]'); return cnn?{el:cnn,kind:'cnrep'}:{el:blk,kind:'cnbg'}; }   /* 261022 추가 — 컨텐츠 블럭: 이미지 자리면 그 이미지, 빈 곳이면 블럭 배경 */
+    if(blk.getAttribute('data-block')==='tkblk') return {el:blk,kind:'tkbg'};   /* 261023 추가 — 탭 블럭: 블럭 배경 */
     if(blk.getAttribute('data-block')==='formblk'){ var fmi=el.closest('.fm-img'); return fmi?{el:fmi,kind:'fmimg'}:{el:blk,kind:'bg'}; }   /* 260929 추가 — 폼 블럭: 옆 이미지 자리면 그 이미지 교체, 그 밖이면 블럭 배경(설정값으로) */
     if(blk.getAttribute('data-block')==='stackcard'){ var scc=el.closest('.sc-card'); return scc?{el:scc,kind:'screp'}:{el:blk,kind:'scadd'}; }   /* 260923 추가 — 스택 카드: 카드 위면 그 카드 이미지 교체, 그 밖이면 새 카드 */   /* 260923 추가 — 이전·이후 비교 */
     if(blk.getAttribute('data-block')==='stackgal') return {el:blk,kind:'skadd'};   /* 260923 추가 — 스택 갤러리: 목록에 추가 */   /* 260922 추가 — 게이지 슬라이더: 목록에 추가 */
@@ -18212,6 +18484,11 @@
       if(kind!=='img' && kind!=='vid'){ clToast('구김 이미지에는 이미지·동영상만 넣을 수 있습니다.'); return; }
       if(typeof selectBlock==='function') try{ selectBlock(blk); }catch(x){}
       ckLibDrop(blk,libVidMark(p.src,kind==='vid')); return;
+    }
+    if(tg.kind==='tkbg'){   /* 261023 추가 — 탭 블럭 */
+      if(kind!=='img' && kind!=='vid'){ clToast('이미지·동영상만 넣을 수 있습니다.'); return; }
+      if(typeof selectBlock==='function') try{ selectBlock(blk); }catch(x){}
+      tkLibDrop(blk,libVidMark(p.src,kind==='vid')); return;
     }
     if(tg.kind==='cnrep'||tg.kind==='cnbg'){   /* 261022 추가 — 컨텐츠 블럭 */
       if(kind!=='img' && kind!=='vid'){ clToast('이미지·동영상만 넣을 수 있습니다.'); return; }
@@ -19968,6 +20245,7 @@
     if(card.getAttribute('data-kind')==='imgring'){ baInsertImgRing(card); return; }   /* 260923 추가 — 3D 이미지 링 */
     if(card.getAttribute('data-kind')==='formblk'){ baInsertForm(card); return; }   /* 260929 추가 — 폼 블럭(FORM01~10) */
     if(card.getAttribute('data-kind')==='snblk'){ baInsertSn(card); return; }   /* 261022 추가 — 소셜 블럭(SOCIAL01~15) */
+    if(card.getAttribute('data-kind')==='tkblk'){ baInsertTk(card); return; }   /* 261023 추가 — 탭 블럭(TAB01~08) */
     if(card.getAttribute('data-kind')==='calblk'){ baInsertCal(card); return; }   /* 260929 추가 — 캘린더 블럭(CALENDAR01) */
     if(card.getAttribute('data-kind')==='dvblk'){ baInsertDv(card); return; }   /* 261019 추가 — 구분선 블럭(DIVIDER01~38) */
     if(card.getAttribute('data-kind')==='cdblk'){ baInsertCd(card); return; }
@@ -21415,6 +21693,7 @@
     if(clone && clone.getAttribute('data-block')==='crumple'){ if(typeof ckCloneInit==='function') ckCloneInit(src,clone); return; }   /* 260923 추가 — 구김 이미지 */
     if(clone && clone.getAttribute('data-block')==='formblk'){ if(typeof fmCloneInit==='function') fmCloneInit(src,clone); return; }   /* 260929 추가 — 폼 블럭 */
     if(clone && clone.getAttribute('data-block')==='snblk'){ if(typeof snCloneInit==='function') snCloneInit(src,clone); return; }   /* 261022 추가 — 소셜 블럭 */
+    if(clone && clone.getAttribute('data-block')==='tkblk'){ if(typeof tkCloneInit==='function') tkCloneInit(src,clone); return; }   /* 261023 추가 — 탭 블럭 */
     if(clone && clone.getAttribute('data-block')==='calblk'){ if(typeof caCloneInit==='function') caCloneInit(src,clone); return; }   /* 260929 추가 — 캘린더 블럭 */
     if(clone && clone.getAttribute('data-block')==='dvblk'){ if(typeof dvCloneInit==='function') dvCloneInit(src,clone); return; }   /* 261019 추가 — 구분선 블럭 */
     if(clone && clone.getAttribute('data-block')==='cdblk'){ if(typeof cdCloneInit==='function') cdCloneInit(src,clone); return; }
@@ -22035,10 +22314,15 @@
     ['brow','배너','글 왼쪽'],['bover','배너','사진 위'],['bcard','배너','가운데'],['f6','이미지 피드','6열'],['f7','이미지 피드','7열 한 줄'],['f4','이미지 피드','4열'],['fhead','이미지 피드','계정 머리줄']].map(function(p,i){
     return {no:i+1, kind:'snblk', preset:p[0], label:'SOCIAL'+(i<9?'0':'')+(i+1), grp:p[1], tag:p[2], ar:'552/'+(p[1]==='아이콘'?110:(p[1]==='배너'?190:300))};
   });
+  /* 261023 추가 — 탭 카테고리: 탭 블럭(tkblk) 8장 = 디자인 8(좌측 사이트 tab1~8). 시작값 이름 = TK_PRESETS(아래 모듈) */
+  var BA_CARDS_TAB=[['under','밑줄'],['fill','채움'],['pill','알약'],['box','테두리'],['block','블럭'],['bar','구분선'],['folder','폴더'],['seg','세그먼트'],['side','세로'],['sidecard','세로 카드']].map(function(p,i){   /* 261023 추가 — TAB09 · 10 세로 탭(선 강조 · 바탕 강조) */
+    return {no:i+1, kind:'tkblk', preset:p[0], label:'TAB'+(i<9?'0':'')+(i+1), tag:p[1], ar:(/^side/.test(p[0])?'552/220':'552/80')};
+  });
   var BA_CAT_CARDS={ text: BA_CARDS_TEXT, image: BA_CARDS_IMAGE, gallery: BA_CARDS_GALLERY, content: BA_CARDS_CONTENT, button: BA_CARDS_BUTTON, form: BA_CARDS_FORM, calendar: BA_CARDS_CALENDAR, map: BA_CARDS_CONTACT, board: BA_CARDS_BOARD, divider: BA_CARDS_DIVIDER, etc: BA_CARDS_ETC };   /* 261019 수정 — 구분선 */   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */
   baGrpAssign();
   var BA_CAT_PFX={ text:'TEXT', image:'IMAGE', gallery:'GALLERY', content:'CONTENT', button:'BUTTON', form:'FORM', calendar:'CALENDAR', map:'CONTACT', board:'BOARD', divider:'DIVIDER', etc:'COUNTDOWN' };   /* 261019 수정 — 구분선 */   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */
   BA_CAT_CARDS.social=BA_CARDS_SOCIAL; BA_CAT_PFX.social='SOCIAL';   /* 261022 추가 — 소셜 */
+  BA_CAT_CARDS.tab=BA_CARDS_TAB; BA_CAT_PFX.tab='TAB'; if(typeof BA_CAT_FILTERS!=='undefined') BA_CAT_FILTERS.tab=[];   /* 261023 추가 — 탭 (8장이라 위 탭 줄 없음) */
   if(typeof BA_CAT_FILTERS!=='undefined') BA_CAT_FILTERS.social=['전체','아이콘','배너','이미지 피드'];   /* 261022 추가 — 소셜 위 탭 */
   var baCurCat=(BA_CATS[0] && BA_CATS[0].i)||'text';   /* 261012 수정 — 'slide' 고정 → 첫 칸(BA_CATS[0])을 따른다. 카테고리 순서를 바꾸며 처음 열 때 「텍스트」가 선택된 채 슬라이드쇼 카드가 보이던 것 */
 
@@ -22161,7 +22445,8 @@
     baMasonry(host.querySelector('.ba-masonry'),true);   /* 261014 추가 — 가로로 채우는 배치 */
     host.scrollTop=0;
     if(cat==='social' && typeof snCardHTML==='function') host.querySelectorAll('.ba-card[data-kind="snblk"] .ba-thumb').forEach(function(t){ var cd=t.closest('.ba-card'); t.classList.add('fm-live'); t.style.backgroundImage='none'; t.insertAdjacentHTML('afterbegin',snCardHTML(cd.getAttribute('data-preset'))); });   /* 261022 추가 — 소셜 카드: 이미지 대신 실제 블럭 */
-    if((cat==='social'||cat==='form'||cat==='calendar'||cat==='map'||cat==='board'||cat==='divider'||cat==='etc') && typeof fmCardFit==='function') fmCardFit(host);   /* 261019 수정 — 구분선 카드도 */   /* 260929 추가 — 폼 카드 높이를 그린 폼에 맞춘다 */
+    if(cat==='tab' && typeof tkCardHTML==='function') host.querySelectorAll('.ba-card[data-kind="tkblk"] .ba-thumb').forEach(function(t){ var cd=t.closest('.ba-card'); t.classList.add('fm-live'); t.style.backgroundImage='none'; t.insertAdjacentHTML('afterbegin',tkCardHTML(cd.getAttribute('data-preset'))); });   /* 261023 추가 — 탭 카드: 실제 탭 줄 */
+    if((cat==='social'||cat==='tab'||cat==='form'||cat==='calendar'||cat==='map'||cat==='board'||cat==='divider'||cat==='etc') && typeof fmCardFit==='function') fmCardFit(host);   /* 261019 수정 — 구분선 카드도 */   /* 260929 추가 — 폼 카드 높이를 그린 폼에 맞춘다 */
     /* 260918 추가 — 풀의 <video> 를 자리에 옮겨 넣는다 (받아 둔 데이터가 그대로 살아 있다) */
     [].slice.call(host.querySelectorAll('.ba-vid-slot')).forEach(function(sl){ var v=baVidEl(sl.getAttribute('data-vid')); v.setAttribute('data-vid',sl.getAttribute('data-vid')); v.classList.remove('ready'); try{ v.pause(); }catch(e){} sl.parentNode.replaceChild(v,sl); });
     baVidBind(host);
@@ -22180,6 +22465,7 @@
   var smCurBlk=null, smBound=false;
   var SM_KIND={/* 261014 수정 — 갤러리 이름은 블럭추가 카드 배지(유형 · 이름)와 같은 말로 */ gridgal:'그리드 갤러리', hero:'이미지', gal:'이미지', slideshow:'이미지', intro:'텍스트', cred:'텍스트', smeartext:'커서 번짐 텍스트', moto3d:'3D 배경 이미지', imggrid:'이미지', stripgallery:'3D 스트립 갤러리', floatgal:'떠다님 갤러리', polytext:'3D 텍스트', typetext:'타이핑 텍스트', risetext:'글자 올라오기', fxbutton:'버튼', cardring:'3D 카드 회전', bookflip2:'책자 넘김', spiralgal:'나선 갤러리', depthgal:'깊이 갤러리', scrollslider:'스크롤 슬라이더', vcgal:'세로 스크롤 갤러리', infgal:'곡면 갤러리', wheelcar:'세로 롤링 갤러리', helixgal:'나선 계단 갤러리', gaugeslider:'눈금 슬라이더', hscrollgal:'가로 스크롤 갤러리', tiltgal:'기울임 갤러리', stackgal:'겹침 갤러리', arctext:'곡선 흐르는 텍스트', idxlist:'인덱스 리스트', faqacc:'FAQ 아코디언', qnaacc:'QnA 아코디언', scrollread:'스크롤 문장 등장', beforeafter:'이전·이후 비교', crumple:'구김 이미지', imgring:'링 갤러리', stackcard:'스택 카드', formblk:'폼', calblk:'캘린더', bdblk:'게시판', ctblk:'컨택트', dvblk:'구분선', cdblk:'카운트다운', nmblk:'숫자 카운터', qrblk:'QR 코드'};   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 추가 — 구분선 */
   SM_KIND.snblk='소셜';   /* 261022 추가 — 소셜 블럭 */
+  SM_KIND.tkblk='탭';   /* 261023 추가 — 탭 블럭 */
   SM_KIND.cnblk='컨텐츠';   /* 261022 추가 — 컨텐츠 블럭 */
   function bsetSync(blk){
     var kindAttr=blk?(blk.getAttribute('data-block')||''):'';
@@ -22217,6 +22503,7 @@
     var isSc=(kindAttr==='stackcard');   /* 260923 추가 — 스택 카드(CONTENT01) */
     var isFm=(kindAttr==='formblk');   /* 260929 추가 — 폼 블럭(FORM01~10) */
     var isSn=(kindAttr==='snblk');   /* 261022 추가 — 소셜 블럭(SOCIAL01~15) */
+    var isTk=(kindAttr==='tkblk');   /* 261023 추가 — 탭 블럭(TAB01~08) */
     var isCa=(kindAttr==='calblk');   /* 260929 추가 — 캘린더 블럭(CALENDAR01) */
     var isCt=(kindAttr==='ctblk');   /* 260929 추가 — 컨택트/지점 블럭 */
     var isBd=(kindAttr==='bdblk');   /* 261008 추가 — 게시판 블럭(BOARD01) */
@@ -22226,7 +22513,7 @@
     var isCd=(kindAttr==='cdblk');   /* 261019 추가 — 카운트다운 블럭(COUNTDOWN01~09) */
     var isRt=(kindAttr==='cred');   /* 260905 추가 — 이력 텍스트 블럭 */
     var d=document.getElementById('bsetDefault'), s=document.getElementById('bsetSmear'), m=document.getElementById('bsetMoto'), g=document.getElementById('bsetStrip'), fl=document.getElementById('bsetFloat'), pt=document.getElementById('bsetPoly'), tw=document.getElementById('bsetType'), cr=document.getElementById('bsetRing'), hx=document.getElementById('bsetSpiral'), ax=document.getElementById('bsetArc'), ix=document.getElementById('bsetIdx');
-    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt||isBd||isDv||isCd||isNm||isQr||isCn||isSn)?'none':'';   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 수정 — 구분선 */
+    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt||isBd||isDv||isCd||isNm||isQr||isCn||isSn||isTk)?'none':'';   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 수정 — 구분선 */
     var rsp=document.getElementById('bsetRise'); if(rsp) rsp.style.display=isRs?'':'none';
     var fqp=document.getElementById('bsetFaq'); if(fqp) fqp.style.display=isFq?'':'none';   /* 260923 추가 */
     var qnp=document.getElementById('bsetQna'); if(qnp) qnp.style.display=isQn?'':'none';   /* 260923 추가 — QnA 아코디언 */
@@ -22237,6 +22524,7 @@
     var scp=document.getElementById('bsetStackCard'); if(scp) scp.style.display=isSc?'':'none';   /* 260923 추가 — 스택 카드 */
     var fmp=document.getElementById('bsetForm'); if(fmp) fmp.style.display=isFm?'':'none';   /* 260929 추가 — 폼 블럭 */
     var snp=document.getElementById('bsetSn'); if(snp) snp.style.display=isSn?'':'none';   /* 261022 추가 — 소셜 블럭 */
+    var tkp=document.getElementById('bsetTk'); if(tkp) tkp.style.display=isTk?'':'none';   /* 261023 추가 — 탭 블럭 */
     var cap=document.getElementById('bsetCal'); if(cap) cap.style.display=isCa?'':'none';   /* 260929 추가 — 캘린더 블럭 */
     var ctp=document.getElementById('bsetCt'); if(ctp) ctp.style.display=isCt?'':'none';
     var bdp=document.getElementById('bsetBoard'); if(bdp) bdp.style.display=isBd?'':'none';   /* 261008 추가 — 게시판 블럭 */   /* 260929 추가 — 컨택트/지점 블럭 */
@@ -22312,6 +22600,8 @@
     fmCurBlk=isFm?blk:null;   /* 260929 추가 — 폼 블럭 */
     if(libThumbMode && snCurBlk!==(isSn?blk:null) && /^(snBg|snImgList)$/.test(libThumbMode.listId||'')) libThumbEnd(false);   /* 261022 추가 — 다른 블럭으로 가면 소셜 블럭의 이미지 고르기를 끝낸다 */
     snCurBlk=isSn?blk:null;   /* 261022 추가 — 소셜 블럭 */
+    if(libThumbMode && tkCurBlk!==(isTk?blk:null) && libThumbMode.listId==='tkBg') libThumbEnd(false);   /* 261023 추가 — 다른 블럭으로 가면 탭 블럭의 배경 고르기를 끝낸다 */
+    tkCurBlk=isTk?blk:null;
     if(caCurBlk && caCurBlk!==(isCa?blk:null)){ var caPrev=caCurBlk; caCurBlk=null; if(caPrev.isConnected){ var cw=caPrev.querySelector('.ca-wrap'); if(cw) cw.classList.remove('can-add'); } if(typeof caPopClose==='function') caPopClose(); }   /* 260929 추가 — 다른 블럭으로 가면 날짜 칸 클릭 추가 표시를 끈다 */
     caCurBlk=isCa?blk:null;   /* 260929 추가 — 캘린더 블럭 */
     if(ctCurBlk!==(isCt?blk:null) && libThumbMode && /^(ctBg|ctBrList)$/.test(libThumbMode.listId||'')) libThumbEnd(false);   /* 260929 추가 — 다른 블럭으로 가면 컨택트 소재 고르기를 끝낸다 */
@@ -22358,6 +22648,7 @@
     if(isSc){ scBuildBset(); scFillBset(); }   /* 260923 추가 — 스택 카드 */
     if(isFm){ fmBuildBset(); fmFillBset(); }   /* 260929 추가 — 폼 블럭 */
     if(isSn){ snBuildBset(); snFillBset(); }   /* 261022 추가 — 소셜 블럭 */
+    if(isTk){ tkBuildBset(); tkFillBset(); }   /* 261023 추가 — 탭 블럭 */
     if(isCa){ caBuildBset(); caFillBset(); }   /* 260929 추가 — 캘린더 블럭 */
     if(isCt){ ctBuildBset(); ctFillBset(); }
     if(isBd){ bdBuildBset(); bdFillBset(); }   /* 261008 추가 — 게시판 블럭 */   /* 260929 추가 — 컨택트/지점 블럭 */
@@ -41981,7 +42272,7 @@ global.PolyFX = API;
   /* 카드 높이를 그린 폼 높이(절반 배율)에 맞춘다 — 목록을 그린 직후 호출 (글꼴이 늦게 오면 한 번 더) */
   function fmCardFit(host){
     var th=host.querySelectorAll('.ba-thumb.fm-live'); if(!th.length) return;
-    function fit(){ th.forEach(function(t){ var w=t.querySelector('.fm-pv > .fm-wrap,.fm-pv > .sn-wrap,.fm-pv > .ca-wrap,.fm-pv > .ct-wrap,.fm-pv > .bd-wrap,.fm-pv > .dv-wrap,.fm-pv > .cd-wrap,.fm-pv > .nm-wrap,.fm-pv > .qr-wrap');   /* 261019 수정 — 구분선 · 카운트다운 카드 */   /* 261008 수정 — 게시판 카드 */ if(!w) return; var h=Math.round(w.offsetHeight*(w.closest('.ba-wide')?1:0.5));   /* 261019 수정 — 1열 구분선 카드는 축소 없이 그린다 */ if(h>24){ t.style.aspectRatio='auto'; t.style.height=h+'px'; }   /* 260929 수정 — 상담 신청 띠처럼 낮은 블럭도 */ }); }
+    function fit(){ th.forEach(function(t){ var w=t.querySelector('.fm-pv > .fm-wrap,.fm-pv > .sn-wrap,.fm-pv > .ca-wrap,.fm-pv > .ct-wrap,.fm-pv > .bd-wrap,.fm-pv > .dv-wrap,.fm-pv > .cd-wrap,.fm-pv > .nm-wrap,.fm-pv > .qr-wrap,.fm-pv > .tk-wrap');   /* 261023 추가 — 탭 카드도 그린 높이에 맞춘다 */   /* 261019 수정 — 구분선 · 카운트다운 카드 */   /* 261008 수정 — 게시판 카드 */ if(!w) return; var h=Math.round(w.offsetHeight*(w.closest('.ba-wide')?1:0.5));   /* 261019 수정 — 1열 구분선 카드는 축소 없이 그린다 */ if(h>24){ t.style.aspectRatio='auto'; t.style.height=h+'px'; }   /* 260929 수정 — 상담 신청 띠처럼 낮은 블럭도 */ }); }
     fit(); setTimeout(fit,400); if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ setTimeout(fit,0); });
   }
   function fmApply(blk){
@@ -44247,6 +44538,314 @@ global.PolyFX = API;
   window.cnCfg=cnCfg; window.cnApply=cnApply; window.cnCloneInit=cnCloneInit; window.cnLibDrop=cnLibDrop; window.cnLibRep=cnLibRep; window.baInsertCn=baInsertCn; window.cnLink=cnLink; window.cnRtSave=cnRtSave;
   window.cnUpd=cnUpd; window.cnTxt=cnTxt; window.cnSeg=cnSeg; window.cnSw=cnSw; window.cnAr=cnAr; window.cnPickLay=cnPickLay; window.cnPickFont=cnPickFont; window.cnShowTog=cnShowTog; window.cnGrid=cnGrid; window.cnShowExp=cnShowExp;
   window.cnBuildBset=cnBuildBset; window.cnFillBset=cnFillBset; window.cnMediaSet=cnMediaSet; window.cnMediaRender=cnMediaRender; window.cnItemSet=cnItemSet; window.cnItemAdd=cnItemAdd; window.cnItemDel=cnItemDel;
+
+  /* ═════════════════════════════════════════════════════════════════
+     261023 추가 — 탭 블럭 (TAB01~08 · 접두어 tk · cfg _tkCfg) — 블럭추가 「탭」
+     · 좌측 사이트 탭 카테고리 tab1~8 은 한 블럭의 디자인 8 가지다(라이브 설정창 「디자인 변경」이 이 8장을 고른다) → 한 블럭 종류(tkblk) + 디자인(ds) 8 로 옮겼다
+     · 탭마다 내용 한 칸(텍스트 편집기 영역 — 글 · 제목 · 이미지 · 버튼 · 표). 내용은 블럭 위에서 바로 고친다(.cred · data-tk-ed = 탭 번호)
+     · 탭 관리(이름 · 순서 · 처음 보이는 탭 · 추가 · 삭제 · 2~24개)는 설정창 「탭」 목록. 블럭 위 탭을 누르면 그 탭으로 바뀐다(편집 화면 · 미리보기 · 모바일 모두)
+     · 라이브의 「컬러 모드 · 선 · 버튼 배경 켜고 끄기」는 디자인이 정하고 색만 고치게 줄였다. PC · 모바일 따로 정하던 줄 · 가로 개수는 모바일 편집(기기별 설정)으로
+     · 탭 · 내용 · 배경 소재는 PC·모바일 공유, 줄 · 가로 개수 · 높이 · 글자 · 색 · 여백은 기기별 (MV_CONTENT)
+     ═════════════════════════════════════════════════════════════════ */
+  var TK_DS=[['under','밑줄'],['fill','채움'],['pill','알약'],['box','테두리'],['block','블럭'],['bar','구분선'],['folder','폴더'],['seg','세그먼트']];
+  var TK_USE={under:'lc', fill:'lc', pill:'lc', box:'lc', block:'bb', bar:'lc', folder:'lc', seg:'bb'};   /* 디자인이 쓰는 보조 색 — 선(lc) 또는 탭 바탕(bb) */
+  var TK_MAX=24, TK_MIN=2;
+  function tkSample(a,b,c){ return '<p><span style="color: rgb(138, 143, 152);">'+a+'</span></p><h2>'+b+'</h2><p>'+c+'</p>'; }
+  var TK_TABS=[
+    {n:'브랜딩', h:tkSample('브랜드의 첫인상을 만드는 일','브랜딩','로고와 컬러, 서체를 하나의 기준으로 묶어<br>어디서든 같은 목소리로 보이게 합니다.')},
+    {n:'웹사이트', h:tkSample('찾아오고 머물게 하는 공간','웹사이트','방문자가 길을 잃지 않도록 구조를 먼저 설계하고<br>모바일까지 같은 경험으로 이어지게 만듭니다.')},
+    {n:'영상', h:tkSample('짧게, 그리고 오래 기억되게','영상 제작','기획부터 촬영, 편집까지 한 흐름으로 진행해<br>브랜드의 이야기를 1분 안에 전합니다.')},
+    {n:'사진', h:tkSample('제품과 공간의 결을 담는 촬영','사진 촬영','빛과 구도를 먼저 정하고 촬영해<br>상세페이지와 SNS 에 바로 쓸 수 있게 드립니다.')}
+  ];
+  var TK_DEF={ ds:'under', tabs:null, def:0, pos:'top', vw:220, wrap:'line', cols:4, bw:100, al:'center', h:60, fs:16, fw:500, tf:5,
+    fg:'#8a8f98', afg:'#222428', ac:'#222428', lc:'#e5e7eb', bb:'#f1f2f5', arc:'#222428', mv:'one',
+    gapB:44, cal:'center', cs:15, tc:'#222428', bg:'#ffffff', bgImg:'', bgDim:0, bgGray:false, pt:80, pb:80 };
+  /* 시작값 = 디자인. 주석의 번호는 좌측 사이트 탭 번호(tabN). 색은 리뉴얼 토큰(잉크 · 보조 · 선 · 그린 · 블루 · 레드)으로 바꿨다 */
+  var TK_PRESETS={
+    under :{ds:'under',  fg:'#8a8f98', afg:'#222428', ac:'#222428', lc:'#e5e7eb', h:60},   /* tab1 */
+    fill  :{ds:'fill',   fg:'#8a8f98', afg:'#ffffff', ac:'#2f6bff', lc:'#e5e7eb', h:56},   /* tab2 */
+    pill  :{ds:'pill',   fg:'#5c616b', afg:'#ffffff', ac:'#222428', lc:'#e5e7eb', h:48},   /* tab3 */
+    box   :{ds:'box',    fg:'#8a8f98', afg:'#222428', ac:'#222428', lc:'#e5e7eb', h:52},   /* tab4 */
+    block :{ds:'block',  fg:'#8a8f98', afg:'#ffffff', ac:'#03c75a', bb:'#f1f2f5', h:52},   /* tab5 */
+    bar   :{ds:'bar',    fg:'#8a8f98', afg:'#e5484d', ac:'#e5484d', lc:'#d5d9e0', h:48},   /* tab6 */
+    folder:{ds:'folder', fg:'#8a8f98', afg:'#222428', ac:'#222428', lc:'#d5d9e0', h:56},   /* tab7 */
+    seg   :{ds:'seg',    fg:'#5c616b', afg:'#222428', ac:'#ffffff', bb:'#f1f2f5', h:52},   /* tab8 — 옅은 바탕 위에 선택 칸이 흰색으로 올라온다 */
+    side  :{ds:'under',  pos:'left', vw:220, fg:'#8a8f98', afg:'#222428', ac:'#222428', lc:'#e5e7eb', h:52, gapB:64, cal:'left'},   /* 261023 추가 — 세로 탭(왼쪽 목록 · 오른쪽 내용) · 선 강조. 좌측 사이트에는 없던 꼴 */
+    sidecard:{ds:'fill', pos:'left', vw:240, fg:'#8a8f98', afg:'#222428', ac:'#f1f2f5', lc:'#e5e7eb', h:52, fw:600, gapB:64, cal:'left'}   /* 261023 추가 — 세로 탭 · 바탕 강조(선택한 탭에 옅은 바탕) */
+  };
+  var TK_DSKEYS=['fg','afg','ac','lc','bb','h'];   /* 디자인을 바꿀 때 함께 바뀌는 값 */
+  function tkTabsDef(){ return JSON.parse(JSON.stringify(TK_TABS)); }
+  function tkPresetCfg(id){
+    var c=JSON.parse(JSON.stringify(TK_DEF)), p=TK_PRESETS[id]||TK_PRESETS.under;
+    Object.keys(p).forEach(function(k){ c[k]=p[k]; });
+    c.tabs=tkTabsDef(); c.preset=TK_PRESETS[id]?id:'under';
+    return c;
+  }
+  var tkCurBlk=null, tkBound=false;
+  function tkCfg(blk){
+    if(!blk._tkCfg) blk._tkCfg=tkPresetCfg('under');
+    var c=blk._tkCfg; Object.keys(TK_DEF).forEach(function(k){ if(c[k]==null) c[k]=(k==='tabs')?tkTabsDef():TK_DEF[k]; });
+    if(!Array.isArray(c.tabs) || !c.tabs.length) c.tabs=tkTabsDef();
+    return c;
+  }
+  function tkEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function tkEmpty(h){ h=String(h||''); if(!h) return true; if(/<(img|video|figure|hr|table|iframe)\b|rt-ico|rt-btn/i.test(h)) return false; return !h.replace(/<[^>]*>/g,'').replace(/&nbsp;| /g,' ').trim(); }
+  function tkIdx(blk,c){ var n=c.tabs.length, i=(blk && blk._tkCur!=null)?blk._tkCur:txNum(c.def,0); i=Math.round(+i)||0; return Math.max(0,Math.min(n-1,i)); }
+  var TK_AR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
+  function tkBarHTML(c,cur,card){
+    var tabs=c.tabs.map(function(t,i){
+      var on=(i===cur), nm=String(t.n||'').trim()||('탭 '+(i+1));
+      return '<button type="button" class="tk-tab'+(on?' on':'')+'" role="tab" aria-selected="'+on+'" data-i="'+i+'" title="'+tkEsc(nm)+'" tabindex="'+((on&&!card)?'0':'-1')+'"><span>'+tkEsc(nm)+'</span></button>';   /* title — 이름이 길어 … 으로 줄면 올려서 전체를 본다 */
+    }).join('');
+    return '<div class="tk-bar"><button type="button" class="tk-ar prev" aria-label="이전 탭" tabindex="-1">'+TK_AR+'</button>'
+      +'<div class="tk-sc"><div class="tk-list" role="tablist">'+tabs+'</div></div>'
+      +'<button type="button" class="tk-ar next" aria-label="다음 탭" tabindex="-1">'+TK_AR+'</button></div>';
+  }
+  function tkPanesHTML(c,cur){
+    var mv=!!window.CL_MVIEW;
+    return '<div class="tk-panes">'+c.tabs.map(function(t,i){
+      var h=String(t.h||''), empty=tkEmpty(h), nm=String(t.n||'').trim()||('탭 '+(i+1));
+      return '<div class="tk-pane cred'+(empty?' rt-ph':'')+(i===cur?' on':'')+'" role="tabpanel" data-tk-ed="'+i+'"'+(mv?'':' data-ph="「'+tkEsc(nm)+'」 탭 내용을 입력하세요."')+'>'+(empty?'':h)+'</div>';
+    }).join('')+'</div>';
+  }
+  function tkInnerHTML(c,cur,card){
+    var pt=txNum(c.pt,80), pb=txNum(c.pb,80); if(card){ pt=36; pb=36; }
+    var panes=(!card || c.pos==='left')?tkPanesHTML(c,cur):'';   /* 카드는 탭 줄만 — 세로 탭 카드는 오른쪽 내용까지 보여야 꼴이 읽힌다 */
+    return '<div class="tk-in" style="padding-top:'+pt+'px;padding-bottom:'+pb+'px">'+tkBarHTML(c,cur,card)+panes+'</div>';
+  }
+  function tkStyleStr(c){
+    var cols=Math.max(1,Math.min(8,Math.round(txNum(c.cols,4)),c.tabs.length));   /* 탭이 가로 개수보다 적으면 탭 수만큼(줄이 비어 보이지 않게) */
+    return '--tkf:'+smStack(txNum(c.tf,5))+';--tkfs:'+txNum(c.fs,16)+'px;--tkfw:'+txNum(c.fw,500)+';--tkh:'+txNum(c.h,60)+'px;'
+      +'--tkcols:'+cols+';--tkcolsm:'+Math.min(cols,4)+';--tkbw:'+Math.max(30,Math.min(100,txNum(c.bw,100)))+'%;'
+      +'--tkfg:'+(c.fg||'#8a8f98')+';--tkafg:'+(c.afg||'#222428')+';--tkac:'+(c.ac||'#222428')+';--tklc:'+(c.lc||'#e5e7eb')+';--tkbb:'+(c.bb||'#f1f2f5')+';--tkarc:'+(c.arc||'#222428')+';'
+      +'--tkvw:'+Math.max(140,Math.min(360,txNum(c.vw,220)))+'px;--tkpg:'+(c.bg||'#ffffff')+';--tkgap:'+txNum(c.gapB,44)+'px;--tkcs:'+txNum(c.cs,15)+'px;--tktc:'+(c.tc||'#222428')+';--tkcal:'+(c.cal==='left'?'left':'center')+';';
+  }
+  function tkAttrs(w,c){ w.setAttribute('data-ds',c.ds||'under'); w.setAttribute('data-pos',c.pos==='left'?'left':'top'); w.setAttribute('data-wrap',c.wrap==='multi'?'multi':'line'); w.setAttribute('data-al',c.al||'center'); }
+  function tkBlockHTML(){ return '<span class="tag-badge">탭</span>'+SM_GEAR+'<div class="tk-wrap"></div>'; }
+  function tkApply(blk){
+    if(!blk) return;
+    if(blk.classList.contains('rt-editing') && typeof rtEditEnd==='function' && typeof rtEditBlk!=='undefined' && rtEditBlk===blk) rtEditEnd();   /* 글 편집 중에 설정을 바꾸면 편집을 끝내고(저장) 다시 그린다 */
+    var c=tkCfg(blk), wrap=blk.querySelector('.tk-wrap'); if(!wrap) return;
+    blk.style.padding='0';
+    wrap.style.cssText=tkStyleStr(c); tkAttrs(wrap,c);
+    var cur=tkIdx(blk,c); blk._tkCur=cur;
+    wrap.innerHTML=tkInnerHTML(c,cur,false);
+    blkBgApply(blk,c,'#ffffff');
+    tkArm(blk);
+  }
+  /* 한 줄에서 넘치는지 — 화살표를 보이고, 끝에 닿으면 그쪽 화살표를 흐리게 */
+  function tkOv(blk){
+    var w=blk.querySelector('.tk-wrap'), sc=blk.querySelector('.tk-sc'), bar=blk.querySelector('.tk-bar'); if(!w||!sc||!bar) return;
+    var ov=(w.getAttribute('data-wrap')!=='multi' || w.getAttribute('data-pos')==='left') && sc.scrollWidth>sc.clientWidth+2;   /* 세로 탭은 넓은 화면에서 넘치지 않고, 좁은 화면(가로로 바뀜)에서만 넘친다 */
+    bar.classList.toggle('ov',ov);
+    bar.classList.toggle('at-s', ov && sc.scrollLeft<=2);
+    bar.classList.toggle('at-e', ov && sc.scrollLeft+sc.clientWidth>=sc.scrollWidth-2);
+  }
+  function tkArm(blk){
+    var sc=blk.querySelector('.tk-sc'); if(!sc) return;
+    sc.addEventListener('scroll',function(){ tkOv(blk); },{passive:true});
+    if(!blk._tkRO && typeof ResizeObserver==='function'){ blk._tkRO=new ResizeObserver(function(){ tkOv(blk); }); try{ blk._tkRO.observe(blk); }catch(e){} }
+    requestAnimationFrame(function(){ tkOv(blk); tkReveal(blk,true); });
+    setTimeout(function(){ tkOv(blk); },80);   /* 그리기가 늦은 창(숨은 탭 · 모바일 사본)에서도 화살표를 맞춘다 */
+  }
+  /* 선택한 탭이 가려져 있으면 보이게 넘긴다 */
+  function tkReveal(blk,quiet){
+    var sc=blk.querySelector('.tk-sc'), t=blk.querySelector('.tk-tab.on'); if(!sc||!t||sc.scrollWidth<=sc.clientWidth) return;
+    var l=t.offsetLeft, r=l+t.offsetWidth, b=quiet?'auto':'smooth';
+    if(l<sc.scrollLeft) sc.scrollTo({left:l,behavior:b}); else if(r>sc.scrollLeft+sc.clientWidth) sc.scrollTo({left:r-sc.clientWidth,behavior:b});
+  }
+  function tkShow(blk,i,quiet){
+    var c=tkCfg(blk), n=c.tabs.length; i=Math.max(0,Math.min(n-1,Math.round(+i)||0)); blk._tkCur=i;
+    blk.querySelectorAll('.tk-tab').forEach(function(b){ var on=(+b.getAttribute('data-i')===i); b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false'); b.setAttribute('tabindex',on?'0':'-1'); });
+    blk.querySelectorAll('.tk-pane').forEach(function(p){ p.classList.toggle('on', +p.getAttribute('data-tk-ed')===i); });
+    tkReveal(blk,quiet);
+  }
+  function tkStep(blk,dir){
+    var c=tkCfg(blk), sc=blk.querySelector('.tk-sc'), t=blk.querySelector('.tk-tab'), L=blk.querySelector('.tk-list'); if(!sc||!t) return;
+    var step=(c.mv==='page')?sc.clientWidth:(t.offsetWidth+(L?(parseFloat(getComputedStyle(L).columnGap)||0):0));
+    sc.scrollBy({left:dir*step,behavior:'smooth'});
+  }
+  /* 탭 · 화살표 누르기 — 편집 화면 · 미리보기 · 모바일 사본 모두 */
+  document.addEventListener('click',function(e){
+    var t=e.target.closest && e.target.closest('.tk-wrap .tk-tab,.tk-wrap .tk-ar'); if(!t || t.closest('.fm-pv,#blockAdd')) return;
+    var blk=t.closest('.blk'); if(!blk || blk.getAttribute('data-block')!=='tkblk') return;
+    if(t.classList.contains('tk-ar')){ tkStep(blk,t.classList.contains('prev')?-1:1); return; }
+    var i=+t.getAttribute('data-i'); if(i===blk._tkCur) return;
+    if(typeof rtEditBlk!=='undefined' && rtEditBlk===blk && typeof rtEditEnd==='function') rtEditEnd();   /* 다른 탭으로 가면 지금 탭 글 편집을 마친다 */
+    tkShow(blk,i,false);
+  });
+  /* 키보드 — 탭 줄에서 ← → Home End */
+  document.addEventListener('keydown',function(e){
+    var t=e.target.closest && e.target.closest('.tk-wrap .tk-tab'); if(!t || t.closest('.fm-pv,#blockAdd')) return;
+    var blk=t.closest('.blk'); if(!blk) return; var n=tkCfg(blk).tabs.length, i=+t.getAttribute('data-i'), j=null;
+    if(e.key==='ArrowRight') j=(i+1)%n; else if(e.key==='ArrowLeft') j=(i-1+n)%n; else if(e.key==='Home') j=0; else if(e.key==='End') j=n-1;
+    if(j==null) return; e.preventDefault(); tkShow(blk,j,false); var nb=blk.querySelector('.tk-tab[data-i="'+j+'"]'); if(nb) nb.focus();
+  });
+  /* ── 블럭 위 탭 내용 고치기(텍스트 편집기) ── */
+  function tkRtSave(blk){   /* 편집 중·끝날 때 rtSaveRegions 가 부른다 */
+    var c=tkCfg(blk);
+    blk.querySelectorAll('.tk-wrap .cred[data-tk-ed]').forEach(function(r){
+      try{ if(typeof rtCleanFonts==='function') rtCleanFonts(r); }catch(x){}
+      var t=c.tabs[+r.getAttribute('data-tk-ed')]; if(!t) return;
+      var h=(typeof rtHtmlOf==='function')?rtHtmlOf(r):r.innerHTML; t.h=tkEmpty(h)?'':h;
+      if(typeof rtPhSync==='function') rtPhSync(r);
+    });
+    tkDirty();
+  }
+  if(!window.CL_MVIEW) document.addEventListener('mousedown',function(e){
+    if(e.button!==0 || typeof rtEditStart!=='function') return;
+    var r=e.target.closest && e.target.closest('#stage .blk[data-block="tkblk"] .cred[data-tk-ed]'); if(!r) return;
+    var blk=r.closest('.blk');
+    if(rtEditBlk===blk){ if(blk._rtActive!==r){ blk._rtActive=r; setTimeout(function(){ rtTbPlace(true); rtTbState(); rtPlusPlace(); },0); } return; }
+    if(typeof selectBlock==='function' && !blk.classList.contains('sel')) selectBlock(blk);
+    rtEditStart(blk,true,r);
+  });
+  function tkInit(blk){ if(blk) tkApply(blk); }
+  function tkCloneInit(src,clone){
+    if(!clone || clone.getAttribute('data-block')!=='tkblk') return;
+    try{ clone._tkCfg=JSON.parse(JSON.stringify(tkCfg(src))); }catch(e){ clone._tkCfg=null; }
+    clone._tkCur=src._tkCur; clone._tkRO=null;
+    setTimeout(function(){ tkInit(clone); },0);
+  }
+  /* ── 카드 (블럭추가) — 시작값대로 탭 줄을 절반 크기로 ── */
+  function tkCardHTML(preset){
+    var c=tkPresetCfg(preset||'under');
+    return '<div class="fm-pv"><div class="tk-wrap" data-ds="'+c.ds+'" data-pos="'+(c.pos==='left'?'left':'top')+'" data-wrap="line" data-al="center" style="'+tkStyleStr(c)+'background:#ffffff;">'+tkInnerHTML(c,0,true)+'</div></div>';
+  }
+  function baInsertTk(card){ baInsertKind(card,'tkblk','tk-blk',tkBlockHTML(),'_tkCfg',tkPresetCfg(card.getAttribute('data-preset')||'under'),tkInit); }
+  /* 보관함 이미지를 블럭 위에 끌어다 놓으면 블럭 배경 */
+  function tkLibDrop(blk,src){ if(typeof bpBgSet==='function') bpBgSet('tk',blk,src); clToast((rtBgIsVid(src)?'블럭 배경 동영상을':'블럭 배경 이미지를')+' 넣었습니다.'); }
+  /* ── 블럭설정 ── */
+  function tkDirty(){ if(typeof markDirty==='function') markDirty(); }
+  function tkUpd(key,val){ var blk=tkCurBlk; if(!blk) return; tkCfg(blk)[key]=val; tkApply(blk); tkRows(); tkDirty(); }
+  function tkSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
+  function tkSeg(key,id,m){ tkSegSync(id,m); tkUpd(key,m); }
+  /* 스타일 — 탭 줄 미니 미리보기 8칸. 고르면 그 스타일의 색 · 높이도 함께(탭 · 내용 · 배경 · 여백 · 탭 위치는 그대로) */
+  function tkStyleSync(){
+    var blk=tkCurBlk, g=document.getElementById('tkDsGrid'); if(!blk||!g) return; var ds=tkCfg(blk).ds;
+    g.innerHTML=TK_DS.map(function(p,i){ return '<button type="button" class="'+(p[0]===ds?'on':'')+'" onclick="tkDesign(\''+p[0]+'\',event)" aria-pressed="'+(p[0]===ds)+'" title="TAB0'+(i+1)+'"><span class="tk-mini" data-ds="'+p[0]+'" aria-hidden="true"><i></i><i></i><i></i></span>'+p[1]+'</button>'; }).join('');
+  }
+  /* 기본 탭 — 탭메뉴 「기본 탭」과 같은 드롭다운 */
+  function tkDefSync(){
+    var blk=tkCurBlk, dd=document.getElementById('tkDefDD'); if(!blk||!dd) return; var c=tkCfg(blk), d=tkIdx(null,c), nm='';
+    dd.querySelector('.sdd-menu').innerHTML=c.tabs.map(function(t,i){ var n=String(t.n||'').trim()||('탭 '+(i+1)); if(i===d) nm=n; return '<button type="button" class="'+(i===d?'on':'')+'" onclick="tkSetDef(event,'+i+')">'+tkEsc(n)+'</button>'; }).join('');
+    dd.querySelector('.sdd-btn .lbl').textContent=nm;
+  }
+  function tkDesign(ds,e){
+    if(e) e.stopPropagation();
+    var blk=tkCurBlk; if(!blk || !TK_PRESETS[ds]) return; var c=tkCfg(blk), p=TK_PRESETS[ds]; if(c.ds===ds) return;
+    var old={}; TK_DSKEYS.forEach(function(k){ old[k]=c[k]; });
+    /* 직접 고친 값이 있는지 — 지금 스타일의 시작값(카드로 넣은 시작값 · 스타일을 고른 뒤면 그 스타일)과 견준다 */
+    var bp=(TK_PRESETS[c.preset] && TK_PRESETS[c.preset].ds===c.ds)?TK_PRESETS[c.preset]:(TK_PRESETS[c.ds]||{});
+    var edited=TK_DSKEYS.some(function(k){ var b=(bp[k]!=null)?bp[k]:TK_DEF[k]; return String(old[k]).toLowerCase()!==String(b).toLowerCase(); });
+    c.ds=ds; c.preset=ds; TK_DSKEYS.forEach(function(k){ if(p[k]!=null) c[k]=p[k]; });
+    tkApply(blk); tkFillBset(); tkDirty();
+    /* 고쳐 둔 색 · 높이를 말없이 덮지 않게 — 직접 고친 값이 있을 때만 안내. 스타일은 그대로 두고 색 · 높이만 되돌릴 수 있다 */
+    if(edited) clToast('「'+((TK_DS.filter(function(x){ return x[0]===ds; })[0]||[])[1]||'')+'」 스타일에 맞춰 탭 색 · 높이도 바꿨습니다.',{label:'색 되돌리기',fn:function(){ if(!blk.isConnected) return; var cc=tkCfg(blk); TK_DSKEYS.forEach(function(k){ cc[k]=old[k]; }); tkApply(blk); if(tkCurBlk===blk) tkFillBset(); tkDirty(); }});
+  }
+  /* 지금 디자인 · 조합에서 쓰는 항목만 보인다 */
+  function tkRows(){
+    var blk=tkCurBlk; if(!blk) return; var c=tkCfg(blk);
+    function show(id,on){ var el=document.getElementById(id); if(el) el.style.display=on?'':'none'; }
+    var top=(c.pos!=='left'), line=top && (c.wrap!=='multi'), use=TK_USE[c.ds]||'lc';
+    show('tkTopRows', top); show('tkVwRow', !top); show('tkLayHint', top); show('tkLayHintL', !top);
+    show('tkAlRow', top && txNum(c.bw,100)<100);
+    show('tkMvRow', line); show('tkArcRow', line);
+    show('tkLcRow', use==='lc'); show('tkBbRow', use==='bb');
+    var al=document.getElementById('tkAcLbl'); if(al) al.textContent=(c.ds==='under'||c.ds==='bar')?'선택 표시':((c.ds==='box')?'선택 테두리':'선택한 탭 바탕');
+    var cnt=document.getElementById('tkCount'); if(cnt) cnt.textContent=c.tabs.length+'/'+TK_MAX;
+    /* 가로 개수는 탭 수까지만 고를 수 있다(저장 값은 그대로 두어 탭을 늘리면 다시 넓어진다) */
+    var ce=document.getElementById('tkCols'), cv=document.getElementById('tkColsV'), mx=Math.max(1,Math.min(8,c.tabs.length)), ev=Math.min(Math.round(txNum(c.cols,4)),mx);
+    if(ce){ if(+ce.max!==mx) ce.max=mx; if(+ce.value!==ev) ce.value=ev; if(typeof smRng==='function') smRng(ce); } if(cv) cv.textContent=ev;
+  }
+  /* 탭 목록 — 소셜 아이콘 목록과 같은 줄: 손잡이(순서) · 이름 · 삭제. 줄을 누르면 그 탭으로 */
+  var TK_I_DRAG='<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>';
+  var TK_I_DEL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg>';
+  function tkListRender(){
+    var blk=tkCurBlk, list=document.getElementById('tkList'); if(!blk||!list) return; var c=tkCfg(blk), few=(c.tabs.length<=TK_MIN);
+    list.innerHTML=c.tabs.map(function(t,i){
+      return '<div class="mt-imgrow" data-i="'+i+'" onclick="tkRowPick(event,'+i+')"><span class="mt-imgdrag" title="드래그하여 순서 변경">'+TK_I_DRAG+'</span>'
+        +'<div class="mtk-field"><input type="text" value="'+tkEsc(t.n||'')+'" maxlength="30" placeholder="탭 이름" spellcheck="false" autocomplete="off" oninput="tkName('+i+',this.value)" onfocus="tkRowPick(null,'+i+')"></div>'
+        +'<button type="button" class="mt-imgdel" title="'+(few?'탭은 최소 '+TK_MIN+'개':'삭제')+'" aria-label="삭제" onclick="tkDel(event,'+i+')"'+(few?' disabled':'')+'>'+TK_I_DEL+'</button></div>';
+    }).join('');
+    var add=document.getElementById('tkAddBtn'); if(add) add.disabled=(c.tabs.length>=TK_MAX);
+    tkDefSync(); tkRows();
+    if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',tkReorder);
+  }
+  function tkRowPick(e,i){
+    if(e && e.target && e.target.closest && e.target.closest('input,button,.mt-imgdrag')) return;
+    var blk=tkCurBlk; if(!blk || blk._tkCur===i) return;
+    if(typeof rtEditBlk!=='undefined' && rtEditBlk===blk && typeof rtEditEnd==='function') rtEditEnd();
+    tkShow(blk,i,false);
+  }
+  var _tkT=0;
+  function tkName(i,v){
+    var blk=tkCurBlk; if(!blk) return; var t=tkCfg(blk).tabs[i]; if(!t) return; t.n=String(v||'').slice(0,30);
+    clearTimeout(_tkT); _tkT=setTimeout(function(){ if(!blk.isConnected) return;   /* 목록은 다시 그리지 않는다(입력 중 포커스 유지) — 탭 줄 글자와 빈 내용 안내만 바꾼다 */
+      var b=blk.querySelector('.tk-tab[data-i="'+i+'"] span'), nm=String(t.n||'').trim()||('탭 '+(i+1)); if(b){ b.textContent=nm; b.parentNode.setAttribute('title',nm); }
+      var p=blk.querySelector('.tk-pane[data-tk-ed="'+i+'"]'); if(p && p.hasAttribute('data-ph')) p.setAttribute('data-ph','「'+nm+'」 탭 내용을 입력하세요.');
+      tkOv(blk); tkDefSync(); tkDirty(); },120);
+  }
+  function tkSetDef(e,i){ if(e) e.stopPropagation(); var dd=document.getElementById('tkDefDD'); if(dd) dd.classList.remove('open'); var blk=tkCurBlk; if(!blk) return; var c=tkCfg(blk); c.def=i; if(blk._tkCur!==i){ blk._tkCur=i; tkApply(blk); } tkDefSync(); tkDirty(); }
+  /* 블럭 위 탭 이름을 두 번 누르면 설정창 「탭」 목록의 그 이름 칸으로 */
+  if(!window.CL_MVIEW) document.addEventListener('dblclick',function(e){
+    var t=e.target.closest && e.target.closest('#stage .blk[data-block="tkblk"] .tk-tab'); if(!t) return;
+    var blk=t.closest('.blk'), i=+t.getAttribute('data-i'), g=blk.querySelector('.gear-fab');
+    if(tkCurBlk!==blk && g && typeof openBset==='function') openBset(g);
+    setTimeout(function(){ var acc=document.getElementById('tkTabAcc'); if(acc && !acc.classList.contains('open') && typeof smAcc==='function') smAcc(acc.querySelector('.fold-h'));
+      var inp=document.querySelector('#tkList .mt-imgrow[data-i="'+i+'"] input'); if(inp){ inp.focus(); inp.select(); } },180);
+  });
+  function tkAdd(){
+    var blk=tkCurBlk; if(!blk) return; var c=tkCfg(blk); if(c.tabs.length>=TK_MAX){ clToast('탭은 최대 '+TK_MAX+'개까지 넣을 수 있습니다.'); return; }
+    c.tabs.push({n:'탭 '+(c.tabs.length+1), h:''}); blk._tkCur=c.tabs.length-1;
+    tkApply(blk); tkListRender(); tkDirty();
+    var rows=document.querySelectorAll('#tkList .mt-imgrow'), last=rows[rows.length-1], inp=last&&last.querySelector('input'); if(inp){ inp.focus(); inp.select(); }
+  }
+  function tkDel(e,i){
+    if(e) e.stopPropagation(); var blk=tkCurBlk; if(!blk) return; var c=tkCfg(blk);
+    if(c.tabs.length<=TK_MIN){ clToast('탭은 최소 '+TK_MIN+'개가 있어야 합니다.'); return; }
+    var d0=tkIdx(null,c), cur0=tkIdx(blk,c), gone=c.tabs.splice(i,1)[0];
+    c.def=(d0===i)?0:(d0>i?d0-1:d0); blk._tkCur=(cur0===i)?Math.min(i,c.tabs.length-1):(cur0>i?cur0-1:cur0);
+    tkApply(blk); tkListRender(); tkDirty();
+    clToast('「'+(String(gone.n||'').trim()||'탭')+'」 탭과 그 내용을 삭제했습니다.',{label:'되돌리기',fn:function(){ if(!blk.isConnected) return; var cc=tkCfg(blk); cc.tabs.splice(Math.min(i,cc.tabs.length),0,gone); cc.def=d0; blk._tkCur=i; tkApply(blk); if(tkCurBlk===blk) tkListRender(); }});
+  }
+  function tkReorder(from,to){
+    var blk=tkCurBlk; if(!blk) return; var c=tkCfg(blk), L=c.tabs; if(from==null||to==null||from===to||from<0||to<0||from>=L.length||to>=L.length) return;
+    var dObj=L[tkIdx(null,c)], cObj=L[tkIdx(blk,c)], it=L.splice(from,1)[0]; L.splice(to,0,it);
+    c.def=Math.max(0,L.indexOf(dObj)); blk._tkCur=Math.max(0,L.indexOf(cObj));   /* 「처음」 · 지금 보는 탭은 자리를 옮겨도 같은 탭 */
+    tkApply(blk); tkListRender(); tkDirty();
+  }
+  var TK_RNG=[['tkCols','cols',''],['tkBw','bw','%'],['tkVw','vw','px'],['tkH','h','px'],['tkGapB','gapB','px'],['tkFs','fs','px'],['tkCs','cs','px'],['tkBgDim','bgDim','%'],['tkPt','pt','px'],['tkPb','pb','px']];
+  var TK_COL=[['tkFg','fg'],['tkAfg','afg'],['tkAc','ac'],['tkLc','lc'],['tkBb','bb'],['tkArc','arc'],['tkTc','tc'],['tkBg','bg']];
+  function tkFontSync(i){ var dd=document.getElementById('tkFDD'); if(!dd) return; var lb=dd.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=(SM_FONTS[i]||SM_FONTS[0]).n; dd.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', +b.getAttribute('data-i')===i); }); }
+  function tkPickFont(e,i){ if(e) e.stopPropagation(); var dd=document.getElementById('tkFDD'); if(dd) dd.classList.remove('open'); tkFontSync(i); tkUpd('tf',i); }
+  function tkBuildBset(){
+    if(tkBound) return; tkBound=true;
+    var fd=document.getElementById('tkFDD'), fm=fd&&fd.querySelector('.sdd-menu');
+    if(fm) fm.innerHTML=SM_FONTS.map(function(f,i){ return '<button type="button" data-i="'+i+'" style="font-family:'+f.f+','+f.fb+'" onclick="tkPickFont(event,'+i+')">'+f.n+'</button>'; }).join('');
+    TK_RNG.forEach(function(r){
+      var el=document.getElementById(r[0]); if(!el) return;
+      el.addEventListener('input',function(){ var v=parseFloat(el.value); if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[2]; tkUpd(r[1],v); });
+    });
+    TK_COL.forEach(function(r){
+      var el=document.getElementById(r[0]); if(!el) return;
+      el.addEventListener('input',function(){ var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(el.value); tkUpd(r[1],el.value); });
+    });
+  }
+  function tkFillBset(){
+    var blk=tkCurBlk; if(!blk) return; var c=tkCfg(blk);
+    function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng') && typeof smRng==='function') smRng(el); } }
+    TK_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
+    TK_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
+    tkFontSync(txNum(c.tf,5));
+    tkSegSync('tkPosSeg',c.pos==='left'?'left':'top'); tkSegSync('tkWrapSeg',c.wrap==='multi'?'multi':'line'); tkSegSync('tkAlSeg',c.al||'center'); tkSegSync('tkMvSeg',c.mv==='page'?'page':'one'); tkSegSync('tkFwSeg',txNum(c.fw,500)); tkSegSync('tkCalSeg',c.cal==='left'?'left':'center');
+    tkStyleSync(); tkListRender(); if(typeof bgPanelSync==='function') bgPanelSync('tk'); tkRows();
+  }
+  if(typeof BGP==='object' && BGP) BGP.tk={cur:function(){ return tkCurBlk; }, cfg:tkCfg, apply:tkApply};
+  window.tkCfg=tkCfg; window.tkApply=tkApply; window.tkCloneInit=tkCloneInit; window.tkCardHTML=tkCardHTML; window.baInsertTk=baInsertTk; window.tkLibDrop=tkLibDrop; window.tkRtSave=tkRtSave;
+  window.tkBuildBset=tkBuildBset; window.tkFillBset=tkFillBset; window.tkSeg=tkSeg; window.tkDesign=tkDesign; window.tkPickFont=tkPickFont;
+  window.tkRowPick=tkRowPick; window.tkName=tkName; window.tkSetDef=tkSetDef; window.tkAdd=tkAdd; window.tkDel=tkDel;
+  window.tkCurSet=function(b){ tkCurBlk=b; };
 
   /* ══════════════════════════════════════════════════════════════════
      261008 추가 — 게시판 블럭 (BOARD01 · 접두어 bd · cfg _bdCfg)
@@ -52013,6 +52612,7 @@ global.PolyFX = API;
     if(blk.getAttribute('data-block')==='beforeafter'){ if(!blk.classList.contains('rt-editing') && typeof bcApply==='function') bcApply(blk); return; }   /* 261022 추가 — 이전·이후 비교 제목 · 본문 */
     if(blk.getAttribute('data-block')==='cnblk'){ if(!blk.classList.contains('rt-editing') && typeof cnApply==='function'){ cnApply(blk); if(typeof cnCurBlk!=='undefined' && cnCurBlk===blk){ cnItemsRender(); cnRows(); } } return; }   /* 261022 추가 — 컨텐츠 블럭 글 칸 */
     if(blk.getAttribute('data-block')==='snblk'){ if(!blk.classList.contains('rt-editing') && typeof snApply==='function') snApply(blk); return; }   /* 261022 추가 — 소셜 블럭 */
+    if(blk.getAttribute('data-block')==='tkblk'){ if(!blk.classList.contains('rt-editing') && typeof tkApply==='function') tkApply(blk); return; }   /* 261023 추가 — 탭 블럭 */
     if(blk.getAttribute('data-block')==='gridgal'){ if(!blk.classList.contains('rt-editing') && typeof ggApply==='function') ggApply(blk); return; }   /* 261015 추가 */
     var c=rtCfg(blk);
     if(c.layout==='dual'){ c.layout='single'; if(!(c.cols>1)) c.cols=2; }   /* 260915 수정 — 옛 '본문 2단' → 2열 */
@@ -52293,7 +52893,7 @@ global.PolyFX = API;
     if(rtEditBlk && rtEditBlk!==blk) rtEditEnd();
     if(region && blk.contains(region)) blk._rtActive=region; else if(!fromClick) blk._rtActive=null;
     var b=rtBody(blk); if(!b) return;
-    if(!rtIsFix(blk) && !/^(bookflip2|imggrid|gridgal|cnblk|ctblk|beforeafter|snblk)$/.test(blk.getAttribute('data-block')||'')) rtCfg(blk); rtTbBuild();   /* 261006 수정 — 탭메뉴 문구도 */   /* 260922 수정 — 이미지 블럭 하단 텍스트도 제 cfg 를 쓴다 */
+    if(!rtIsFix(blk) && !/^(bookflip2|imggrid|gridgal|cnblk|ctblk|beforeafter|snblk|tkblk)$/.test(blk.getAttribute('data-block')||'')) rtCfg(blk); rtTbBuild();   /* 261006 수정 — 탭메뉴 문구도 */   /* 260922 수정 — 이미지 블럭 하단 텍스트도 제 cfg 를 쓴다 */
     rtEditBlk=blk; blk.classList.add('rt-editing');
     /* 260906 수정 — 글 영역이 여럿(라벨 + 본문)이면 모두 편집 가능하게. 툴바는 커서가 있는 영역을 따른다 */
     blk.querySelectorAll('.cred').forEach(function(el){ el.setAttribute('contenteditable','true'); el.setAttribute('spellcheck','false'); });
@@ -52340,6 +52940,7 @@ global.PolyFX = API;
     if(blk.getAttribute('data-block')==='beforeafter'){ if(typeof bcRtSave==='function') bcRtSave(blk); return; }   /* 261022 추가 — 이전·이후 비교 제목 · 본문 */
     if(blk.getAttribute('data-block')==='cnblk'){ if(typeof cnRtSave==='function') cnRtSave(blk); return; }   /* 261022 추가 — 컨텐츠 블럭 글 칸 */
     if(blk.getAttribute('data-block')==='snblk'){ if(typeof snRtSave==='function') snRtSave(blk); return; }   /* 261022 추가 — 소셜 블럭 제목·설명·소개 글 */
+    if(blk.getAttribute('data-block')==='tkblk'){ if(typeof tkRtSave==='function') tkRtSave(blk); return; }   /* 261023 추가 — 탭 블럭 내용 */
     if(blk.getAttribute('data-block')==='gridgal'){ if(typeof ggRtSave==='function') ggRtSave(blk); return; }   /* 261015 추가 — 그리드 갤러리 타이틀 고정 배치의 제목·설명 */
     if(rtIsTm(blk)){ if(typeof tmRtSave==='function') tmRtSave(blk); return; }   /* 261006 추가 — 탭메뉴 문구 */
     if(rtIsGd(blk)){ if(typeof gdRtSave==='function') gdRtSave(blk); return; }   /* 261007 추가 — 상세 페이지 타이틀 */
@@ -52372,7 +52973,7 @@ global.PolyFX = API;
       if(e.key==='Tab'){
         var n=e.shiftKey?i-1:i+1; if(n<0||n>=regs.length) return;
         e.preventDefault(); rtSaveRegions(rtEditBlk); rtCaretTo(regs[n], e.shiftKey);
-      } else if(e.key==='Backspace' && i>0 && rtAtStart(cur) && !/^(imggrid|gridgal|cnblk|ctblk|beforeafter|snblk)$/.test(rtEditBlk.getAttribute('data-block')||'') && !rtIsFix(rtEditBlk)){   /* 260922 — 이미지 블럭 하단 텍스트는 칸마다 따로라 앞 칸으로 넘어가지 않는다 */
+      } else if(e.key==='Backspace' && i>0 && rtAtStart(cur) && !/^(imggrid|gridgal|cnblk|ctblk|beforeafter|snblk|tkblk)$/.test(rtEditBlk.getAttribute('data-block')||'') && !rtIsFix(rtEditBlk)){   /* 260922 — 이미지 블럭 하단 텍스트는 칸마다 따로라 앞 칸으로 넘어가지 않는다 */
         e.preventDefault(); rtCaretTo(regs[i-1], true);
       }
     },true);
@@ -54923,6 +55524,7 @@ global.PolyFX = API;
       stackcard   :{cfg:'_scCfg', apply:function(b){ scApply(b); }},   /* 260923 추가 — 스택 카드 */
       formblk     :{cfg:'_fmCfg', apply:function(b){ fmApply(b); }},   /* 260929 추가 — 폼 블럭 */
       snblk       :{cfg:'_snCfg', apply:function(b){ snApply(b); }},   /* 261022 추가 — 소셜 블럭 */
+      tkblk       :{cfg:'_tkCfg', apply:function(b){ tkApply(b); }},   /* 261023 추가 — 탭 블럭 */
       calblk      :{cfg:'_caCfg', apply:function(b){ caApply(b); }},
       dvblk       :{cfg:'_dvCfg', apply:function(b){ dvApply(b); }},   /* 261019 추가 — 구분선 블럭 */
       cdblk       :{cfg:'_cdCfg', apply:function(b){ cdApply(b); }},   /* 261019 추가 — 카운트다운 블럭 */
@@ -55454,6 +56056,7 @@ global.PolyFX = API;
       dvblk       :{text:1},   /* 261019 추가 — 구분선 블럭 · 글자 장식의 문구만 PC·모바일 공유. 선·두께·너비·색·여백은 기기별 */
       calblk      :{events:1, view:1, nav:1, hol:1, ws:1, perm:1, gid:1, gkey:1, gc:1, sync:1},   /* 260929 추가 — 캘린더 블럭 · 일정·보기·권한·연동은 PC·모바일이 함께 쓴다. 색·크기·여백은 기기별 */
       snblk       :{icons:1, eb:1, desc:1, ebH:1, descH:1, introTH:1, acct:1, href:1, imgs:1, introT:1, moreT:1, bgImg:1},   /* 261022 추가 — 소셜 블럭 · 아이콘·문구·계정·이미지·배경 소재는 PC·모바일 공유, 모양·크기·열·색·여백은 기기별 */
+      tkblk       :{tabs:1, def:1, bgImg:1, bgGray:1},   /* 261023 추가 — 탭 블럭 · 탭(이름 · 내용) · 처음 탭 · 배경 소재는 PC·모바일 공유, 줄 · 가로 개수 · 높이 · 글자 · 색 · 여백은 기기별 */
       formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, privacy:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블럭 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
     };
     /* 텍스트 문구 키 — 기본은 PC 와 공유하고, 블럭별 '문구 따로 쓰기'(blk._mvTextSplit)를 켠 경우에만 모바일 전용이 된다 */
@@ -55534,7 +56137,7 @@ global.PolyFX = API;
     }
     function mvDefaultCfg(blk,def){
       /* xxCfg(blk) 가 기본값을 만들어 준다 */
-      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_cnCfg:'cnCfg'}[def.cfg];   /* 260922 수정 */
+      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_cnCfg:'cnCfg',_snCfg:'snCfg',_tkCfg:'tkCfg'}[def.cfg];   /* 260922 수정 */
       try{ return window[fn](blk); }catch(x){ return {}; }
     }
     /* 헤더 세그먼트·초기화 버튼 상태 */
@@ -55579,7 +56182,7 @@ global.PolyFX = API;
     /* Apply 가로채기 — 모든 설정 변경은 xxApply 로 모이므로 여기서 한 번만 갈라 놓으면 된다 */
     Object.keys(MV_TYPES).forEach(function(type){
       var def=MV_TYPES[type];
-      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_cnCfg:'cnApply'}[def.cfg];   /* 260922 수정 */
+      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_cnCfg:'cnApply',_snCfg:'snApply',_tkCfg:'tkApply'}[def.cfg];   /* 260922 수정 */
       var orig=window[name]; if(typeof orig!=='function') return;
       var wrapped=function(blk){
         if(blk && MV_TARGET==='mobile' && blk===mvTargetBlk && blk._mvBase) mvReconcile(blk);
