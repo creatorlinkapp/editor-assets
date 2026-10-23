@@ -6617,7 +6617,7 @@
         </div>
       </div>
       <div class="tb-sep"></div>
-      <button class="tb-btn tb-ico pg-tip tip-right" data-tip="사용 가이드" aria-label="사용 가이드" id="tbGuide" onclick="clToast('준비중입니다.')"><svg class="ico" viewBox="0 0 24 24"><path d="M2.5 5.5A2 2 0 0 1 4.5 4H9a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H4.5a2 2 0 0 1-2-2z"/><path d="M21.5 5.5A2 2 0 0 0 19.5 4H15a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h4.5a2 2 0 0 0 2-2z"/></svg><span class="lbl-t">가이드</span></button>
+      <button class="tb-btn tb-ico pg-tip tip-right" data-tip="사용 가이드" aria-label="사용 가이드" id="tbGuide" onclick="ugOpen()"><svg class="ico" viewBox="0 0 24 24"><path d="M2.5 5.5A2 2 0 0 1 4.5 4H9a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H4.5a2 2 0 0 1-2-2z"/><path d="M21.5 5.5A2 2 0 0 0 19.5 4H15a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h4.5a2 2 0 0 0 2-2z"/></svg><span class="lbl-t">가이드</span></button>
       <button class="tb-btn tb-ico tb-ask pg-tip tip-right" data-tip="문의하기" aria-label="문의하기" id="tbAsk" onclick="clAskOpen()"><svg class="ico" viewBox="0 0 24 24"><path d="M7 8a5 5 0 1 1 7 4.58c-1.2.55-2 1.5-2 2.82v.6"/><circle cx="12" cy="20" r="1.3" fill="currentColor" stroke="none"/></svg><span class="lbl-t">문의하기</span></button>
       <!-- 260904 수정 — 미리보기·사이트 게시 : 화면 우측 상단 (아이콘 + 풀네임). 편집 모드 나가기는 좌측 레일 상단 마크로 -->
       <div class="tb-actions" id="tbActions">
@@ -6631,7 +6631,7 @@
     <button class="tb-ham" title="메뉴" onclick="toggleTbMenu(event)"><svg class="ico" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <div class="tb-mobmenu" id="tbMobMenu">
       <button onclick="tbMobAct('toast')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.34 12.27C2.48 17.48 6.75 21.67 12 21.67C17.34 21.67 21.67 17.34 21.67 12C21.67 6.66 17.34 2.33 12 2.33C8 2.33 4.57 4.76 3.1 8.23"/><path d="M2.51 4.41L3.05 8.33L6.98 7.79"/><path d="M12 6.33V12L16.33 15"/></svg>히스토리</button>
-      <button onclick="tbMobAct('toast')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5A2 2 0 0 1 4.5 4H9a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H4.5a2 2 0 0 1-2-2z"/><path d="M21.5 5.5A2 2 0 0 0 19.5 4H15a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h4.5a2 2 0 0 0 2-2z"/></svg>가이드</button>
+      <button onclick="tbMobAct('guide')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5A2 2 0 0 1 4.5 4H9a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H4.5a2 2 0 0 1-2-2z"/><path d="M21.5 5.5A2 2 0 0 0 19.5 4H15a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h4.5a2 2 0 0 0 2-2z"/></svg>가이드</button>
       <button onclick="tbMobAct('ask')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m7.47,6.81c0.92-2.16,2.32-3.26,4.76-3.26,2.1,0,3.971.26,3.97,3.95,0,3.78-4.7,2.99-4.7,7.51"/><path d="m11.54,21.33c0.73,0,1.33-0.6,1.33-1.33s-0.6-1.33-1.33-1.33-1.33,0.6-1.33,1.33,0.6,1.33,1.33,1.33Z" fill="currentColor" stroke="none"/></svg>문의하기</button>
       <button onclick="tbMobAct('toast')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></svg>미리보기</button>
       <button class="pub" onclick="tbMobAct('toast')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.7-.84.69-2.13-.1-2.91a2.18 2.18 0 0 0-2.9-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.9 12.9 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/></svg>사이트 게시</button>
@@ -7623,6 +7623,101 @@
   .bg-site p{margin:0;font-size:var(--fs-sm);line-height:1.7;color:var(--ink-2);word-break:keep-all;flex:1;}
   .bg-site .kg-lk{font-size:var(--fs-sm);}
   @media (max-width:760px){ .bg-sites{grid-template-columns:1fr;} }
+  /* ── 261023 추가 — 사용 가이드 (좌측 레일 「사용 가이드」 · 라이브 가이드 8항목을 리뉴얼 화면에 맞춰 · kg 가이드 모달 매너) ── */
+  #ugOverlay{display:none;position:fixed;inset:0;background:rgba(14,18,25,.62);z-index:300;}
+  #ugOverlay.open{display:block;}
+  #ugOverlay .kg-step,#ugOverlay .kg-close{-webkit-tap-highlight-color:transparent;}
+  #ugOverlay .kg-inner{max-width:880px;margin:0 auto;padding:34px 28px 90px;}
+  #ugOverlay .kg-head .sn-guide{flex:none;height:30px;font-size:var(--fs-sm);padding:0 10px 0 13px;}
+  #ugOverlay .kg-head .sn-guide.go{border-color:var(--green-line,var(--green));color:var(--green-text,var(--green));}
+  #ugOverlay .kg-head .sn-guide.go:hover{background:var(--green-tint,var(--bg-2));}
+  #ugOverlay .kg-close{margin-left:4px;}
+  #ugOverlay .kg-head .ug-sp{flex:1;min-width:0;}
+  /* 주제 8개 = 순서가 아니라 목차 — 화살표 없이 한 줄 알약, 넘치면 옆으로 민다 */
+  #ugOverlay .kg-steps{flex-wrap:nowrap;justify-content:safe center;gap:6px;overflow-x:auto;scrollbar-width:none;}
+  #ugOverlay .kg-steps::-webkit-scrollbar{display:none;}
+  #ugOverlay .kg-step{width:auto;height:38px;padding:0 15px;border-radius:var(--r-full);white-space:nowrap;}
+  #ugOverlay .kg-step.on{box-shadow:0 0 0 3px rgba(3,199,90,.14);}
+  .ug-where{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:-2px 0 16px;font-size:var(--fs-sm);font-weight:700;color:var(--ink-2);}
+  .ug-where .sep{color:var(--ink-3);font-weight:500;}
+  .ug-ico{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:var(--r-md);background:var(--bg-2);border:1px solid var(--bg-3);color:var(--ink-2);flex:none;}
+  .ug-ico svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+  .ug-acts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px;}
+  .ug-acts .sn-guide{color:var(--green-text,var(--green));border-color:var(--green-line,var(--green));}
+  .ug-acts .sn-guide:hover{background:var(--green-tint,var(--bg-2));color:var(--green-text,var(--green));}
+  .ug-kbd{display:inline-block;text-indent:0;margin:0 1px;padding:0 6px;border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;background:#fff;font-size:var(--fs-xs);font-weight:700;color:var(--ink-2);line-height:18px;}
+  @media (max-width:760px){ #ugOverlay .kg-head .kg-sub{display:none;} #ugOverlay .kg-inner{padding:24px 18px 70px;} #ugOverlay .kg-steps{justify-content:flex-start;padding:12px 16px;} }
+  @media (max-width:520px){ #ugOverlay .kg-head{padding:0 10px 0 16px;gap:6px;} #ugOverlay .kg-head .sn-guide.sup{display:none;} }
+  /* 주요 기능 둘러보기 — 화면의 실제 버튼을 차례로 비추는 말풍선(라이브 「주요기능 둘러보기」 7단계를 리뉴얼 레일에 맞춰) */
+  #ugTour{display:none;position:fixed;inset:0;z-index:330;}
+  #ugTour.open{display:block;}
+  #ugTour .ug-spot{position:fixed;border-radius:var(--r-lg);box-shadow:0 0 0 9999px rgba(14,18,25,.55);outline:2px solid var(--green);outline-offset:2px;pointer-events:none;transition:top .25s cubic-bezier(.2,0,.2,1),left .25s cubic-bezier(.2,0,.2,1),width .25s,height .25s;}
+  #ugTour .ug-pop{position:fixed;width:290px;max-width:calc(100vw - 24px);box-sizing:border-box;background:#fff;border-radius:var(--r-lg);box-shadow:var(--shadow-modal);padding:16px 16px 12px;transition:top .25s cubic-bezier(.2,0,.2,1),left .25s cubic-bezier(.2,0,.2,1);}
+  #ugTour .ug-pop h5{margin:0 26px 6px 0;font-size:var(--fs-lg);font-weight:800;color:var(--ink);}
+  #ugTour .ug-pop p{margin:0 0 14px;font-size:var(--fs-md);line-height:1.7;color:var(--ink-2);word-break:keep-all;}
+  #ugTour .ug-pop .ft{display:flex;align-items:center;gap:6px;}
+  #ugTour .ug-pop .no{margin-right:auto;font-size:var(--fs-sm);font-weight:700;color:var(--ink-3);}
+  #ugTour .ug-pop .ug-prev{height:32px;padding:0 12px;border:1px solid var(--border);border-radius:var(--ui-r-btn,var(--r-md));background:#fff;color:var(--ink-2);font-family:inherit;font-size:var(--fs-sm);font-weight:700;cursor:pointer;}
+  #ugTour .ug-pop .ug-prev:hover{border-color:var(--ink-3);color:var(--ink);}
+  #ugTour .ug-pop .ug-prev[disabled]{opacity:.4;cursor:default;}
+  #ugTour .ug-pop .btn-sm{cursor:pointer;font-family:inherit;}
+  #ugTour .ug-pop .kg-close{position:absolute;top:10px;right:10px;width:26px;height:26px;margin:0;}
+  /* 위치 보기 후 「가이드로 돌아가기」 알약 — 화면 아래 가운데에 15초 */
+  #ugPill{position:fixed;left:50%;bottom:22px;z-index:320;display:flex;align-items:center;gap:2px;padding:4px;border-radius:var(--r-full);background:var(--ink,#1c1f24);box-shadow:var(--shadow-modal);opacity:0;pointer-events:none;transform:translate(-50%,8px);transition:opacity .2s,transform .2s;}
+  #ugPill.show{opacity:1;pointer-events:auto;transform:translate(-50%,0);}
+  #ugPill button{border:none;background:none;color:#fff;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;}
+  #ugPill .go{height:32px;gap:5px;padding:0 12px 0 10px;border-radius:var(--r-full);font-size:var(--fs-sm);font-weight:700;}
+  #ugPill .go:hover,#ugPill .x:hover{background:rgba(255,255,255,.12);}
+  #ugPill .x{width:28px;height:28px;border-radius:50%;color:rgba(255,255,255,.7);}
+  #ugPill svg{width:14px;height:14px;}
+  /* 화면 그림 4장(블럭 추가 · 블럭 설정 · 텍스트 편집 · 모바일) — cal.com 가이드 목업(kg-shot · kg-win) 매너로 그린다. 화면이 확정되면 실제 캡처로 바꿀 자리 */
+  .ug-shot{flex-wrap:nowrap;gap:10px;overflow-x:auto;padding:18px;}
+  .ug-fi{flex:none;width:250px;}
+  .ug-fi.wide{width:430px;}
+  .ug-w{height:150px;}
+  .ug-shot .kg-farrow{margin-top:78px;}
+  .ug-pg{position:relative;height:100%;box-sizing:border-box;padding:12px;display:flex;flex-direction:column;background:#fff;}
+  .ug-b{position:relative;flex:1;border-radius:6px;background:#F5F6F8;padding:10px;display:flex;flex-direction:column;gap:6px;}
+  .ug-b i,.ug-tx > i,.ug-ph i{display:block;height:5px;border-radius:3px;background:#E1E4E8;}
+  .ug-b i.l1{width:46%;height:7px;} .ug-b i.l2{width:80%;} .ug-b i.l3{width:60%;}
+  .ug-gap{position:relative;height:24px;display:flex;align-items:center;justify-content:center;}
+  .ug-gap::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1.5px dashed var(--green);}
+  .ug-plus{position:relative;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:15px;font-weight:700;line-height:22px;text-align:center;box-shadow:0 0 0 4px rgba(3,199,90,.18);}
+  .ug-ba{display:flex;height:100%;}
+  .ug-ba .sd{width:58px;border-right:1px solid #EEF0F2;padding:12px 8px;display:flex;flex-direction:column;gap:7px;}
+  .ug-ba .sd i{display:block;height:6px;border-radius:3px;background:#E1E4E8;} .ug-ba .sd i.on{background:var(--green);}
+  .ug-ba .mn{flex:1;padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0;}
+  .ug-ba .tp{display:flex;align-items:center;gap:4px;}
+  .ug-ba .tp i{width:20px;height:8px;border-radius:4px;background:#EEF0F2;} .ug-ba .tp i.on{background:var(--ink-2s,#4B4F57);}
+  .ug-ba .tp .q{margin-left:auto;height:16px;padding:0 6px;border:1px solid #E1E4E8;border-radius:5px;font-size:8px;font-weight:700;line-height:14px;color:var(--ink-3);}
+  .ug-ba .gd{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .ug-ba .gd i{border-radius:5px;background:#F2F4F6;border:1px solid #EEF0F2;} .ug-ba .gd i.on{border-color:var(--green);box-shadow:0 0 0 2px rgba(3,199,90,.18);}
+  .ug-bs{display:flex;height:100%;}
+  .ug-bs .ug-pg{flex:1;}
+  .ug-gear{position:absolute;top:7px;right:7px;width:22px;height:22px;border-radius:6px;background:#fff;box-shadow:0 0 0 2px #FF3B77,0 1px 4px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;color:var(--ink-2);}
+  .ug-gear svg{width:13px;height:13px;}
+  .ug-pn{width:150px;border-left:1px solid #EEF0F2;display:flex;flex-direction:column;font-size:9px;color:var(--ink-2);background:#fff;}
+  .ug-pn .h{height:26px;flex:none;padding:0 10px;display:flex;align-items:center;font-weight:800;color:var(--ink);border-bottom:1px solid #EEF0F2;}
+  .ug-pn .r{height:19px;flex:none;padding:0 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #F4F5F7;font-weight:700;}
+  .ug-pn .r::after{content:"›";color:var(--ink-3);font-weight:500;}
+  .ug-pn .ft{margin-top:auto;display:flex;justify-content:space-around;padding:6px 2px;border-top:1px solid #EEF0F2;font-size:8px;font-weight:700;color:var(--ink-3);}
+  .ug-tx{position:relative;height:100%;box-sizing:border-box;padding:46px 18px 14px;display:flex;flex-direction:column;gap:8px;background:#fff;}
+  .ug-tx .ln{display:flex;align-items:center;gap:4px;}
+  .ug-tx .ln i{display:block;height:5px;border-radius:3px;background:#E1E4E8;}
+  .ug-tx .sel{font-size:10px;font-weight:700;color:var(--ink);background:rgba(3,199,90,.2);padding:0 3px;border-radius:2px;line-height:15px;white-space:nowrap;}
+  .ug-tb{position:absolute;top:12px;left:18px;display:flex;align-items:center;gap:1px;padding:3px;background:#fff;border-radius:7px;box-shadow:0 0 0 2px #FF3B77,0 2px 10px rgba(20,24,32,.12);font-size:9px;font-weight:700;color:var(--ink-2);}
+  .ug-tb span{min-width:16px;height:18px;padding:0 4px;display:inline-flex;align-items:center;justify-content:center;border-radius:4px;box-sizing:border-box;}
+  .ug-tb span.f{border:1px solid #EEF0F2;}
+  .ug-tb span.c{box-shadow:inset 0 -2px 0 #ee445f;}
+  .ug-mo{display:flex;align-items:flex-end;gap:18px;}
+  .ug-sw{display:inline-flex;border:1px solid #E1E4E8;border-radius:999px;padding:2px;font-size:8.5px;font-weight:700;background:#fff;margin:0 auto 10px;}
+  .ug-sw span{padding:2px 9px;border-radius:999px;color:var(--ink-3);} .ug-sw span.on{background:var(--ink,#1c1f24);color:#fff;}
+  .ug-pcw{width:230px;height:130px;}
+  .ug-pcw .ug-pg{gap:8px;} .ug-pcw .row{flex:1;display:flex;gap:8px;} .ug-pcw .row .ug-b{gap:5px;}
+  .ug-ph{width:84px;height:150px;box-sizing:border-box;border-radius:16px;border:5px solid #2B2F36;background:#fff;padding:9px 6px;display:flex;flex-direction:column;gap:6px;}
+  .ug-ph .ug-b{flex:none;height:36px;padding:6px;gap:4px;box-shadow:0 0 0 2px #FF3B77;}
+  .ug-ph .ug-b + .ug-b{box-shadow:none;}
+  @media (max-width:760px){ .ug-shot{flex-wrap:wrap;justify-content:center;overflow:visible;padding:14px;} .ug-shot .kg-farrow{display:none;} .ug-fi,.ug-fi.wide{width:100% !important;max-width:300px;} .ug-mo{gap:10px;justify-content:center;} .ug-pcw{width:170px;} }
   /* 설정창(#qmDock) — 블럭설정 도크(.bset) 매너를 그대로. 목록 행은 .mt-imgrow 공통 구조 */
   #qmDock .mtk-field input{border-color:var(--border-2);background:#fff;}
   #qmDock .mt-imgrow:hover .mtk-field input:not(:focus){border-color:#C8CDD4;}
@@ -9944,6 +10039,136 @@
       </div>
     </div>
   </div>
+  <!-- 261023 추가 — 사용 가이드 모달 (좌측 레일 「사용 가이드」). 라이브 가이드 8항목(메뉴/페이지 · 사이트 설정 · 블럭 설정 · 블럭 추가 · 이미지 · 텍스트 · 갤러리 · 저장/게시)을
+       리뉴얼 화면 기준으로 다시 씀 · kg 가이드 모달 매너(헤드 · 목차 알약 · 섹션). 섹션마다 「어디에 있나」(실제 버튼 아이콘) + 바로 열기 칩. 「주요 기능 둘러보기」 = 실제 버튼을 차례로 비추는 말풍선 -->
+  <div id="ugOverlay" onclick="if(event.target===this) ugClose()">
+    <div class="kg-panel" role="dialog" aria-modal="true" aria-labelledby="ugTitle">
+      <div class="kg-head">
+        <h3 id="ugTitle">사용 가이드</h3>
+        <span class="kg-sub">처음이라면 「주요 기능 둘러보기」로 버튼 위치부터 확인해 보세요.</span>
+        <span class="ug-sp"></span>
+        <button type="button" class="sn-guide go" onclick="ugTourStart()">주요 기능 둘러보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+        <a class="sn-guide sup" href="https://supportcenter.creatorlink.net/creatorlink/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">서포트센터<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></a>
+        <button class="kg-close" onclick="ugClose()" title="닫기 (ESC)" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div class="kg-body" id="ugBody">
+        <div class="kg-steps" id="ugSteps"><button class="kg-step on" data-t="ug1" onclick="ugGo('ug1')">블럭 추가</button><button class="kg-step" data-t="ug2" onclick="ugGo('ug2')">블럭 설정</button><button class="kg-step" data-t="ug3" onclick="ugGo('ug3')">텍스트 편집</button><button class="kg-step" data-t="ug4" onclick="ugGo('ug4')">이미지 · 동영상</button><button class="kg-step" data-t="ug5" onclick="ugGo('ug5')">메뉴 · 페이지</button><button class="kg-step" data-t="ug6" onclick="ugGo('ug6')">사이트 꾸미기</button><button class="kg-step" data-t="ug7" onclick="ugGo('ug7')">모바일 편집</button><button class="kg-step" data-t="ug8" onclick="ugGo('ug8')">미리보기 · 게시</button></div>
+        <div class="kg-inner">
+
+          <section class="kg-sec" id="ug1">
+            <h4><span class="kg-sec-no">1</span>블럭 추가</h4>
+            <p class="ug-where"><span class="ug-ico" data-ico="#btnBlockAdd"></span>왼쪽 레일 › 블럭 추가<span class="sep">또는</span>블럭 사이의 <b>+</b> 버튼</p>
+            <p class="kg-lead">사이트는 블럭을 쌓아서 만들어요. 블럭 사이에 마우스를 올리면 나타나는 <b>+</b> 버튼을 누르면 그 자리에, 왼쪽 레일의 <b>블럭 추가</b>를 누르면 선택한 블럭 바로 아래(선택한 블럭이 없으면 맨 위)에 들어가요.</p>
+            <div class="kg-shot ug-shot">
+              <div class="ug-fi"><div class="kg-fno">1</div><div class="kg-win ug-w"><div class="ug-pg"><div class="ug-b"><i class="l1"></i><i class="l2"></i><i class="l3"></i></div><div class="ug-gap"><span class="ug-plus">+</span></div><div class="ug-b"><i class="l1"></i><i class="l2"></i></div></div></div><p class="kg-fcap">블럭 사이에 마우스를 올리면 <b>+</b></p></div>
+              <span class="kg-farrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+              <div class="ug-fi"><div class="kg-fno">2</div><div class="kg-win ug-w"><div class="ug-ba"><div class="sd"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div><div class="mn"><div class="tp"><i class="on"></i><i></i><i></i><span class="q">CONTENT13</span></div><div class="gd"><i class="on"></i><i></i><i></i><i></i></div></div></div></div><p class="kg-fcap">카테고리 · 블럭을 고르면 그 자리에 들어가요</p></div>
+            </div>
+            <ul class="kg-ul">
+              <li>· 왼쪽 <b>카테고리</b>(텍스트 · 이미지 · 갤러리 · 게시판 · 탭 · 최근게시물 등)를 고르고, 위쪽 탭으로 모양별로 걸러 볼 수 있어요.</li>
+              <li>· 오른쪽 위 <b>검색칸</b>에 블럭 번호(예: <b>CONTENT13</b> 또는 <b>13</b>)나 이름을 넣으면 바로 찾아요.</li>
+              <li>· 갤러리처럼 이미지를 올리는 블럭은 넣은 뒤 블럭 설정창에서 이미지를 추가해요.</li>
+            </ul>
+            <div class="ug-acts"><button type="button" class="sn-guide" onclick="ugShow('add')">블럭 추가 위치 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+          </section>
+
+          <section class="kg-sec" id="ug2">
+            <h4><span class="kg-sec-no">2</span>블럭 설정</h4>
+            <p class="ug-where">블럭에 마우스를 올리면 오른쪽 위에 나타나는 <b>톱니</b> 버튼</p>
+            <p class="kg-lead">톱니 버튼을 누르면 오른쪽에 <b>설정창</b>이 열려요. 스타일 · 글자 · 색 · 배경 · 여백 등 블럭의 세부 모양을 바꿀 수 있어요.</p>
+            <div class="kg-shot ug-shot">
+              <div class="ug-fi wide"><div class="kg-win ug-w"><div class="ug-bs"><div class="ug-pg"><div class="ug-b"><span class="ug-gear"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l2"></i></div></div><div class="ug-pn"><div class="h">블럭설정</div><div class="r">스타일</div><div class="r">글자</div><div class="r">색</div><div class="r">배경</div><div class="r">여백</div><div class="ft"><span>이동</span><span>복제</span><span>숨김</span><span>보관</span><span>삭제</span></div></div></div></div><p class="kg-fcap">톱니를 누르면 오른쪽에 설정창 · 아래 버튼으로 이동 · 복제 · 삭제</p></div>
+            </div>
+            <ul class="kg-ul">
+              <li>· 설정창 아래 버튼으로 블럭을 <b>이동 · 복제 · 숨김 · 보관 · 삭제</b>해요.</li>
+              <li>· 블럭 종류에 따라 설정 항목이 달라요. 항목 제목을 누르면 접고 펼 수 있어요.</li>
+              <li>· 설정창 위쪽 <b>PC · 모바일</b> 탭으로 모바일 모양만 따로 고칠 수 있어요. (7. 모바일 편집)</li>
+            </ul>
+          </section>
+
+          <section class="kg-sec" id="ug3">
+            <h4><span class="kg-sec-no">3</span>텍스트 편집</h4>
+            <p class="ug-where">고치고 싶은 글자를 바로 클릭</p>
+            <p class="kg-lead">블럭 안의 글자를 클릭하면 바로 고칠 수 있어요. 바꾸고 싶은 부분을 <b>드래그해서 고르면</b> 툴바가 나타나 <b>글꼴 · 글자 크기 · 굵게 · 기울임 · 밑줄 · 글자 색 · 링크</b>를 바꿀 수 있어요.</p>
+            <div class="kg-shot ug-shot">
+              <div class="ug-fi wide" style="width:340px;"><div class="kg-win ug-w"><div class="ug-tx"><div class="ug-tb"><span class="f">글꼴 ▾</span><span class="f">14</span><span><b>B</b></span><span><i>I</i></span><span><u>U</u></span><span class="c">A</span><span>링크</span></div><div class="ln"><i style="width:22%"></i><span class="sel">드래그한 글자</span><i style="width:34%"></i></div><i style="width:88%"></i><i style="width:72%"></i><i style="width:56%"></i></div></div><p class="kg-fcap">글자를 드래그해 고르면 위에 툴바가 떠요</p></div>
+            </div>
+            <ul class="kg-ul">
+              <li>· 단축키: 굵게 <span class="ug-kbd">Ctrl</span> + <span class="ug-kbd">B</span>, 기울임 <span class="ug-kbd">Ctrl</span> + <span class="ug-kbd">I</span>, 밑줄 <span class="ug-kbd">Ctrl</span> + <span class="ug-kbd">U</span></li>
+              <li>· 다 고쳤으면 블럭 바깥을 클릭하면 돼요.</li>
+            </ul>
+          </section>
+
+          <section class="kg-sec" id="ug4">
+            <h4><span class="kg-sec-no">4</span>이미지 · 동영상</h4>
+            <p class="ug-where"><span class="ug-ico" data-ico="#btnLib"></span>왼쪽 레일 › 컨텐츠 보관함</p>
+            <p class="kg-lead">보관함에 이미지 · 동영상을 올려 두거나 <b>무료 이미지 · 아이콘</b>을 골라요. 보관함의 항목을 <b>블럭 위로 끌어다 놓으면</b> 바로 들어가요.</p>
+            <ul class="kg-ul">
+              <li>· 여러 장을 한 번에 올리려면 파일을 보관함으로 한꺼번에 끌어다 놓으세요.</li>
+              <li>· 이미지를 바꾸려면 이미지 위의 <b>교체</b> 버튼을 누르거나, 블럭 설정창의 이미지 칸을 눌러 보관함에서 골라요.</li>
+              <li>· 폴더를 만들어 이미지를 정리할 수 있어요.</li>
+            </ul>
+            <div class="ug-acts"><button type="button" class="sn-guide" onclick="ugShow('lib')">컨텐츠 보관함 위치 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+          </section>
+
+          <section class="kg-sec" id="ug5">
+            <h4><span class="kg-sec-no">5</span>메뉴 · 페이지</h4>
+            <p class="ug-where"><span class="ug-ico" data-ico="#btnPages"></span>왼쪽 레일 › 메뉴 · 페이지 설정</p>
+            <p class="kg-lead">페이지를 추가 · 삭제하고 메뉴 이름과 순서를 바꿔요. 목록을 <b>끌어서</b> 순서를 바꿀 수 있어요.</p>
+            <ul class="kg-ul">
+              <li>· <b>메뉴</b>는 사이트 상단 메뉴에 보이는 페이지, <b>메뉴 페이지</b>는 메뉴 없이 링크로만 여는 페이지예요.</li>
+              <li>· 사이트 첫 화면에 보여 줄 <b>인트로 페이지</b>도 여기서 설정해요.</li>
+              <li>· 다른 페이지를 편집하려면 화면 위쪽의 <b>페이지 이름</b>을 눌러 옮겨요.</li>
+            </ul>
+            <div class="ug-acts"><button type="button" class="sn-guide" onclick="ugShow('pages')">메뉴 · 페이지 설정 위치 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+          </section>
+
+          <section class="kg-sec" id="ug6">
+            <h4><span class="kg-sec-no">6</span>사이트 꾸미기</h4>
+            <p class="ug-where"><span class="ug-ico" data-ico="#btnStyle"></span>스타일<span class="ug-ico" data-ico="#btnFx"></span>효과<span class="ug-ico" data-ico="#btnComp"></span>컴포넌트<span class="ug-ico" data-ico="#btnSite"></span>사이트 설정</p>
+            <p class="kg-lead">사이트 전체에 한 번에 적용되는 설정이에요. 블럭마다 따로 바꾸지 않아도 돼요.</p>
+            <ul class="kg-ul">
+              <li>· <b>스타일</b> — 메뉴를 눌렀을 때 이동 방식(멀티 페이지 · 원페이지), 컬러 모드, 서체, 사이트 배경</li>
+              <li>· <b>효과</b> — 스크롤 · 화면전환 · 커서 · 가장자리 효과</li>
+              <li>· <b>컴포넌트</b> — 퀵메뉴 · 팝업 / 띠배너 · 화상 미팅 예약 · 배경음악처럼 사이트 위에 떠 있는 기능</li>
+              <li>· <b>사이트 설정</b> — 메타태그 · 파비콘 · 로그인/회원가입 · 다국어 · 접속 제한 같은 운영 설정</li>
+            </ul>
+            <div class="ug-acts"><button type="button" class="sn-guide" onclick="ugShow('style')">스타일 위치 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><button type="button" class="sn-guide" onclick="ugShow('site')">사이트 설정 위치 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+          </section>
+
+          <section class="kg-sec" id="ug7">
+            <h4><span class="kg-sec-no">7</span>모바일 편집</h4>
+            <p class="ug-where"><span class="ug-ico" data-ico="#tbMode button[onclick*=mobile]"></span>화면 위쪽 가운데 › PC · 모바일 전환</p>
+            <p class="kg-lead">모바일 화면으로 바꾸면 휴대폰에서 보이는 모습을 확인하고 다듬을 수 있어요.</p>
+            <div class="kg-shot ug-shot">
+              <div class="ug-fi" style="width:auto;"><div style="text-align:center;"><span class="ug-sw"><span>PC</span><span class="on">모바일</span></span></div><div class="ug-mo"><div><div class="kg-win ug-pcw"><div class="ug-pg"><div class="ug-b" style="flex:none;height:22px;"><i class="l1"></i></div><div class="row"><div class="ug-b"><i class="l1"></i><i class="l2"></i></div><div class="ug-b"><i class="l1"></i><i class="l2"></i></div></div></div></div><p class="kg-fcap">PC 화면</p></div><div><div class="ug-ph"><div class="ug-b"><i class="l1"></i><i class="l2"></i></div><div class="ug-b"><i class="l1"></i><i class="l2"></i></div><div class="ug-b"><i class="l1"></i><i class="l2"></i></div></div><p class="kg-fcap">모바일 화면</p></div></div><p class="kg-fcap" style="margin-top:4px;">글 · 이미지는 <b>함께</b>, 크기 · 여백 · 스타일은 <b>모바일만 따로</b></p></div>
+            </div>
+            <ul class="kg-ul">
+              <li>· 모바일에서 바꾼 <b>스타일 · 크기 · 여백</b>은 모바일에만 적용돼요.</li>
+              <li>· 글 · 이미지 · 게시판 같은 <b>내용</b>은 PC와 함께 바뀌어요.</li>
+              <li>· 블럭 설정창의 <b>PC · 모바일</b> 탭으로도 고칠 화면을 고를 수 있어요.</li>
+            </ul>
+            <div class="ug-acts"><button type="button" class="sn-guide" onclick="ugShow('mobile')">PC · 모바일 전환 위치 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+          </section>
+
+          <section class="kg-sec" id="ug8">
+            <h4><span class="kg-sec-no">8</span>미리보기 · 게시</h4>
+            <p class="ug-where"><span class="ug-ico" data-ico="#tbPreview"></span>화면 오른쪽 위 › 미리보기 · 게시하기</p>
+            <p class="kg-lead">편집을 마치면 <b>미리보기</b>로 방문자에게 보일 화면을 확인하고, <b>게시하기</b>를 눌러 사이트에 공개하세요. 완성된 사이트가 내 주소(URL)에 연결돼요.</p>
+            <div class="kg-note warn"><span class="ico"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/></svg></span><span>편집한 뒤 <b>게시하기</b>를 누르지 않으면 고친 내용이 사이트에 반영되지 않아요.</span></div>
+            <ul class="kg-ul">
+              <li>· 실수했다면 되돌리기 <span class="ug-kbd">Ctrl</span> + <span class="ug-kbd">Z</span> · 다시하기 <span class="ug-kbd">Ctrl</span> + <span class="ug-kbd">Shift</span> + <span class="ug-kbd">Z</span>, 또는 왼쪽 아래 <b>히스토리</b>에서 이전 상태로 돌아가요.</li>
+            </ul>
+            <div class="ug-acts"><button type="button" class="sn-guide" onclick="ugShow('preview')">미리보기 · 게시 위치 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+            <div class="kg-note"><i>·</i><span>더 궁금한 점은 <a class="kg-lk" href="https://supportcenter.creatorlink.net/creatorlink/" target="_blank" rel="noopener noreferrer">서포트센터<svg class="kg-lk-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></a>에서 찾아보거나 <a class="kg-lk" href="javascript:void 0" onclick="clAskOpen();return false;">문의하기</a>로 알려 주세요.</span></div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="ugTour" aria-live="polite" onclick="ugTourBg(event)"><div class="ug-spot"></div><div class="ug-pop" role="dialog" aria-label="주요 기능 둘러보기"><button class="kg-close" onclick="ugTourEnd()" title="닫기 (ESC)" aria-label="둘러보기 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><h5></h5><p></p><div class="ft"><span class="no"></span><button type="button" class="ug-prev" onclick="ugTourStep(-1)">이전</button><button type="button" class="btn-sm ug-next" onclick="ugTourStep(1)">다음</button></div></div></div>
+  <div id="ugPill" role="status"><button type="button" class="go" onclick="ugOpen()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>가이드로 돌아가기</button><button type="button" class="x" onclick="ugPillHide()" title="닫기" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
   <!-- 260923 추가 — cal.com 연동 가이드 모달 (대시보드 가이드 모달 kg 매너: 헤드 · 단계 앵커(스크롤 고정·스크롤 스파이) · 섹션 · 화면 목업 + 캡션 · STEP 줄 · 안내 박스) -->
   <div id="calGuideOverlay" onclick="if(event.target===this) closeCalGuide()">
     <div class="kg-panel">
@@ -18097,6 +18322,117 @@
     bgmSetClose(); bgmSwSync(); bgmRender(); calMvSync();
     clToast(fromSw?'배경음악 플레이어를 켰습니다.':(!BGM.src && wasOn?'음원이 없어 배경음악 플레이어를 껐습니다.':'배경음악 설정을 저장했습니다.'));
   }
+  /* ── 261023 추가 — 사용 가이드 (좌측 레일 「사용 가이드」 · 좁은 화면 메뉴 「가이드」). 열기 · 목차 이동 · 스크롤 따라 목차 표시는 무료 음원 가이드(bgGo · bgSpy)와 같은 동작 ── */
+  function ugIcons(){   /* 「어디에 있나」 아이콘 = 화면의 실제 버튼 아이콘을 그대로 복사(버튼 모양이 바뀌어도 맞게) */
+    document.querySelectorAll('#ugOverlay .ug-ico[data-ico]').forEach(function(s){ if(s.firstChild) return; var b=document.querySelector(s.getAttribute('data-ico')), v=b&&b.querySelector('svg'); if(v){ var c=v.cloneNode(true); c.removeAttribute('class'); c.removeAttribute('style'); s.appendChild(c); } else s.style.display='none'; });
+  }
+  var ugLastTop=0;   /* 다시 열면 마지막으로 보던 자리부터 */
+  function ugOpen(){
+    var ov=document.getElementById('ugOverlay'); if(!ov) return;
+    ugPillHide(); if(ugT.on) ugTourEnd();
+    ugIcons(); ov.classList.add('open');
+    var b=document.getElementById('ugBody'); if(b){ var bh=b.style.scrollBehavior; b.style.scrollBehavior='auto'; b.scrollTop=ugLastTop; b.style.scrollBehavior=bh; } ugSpy();
+    var x=ov.querySelector('.kg-close'); if(x) try{ x.focus({preventScroll:true}); }catch(e){}
+  }
+  function ugClose(){ var ov=document.getElementById('ugOverlay'); if(!ov) return; var b=document.getElementById('ugBody'); if(b && ov.classList.contains('open')) ugLastTop=b.scrollTop; ov.classList.remove('open'); }
+  /* 「가이드로 돌아가기」 알약 — 위치 보기에서 기능을 연 뒤 잠깐 남아 한 번에 돌아온다 */
+  var ugPillTm=null;
+  function ugPillShow(){ var p=document.getElementById('ugPill'); if(!p) return; p.classList.add('show'); clearTimeout(ugPillTm); ugPillTm=setTimeout(ugPillHide,15000); }
+  function ugPillHide(){ var p=document.getElementById('ugPill'); if(p) p.classList.remove('show'); clearTimeout(ugPillTm); }
+  function ugGo(id){
+    var body=document.getElementById('ugBody'), sec=document.getElementById(id), steps=document.getElementById('ugSteps'); if(!body||!sec) return;
+    var off=steps?steps.offsetHeight:0, top=body.scrollTop+sec.getBoundingClientRect().top-body.getBoundingClientRect().top-off-10;
+    body.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+  }
+  function ugSpy(){
+    var body=document.getElementById('ugBody'), steps=document.getElementById('ugSteps'); if(!body||!steps) return;
+    var off=steps.offsetHeight+24, bt=body.getBoundingClientRect().top, btns=steps.querySelectorAll('.kg-step'), cur=btns.length?btns[0].getAttribute('data-t'):null;
+    for(var i=0;i<btns.length;i++){ var sec=document.getElementById(btns[i].getAttribute('data-t')); if(sec && (sec.getBoundingClientRect().top-bt)<=off) cur=btns[i].getAttribute('data-t'); }
+    if(btns.length && body.scrollTop+body.clientHeight>=body.scrollHeight-4) cur=btns[btns.length-1].getAttribute('data-t');
+    for(var j=0;j<btns.length;j++){ var on=btns[j].getAttribute('data-t')===cur; if(on && !btns[j].classList.contains('on')){ try{ btns[j].scrollIntoView({block:'nearest',inline:'nearest'}); }catch(e){} } btns[j].classList.toggle('on',on); }   /* 좁은 화면: 목차 알약이 옆으로 밀려 있으면 지금 항목을 보이게 */
+  }
+  /* 섹션의 「○○ 열기」 — 가이드를 닫고 그 기능을 바로 연다 */
+  function ugDo(a){
+    ugClose();
+    if(a==='add'){ var bb=document.getElementById('btnBlockAdd'); if(bb && bb.offsetParent) bb.click(); else if(typeof openBlockAdd==='function') openBlockAdd(null); return; }
+    if(a==='mobile'){ if(typeof mvSetMode==='function') mvSetMode('mobile'); return; }
+    if(a==='preview'){ if(typeof pvOpen==='function') pvOpen(); return; }
+    if(typeof closeAllPanels==='function') closeAllPanels();
+    if(typeof togglePanel==='function') togglePanel(a);
+  }
+  /* 주요 기능 둘러보기 — 실제 버튼을 차례로 비춘다. 화면에 없는 버튼(좁은 화면 등)은 건너뛴다 */
+  var UG_TOUR=[
+    ['#btnBlockAdd','블럭 추가','원하는 블럭을 골라 사이트에 넣어요. 블럭 사이의 + 버튼으로 원하는 자리에 넣을 수도 있어요.'],
+    ['#btnPages','메뉴 · 페이지 설정','페이지를 추가 · 삭제하고 메뉴 이름과 순서를 바꿔요.'],
+    ['#btnLib','컨텐츠 보관함','이미지 · 동영상 · 아이콘을 올려 두고 블럭 위로 끌어다 넣어요.'],
+    ['#btnStyle','스타일 · 효과','컬러 모드 · 서체 · 배경과 스크롤 · 화면전환 효과를 사이트 전체에 한 번에 적용해요.'],
+    ['#btnComp','컴포넌트','퀵메뉴 · 팝업 · 화상 미팅 예약 · 배경음악처럼 사이트 위에 떠 있는 기능을 넣어요.'],
+    ['#btnSite','사이트 설정','메타태그 · 파비콘 · 로그인/회원가입 · 다국어 같은 운영 설정을 해요.'],
+    ['#tbMode','PC · 모바일 편집','모바일 화면으로 바꿔 휴대폰에서 보일 모양을 따로 다듬어요.'],
+    ['#tbPreview','미리보기','방문자에게 보일 화면을 새 창으로 확인해요.'],
+    ['#tbPublish','게시하기','편집을 마치면 게시해야 사이트에 반영돼요. 멋지게 완성된 사이트를 모두에게 보여 주세요.']
+  ];
+  var ugT={on:false,list:[],i:0,mode:'tour',k:''};
+  /* 섹션의 「위치 보기」 — 가이드를 내리고 실제 버튼만 비춘다. 말풍선에서 열어 보기 · 가이드로 돌아가기 */
+  var UG_SHOW={
+    add:['#btnBlockAdd','블럭 추가','이 버튼을 누르면 블럭 추가 창이 열려요. 블럭 사이의 + 버튼으로도 넣을 수 있어요.'],
+    lib:['#btnLib','컨텐츠 보관함','이미지 · 동영상 · 아이콘을 올려 두는 곳이에요. 항목을 블럭 위로 끌어다 놓으면 들어가요.'],
+    pages:['#btnPages','메뉴 · 페이지 설정','페이지 추가 · 삭제, 메뉴 이름과 순서를 여기서 바꿔요.'],
+    style:['#btnStyle','스타일','컬러 모드 · 서체 · 배경을 사이트 전체에 적용해요. 바로 아래 버튼이 효과예요.'],
+    site:['#btnSite','사이트 설정','메타태그 · 파비콘 · 로그인/회원가입 같은 운영 설정이에요.'],
+    mobile:['#tbMode','PC · 모바일 전환','모바일을 누르면 휴대폰 화면으로 바뀌어요. 모바일에서 바꾼 모양은 모바일에만 적용돼요.'],
+    preview:['#tbPreview, #tbPublish','미리보기 · 게시하기','미리보기로 확인한 뒤 게시하기를 눌러야 사이트에 반영돼요.']
+  };
+  function ugShow(k){
+    var s=UG_SHOW[k]; if(!s) return;
+    var el=document.querySelector(s[0]);
+    ugClose(); if(typeof closeAllPanels==='function') closeAllPanels();
+    if(!ugVis(el)){ ugDo(k); ugPillShow(); return; }   /* 화면에 없는 버튼(좁은 화면 등)은 바로 연다 */
+    ugT={on:true,list:[s],i:0,mode:'show',k:k}; document.getElementById('ugTour').classList.add('open'); ugTourDraw();
+  }
+  function ugVis(el){ if(!el) return false; var r=el.getBoundingClientRect(); return r.width>0 && r.height>0 && r.bottom>0 && r.right>0 && r.top<innerHeight && r.left<innerWidth && getComputedStyle(el).visibility!=='hidden'; }
+  function ugTourStart(){
+    ugClose(); if(typeof closeAllPanels==='function') closeAllPanels();
+    ugT.list=UG_TOUR.filter(function(s){ return ugVis(document.querySelector(s[0])); });
+    if(!ugT.list.length){ if(typeof clToast==='function') clToast('지금 화면에서는 둘러볼 버튼이 보이지 않습니다.'); return; }
+    ugT.on=true; ugT.i=0; ugT.mode='tour'; ugT.k=''; document.getElementById('ugTour').classList.add('open'); ugTourDraw();
+  }
+  function ugTourEnd(){ ugT.on=false; var t=document.getElementById('ugTour'); if(t) t.classList.remove('open'); }
+  function ugTourStep(d){
+    if(!ugT.on) return;
+    if(ugT.mode==='show'){ var k=ugT.k; ugTourEnd(); if(d<0) ugOpen(); else { ugDo(k); ugPillShow(); } return; }   /* 위치 보기: 이전 = 가이드로 돌아가기 · 다음 = 열어 보기 */
+    var n=ugT.i+d; if(n>=ugT.list.length){ ugTourEnd(); return; } if(n<0) return; ugT.i=n; ugTourDraw();
+  }
+  function ugTourBg(e){ if(e.target!==e.currentTarget) return; if(ugT.on && ugT.mode==='show'){ ugTourEnd(); ugOpen(); } }   /* 위치 보기 중 바깥을 누르면 가이드로 */
+  function ugRect(sel){ var L=1e9,T=1e9,R=-1e9,B=-1e9; document.querySelectorAll(sel).forEach(function(e){ var r=e.getBoundingClientRect(); if(!r.width) return; L=Math.min(L,r.left); T=Math.min(T,r.top); R=Math.max(R,r.right); B=Math.max(B,r.bottom); }); return {left:L,top:T,right:R,bottom:B,width:R-L,height:B-T}; }   /* 여러 버튼(미리보기 + 게시하기)을 한 테두리로 */
+  function ugTourDraw(){
+    var T=document.getElementById('ugTour'); if(!T||!ugT.on) return;
+    var s=ugT.list[ugT.i], el=document.querySelector(s[0]); if(!ugVis(el)){ ugTourEnd(); return; }
+    var r=ugRect(s[0]), pad=4, sp=T.querySelector('.ug-spot'), pop=T.querySelector('.ug-pop');
+    sp.style.left=(r.left-pad)+'px'; sp.style.top=(r.top-pad)+'px'; sp.style.width=(r.width+pad*2)+'px'; sp.style.height=(r.height+pad*2)+'px';
+    pop.querySelector('h5').textContent=s[1]; pop.querySelector('p').textContent=s[2];
+    var show=(ugT.mode==='show');
+    pop.querySelector('.no').textContent=show?'':(ugT.i+1)+' / '+ugT.list.length;
+    var pv=pop.querySelector('.ug-prev'), nx=pop.querySelector('.ug-next');
+    if(show){ pv.disabled=false; pv.textContent='가이드로 돌아가기'; nx.textContent='열어 보기'; }
+    else { pv.disabled=(ugT.i===0); pv.textContent='이전'; nx.textContent=(ugT.i===ugT.list.length-1)?'시작하기':'다음'; }
+    /* 말풍선 자리 — 왼쪽 레일 버튼은 오른쪽, 위쪽 띠 버튼은 아래. 화면 밖으로 나가지 않게 */
+    var pw=pop.offsetWidth, ph=pop.offsetHeight, gap=14, L, Tp;
+    if(r.left<90 && r.width<90){   /* 왼쪽 레일 */ L=r.right+gap; Tp=r.top+r.height/2-ph/2; } else { L=r.left+r.width/2-pw/2; Tp=r.bottom+gap; }
+    L=Math.max(12,Math.min(innerWidth-pw-12,L)); Tp=Math.max(12,Math.min(innerHeight-ph-12,Tp));
+    pop.style.left=L+'px'; pop.style.top=Tp+'px';
+    try{ nx.focus({preventScroll:true}); }catch(e){}
+  }
+  (function(){
+    function bind(){ var b=document.getElementById('ugBody'); if(b&&!b._ug){ b._ug=1; b.addEventListener('scroll',ugSpy,{passive:true}); } }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
+    document.addEventListener('keydown',function(e){
+      if(ugT.on){ if(e.key==='Escape'){ e.stopPropagation(); e.preventDefault(); if(ugT.mode==='show'){ ugTourEnd(); ugOpen(); } else ugTourEnd(); } else if(e.key==='ArrowRight'){ e.preventDefault(); ugTourStep(1); } else if(e.key==='ArrowLeft'){ e.preventDefault(); ugTourStep(-1); } return; }
+      if(e.key==='Escape' && document.querySelector('#ugOverlay.open')){ e.stopPropagation(); ugClose(); }
+    },true);
+    window.addEventListener('resize',function(){ if(ugT.on) ugTourDraw(); });
+  })();
+  window.ugOpen=ugOpen; window.ugClose=ugClose; window.ugGo=ugGo; window.ugDo=ugDo; window.ugShow=ugShow; window.ugTourBg=ugTourBg; window.ugPillHide=ugPillHide; window.ugTourStart=ugTourStart; window.ugTourEnd=ugTourEnd; window.ugTourStep=ugTourStep;
   /* 무료 음원 이용 가이드 (cal.com 가이드와 같은 동작) */
   function openBgmGuide(){ var ov=document.getElementById('bgmGuideOverlay'); if(!ov) return; ov.classList.add('open'); var b=document.getElementById('bgBody'); if(b) b.scrollTop=0; bgSpy(); }
   function closeBgmGuide(){ var ov=document.getElementById('bgmGuideOverlay'); if(ov) ov.classList.remove('open'); }
@@ -19854,7 +20190,7 @@
   /* 261023 추가 — 문의하기(좌측 레일 · 좁은 화면 메뉴): 헬프데스크를 새 탭으로. 전역 var open 이 window.open 을 덮으므로 clWinOpen 을 쓴다 */
   function clAskOpen(){ var url='https://www.creatorlink.net/dashboard/#helpdesk', w=window.clWinOpen||window.open; try{ w(url,'_blank','noopener'); }catch(e){ location.href=url; } }
   window.clAskOpen=clAskOpen;
-  function tbMobAct(a){ tbCloseMenu(); if(a==='ask'){ clAskOpen(); return; } if(a==='exit'){ try{parent.postMessage('cl-exit-editor','*');}catch(e){} } else { clToast('준비중입니다.'); } }
+  function tbMobAct(a){ tbCloseMenu(); if(a==='ask'){ clAskOpen(); return; } if(a==='guide'){ if(typeof ugOpen==='function') ugOpen(); return; } if(a==='exit'){ try{parent.postMessage('cl-exit-editor','*');}catch(e){} } else { clToast('준비중입니다.'); } }
   document.addEventListener('click',function(e){ var m=document.getElementById('tbMobMenu'); if(m && m.classList.contains('open') && !m.contains(e.target) && !(e.target.closest&&e.target.closest('.tb-ham'))) tbCloseMenu(); });
   function toggleCollapse(id){ var f=pgFind(id); if(f){ f.node.collapsed=!f.node.collapsed; renderPages(); } }
 
