@@ -3025,6 +3025,8 @@
   .cn-stk > .cn-sm + .cn-txt{margin-top:28px;} .cn-stk > .cn-txt + .cn-sm{margin-top:44px;}
   .cn-frame{display:inline-flex;flex-direction:column;align-items:center;text-align:center;border:2px solid var(--cntc);padding:48px 84px;}
   .cn-vl{display:block;width:1px;height:56px;background:var(--cntc);margin:22px auto;}
+  .cn-wrap[data-st="text"] .cn-vl{height:42px;margin:16px auto 22px;}   /* 261023 추가 — 글만(좌측 66 의 세로선) */
+  .cn-wrap[data-st="text"] .cn-vl + .cn-ds{margin-top:0;}
   .cn-wrap[data-st="profile"] .cn-in{max-width:none;padding-left:0;padding-right:0;}
   .cn-ban{position:relative;width:100%;height:var(--cnbh);background:#9AA0A8 center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:0 24px;box-sizing:border-box;}
   .cn-av{position:relative;width:var(--cnav);height:var(--cnav);border-radius:50%;background:#C9CDD3 center/cover no-repeat;margin:calc(var(--cnav) / -2) auto 0;}
@@ -3064,6 +3066,7 @@
   .cn-tl-i:nth-child(even) .cn-tl-tx{order:2;text-align:left;}
   .cn-tl-yr{font-family:var(--cntf);font-size:calc(var(--cnts) * 2.4);font-weight:300;line-height:1;letter-spacing:-.01em;color:var(--cnitc2);font-variant-numeric:tabular-nums;margin-bottom:22px!important;}
   /* 261023 수정 — 줄 목록은 글 칸이라 한 줄 = <p> 하나, 월은 줄 앞 인라인(.cn-tl-mo). 예전 flex(월 · 글 두 칸) 구조는 편집기에서 Enter 를 치면 새 줄 대신 같은 줄에 칸이 붙었다 */
+  .cn-arx{aspect-ratio:var(--cnmar);overflow:hidden;border-radius:var(--cnrd);} .cn-arx > img,.cn-arx > video{width:100%!important;height:100%!important;object-fit:cover;}   /* 261023 추가 — 대표 이미지 비율(항목별 · 좌우 · 가운데) */
   .cn-tl-mo{display:inline-block;min-width:22px;margin-right:14px;color:var(--cnac);font-variant-numeric:tabular-nums;}
   .cn-tl-m{aspect-ratio:var(--cnar);overflow:hidden;border-radius:var(--cnrd);background:#E9ECF0;}
   .cn-tl-m img,.cn-tl-m video{display:block;width:100%;height:100%;object-fit:cover;}
@@ -3092,9 +3095,9 @@
     .cn-wrap[data-shape="rect"][data-mpos="side"] .cn-it{flex-direction:column;} .cn-wrap[data-shape="rect"][data-mpos="side"] .cn-m{width:100%;}
     .cn-in{padding-left:20px;padding-right:20px;}
   }
-  #bset :is(#cnItemList,#cnMediaList) .mt-imgrow{align-items:center;}
-  #bset :is(#cnItemList,#cnMediaList) .mt-imgdrag,#bset :is(#cnItemList,#cnMediaList) .mt-imgthumb,#bset :is(#cnItemList,#cnMediaList) .mt-imgdel{margin-top:0;}
-  #bset :is(#cnItemList,#cnMediaList) .vc-caps > input.cn-src{display:none;}
+  #bset #cnItemRows .mt-imgrow{align-items:center;}
+  #bset #cnItemRows .mt-imgdrag,#bset #cnItemRows .mt-imgthumb,#bset #cnItemRows .mt-imgdel{margin-top:0;}
+  #bset #cnItemRows .vc-caps > input.cn-src{display:none;}
   #bset #cnMediaList .cn-mlb{flex:none;width:36px;font-size:11px;font-weight:700;color:var(--ink-3);text-align:center;}
   #bset .cn-r[hidden]{display:none!important;}
   /* 261022 추가 — 글 칸 인라인 편집: 바깥(.cn-tt 등)이 글꼴 · 크기 · 색을 정하고 편집 영역(.cred.cn-e)은 그대로 물려받는다(사이트 스타일의 .cred 기본값을 끊는다) */
@@ -3108,7 +3111,7 @@
   #stage .blk[data-block="cnblk"] .cn-wrap .cred.rt-ph[data-ph]::before{content:none;display:none;}
   #stage .blk[data-block="cnblk"] .cn-wrap .cred.rt-ph[data-ph]::after{opacity:.42;}
   html.mview #stage .blk[data-block="cnblk"] .cn-wrap .cred{outline-color:transparent !important;cursor:auto;}
-  #bset #cnMediaList .cn-mnm,#bset #cnItemList .cn-mnm{display:block;font-size:12.5px;line-height:1.4;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  #bset #cnItemRows .cn-mnm{display:block;font-size:12.5px;line-height:1.4;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   /* 261022 추가 — 빈 글 칸의 자리표시는 고른 블럭에서만(다른 블럭을 고치는 동안 페이지는 게시 화면처럼) */
   #stage .blk[data-block="cnblk"]:not(.sel):not(.rt-editing) .cn-wrap :is(.cn-eb,.cn-tt,.cn-sub,.cn-ds,.cn-li-t,.cn-li-d,.cn-it-t,.cn-it-s,.cn-it-d,.cn-cap-t,.cn-cap-s,.cn-lines,.cn-bw):has(> .cred.rt-ph){display:none;}
   #bset #cnShow .gt-pan > .gt-chips{grid-template-columns:repeat(3,minmax(0,1fr));}
@@ -4300,6 +4303,7 @@
     .ba-card:hover .ba-badge.b3d,.ba-card:focus-visible .ba-badge.b3d{opacity:1;transform:none;}
   }
   .ba-empty{padding:60px 10px;text-align:center;color:var(--ink-3);font-size:var(--fs-base);font-weight:600;}
+  .ba-search-other{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:14px;}   /* 261023 추가 — 검색 결과가 다른 카테고리에 있을 때 */
 
   /* ── 블럭설정: 스미어 텍스트 전용 컨트롤 (기존 그린 매너 계승) ── */
   #bsetDefault > .acc-row:last-child, #bsetSmear > .acc-row:last-child{border-bottom:1px solid var(--line);}
@@ -4634,6 +4638,18 @@
   #imSelRow{margin:-4px 0 6px;padding:0 2px 0 4px;height:30px;background:none;border:none;border-radius:0;}
   #imSelRow.none .lb{visibility:hidden;} #imSelRow .lb b{margin-left:0;}   /* 260920 수정 — 라벨: 「선택한 항목 N번」 → 「N번 선택」 · 「N개 선택」(숫자가 앞) */
   #imSelRow .im-tb button.danger{margin-left:0;} #imSelRow .im-tb button.danger::before{display:none;}
+  /* 261023 추가 — 컨텐츠 블럭 썸네일 격자: 이미지 블럭 목록과 같은 도구 줄 · 상자 · 배지(자리 이름은 배지 폭이 글자에 맞게) */
+  #bsetCn .cn-selrow{margin:-4px 0 6px;padding:0 2px 0 4px;height:30px;background:none;border:none;border-radius:0;} #bsetCn .cn-selrow.none .lb{visibility:hidden;} #bsetCn .cn-selrow .lb b{margin-left:0;}
+  .cn-selrow .im-tb button.danger{margin-left:0;} .cn-selrow .im-tb button.danger::before{display:none;}
+  #bsetCn .cnt-list{background:var(--bg-3);border-color:var(--border);}
+  #cnMediaList .im-th .no{padding:0 5px;}
+  #bsetCn .im-addrow .cn-gonly{display:none;} #bsetCn.cn-grid .im-addrow .cn-gonly{display:inline-flex;}
+  .cn-am-box{width:520px;max-width:calc(100vw - 40px);} .cn-am-seg{margin:4px 0 14px;}
+  .cn-am-stage{display:flex;align-items:center;justify-content:center;height:300px;background:var(--bg-3);border-radius:var(--r-md);}
+  .cn-am-frame{position:relative;overflow:hidden;border-radius:4px;box-shadow:0 0 0 1px rgba(20,24,32,.12);cursor:grab;touch-action:none;background:#fff;}
+  .cn-am-frame.nodrag{cursor:default;} .cn-am-frame.dragging{cursor:grabbing;}
+  .cn-am-frame img,.cn-am-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none;}
+  .cn-am-note{margin:10px 0 4px;font-size:12.5px;color:var(--ink-3);line-height:1.5;} .cn-am-note a{color:var(--green-text);cursor:pointer;text-decoration:underline;}
   .im-rm-all.multi .sw{display:none;} .im-rm-all.multi span{color:var(--ink-2);}   /* 260921 추가 — 비율 설정(묶음): 일괄 적용 스위치 대신 안내 한 줄 */
   .im-selrow{display:flex;align-items:center;margin-top:10px;padding:4px 4px 4px 10px;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);}   /* 260919 추가 — 선택한 항목 도구 줄 */
   .im-selrow .lb{font-size:var(--fs-sm);font-weight:600;color:var(--ink-2);white-space:nowrap;} .im-selrow .lb b{color:var(--green-text);font-weight:700;margin-left:2px;}
@@ -8213,7 +8229,7 @@
   /* 로고 */
   .site-hd .logo{color:var(--hd-logo);font-size:var(--hd-lfs);letter-spacing:var(--hd-lls);font-family:var(--hd-lfont);font-weight:var(--hd-lfw);line-height:1.1;display:flex;align-items:center;flex:none;}
   .site-hd .logo b,.site[data-theme] .site-hd .logo,.site[data-theme] .site-hd .logo b{color:var(--hd-logo);}
-  .site-hd .logo .dot{color:var(--hd-logo);opacity:.4;}
+  .site-hd .logo .dot,.site[data-theme] .site-hd .logo .dot{color:var(--hd-logo);opacity:.4;}   /* 261023 수정 — 테마 규칙(.site[data-theme] .logo .dot = 옅은 회색 고정)이 더 세서 점만 로고 색을 따르지 않았다(어두운 바탕에서 로고는 사라지고 점만 남음) */
   .site-hd .logo img{display:block;max-height:var(--hd-lmax);width:auto;max-width:280px;object-fit:contain;}
   .site-hd.hd-nologo .logo{display:none;}
   .site-hd .snav-ham,.site[data-theme] .site-hd .snav-ham{color:var(--hd-ac);}
@@ -9937,6 +9953,18 @@
       <div class="im-am-ta"><textarea id="imAltTa" maxlength="150" spellcheck="false" oninput="document.getElementById('imAltCnt').textContent=this.value.length+' / 150'"></textarea><span class="cnt" id="imAltCnt">0 / 150</span></div>
       <button type="button" class="dm-save" onclick="imAltApply()">적용</button>
       <button type="button" class="dm-cancel" onclick="imAltClose()">취소</button>
+    </div>
+  </div>
+  <!-- 261023 추가 — 컨텐츠 블럭: 비율 · 보이는 영역. 항목(칸 · 타일 등)은 비율이 블럭 공통이라 영역만, 좌우 · 가운데의 대표 이미지는 비율도 -->
+  <div class="dm-overlay rt-lm" id="cnAreaModal" role="dialog" aria-modal="true" aria-label="비율 · 보이는 영역">
+    <div class="dm-modal rt-lm-box cn-am-box">
+      <button type="button" class="dm-close" onclick="cnAmClose()" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <h3 id="cnAmTtl">보이는 영역</h3>
+      <div class="mt-seg cn-am-seg" id="cnAmArSeg"></div>
+      <div class="cn-am-stage"><div class="cn-am-frame" id="cnAmFrame"></div></div>
+      <div class="cn-am-note" id="cnAmNote"></div>
+      <button type="button" class="dm-save" onclick="cnAmApply()">적용</button>
+      <button type="button" class="dm-cancel" onclick="cnAmClose()">취소</button>
     </div>
   </div>
   <!-- 260918 추가 — 텍스트 블럭 동영상 교체 모달 -->
@@ -12543,18 +12571,26 @@
         <div class="fld sfold cn-r" data-for="split stack" id="cnMediaAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">이미지·동영상<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="mt-imglist" id="cnMediaList" data-rowcard="1"></div>
+            <!-- 261023 수정 — 줄 목록 → 이미지 블럭(IMAGE02)과 같은 썸네일 격자 + 위쪽 도구 줄(비율·보이는 영역 · 링크 · Alt · URL · 삭제). 칸 수는 배치가 정해 추가 · 순서 바꾸기는 없다. 배지 = 자리 이름 -->
+            <div class="im-selrow none cn-selrow" id="cnMSelRow"><span class="lb"><b id="cnMSelNo"></b> 선택</span><span class="im-tb" id="cnMTb"><button type="button" data-act="area" title="비율 · 보이는 영역" aria-label="비율 · 보이는 영역" onclick="cnGAct('cnM','area')"><svg viewBox="0 0 24 24"><path d="M6 2v16h16"/><path d="M2 6h16v16"/></svg></button><button type="button" data-act="link" title="링크" aria-label="링크" onclick="cnGAct('cnM','link')"><svg viewBox="0 0 24 24"><path d="M10.4 12.8a4 4 0 0 0 6.03.43l2.4-2.4a4 4 0 0 0-5.66-5.66l-1.38 1.37"/><path d="M13.6 11.2a4 4 0 0 0-6.03-.43l-2.4 2.4a4 4 0 0 0 5.66 5.66l1.37-1.37"/></svg></button><button type="button" data-act="alt" title="대체 텍스트" aria-label="대체 텍스트" onclick="cnGAct('cnM','alt')">Alt</button><button type="button" data-act="url" title="주소(URL)로 교체" aria-label="주소(URL)로 교체" onclick="cnGAct('cnM','url')">URL</button><button type="button" class="danger" data-act="del" title="삭제" aria-label="삭제" onclick="cnGAct('cnM','del')"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg></button></span></div>
+            <div class="cnt-list"><div class="im-thumbs" id="cnMediaList"></div></div>
             <div class="mtk-hint">썸네일을 누르고 보관함에서 고르거나, 보관함 이미지·동영상을 블럭의 이미지 위에 끌어다 놓으면 바뀝니다. 캡션은 블럭에서 고칩니다.</div>
           </div></div>
         </div>
         <div class="fld sfold cn-r" data-for="split cols tiles mosaic list hist" id="cnItemAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)"><span id="cnItemTtl">이미지·동영상</span> <span class="n" id="cnItemCount"></span><span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="mt-imglist" id="cnItemList" data-rowcard="1"></div>
+            <!-- 261023 수정 — 사진이 있는 배치는 이미지 블럭(IMAGE02)과 같은 썸네일 격자 + 도구 줄(끌어서 순서 · 롤오버 ×). 사진 없는 목록(글 목록 · 좌우의 목록)은 줄 목록(#cnItemRows) 그대로 -->
+            <div class="im-selrow none cn-selrow" id="cnISelRow"><span class="lb"><b id="cnISelNo"></b> 선택</span><span class="im-tb" id="cnITb"><button type="button" data-act="area" title="비율 · 보이는 영역" aria-label="비율 · 보이는 영역" onclick="cnGAct('cnI','area')"><svg viewBox="0 0 24 24"><path d="M6 2v16h16"/><path d="M2 6h16v16"/></svg></button><button type="button" data-act="link" title="링크" aria-label="링크" onclick="cnGAct('cnI','link')"><svg viewBox="0 0 24 24"><path d="M10.4 12.8a4 4 0 0 0 6.03.43l2.4-2.4a4 4 0 0 0-5.66-5.66l-1.38 1.37"/><path d="M13.6 11.2a4 4 0 0 0-6.03-.43l-2.4 2.4a4 4 0 0 0 5.66 5.66l1.37-1.37"/></svg></button><button type="button" data-act="alt" title="대체 텍스트" aria-label="대체 텍스트" onclick="cnGAct('cnI','alt')">Alt</button><button type="button" data-act="url" title="주소(URL)로 교체" aria-label="주소(URL)로 교체" onclick="cnGAct('cnI','url')">URL</button><button type="button" class="danger" data-act="del" title="삭제" aria-label="삭제" onclick="cnGAct('cnI','del')"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg></button></span></div>
+            <div class="cnt-list" id="cnItemGridBox"><div class="im-thumbs" id="cnItemList"></div></div>
+            <div class="mt-imglist" id="cnItemRows" data-rowcard="1"></div>
             <div class="im-addrow">
-              <button type="button" class="btn-sm" id="cnItemAdd" onclick="cnItemAdd()" title="항목을 하나 더 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button>
+              <input type="file" id="cnListUp" accept="image/*,video/*" multiple style="display:none;" onchange="blkListUpload(this,'cn')">
+              <button type="button" class="ghost cn-gonly" onclick="cnIUrlAdd()" title="이미지·동영상 파일 주소(URL)로 항목을 추가합니다">URL</button>
+              <button type="button" class="ghost cn-gonly" id="cnItemUp" onclick="document.getElementById('cnListUp').click()" title="내 컴퓨터의 파일을 보관함과 이 목록에 함께 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
+              <button type="button" class="btn-sm" id="cnItemAdd" onclick="cnItemAddBtn()" title="항목을 하나 더 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button>
             </div>
-            <div class="mtk-hint" id="cnItemHint">항목 글은 블럭에서 고칩니다. 새 항목은 앞 항목의 사진으로 들어갑니다.</div>
+            <div class="mtk-hint" id="cnItemHint">항목 글은 블럭에서 고칩니다.</div>   <!-- 261023 수정 — 「새 항목은 앞 항목의 사진」 문구 삭제: 사진 목록의 「추가」는 보관함에서 고른 사진으로 넣는다 -->
           </div></div>
         </div>
         <div class="fld sfold acc-flush" id="cnLayAcc">
@@ -12586,6 +12622,7 @@
               <button type="button" class="mt-seg-b" data-m="plain" onclick="cnSeg('st','cnStSeg','plain')">기본</button>
               <button type="button" class="mt-seg-b" data-m="frame" onclick="cnSeg('st','cnStSeg','frame')">액자</button>
               <button type="button" class="mt-seg-b" data-m="profile" onclick="cnSeg('st','cnStSeg','profile')">프로필</button>
+              <button type="button" class="mt-seg-b" data-m="text" onclick="cnSeg('st','cnStSeg','text')">글만</button>
             </div>
             <div class="srow cn-r" data-for="stack" data-st="plain" style="margin:12px 0 6px;"><span class="k">순서</span></div>
             <div class="mt-seg cn-r" data-for="stack" data-st="plain" id="cnOrdSeg">
@@ -12595,7 +12632,7 @@
             <div class="srow cn-r" data-for="stack" data-st="plain"><span class="k">이미지 폭</span><input class="rng" type="range" id="cnIw" min="60" max="1140" step="10" value="600"><span class="v" id="cnIwV">600px</span></div>
             <div class="srow cn-r" data-for="stack" data-st="profile"><span class="k">배너 높이</span><input class="rng" type="range" id="cnBh" min="200" max="700" step="10" value="420"><span class="v" id="cnBhV">420px</span></div>
             <div class="srow cn-r" data-for="stack" data-st="profile"><span class="k">프로필 크기</span><input class="rng" type="range" id="cnAv" min="80" max="260" step="2" value="140"><span class="v" id="cnAvV">140px</span></div>
-            <div class="srow cn-r" data-for="cols tiles list" style="margin:12px 0 6px;"><span class="k">칸 수</span></div>
+            <div class="srow cn-r" data-for="cols tiles list" style="margin:12px 0 6px;"><span class="k" id="cnNLbl">칸 수</span></div>
             <div class="mt-seg cn-r" data-for="cols tiles list" id="cnNSeg">
               <button type="button" class="mt-seg-b" data-m="1" onclick="cnSeg('n','cnNSeg',1)">1</button>
               <button type="button" class="mt-seg-b" data-m="2" onclick="cnSeg('n','cnNSeg',2)">2</button>
@@ -12603,8 +12640,8 @@
               <button type="button" class="mt-seg-b" data-m="4" onclick="cnSeg('n','cnNSeg',4)">4</button>
               <button type="button" class="mt-seg-b" data-m="5" onclick="cnSeg('n','cnNSeg',5)">5</button>
             </div>
-            <div class="srow cn-r" data-for="cols" style="margin:12px 0 6px;"><span class="k">이미지 모양</span></div>
-            <div class="mt-seg cn-r" data-for="cols" id="cnShapeSeg">
+            <div class="srow cn-r" data-for="cols" data-nostrip style="margin:12px 0 6px;"><span class="k">이미지 모양</span></div>
+            <div class="mt-seg cn-r" data-for="cols" data-nostrip id="cnShapeSeg">
               <button type="button" class="mt-seg-b" data-m="rect" onclick="cnSeg('shape','cnShapeSeg','rect')">사각</button>
               <button type="button" class="mt-seg-b" data-m="circle" onclick="cnSeg('shape','cnShapeSeg','circle')">원형</button>
               <button type="button" class="mt-seg-b" data-m="icon" onclick="cnSeg('shape','cnShapeSeg','icon')">아이콘</button>
@@ -12618,8 +12655,8 @@
             </div>
             <div class="srow cn-r" data-for="cols" data-shape="circle"><span class="k">원 크기</span><input class="rng" type="range" id="cnCs" min="60" max="400" step="2" value="200"><span class="v" id="cnCsV">200px</span></div>
             <div class="srow cn-r" data-for="cols list" data-shape="icon"><span class="k">아이콘 크기</span><input class="rng" type="range" id="cnIs" min="16" max="160" step="2" value="46"><span class="v" id="cnIsV">46px</span></div>
-            <div class="srow cn-r" data-for="cols" data-shape="rect icon circle" style="margin:12px 0 6px;"><span class="k">이미지 위치</span></div>
-            <div class="mt-seg cn-r" data-for="cols" data-shape="rect icon circle" id="cnMposSeg">
+            <div class="srow cn-r" data-for="cols" data-shape="rect icon circle" data-nostrip style="margin:12px 0 6px;"><span class="k">이미지 위치</span></div>
+            <div class="mt-seg cn-r" data-for="cols" data-shape="rect icon circle" data-nostrip id="cnMposSeg">
               <button type="button" class="mt-seg-b" data-m="top" onclick="cnSeg('mpos','cnMposSeg','top')">위</button>
               <button type="button" class="mt-seg-b" data-m="side" onclick="cnSeg('mpos','cnMposSeg','side')">옆</button>
             </div>
@@ -15104,7 +15141,7 @@
         <div class="ba-filter-menu" id="baFilterMenu"></div>
         <div class="ba-top-right">
           <button class="ba-search-btn" title="검색" onclick="toggleBaSearch(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></button>
-          <div class="ba-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input type="text" placeholder="블럭번호 검색"></div>
+          <div class="ba-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input type="text" id="baSearchIn" placeholder="블럭번호 검색" autocomplete="off" spellcheck="false" oninput="baSearchInput(this.value)" onkeydown="baSearchKey(event,this)"></div>
           <button class="ba-x" title="닫기" onclick="closeBlockAdd()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         </div>
       </div>
@@ -17334,7 +17371,7 @@
      확인 전엔 아무것도 반영되지 않으므로 바깥 클릭을 취소와 같게 해도 잃는 게 없다. 읽기 모달(가이드 · 확인 · 코드 · 설명)은 이미 제 onclick 으로 닫힌다.
      모달마다 onclick 을 달지 않고 여기 한 곳에서 — 새 모달은 PU_MODAL_CANCEL 에 한 줄만 보탠다 ══ */
   var PU_MODAL_CANCEL={
-    rtLinkModal:function(){ rtLinkCancel(); }, calSetModal:function(){ calSetClose(); }, bgmSetModal:function(){ bgmSetClose(); }, imRatioModal:function(){ imRatioClose(); }, imAltModal:function(){ imAltClose(); }, rtVidModal:function(){ rtVidUrlClose(); },
+    rtLinkModal:function(){ rtLinkCancel(); }, calSetModal:function(){ calSetClose(); }, bgmSetModal:function(){ bgmSetClose(); }, imRatioModal:function(){ imRatioClose(); }, imAltModal:function(){ imAltClose(); }, cnAreaModal:function(){ cnAmClose(); }, rtVidModal:function(){ rtVidUrlClose(); },
     hdPickModal:function(){ hdPickClose(false); }, gdPickModal:function(){ gdPickClose(false); }, tmPickModal:function(){ tmPickClose(false); }, ftPickModal:function(){ ftPickClose(false); }
   };
   document.addEventListener('click',function(e){
@@ -17343,7 +17380,7 @@
   },true);
   document.addEventListener('keydown',function(e){
     if(e.key!=='Escape') return;
-    ['calSetModal','bgmSetModal','imRatioModal','imAltModal','rtVidModal'].some(function(id){ var m=document.getElementById(id); if(!m || !m.classList.contains('show')) return false; e.preventDefault(); e.stopPropagation(); try{ PU_MODAL_CANCEL[id](); }catch(x){} return true; });   /* 링크 · 고르기 4종은 제 Esc 처리가 이미 있다 */
+    ['calSetModal','bgmSetModal','imRatioModal','imAltModal','cnAreaModal','rtVidModal'].some(function(id){ var m=document.getElementById(id); if(!m || !m.classList.contains('show')) return false; e.preventDefault(); e.stopPropagation(); try{ PU_MODAL_CANCEL[id](); }catch(x){} return true; });   /* 링크 · 고르기 4종은 제 Esc 처리가 이미 있다 */
   },true);
   /* ── 260923 추가 — cal.com 연동 가이드 모달 (대시보드 가이드 모달 fgGo/fgSpy 와 같은 동작) ── */
   function openCalGuide(){ var ov=document.getElementById('calGuideOverlay'); if(!ov) return; ov.classList.add('open'); var b=document.getElementById('cgBody'); if(b) b.scrollTop=0; cgSpy(); }
@@ -20154,6 +20191,7 @@
     baPendingAddbar = (srcBtn && srcBtn.closest) ? srcBtn.closest('.addbar') : null;
     /* 261016 수정 — 버튼 카드의 배경 톤 기본값은 늘 「밝은 배경」(사이트 컬러 모드를 따라 열 때마다 바꾸던 260921 동작을 뺌). 안에서 바꾸면 그 세션 동안 유지 */
     baBuild();
+    if(baQuery){ baQuery=''; var bsi=document.getElementById('baSearchIn'); if(bsi) bsi.value=''; if(baCurCat!=='folder') baRenderGrid(baCurCat); }   /* 261023 추가 — 블럭번호 검색은 열 때마다 비운다 */
     if(baCurCat==='folder' && typeof bkArchRender==='function') baRenderGrid('folder');   /* 261013 추가 — 보관함 칸이 열려 있었으면 지금 목록으로 다시 그린다(닫을 때 비워 둔다) */
     var ba=document.getElementById('blockAdd');
     ba.classList.remove('ba-closing');
@@ -22017,9 +22055,18 @@
      3. 마우스는 매 틱마다 page.mouse.move 로 보간 이동(코사인 이징). 드래그를 놓는 틱에는 move 를 보내지 않는다(그 프레임만 이동량이 1.5배가 되어 튄다).
         블럭의 '처음 한 번 움직여 보이기' 류 힌트는 끄고(_bcHinted 등), 편집 장식(.blk::before/::after 테두리·기어·배지·addbar)은 CSS 로 감춘다.
      4. 자르기: 블럭 가운데를 카드 비율(ar)로 자르고 552px 폭으로 lanczos 축소. 큰 블럭은 핵심(사진·링)이 차게 세로를 줄여 자른다.
-        인코딩: 25fps 그대로(30fps 변환 금지 — 프레임 중복으로 끊겨 보임) · mp4 libx264 crf 20 + webm libvpx-vp9 crf 32 · 썸네일은 첫 프레임 jpg(같은 이름).
+        인코딩: 25fps 그대로(30fps 변환 금지 — 프레임 중복으로 끊겨 보임) · mp4 libx264 + webm libvpx-vp9(crf 값은 7 의 용량 기준 · 260930 첫 기준은 20/32) · 썸네일은 첫 프레임 jpg(같은 이름).
      5. 확인: 연속 프레임 픽셀 차이를 찍어 '움직이는 구간에 차이 0인 프레임(중복)'과 '갑자기 튀는 프레임(스파이크)'이 없는지 본다. 영상은 새 이름으로만 올린다(jsDelivr 캐시).
-     스크립트: editor-assets\_src\rec\ (harness.js · rec_image03/04/05.js) — 메모리에도 같은 규칙을 적어 두었다. */
+     6. 261023 추가 — 블럭 안에 동영상이 든 경우(스택 카드 CONTENT01 등): <video> 는 가상 시계를 따르지 않아 실시간으로 흘러간다.
+        녹화 전에 블럭의 영상을 모두 멈추고(play 를 막고), 매 프레임 currentTime 을 가상 시각으로 탐색(seek)해 seeked 를 기다린 뒤 찍는다(첫 프레임 = 영상 0초).
+        route 로 영상을 줄 때는 Range 요청에 206(content-range) 으로 답해야 탐색이 된다(200 통째로 주면 currentTime 이 0 에 멈춘다).
+     7. 261023 추가 — 용량(카드 영상은 패널을 열면 전부 미리 받는다 · 위 선로딩): 한 편 200KB 이하를 기준으로 한다.
+        552px 폭 · 25fps · 5초 안팎 · 소리 없음. 브라우저는 <source> 순서대로 webm 을 먼저 고르므로 webm 을 작게: webm vp9 crf 36(-row-mt 1, 프레임 PNG 에서 바로) · mp4 x264 crf 24(대체용).
+        블럭 속 영상처럼 화면이 계속 바뀌는 영상은 crf 20/32 로 300KB 가까이 나온다 → 위 값으로 낮춰도 552px 에서 눈에 띄는 차이가 없다(CONTENT01: webm · mp4 각 160KB 안팎 · 썸네일 25KB 안팎).
+        넘으면 길이(프레임 수)부터 줄이고, 그다음 crf 를 2씩 올린다. 썸네일 jpg 도 첫 프레임을 같은 크기(552px)로 — 큰 캡처로 두지 않는다.
+     8. 261023 추가 — 자르기 위치: 화면 맨 위(y=0)부터 자르면 편집기 상단 툴바 경계선(y=44)이 회색 띠로 찍힌다. 경계선 아래에서, 멈춘 상태의 블럭 묶음이 위아래 가운데 오게 y 를 잡는다(위쪽 여백은 잘라내도 된다).
+     규칙: 움직이는(동적인) 블럭의 카드는 롤오버 미리보기 영상(vid)을 달고, 썸네일(img)은 그 영상의 첫 컷으로 만든다. 정지 캡처 썸네일은 영상을 만들기 전 임시로만 쓴다.
+     스크립트: editor-assets\_src\rec\ (harness.js · rec_image03/04/05.js · rec_content01.js) — 메모리에도 같은 규칙을 적어 두었다. */
   /* 260917 추가 — 편집기 정적 자산(블럭 미리보기 영상 등). 공개 저장소 creatorlinkapp/editor-assets 를 jsDelivr 로 받는다.
      @main 은 캐시(최대 12시간·7일)가 길어 갱신이 늦으므로, 파일을 바꾼 뒤에는 커밋 SHA 로 고정할 것 (fonts 와 같은 방식) */
   var BA_ASSET_BASE='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/';   /* 260918 수정 — 이미지(ED_IMG)와 같은 규칙으로 @main: 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다 */
@@ -22098,9 +22145,9 @@
   /* 260825 수정 — 3D 텍스트 카드는 텍스트 카테고리로 이동
      260827 수정 — 3D 카드 회전은 갤러리 → 컨텐츠 카테고리로 이동
      260901 수정 — 3D 카드 회전은 컨텐츠 → 슬라이드쇼 카테고리로 이동 */
-  var BA_SC_THUMB=ED_IMG+'ba/content01-4.jpg';   /* 261022 교체 — 실제 블럭 캡처 (세 장이 쌓인 순간 · 1104x600). 예전 SVG 그림은 없앴다 */
+  var BA_SC_THUMB=ED_IMG+'ba/content01-6.jpg';   /* 261023 교체 — 미리보기 영상(ba/content01-6) 첫 프레임 (썸네일=영상 첫 컷 규칙). 이전: content01-4.jpg(261022 정지 캡처) · -5(위에 툴바 경계선이 찍히고 카드가 아래로 치우친 첫 녹화) */
   var BA_CARDS_CONTENT=[
-    {no:1, kind:'stackcard', label:'CONTENT01', ar:'552/300', img:BA_SC_THUMB},   /* 260923 추가 — 스택 카드 (terawulf.com 참조) · 미리보기 영상은 아직 없다 */
+    {no:1, kind:'stackcard', label:'CONTENT01', ar:'552/300', img:BA_SC_THUMB, vid:'ba/content01-6'},   /* 260923 추가 — 스택 카드 (terawulf.com 참조) · 261023 추가 — 롤오버 미리보기 영상(스크롤로 카드 2 · 3 이 올라와 덮였다가 되감김 · 카드 속 견본 동영상 재생). 예전 ba/content01 · -2 는 사진 견본 때 녹화라 쓰지 않는다 */
     {no:2, kind:'beforeafter', label:'CONTENT02', ar:'552/260', img:BA_BC_THUMB, vid:'ba/image03'}   /* 261008 이동 — 이미지(IMAGE03) → 컨텐츠(CONTENT02): 글 + 이미지 + 버튼을 함께 짜는 블럭이라. 미리보기 영상 · 썸네일 파일명(image03)은 그대로. 이미지 쪽 번호는 당기지 않았다(IMAGE04 그대로 — 라벨이 다른 블럭을 가리키게 되지 않도록) */   /* 260930 추가 — 롤오버 미리보기 영상(경계가 마우스를 따라 오른쪽→왼쪽→가운데) */   /* 260923 추가 — 이전·이후 비교 (vibe3d.ai 참조) */
   ];
   /* 261014 추가 — 양쪽 배치(cross-listing · 스트립과 같은 규칙): 책자 넘김(SLIDE03)은 페이지가 서식 글(h2·p)+배경 사진인 「글을 담는 그릇」이라 본적은 컨텐츠, 슬라이드쇼엔 넘김 룩 때문에 남긴다. 카드는 슬라이드쇼 쪽 정의를 복사(라벨 SLIDE03 · 썸네일 · 영상 · NEW 동일) */
@@ -22157,6 +22204,8 @@
       k44:{lay:'cols', n:4, ar:'700/500', al:'center', ts:18, itc:'#222222', sit:true, bf:M, bs:12, more:'더 보 기', items:its([{img:'contents44_1.jpg',t:'그 래 비 티',s:'정상에 벗어날때 영화는 개인적인 것이 된다.'},{img:'contents44_2.jpg',t:'노 엘 갤 러 거',s:'정상에 벗어날때 영화는 개인적인 것이 된다.'},{img:'contents44_3.jpg',t:'힐 링 프 로 세 스',s:'정상에 벗어날때 영화는 개인적인 것이 된다.'},{img:'contents44_4.jpg',t:'아 이 스 로 드',s:'정상에 벗어날때 영화는 개인적인 것이 된다.'}])},
       k47:{lay:'cols', n:4, shape:'circle', cs:400, al:'center', iord:'dts', ts:16, itc:'#333333', ac:'#676767', bs:14, items:its([{img:'contents47_1.jpg',t:'멜리사 에더리지',s:'아트 디렉터',d:'프로젝트의 전체 무드를 정의하고 세밀한 디테일까지 브랜드의 정체성을 담아내며, 예술적 시선으로 팀의 방향을 이끌고 조율합니다.'},{img:'contents47_2.jpg',t:'포터 로빈슨',s:'웹 디자이너',d:'감각적인 인터페이스와 유연한 화면 흐름을 설계하여 브랜드가 생동감 있게 드러나도록 돕고, 세밀한 사용자 경험을 아름답게 완성합니다.'},{img:'contents47_3.jpg',t:'애니 레녹스',s:'테크니컬 디렉터',d:'복잡한 문제를 해결하는 기술적 기반을 마련하고 창의적인 아이디어가 실제로 구현될 수 있도록 프로젝트 전 과정을 지휘합니다.'},{img:'contents47_4.jpg',t:'올라퍼 아르날즈',s:'웹 개발자',d:'아이디어를 안정적이고 빠른 코드로 구현하면서 세심한 구조와 효율적인 성능을 구축하고, 보이지 않는 부분까지 철저히 다듬습니다.'}])},
       k50:{lay:'cols', n:4, ar:'1200/856', rd:12, al:'center', ts:15, ifw:600, itc:'#222222', items:its([{img:'contents50_1.jpg',t:'언덕 위의 신전',d:'기둥은 언덕 위에서 도시를 바라보며\n인간의 이상을 드러냅니다.'},{img:'contents50_2.jpg',t:'사막의 피라미드',d:'모래 위에 솟은 삼각의 형상은\n인류가 남긴 장엄한 흔적입니다.'},{img:'contents50_3.jpg',t:'돌의 원형 극장',d:'원형의 무대는 환호와 이야기를 품어\n세월을 이어갑니다.'},{img:'contents50_4.jpg',t:'도시의 성전',d:'거대한 곡선은 빛과 소리를 담아내며\n예술이 되는 공간이 됩니다.'}])},
+      /* 261023 추가 — CONTENT72: 40(k50)의 3열판. 사진 + 제목 + 설명 3열 카드가 목록에 없어 채운다(2열은 42 가 있어 만들지 않았다). 견본은 40 의 앞 3장 */
+      k50c3:{lay:'cols', n:3, ar:'1200/856', rd:12, al:'center', ts:15, ifw:600, itc:'#222222', items:its([{img:'contents50_1.jpg',t:'언덕 위의 신전',d:'기둥은 언덕 위에서 도시를 바라보며\n인간의 이상을 드러냅니다.'},{img:'contents50_2.jpg',t:'사막의 피라미드',d:'모래 위에 솟은 삼각의 형상은\n인류가 남긴 장엄한 흔적입니다.'},{img:'contents50_3.jpg',t:'돌의 원형 극장',d:'원형의 무대는 환호와 이야기를 품어\n세월을 이어갑니다.'}])},
       k53:{lay:'cols', n:4, ar:'670/979', ts:16, ifw:400, itc:'#222222', bs:13, items:its([{img:'contents53_1.jpg',t:'디지털 아이덴티티',d:'디지털 아이덴티티는 당신이 안전하게 접속할 수 있는 방법으로 신원을 확인하고 정부 및 기타 서비스를 온라인으로 이용하는 데 도움이 됩니다.'},{img:'contents53_2.jpg',t:'사용자 경험',d:'사용자 경험(UX) 디자인은 디자인 팀이 사용자에게 의미 있고 관련성 있는 경험을 제공하는 제품을 만드는 데 사용하는 프로세스입니다.'},{img:'contents53_3.jpg',t:'비주얼 디자인',d:'비주얼 디자인은 이미지, 색상, 글꼴 및 기타 요소를 전략적으로 구현하여 사이트 및 관련 자료의 미학에 중점을 둡니다.'},{img:'contents53_4.jpg',t:'브랜딩',d:'브랜딩은 소비자의 마음 속에 브랜드를 만들고 형성함으로써 특정 조직, 회사, 제품 또는 서비스에 의미를 부여하는 과정입니다.'}])},
       k61:{lay:'cols', n:2, strip:true, ar:'1/1', ts:20, ifw:400, itc:'#222222', bs:15, items:its([{img:'contents61_1.jpg',t:'01. 스타일과 무드',d:'색과 질감, 그리고 동반자의 존재가 하나의 장면을 완성합니다. 브랜드의 개성을 시각적으로 드러내며, 보는 순간 감각적인 인상을 남깁니다.'},{img:'contents61_2.jpg',t:'02. 관계의 기록',d:'사람과 반려동물의 교감은 단순한 사진을 넘어 하나의 서사가 됩니다. 빛과 구도를 통해 관계의 따뜻한 순간을 오래도록 간직할 수 있습니다.'},'contents61_3.jpg','contents61_4.jpg','contents61_5.jpg']), gap:60},
       k77:{lay:'cols', n:4, ar:'650/370', card:'box', cb:'#ffffff', al:'center', hal:'center', bgImg:'saola_main_bg.jpg', tt:'당신을 위한 특별한 디자인', tf:E, fw:400, fs:48, tc:'#ffffff', hg:70, ts:16, itc:'#46505d', ac:'#949fab', sc:'#949fab', bs:12, items:its([{img:'contents77_1.jpg',t:'폴 랜드',s:'단순하게 유지하세요. 정직하세요.',d:'이 말은 당신의 작품에 대해 완전하게 객관적이 되라는 말입니다. 그리고 그 작업에 최선을 다하세요.'},{img:'contents77_2.jpg',t:'마틴 다비셔',s:'보이지 않는 디자인이 진짜 디자인입니다.',d:'훌륭한 디자인은 당신이 느끼지 못하는 사이에 당신을 이끄는 것입니다.'},{img:'contents77_3.jpg',t:'노먼 포터',s:'질문하기, 그리고 좋은 질문 찾기는',d:'디자이너라는 역할이 상상할 수 있는 최고의 존엄성과 적합성을 획득하기 위한 근본 요소입니다.'},{img:'contents77_4.png',t:'데이비드 카슨',d:'디자인이라는 분야는 재미있는 사람들이 몸담고 있는 지극히 창조적인 잠재력을 가진 분야입니다. 여기에서는 모든 형태의 자유와 기묘한 실험이 가능합니다.'}]), pt:110, pb:110},
@@ -22183,6 +22232,8 @@
       k23:{lay:'stack', ord:'it', iw:560, al:'center', media:md(['contents23_1.png']), bgImg:'content_image_23_2.jpg', tt:'M A T T  K E A T O N', tf:E, fw:400, fs:62, tc:'#1f1f1f', sub:'감 성 을 자 극 하 는 감 미 로 운 사 운 드', sc:'#505050', note:'맷 키 튼 의 지 니 라 이 브 인 콘 서 트', ns:20, ac:'#907b53', pt:60, pb:60},
       k90:{lay:'stack', ord:'ti', iw:149, al:'center', media:md(['contents90_1.png']), ds:'좋은 품질, 다양한 컨셉트, 합리적인 가격대의 제품을 더 빠르게 제공하는\nMICAELA.R은 글로벌 SPA 브랜드들과 함께 나란히 어깨를 견주는 대한민국 패션업계의 자존심입니다.\n한국인들의 일상 속 Fashion Groove를 실현해 주는 브랜드입니다.', sc:'#111111', pt:40, pb:40},
       k100:{lay:'stack', st:'profile', al:'center', bh:420, av:170, media:md(['content_image_90_1.jpg','content_image_90_2.jpg']), tt:'나를 소개합니다', fw:400, fs:50, tc:'#ffffff', pt:0, pb:40},
+      k65:{lay:'stack', st:'text', al:'center', bgImg:'contents65_1.jpg', bg:'#000000', eb:'어 둠  너 머 에 서  빛 을  찾 는  여 정', ac:'#ffffff', tt:'우주의 침묵 속에서 발견한 예술', tf:M, fw:400, fs:52, tc:'#ffffff', pt:270, pb:260},   /* 261023 추가 — 좌측 contents65(꽉 찬 사진 + 가운데 라벨 · 큰 제목, 높이 600) */
+      k66:{lay:'stack', st:'text', al:'center', bar:true, bgImg:'contents66_1.jpg', bg:'#000000', bgDim:60, tt:'예술철학', tf:G, fw:700, fs:16, tls:20, tc:'#ffffff', bs:14, sc:'#ffffff', ds:'미디어아트(media art)는 사진, 영화 등의 영상물 발명 이후 이 같은 신기술들을 활용하는 예술들을 가리킵니다.\n현재 뉴미디어 아트라고도 불리며 매체예술로 분류됩니다.\n\n미디어아트가 기존의 예술과 다른점은 아티스트와 대중의 상호작용에 있습니다.\n전통적인 예술, 즉 회화나 조각에서는 심리적 상호소통이 우선적인데 비해\n미디어아트는 대중매체를 통해 심리적 상호작용 뿐만 아니라 인터페이스를 통한 물질적인 상호작용도 일어납니다.\n대중매체가 발달된 오늘 날 미디어아트는 단순한 예술을 넘어서 가까운 일상으로 발전하고 있습니다.\n\n\n*클 라 이 언 트  목 록*\n루브르 · 프랑스 텔레비지옹 · 오렌지 · 르꼬끄 스포르티브\n디올 · LVMH · 엘리 사브 · 앙드레 · 페리에-주에 · 시틀럼\n믹스타루트 · 리카드 라이브 뮤직 · 큐리그 · 반 호트', pt:125, pb:125},   /* 261023 추가 — 좌측 contents66(어두운 배경 사진 60% + 가운데 제목 · 세로선 · 본문) */
       k86:{lay:'stack', st:'frame', al:'center', bgImg:'content_text_8_1.jpg', bg:'#000000', tt:'Héctor.', tf:E, fs:20, tc:'#191919', ds:'제너럴 웍스 15', bs:12, sc:'#191919', pt:200, pb:200},
       k89:{lay:'stack', ord:'it', iw:380, al:'center', media:md(['contents89_1.jpg']), bgImg:'content_image_80_2.jpg', ds:'지난 60여 년간 저의 디자인 철학은 변하지 않았으며, 여전히 이것이 옳다고 믿고 있습니다.\n디자인의 중심엔 언제나 인간이 있지만, 사회의 변화와 함께하고,\n그것은 디자이너의 책임 변화로 이어집니다.', bs:18, sc:'#ffffff', pt:130, pb:100},
       /* ── 글 목록 (list) ── */
@@ -22208,10 +22259,17 @@
     ['k58',403,'칸'],['k59',215,'칸'],['k128',299,'칸'],['k130',172,'칸'],['k133',331,'칸'],
     ['k3',513,'가운데'],['k23',585,'가운데'],['k90',200,'가운데'],['k100',272,'가운데'],['k86',400,'가운데'],['k89',521,'가운데'],
     ['k56',475,'히스토리'],['k147',169,'목록'],['k24',314,'목록'],['k73',233,'목록'],['k67',283,'히스토리'],
-    ['k149',614,'히스토리']   /* 261022 추가 — CONTENT71 히스토리 · 261022 수정 — 연혁 블럭 6장(22 · 56 · 57 · 67 · 123 · 149)은 위 탭 「히스토리」로 모았다. 73(수상 · 출간 · 언론 목록)은 연도가 없어 「목록」에 둔다. 썸네일 = 실제 블럭 캡처(img/ba/content71.jpg · 800×614) */
+    ['k149',614,'히스토리'],['k50c3',300,'칸'],['k65',450,'가운데'],['k66',443,'가운데']   /* 261023 추가 — CONTENT73 · 74 = 좌측 65 · 66 (썸네일 = 사이트 목록 썸네일 contents_65_ko_r · contents_66_ko_r 원본 → img/ba/content73.jpg · content74.jpg) */   /* 261023 추가 — CONTENT72 = 40 의 3열판(k50c3 · 썸네일 실제 블럭 캡처 img/ba/content72.jpg 800×300). 번호는 맨 뒤에서 받고 목록 자리는 40 바로 뒤로 옮긴다(아래) */   /* 261022 추가 — CONTENT71 히스토리 · 261022 수정 — 연혁 블럭 6장(22 · 56 · 57 · 67 · 123 · 149)은 위 탭 「히스토리」로 모았다. 73(수상 · 출간 · 언론 목록)은 연도가 없어 「목록」에 둔다. 썸네일 = 실제 블럭 캡처(img/ba/content71.jpg · 800×614) */
   ];
   /* 261022 추가 — 컨텐츠 블럭 카드 67장(CONTENT04~70). 썸네일 = 좌측 사이트 블럭 목록 썸네일 원본(editor-assets img/ba/contentNN.jpg · ar = 원본 크기). grp = 위 탭(좌우 · 칸 · 가운데 · 목록) */
-  CN_CARDS.forEach(function(p,i){ var no=4+i, nn=(no<10?'0':'')+no; BA_CARDS_CONTENT.push({no:no, kind:'cnblk', preset:p[0], label:'CONTENT'+nn, ar:(p[3]||800)+'/'+p[1], img:ED_IMG+'ba/content'+nn+'.jpg', grp:p[2]}); });
+  /* 261023 추가 — 레이아웃이 겹치는 카드 5장은 목록에서만 뺀다(사진 · 색만 다름): CONTENT10(k33 → 09 와 같음) · 20(k112 → 15) · 36(k19 → 33) · 49(k106 → 35) · 56(k59 → 55, 항목 수만 다름).
+     배열에서 지우면 뒤 카드 번호 · 썸네일(contentNN.jpg)이 한 칸씩 당겨지므로 순번은 그대로 세고 건너뛴다. 시작값(CN_PRESETS)은 남겨 이미 넣은 블럭은 그대로
+     261023 추가 — 4칸 · 사진 위 · 글 아래 묶음에서 3장 더: CONTENT33(k6) · 37(k41 → 34 에서 제목만 끈 꼴) · 38(k44). 가운데 정렬 대표는 40(둥근 모서리 · 제목 + 설명) · 43 · 46
+     (같은 날 40 을 뺐다가 되살리고 38 을 대신 뺐다) */
+  var CN_HIDE={k33:1, k112:1, k19:1, k106:1, k59:1, k6:1, k41:1, k44:1};
+  CN_CARDS.forEach(function(p,i){ var no=4+i, nn=(no<10?'0':'')+no; if(CN_HIDE[p[0]]) return; BA_CARDS_CONTENT.push({no:no, kind:'cnblk', preset:p[0], label:'CONTENT'+nn, ar:(p[3]||800)+'/'+p[1], img:ED_IMG+'ba/content'+nn+'.jpg', grp:p[2]}); });
+  /* 261023 추가 — 같은 꼴의 변형은 번호와 상관없이 원본 카드 바로 뒤에 둔다 [변형 프리셋, 원본 프리셋] */
+  [['k50c3','k50']].forEach(function(q){ var L=BA_CARDS_CONTENT, a=L.findIndex(function(c){ return c.preset===q[0]; }); if(a<0) return; var c=L.splice(a,1)[0], b=L.findIndex(function(x){ return x.preset===q[1]; }); L.splice(b<0?L.length:b+1,0,c); });
   /* 260919 추가 — 버튼 카테고리 카드. 한 가지 블럭(fxbutton)을 효과별 시작값(BT_PRESETS)으로 넣는다.
      썸네일 이미지 대신 실제 버튼을 그린다(live) → 카드에 올리면 효과가 그대로 재생된다. 다른 카테고리처럼 슬라이드쇼 카드로 남는 자리를 채우지 않는다(nofill) */
   var BA_CARDS_BUTTON=['invert','roll','line','fill','arrow','wide','flip','scramble','magnet','slide','shine','lift','bracket','swap','expand','glow',
@@ -22401,6 +22459,30 @@
   }
   (function(){ function boot(){ var host=document.getElementById('baGrid'); if(!host || !window.ResizeObserver) return; new ResizeObserver(function(){ var m=host.querySelector('.ba-masonry'); if(m) baMasonry(m); }).observe(host); }
     if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else setTimeout(boot,0); })();
+  /* 261023 추가 — 블럭번호 검색. 숫자만 = 카드 번호(5 · 05 → TEXT05 · CONTENT05), 글자가 섞이면 카드 이름(tab0 · slide03).
+     지금 카테고리의 카드에서 찾는다(위 탭 거르기는 잠시 무시). 없으면 그 번호가 있는 다른 카테고리로 가는 단추를 보인다. 블럭추가를 다시 열면 비운다 */
+  var baQuery='', _baQT=0;
+  function baSearchNorm(s){ return String(s||'').toUpperCase().replace(/\s+/g,''); }
+  function baCardLabel(c,pfx){ return String(c.label||(pfx+((c.no<10?'0':'')+c.no))).toUpperCase(); }
+  function baSearchHit(c,pfx,q){ var lb=baCardLabel(c,pfx); if(/^\d+$/.test(q)){ var d=lb.replace(/\D/g,''); return d!=='' && parseInt(d,10)===parseInt(q,10); } return lb.indexOf(q)>=0; }
+  function baSearchFilter(list,pfx){ var q=baSearchNorm(baQuery); return list.filter(function(c){ return baSearchHit(c,pfx,q); }); }
+  function baSearchEmpty(cat){
+    var q=baSearchNorm(baQuery), other=[];
+    BA_CATS.forEach(function(k){
+      if(k.i===cat) return; var L=(k.i==='slide')?BA_CARDS_SLIDE:BA_CAT_CARDS[k.i]; if(!L || !L.length) return;
+      var pf=BA_CAT_PFX[k.i]||(k.i==='slide'?'SLIDESHOW':'TEXT'); if(L.some(function(c){ return baSearchHit(c,pf,q); })) other.push(k);
+    });
+    var esc=String(baQuery).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return '<div class="ba-empty">이 카테고리에는 「'+esc+'」 블럭이 없습니다.'
+      +(other.length?('<div class="ba-search-other">'+other.map(function(k){ return '<button type="button" class="btn-sm" onclick="baSearchGo(\''+k.i+'\')">'+k.n+'에서 보기</button>'; }).join('')+'</div>'):'')+'</div>';
+  }
+  function baSearchGo(cat){ var el=document.querySelector('#blockAdd .ba-cat[data-cat="'+cat+'"]'); if(el) baPick(el); }
+  function baSearchInput(v){ baQuery=String(v||'').trim(); clearTimeout(_baQT); _baQT=setTimeout(function(){ baRenderGrid(baCurCat); },150); }
+  function baSearchKey(e,el){
+    if(e.key==='Enter'){ clearTimeout(_baQT); baQuery=String(el.value||'').trim(); baRenderGrid(baCurCat); }
+    else if(e.key==='Escape' && el.value){ e.stopPropagation(); el.value=''; baSearchInput(''); }   /* 글이 있을 때 Esc = 검색만 지운다(창은 그대로) */
+  }
+  window.baSearchInput=baSearchInput; window.baSearchKey=baSearchKey; window.baSearchGo=baSearchGo;
   function baRenderGrid(cat){
     var host=document.getElementById('baGrid'); if(!host) return;
     var list, pfx;
@@ -22421,8 +22503,9 @@
        지금은 기본 텍스트(TEXT10) 하나 — 가장 많이 쓰는 기본형이라 특수 효과 블럭들 뒤에 묻히지 않게 한다 */
     if(list.some(function(c){ return c.pin; })) list=list.filter(function(c){ return c.pin; }).concat(list.filter(function(c){ return !c.pin; }));
     baMarkNew(list);   /* 261014 추가 — NEW 는 차례 앞 3~4장 */
-    if(BA_CAT_FILTERS[cat] && baCurFilter!=='전체') list=list.filter(function(c){ return c.grp===baCurFilter; });   /* 261012 추가 */
-    if(!list.length){ host.innerHTML='<div class="ba-empty">준비된 블럭이 없습니다.</div>'; return; }
+    if(baQuery) list=baSearchFilter(list,pfx);   /* 261023 추가 — 검색 중에는 위 탭과 상관없이 카테고리 전체에서 */
+    else if(BA_CAT_FILTERS[cat] && baCurFilter!=='전체') list=list.filter(function(c){ return c.grp===baCurFilter; });   /* 261012 추가 */
+    if(!list.length){ host.innerHTML=baQuery?baSearchEmpty(cat):'<div class="ba-empty">준비된 블럭이 없습니다.</div>'; return; }
     var toneBar=(cat==='button')?('<div class="ba-tone"><div class="ba-tone-g"><div class="mt-seg"><button type="button" class="mt-seg-b'+(baBtnTone==='light'?' active':'')+'" onclick="baBtnToneSet(\'light\')">밝은 배경</button><button type="button" class="mt-seg-b'+(baBtnTone==='dark'?' active':'')+'" onclick="baBtnToneSet(\'dark\')">어두운 배경</button></div></div><i class="ba-tone-sep"></i>'
       +'<div class="ba-tone-g"><div class="mt-seg"><button type="button" class="mt-seg-b'+(baBtnLang==='ko'?' active':'')+'" onclick="baBtnLangSet(\'ko\')">한글</button><button type="button" class="mt-seg-b'+(baBtnLang==='en'?' active':'')+'" onclick="baBtnLangSet(\'en\')">영문</button></div></div></div>'):'';   /* 260921 추가 — 언어 전환 */   /* 260921 추가 */
     host.innerHTML=toneBar+'<div class="ba-masonry'+(cat==='button'?' ba-dense':'')+(cat==='divider'?' ba-wide':'')+'">'   /* 261019 추가 — 구분선은 1열 */+list.map(function(c,ci){
@@ -27086,8 +27169,9 @@
     document.getElementById('imAltCnt').textContent=ta.value.length+' / 150';
     document.getElementById('imAltModal').classList.add('show'); setTimeout(function(){ try{ ta.focus(); }catch(e){} },0);
   }
-  function imAltClose(){ document.getElementById('imAltModal').classList.remove('show'); }
+  function imAltClose(){ window.__altExt=null; document.getElementById('imAltModal').classList.remove('show'); }   /* 261023 수정 — 다른 블럭이 빌려 쓴 경우(__altExt)도 함께 끝 */
   function imAltApply(){
+    if(window.__altExt){ var f=window.__altExt, v0=document.getElementById('imAltTa').value.trim().slice(0,150); imAltClose(); f(v0); return; }   /* 261023 추가 — 컨텐츠 블럭이 같은 모달을 쓴다(값만 돌려준다) */
     var it=imCurBlk&&imCfg(imCurBlk).items[imAltIdx], multi=imAltMulti; imAltMulti=null; imAltClose(); if(!it) return;
     var val=document.getElementById('imAltTa').value.trim().slice(0,150);
     if(multi){ var c1=imCfg(imCurBlk), cnt=0; multi.forEach(function(k){ if(c1.items[k]){ c1.items[k].alt=val; cnt++; } }); imApply(imCurBlk); imThumbRender(); clToast(cnt+'개 항목의 대체 텍스트를 저장했습니다.'); return; }
@@ -43955,8 +44039,9 @@ global.PolyFX = API;
      · 좌측 사이트(addblock) 블럭추가 > 컨텐츠 contents1~149 를 한 블럭 종류(cnblk) + 배치(lay) 6 + 시작값(CN_PRESETS) 67 벌로 옮겼다.
        - 좌우(split) : 이미지 칸 + 글 칸. 좌우 반전 · 이미지 한 장/두 장/네 장/끝까지(가장자리까지 꽉 참) · 이미지 폭 · 세로 정렬 · 글 칸 목록(번호 · 연도 · 소제목)
        - 칸(cols)    : 이미지 + 제목 · 부제 · 설명. 칸 수 1~5 · 이미지 모양(사각 · 원형 · 아이콘 · 없음) · 비율 · 위치(위 · 옆) · 글 상자(선 · 상자)
-       - 이미지 위 글(tiles) · 바둑판(mosaic: 이미지 칸과 글 칸이 번갈아) · 가운데(stack: 기본 · 액자 · 프로필) · 글 목록(list: 칸마다 제목 + 줄 목록)
+       - 이미지 위 글(tiles) · 바둑판(mosaic: 이미지 칸과 글 칸이 번갈아) · 가운데(stack: 기본 · 액자 · 프로필 · 글만) · 글 목록(list: 칸마다 제목 + 줄 목록)
      · 좌우 반전 짝과 칸 수만 다른 묶음은 하나로 합쳤다(시작값 주석 참고). 다른 카테고리에 이미 있는 꼴(배경 사진 + 가운데 큰 글 = TEXT18 · 이미지 + 캡션 = IMAGE08 등)은 뺐다.
+       261023 수정 — 그중 65 · 66(배경 사진 위 가운데 글)은 요청으로 다시 넣었다: 가운데 모양 「글만」(st:'text') · CONTENT73 · 74.
      · 견본 사진 = 좌측 사이트 견본 그대로 — editor-assets 의 img/content-sample/ (사이트 파일 이름 그대로, 이름 없는 구글 사진은 contentsNN_k). 카드 썸네일 = 사이트 블럭 목록 썸네일 원본(img/ba/contentNN.jpg)
      · 이미지 · 문구 · 항목은 PC·모바일 공유, 배치 옵션 · 크기 · 색 · 여백은 기기별 (MV_CONTENT)
      · 블럭 위 이미지에 보관함 이미지를 끌어다 놓으면 그 이미지가 바뀐다(data-cn 자리) · 빈 곳에 놓으면 블럭 배경
@@ -44053,8 +44138,6 @@ global.PolyFX = API;
   function cnBgV(u){ return cnIsVid(u)?cnVid(u,'cn-bgv'):''; }
   function cnLink(e,a){ var h=a.getAttribute('href')||''; if(!window.CL_MVIEW || h==='#' || !h){ e.preventDefault(); return false; } return true; }
   function cnHref(u){ u=String(u||'').trim(); if(!u) return '#'; if(!/^(https?:|mailto:|tel:|\/|#)/i.test(u)) u='https://'+u; return _mtAttr(u); }
-  /* 261023 추가 — 「링크」(더 보기) 칩을 켠 칸 · 이미지 위 글 · 바둑판이면 항목 목록에 줄마다 링크 주소 칸 */
-  function cnMoreOn(c){ return !!((c.show||{}).more && String(c.more||'').trim()) && /^(cols|tiles|mosaic)$/.test(c.lay); }
   /* 글 칸 하나 — 바깥(cls)이 글꼴 · 크기 · 색을 정하고, 안쪽 .cred.cn-e 가 편집 영역(그 값들을 물려받는다).
      show 가 꺼져 있으면 그리지 않는다 · 비어 있으면 편집 화면에서는 자리표시(.rt-ph · data-ph), 미리보기 · 게시 화면에서는 뺀다 */
   function cnF(cls,key,val,ph,show){
@@ -44101,12 +44184,21 @@ global.PolyFX = API;
     return '<div class="cn-split">'+media+'<div class="cn-txt">'+cnTextHTML(c,true)+'</div></div>';
   }
   /* 항목 글(칸 · 이미지 위 글 · 바둑판) */
+  /* 261023 추가 — 「더 보기」 누르기: 편집 화면에서는 이동하지 않고, 미리보기 · 게시에서는 항목 링크(페이지 · 앵커 · 주소 · 새 창)로 */
+  function cnMoreGo(e,a){
+    if(e) e.preventDefault(); if(!window.CL_MVIEW) return false;
+    var blk=a.closest('.blk'); if(!blk || !blk._cnCfg) return false; var it=cnCfg(blk).items[+a.getAttribute('data-i')], lk=it&&it.link; if(!lk || !lk.url) return false;
+    if(typeof pgLinkGo==='function') pgLinkGo(lk); else if(lk.newTab) window.open(lk.url,'_blank','noopener'); else location.href=lk.url;
+    return false;
+  }
+  window.cnMoreGo=cnMoreGo;
   function cnItemText(c,it,i){
     var S=c.show||{};
     var T=cnF('cn-it-t','i'+i+'.t',it.t,'제목',S.it), Sb=cnF('cn-it-s','i'+i+'.s',it.s,'부제',S.is), D=cnF('cn-it-d','i'+i+'.d',it.d,'설명',S.id);
     var deco=(c.deco && T)?'<img class="cn-deco" src="'+_mtAttr(c.deco)+'" alt="" draggable="false">':'';
     var body=(c.iord==='dts')?(D+T+Sb):((c.iord==='std')?(Sb+T+D):(T+deco+Sb+D));
-    var more=(S.more && c.more)?'<a class="cn-more" href="'+cnHref(it.h)+'" onclick="return cnLink(event,this)">'+cnEsc(c.more)+'</a>':'';   /* 261023 수정 — 항목마다 링크 주소(it.h · 설정창 항목 목록) */
+    var lk=(it.link && it.link.url)?it.link:null;   /* 261023 추가 — 「더 보기」는 그 항목 이미지에 건 링크로(항목 썸네일 → 링크) */
+    var more=(S.more && c.more)?'<a class="cn-more" href="'+(lk?_mtAttr(String(lk.url)):'#')+'" data-i="'+i+'" onclick="return cnMoreGo(event,this)">'+cnEsc(c.more)+'</a>':'';
     return (body||more)?'<div class="cn-tx">'+body+more+'</div>':'';
   }
   function cnColsHTML(c){
@@ -44142,6 +44234,10 @@ global.PolyFX = API;
     var M=c.media||[], S=c.show||{};
     if(c.st==='frame'){
       return '<div class="cn-stk"><div class="cn-frame">'+cnF('cn-tt','tt',c.tt,'제목',S.tt)+'<i class="cn-vl"></i>'+cnF('cn-ds','ds',c.ds,'본문',S.ds)+'</div></div>';
+    }
+    if(c.st==='text'){   /* 261023 추가 — 글만(배경 사진 위 가운데 글 · 좌측 65 · 66): 라벨 · 제목 · (세로선) · 부제 · 본문 · 버튼 */
+      var h=cnF('cn-eb','eb',c.eb,'라벨',S.eb)+cnF('cn-tt','tt',c.tt,'제목',S.tt)+(c.bar?'<i class="cn-vl"></i>':'')+cnF('cn-sub','sub',c.sub,'부제',S.sub)+cnF('cn-ds','ds',c.ds,'본문',S.ds)+cnF('cn-bw','actH',c.actH,'버튼',S.btn);
+      return '<div class="cn-stk"><div class="cn-txt">'+h+'</div></div>';
     }
     if(c.st==='profile'){
       var b=M[0]||{}, a=M[1]||{}, rest=Object.assign({},c,{show:Object.assign({},S,{tt:false})});
@@ -44221,7 +44317,8 @@ global.PolyFX = API;
       +'--cnpt:'+txNum(c.pt,100)+'px;--cnpb:'+txNum(c.pb,100)+'px;';
   }
   function cnAttrs(el,c){
-    var A={lay:c.lay, flip:c.flip?'1':'0', md:c.md, va:c.va, shape:c.shape, card:c.card, mpos:c.mpos, flush:c.flush?'1':'0', al:c.al||'left', hal:c.hal||c.al||'left', tpos:c.tpos, st:c.st,
+    var A={lay:c.lay, flip:c.flip?'1':'0', md:c.md, va:c.va, shape:c.strip?'rect':c.shape, card:c.card, mpos:c.strip?'top':c.mpos,   /* 261023 수정 — 사진 띠(strip)는 이미지 모양 · 위치를 쓰지 않는다(늘 사각 · 위) */
+           flush:c.flush?'1':'0', al:c.al||'left', hal:c.hal||c.al||'left', tpos:c.tpos, st:c.st,
            ibox:c.ibox?'1':'0', fi:c.fi?'1':'0', mcap:c.mcap, lline:c.lline?'1':'0', tfirst:c.tfirst?'1':'0', sit:c.sit?'1':'0'};
     Object.keys(A).forEach(function(k){ el.setAttribute('data-'+k,A[k]); });
   }
@@ -44235,6 +44332,7 @@ global.PolyFX = API;
     wrap.style.cssText=cnStyleStr(c); cnAttrs(wrap,c);
     wrap.innerHTML=cnInnerHTML(c);
     wrap.querySelectorAll('.rt-btn[data-fx]').forEach(function(el){ if(!el.querySelector('.bt-t') && typeof rtBtnFxRender==='function') rtBtnFxRender(el); });   /* 261023 추가 — 효과 버튼 마크업이 아직 없는 버튼(옮겨 온 견본)은 여기서 그린다 */
+    cnDeco(wrap,c);   /* 261023 추가 — 자리마다 보이는 영역 · Alt · 비율 · 링크 */
     blkBgApply(blk,c,'#ffffff');
   }
   /* 편집 중 · 끝날 때 rtSaveRegions 가 부른다 — 칸마다 서식 HTML 을 그 자리 값에(빈 칸은 '') */
@@ -44292,7 +44390,7 @@ global.PolyFX = API;
   function cnDirty(){ if(typeof markDirty==='function') markDirty(); }
   function cnUpd(key,val){ var blk=cnCurBlk; if(!blk) return; cnCfg(blk)[key]=val; cnApply(blk); cnRows(); cnDirty(); }
   var _cnT=0;
-  function cnTxt(key,val){ var blk=cnCurBlk; if(!blk) return; cnCfg(blk)[key]=val; clearTimeout(_cnT); _cnT=setTimeout(function(){ if(blk.isConnected){ cnApply(blk); cnRows(); if(key==='more') cnItemsRender(); cnDirty(); } },150); }   /* 261023 수정 — 링크 문구를 비우거나 넣으면 항목별 주소 칸도 */
+  function cnTxt(key,val){ var blk=cnCurBlk; if(!blk) return; cnCfg(blk)[key]=val; clearTimeout(_cnT); _cnT=setTimeout(function(){ if(blk.isConnected){ cnApply(blk); cnRows(); cnDirty(); } },150); }
   function cnSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
   function cnSeg(key,id,m){
     var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
@@ -44350,7 +44448,8 @@ global.PolyFX = API;
       var ok=true, f=el.getAttribute('data-for'), st=el.getAttribute('data-st'), sh=el.getAttribute('data-shape');
       if(f && f.split(' ').indexOf(c.lay)<0) ok=false;
       if(ok && st && c.lay==='stack' && st.split(' ').indexOf(c.st)<0) ok=false;
-      if(ok && sh && c.lay==='cols' && sh.split(' ').indexOf(c.shape)<0) ok=false;
+      if(ok && sh && c.lay==='cols' && sh.split(' ').indexOf(c.strip?'rect':c.shape)<0) ok=false;
+      if(ok && c.strip && c.lay==='cols' && el.hasAttribute('data-nostrip')) ok=false;   /* 261023 추가 — 사진 띠(42 등)에서 효과 없는 이미지 모양 · 이미지 위치 줄을 숨긴다 */
       if(ok && sh && c.lay==='list' && c.lshape!=='icon') ok=false;
       if(ok && el.hasAttribute('data-btn') && !(S.btn && String(c.btn||'').trim() && (!cnGrid(c) || S.head))) ok=false;
       if(ok && el.hasAttribute('data-items') && !hasItems) ok=false;
@@ -44358,7 +44457,8 @@ global.PolyFX = API;
       if(ok && el.hasAttribute('data-cb') && !(c.card==='box' && c.lay==='cols') && c.lay!=='mosaic' && !(c.lay==='split' && c.ibox)) ok=false;
       el.hidden=!ok;
     });
-    var ma=document.getElementById('cnMediaAcc'); if(ma && c.lay==='stack' && c.st==='frame') ma.hidden=true;
+    var nl=document.getElementById('cnNLbl'); if(nl) nl.textContent=(c.lay==='cols' && c.strip)?'글 칸 수':'칸 수';   /* 261023 추가 — 사진 띠는 칸 수가 아래 글 칸에만 걸린다(사진 칸 = 사진 장수) */
+    var ma=document.getElementById('cnMediaAcc'); if(ma && c.lay==='stack' && (c.st==='frame'||c.st==='text')) ma.hidden=true;   /* 261023 수정 — 글만도 이미지 칸이 없다(배경은 「배경」에서) */
     var ia=document.getElementById('cnItemAcc'); if(ia && !hasItems) ia.hidden=true;
     var al=document.getElementById('cnAlLbl'); if(al) al.textContent=(c.lay==='split'||c.lay==='stack')?'글 정렬':'항목 정렬';
     var alRow=al&&al.closest('.srow'), alSeg=document.getElementById('cnAlSeg'), noAl=(c.lay==='hist'); if(alRow) alRow.hidden=noAl; if(alSeg) alSeg.hidden=noAl;   /* 261022 추가 — 히스토리는 좌우가 번갈아 정렬이 정해져 있다 */
@@ -44421,7 +44521,7 @@ global.PolyFX = API;
     if(k==='lst') return '<div class="mt-seg" id="cnLstSeg" style="margin:0;">'+[['num','번호'],['year','연도'],['head','소제목']].map(function(p){ return '<button type="button" class="mt-seg-b'+(c.lst===p[0]?' active':'')+'" data-m="'+p[0]+'" onclick="cnSeg(\'lst\',\'cnLstSeg\',\''+p[0]+'\')">'+p[1]+'</button>'; }).join('')+'</div>'
       +'<div class="mtk-hint" style="margin-top:8px;">목록의 줄은 블럭에서 고치고, 추가 · 순서 · 삭제는 아래 「목록」에서 합니다.</div>';
     if(k==='more') return '<div class="fm-fin" style="margin-top:0;"><span class="k">문구</span><input type="text" value="'+_mtAttr(c.more||'')+'" maxlength="24" placeholder="예: 더 보기" spellcheck="false" autocomplete="off" oninput="cnTxt(\'more\',this.value)"></div>'
-      +'<div class="mtk-hint" style="margin-top:8px;">모든 항목 아래에 같은 문구로 나옵니다. 링크 주소는 아래 목록에서 항목마다 넣습니다.</div>';
+      +'<div class="mtk-hint" style="margin-top:8px;">모든 항목 아래에 같은 문구로 나옵니다. 누르면 그 항목 이미지에 건 링크로 이동합니다(이미지 목록에서 항목 → 링크).</div>';
     return '';
   }
   function cnShowExp(k){ cnShowOpen=(cnShowOpen===k)?'':k; cnShowRender(); }
@@ -44440,28 +44540,228 @@ global.PolyFX = API;
       if(on && k==='head' && !(S.eb||S.tt||S.sub||S.ds||S.btn)) S.tt=true;
     }
     if(k==='more'||k==='head'||k==='lst'){ cnShowOpen=on?k:(cnShowOpen===k?'':cnShowOpen); }
-    if(k==='more') cnItemsRender();   /* 261023 추가 — 항목마다 링크 주소 칸 */
     cnApply(blk); cnShowRender(); cnRows(); cnDirty();
   }
   /* 이미지 목록(좌우 · 가운데) — 개수는 배치가 정한다. 캡션 글은 캔버스에서 */
   function cnMediaSlots(c){
-    if(c.lay==='stack') return c.st==='profile'?[['배너',0],['프로필',1]]:(c.st==='frame'?[]:[['이미지',0]]);
+    if(c.lay==='stack') return c.st==='profile'?[['배너',0],['프로필',1]]:((c.st==='frame'||c.st==='text')?[]:[['이미지',0]]);   /* 261023 수정 — 글만 */
     var k=(c.md==='two')?2:((c.md==='grid')?4:1), a=[]; for(var i=0;i<k;i++) a.push([k>1?String(i+1):'이미지',i]);
     if(c.timgOk || c.timg) a.push(['글 위','t']); return a;   /* 261022 수정 — 「글 위」는 그 자리로 만든 블럭에서만 */
   }
+  /* ══ 261023 추가 — 사진 목록을 이미지 블럭(IMAGE02)과 같은 썸네일 격자 + 위쪽 도구 줄로 (컨텐츠 블럭 전용 처리 · IMAGE02 코드는 건드리지 않는다)
+     · 두 목록: cnM = 대표 이미지(좌우 · 가운데 · 「글 위」 — 칸 수는 배치가 정함, 추가 · 순서 없음) · cnI = 항목(칸 · 타일 · 바둑판 · 히스토리 · 목록의 그림)
+     · 자리 값(o): 이미지(img · 「글 위」는 c.timg) + pos(보이는 영역 'x% y%') · alt · link{url,kind,newTab,download} · ar(대표 이미지만 · 숫자, 비면 원본)
+       「글 위」 자리의 pos · alt · link 는 c.tx 에 둔다
+     · 비율: 항목은 블럭 공통(배치 › 이미지 비율 — 격자가 어긋나지 않게), 대표 이미지만 항목별. 모달은 「비율 · 보이는 영역」 하나
+     · 링크: 게시 · 미리보기에서 그 자리를 누르면 이동. 타일처럼 안에 버튼 · 링크 글이 있으면 버튼이 먼저(타일 링크는 클릭 처리 · <a> 겹침 없음) */
+  var cnGS={cnM:null, cnI:-1}, cnGPick=null;
+  var CN_LK_ICO='<svg viewBox="0 0 24 24"><path d="M10.4 12.8a4 4 0 0 0 6.03.43l2.4-2.4a4 4 0 0 0-5.66-5.66l-1.38 1.37"/><path d="M13.6 11.2a4 4 0 0 0-6.03-.43l-2.4 2.4a4 4 0 0 0 5.66 5.66l1.37-1.37"/></svg>';
+  function cnEnt(c,key){
+    key=String(key);
+    if(key==='t'){ if(!c.tx) c.tx={}; return {o:c.tx, img:String(c.timg||''), set:function(v){ c.timg=v; }, media:true, key:'t'}; }
+    var m=key.charAt(0), n=+key.slice(1), L=(m==='i')?c.items:c.media;
+    if(m==='m'){ while(L.length<=n) L.push({img:'',t:'',s:''}); }
+    var o=L[n]; if(!o) return null;
+    return {o:o, img:String(o.img||''), set:function(v){ o.img=v; }, media:(m==='m'), key:key};
+  }
+  function cnGKey(pre,sel){ return (pre==='cnI')?('i'+sel):sel; }
+  function cnGSelOk(pre){ var c=cnCurBlk&&cnCfg(cnCurBlk); if(!c) return null; var sel=cnGS[pre]; if(pre==='cnI'?(sel<0||!c.items[sel]):!sel) return null; return cnEnt(c,cnGKey(pre,sel)); }
+  function cnAltName(e){ var a=String(e.o.alt||'').trim(); if(a) return a; var mm=/([^\/?#]+)(?:[?#].*)?$/.exec(e.img.replace(/#video$/i,'')); return mm?decodeURIComponent(mm[1]).replace(/\.[a-z0-9]+$/i,''):''; }
+  function cnThHTML(e,badge,sel,canX,iAttr){
+    var u=e.img, uv=cnIsVid(u), bg=(u&&!uv)?(' style="background-image:url(&quot;'+_mtAttr(u)+'&quot;)"'):'';
+    return '<div class="im-th'+(u?'':' empty')+(sel?' on':'')+(cnGPick&&cnGPick.k===iAttr?' picking':'')+'" data-k="'+iAttr+'"'+bg+' title="'+_mtAttr(u?cnAltName(e):'비어 있음 — 눌러서 보관함에서 고르기')+'">'
+      +(uv?'<video src="'+_mtAttr(u.replace(/#video$/i,''))+'#t=0.1" muted playsinline preload="metadata"></video>':'')
+      +'<span class="no">'+badge+'</span>'+(u?'':'<svg class="ph" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg>')
+      +((e.o.link&&e.o.link.url)?('<span class="lk" title="링크 있음">'+CN_LK_ICO+'</span>'):'')
+      +(canX?'<button type="button" class="x" title="삭제" aria-label="'+badge+' 삭제"><svg viewBox="0 0 8 8"><path d="M1.5 1.5l5 5M6.5 1.5l-5 5"/></svg></button>':'')+'</div>';
+  }
   function cnMediaRender(){
     var blk=cnCurBlk, list=document.getElementById('cnMediaList'); if(!blk||!list) return; var c=cnCfg(blk);
-    list.innerHTML=cnMediaSlots(c).map(function(s){
-      var isT=(s[1]==='t'), m=isT?{img:c.timg}:(c.media[s[1]]||{img:''}), u=String(m.img||''), key=isT?'t':('m'+s[1]), uv=cnIsVid(u);   /* 261022 수정 — 동영상은 첫 프레임 썸네일 */
-      return '<div class="mt-imgrow" data-i="'+key+'">'
-        +'<span class="cn-mlb">'+s[0]+'</span>'
-        +'<span class="mt-imgthumb"'+((u&&!uv)?' style="background-image:url(&quot;'+_mtAttr(u)+'&quot;)"':'')+'>'+(uv?'<video src="'+_mtAttr(u.replace(/#video$/i,''))+'#t=0.1" muted playsinline preload="metadata"></video>':'')+'</span>'
-        +'<div class="vc-caps"><input type="text" class="cn-src" value="'+_mtAttr(u)+'" oninput="cnMediaSet(\''+key+'\',\'img\',this.value)">'
-        +'<span class="cn-mnm">'+(isT?(u?'제목 위 작은 이미지·동영상':'제목 위 작은 이미지·동영상 (선택)'):(u?_mtAttr(decodeURIComponent(u.split('/').pop().split('?')[0]).slice(0,40)):'비어 있음'))+'</span></div>'
-        +((isT && u)?'<button type="button" class="mt-imgdel" title="빼기" aria-label="빼기" onclick="cnMediaSet(\'t\',\'img\',\'\');cnMediaRender()">'+CN_DI.del+'</button>':'')
-        +'</div>';
-    }).join('');
+    var slots=cnMediaSlots(c), keys=slots.map(function(sl){ return sl[1]==='t'?'t':('m'+sl[1]); });
+    if(cnGS.cnM && keys.indexOf(cnGS.cnM)<0) cnGS.cnM=null;
+    list.innerHTML=slots.map(function(sl,j){ var k=keys[j], e=cnEnt(c,k); return cnThHTML(e,sl[0],cnGS.cnM===k,false,k); }).join('');
+    cnGBind(list,'cnM'); cnTbSync('cnM');
   }
+  function cnItemsGrid(c){
+    var list=document.getElementById('cnItemList'); if(!list) return;
+    if(cnGS.cnI>=c.items.length) cnGS.cnI=-1;
+    list.innerHTML=c.items.map(function(it,i){ return cnThHTML(cnEnt(c,'i'+i),String(i+1),cnGS.cnI===i,c.items.length>1,String(i)); }).join('');
+    cnGBind(list,'cnI'); cnTbSync('cnI');
+  }
+  function cnTbSync(pre){
+    var c=cnCurBlk&&cnCfg(cnCurBlk), e=cnGSelOk(pre), row=document.getElementById(pre+'SelRow'), no=document.getElementById(pre+'SelNo'); if(!row) return;
+    row.classList.toggle('none',!e);
+    if(no) no.textContent=e?((pre==='cnI')?((cnGS.cnI+1)+'번'):((cnMediaSlots(c).filter(function(sl){ return (sl[1]==='t'?'t':'m'+sl[1])===cnGS.cnM; })[0]||['이미지'])[0])):'';
+    row.querySelectorAll('.im-tb button').forEach(function(b){
+      var act=b.getAttribute('data-act'), has=!!(e&&e.img);
+      var why=!e?'먼저 썸네일을 눌러 고르세요':(act==='del' && pre==='cnI' && c.items.length<=1)?'항목은 최소 1개가 있어야 합니다':(act==='del' && pre==='cnM' && !has)?'빈 자리입니다':((act==='area'||act==='alt'||act==='link') && !has)?'이미지·동영상을 먼저 넣으세요':'';
+      if(!b.getAttribute('data-t')) b.setAttribute('data-t',b.getAttribute('title')||'');
+      b.classList.toggle('soft-off',!!why); b.setAttribute('title',why||b.getAttribute('data-t')); b.setAttribute('data-why',why);
+      if(act==='link') b.style.color=(e&&e.o.link&&e.o.link.url)?'var(--green-text)':'';
+    });
+  }
+  /* 썸네일: 누르기 = 고르기 + 보관함 교체(같은 것을 다시 누르면 끝) · 항목은 끌어서 순서 · 롤오버 × 삭제 */
+  function cnGBind(list,pre){
+    if(list._cnBound) return; list._cnBound=true; var d=null;
+    list.addEventListener('click',function(e){ var x=e.target.closest&&e.target.closest('.im-th .x'); if(!x) return; e.preventDefault(); e.stopPropagation(); cnItemDel(+x.closest('.im-th').getAttribute('data-k')); });
+    list.addEventListener('pointerdown',function(e){ if(e.target.closest&&e.target.closest('.im-th .x')) return; var th=e.target.closest&&e.target.closest('.im-th'); if(!th||(e.button!=null&&e.button!==0)) return; d={th:th,k:th.getAttribute('data-k'),x:e.clientX,y:e.clientY,moved:false,id:e.pointerId,to:null}; });
+    list.addEventListener('pointermove',function(e){
+      if(!d || pre!=='cnI') return;
+      if(!d.moved){ if(Math.abs(e.clientX-d.x)<5&&Math.abs(e.clientY-d.y)<5) return; d.moved=true; d.th.classList.add('dragging'); try{ list.setPointerCapture(d.id); }catch(x){}
+        var r0=d.th.getBoundingClientRect(), g=d.th.cloneNode(true); g.className='im-th im-dragghost'; g.style.width=r0.width+'px'; g.style.height=r0.height+'px'; document.body.appendChild(g); d.ghost=g; d.ox=d.x-r0.left; d.oy=d.y-r0.top; document.body.classList.add('cl-sorting'); }
+      d.ghost.style.left=(e.clientX-d.ox)+'px'; d.ghost.style.top=(e.clientY-d.oy)+'px';
+      list.querySelectorAll('.im-th.dragover').forEach(function(t){ t.classList.remove('dragover','drop-l','drop-r'); });
+      var el=document.elementFromPoint(e.clientX,e.clientY), ov=el&&el.closest?el.closest('#cnItemList .im-th'):null;
+      d.to=(ov&&ov!==d.th)?+ov.getAttribute('data-k'):null; if(d.to!=null) ov.classList.add('dragover',(+d.k<d.to)?'drop-r':'drop-l');
+    });
+    function up(){
+      if(!d) return; var q=d; d=null;
+      if(q.ghost){ q.ghost.remove(); document.body.classList.remove('cl-sorting'); }
+      list.querySelectorAll('.im-th').forEach(function(t){ t.classList.remove('dragover','dragging','drop-l','drop-r'); });
+      var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
+      if(!q.moved){
+        var k=(pre==='cnI')?+q.k:q.k, was=(cnGS[pre]===k);
+        cnGS[pre]=was?((pre==='cnI')?-1:null):k;
+        if(was){ if(cnGPick&&libThumbMode) libThumbEnd(false); } else cnGPickStart(pre,k);
+        if(pre==='cnI') cnItemsGrid(c); else cnMediaRender();
+        return;
+      }
+      if(q.to==null || q.to===+q.k) return;
+      if(cnGPick&&libThumbMode) libThumbEnd(false);
+      var from=+q.k, m=c.items.splice(from,1)[0]; c.items.splice(q.to,0,m); cnGS.cnI=q.to;
+      cnApply(blk); cnItemsRender(); cnDirty();
+    }
+    list.addEventListener('pointerup',up); list.addEventListener('pointercancel',up);
+  }
+  /* 보관함 고르기 — 교체(rep) · 항목 추가(add). IMAGE02 의 imPick 과 같은 libThumbMode 규칙 */
+  function cnGPickStart(pre,k,add){
+    var blk=cnCurBlk; if(!blk) return;
+    if(libThumbMode) libThumbEnd(false);
+    cnGPick={pre:pre, k:add?'add':String(k), add:!!add};
+    libThumbMode={listId:(pre==='cnI')?'cnItemList':'cnMediaList', idx:null, only:'', quiet:true, apply:function(src){
+      if(!blk.isConnected || blk!==cnCurBlk || !cnGPick) return; var c=cnCfg(blk), vid=cnIsVid(src);
+      if(cnGPick.add){ if(c.items.length>=CN_MAX){ clToast('항목은 최대 '+CN_MAX+'개까지 넣을 수 있습니다.'); return; } c.items.push({img:src,t:'',s:'',d:''}); clToast((vid?'동영상을':'이미지를')+' 넣은 항목을 추가했습니다. ('+c.items.length+'/'+CN_MAX+') 계속 눌러 더 넣을 수 있습니다.'); }
+      else { var e=cnEnt(c,cnGKey(cnGPick.pre,(cnGPick.pre==='cnI')?+cnGPick.k:cnGPick.k)); if(!e) return; e.set(src); clToast(vid?'동영상으로 바꿨습니다. 다른 항목을 누르면 다시 바뀝니다.':'이미지를 바꿨습니다. 다른 이미지를 누르면 다시 바뀝니다.'); }
+      cnApply(blk); cnDirty(); if(cnGPick.pre==='cnI') cnItemsRender(); else cnMediaRender();
+    }};
+    document.documentElement.classList.add('rt-lib-ins');
+    if(typeof libTab==='function') libTab('img');
+    if(typeof open!=='undefined' && open!=='lib' && typeof togglePanel==='function'){ window.libWantR=true; togglePanel('lib'); if(typeof libOpenedByBset!=='undefined') libOpenedByBset=true; }
+    var ab=document.getElementById('cnItemAdd'); if(ab) ab.classList.toggle('picking',!!add);
+    clToast(add?'보관함에서 고를 때마다 그 사진으로 항목이 추가됩니다.':'보관함에서 이미지·동영상을 고르거나 드래그하세요.');
+  }
+  function cnPickClear(){ if(!cnGPick) return; var pre=cnGPick.pre; cnGPick=null; var ab=document.getElementById('cnItemAdd'); if(ab) ab.classList.remove('picking'); document.querySelectorAll('#cnItemList .im-th.picking,#cnMediaList .im-th.picking').forEach(function(t){ t.classList.remove('picking'); }); }
+  function cnItemAddBtn(){
+    var c=cnCurBlk&&cnCfg(cnCurBlk); if(!c) return;
+    if(!cnItemImgOn(c)){ cnItemAdd(); return; }
+    if(cnGPick&&cnGPick.add&&libThumbMode){ libThumbEnd(false); clToast('추가를 끝냈습니다.'); return; }
+    if(c.items.length>=CN_MAX){ clToast('항목은 최대 '+CN_MAX+'개까지 넣을 수 있습니다.'); return; }
+    cnGPickStart('cnI',null,true);
+  }
+  /* 주소(URL) — 이미지·동영상 파일 주소만(유튜브는 받지 않는다) */
+  function cnUrlCheck(u,put){
+    if(!/^https?:\/\//i.test(u)){ clToast('주소는 http:// 또는 https:// 로 시작해야 합니다.'); return false; }
+    if(cnIsVid(u) || /\.(jpe?g|png|gif|webp|avif|svg|bmp)(\?|#|$)/i.test(u)){ put(u); return; }
+    clToast('주소를 확인하고 있습니다…');
+    var im=new Image(); im.onload=function(){ put(u); };
+    im.onerror=function(){ var v=document.createElement('video'); v.muted=true; v.preload='metadata'; v.onloadedmetadata=function(){ put(u+'#video'); }; v.onerror=function(){ clToast('이미지나 동영상으로 불러올 수 없는 주소입니다.'); }; v.src=u; };
+    im.src=u;
+  }
+  function cnIUrlAdd(){
+    var blk=cnCurBlk; if(!blk||typeof rtUrlModalOpen!=='function') return; if(cnCfg(blk).items.length>=CN_MAX){ clToast('항목은 최대 '+CN_MAX+'개까지 넣을 수 있습니다.'); return; }
+    rtUrlModalOpen({title:'주소로 추가', label:'이미지·동영상 파일 주소(URL)를 입력해주세요.', placeholder:'https://… .jpg · .mp4', value:'', apply:function(u){ return cnUrlCheck(u,function(src){ if(!blk.isConnected) return; var c=cnCfg(blk); if(c.items.length>=CN_MAX) return; c.items.push({img:src,t:'',s:'',d:''}); cnApply(blk); cnDirty(); if(cnCurBlk===blk) cnItemsRender(); clToast('항목을 추가했습니다. ('+c.items.length+'/'+CN_MAX+')'); }); }});
+  }
+  /* 도구 줄 */
+  function cnGAct(pre,act){
+    var tb=document.querySelector('#'+pre+'Tb button[data-act="'+act+'"]'); if(tb && tb.classList.contains('soft-off')){ clToast(tb.getAttribute('data-why')||'지금은 쓸 수 없습니다'); return; }
+    var blk=cnCurBlk, e=cnGSelOk(pre); if(!blk||!e) return;
+    function done(msg){ cnApply(blk); cnDirty(); if(pre==='cnI') cnItemsRender(); else cnMediaRender(); if(msg) clToast(msg); }
+    if(act==='link'){
+      if(typeof rtLinkOpen!=='function') return; var lk=e.o.link||{}, a=document.createElement('a'); a.className='rt-btn-a';
+      if(lk.url){ a.setAttribute('href',lk.url); a.setAttribute('data-rt-link',lk.kind||'url'); if(lk.newTab) a.setAttribute('target','_blank'); if(lk.download) a.setAttribute('download',lk.download); }
+      rtLinkOpen(a,{blk:blk, has:!!lk.url, apply:function(v){ e.o.link={url:v.url,kind:v.kind,newTab:!!v.newTab,download:v.download||''}; done('링크를 연결했습니다.'); }, remove:function(){ e.o.link=null; done('링크를 해제했습니다.'); }});
+    }
+    else if(act==='alt'){
+      var ta=document.getElementById('imAltTa'), h3=document.querySelector('#imAltModal h3'), md=document.getElementById('imAltModal'); if(!ta||!md) return;
+      if(h3) h3.textContent='대체 텍스트'; ta.value=e.o.alt||''; ta.placeholder=cnAltName({o:{},img:e.img}); document.getElementById('imAltCnt').textContent=ta.value.length+' / 150';
+      md.classList.add('show'); window.__altExt=function(v){ e.o.alt=v; done('대체 텍스트를 저장했습니다.'); }; setTimeout(function(){ try{ ta.focus(); }catch(x){} },0);
+    }
+    else if(act==='url'){
+      if(typeof rtUrlModalOpen!=='function') return; if(cnGPick&&libThumbMode) libThumbEnd(false);
+      rtUrlModalOpen({title:'주소로 교체', label:'이미지·동영상 파일 주소(URL)를 입력해주세요.', placeholder:'https://… .jpg · .mp4', value:e.img.replace(/#video$/i,''), apply:function(u){ return cnUrlCheck(u,function(src){ if(!blk.isConnected) return; e.set(src); done(cnIsVid(src)?'동영상으로 바꿨습니다.':'이미지를 바꿨습니다.'); }); }});
+    }
+    else if(act==='del'){
+      if(pre==='cnI'){ cnItemDel(cnGS.cnI); return; }
+      var old=e.img, k=e.key; e.set(''); done();
+      clToast('이미지를 뺐습니다.',{label:'되돌리기',fn:function(){ if(!blk.isConnected) return; var e2=cnEnt(cnCfg(blk),k); if(e2) e2.set(old); cnApply(blk); if(cnCurBlk===blk) cnMediaRender(); }});
+    }
+    else if(act==='area') cnAmOpen(pre,e);
+  }
+  /* ── 비율 · 보이는 영역 모달 ── 틀 비율 = 항목은 블럭의 실제 칸(캔버스에서 잰다) · 대표 이미지는 고른 비율(원본이면 잘리지 않아 영역 없음) */
+  var CN_AM_AR=[['','원본'],['1','1:1'],['1.3333','4:3'],['1.5','3:2'],['1.7778','16:9'],['0.75','3:4']], cnAm=null;
+  function cnAmArOf(blk,e){
+    var el=blk.querySelector('.cn-wrap [data-cn="'+e.key+'"]'), r=el&&el.getBoundingClientRect();
+    return (r&&r.width&&r.height)?r.width/r.height:1;
+  }
+  function cnAmOpen(pre,e){
+    var blk=cnCurBlk, md=document.getElementById('cnAreaModal'); if(!blk||!md) return;
+    var canAr=e.media && cnArOk(cnCfg(blk),e.key);
+    cnAm={pre:pre, e:e, blk:blk, pos:String(e.o.pos||'50% 50%'), ar:canAr?String(e.o.ar||''):null, canAr:canAr};
+    document.getElementById('cnAmTtl').textContent=canAr?'비율 · 보이는 영역':'보이는 영역';
+    var seg=document.getElementById('cnAmArSeg'); seg.style.display=canAr?'':'none';
+    seg.innerHTML=CN_AM_AR.map(function(a){ return '<button type="button" class="mt-seg-b'+(String(cnAm.ar||'')===a[0]?' active':'')+'" data-v="'+a[0]+'">'+a[1]+'</button>'; }).join('');
+    seg.onclick=function(ev){ var b=ev.target.closest('.mt-seg-b'); if(!b) return; cnAm.ar=b.getAttribute('data-v'); seg.querySelectorAll('.mt-seg-b').forEach(function(x){ x.classList.toggle('active',x===b); }); cnAmFrame(); };
+    md.classList.add('show'); cnAmFrame();
+  }
+  function cnAmFrame(){
+    var f=document.getElementById('cnAmFrame'), note=document.getElementById('cnAmNote'); if(!f||!cnAm) return; var e=cnAm.e, u=e.img;
+    f.innerHTML=cnIsVid(u)?('<video src="'+_mtAttr(u.replace(/#video$/i,''))+'" muted loop autoplay playsinline></video>'):('<img src="'+_mtAttr(u)+'" alt="" draggable="false">');
+    var md=f.firstChild; md.style.objectPosition=cnAm.pos;
+    function size(nw,nh){
+      var ar=cnAm.canAr?(cnAm.ar?+cnAm.ar:(nw&&nh?nw/nh:1.5)):cnAmArOf(cnAm.blk,e), W=440, H=280, w=W, h=w/ar; if(h>H){ h=H; w=h*ar; }
+      f.style.width=Math.round(w)+'px'; f.style.height=Math.round(h)+'px';
+      var free=(cnAm.canAr && !cnAm.ar); f.classList.toggle('nodrag',free); cnAm.nw=nw; cnAm.nh=nh;
+      note.innerHTML=free?'원본 비율은 사진이 잘리지 않아 영역을 맞출 필요가 없습니다.':(e.media?'사진을 끌어 보이는 영역을 맞춥니다.':'사진을 끌어 보이는 영역을 맞춥니다. 비율은 블럭 공통입니다 — <a onclick="cnAmGoAr()">배치 › 이미지 비율</a>');
+    }
+    if(md.tagName==='VIDEO'){ md.muted=true; md.addEventListener('loadedmetadata',function(){ size(md.videoWidth,md.videoHeight); }); size(0,0); }
+    else { if(md.complete&&md.naturalWidth) size(md.naturalWidth,md.naturalHeight); else { md.onload=function(){ size(md.naturalWidth,md.naturalHeight); }; size(0,0); } }
+    if(f._amBound) return; f._amBound=true; var dg=null;
+    f.addEventListener('pointerdown',function(ev){ if(f.classList.contains('nodrag')||!cnAm||!cnAm.nw) return; var p=cnAm.pos.split(' ').map(parseFloat); dg={x:ev.clientX,y:ev.clientY,px:p[0],py:p[1]}; f.classList.add('dragging'); try{ f.setPointerCapture(ev.pointerId); }catch(x){} ev.preventDefault(); });
+    f.addEventListener('pointermove',function(ev){
+      if(!dg||!cnAm) return; var fw=f.offsetWidth, fh=f.offsetHeight, sc=Math.max(fw/cnAm.nw, fh/cnAm.nh), ox=cnAm.nw*sc-fw, oy=cnAm.nh*sc-fh;
+      var px=ox>0.5?Math.max(0,Math.min(100,dg.px-(ev.clientX-dg.x)/ox*100)):50, py=oy>0.5?Math.max(0,Math.min(100,dg.py-(ev.clientY-dg.y)/oy*100)):50;
+      cnAm.pos=Math.round(px)+'% '+Math.round(py)+'%'; var m=f.firstChild; if(m) m.style.objectPosition=cnAm.pos;
+    });
+    function end(){ dg=null; f.classList.remove('dragging'); } f.addEventListener('pointerup',end); f.addEventListener('pointercancel',end);
+  }
+  function cnAmGoAr(){ cnAmClose(); var a=document.getElementById('cnLayAcc'); if(a && !a.classList.contains('open')){ var h=a.querySelector('.fld-h'); if(h) smAcc(h); } var sg=document.getElementById('cnArSeg'); if(sg){ sg.scrollIntoView({block:'center',behavior:'smooth'}); sg.classList.add('cl-flash'); setTimeout(function(){ sg.classList.remove('cl-flash'); },1200); } }
+  function cnAmClose(){ var md=document.getElementById('cnAreaModal'); if(md) md.classList.remove('show'); var f=document.getElementById('cnAmFrame'); if(f) f.innerHTML=''; cnAm=null; }
+  function cnAmApply(){
+    var a=cnAm; if(!a){ cnAmClose(); return; } var blk=a.blk;
+    a.e.o.pos=(a.pos==='50% 50%')?'':a.pos; if(a.canAr) a.e.o.ar=a.ar?+a.ar:'';
+    cnAmClose(); if(!blk.isConnected) return; cnApply(blk); cnDirty(); if(a.pre==='cnI') cnItemsRender(); else cnMediaRender(); clToast('저장했습니다.');
+  }
+  /* 대표 이미지 중 비율을 고를 수 있는 자리 — 좌우의 사진(꽉 채움 · 배경형 제외) · 가운데 기본형. 배너 · 프로필 · 「글 위」는 모양이 정해져 있다 */
+  function cnArOk(c,key){ if(key==='t') return false; if(c.lay==='split') return c.md!=='bleed'; if(c.lay==='stack') return c.st!=='profile' && c.st!=='frame'; return false; }
+  /* 그린 뒤 자리마다 보이는 영역 · 대체 텍스트 · 비율 · 링크 표시를 입힌다 (cnApply 끝에서) */
+  function cnDeco(wrap,c){
+    wrap.querySelectorAll('[data-cn]').forEach(function(el){
+      var e=cnEnt(c,el.getAttribute('data-cn')); if(!e||!e.o) return; var o=e.o;
+      if(o.pos){ el.querySelectorAll(':scope > img, :scope > video').forEach(function(m){ m.style.objectPosition=o.pos; }); if(el.style.backgroundImage) el.style.backgroundPosition=o.pos; }
+      var im=el.querySelector(':scope > img'); if(im) im.setAttribute('alt',String(o.alt||''));
+      if(e.media && o.ar && cnArOk(c,e.key)){ el.classList.add('cn-arx'); el.style.setProperty('--cnmar',String(o.ar)); }
+      if(o.link && o.link.url){ el.setAttribute('data-cn-lk','1'); if(window.CL_MVIEW) el.style.cursor='pointer'; }
+    });
+  }
+  /* 게시 · 미리보기: 링크가 걸린 자리 누르기. 안의 버튼 · 링크 글 · 편집 칸은 제 동작이 먼저 */
+  if(window.CL_MVIEW) document.addEventListener('click',function(ev){
+    var el=ev.target.closest&&ev.target.closest('.cn-wrap [data-cn-lk]'); if(!el) return;
+    if(ev.target.closest('a,button,.rt-btn,.cn-more')) return;
+    var blk=el.closest('.blk'); if(!blk||!blk._cnCfg) return; var e=cnEnt(cnCfg(blk),el.getAttribute('data-cn')); var lk=e&&e.o&&e.o.link; if(!lk||!lk.url) return;
+    ev.preventDefault();
+    if(typeof pgLinkGo==='function'){ pgLinkGo(lk); return; }
+    if(lk.newTab) window.open(lk.url,'_blank','noopener'); else location.href=lk.url;
+  });
   function cnMediaSet(key,k,v){
     var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
     if(key==='t'){ c.timg=v; }
@@ -44474,24 +44774,28 @@ global.PolyFX = API;
   function cnItemTtlSync(c){ var tt=document.getElementById('cnItemTtl'); if(tt) tt.textContent=(c.lay==='split')?'목록':(cnItemImgOn(c)?'이미지·동영상':'항목'); }
   function cnItemImgOn(c){
     if(c.lay==='split') return false;
-    if(c.lay==='cols') return c.shape!=='none';
+    if(c.lay==='cols') return !!c.strip || c.shape!=='none';   /* 261023 수정 — 사진 띠는 이미지 모양과 상관없이 사진을 쓴다 */
     if(c.lay==='list') return c.lshape && c.lshape!=='none';
     if(c.lay==='tiles') return !c.tbg;
     return true;
   }
   function cnItemName(it,i){ var t=cnPlain(it.t).split('\n')[0]||cnPlain(it.d).split('\n')[0]||cnPlain(it.s).split('\n')[0]; return t?t.slice(0,40):('항목 '+(i+1)); }
   function cnItemsRender(){
-    var blk=cnCurBlk, list=document.getElementById('cnItemList'); if(!blk||!list) return; var c=cnCfg(blk);
+    var blk=cnCurBlk, list=document.getElementById('cnItemRows'); if(!blk||!list) return; var c=cnCfg(blk);
     var img=cnItemImgOn(c);
+    /* 261023 수정 — 사진이 있는 배치는 썸네일 격자(cnItemsGrid), 사진 없는 목록은 아래 줄 목록 */
+    var box=document.getElementById('bsetCn'), gb=document.getElementById('cnItemGridBox'), sr=document.getElementById('cnISelRow');
+    if(box) box.classList.toggle('cn-grid',!!img); if(gb) gb.style.display=img?'':'none'; if(sr) sr.style.display=img?'':'none'; list.style.display=img?'none':'';
+    var add0=document.getElementById('cnItemAdd'); if(add0) add0.setAttribute('title',img?'보관함에서 골라 그 사진으로 항목을 추가합니다':'항목을 하나 더 넣습니다');
+    if(img){ list.innerHTML=''; cnItemsGrid(c); var cnt0=document.getElementById('cnItemCount'); if(cnt0) cnt0.textContent=c.items.length+'/'+CN_MAX; cnItemTtlSync(c); var a1=document.getElementById('cnItemAdd'), u1=document.getElementById('cnItemUp'); if(a1) a1.disabled=(c.items.length>=CN_MAX); if(u1) u1.disabled=(c.items.length>=CN_MAX); return; }
+    if(cnGPick&&cnGPick.pre==='cnI'&&libThumbMode) libThumbEnd(false);
     list.innerHTML=c.items.map(function(it,i){
       var u=String(it.img||''), uv=cnIsVid(u);   /* 261022 수정 — 동영상은 첫 프레임을 썸네일로(이미지 블럭 목록과 같은 매너) */
       return '<div class="mt-imgrow" data-i="'+i+'">'
         +'<span class="mt-imgdrag" title="드래그하여 순서 변경">'+CN_DI.drag+'</span>'
         +(img?'<span class="mt-imgthumb"'+((u&&!uv)?' style="background-image:url(&quot;'+_mtAttr(u)+'&quot;)"':'')+'>'+(uv?'<video src="'+_mtAttr(u.replace(/#video$/i,''))+'#t=0.1" muted playsinline preload="metadata"></video>':'')+'</span>':'')
         +'<div class="vc-caps">'+(img?'<input type="text" class="cn-src" value="'+_mtAttr(u)+'" oninput="cnItemSet('+i+',\'img\',this.value)">':'')
-        +'<span class="cn-mnm">'+_mtAttr(cnItemName(it,i))+'</span>'
-        +(cnMoreOn(c)?'<input type="text" class="s-in" value="'+_mtAttr(it.h||'')+'" placeholder="「'+_mtAttr(String(c.more).trim())+'」 링크 주소 (https://)" maxlength="300" spellcheck="false" autocomplete="off" oninput="cnItemSet('+i+',&#39;h&#39;,this.value)">':'')   /* 261023 추가 */
-        +'</div>'
+        +'<span class="cn-mnm">'+_mtAttr(cnItemName(it,i))+'</span></div>'
         +'<button type="button" class="mt-imgdel" onclick="cnItemDel('+i+')" title="삭제" aria-label="삭제"'+(c.items.length<=1?' disabled':'')+'>'+CN_DI.del+'</button>'
         +'</div>';
     }).join('');
@@ -44499,7 +44803,6 @@ global.PolyFX = API;
     cnItemTtlSync(c);
     var add=document.getElementById('cnItemAdd'); if(add) add.disabled=(c.items.length>=CN_MAX);
     if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',function(a,b){ var m=c.items.splice(a,1)[0]; c.items.splice(b,0,m); cnItemsRender(); cnApply(blk); cnDirty(); });
-    if(typeof libThumbKeep==='function' && libThumbMode && libThumbMode.listId==='cnItemList') libThumbKeep();
   }
   function cnItemSet(i,k,v){
     var blk=cnCurBlk; if(!blk) return; var it=cnCfg(blk).items[i]; if(!it) return; it[k]=v;
@@ -44516,11 +44819,12 @@ global.PolyFX = API;
   }
   function cnItemDel(i){
     var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk); if(c.items.length<=1){ clToast('항목은 최소 1개가 있어야 합니다.'); return; }
-    var gone=c.items.splice(i,1)[0]; cnApply(blk); cnItemsRender(); cnDirty();
+    var gone=c.items.splice(i,1)[0]; if(cnGS.cnI===i) cnGS.cnI=-1; else if(cnGS.cnI>i) cnGS.cnI--; if(cnGPick&&libThumbMode) libThumbEnd(false); cnApply(blk); cnItemsRender(); cnDirty();
     clToast('「'+cnItemName(gone,i)+'」을 삭제했습니다.',{label:'되돌리기',fn:function(){ if(!blk.isConnected) return; cnCfg(blk).items.splice(i,0,gone); cnApply(blk); if(cnCurBlk===blk) cnItemsRender(); }});
   }
   function cnFillBset(){
     var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
+    if(cnGS._blk!==blk){ cnGS._blk=blk; cnGS.cnM=null; cnGS.cnI=-1; }   /* 261023 추가 — 다른 블럭을 고르면 썸네일 선택을 비운다 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     var ld=document.getElementById('cnLayDD'); if(ld){ var lb=ld.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=CN_LAYNM[c.lay]||'좌우'; ld.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-k')===c.lay); }); }
     var tdd=document.getElementById('cnTfDD'); if(tdd) cnFontSync(tdd,txNum(c.tf,8));
@@ -44535,6 +44839,8 @@ global.PolyFX = API;
     cnShowRender(); cnMediaRender(); cnItemsRender(); bgPanelSync('cn'); cnRows();
   }
   if(typeof BGP==='object' && BGP) BGP.cn={cur:function(){ return cnCurBlk; }, cfg:cnCfg, apply:cnApply};
+  var _cnBU=(typeof BLK_UP!=='undefined')?BLK_UP:window.BLK_UP; if(_cnBU) _cnBU.cn={video:true,max:function(){return CN_MAX;},cur:function(){return cnCurBlk;},cfg:function(b){return cnCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push({img:a.src,t:'',s:'',d:'',alt:a.cap||''}); },render:function(){ cnItemsRender(); },apply:function(b){ cnApply(b); cnDirty(); }};   /* 261023 추가 — 「업로드」(blkListUpload) */
+  window.cnGAct=cnGAct; window.cnItemAddBtn=cnItemAddBtn; window.cnIUrlAdd=cnIUrlAdd; window.cnAmClose=cnAmClose; window.cnAmApply=cnAmApply; window.cnAmGoAr=cnAmGoAr; window.cnPickClear=cnPickClear;   /* 261023 추가 — 썸네일 격자 */
   window.cnCfg=cnCfg; window.cnApply=cnApply; window.cnCloneInit=cnCloneInit; window.cnLibDrop=cnLibDrop; window.cnLibRep=cnLibRep; window.baInsertCn=baInsertCn; window.cnLink=cnLink; window.cnRtSave=cnRtSave;
   window.cnUpd=cnUpd; window.cnTxt=cnTxt; window.cnSeg=cnSeg; window.cnSw=cnSw; window.cnAr=cnAr; window.cnPickLay=cnPickLay; window.cnPickFont=cnPickFont; window.cnShowTog=cnShowTog; window.cnGrid=cnGrid; window.cnShowExp=cnShowExp;
   window.cnBuildBset=cnBuildBset; window.cnFillBset=cnFillBset; window.cnMediaSet=cnMediaSet; window.cnMediaRender=cnMediaRender; window.cnItemSet=cnItemSet; window.cnItemAdd=cnItemAdd; window.cnItemDel=cnItemDel;
@@ -54635,6 +54941,7 @@ global.PolyFX = API;
     var _rb=document.getElementById('rtBgTh'); if(_rb) _rb.classList.remove('picking');   /* 260920 추가 — 텍스트 블럭 배경 썸네일의 대기 표시 */
     ['fmBgTh','fmImgTh'].forEach(function(id){ var x=document.getElementById(id); if(x) x.classList.remove('picking'); });   /* 260929 추가 — 폼 블럭 소재 썸네일 */
     var _cb=document.getElementById('ctBgTh'); if(_cb) _cb.classList.remove('picking'); document.querySelectorAll('#ctBrList .ct-tb.picking').forEach(function(x){ x.classList.remove('picking'); });   /* 260929 추가 — 컨택트 블럭 */
+    if(typeof cnPickClear==='function') cnPickClear();   /* 261023 추가 — 컨텐츠 블럭 썸네일 격자의 고르기 표시 */
     if(typeof imPickClear==='function') imPickClear();   /* 260919 추가 — 이미지 블럭(IMAGE02) · 이미지 블럭의 고르기 표시도 함께 끈다 */
     document.querySelectorAll('.mt-imgthumb.picking,.sg-imgthumb.picking,.fl-imgthumb.picking,.b2-pgthumb.picking,.mt-imgadd.picking,.rs-box .btn-sm.picking').forEach(function(t){ t.classList.remove('picking'); });   /* 260919 수정 — 목록 「추가」 버튼의 대기 표시도 끈다 */
     if(!rtLibMode){ document.documentElement.classList.remove('rt-lib-ins'); }
@@ -56051,7 +56358,7 @@ global.PolyFX = API;
       bdblk       :{board:1, layout:1, gcols:1, per:1, pg:1, cols:1, notice:1, isNew:1, cmt:1, tabs:1, total:1, search:1, write:1, writeT:1, prevnext:1, comments:1, wpos:1},   /* 261008 추가 — 게시판 · 연결 게시판·레이아웃·표시 항목·상단·글 보기는 PC·모바일 공유, 색·크기·여백은 기기별 */
       nmblk       :{items:1, eb:1, desc:1, comma:1, bgImg:1, bgGray:1},   /* 261019 추가 — 숫자 카운터 · 항목·문구·배경 소재 공유 */
       qrblk       :{url:1, eb:1, desc:1, cap:1, bgImg:1, bgGray:1},   /* 261019 추가 — QR 코드 · 링크·문구·배경 소재 공유 */
-      cnblk       :{preset:1, lay:1, st:1, lst:1, lstOk:1, timgOk:1, media:1, items:1, timg:1, tbg:1, deco:1, eb:1, tt:1, sub:1, ds:1, note:1, btn:1, href:1, actH:1, more:1, bgImg:1, bgGray:1},   /* 261022 추가 — 컨텐츠 블럭 · 배치 종류 · 이미지 · 문구 · 항목 · 배경 소재는 PC·모바일 공유, 배치 옵션 · 크기 · 색 · 여백은 기기별 */
+      cnblk       :{preset:1, lay:1, st:1, lst:1, lstOk:1, timgOk:1, media:1, items:1, timg:1, tx:1, tbg:1, deco:1, eb:1, tt:1, sub:1, ds:1, note:1, btn:1, href:1, actH:1, more:1, bgImg:1, bgGray:1},   /* 261022 추가 — 컨텐츠 블럭 · 배치 종류 · 이미지 · 문구 · 항목 · 배경 소재는 PC·모바일 공유, 배치 옵션 · 크기 · 색 · 여백은 기기별 */
       cdblk       :{target:1, unit:1, end:1, endMsg:1, eb:1, desc:1, lab:1, bgImg:1, bgGray:1},   /* 261019 추가 — 카운트다운 · 일시·표시·끝난 뒤·문구·배경 소재는 PC·모바일 공유, 스타일·크기·색·여백은 기기별 */
       dvblk       :{text:1},   /* 261019 추가 — 구분선 블럭 · 글자 장식의 문구만 PC·모바일 공유. 선·두께·너비·색·여백은 기기별 */
       calblk      :{events:1, view:1, nav:1, hol:1, ws:1, perm:1, gid:1, gkey:1, gc:1, sync:1},   /* 260929 추가 — 캘린더 블럭 · 일정·보기·권한·연동은 PC·모바일이 함께 쓴다. 색·크기·여백은 기기별 */
@@ -56911,7 +57218,7 @@ function hdToneRead(hd,rc,n){   /* rc: 잴 영역(화면 좌표) — 헤더 전�
     for(var k=0;k<els.length;k++){
       var el=els[k]; if(hd.contains(el)) continue;
       if(el===site){ lum=siteL; break; }
-      if(!el.closest || !el.closest('.site > .blk')) continue;   /* 편집기 크롬(톱니·배지·추가 막대)은 건너뜀 */
+      if(!el.closest || !el.closest('.site > .blk, .site > .cl-tabmenu')) continue;   /* 편집기 크롬(톱니·배지·추가 막대)은 건너뜀 · 261023 수정 — 서브페이지 머리(탭메뉴 · .cl-tabmenu)도 잰다. 블럭이 아니라 건너뛰어 흰 사이트 바탕으로 읽혔고, 어두운 머리 위에 진한 로고가 깔렸다 */
       var cs=getComputedStyle(el);
       if(/^(IMG|VIDEO|CANVAS|IFRAME)$/.test(el.tagName) || /url\(/.test(cs.backgroundImage)){ lum=hdMediaLum(el,cs,x,y); break; }
       var c=hdRgb(cs.backgroundColor); if(c && c.a>0.02){ if(c.a>=0.95){ lum=hdLumOf(c); break; } ov.push(c); }
