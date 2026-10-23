@@ -2559,6 +2559,119 @@
   #baGrid .ba-card[data-kind="formblk"]{border-radius:var(--r-xl);}
   .ba-thumb.fm-live{overflow:hidden;background:#fff;align-items:flex-start;}
   .fm-pv{position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;}
+  /* ══ 261023 추가 — 최근게시물 블럭 (ltblk · LATEST01~10) — 사이트 게시판의 최근 글. 목록(게시판 1~3개를 칸으로) · 카드 · 리스트(사진 옆 글) ══ */
+  .lt-wrap{position:relative;container-type:inline-size;font-family:var(--ltf);color:var(--lttc);}
+  .lt-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box;}
+  .lt-wrap a{color:inherit;text-decoration:none;}
+  .lt-post{cursor:pointer;}
+  .lt-ttl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .lt-post:hover .lt-ttl{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;}
+  .lt-cm{flex:none;color:var(--ltac);font-size:.86em;font-weight:600;}
+  .lt-new{flex:none;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:4px;background:var(--ltac);color:var(--ltai);font:800 9px/1 var(--ltf);}
+  .lt-nt{flex:none;padding:1px 6px;border-radius:4px;border:1px solid var(--ltln);color:var(--ltsc);font-size:11px;font-weight:600;line-height:16px;}
+  .lt-dt{flex:none;color:var(--ltsc);font-size:13px;font-variant-numeric:tabular-nums;}
+  .lt-empty{padding:28px 0;color:var(--ltsc);font-size:13px;text-align:center;}
+  .lt-lock{display:flex;flex-direction:column;align-items:center;gap:8px;}   /* 회원 · 관리자 전용 게시판 — 방문자 안내 */
+  .lt-lock svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}
+  .lt-lk{display:inline-flex;flex:none;color:var(--ltsc);}   /* 비밀글 자물쇠 */
+  .lt-lk svg{width:.85em;height:.85em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .lt-li .lt-lk{margin-right:-2px;}   /* 자물쇠 · 제목 사이 6px(게시판 블럭과 같게) — 목록 줄 간격 8px 에서 2px 줄인다 */
+  .lt-wrap .lt-im.none{display:flex;align-items:center;justify-content:center;color:var(--ltsc);background-image:none;}   /* 사진 없는 글 · 비밀글 */
+  .lt-wrap .lt-im.none svg{width:26%;max-width:30px;min-width:16px;height:auto;aspect-ratio:1;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.55;}
+  /* 머리줄 — 게시판 이름 · 전체 보기 */
+  .lt-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;font-size:calc(var(--ltts) + 1px);font-weight:600;line-height:1.3;color:var(--lttc);}
+  .lt-h b{font-weight:inherit;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .lt-more{flex:none;display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:500;color:var(--ltsc);cursor:pointer;}
+  .lt-more:hover{color:var(--lttc);}
+  .lt-more svg{width:12px;height:12px;}
+  /* 목록 — 게시판마다 한 칸(1~3칸). 머리 모양 5: 없음 · 윗선 · 밑줄 · 진한 바탕 · 옅은 바탕 (좌측 사이트 latest1·7 · 8 · 9 · 10 · 11) */
+  .lt-cols{display:grid;grid-template-columns:repeat(var(--ltn),minmax(0,1fr));gap:24px 40px;}
+  .lt-col{min-width:0;}
+  .lt-li{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:var(--ltts);line-height:1.5;}
+  .lt-li .lt-ttl{flex:1 1 auto;}
+  .lt-li .lt-dt{margin-left:auto;padding-left:12px;}
+  .lt-wrap[data-hd="top"] .lt-col .lt-h{border-top:2px solid var(--lttc);padding-top:14px;}
+  .lt-wrap[data-hd="under"] .lt-col .lt-h{position:relative;padding-bottom:12px;}
+  .lt-wrap[data-hd="under"] .lt-col .lt-h::after{content:"";position:absolute;left:0;bottom:0;width:22px;height:2px;background:var(--lttc);}
+  .lt-wrap[data-hd="fill"] .lt-col .lt-h{padding:10px 14px;background:var(--ltac);color:var(--ltai);}
+  .lt-wrap[data-hd="fill"] .lt-col .lt-h .lt-more{color:inherit;opacity:.8;}
+  .lt-wrap[data-hd="soft"] .lt-col .lt-h{padding:10px 14px;background:var(--ltsf);}
+  .lt-wrap[data-hd="fill"] .lt-col .lt-li,.lt-wrap[data-hd="soft"] .lt-col .lt-li{padding-left:2px;padding-right:2px;}
+  /* 카드 — 사진 위 · 제목 · 요약 · 날짜 (latest2) */
+  .lt-grid{display:grid;grid-template-columns:repeat(var(--ltc),minmax(0,1fr));gap:calc(var(--ltg) * 1.6) var(--ltg);}
+  .lt-card{min-width:0;}
+  .lt-card .lt-im{display:block;width:100%;aspect-ratio:var(--ltar);border-radius:var(--ltr);background:var(--ltsf) center/cover no-repeat;overflow:hidden;transition:opacity .2s ease;}
+  .lt-card:hover .lt-im{opacity:.88;}
+  .lt-card .lt-tl{display:flex;align-items:flex-start;gap:6px;margin-top:12px;font-size:var(--ltts);font-weight:600;line-height:1.45;}
+  .lt-card .lt-tl .lt-ttl{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:keep-all;}
+  .lt-card .lt-tl .lt-new{margin-top:3px;}
+  .lt-ex{margin-top:6px;color:var(--ltsc);font-size:13px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all;}
+  .lt-meta{display:flex;align-items:center;gap:8px;margin-top:8px;}
+  .lt-meta .lt-cmi{display:inline-flex;align-items:center;gap:3px;color:var(--ltsc);font-size:12.5px;}
+  .lt-meta .lt-cmi svg{width:13px;height:13px;}
+  /* 리스트 — 사진 옆 글 (latest6 · 3 · 4 · 5). 열 1 · 2, 사진 왼쪽 · 오른쪽, 크게 · 작게 */
+  .lt-rows{display:grid;grid-template-columns:repeat(var(--ltrc),minmax(0,1fr));column-gap:48px;}
+  .lt-row{display:flex;align-items:center;gap:20px;padding:18px 0;border-bottom:1px solid var(--ltln);min-width:0;}
+  .lt-row .lt-tx{flex:1;min-width:0;}
+  .lt-row .lt-tl{display:flex;align-items:center;gap:6px;font-size:var(--ltts);font-weight:600;line-height:1.45;}
+  .lt-row .lt-ex{-webkit-line-clamp:var(--ltxl,2);}
+  .lt-row .lt-im{flex:none;width:var(--ltts2);aspect-ratio:var(--ltar);border-radius:var(--ltr);background:var(--ltsf) center/cover no-repeat;}
+  .lt-wrap[data-th="left"] .lt-row .lt-im{order:-1;}
+  .lt-rows > .lt-row:first-child,.lt-wrap[data-rc="2"] .lt-rows > .lt-row:nth-child(2){border-top:1px solid var(--ltln);}
+  /* 좁은 화면(모바일) — 목록 칸은 위아래로 · 카드는 최대 2열 · 리스트는 1열 */
+  @container (max-width:640px){
+    .lt-in{padding-left:20px;padding-right:20px;}
+    .lt-cols{grid-template-columns:1fr;gap:36px;}
+    .lt-grid{grid-template-columns:repeat(var(--ltcm),minmax(0,1fr));gap:24px 12px;}
+    .lt-rows{grid-template-columns:1fr;}
+    .lt-wrap[data-rc="2"] .lt-rows > .lt-row:nth-child(2){border-top:0;}
+    .lt-row{gap:14px;padding:14px 0;}
+    .lt-row .lt-im{width:min(var(--ltts2),96px);}
+    .lt-li{padding:8px 0;min-height:40px;box-sizing:border-box;}   /* 누르기 좋게 줄 높이를 조금 키운다 */
+  }
+  /* 블럭추가 카드 — 실제 블럭을 절반 크기로 */
+  .fm-pv > .lt-wrap{width:200%;transform:scale(.5);transform-origin:0 0;}
+  #baGrid .ba-card[data-kind="ltblk"]{border-radius:var(--r-xl);}
+  /* 설정창 — 스타일 미리보기(탭 블럭 #tkDsGrid 와 같은 모양) · 게시판 고르기 */
+  #ltDsGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;}
+  #ltDsGrid button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:9px 2px 7px;border:1px solid var(--border-2);border-radius:var(--r-md);background:var(--surface);color:var(--ink-2s);font:500 var(--fs-xs)/1.2 var(--font);cursor:pointer;word-break:keep-all;text-align:center;}
+  #ltDsGrid button:hover{border-color:var(--border-hover);}
+  #ltDsGrid button.on{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green);color:var(--ink);background:var(--green-tint);}
+  .lt-mini{--a:var(--ink);--o:var(--ink-3);display:grid;width:38px;height:22px;gap:2px;}
+  .lt-mini i{display:block;border-radius:1px;background:var(--o);}
+  .lt-mini[data-l="list"]{grid-template-columns:1fr 1fr;grid-template-rows:4px repeat(3,2px);row-gap:3px;column-gap:4px;}
+  .lt-mini[data-l="list"] i.h{background:var(--a);}
+  .lt-mini[data-l="list"][data-hd="fill"] i.h{height:5px;}
+  .lt-mini[data-l="list"][data-hd="soft"] i.h{background:var(--bg-3);box-shadow:inset 0 0 0 1px var(--o);}
+  .lt-mini[data-l="list"][data-hd="top"] i.h{box-shadow:0 -2px 0 var(--a);background:var(--o);height:2px;margin-top:2px;}
+  .lt-mini[data-l="list"][data-hd="under"] i.h{background:linear-gradient(var(--a),var(--a)) 0 100%/35% 1.5px no-repeat,var(--o);background-color:transparent;}
+  .lt-mini[data-l="list"][data-hd="none"] i.h{background:var(--o);height:2px;margin-top:2px;}
+  .lt-mini[data-l="card"]{grid-template-columns:repeat(4,1fr);grid-template-rows:12px 2px 2px;}
+  .lt-mini[data-l="card"] i.p{background:var(--ink-2);border-radius:2px;}
+  .lt-mini[data-l="row"]{grid-template-columns:1fr;grid-template-rows:repeat(3,6px);}
+  .lt-mini[data-l="row"][data-rc="2"]{grid-template-columns:1fr 1fr;column-gap:4px;}
+  .lt-mini[data-l="row"] i{background:linear-gradient(90deg,var(--o) 0 62%,transparent 62%),transparent;position:relative;}
+  .lt-mini[data-l="row"] i::after{content:"";position:absolute;top:0;bottom:0;width:6px;right:0;border-radius:1px;background:var(--ink-2);}
+  .lt-mini[data-l="row"][data-th="left"] i{background:linear-gradient(90deg,transparent 0 38%,var(--o) 38%),transparent;}
+  .lt-mini[data-l="row"][data-th="left"] i::after{right:auto;left:0;}
+  .lt-mini[data-l="row"][data-sz="l"] i::after{width:9px;}
+  #ltBoards .lt-bd{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--border-2);border-radius:var(--r-md);background:var(--surface);cursor:pointer;font-size:var(--fs-md);color:var(--ink);}
+  #ltBoards .lt-bd + .lt-bd{margin-top:6px;}
+  #ltBoards .lt-bd:hover{border-color:var(--border-hover);}
+  #ltBoards .lt-bd.on{border-color:var(--green);background:var(--green-tint);}
+  #ltBoards .lt-bd .ck{flex:none;width:16px;height:16px;border:1.5px solid var(--border-hover);border-radius:4px;display:flex;align-items:center;justify-content:center;background:var(--surface);}
+  #ltBoards .lt-bd.radio .ck{border-radius:50%;}
+  #ltBoards .lt-bd.on .ck{border-color:var(--green);background:var(--green);}
+  #ltBoards .lt-bd.on .ck svg{display:block;}
+  #ltBoards .lt-bd .ck svg{display:none;width:10px;height:10px;stroke:#fff;}
+  #ltBoards .lt-bd .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;}
+  #ltBoards .lt-bd .pg{flex:none;color:var(--ink-2);font-size:var(--fs-sm);}
+  #ltBoards .lt-bd .pm{flex:none;padding:1px 6px;border-radius:4px;background:var(--bg-3);color:var(--ink-2);font-size:11px;font-weight:600;line-height:16px;}   /* 회원 · 관리자 전용 */
+  #ltBoards .lt-bd .no{flex:none;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--green);color:#fff;font-size:11px;font-weight:700;line-height:18px;text-align:center;box-sizing:border-box;}
+  #ltBoards .lt-bd .mt-imgdrag{height:20px;margin:0 -4px 0 -6px;}   /* 순서 손잡이 — 다른 블럭 목록과 같은 .mt-imgdrag */
+  #ltBoards .lt-bd:hover .mt-imgdrag{color:#7C838D;}
+  #ltBoards .lt-bd .dg-sp{flex:none;width:18px;margin:0 -4px 0 -6px;}
+  #ltBoards .lt-bd.dragging{opacity:.4;}
   /* ══ 261023 추가 — 탭 블럭 (tkblk · TAB01~08) — 좌측 사이트 탭 카테고리 tab1~8 을 한 블럭 + 디자인 8 로. 탭을 누르면 그 탭의 내용(텍스트 편집기 영역)이 보인다 ══ */
   :where(.tk-wrap) .cred{font-size:inherit;line-height:inherit;color:inherit;text-align:inherit;}   /* .cred 공통값(14.5px · 가운데 · 회색)은 받지 않는다 — :where 로 낮춰 아래 규칙이 이긴다 */
   .tk-wrap{position:relative;container-type:inline-size;color:var(--tktc);}
@@ -11838,6 +11951,123 @@
 
       </div>
       <!-- 261022 추가 — 소셜 블럭 설정 (SOCIAL01~15 · 접두어 sn). data-for = 그 종류(아이콘 icon · 배너 banner · 이미지 피드 feed)에서만 보이는 행(snRows) -->
+      <!-- 261023 추가 — 최근게시물 블럭 설정 (LATEST01~10 · 접두어 lt). 최근게시물(스타일 · 게시판 · 개수) · 표시 항목 · 배치 · 글자 · 색 · 배경 · 여백 -->
+      <div id="bsetLt" style="display:none;">
+        <div class="fld sfold open acc-flush" id="ltMainAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">최근게시물<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
+            <div class="srow" style="margin:0 0 6px;"><span class="k">스타일</span></div>
+            <div id="ltDsGrid"></div>
+            <div class="srow" style="margin:14px 0 6px;"><span class="k" id="ltBdLbl">게시판</span></div>
+            <div id="ltBoards"></div>
+            <div class="mtk-hint" id="ltBdHint"></div>
+            <div class="srow"><span class="k" id="ltNLbl">글 개수</span><input class="rng" type="range" id="ltN" min="2" max="12" step="1" value="5"><span class="v" id="ltNV">5</span></div><div class="mtk-hint" id="ltNHint">게시판마다 보여 줄 글 수입니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold open" id="ltShowAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">표시 항목<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="gt-chips" id="ltShow"></div>
+            <div class="mtk-hint">미리보기 · 게시된 사이트에서 글을 누르면 그 게시판의 글로, 「전체 보기」를 누르면 게시판이 있는 페이지로 이동합니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="ltLayAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">배치<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div data-lt="list">
+              <div class="srow" style="margin:0 0 6px;"><span class="k">머리 모양</span></div>
+              <div class="mt-seg" id="ltHdSeg">
+                <button type="button" class="mt-seg-b" data-m="none" onclick="ltSeg('hd','ltHdSeg','none')">없음</button>
+                <button type="button" class="mt-seg-b" data-m="top" onclick="ltSeg('hd','ltHdSeg','top')">윗선</button>
+                <button type="button" class="mt-seg-b" data-m="under" onclick="ltSeg('hd','ltHdSeg','under')">밑줄</button>
+                <button type="button" class="mt-seg-b" data-m="fill" onclick="ltSeg('hd','ltHdSeg','fill')">진한 바탕</button>
+                <button type="button" class="mt-seg-b" data-m="soft" onclick="ltSeg('hd','ltHdSeg','soft')">옅은 바탕</button>
+              </div>
+              <div class="mtk-hint">게시판을 고른 만큼 칸이 생깁니다(최대 3). 좁은 화면에서는 위아래로 쌓입니다.</div>
+            </div>
+            <div data-lt="card">
+              <div class="srow" style="margin-top:0;"><span class="k">가로 개수</span><input class="rng" type="range" id="ltCols" min="2" max="6" step="1" value="5"><span class="v" id="ltColsV">5</span></div>
+              <div class="srow"><span class="k">간격</span><input class="rng" type="range" id="ltGap" min="8" max="40" step="2" value="16"><span class="v" id="ltGapV">16px</span></div>
+            </div>
+            <div data-lt="row">
+              <div class="srow" style="margin:0 0 6px;"><span class="k">열</span></div>
+              <div class="mt-seg" id="ltRcSeg">
+                <button type="button" class="mt-seg-b" data-m="1" onclick="ltSeg('rc','ltRcSeg',1)">1열</button>
+                <button type="button" class="mt-seg-b" data-m="2" onclick="ltSeg('rc','ltRcSeg',2)">2열</button>
+              </div>
+              <div class="srow" style="margin:12px 0 6px;"><span class="k">사진 위치</span></div>
+              <div class="mt-seg" id="ltThSeg">
+                <button type="button" class="mt-seg-b" data-m="left" onclick="ltSeg('th','ltThSeg','left')">왼쪽</button>
+                <button type="button" class="mt-seg-b" data-m="right" onclick="ltSeg('th','ltThSeg','right')">오른쪽</button>
+              </div>
+              <div class="srow" style="margin:12px 0 6px;"><span class="k">사진 크기</span></div>
+              <div class="mt-seg" id="ltSzSeg">
+                <button type="button" class="mt-seg-b" data-m="s" onclick="ltSeg('sz','ltSzSeg','s')">작게</button>
+                <button type="button" class="mt-seg-b" data-m="l" onclick="ltSeg('sz','ltSzSeg','l')">크게</button>
+              </div>
+            </div>
+            <div data-lt="card row">
+              <div class="srow" style="margin:12px 0 6px;"><span class="k">사진 비율</span></div>
+              <div class="mt-seg" id="ltArSeg">
+                <button type="button" class="mt-seg-b" data-m="4/3" onclick="ltSeg('ar','ltArSeg','4/3')">가로</button>
+                <button type="button" class="mt-seg-b" data-m="1/1" onclick="ltSeg('ar','ltArSeg','1/1')">정사각</button>
+                <button type="button" class="mt-seg-b" data-m="3/4" onclick="ltSeg('ar','ltArSeg','3/4')">세로</button>
+              </div>
+              <div class="srow"><span class="k">모서리</span><input class="rng" type="range" id="ltRad" min="0" max="24" step="1" value="0"><span class="v" id="ltRadV">0px</span></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="ltTxtAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">글자<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow srow-dd" style="margin-top:0;"><span class="k">폰트</span>
+              <div class="sdd" id="ltFDD">
+                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Creatorlink Sans (본문)</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="sdd-menu"></div>
+              </div>
+            </div>
+            <div class="srow"><span class="k">제목 크기</span><input class="rng" type="range" id="ltTs" min="12" max="20" step="1" value="14"><span class="v" id="ltTsV">14px</span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="ltColAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">색<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="mt-seg" id="ltThemeSeg" style="margin:2px 0 11px;">
+              <button type="button" class="mt-seg-b" data-m="light" onclick="ltTheme('light')">라이트</button>
+              <button type="button" class="mt-seg-b" data-m="dark" onclick="ltTheme('dark')">다크</button>
+            </div>
+            <div class="srow"><span class="k">글자</span><span class="sw-col"><input type="color" id="ltTc" value="#1c1f24" data-cp-title="글자 색"><span class="hex" id="ltTcV">#1C1F24</span></span></div>
+            <div class="srow"><span class="k">보조 글자</span><span class="sw-col"><input type="color" id="ltSc" value="#8a9099" data-cp-title="보조 글자 색"><span class="hex" id="ltScV">#8A9099</span></span></div>
+            <div class="srow"><span class="k" id="ltAcLbl">강조색</span><span class="sw-col"><input type="color" id="ltAc" value="#1c1f24" data-cp-title="강조 색"><span class="hex" id="ltAcV">#1C1F24</span></span></div>
+            <div class="srow" id="ltLnRow"><span class="k">선</span><span class="sw-col"><input type="color" id="ltLn" value="#e6e8ec" data-cp-title="선 색"><span class="hex" id="ltLnV">#E6E8EC</span></span></div>
+            <div class="mtk-hint">강조색은 NEW 표시 · 댓글 수 · 진한 바탕 머리에 쓰입니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="ltBgAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">배경<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="cnt-list rt-bgbox">
+              <div class="im-th empty" id="ltBgTh" onclick="bpBgPick('lt')" title="보관함에서 이미지·동영상 고르기" role="button" aria-label="배경 이미지·동영상 고르기"></div>
+              <div class="im-addrow">
+                <input type="file" id="ltBgUp" accept="image/*,video/*" style="display:none;" onchange="bpBgUpload('lt',this)">
+                <span class="im-tb off" id="ltBgDel"><button type="button" class="danger" onclick="bpBgClear('lt')" title="배경 이미지·동영상 없애기" aria-label="배경 없애기"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg></button></span>
+                <button type="button" class="ghost" onclick="bpBgUrl('lt')" title="이미지·동영상 파일 주소(URL)로 넣습니다">URL</button>
+                <button type="button" class="ghost" onclick="document.getElementById('ltBgUp').click()" title="내 컴퓨터의 파일을 보관함과 블럭 배경에 함께 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
+              </div>
+            </div>
+            <div class="srow" id="ltBgGrayRow"><span class="k">흑백</span><button type="button" class="sw" id="ltBgGraySw" style="margin-left:auto;" onclick="bpSw('lt',this,'bgGray')" aria-label="배경 흑백"></button></div>
+            <div class="srow" id="ltBgDimRow"><span class="k">어둡게</span><input class="rng" type="range" id="ltBgDim" min="0" max="80" step="5" value="0"><span class="v" id="ltBgDimV">0%</span></div>
+            <div class="srow"><span class="k">배경색</span><span class="sw-col"><input type="color" id="ltBg" value="#ffffff" data-cp-title="배경색"><span class="hex" id="ltBgV">#FFFFFF</span></span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="ltBoxAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="ltPt" min="0" max="240" step="2" value="72"><span class="v" id="ltPtV">72px</span></div>
+            <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="ltPb" min="0" max="240" step="2" value="72"><span class="v" id="ltPbV">72px</span></div>
+          </div></div>
+        </div>
+      </div>
       <!-- 261023 추가 — 탭 블럭 설정 (TAB01~08 · 접두어 tk). 탭 · 디자인 · 배치 · 글자 · 색 · 내용 · 배경 · 여백 -->
       <div id="bsetTk" style="display:none;">
         <div class="fld sfold open acc-flush" id="tkTabAcc">
@@ -18449,6 +18679,7 @@
     if(blk.getAttribute('data-block')==='crumple') return {el:blk,kind:'ckrep'};   /* 260923 추가 — 구김 이미지: 지금 보이는 항목 교체 */
     if(blk.getAttribute('data-block')==='cnblk'){ var cnn=el.closest('[data-cn]'); return cnn?{el:cnn,kind:'cnrep'}:{el:blk,kind:'cnbg'}; }   /* 261022 추가 — 컨텐츠 블럭: 이미지 자리면 그 이미지, 빈 곳이면 블럭 배경 */
     if(blk.getAttribute('data-block')==='tkblk') return {el:blk,kind:'tkbg'};   /* 261023 추가 — 탭 블럭: 블럭 배경 */
+    if(blk.getAttribute('data-block')==='ltblk') return {el:blk,kind:'ltbg'};   /* 261023 추가 — 최근게시물 블럭: 블럭 배경 */
     if(blk.getAttribute('data-block')==='formblk'){ var fmi=el.closest('.fm-img'); return fmi?{el:fmi,kind:'fmimg'}:{el:blk,kind:'bg'}; }   /* 260929 추가 — 폼 블럭: 옆 이미지 자리면 그 이미지 교체, 그 밖이면 블럭 배경(설정값으로) */
     if(blk.getAttribute('data-block')==='stackcard'){ var scc=el.closest('.sc-card'); return scc?{el:scc,kind:'screp'}:{el:blk,kind:'scadd'}; }   /* 260923 추가 — 스택 카드: 카드 위면 그 카드 이미지 교체, 그 밖이면 새 카드 */   /* 260923 추가 — 이전·이후 비교 */
     if(blk.getAttribute('data-block')==='stackgal') return {el:blk,kind:'skadd'};   /* 260923 추가 — 스택 갤러리: 목록에 추가 */   /* 260922 추가 — 게이지 슬라이더: 목록에 추가 */
@@ -18521,6 +18752,11 @@
       if(kind!=='img' && kind!=='vid'){ clToast('구김 이미지에는 이미지·동영상만 넣을 수 있습니다.'); return; }
       if(typeof selectBlock==='function') try{ selectBlock(blk); }catch(x){}
       ckLibDrop(blk,libVidMark(p.src,kind==='vid')); return;
+    }
+    if(tg.kind==='ltbg'){   /* 261023 추가 — 최근게시물 블럭 */
+      if(kind!=='img' && kind!=='vid'){ clToast('이미지·동영상만 넣을 수 있습니다.'); return; }
+      if(typeof selectBlock==='function') try{ selectBlock(blk); }catch(x){}
+      ltLibDrop(blk,libVidMark(p.src,kind==='vid')); return;
     }
     if(tg.kind==='tkbg'){   /* 261023 추가 — 탭 블럭 */
       if(kind!=='img' && kind!=='vid'){ clToast('이미지·동영상만 넣을 수 있습니다.'); return; }
@@ -18789,6 +19025,7 @@
   function clBoardNames(names,counts){
     if(!names || typeof names!=='object' || typeof BD_BOARDS==='undefined') return;
     Object.keys(names).forEach(function(k){ var nm=String(names[k]||'').trim(); if(BD_BOARDS[k] && nm) BD_BOARDS[k].n=nm; });
+    if(typeof ltRefresh==='function') ltRefresh();   /* 261023 추가 — 최근게시물 블럭: 대시보드 게시판 이름 */
     if(counts && typeof counts==='object') Object.keys(counts).forEach(function(k){ if(BD_BOARDS[k] && BD_BOARDS[k].fresh) BD_BOARDS[k].cnt=+counts[k]||0; });   /* 새 게시판에 대시보드에서 쓴 글 수 */
     if(typeof bdLinkSync==='function') bdLinkSync();
   }
@@ -20284,6 +20521,7 @@
     if(card.getAttribute('data-kind')==='formblk'){ baInsertForm(card); return; }   /* 260929 추가 — 폼 블럭(FORM01~10) */
     if(card.getAttribute('data-kind')==='snblk'){ baInsertSn(card); return; }   /* 261022 추가 — 소셜 블럭(SOCIAL01~15) */
     if(card.getAttribute('data-kind')==='tkblk'){ baInsertTk(card); return; }   /* 261023 추가 — 탭 블럭(TAB01~08) */
+    if(card.getAttribute('data-kind')==='ltblk'){ baInsertLt(card); return; }   /* 261023 추가 — 최근게시물 블럭(LATEST01~10) */
     if(card.getAttribute('data-kind')==='calblk'){ baInsertCal(card); return; }   /* 260929 추가 — 캘린더 블럭(CALENDAR01) */
     if(card.getAttribute('data-kind')==='dvblk'){ baInsertDv(card); return; }   /* 261019 추가 — 구분선 블럭(DIVIDER01~38) */
     if(card.getAttribute('data-kind')==='cdblk'){ baInsertCd(card); return; }
@@ -21732,6 +21970,7 @@
     if(clone && clone.getAttribute('data-block')==='formblk'){ if(typeof fmCloneInit==='function') fmCloneInit(src,clone); return; }   /* 260929 추가 — 폼 블럭 */
     if(clone && clone.getAttribute('data-block')==='snblk'){ if(typeof snCloneInit==='function') snCloneInit(src,clone); return; }   /* 261022 추가 — 소셜 블럭 */
     if(clone && clone.getAttribute('data-block')==='tkblk'){ if(typeof tkCloneInit==='function') tkCloneInit(src,clone); return; }   /* 261023 추가 — 탭 블럭 */
+    if(clone && clone.getAttribute('data-block')==='ltblk'){ if(typeof ltCloneInit==='function') ltCloneInit(src,clone); return; }   /* 261023 추가 — 최근게시물 블럭 */
     if(clone && clone.getAttribute('data-block')==='calblk'){ if(typeof caCloneInit==='function') caCloneInit(src,clone); return; }   /* 260929 추가 — 캘린더 블럭 */
     if(clone && clone.getAttribute('data-block')==='dvblk'){ if(typeof dvCloneInit==='function') dvCloneInit(src,clone); return; }   /* 261019 추가 — 구분선 블럭 */
     if(clone && clone.getAttribute('data-block')==='cdblk'){ if(typeof cdCloneInit==='function') cdCloneInit(src,clone); return; }
@@ -22376,11 +22615,16 @@
   var BA_CARDS_TAB=[['under','밑줄'],['fill','채움'],['pill','알약'],['box','테두리'],['block','블럭'],['bar','구분선'],['folder','폴더'],['seg','세그먼트'],['side','세로'],['sidecard','세로 카드']].map(function(p,i){   /* 261023 추가 — TAB09 · 10 세로 탭(선 강조 · 바탕 강조) */
     return {no:i+1, kind:'tkblk', preset:p[0], label:'TAB'+(i<9?'0':'')+(i+1), tag:p[1], ar:(/^side/.test(p[0])?'552/220':'552/80')};
   });
+  /* 261023 추가 — 최근게시물 카테고리: 최근게시물 블럭(ltblk) 10장. grp = 위 탭(목록 · 이미지) · 보라 태그 = 모양. 시작값 이름 = LT_PRESETS(아래 모듈) */
+  var BA_CARDS_RECENT=[['l1','목록','기본'],['l2','목록','윗선'],['l3','목록','밑줄'],['l4','목록','진한 바탕'],['l5','목록','옅은 바탕'],['c5','이미지','카드'],['r1l','이미지','리스트 크게'],['r1s','이미지','리스트'],['r2r','이미지','2열 오른쪽'],['r2l','이미지','2열 왼쪽']].map(function(p,i){
+    return {no:i+1, kind:'ltblk', preset:p[0], label:'LATEST'+(i<9?'0':'')+(i+1), grp:p[1], tag:p[2], ar:(p[1]==='목록'?'552/110':'552/170')};
+  });
   var BA_CAT_CARDS={ text: BA_CARDS_TEXT, image: BA_CARDS_IMAGE, gallery: BA_CARDS_GALLERY, content: BA_CARDS_CONTENT, button: BA_CARDS_BUTTON, form: BA_CARDS_FORM, calendar: BA_CARDS_CALENDAR, map: BA_CARDS_CONTACT, board: BA_CARDS_BOARD, divider: BA_CARDS_DIVIDER, etc: BA_CARDS_ETC };   /* 261019 수정 — 구분선 */   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */
   baGrpAssign();
   var BA_CAT_PFX={ text:'TEXT', image:'IMAGE', gallery:'GALLERY', content:'CONTENT', button:'BUTTON', form:'FORM', calendar:'CALENDAR', map:'CONTACT', board:'BOARD', divider:'DIVIDER', etc:'COUNTDOWN' };   /* 261019 수정 — 구분선 */   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */
   BA_CAT_CARDS.social=BA_CARDS_SOCIAL; BA_CAT_PFX.social='SOCIAL';   /* 261022 추가 — 소셜 */
   BA_CAT_CARDS.tab=BA_CARDS_TAB; BA_CAT_PFX.tab='TAB'; if(typeof BA_CAT_FILTERS!=='undefined') BA_CAT_FILTERS.tab=[];   /* 261023 추가 — 탭 (8장이라 위 탭 줄 없음) */
+  BA_CAT_CARDS.recent=BA_CARDS_RECENT; BA_CAT_PFX.recent='LATEST'; if(typeof BA_CAT_FILTERS!=='undefined') BA_CAT_FILTERS.recent=['전체','목록','이미지'];   /* 261023 추가 — 최근게시물 */
   if(typeof BA_CAT_FILTERS!=='undefined') BA_CAT_FILTERS.social=['전체','아이콘','배너','이미지 피드'];   /* 261022 추가 — 소셜 위 탭 */
   var baCurCat=(BA_CATS[0] && BA_CATS[0].i)||'text';   /* 261012 수정 — 'slide' 고정 → 첫 칸(BA_CATS[0])을 따른다. 카테고리 순서를 바꾸며 처음 열 때 「텍스트」가 선택된 채 슬라이드쇼 카드가 보이던 것 */
 
@@ -22529,7 +22773,8 @@
     host.scrollTop=0;
     if(cat==='social' && typeof snCardHTML==='function') host.querySelectorAll('.ba-card[data-kind="snblk"] .ba-thumb').forEach(function(t){ var cd=t.closest('.ba-card'); t.classList.add('fm-live'); t.style.backgroundImage='none'; t.insertAdjacentHTML('afterbegin',snCardHTML(cd.getAttribute('data-preset'))); });   /* 261022 추가 — 소셜 카드: 이미지 대신 실제 블럭 */
     if(cat==='tab' && typeof tkCardHTML==='function') host.querySelectorAll('.ba-card[data-kind="tkblk"] .ba-thumb').forEach(function(t){ var cd=t.closest('.ba-card'); t.classList.add('fm-live'); t.style.backgroundImage='none'; t.insertAdjacentHTML('afterbegin',tkCardHTML(cd.getAttribute('data-preset'))); });   /* 261023 추가 — 탭 카드: 실제 탭 줄 */
-    if((cat==='social'||cat==='tab'||cat==='form'||cat==='calendar'||cat==='map'||cat==='board'||cat==='divider'||cat==='etc') && typeof fmCardFit==='function') fmCardFit(host);   /* 261019 수정 — 구분선 카드도 */   /* 260929 추가 — 폼 카드 높이를 그린 폼에 맞춘다 */
+    if(cat==='recent' && typeof ltCardHTML==='function') host.querySelectorAll('.ba-card[data-kind="ltblk"] .ba-thumb').forEach(function(t){ var cd=t.closest('.ba-card'); t.classList.add('fm-live'); t.style.backgroundImage='none'; t.insertAdjacentHTML('afterbegin',ltCardHTML(cd.getAttribute('data-preset'))); });   /* 261023 추가 — 최근게시물 카드: 실제 블럭 */
+    if((cat==='social'||cat==='tab'||cat==='recent'||cat==='form'||cat==='calendar'||cat==='map'||cat==='board'||cat==='divider'||cat==='etc') && typeof fmCardFit==='function') fmCardFit(host);   /* 261019 수정 — 구분선 카드도 */   /* 260929 추가 — 폼 카드 높이를 그린 폼에 맞춘다 */
     /* 260918 추가 — 풀의 <video> 를 자리에 옮겨 넣는다 (받아 둔 데이터가 그대로 살아 있다) */
     [].slice.call(host.querySelectorAll('.ba-vid-slot')).forEach(function(sl){ var v=baVidEl(sl.getAttribute('data-vid')); v.setAttribute('data-vid',sl.getAttribute('data-vid')); v.classList.remove('ready'); try{ v.pause(); }catch(e){} sl.parentNode.replaceChild(v,sl); });
     baVidBind(host);
@@ -22549,6 +22794,7 @@
   var SM_KIND={/* 261014 수정 — 갤러리 이름은 블럭추가 카드 배지(유형 · 이름)와 같은 말로 */ gridgal:'그리드 갤러리', hero:'이미지', gal:'이미지', slideshow:'이미지', intro:'텍스트', cred:'텍스트', smeartext:'커서 번짐 텍스트', moto3d:'3D 배경 이미지', imggrid:'이미지', stripgallery:'3D 스트립 갤러리', floatgal:'떠다님 갤러리', polytext:'3D 텍스트', typetext:'타이핑 텍스트', risetext:'글자 올라오기', fxbutton:'버튼', cardring:'3D 카드 회전', bookflip2:'책자 넘김', spiralgal:'나선 갤러리', depthgal:'깊이 갤러리', scrollslider:'스크롤 슬라이더', vcgal:'세로 스크롤 갤러리', infgal:'곡면 갤러리', wheelcar:'세로 롤링 갤러리', helixgal:'나선 계단 갤러리', gaugeslider:'눈금 슬라이더', hscrollgal:'가로 스크롤 갤러리', tiltgal:'기울임 갤러리', stackgal:'겹침 갤러리', arctext:'곡선 흐르는 텍스트', idxlist:'인덱스 리스트', faqacc:'FAQ 아코디언', qnaacc:'QnA 아코디언', scrollread:'스크롤 문장 등장', beforeafter:'이전·이후 비교', crumple:'구김 이미지', imgring:'링 갤러리', stackcard:'스택 카드', formblk:'폼', calblk:'캘린더', bdblk:'게시판', ctblk:'컨택트', dvblk:'구분선', cdblk:'카운트다운', nmblk:'숫자 카운터', qrblk:'QR 코드'};   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 추가 — 구분선 */
   SM_KIND.snblk='소셜';   /* 261022 추가 — 소셜 블럭 */
   SM_KIND.tkblk='탭';   /* 261023 추가 — 탭 블럭 */
+  SM_KIND.ltblk='최근게시물';   /* 261023 추가 — 최근게시물 블럭 */
   SM_KIND.cnblk='컨텐츠';   /* 261022 추가 — 컨텐츠 블럭 */
   function bsetSync(blk){
     var kindAttr=blk?(blk.getAttribute('data-block')||''):'';
@@ -22587,6 +22833,7 @@
     var isFm=(kindAttr==='formblk');   /* 260929 추가 — 폼 블럭(FORM01~10) */
     var isSn=(kindAttr==='snblk');   /* 261022 추가 — 소셜 블럭(SOCIAL01~15) */
     var isTk=(kindAttr==='tkblk');   /* 261023 추가 — 탭 블럭(TAB01~08) */
+    var isLt=(kindAttr==='ltblk');   /* 261023 추가 — 최근게시물 블럭(LATEST01~10) */
     var isCa=(kindAttr==='calblk');   /* 260929 추가 — 캘린더 블럭(CALENDAR01) */
     var isCt=(kindAttr==='ctblk');   /* 260929 추가 — 컨택트/지점 블럭 */
     var isBd=(kindAttr==='bdblk');   /* 261008 추가 — 게시판 블럭(BOARD01) */
@@ -22596,7 +22843,7 @@
     var isCd=(kindAttr==='cdblk');   /* 261019 추가 — 카운트다운 블럭(COUNTDOWN01~09) */
     var isRt=(kindAttr==='cred');   /* 260905 추가 — 이력 텍스트 블럭 */
     var d=document.getElementById('bsetDefault'), s=document.getElementById('bsetSmear'), m=document.getElementById('bsetMoto'), g=document.getElementById('bsetStrip'), fl=document.getElementById('bsetFloat'), pt=document.getElementById('bsetPoly'), tw=document.getElementById('bsetType'), cr=document.getElementById('bsetRing'), hx=document.getElementById('bsetSpiral'), ax=document.getElementById('bsetArc'), ix=document.getElementById('bsetIdx');
-    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt||isBd||isDv||isCd||isNm||isQr||isCn||isSn||isTk)?'none':'';   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 수정 — 구분선 */
+    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt||isBd||isDv||isCd||isNm||isQr||isCn||isSn||isTk||isLt)?'none':'';   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 수정 — 구분선 */
     var rsp=document.getElementById('bsetRise'); if(rsp) rsp.style.display=isRs?'':'none';
     var fqp=document.getElementById('bsetFaq'); if(fqp) fqp.style.display=isFq?'':'none';   /* 260923 추가 */
     var qnp=document.getElementById('bsetQna'); if(qnp) qnp.style.display=isQn?'':'none';   /* 260923 추가 — QnA 아코디언 */
@@ -22608,6 +22855,7 @@
     var fmp=document.getElementById('bsetForm'); if(fmp) fmp.style.display=isFm?'':'none';   /* 260929 추가 — 폼 블럭 */
     var snp=document.getElementById('bsetSn'); if(snp) snp.style.display=isSn?'':'none';   /* 261022 추가 — 소셜 블럭 */
     var tkp=document.getElementById('bsetTk'); if(tkp) tkp.style.display=isTk?'':'none';   /* 261023 추가 — 탭 블럭 */
+    var ltp=document.getElementById('bsetLt'); if(ltp) ltp.style.display=isLt?'':'none';   /* 261023 추가 — 최근게시물 블럭 */
     var cap=document.getElementById('bsetCal'); if(cap) cap.style.display=isCa?'':'none';   /* 260929 추가 — 캘린더 블럭 */
     var ctp=document.getElementById('bsetCt'); if(ctp) ctp.style.display=isCt?'':'none';
     var bdp=document.getElementById('bsetBoard'); if(bdp) bdp.style.display=isBd?'':'none';   /* 261008 추가 — 게시판 블럭 */   /* 260929 추가 — 컨택트/지점 블럭 */
@@ -22685,6 +22933,8 @@
     snCurBlk=isSn?blk:null;   /* 261022 추가 — 소셜 블럭 */
     if(libThumbMode && tkCurBlk!==(isTk?blk:null) && libThumbMode.listId==='tkBg') libThumbEnd(false);   /* 261023 추가 — 다른 블럭으로 가면 탭 블럭의 배경 고르기를 끝낸다 */
     tkCurBlk=isTk?blk:null;
+    if(libThumbMode && ltCurBlk!==(isLt?blk:null) && libThumbMode.listId==='ltBg') libThumbEnd(false);
+    ltCurBlk=isLt?blk:null;   /* 261023 추가 — 최근게시물 블럭 */
     if(caCurBlk && caCurBlk!==(isCa?blk:null)){ var caPrev=caCurBlk; caCurBlk=null; if(caPrev.isConnected){ var cw=caPrev.querySelector('.ca-wrap'); if(cw) cw.classList.remove('can-add'); } if(typeof caPopClose==='function') caPopClose(); }   /* 260929 추가 — 다른 블럭으로 가면 날짜 칸 클릭 추가 표시를 끈다 */
     caCurBlk=isCa?blk:null;   /* 260929 추가 — 캘린더 블럭 */
     if(ctCurBlk!==(isCt?blk:null) && libThumbMode && /^(ctBg|ctBrList)$/.test(libThumbMode.listId||'')) libThumbEnd(false);   /* 260929 추가 — 다른 블럭으로 가면 컨택트 소재 고르기를 끝낸다 */
@@ -22732,6 +22982,7 @@
     if(isFm){ fmBuildBset(); fmFillBset(); }   /* 260929 추가 — 폼 블럭 */
     if(isSn){ snBuildBset(); snFillBset(); }   /* 261022 추가 — 소셜 블럭 */
     if(isTk){ tkBuildBset(); tkFillBset(); }   /* 261023 추가 — 탭 블럭 */
+    if(isLt){ ltBuildBset(); ltFillBset(); }   /* 261023 추가 — 최근게시물 블럭 */
     if(isCa){ caBuildBset(); caFillBset(); }   /* 260929 추가 — 캘린더 블럭 */
     if(isCt){ ctBuildBset(); ctFillBset(); }
     if(isBd){ bdBuildBset(); bdFillBset(); }   /* 261008 추가 — 게시판 블럭 */   /* 260929 추가 — 컨택트/지점 블럭 */
@@ -42356,7 +42607,7 @@ global.PolyFX = API;
   /* 카드 높이를 그린 폼 높이(절반 배율)에 맞춘다 — 목록을 그린 직후 호출 (글꼴이 늦게 오면 한 번 더) */
   function fmCardFit(host){
     var th=host.querySelectorAll('.ba-thumb.fm-live'); if(!th.length) return;
-    function fit(){ th.forEach(function(t){ var w=t.querySelector('.fm-pv > .fm-wrap,.fm-pv > .sn-wrap,.fm-pv > .ca-wrap,.fm-pv > .ct-wrap,.fm-pv > .bd-wrap,.fm-pv > .dv-wrap,.fm-pv > .cd-wrap,.fm-pv > .nm-wrap,.fm-pv > .qr-wrap,.fm-pv > .tk-wrap');   /* 261023 추가 — 탭 카드도 그린 높이에 맞춘다 */   /* 261019 수정 — 구분선 · 카운트다운 카드 */   /* 261008 수정 — 게시판 카드 */ if(!w) return; var h=Math.round(w.offsetHeight*(w.closest('.ba-wide')?1:0.5));   /* 261019 수정 — 1열 구분선 카드는 축소 없이 그린다 */ if(h>24){ t.style.aspectRatio='auto'; t.style.height=h+'px'; }   /* 260929 수정 — 상담 신청 띠처럼 낮은 블럭도 */ }); }
+    function fit(){ th.forEach(function(t){ var w=t.querySelector('.fm-pv > .fm-wrap,.fm-pv > .sn-wrap,.fm-pv > .ca-wrap,.fm-pv > .ct-wrap,.fm-pv > .bd-wrap,.fm-pv > .dv-wrap,.fm-pv > .cd-wrap,.fm-pv > .nm-wrap,.fm-pv > .qr-wrap,.fm-pv > .tk-wrap,.fm-pv > .lt-wrap');   /* 261023 추가 — 탭 카드도 그린 높이에 맞춘다 */   /* 261019 수정 — 구분선 · 카운트다운 카드 */   /* 261008 수정 — 게시판 카드 */ if(!w) return; var h=Math.round(w.offsetHeight*(w.closest('.ba-wide')?1:0.5));   /* 261019 수정 — 1열 구분선 카드는 축소 없이 그린다 */ if(h>24){ t.style.aspectRatio='auto'; t.style.height=h+'px'; }   /* 260929 수정 — 상담 신청 띠처럼 낮은 블럭도 */ }); }
     fit(); setTimeout(fit,400); if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ setTimeout(fit,0); });
   }
   function fmApply(blk){
@@ -45706,6 +45957,7 @@ global.PolyFX = API;
   function bdWpos(m){ if(!bdCurBlk) return; var c=bdCfg(bdCurBlk); c.wpos=(m==='bottom')?'bottom':'top'; bdItemsRender(); bdApply(bdCurBlk); if(typeof markDirty==='function') markDirty(); }
   /* ── 261008 추가 — 게시판 공통: 카테고리 · 권한 (편집기에서 바로 편집) ── */
   function bdApplyBoard(k){   /* 같은 게시판을 쓰는 블럭 전부 다시 그린다 (공통 값이 바뀌었으므로 서명 무시) */
+    if(typeof ltRefresh==='function') setTimeout(function(){ ltRefresh(k); },0);   /* 261023 추가 — 최근게시물 블럭 */
     document.querySelectorAll('.blk[data-block="bdblk"]').forEach(function(b){ if(bdCfg(b).board!==k) return; var s=bdState(b); if(s.cat && BD_BOARDS[k].cats.indexOf(s.cat)<0) s.cat=''; if(BD_BOARDS[k].catOn===false) s.cat=''; bdApply(b,true); });
     bdLinkSync(); if(typeof markDirty==='function') markDirty();
   }
@@ -45824,6 +46076,7 @@ global.PolyFX = API;
   function bdNameIn(v){
     if(!bdCurBlk) return; var k=bdCfg(bdCurBlk).board, nm=String(v).replace(/\s+/g,' ').trim(); if(!nm) return;
     BD_BOARDS[k].n=nm; if(typeof markDirty==='function') markDirty();
+    if(typeof ltRefresh==='function') ltRefresh(k);   /* 261023 추가 — 최근게시물 블럭: 게시판 이름 */
   }
   function bdNameFix(el){ if(!bdCurBlk||!el) return; el.value=BD_BOARDS[bdCfg(bdCurBlk).board].n; }
   /* 게시판 카드 — 글 수 · 오늘 새 글 + 「게시판 관리」. 새 게시판은 글이 없다(캔버스의 글은 견본) */
@@ -45895,6 +46148,283 @@ global.PolyFX = API;
   window.bdGo=bdGo; window.bdOpen=bdOpen; window.bdCat=bdCat; window.bdPage=bdPage; window.bdQf=bdQf; window.bdSearch=bdSearch; window.bdSearchClear=bdSearchClear; window.bdUnlock=bdUnlock; window.bdFake=bdFake;
   window.bdWpos=bdWpos; window.bdSeg=bdSeg; window.bdText=bdText; window.bdItemTog=bdItemTog; window.bdItemExp=bdItemExp; window.bdDelAsk=bdDelAsk; window.bdDesignSet=bdDesignSet; window.bdEx=bdEx; window.BD_DSN=BD_DSN; window.BD_PRESETS=BD_PRESETS; window.BD_GRPS=BD_GRPS; window.bdNameIn=bdNameIn; window.bdNameFix=bdNameFix; window.bdNewBoard=bdNewBoard; window.bdKeyUsed=bdKeyUsed; window.bdBoardPack=bdBoardPack; window.bdLinkSync=bdLinkSync; window.bdTheme=bdTheme; window.bdPickFont=bdPickFont; window.bdFillBset=bdFillBset; window.bdManage=bdManage;
   window.bdCatName=bdCatName; window.bdCatAdd=bdCatAdd; window.bdCatDel=bdCatDel; window.bdPerm=bdPerm;
+
+  /* ═════════════════════════════════════════════════════════════════
+     261023 추가 — 최근게시물 블럭 (LATEST01~10 · 접두어 lt · cfg _ltCfg) — 블럭추가 「최근게시물」
+     · 좌측 사이트 latest1~11 이식. 글은 사이트 게시판(BD_BOARDS · 게시판 블럭 하나 = 게시판 하나)에서 가져온다(bdPosts — 게시판 블럭과 같은 견본 글)
+       - 목록(list) : latest1 · 7 · 8 · 9 · 10 · 11 — 글자만 다른 3칸 목록 6장을 「머리 모양」 5(없음 · 윗선 · 밑줄 · 진한 바탕 · 옅은 바탕)로. 게시판을 고른 만큼 칸(최대 3)
+       - 카드(card) : latest2 — 사진 위 · 제목 · 요약 · 날짜. 가로 개수 · 간격
+       - 리스트(row): latest6 · 3 · 4 · 5 — 사진 옆 글. 열(1 · 2) · 사진 위치(왼쪽 · 오른쪽) · 크기(작게 · 크게)
+     · 라이브 설정 대응: 게시판 선택 → 「게시판」(사이트의 게시판에서 고르기 · 없으면 견본) · 리스트 페이지 칩 → 「표시 항목」 · 컬러 모드 → 「색」 · 초기 노출 개수 → 「글 개수」
+       · 게시판 이름 · 제목 칩 안의 폰트 → 「글자」 하나로 · 공지글 상단고정 → 「공지 먼저」 · 「전체 보기」(게시판 페이지로) · 「요약」 · 사진 비율은 리뉴얼에서 더함
+     · 미리보기 · 게시: 글을 누르면 게시판이 있는 페이지로 가서 그 글을 연다(bdOpen). 편집 화면에서는 누르지 않는다(블럭 고르기)
+     · 게시판 · 표시 항목 · 배경 소재는 PC·모바일 공유, 스타일 · 개수 · 배치 · 글자 · 색 · 여백은 기기별 (MV_CONTENT)
+     ═════════════════════════════════════════════════════════════════ */
+  var LT_DS=[['l1','기본'],['l2','윗선'],['l3','밑줄'],['l4','진한 바탕'],['l5','옅은 바탕'],['c5','카드'],['r1l','리스트 크게'],['r1s','리스트'],['r2r','2열 오른쪽'],['r2l','2열 왼쪽']];
+  var LT_MAXB={list:3, card:1, row:1};
+  var LT_THEMES={ light:{tc:'#1c1f24', sc:'#8a9099', ac:'#1c1f24', ln:'#e6e8ec', bg:'#ffffff'}, dark:{tc:'#f1f3f5', sc:'#9aa3ae', ac:'#f1f3f5', ln:'#2b3038', bg:'#0e1114'} };
+  var LT_DEF={ ds:'l1', lay:'list', hd:'none', boards:null, n:5, show:null, cols:5, gap:16, rc:1, th:'right', sz:'s', ar:'4/3', rad:0, tf:5, ts:14,
+    theme:'light', tc:'#1c1f24', sc:'#8a9099', ac:'#1c1f24', ln:'#e6e8ec', bg:'#ffffff', bgImg:'', bgDim:0, bgGray:false, pt:72, pb:72 };
+  var LT_SHOW={bn:true, dt:true, cm:true, nw:true, ex:true, nt:false, more:false};
+  /* 시작값 — 주석의 번호는 좌측 사이트 최근게시물 번호(latestN) */
+  var LT_PRESETS={
+    l1 :{lay:'list', hd:'none',  n:5},            /* latest1 · 7 */
+    l2 :{lay:'list', hd:'top',   n:5},            /* latest8 */
+    l3 :{lay:'list', hd:'under', n:5},            /* latest9 */
+    l4 :{lay:'list', hd:'fill',  n:5},            /* latest10 */
+    l5 :{lay:'list', hd:'soft',  n:5},            /* latest11 */
+    c5 :{lay:'card', cols:5, gap:16, n:5, ar:'4/3'},                    /* latest2 */
+    r1l:{lay:'row', rc:1, th:'right', sz:'l', n:4, ar:'1/1'},           /* latest6 */
+    r1s:{lay:'row', rc:1, th:'right', sz:'s', n:4, ar:'1/1'},           /* latest3 */
+    r2r:{lay:'row', rc:2, th:'right', sz:'s', n:6, ar:'1/1'},           /* latest4 */
+    r2l:{lay:'row', rc:2, th:'left',  sz:'s', n:6, ar:'1/1'}            /* latest5 */
+  };
+  var LT_NMAX={list:10, card:12, row:12}, LT_NMIN={list:3, card:2, row:2};
+  /* 사이트에 있는 게시판(게시판 블럭) — 대시보드 게시판 목록과 같은 함수. 없으면 견본(자유게시판 · 공지사항 · 질문과 답변) */
+  function ltSiteBoards(){ try{ return (typeof clBoardList==='function')?clBoardList().filter(function(b){ return b.type!=='faq' && b.type!=='qna' && b.type!=='guest'; }):[]; }catch(e){ return []; } }
+  function ltDefBoards(lay){
+    var s=window.CL_MVIEW?[]:ltSiteBoards().map(function(b){ return b.key; }), mx=LT_MAXB[lay]||1;
+    if(s.length) return s.slice(0,mx);
+    return ['free','notice','qna'].slice(0,mx);
+  }
+  function ltPresetCfg(id){
+    var c=JSON.parse(JSON.stringify(LT_DEF)), p=LT_PRESETS[id]||LT_PRESETS.l1;
+    Object.keys(p).forEach(function(k){ c[k]=p[k]; });
+    c.show=JSON.parse(JSON.stringify(LT_SHOW)); c.boards=ltDefBoards(c.lay); c.ds=LT_PRESETS[id]?id:'l1'; c.preset=c.ds;
+    return c;
+  }
+  var ltCurBlk=null, ltBound=false;
+  function ltCfg(blk){
+    if(!blk._ltCfg) blk._ltCfg=ltPresetCfg('l1');
+    var c=blk._ltCfg; Object.keys(LT_DEF).forEach(function(k){ if(c[k]==null) c[k]=(k==='boards')?ltDefBoards(c.lay||'list'):((k==='show')?JSON.parse(JSON.stringify(LT_SHOW)):LT_DEF[k]); });
+    Object.keys(LT_SHOW).forEach(function(k){ if(c.show[k]==null) c.show[k]=LT_SHOW[k]; });
+    if(!Array.isArray(c.boards)) c.boards=ltDefBoards(c.lay);
+    /* 모바일 미리보기 사본 — 문서가 달라 BD_BOARDS 에 없는 게시판은 편집 화면이 실어 보낸 값(_Bs)으로 만든다 */
+    if(c._Bs && typeof BD_BOARDS==='object') Object.keys(c._Bs).forEach(function(k){ var P=c._Bs[k]; if(!P || BD_BOARDS[k]) return; var S=BD_BOARDS[P.src]||BD_BOARDS.free; BD_BOARDS[k]={n:P.n, fresh:!!P.fresh, src:P.src, cats:(P.cats||[]).slice(), nt:S.nt, t:S.t, a:S.a, catOn:P.catOn!==false, perm:P.perm||S.perm}; });
+    c.boards=c.boards.filter(function(k){ return BD_BOARDS[k]; }); if(!c.boards.length) c.boards=['free'];
+    return c;
+  }
+  function ltEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  var LT_CMI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg>';
+  var LT_ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+  /* 한 게시판의 보여 줄 글 — 공지 먼저(켜면) · 개수만큼 */
+  function ltPosts(c,k){ if(typeof bdPosts!=='function') return []; var P=bdPosts(k), L=(c.show.nt?P.nt:[]).concat(P.list); return L.slice(0,Math.max(1,Math.round(txNum(c.n,5)))); }
+  function ltBoardName(k){ var B=BD_BOARDS[k]; return B?B.n:'게시판'; }
+  function ltWhen(p){ return (typeof bdWhen==='function')?bdWhen(p.at):''; }
+  function ltIsNew(p){ return !p.notice && typeof bdIsNew==='function' && bdIsNew(p); }
+  /* 아이콘은 게시판 블럭(BD_I)과 같은 것 */
+  function ltIc(n){ return (typeof BD_I!=='undefined' && BD_I[n])?BD_I[n].replace(/ class="[^"]*"/,''):''; }
+  /* 비밀글은 사진도 가린다(게시판 블럭 bdThHTML 과 같은 규칙) · 사진 없는 글은 빈 면 + 사진 아이콘 */
+  function ltImHTML(p,keep){ return (p.img && !p.sec)?'<span class="lt-im" style="background-image:url(&quot;'+_mtAttr(p.img)+'&quot;)"></span>':(keep||p.sec?'<span class="lt-im none">'+ltIc(p.sec?'lockBig':'pic')+'</span>':''); }
+  /* 목록 보기 권한이 「모두」가 아닌 게시판 — 방문자(미리보기 · 게시)에게는 글 대신 안내 */
+  function ltPerm(k){ var B=BD_BOARDS[k]; return (B && B.perm && B.perm.list && B.perm.list!=='all')?B.perm.list:''; }
+  function ltPermName(v){ return v==='admin'?'관리자':'회원'; }
+  function ltVisitor(){ var de=document.documentElement; if(de.classList.contains('pview')) return true; if(!window.CL_MVIEW) return false; try{ var h=(typeof clHost==='function')?clHost():window.parent; return !!(h && h!==window && h.document.documentElement.classList.contains('pview')); }catch(e){ return false; } }
+  function ltLocked(k){ var v=ltPerm(k); return (v && ltVisitor())?'<div class="lt-empty lt-lock">'+ltIc('lockBig')+'<span>'+ltPermName(v)+'만 볼 수 있는 게시판입니다.</span></div>':''; }
+  function ltEx(p){ if(p.sec) return "비밀글입니다."; return String(p.x||'').split(/\n+/).filter(function(s){ return s.trim(); }).join(' '); }
+  function ltHead(c,k){
+    var bn=c.show.bn, mo=c.show.more; if(!bn && !mo) return '';
+    return '<div class="lt-h">'+(bn?'<b>'+ltEsc(ltBoardName(k))+'</b>':'<span></span>')+(mo?'<a class="lt-more" data-k="'+k+'" role="link" tabindex="0">전체 보기'+LT_ARR+'</a>':'')+'</div>';
+  }
+  function ltTitle(c,p){
+    return (p.notice?'<span class="lt-nt">공지</span>':'')+(p.sec?'<span class="lt-lk">'+ltIc('lock')+'</span>':'')+'<span class="lt-ttl">'+ltEsc(p.t)+'</span>'+((c.show.cm && p.cm && c.lay==='list')?'<span class="lt-cm">['+p.cm+']</span>':'')+((c.show.nw && ltIsNew(p))?'<span class="lt-new">N</span>':'');
+  }
+  function ltListHTML(c){
+    var B=c.boards.slice(0,LT_MAXB.list);
+    return '<div class="lt-cols" style="--ltn:'+B.length+'">'+B.map(function(k){
+      var L=ltPosts(c,k), lk=ltLocked(k);
+      return '<div class="lt-col">'+ltHead(c,k)+lk+(lk?'':L.length?L.map(function(p){ return '<div class="lt-li lt-post" data-k="'+k+'" data-id="'+ltEsc(p.id)+'" role="link" tabindex="0">'+ltTitle(c,p)+(c.show.dt?'<span class="lt-dt">'+ltWhen(p)+'</span>':'')+'</div>'; }).join(''):'<div class="lt-empty">아직 글이 없습니다.</div>')+'</div>';
+    }).join('')+'</div>';
+  }
+  function ltMeta(c,p){
+    var a=(c.show.dt?'<span class="lt-dt">'+ltWhen(p)+'</span>':'')+((c.show.cm && p.cm)?'<span class="lt-cmi">'+LT_CMI+p.cm+'</span>':'');
+    return a?'<div class="lt-meta">'+a+'</div>':'';
+  }
+  function ltCardHTML_(c){
+    var k=c.boards[0], L=ltPosts(c,k), lk=ltLocked(k); if(lk) return ltHead(c,k)+lk;
+    return ltHead(c,k)+(L.length?'<div class="lt-grid">'+L.map(function(p){
+      return '<div class="lt-card lt-post" data-k="'+k+'" data-id="'+ltEsc(p.id)+'" role="link" tabindex="0">'+ltImHTML(p,true)
+        +'<div class="lt-tl">'+ltTitle(c,p)+'</div>'+(c.show.ex?'<div class="lt-ex">'+ltEsc(ltEx(p))+'</div>':'')+ltMeta(c,p)+'</div>';
+    }).join('')+'</div>':'<div class="lt-empty">아직 글이 없습니다.</div>');
+  }
+  function ltRowHTML(c){
+    var k=c.boards[0], L=ltPosts(c,k), lk=ltLocked(k); if(lk) return ltHead(c,k)+lk;
+    return ltHead(c,k)+(L.length?'<div class="lt-rows">'+L.map(function(p){
+      return '<div class="lt-row lt-post" data-k="'+k+'" data-id="'+ltEsc(p.id)+'" role="link" tabindex="0"><div class="lt-tx"><div class="lt-tl">'+ltTitle(c,p)+'</div>'
+        +(c.show.ex?'<div class="lt-ex">'+ltEsc(ltEx(p))+'</div>':'')+ltMeta(c,p)+'</div>'+ltImHTML(p,false)+'</div>';
+    }).join('')+'</div>':'<div class="lt-empty">아직 글이 없습니다.</div>');
+  }
+  function ltInnerHTML(c,card){
+    var pt=txNum(c.pt,72), pb=txNum(c.pb,72); if(card){ pt=32; pb=32; }
+    var body=(c.lay==='card')?ltCardHTML_(c):((c.lay==='row')?ltRowHTML(c):ltListHTML(c));
+    return '<div class="lt-in" style="padding-top:'+pt+'px;padding-bottom:'+pb+'px">'+body+'</div>';
+  }
+  function ltSoft(c){ return (c.theme==='dark')?'rgba(255,255,255,.07)':'#f4f5f7'; }
+  function ltStyleStr(c){
+    var cols=Math.max(2,Math.min(6,Math.round(txNum(c.cols,5)))), ts=Math.max(12,Math.min(20,txNum(c.ts,14)));
+    return '--ltf:'+smStack(txNum(c.tf,5))+';--ltts:'+ts+'px;--lttc:'+(c.tc||'#1c1f24')+';--ltsc:'+(c.sc||'#8a9099')+';--ltac:'+(c.ac||'#1c1f24')+';--ltai:'+((typeof bdInk==='function')?bdInk(c.ac):'#ffffff')+';--ltln:'+(c.ln||'#e6e8ec')+';--ltsf:'+ltSoft(c)+';'
+      +'--ltc:'+cols+';--ltcm:'+Math.min(cols,2)+';--ltg:'+txNum(c.gap,16)+'px;--ltrc:'+(+c.rc===2?2:1)+';--ltar:'+(c.ar||'4/3')+';--ltr:'+txNum(c.rad,0)+'px;--ltts2:'+(c.sz==='l'?'132px':'72px')+';--ltxl:'+(c.sz==='l'?2:1)+';';
+  }
+  function ltAttrs(w,c){ w.setAttribute('data-lay',c.lay||'list'); w.setAttribute('data-hd',c.hd||'none'); w.setAttribute('data-th',c.th==='left'?'left':'right'); w.setAttribute('data-rc',+c.rc===2?'2':'1'); }
+  function ltBlockHTML(){ return '<span class="tag-badge">최근게시물</span>'+SM_GEAR+'<div class="lt-wrap"></div>'; }
+  function ltApply(blk){
+    if(!blk) return;
+    var c=ltCfg(blk), wrap=blk.querySelector('.lt-wrap'); if(!wrap) return;
+    if(!window.CL_MVIEW && typeof bdBoardPack==='function'){ var bs={}; c.boards.forEach(function(k){ var P=bdBoardPack(k); if(P) bs[k]=P; }); c._Bs=bs; }   /* 모바일 사본이 게시판 이름 · 견본을 알 수 있게 */
+    blk.style.padding='0';
+    wrap.style.cssText=ltStyleStr(c); ltAttrs(wrap,c);
+    wrap.innerHTML=ltInnerHTML(c,false);
+    blkBgApply(blk,c,'#ffffff');
+  }
+  function ltInit(blk){ if(blk) ltApply(blk); }
+  function ltCloneInit(src,clone){
+    if(!clone || clone.getAttribute('data-block')!=='ltblk') return;
+    try{ clone._ltCfg=JSON.parse(JSON.stringify(ltCfg(src))); }catch(e){ clone._ltCfg=null; }
+    setTimeout(function(){ ltInit(clone); },0);
+  }
+  /* 게시판 이름 · 카테고리 같은 공통 값이 바뀌면(bdApplyBoard) 그 게시판을 쓰는 최근게시물도 다시 그린다 */
+  function ltRefresh(k){ document.querySelectorAll('.blk[data-block="ltblk"]').forEach(function(b){ if(!k || ltCfg(b).boards.indexOf(k)>=0) ltApply(b); }); }
+  /* ── 카드 (블럭추가) ── */
+  function ltCardHTML(preset){
+    var c=ltPresetCfg(preset||'l1'); if(c.lay==='list') c.boards=['free','notice','qna']; else c.boards=['free'];
+    if(c.lay!=='list') c.n=Math.min(c.n,c.lay==='card'?5:4);
+    return '<div class="fm-pv"><div class="lt-wrap" data-lay="'+c.lay+'" data-hd="'+c.hd+'" data-th="'+c.th+'" data-rc="'+c.rc+'" style="'+ltStyleStr(c)+'background:#ffffff;">'+ltInnerHTML(c,true)+'</div></div>';
+  }
+  function baInsertLt(card){
+    var c=ltPresetCfg(card.getAttribute('data-preset')||'l1');
+    baInsertKind(card,'ltblk','lt-blk',ltBlockHTML(),'_ltCfg',c,ltInit);
+    /* 게시판이 저절로 이어진 까닭을 「블럭을 추가했습니다」 토스트 자리에 알린다(토스트 하나만) */
+    var T=(typeof showToast==='function')?showToast:((typeof clToast==='function')?clToast:null); if(!T) return;
+    if(!ltSiteBoards().length){ T('블럭을 추가했습니다. 사이트에 게시판이 없어 견본 글을 보여 줍니다.'); return; }
+    var B=c.boards.slice(0,LT_MAXB[c.lay]||1).map(ltBoardName).join(' · ');
+    T(B+'의 최근 글을 가져왔습니다. 블럭 설정에서 게시판을 바꿀 수 있습니다.');
+  }
+  function ltLibDrop(blk,src){ if(typeof bpBgSet==='function') bpBgSet('lt',blk,src); clToast((rtBgIsVid(src)?'블럭 배경 동영상을':'블럭 배경 이미지를')+' 넣었습니다.'); }
+  /* ── 글 · 전체 보기 누르기 — 미리보기 · 게시(모바일 사본 포함)에서만. 게시판이 있는 페이지로 가서 그 글을 연다 ── */
+  function ltLive(){ return !!window.CL_MVIEW || document.documentElement.classList.contains('pview'); }
+  function ltBoardBlk(k){ var st=document.getElementById('stage'); if(!st) return null; var hit=null; [].forEach.call(st.querySelectorAll('.blk[data-block="bdblk"]'),function(b){ if(!hit && b._bdCfg && b._bdCfg.board===k) hit=b; }); return hit; }
+  function ltBoardPage(k){
+    if(typeof pgxKeep!=='undefined'){ for(var id in pgxKeep){ var r=pgxKeep[id]; if(r && r.querySelectorAll){ var f=[].some.call(r.querySelectorAll('.blk[data-block="bdblk"]'),function(b){ return b._bdCfg && b._bdCfg.board===k; }); if(f) return id; } } }
+    if(typeof PGX_PAGES!=='undefined'){ for(var pid in PGX_PAGES){ var P=PGX_PAGES[pid]; if(P && P.seed && P.seed.some(function(s){ return typeof s==='string' && s.split(':')[0]==='bdblk' && s.split(':')[2]===k; })) return pid; } }
+    return null;
+  }
+  function ltGo(k,id){
+    var b=ltBoardBlk(k);
+    function open(bb){ if(!bb) return; if(id && typeof bdOpen==='function') bdOpen(bb,id); else { var s=(typeof bdState==='function')?bdState(bb):null; if(s){ s.m='list'; s.id=null; if(typeof bdApply==='function') bdApply(bb); } } try{ bb.scrollIntoView({behavior:'smooth',block:'start'}); }catch(e){} }
+    if(b){ open(b); return; }
+    var pg=ltBoardPage(k);
+    if(pg && typeof pgxGo==='function'){ pgxGo(pg); setTimeout(function(){ open(ltBoardBlk(k)); },380); return; }
+    if(typeof clToast==='function') clToast('이 게시판이 놓인 페이지가 없어 이동할 곳이 없습니다.');
+  }
+  var ltTipShown=false;
+  document.addEventListener('click',function(e){
+    var t=e.target.closest && e.target.closest('.lt-wrap .lt-post,.lt-wrap .lt-more'); if(!t || t.closest('.fm-pv,#blockAdd')) return;
+    if(!ltLive()){ if(!ltTipShown && typeof clToast==='function'){ ltTipShown=true; clToast('미리보기에서 누르면 그 글(게시판)로 이동합니다.'); } return; }   /* 편집 화면: 블럭만 고른다 */
+    e.preventDefault(); ltGo(t.getAttribute('data-k'), t.classList.contains('lt-more')?null:t.getAttribute('data-id'));
+  });
+  document.addEventListener('keydown',function(e){ if(e.key!=='Enter') return; var t=e.target.closest && e.target.closest('.lt-wrap .lt-post,.lt-wrap .lt-more'); if(!t || !ltLive()) return; e.preventDefault(); t.click(); });
+  /* ── 블럭설정 ── */
+  function ltDirty(){ if(typeof markDirty==='function') markDirty(); }
+  function ltUpd(key,val){ var blk=ltCurBlk; if(!blk) return; ltCfg(blk)[key]=val; ltApply(blk); ltRows(); ltDirty(); }
+  function ltSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
+  function ltSeg(key,id,m){ ltSegSync(id,m); var blk=ltCurBlk; if(!blk) return; var c=ltCfg(blk); c[key]=m; c.ds=ltMatchDs(c); ltApply(blk); ltRows(); ltDsRender(); ltDirty(); }
+  /* 지금 값과 맞는 스타일 칸(직접 바꿔 시작값과 다르면 가장 가까운 것) */
+  function ltMatchDs(c){
+    var best=c.ds; LT_DS.some(function(d){ var p=LT_PRESETS[d[0]]; if(p.lay!==c.lay) return false; if(c.lay==='list' && p.hd===c.hd){ best=d[0]; return true; } if(c.lay==='row' && p.rc===+c.rc && p.th===c.th && p.sz===c.sz){ best=d[0]; return true; } if(c.lay==='card'){ best=d[0]; return true; } return false; });
+    return best;
+  }
+  /* 스타일 — 미니 미리보기 10칸. 배치가 바뀌면 그 배치의 시작값(개수 · 열 · 사진)도. 게시판 · 표시 항목 · 글자 · 색 · 여백은 그대로 */
+  function ltMini(id){ var p=LT_PRESETS[id], i='';
+    if(p.lay==='list') return '<span class="lt-mini" data-l="list" data-hd="'+p.hd+'"><i class="h"></i><i class="h"></i><i></i><i></i><i></i><i></i><i></i><i></i></span>';
+    if(p.lay==='card'){ for(var k=0;k<4;k++) i+='<i class="p"></i>'; for(k=0;k<8;k++) i+='<i></i>'; return '<span class="lt-mini" data-l="card">'+i+'</span>'; }
+    var n=(p.rc===2)?6:3; for(var j=0;j<n;j++) i+='<i></i>'; return '<span class="lt-mini" data-l="row" data-rc="'+p.rc+'" data-th="'+p.th+'" data-sz="'+p.sz+'">'+i+'</span>';
+  }
+  function ltDsRender(){
+    var blk=ltCurBlk, g=document.getElementById('ltDsGrid'); if(!blk||!g) return; var ds=ltCfg(blk).ds;
+    g.innerHTML=LT_DS.map(function(d,i){ return '<button type="button" class="'+(d[0]===ds?'on':'')+'" aria-pressed="'+(d[0]===ds)+'" title="LATEST'+(i<9?'0':'')+(i+1)+'" onclick="ltDesign(\''+d[0]+'\')">'+ltMini(d[0])+d[1]+'</button>'; }).join('');
+  }
+  function ltDesign(id){
+    var blk=ltCurBlk, p=LT_PRESETS[id]; if(!blk||!p) return; var c=ltCfg(blk); if(c.ds===id) return;
+    var layCh=(p.lay!==c.lay);
+    Object.keys(p).forEach(function(k){ if(k==='n' && !layCh) return; c[k]=p[k]; });   /* 같은 배치끼리는 개수를 지킨다 */
+    c.ds=id;
+    /* 게시판 목록(PC·모바일 공유)은 줄이지 않는다 — 카드 · 리스트는 첫 게시판만, 목록은 앞의 3개까지 쓴다(한 기기에서 스타일을 바꿔도 다른 기기의 칸이 줄지 않게) */
+    if(layCh && c.lay==='list' && c.boards.length<2){ var add=ltDefBoards('list').filter(function(k){ return c.boards.indexOf(k)<0; }); c.boards=c.boards.concat(add).slice(0,Math.max(1,Math.min(3,ltSiteBoards().length||3))); }
+    ltApply(blk); ltFillBset(); ltDirty();
+  }
+  /* 게시판 고르기 — 사이트의 게시판(게시판 블럭). 목록은 여러 개(칸 · 최대 3, 고른 차례 = 칸 차례), 카드 · 리스트는 하나 */
+  var LT_CK='<svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>';
+  function ltBoardsRender(){
+    var blk=ltCurBlk, host=document.getElementById('ltBoards'), hint=document.getElementById('ltBdHint'); if(!blk||!host) return; var c=ltCfg(blk);
+    var site=ltSiteBoards(), multi=(c.lay==='list'), rows=site.map(function(b){ return {k:b.key, n:b.name, pg:b.page}; });
+    c.boards.forEach(function(k){ if(!rows.some(function(r){ return r.k===k; })) rows.push({k:k, n:ltBoardName(k), pg:'견본', sample:true}); });
+    if(!site.length) ['free','notice','qna'].forEach(function(k){ if(!rows.some(function(r){ return r.k===k; })) rows.push({k:k, n:ltBoardName(k), pg:'견본', sample:true}); });
+    /* 목록: 고른 게시판을 칸 차례대로 위에 모으고 손잡이로 순서를 바꾼다(다른 블럭 목록과 같은 .mt-imgdrag · clBindSortable) */
+    var sort=multi && Math.min(c.boards.length,LT_MAXB.list)>1, ord=function(r){ var i=c.boards.indexOf(r.k); return (multi && i>=0 && i<LT_MAXB.list)?i:99; };
+    if(multi) rows=rows.map(function(r,j){ return [r,j]; }).sort(function(a,b){ return (ord(a[0])-ord(b[0]))||(a[1]-b[1]); }).map(function(p){ return p[0]; });
+    var DRAG=(typeof QM_I!=='undefined' && QM_I.drag)||'⋮⋮';
+    host.innerHTML=rows.map(function(r){ var i=c.boards.indexOf(r.k), on=multi?(i>=0 && i<LT_MAXB.list):(i===0);
+      var dg=sort?(on?'<span class="mt-imgdrag" title="드래그하여 순서 변경" onclick="event.stopPropagation()">'+DRAG+'</span>':'<span class="dg-sp"></span>'):'';
+      return '<div class="lt-bd'+(on?' on':'')+(multi?'':' radio')+(sort && on?' lt-bdo':'')+'"'+(sort && on?' data-i="'+i+'"':'')+' role="'+(multi?'checkbox':'radio')+'" aria-checked="'+on+'" tabindex="0" onclick="ltBoardTog(\''+r.k+'\')" onkeydown="if(event.key===\' \'||event.key===\'Enter\'){event.preventDefault();ltBoardTog(\''+r.k+'\');}">'+dg+'<span class="ck">'+LT_CK+'</span><span class="nm">'+ltEsc(r.n)+'</span>'+(ltPerm(r.k)?'<span class="pm">'+ltPermName(ltPerm(r.k))+' 전용</span>':'')+((multi && on && c.boards.length>1)?'<span class="no">'+(i+1)+'</span>':'')+'<span class="pg">'+ltEsc(r.pg)+'</span></div>'; }).join('');
+    if(sort && typeof clBindSortable==='function') clBindSortable(host,'.lt-bdo','.mt-imgdrag',ltBoardMove);
+    var lb=document.getElementById('ltBdLbl'); if(lb) lb.textContent=multi?('게시판 (칸 · 최대 '+LT_MAXB.list+')'):'게시판';
+    if(hint) hint.textContent=site.length?(multi?'위에서부터 왼쪽 칸이 됩니다. 손잡이를 끌어 순서를 바꿀 수 있습니다. FAQ · Q&A · 방명록 게시판은 고를 수 없습니다.':'글을 가져올 게시판 하나를 고릅니다.')
+      :'사이트에 아직 게시판이 없어 견본 글을 보여 줍니다. 게시판 블럭을 넣으면 여기서 고를 수 있습니다.';
+    if(hint && rows.some(function(r){ return ltPerm(r.k); })) hint.textContent+=' 회원 · 관리자 전용 게시판은 방문자에게 글 대신 안내가 보입니다.';
+  }
+  function ltBoardMove(from,to){
+    var blk=ltCurBlk; if(!blk) return; var c=ltCfg(blk), n=Math.min(c.boards.length,LT_MAXB.list);
+    if(from===to || from<0 || to<0 || from>=n || to>=n) return;
+    c.boards.splice(to,0,c.boards.splice(from,1)[0]);
+    ltApply(blk); ltBoardsRender(); ltDirty();
+  }
+  function ltBoardTog(k){
+    var blk=ltCurBlk; if(!blk) return; var c=ltCfg(blk), i=c.boards.indexOf(k);
+    if(c.lay!=='list'){ if(i===0) return; if(i>0) c.boards.splice(i,1); c.boards.unshift(k); c.boards=c.boards.slice(0,LT_MAXB.list); }   /* 카드 · 리스트 = 맨 앞 게시판 하나. 나머지는 목록 스타일(다른 기기 포함)을 위해 남겨 둔다(최대 3) */
+    else if(i>=0){ if(c.boards.length<=1){ clToast('게시판을 하나 이상 골라야 합니다.'); return; } c.boards.splice(i,1); }
+    else { if(c.boards.length>=LT_MAXB.list){ clToast('목록에는 게시판을 '+LT_MAXB.list+'개까지 고를 수 있습니다.'); return; } c.boards.push(k); }
+    ltApply(blk); ltBoardsRender(); ltDirty();
+  }
+  /* 표시 항목 — 게시판 블럭 · 컨텐츠 블럭과 같은 알약(.gt-chip) */
+  function ltShowRender(){
+    var blk=ltCurBlk, host=document.getElementById('ltShow'); if(!blk||!host) return; var c=ltCfg(blk), S=c.show;
+    var L=[['bn','게시판 이름'],['dt','작성일'],['cm','댓글 수'],['nw','NEW'],['nt','공지 먼저'],['more','전체 보기']]; if(c.lay!=='list') L.splice(4,0,['ex','요약']);
+    host.innerHTML=L.map(function(x){ var on=!!S[x[0]]; return '<div class="gt-chip'+(on?' on':'')+'" data-k="'+x[0]+'"><button type="button" class="lb" aria-pressed="'+on+'" onclick="ltShowTog(\''+x[0]+'\')">'+x[1]+'</button></div>'; }).join('');
+  }
+  function ltShowTog(k){ var blk=ltCurBlk; if(!blk) return; var S=ltCfg(blk).show; S[k]=!S[k]; ltApply(blk); ltShowRender(); ltDirty(); }
+  function ltTheme(t){ var blk=ltCurBlk, T=LT_THEMES[t]; if(!blk||!T) return; var c=ltCfg(blk); c.theme=t; Object.keys(T).forEach(function(k){ c[k]=T[k]; }); ltApply(blk); ltFillBset(); ltDirty(); }
+  function ltRows(){
+    var blk=ltCurBlk, box=document.getElementById('bsetLt'); if(!blk||!box) return; var c=ltCfg(blk);
+    box.querySelectorAll('[data-lt]').forEach(function(el){ el.style.display=(' '+el.getAttribute('data-lt')+' ').indexOf(' '+c.lay+' ')>=0?'':'none'; });
+    var nl=document.getElementById('ltNLbl'); if(nl) nl.textContent='글 개수'; var nh=document.getElementById('ltNHint'); if(nh) nh.style.display=(c.lay==='list')?'':'none';   /* 항목명은 짧게(74px), 목록일 때만 안내 */
+    var ne=document.getElementById('ltN'); if(ne){ var mn=LT_NMIN[c.lay], mx=LT_NMAX[c.lay]; if(+ne.min!==mn) ne.min=mn; if(+ne.max!==mx) ne.max=mx; var v=Math.max(mn,Math.min(mx,Math.round(txNum(c.n,5)))); if(v!==+c.n){ c.n=v; } ne.value=v; if(typeof smRng==='function') smRng(ne); var nv=document.getElementById('ltNV'); if(nv) nv.textContent=v; }
+    var lr=document.getElementById('ltLnRow'); if(lr) lr.style.display=(c.lay==='list' && c.hd!=='top' && c.hd!=='under')?'none':'';
+    var al=document.getElementById('ltAcLbl'); if(al) al.textContent='강조색';
+  }
+  var LT_RNG=[['ltN','n',''],['ltCols','cols',''],['ltGap','gap','px'],['ltRad','rad','px'],['ltTs','ts','px'],['ltBgDim','bgDim','%'],['ltPt','pt','px'],['ltPb','pb','px']];
+  var LT_COL=[['ltTc','tc'],['ltSc','sc'],['ltAc','ac'],['ltLn','ln'],['ltBg','bg']];
+  function ltFontSync(i){ var dd=document.getElementById('ltFDD'); if(!dd) return; var lb=dd.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=(SM_FONTS[i]||SM_FONTS[0]).n; dd.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', +b.getAttribute('data-i')===i); }); }
+  function ltPickFont(e,i){ if(e) e.stopPropagation(); var dd=document.getElementById('ltFDD'); if(dd) dd.classList.remove('open'); ltFontSync(i); ltUpd('tf',i); }
+  function ltBuildBset(){
+    if(ltBound) return; ltBound=true;
+    var fd=document.getElementById('ltFDD'), fm=fd&&fd.querySelector('.sdd-menu');
+    if(fm) fm.innerHTML=SM_FONTS.map(function(f,i){ return '<button type="button" data-i="'+i+'" style="font-family:'+f.f+','+f.fb+'" onclick="ltPickFont(event,'+i+')">'+f.n+'</button>'; }).join('');
+    LT_RNG.forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return; el.addEventListener('input',function(){ var v=parseFloat(el.value); if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[2]; ltUpd(r[1],v); }); });
+    LT_COL.forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return; el.addEventListener('input',function(){ var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(el.value); ltUpd(r[1],el.value); }); });
+  }
+  function ltFillBset(){
+    var blk=ltCurBlk; if(!blk) return; var c=ltCfg(blk);
+    function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng') && typeof smRng==='function') smRng(el); } }
+    LT_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
+    LT_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
+    ltFontSync(txNum(c.tf,5));
+    ltSegSync('ltHdSeg',c.hd); ltSegSync('ltRcSeg',+c.rc===2?2:1); ltSegSync('ltThSeg',c.th); ltSegSync('ltSzSeg',c.sz); ltSegSync('ltArSeg',c.ar); ltSegSync('ltThemeSeg',c.theme||'light');
+    ltDsRender(); ltBoardsRender(); ltShowRender(); if(typeof bgPanelSync==='function') bgPanelSync('lt'); ltRows();
+  }
+  if(typeof BGP==='object' && BGP) BGP.lt={cur:function(){ return ltCurBlk; }, cfg:ltCfg, apply:ltApply};
+  window.ltCfg=ltCfg; window.ltApply=ltApply; window.ltCloneInit=ltCloneInit; window.ltCardHTML=ltCardHTML; window.baInsertLt=baInsertLt; window.ltLibDrop=ltLibDrop; window.ltRefresh=ltRefresh;
+  window.ltBuildBset=ltBuildBset; window.ltFillBset=ltFillBset; window.ltSeg=ltSeg; window.ltDesign=ltDesign; window.ltPickFont=ltPickFont; window.ltBoardTog=ltBoardTog; window.ltBoardMove=ltBoardMove; window.ltShowTog=ltShowTog; window.ltTheme=ltTheme;
+
 
   /* ══════════════════════════════════════════════════════════════════
      260929 추가 — 컨택트/지점 블럭 (CONTACT01~18 · 접두어 ct · cfg _ctCfg)
@@ -55832,6 +56362,7 @@ global.PolyFX = API;
       formblk     :{cfg:'_fmCfg', apply:function(b){ fmApply(b); }},   /* 260929 추가 — 폼 블럭 */
       snblk       :{cfg:'_snCfg', apply:function(b){ snApply(b); }},   /* 261022 추가 — 소셜 블럭 */
       tkblk       :{cfg:'_tkCfg', apply:function(b){ tkApply(b); }},   /* 261023 추가 — 탭 블럭 */
+      ltblk       :{cfg:'_ltCfg', apply:function(b){ ltApply(b); }},   /* 261023 추가 — 최근게시물 블럭 */
       calblk      :{cfg:'_caCfg', apply:function(b){ caApply(b); }},
       dvblk       :{cfg:'_dvCfg', apply:function(b){ dvApply(b); }},   /* 261019 추가 — 구분선 블럭 */
       cdblk       :{cfg:'_cdCfg', apply:function(b){ cdApply(b); }},   /* 261019 추가 — 카운트다운 블럭 */
@@ -56364,6 +56895,7 @@ global.PolyFX = API;
       calblk      :{events:1, view:1, nav:1, hol:1, ws:1, perm:1, gid:1, gkey:1, gc:1, sync:1},   /* 260929 추가 — 캘린더 블럭 · 일정·보기·권한·연동은 PC·모바일이 함께 쓴다. 색·크기·여백은 기기별 */
       snblk       :{icons:1, eb:1, desc:1, ebH:1, descH:1, introTH:1, acct:1, href:1, imgs:1, introT:1, moreT:1, bgImg:1},   /* 261022 추가 — 소셜 블럭 · 아이콘·문구·계정·이미지·배경 소재는 PC·모바일 공유, 모양·크기·열·색·여백은 기기별 */
       tkblk       :{tabs:1, def:1, bgImg:1, bgGray:1},   /* 261023 추가 — 탭 블럭 · 탭(이름 · 내용) · 처음 탭 · 배경 소재는 PC·모바일 공유, 줄 · 가로 개수 · 높이 · 글자 · 색 · 여백은 기기별 */
+      ltblk       :{boards:1, show:1, _Bs:1, bgImg:1, bgGray:1},   /* 261023 추가 — 최근게시물 블럭 · 게시판 · 표시 항목 · 배경 소재는 PC·모바일 공유, 스타일 · 개수 · 배치 · 글자 · 색 · 여백은 기기별 */
       formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, privacy:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블럭 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
     };
     /* 텍스트 문구 키 — 기본은 PC 와 공유하고, 블럭별 '문구 따로 쓰기'(blk._mvTextSplit)를 켠 경우에만 모바일 전용이 된다 */
@@ -56444,7 +56976,7 @@ global.PolyFX = API;
     }
     function mvDefaultCfg(blk,def){
       /* xxCfg(blk) 가 기본값을 만들어 준다 */
-      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_cnCfg:'cnCfg',_snCfg:'snCfg',_tkCfg:'tkCfg'}[def.cfg];   /* 260922 수정 */
+      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_cnCfg:'cnCfg',_snCfg:'snCfg',_tkCfg:'tkCfg',_ltCfg:'ltCfg'}[def.cfg];   /* 260922 수정 */
       try{ return window[fn](blk); }catch(x){ return {}; }
     }
     /* 헤더 세그먼트·초기화 버튼 상태 */
@@ -56489,7 +57021,7 @@ global.PolyFX = API;
     /* Apply 가로채기 — 모든 설정 변경은 xxApply 로 모이므로 여기서 한 번만 갈라 놓으면 된다 */
     Object.keys(MV_TYPES).forEach(function(type){
       var def=MV_TYPES[type];
-      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_cnCfg:'cnApply',_snCfg:'snApply',_tkCfg:'tkApply'}[def.cfg];   /* 260922 수정 */
+      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_cnCfg:'cnApply',_snCfg:'snApply',_tkCfg:'tkApply',_ltCfg:'ltApply'}[def.cfg];   /* 260922 수정 */
       var orig=window[name]; if(typeof orig!=='function') return;
       var wrapped=function(blk){
         if(blk && MV_TARGET==='mobile' && blk===mvTargetBlk && blk._mvBase) mvReconcile(blk);
