@@ -3116,6 +3116,7 @@
   .cn-wrap[data-sit="1"] .cn-it-s{font-style:italic;}
   .cn-deco{display:block;margin:16px 0 0;max-width:100%;} .cn-wrap[data-al="center"] .cn-deco{margin-left:auto;margin-right:auto;}
   .cn-more{display:inline-block;margin-top:22px;font-size:13px;line-height:1;color:var(--cnitc2);text-decoration:none;padding-bottom:4px;border-bottom:1px solid currentColor;}
+.cn-more .cn-more-t{display:inline;}   /* 261026 추가 — 「더 보기」 문구를 블럭 위에서 바로 고친다 */
   .cn-strip{display:grid;grid-template-columns:repeat(var(--cnsn),minmax(0,1fr));margin-bottom:44px;}
   .cn-strip .cn-m{border-radius:0;}
   /* 이미지 위 글(tiles) */
@@ -44987,17 +44988,58 @@ global.PolyFX = API;
   function cnMoreGo(e,a){
     if(e) e.preventDefault(); if(!window.CL_MVIEW) return false;
     var blk=a.closest('.blk'); if(!blk || !blk._cnCfg) return false; var it=cnCfg(blk).items[+a.getAttribute('data-i')], lk=it&&it.link; if(!lk || !lk.url) return false;
-    if(typeof pgLinkGo==='function') pgLinkGo(lk); else if(lk.newTab) (window.clWinOpen||window.open)(lk.url,'_blank','noopener');   /* 261026 수정 — 전역 var open 이 window.open 을 덮어 clWinOpen 으로 */ else location.href=lk.url;
+    cnLkGo(lk);
     return false;
   }
+  /* 261026 추가 — 미리보기 · 게시에서 항목 링크 열기(「더 보기」 · 항목 이미지 공통). pgLinkGo 는 편집기용이라 외부 주소 · 파일은 안내만 띄우므로
+     주소(url) · 파일(file)은 여기서 직접 연다. 페이지 · 앵커 · 화상 미팅 예약 등은 그대로 pgLinkGo */
+  function cnLkGo(lk){
+    if(!lk || !lk.url) return;
+    var k=lk.kind||'url', u=String(lk.url).trim();
+    if(k==='file'){ var a=document.createElement('a'); a.href=u; if(lk.download) a.setAttribute('download',lk.download); a.rel='noopener'; a.style.display='none'; document.body.appendChild(a); a.click(); a.remove(); return; }
+    if(k==='url'){
+      if(!/^(https?:|mailto:|tel:|\/|#)/i.test(u)) u='https://'+u.replace(/^\/+/,'');
+      if(lk.newTab) (window.clWinOpen||window.open)(u,'_blank','noopener'); else location.href=u;   /* 전역 var open 이 window.open 을 덮어 clWinOpen 으로 */
+      return;
+    }
+    if(typeof pgLinkGo==='function'){ pgLinkGo(lk); return; }
+    if(lk.newTab) (window.clWinOpen||window.open)(u,'_blank','noopener'); else location.href=u;
+  }
   window.cnMoreGo=cnMoreGo;
+  /* 261026 추가 — 「더 보기」 글자를 고치는 중에 텍스트 툴바 「링크」를 누르면, 글자 링크(새 링크 글자를 끼워 넣음 → 글자가 두 번 생김) 대신
+     그 항목의 링크(이미지 목록 🔗 과 같은 값 · it.link)를 연다. 그 밖의 글 링크는 원래 rtLinkOpen 그대로 */
+  (function(){
+    function wrap(){
+    var lo=window.rtLinkOpen; if(typeof lo!=='function' || lo._cnMore) return;
+    function moreRegion(){
+      var sel=window.getSelection(), n=(sel&&sel.rangeCount)?sel.anchorNode:null, el=n?(n.nodeType===1?n:n.parentElement):null;
+      var r=el&&el.closest?el.closest('.cn-more-t'):null;
+      if(!r){ var ae=document.activeElement; r=(ae&&ae.closest)?ae.closest('.cn-more-t'):null; }
+      return r;
+    }
+    window.rtLinkOpen=function(forceA,ext){
+      var r=(!ext && !(forceA && forceA.nodeType===1))?moreRegion():null;
+      if(!r) return lo.apply(this,arguments);
+      var blk=r.closest('.blk'), mo=r.closest('.cn-more'), i=mo?+mo.getAttribute('data-i'):-1, it=(blk && blk._cnCfg)?cnCfg(blk).items[i]:null;
+      if(!it) return lo.apply(this,arguments);
+      var lk=it.link||{}, a=document.createElement('a'); a.className='rt-btn-a';
+      if(lk.url){ a.setAttribute('href',lk.url); a.setAttribute('data-rt-link',lk.kind||'url'); if(lk.newTab) a.setAttribute('target','_blank'); if(lk.download) a.setAttribute('download',lk.download); }
+      function done(msg){ if(typeof rtEditEnd==='function') try{ rtEditEnd(); }catch(x){} cnApply(blk); cnDirty(); if(cnCurBlk===blk && typeof cnItemsRender==='function') cnItemsRender(); if(msg) clToast(msg); }
+      return lo.call(this,a,{blk:blk, has:!!lk.url, apply:function(v){ it.link={url:v.url,kind:v.kind,newTab:!!v.newTab,download:v.download||''}; done('링크를 연결했습니다. 항목 이미지와 버튼에 함께 걸립니다.'); }, remove:function(){ it.link=null; done('링크를 해제했습니다.'); }});
+    };
+    window.rtLinkOpen._cnMore=1;
+    }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',wrap); else setTimeout(wrap,0);   /* rtLinkOpen 이 뒤쪽 스크립트에 있어 다 읽은 뒤 감싼다 */
+  })();
   function cnItemText(c,it,i){
     var S=c.show||{};
     var T=cnF('cn-it-t','i'+i+'.t',it.t,'제목',S.it), Sb=cnF('cn-it-s','i'+i+'.s',it.s,'부제',S.is), D=cnF('cn-it-d','i'+i+'.d',it.d,'설명',S.id);
     var deco=(c.deco && T)?'<img class="cn-deco" src="'+_mtAttr(c.deco)+'" alt="" draggable="false">':'';
     var body=(c.iord==='dts')?(D+T+Sb):((c.iord==='std')?(Sb+T+D):(T+deco+Sb+D));
     var lk=(it.link && it.link.url)?it.link:null;   /* 261023 추가 — 「더 보기」는 그 항목 이미지에 건 링크로(항목 썸네일 → 링크) */
-    var more=(S.more && c.more)?'<a class="cn-more" href="'+(lk?_mtAttr(String(lk.url)):'#')+'" data-i="'+i+'" onclick="return cnMoreGo(event,this)">'+cnEsc(c.more)+'</a>':'';
+    /* 261026 수정 — 「더 보기」 문구는 항목마다 블럭 위에서 바로 고친다(it.m). 비워 두면 설정창의 기본 문구(c.more) */
+    var mt=String(it.m||'').trim()||String(c.more||'').trim();
+    var more=(S.more && mt)?'<a class="cn-more" href="'+(lk?_mtAttr(String(lk.url)):'#')+'" data-i="'+i+'" onclick="return cnMoreGo(event,this)">'+(window.CL_MVIEW?cnEsc(mt):'<span class="cred cn-e cn-more-t" data-cn-ed="i'+i+'.m" data-ph="'+cnEsc(c.more||'더 보기')+'">'+cnEsc(mt)+'</span>')+'</a>':'';
     return (body||more)?'<div class="cn-tx">'+body+more+'</div>':'';
   }
   function cnColsHTML(c){
@@ -45320,7 +45362,7 @@ global.PolyFX = API;
     if(k==='lst') return '<div class="mt-seg" id="cnLstSeg" style="margin:0;">'+[['num','번호'],['year','연도'],['head','소제목']].map(function(p){ return '<button type="button" class="mt-seg-b'+(c.lst===p[0]?' active':'')+'" data-m="'+p[0]+'" onclick="cnSeg(\'lst\',\'cnLstSeg\',\''+p[0]+'\')">'+p[1]+'</button>'; }).join('')+'</div>'
       +'<div class="mtk-hint" style="margin-top:8px;">목록의 줄은 블럭에서 고치고, 추가 · 순서 · 삭제는 아래 「목록」에서 합니다.</div>';
     if(k==='more') return '<div class="fm-fin" style="margin-top:0;"><span class="k">문구</span><input type="text" value="'+_mtAttr(c.more||'')+'" maxlength="24" placeholder="예: 더 보기" spellcheck="false" autocomplete="off" oninput="cnTxt(\'more\',this.value)"></div>'
-      +'<div class="mtk-hint" style="margin-top:8px;">모든 항목 아래에 같은 문구로 나옵니다. 누르면 그 항목 이미지에 건 링크로 이동합니다(이미지 목록에서 항목 → 링크).</div>';
+      +'<div class="mtk-hint" style="margin-top:8px;">기본 문구예요. 블럭에서 버튼 글자를 눌러 항목마다 바꿀 수 있고, 지우면 이 문구로 돌아가요. 누르면 그 항목 이미지에 건 링크로 이동합니다(이미지 목록에서 항목 → 링크).</div>';
     return '';
   }
   function cnShowExp(k){ cnShowOpen=(cnShowOpen===k)?'':k; cnShowRender(); }
@@ -45558,8 +45600,7 @@ global.PolyFX = API;
     if(ev.target.closest('a,button,.rt-btn,.cn-more')) return;
     var blk=el.closest('.blk'); if(!blk||!blk._cnCfg) return; var e=cnEnt(cnCfg(blk),el.getAttribute('data-cn')); var lk=e&&e.o&&e.o.link; if(!lk||!lk.url) return;
     ev.preventDefault();
-    if(typeof pgLinkGo==='function'){ pgLinkGo(lk); return; }
-    if(lk.newTab) (window.clWinOpen||window.open)(lk.url,'_blank','noopener');   /* 261026 수정 — 전역 var open 이 window.open 을 덮어 clWinOpen 으로 */ else location.href=lk.url;
+    cnLkGo(lk);   /* 261026 수정 — 외부 주소 · 파일도 열리게(pgLinkGo 는 편집기용이라 외부 주소는 안내만 띄움). 페이지 · 앵커 · 예약은 cnLkGo 가 pgLinkGo 로 넘긴다 */
   });
   function cnMediaSet(key,k,v){
     var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
@@ -45641,6 +45682,22 @@ global.PolyFX = API;
   var _cnBU=(typeof BLK_UP!=='undefined')?BLK_UP:window.BLK_UP; if(_cnBU) _cnBU.cn={video:true,max:function(){return CN_MAX;},cur:function(){return cnCurBlk;},cfg:function(b){return cnCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push({img:a.src,t:'',s:'',d:'',alt:a.cap||''}); },render:function(){ cnItemsRender(); },apply:function(b){ cnApply(b); cnDirty(); }};   /* 261023 추가 — 「업로드」(blkListUpload) */
   window.cnGAct=cnGAct; window.cnItemAddBtn=cnItemAddBtn; window.cnIUrlAdd=cnIUrlAdd; window.cnAmClose=cnAmClose; window.cnAmApply=cnAmApply; window.cnAmGoAr=cnAmGoAr; window.cnPickClear=cnPickClear;   /* 261023 추가 — 썸네일 격자 */
   window.cnCfg=cnCfg; window.cnApply=cnApply; window.cnCloneInit=cnCloneInit; window.cnLibDrop=cnLibDrop; window.cnLibRep=cnLibRep; window.baInsertCn=baInsertCn; window.cnLink=cnLink; window.cnRtSave=cnRtSave;
+  /* 261026 추가 — 「더 보기」 문구(항목마다 · it.m) 저장. 팀장님 cnRtSave 는 그대로 두고, 그 앞에서 「더 보기」 칸만 먼저 저장한 뒤 잠시 빼고 넘긴다
+     (글자만 · 기본 문구와 같거나 비우면 기본 문구를 따른다) */
+  (function(){
+    var save0=window.cnRtSave; if(typeof save0!=='function') return;
+    window.cnRtSave=function(blk){
+      var c=cnCfg(blk), hold=[];
+      blk.querySelectorAll('.cn-wrap .cred[data-cn-ed]').forEach(function(r){
+        var mm=String(r.getAttribute('data-cn-ed')).match(/^i(\d+)\.m$/); if(!mm) return;
+        var it=c.items[+mm[1]];
+        if(it){ var h=(typeof rtHtmlOf==='function')?rtHtmlOf(r):r.innerHTML, tx=cnPlain(h).replace(/\s+/g,' ').trim().slice(0,30); if(!tx || tx===String(c.more||'').trim()) delete it.m; else it.m=tx; }
+        if(typeof rtPhSync==='function') rtPhSync(r);
+        r.setAttribute('data-cn-edm',r.getAttribute('data-cn-ed')); r.removeAttribute('data-cn-ed'); hold.push(r);
+      });
+      try{ return save0.apply(this,arguments); } finally { hold.forEach(function(r){ r.setAttribute('data-cn-ed',r.getAttribute('data-cn-edm')); r.removeAttribute('data-cn-edm'); }); }
+    };
+  })();
   window.cnUpd=cnUpd; window.cnTxt=cnTxt; window.cnSeg=cnSeg; window.cnSw=cnSw; window.cnAr=cnAr; window.cnPickLay=cnPickLay; window.cnPickFont=cnPickFont; window.cnShowTog=cnShowTog; window.cnGrid=cnGrid; window.cnShowExp=cnShowExp;
   window.cnBuildBset=cnBuildBset; window.cnFillBset=cnFillBset; window.cnMediaSet=cnMediaSet; window.cnMediaRender=cnMediaRender; window.cnItemSet=cnItemSet; window.cnItemAdd=cnItemAdd; window.cnItemDel=cnItemDel;
 
