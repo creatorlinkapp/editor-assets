@@ -12821,6 +12821,9 @@
               <div class="add"><input type="email" id="fmMailIn" placeholder="받는 메일 주소" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();fmMailAdd();}"><button type="button" class="btn-sm" id="fmMailAddB" onclick="fmMailAdd()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
               <div class="mtk-hint" id="fmMailHint">최대 5개. 비워 두면 사이트 관리자 메일로 보냅니다.</div>
             </div>
+            <!-- 261026 추가 — 문자 알림 (기존 편집기 「문자 알림 설정」 이식) -->
+            <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help" data-tip="이 블럭으로 신청이 접수되면 지정한 번호로 문자(SMS)를 보냅니다. 베이직 요금제 이상에서 쓸 수 있습니다."></i></span><button type="button" class="sw on" id="fmSmsSw" onclick="fmSw(this,'smsOn'); clSmsSync('fm');"></button></div>
+            <div class="fm-mails sms-box" id="fmSmsBox"></div>
             <div class="sline"><span class="lbl">개인정보 수집 및 이용 동의</span><button type="button" class="sw" id="fmPrivSw" onclick="fmSw(this,'privacy')"></button></div>
             <div class="sline"><span class="lbl">CAPTCHA <i class="st-help" data-tip="보내기 전에 보안문자를 입력하게 해 자동 등록(스팸)을 막습니다."></i></span><button type="button" class="sw on" id="fmCapSw" onclick="fmSw(this,'captcha')"></button></div>
             <div class="mtk-hint" style="margin-top:10px;">폼 응답은 사이트 게시 뒤 대시보드 「폼 응답」에서 확인합니다.</div>
@@ -13690,6 +13693,9 @@
               <div class="add"><input type="email" id="ctMailIn" placeholder="받는 메일 주소" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();ctMailAdd();}"><button type="button" class="btn-sm" id="ctMailAddB" onclick="ctMailAdd()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
               <div class="mtk-hint" id="ctMailHint">최대 5개. 비워 두면 사이트 관리자 메일로 보냅니다.</div>
             </div>
+            <!-- 261026 추가 — 문자 알림 (기존 편집기 「문자 알림 설정」 이식) -->
+            <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help" data-tip="이 블럭으로 문의·신청이 접수되면 지정한 번호로 문자(SMS)를 보냅니다. 베이직 요금제 이상에서 쓸 수 있습니다."></i></span><button type="button" class="sw on" id="ctSmsSw" onclick="ctSw(this,'smsOn'); clSmsSync('ct');"></button></div>
+            <div class="fm-mails sms-box" id="ctSmsBox"></div>
             <div class="sline"><span class="lbl">개인정보 수집 및 이용 동의</span><button type="button" class="sw" id="ctPrivSw" onclick="ctSw(this,'privacy'); ctRowsSync();"></button></div>
             <div class="fm-fin" id="ctPrivTxtRow" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">동의 내용</span><textarea id="ctPrivTxt" rows="3" placeholder="「보기」를 누르면 보이는 동의 내용" spellcheck="false" oninput="ctUpd('privTxt',this.value)"></textarea></div>
             <div class="sline" id="ctCapRow"><span class="lbl">CAPTCHA <i class="st-help" data-tip="보내기 전에 보안문자를 입력하게 해 자동 등록(스팸)을 막습니다."></i></span><button type="button" class="sw" id="ctCapSw" onclick="ctSw(this,'captcha')"></button></div>
@@ -43373,6 +43379,7 @@ global.PolyFX = API;
     c.mails.push(v); inp.value=''; fmMailSync(); if(typeof markDirty==='function') markDirty();
   }
   function fmMailDel(i){ if(!fmCurBlk) return; var c=fmCfg(fmCurBlk); c.mails.splice(i,1); fmMailSync(); if(typeof markDirty==='function') markDirty(); }
+  window.fmSmsCfg=function(){ return fmCurBlk?fmCfg(fmCurBlk):null; };   /* 261026 추가 — 문자 알림(clSmsSync)이 현재 폼 블럭 설정을 읽는 통로 */
   /* 소재(옆 이미지 · 블럭 배경) — 텍스트 블럭 배경 소재(rtBg*)와 같은 세 길: 썸네일=보관함 선택 모드 · URL 모달 · 업로드 */
   var FM_PLUS='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
   function fmMediaKey(w){ return w==='img'?'img':'bgImg'; }
@@ -43447,7 +43454,7 @@ global.PolyFX = API;
   function fmFillBset(){
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk);
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
-    fmOpenIdx=-1; fmFieldRender(); fmInfoRender(); fmMailSync(); fmMediaSync();
+    fmOpenIdx=-1; fmFieldRender(); fmInfoRender(); fmMailSync(); if(typeof clSmsSync==='function') clSmsSync('fm'); fmMediaSync();
     set('fmTitle',c.title||''); set('fmDesc',c.desc||''); set('fmBtnT',c.btnT||''); set('fmDone',c.done||'');
     var dd=document.getElementById('fmFDD');
     if(dd){ var fi=txNum(c.f,5); var lb=dd.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=(SM_FONTS[fi]||SM_FONTS[0]).n;
@@ -47556,6 +47563,7 @@ global.PolyFX = API;
   }
   function ctMailAdd(){ if(!ctCurBlk) return; var c=ctCfg(ctCurBlk), inp=document.getElementById('ctMailIn'); if(!inp) return; var v=String(inp.value||'').trim(); if(!v) return; if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ clToast('메일 주소 형식이 아닙니다.'); return; } if(c.mails.indexOf(v)>=0){ clToast('이미 있는 주소입니다.'); inp.value=''; return; } if(c.mails.length>=CT_MAIL_MAX){ clToast('받는 메일은 최대 '+CT_MAIL_MAX+'개입니다.'); return; } c.mails.push(v); inp.value=''; ctMailSync(); if(typeof markDirty==='function') markDirty(); }
   function ctMailDel(i){ if(!ctCurBlk) return; ctCfg(ctCurBlk).mails.splice(i,1); ctMailSync(); if(typeof markDirty==='function') markDirty(); }
+  window.ctSmsCfg=function(){ return ctCurBlk?ctCfg(ctCurBlk):null; };   /* 261026 추가 — 문자 알림(clSmsSync)이 현재 컨택트 블럭 설정을 읽는 통로 */
   /* 배경 소재 — 폼 블럭과 같은 세 길 */
   var CT_PLUS='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
   function ctBgSync(){
@@ -47617,7 +47625,7 @@ global.PolyFX = API;
     if(!ctCurBlk) return; var c=ctCfg(ctCurBlk);
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     ctOpenIdx=-1; ctOpenBr=-1; ctOpenInfo=-1;
-    ctKindSync(); ctAccSync(ctFillBset._kind!==c.kind); ctFillBset._kind=c.kind; ctFieldRender(); ctInfoRender(); ctBrRender(); ctMailSync(); ctBgSync();
+    ctKindSync(); ctAccSync(ctFillBset._kind!==c.kind); ctFillBset._kind=c.kind; ctFieldRender(); ctInfoRender(); ctBrRender(); ctMailSync(); if(typeof clSmsSync==='function') clSmsSync('ct'); ctBgSync();
     ctHeadChips(); set('ctBtnT',c.btnT||''); set('ctDone',c.done||''); set('ctPrivTxt',c.privTxt||''); set('ctLead',c.lead||''); set('ctPhone',c.phone||''); set('ctSrPh',c.srPh||'');
     set('ctMapAddr',c.map.addr||''); set('ctMapPlace',c.map.place||'');
     var dd=document.getElementById('ctFDD');
@@ -57512,7 +57520,7 @@ global.PolyFX = API;
       tiltgal     :{items:1, gt:1, posts:1},   /* 261008 추가 */
       stackgal    :{items:1, gt:1, posts:1},   /* 260923 추가 */
       stackcard   :{items:1},   /* 260923 추가 — 스택 카드 · 카드 목록(이미지·문구·링크)은 PC·모바일이 함께 쓴다. 쌓임·모양·색·여백은 기기별 */
-      ctblk       :{kind:1, preset:1, fields:1, info:1, branches:1, map:1, title:1, desc:1, titleH:1, descH:1, showT:1, showD:1, lead:1, phone:1, leadL:1, fix:1, btnT:1, done:1, mailOn:1, mails:1, privacy:1, privTxt:1, captcha:1, srRegion:1, srKw:1, srPh:1, bgImg:1, bgGray:1},   /* 260929 추가 — 컨택트/지점 · 항목·지점·연락처·지도·문구·제출 옵션은 PC·모바일 공유, 배치·색·크기·여백은 기기별 */
+      ctblk       :{kind:1, preset:1, fields:1, info:1, branches:1, map:1, title:1, desc:1, titleH:1, descH:1, showT:1, showD:1, lead:1, phone:1, leadL:1, fix:1, btnT:1, done:1, mailOn:1, mails:1, smsOn:1, sms:1, smsOff:1, privacy:1, privTxt:1, captcha:1, srRegion:1, srKw:1, srPh:1, bgImg:1, bgGray:1},   /* 260929 추가 — 컨택트/지점 · 항목·지점·연락처·지도·문구·제출 옵션은 PC·모바일 공유, 배치·색·크기·여백은 기기별 */
       bdblk       :{board:1, layout:1, gcols:1, per:1, pg:1, cols:1, notice:1, isNew:1, cmt:1, tabs:1, total:1, search:1, write:1, writeT:1, prevnext:1, comments:1, wpos:1},   /* 261008 추가 — 게시판 · 연결 게시판·레이아웃·표시 항목·상단·글 보기는 PC·모바일 공유, 색·크기·여백은 기기별 */
       nmblk       :{items:1, eb:1, desc:1, comma:1, bgImg:1, bgGray:1},   /* 261019 추가 — 숫자 카운터 · 항목·문구·배경 소재 공유 */
       qrblk       :{url:1, eb:1, desc:1, cap:1, bgImg:1, bgGray:1},   /* 261019 추가 — QR 코드 · 링크·문구·배경 소재 공유 */
@@ -57523,7 +57531,7 @@ global.PolyFX = API;
       snblk       :{icons:1, eb:1, desc:1, ebH:1, descH:1, introTH:1, acct:1, href:1, imgs:1, introT:1, moreT:1, bgImg:1},   /* 261022 추가 — 소셜 블럭 · 아이콘·문구·계정·이미지·배경 소재는 PC·모바일 공유, 모양·크기·열·색·여백은 기기별 */
       tkblk       :{tabs:1, def:1, bgImg:1, bgGray:1},   /* 261023 추가 — 탭 블럭 · 탭(이름 · 내용) · 처음 탭 · 배경 소재는 PC·모바일 공유, 줄 · 가로 개수 · 높이 · 글자 · 색 · 여백은 기기별 */
       ltblk       :{boards:1, show:1, _Bs:1, bgImg:1, bgGray:1},   /* 261023 추가 — 최근게시물 블럭 · 게시판 · 표시 항목 · 배경 소재는 PC·모바일 공유, 스타일 · 개수 · 배치 · 글자 · 색 · 여백은 기기별 */
-      formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, privacy:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블럭 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
+      formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, smsOn:1, sms:1, smsOff:1, privacy:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블럭 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
     };
     /* 텍스트 문구 키 — 기본은 PC 와 공유하고, 블럭별 '문구 따로 쓰기'(blk._mvTextSplit)를 켠 경우에만 모바일 전용이 된다 */
     var MV_TEXT={
@@ -60829,6 +60837,71 @@ function ghvDemo(blk){
   },true);   /* capture — 버튼 onclick(창 닫기)보다 먼저 펼침 여부를 읽는다 */
   tb.addEventListener('mouseleave',function(){ tb.classList.remove('rail-hold'); });
   tb.addEventListener('animationend',function(e){ if(e.target===tb && e.pseudoElement==='::after'){ if(e.animationName==='railFadeIn') tb.classList.remove('rail-fadein'); else if(e.animationName==='railFade') tb.classList.remove('rail-fade'); } });   /* 면 애니메이션이 끝나는 대로 정리(타이머는 예비) */
+})();
+</script>
+<!-- 261026 추가 — 문자 알림 (컨택트 ct · 폼 fm 공통). 기존 편집기 「문자 알림 설정」 모달 내용을 도크 안 목록으로 옮김
+     · 관리자 수신번호: 대시보드 「알림 설정」에 등록된 번호가 자동 연동, 블럭마다 번호별 켜기/끄기 (c.smsOff = 끈 번호)
+     · 수신번호 추가: 이 블럭만 받을 번호 최대 10개 (c.sms) — 관리자 번호·이미 있는 번호와 중복 불가
+     · 발신번호 · 잔여 포인트는 대시보드 값 표시만 (CL_SITE_SMS — 실제 값은 서버 연동 시 채움)
+     · 실제 문자 발송은 게시 화면 서버 몫. 편집기는 설정 저장까지 -->
+<style>
+  .sms-box .sms-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;font-size:var(--fs-sm);font-weight:700;color:var(--ink-2);}
+  .sms-box .sms-h:first-child{margin-top:4px;}
+  .sms-box .sms-h .cnt{font-weight:400;color:var(--ink-3,#9096A0);}
+  .sms-box .sms-lk{border:none;background:none;padding:0;font:inherit;font-size:var(--fs-sm);font-weight:400;color:var(--green);cursor:pointer;}
+  .sms-box .sms-lk:hover{text-decoration:underline;}
+  .sms-box .row .sw{margin-right:6px;}
+  .sms-box .row .m.off{color:var(--ink-3,#9096A0);text-decoration:line-through;}
+  .sms-box .sms-err{margin-top:6px;font-size:var(--fs-sm);color:#e5484d;}
+  .sms-box .sms-err:empty{display:none;}
+</style>
+<script>
+(function(){
+  var MAX=10;
+  /* 대시보드 값 자리 — 서버 연동 전 예시 */
+  window.CL_SITE_SMS=window.CL_SITE_SMS||{admin:['01012345678'], sender:'0212345678', point:1250, dash:'https://www.creatorlink.net/dashboard/'};
+  var errMsg={ct:'',fm:''};
+  function cfg(p){ var f=window[p+'SmsCfg']; var c=f&&f(); if(!c) return null; if(typeof c.smsOn==='undefined') c.smsOn=true; if(!Array.isArray(c.sms)) c.sms=[]; if(!Array.isArray(c.smsOff)) c.smsOff=[]; return c; }
+  function norm(v){ v=String(v||'').trim(); var plus=v.charAt(0)==='+'; v=v.replace(/[^0-9]/g,'').slice(0,15); return (plus?'+':'')+v; }
+  function show(n){ if(n.charAt(0)==='+') return n; if(/^02/.test(n)) return n.replace(/^(02)(\d{3,4})(\d{4})$/,'$1-$2-$3'); return n.replace(/^(\d{3})(\d{3,4})(\d{4})$/,'$1-$2-$3'); }
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; }); }
+  var DEL='<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var PLUS='<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>';
+  function dirty(){ if(typeof markDirty==='function') markDirty(); }
+  window.clSmsSync=function(p){
+    var c=cfg(p), box=document.getElementById(p+'SmsBox'), sw=document.getElementById(p+'SmsSw'); if(!c||!box) return;
+    if(sw) sw.classList.toggle('on',!!c.smsOn);
+    box.style.display=c.smsOn?'':'none';
+    var S=window.CL_SITE_SMS, inp=document.getElementById(p+'SmsIn'), keep=inp?inp.value:'';
+    var admin=(S.admin||[]).map(norm), full=c.sms.length>=MAX, h='';
+    h+='<div class="sms-h"><span>관리자 수신번호</span><button type="button" class="sms-lk" onclick="clSmsDash()">대시보드 알림 설정</button></div>';
+    h+=admin.length?admin.map(function(n){ var on=c.smsOff.indexOf(n)<0; return '<div class="row"><span class="m'+(on?'':' off')+'">'+esc(show(n))+'</span><button type="button" class="sw'+(on?' on':'')+'" title="'+(on?'이 번호로 받기 끄기':'이 번호로 받기 켜기')+'" onclick="clSmsAdmin(\''+p+'\',\''+n+'\')"></button></div>'; }).join('')
+      :'<div class="mtk-hint" style="margin-top:6px;">대시보드에 등록된 번호가 없습니다.</div>';
+    h+='<div class="sms-h"><span>수신번호 추가</span><span class="cnt">'+c.sms.length+'/'+MAX+'</span></div>';
+    h+=c.sms.map(function(n,i){ return '<div class="row"><span class="m">'+esc(show(n))+'</span><button type="button" class="mt-imgdel" title="삭제" aria-label="삭제" onclick="clSmsDel(\''+p+'\','+i+')">'+DEL+'</button></div>'; }).join('');
+    h+='<div class="add"><input type="tel" id="'+p+'SmsIn" placeholder="번호를 입력해 주세요." autocomplete="off" spellcheck="false"'+(full?' disabled':'')+' oninput="this.value=this.value.replace(/[^0-9+\-\s]/g,\'\')" onkeydown="if(event.key===\'Enter\'){event.preventDefault();clSmsAdd(\''+p+'\');}"><button type="button" class="btn-sm"'+(full?' disabled':'')+' onclick="clSmsAdd(\''+p+'\')">'+PLUS+'추가</button></div>';
+    h+='<div class="sms-err">'+esc(errMsg[p]||'')+'</div>';
+    h+='<div class="sms-h"><span>발신번호</span></div><div class="row"><span class="m'+(S.sender?'':' off')+'" style="text-decoration:none;">'+(S.sender?esc(show(norm(S.sender))):'등록된 발신번호가 없습니다.')+'</span></div>';
+    h+='<div class="mtk-hint" style="margin-top:8px;">관리자 수신번호 외에 이 블럭만 받을 번호를 최대 '+MAX+'개 추가할 수 있습니다. 발신번호가 없으면 문자가 가지 않습니다. 잔여 포인트 '+Number(S.point||0).toLocaleString()+'건 (문자 1통에 1.4건) · <button type="button" class="sms-lk" onclick="clSmsDash()">충전하기</button></div>';
+    box.innerHTML=h;
+    var ni=document.getElementById(p+'SmsIn'); if(ni&&keep&&!full) ni.value=keep;
+  };
+  window.clSmsAdd=function(p){
+    var c=cfg(p), inp=document.getElementById(p+'SmsIn'); if(!c||!inp) return;
+    var n=norm(inp.value), admin=(window.CL_SITE_SMS.admin||[]).map(norm), e='';
+    if(!n||n==='+') e='번호를 입력해 주세요.';
+    else if(!(n.charAt(0)==='+'?n.length>=9:/^0\d{8,10}$/.test(n))) e='번호 형식이 올바르지 않습니다.';
+    else if(c.sms.length>=MAX) e='알림 수신번호는 최대 '+MAX+'개까지 등록할 수 있습니다.';
+    else if(admin.indexOf(n)>=0) e='관리자 기본 수신번호와 중복됩니다.';
+    else if(c.sms.indexOf(n)>=0) e='이미 등록된 번호입니다.';
+    errMsg[p]=e;
+    if(!e){ c.sms.push(n); inp.value=''; dirty(); }
+    clSmsSync(p);
+    var ni=document.getElementById(p+'SmsIn'); if(ni&&!ni.disabled) ni.focus();
+  };
+  window.clSmsDel=function(p,i){ var c=cfg(p); if(!c) return; c.sms.splice(i,1); errMsg[p]=''; dirty(); clSmsSync(p); };
+  window.clSmsAdmin=function(p,n){ var c=cfg(p); if(!c) return; var k=c.smsOff.indexOf(n); if(k<0) c.smsOff.push(n); else c.smsOff.splice(k,1); dirty(); clSmsSync(p); };
+  window.clSmsDash=function(){ var w=window.clWinOpen||window.open; try{ w(window.CL_SITE_SMS.dash,'_blank','noopener'); }catch(x){} };
 })();
 </script>
 </body>
