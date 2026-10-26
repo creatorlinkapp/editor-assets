@@ -5217,6 +5217,7 @@
   /* 블럭설정 헤더의 편집 대상(PC/모바일) 세그먼트 — 모바일 편집모드에서만 보인다 */
   .bset-dev{display:none;align-items:center;gap:6px;margin-left:auto;margin-right:6px;flex:none;}
   body.mview-on .bset-dev{display:flex;}
+  @media (min-width:901px){ .bset-dev{display:flex;} }   /* 261026 추가 — PC/모바일 탭을 늘 보인다(모바일 탭 = 모바일 편집창 열기). 좁은 화면은 모바일 편집창을 열 수 없어 숨긴다 */
   body.mview-on .bset-h .t{flex:1;min-width:0;white-space:nowrap;}
   body.mview-on .bset-h .t .sub{overflow:hidden;text-overflow:ellipsis;}
   .bset-seg button{white-space:nowrap;}
@@ -57627,12 +57628,22 @@ global.PolyFX = API;
     }
     function mvBsetTarget(t){
       t=(t==='mobile')?'mobile':'pc';
-      var blk=document.querySelector('#stage .blk.sel'); if(!blk) { MV_TARGET=t; mvDevSync(null); return; }
+      var blk=document.querySelector('#stage .blk.sel'); if(!blk) { MV_TARGET=t; mvDevSync(null); mvBsetMode(t); return; }
       if(blk._mvBase) mvReconcile(blk);
       delete blk._mvBase;
       MV_TARGET=t;
       mvFillFor(blk, function(){ bsetSync.__orig(blk); });
       mvKick(0);
+      mvBsetMode(t);
+    }
+    /* 261026 추가 — 설정창 PC/모바일 탭과 모바일 편집창(위쪽 PC/모바일 버튼)을 함께 움직인다.
+       PC 탭 → 모바일 편집창 닫기(PC 화면이 가려지지 않게) · 모바일 탭 → 다시 열기(좁은 화면은 설정만 바꾸고 창은 그대로).
+       mvSetMode 안에서 이 함수를 다시 부르지만, 대상이 이미 같아 되풀이되지 않는다 */
+    function mvBsetMode(t){
+      if(typeof window.mvSetMode!=='function') return;
+      var open=document.body.classList.contains('mview-on');
+      if(t==='pc' && open) window.mvSetMode('pc');
+      else if(t==='mobile' && !open && window.innerWidth>900) window.mvSetMode('mobile');
     }
     function mvResetOverrides(){
       var blk=document.querySelector('#stage .blk.sel'); if(!blk) return;
