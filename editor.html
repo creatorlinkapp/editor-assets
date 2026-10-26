@@ -17045,7 +17045,7 @@
   function pgStructToggle(){ pgStructSet(SITE_STRUCT==='one'?'multi':'one'); }
   window.pgStructSet=pgStructSet; window.pgStructToggle=pgStructToggle;
   (function(){
-    document.querySelectorAll('#panelPages .st-help,#panelStyle .st-help,#bsAosRow .st-help,#hdDock .st-help').forEach(function(i){ var t=i.getAttribute('data-tip')||''; i.outerHTML=t?helpIcon(t):HELP; });
+    document.querySelectorAll('#panelPages .st-help,#panelStyle .st-help,#bsAosRow .st-help,#hdDock .st-help,#bset .st-help').forEach(function(i){ var t=i.getAttribute('data-tip')||''; i.outerHTML=t?helpIcon(t):HELP; });   /* 261026 수정 — 블럭 설정창(#bset) 물음표도 아이콘으로 (빠져 있어 안 보이던 문제) */
     document.querySelectorAll('#panelStyle .st-gearico').forEach(function(i){ i.outerHTML=GEAR; });
   })();
 
