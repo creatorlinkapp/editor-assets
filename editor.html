@@ -351,6 +351,7 @@
   .set-row .lbl{flex:1;display:flex;align-items:center;gap:6px;min-width:0;white-space:nowrap;}
   .help{width:15px;height:15px;border-radius:50%;flex:none;color:var(--ink-2s);}
   .help-ico{flex:none;position:relative;cursor:help;}   /* 261023 수정 — top:.5px 제거: 반 픽셀 밀림이 1px 테두리를 두 줄로 번지게 했다(아이콘은 정수 픽셀 격자로 다시 그림) */
+  #bset .lbl:has(> .help-ico),#bset .k:has(> .help-ico){display:inline-flex;align-items:center;gap:5px;}   /* 261026 추가 — 블럭 설정창 물음표: 스타일 패널(.st-row .lbl)과 같이 글자 가운데 정렬 · 5px 간격 */
   .set-row .chev{width:16px;height:16px;color:var(--ink-3);}
   .set-row .gear{width:17px;height:17px;color:#3B3F46;}
   .set-row.disabled .lbl{color:var(--ink-3);}
