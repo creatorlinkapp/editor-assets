@@ -4414,6 +4414,9 @@
   @media (hover:hover){
     .ba-card .ba-badge.b3d{opacity:0;transform:translateY(-2px);transition:opacity .16s ease,transform .16s ease;}
     .ba-card:hover .ba-badge.b3d,.ba-card:focus-visible .ba-badge.b3d{opacity:1;transform:none;}
+    /* 261026 추가 — 오른쪽 아래 이름 배지(CONTENT01 등)도 같은 규칙: 고를 때 필요한 정보가 아니라 롤오버 · 키보드 포커스 때만(번호가 비거나 섞인 것도 덜 띈다). 터치 기기는 늘 보인다. 초록 NEW 는 그대로 상시 */
+    .ba-card .ba-label{opacity:0;transform:translateY(2px);transition:opacity .16s ease,transform .16s ease;}
+    .ba-card:hover .ba-label,.ba-card:focus-visible .ba-label{opacity:1;transform:none;}
   }
   .ba-empty{padding:60px 10px;text-align:center;color:var(--ink-3);font-size:var(--fs-base);font-weight:600;}
   .ba-search-other{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:14px;}   /* 261023 추가 — 검색 결과가 다른 카테고리에 있을 때 */
@@ -10067,7 +10070,7 @@
             <ul class="kg-ul">
               <li>· 왼쪽 <b>카테고리</b>(텍스트 · 이미지 · 갤러리 · 게시판 · 탭 · 최근게시물 등)를 고르고, 위쪽 탭으로 모양별로 걸러 볼 수 있어요.</li>
               <li>· 오른쪽 위 <b>검색칸</b>에 블럭 번호(예: <b>CONTENT13</b> 또는 <b>13</b>)나 이름을 넣으면 바로 찾아요.</li>
-              <li>· 갤러리처럼 이미지를 올리는 블럭은 넣은 뒤 블럭 설정창에서 이미지를 추가해요.</li>
+              <li>· 갤러리 블럭은 넣은 뒤 설정창에서 이미지를 추가하고, <b>갤러리 타입</b>에서 눌렀을 때 동작을 골라요 — 단일 이미지형(크게 보기) · 상세 페이지형(글 페이지로 이동) · 클릭 없음. 나중에 언제든 바꿀 수 있어요.</li>
             </ul>
             <div class="ug-acts"><button type="button" class="sn-guide" onclick="ugShow('add')">블럭 추가 위치 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
           </section>
@@ -44778,7 +44781,7 @@ global.PolyFX = API;
   function cnMoreGo(e,a){
     if(e) e.preventDefault(); if(!window.CL_MVIEW) return false;
     var blk=a.closest('.blk'); if(!blk || !blk._cnCfg) return false; var it=cnCfg(blk).items[+a.getAttribute('data-i')], lk=it&&it.link; if(!lk || !lk.url) return false;
-    if(typeof pgLinkGo==='function') pgLinkGo(lk); else if(lk.newTab) window.open(lk.url,'_blank','noopener'); else location.href=lk.url;
+    if(typeof pgLinkGo==='function') pgLinkGo(lk); else if(lk.newTab) (window.clWinOpen||window.open)(lk.url,'_blank','noopener');   /* 261026 수정 — 전역 var open 이 window.open 을 덮어 clWinOpen 으로 */ else location.href=lk.url;
     return false;
   }
   window.cnMoreGo=cnMoreGo;
@@ -45350,7 +45353,7 @@ global.PolyFX = API;
     var blk=el.closest('.blk'); if(!blk||!blk._cnCfg) return; var e=cnEnt(cnCfg(blk),el.getAttribute('data-cn')); var lk=e&&e.o&&e.o.link; if(!lk||!lk.url) return;
     ev.preventDefault();
     if(typeof pgLinkGo==='function'){ pgLinkGo(lk); return; }
-    if(lk.newTab) window.open(lk.url,'_blank','noopener'); else location.href=lk.url;
+    if(lk.newTab) (window.clWinOpen||window.open)(lk.url,'_blank','noopener');   /* 261026 수정 — 전역 var open 이 window.open 을 덮어 clWinOpen 으로 */ else location.href=lk.url;
   });
   function cnMediaSet(key,k,v){
     var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
