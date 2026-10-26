@@ -5456,6 +5456,7 @@
   .lib-tile{display:block;position:relative;width:100%;margin:0 0 8px;border-radius:var(--r-md);overflow:hidden;background:#E6E9EF;cursor:pointer;break-inside:avoid;border:none;padding:0;
     box-shadow:inset 0 0 0 1px rgba(20,24,32,.06);transition:transform .14s,box-shadow .14s;}
   .lib-tile:hover{transform:translateY(-1px);box-shadow:0 0 0 2px var(--green);}
+  .lib-tile::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(20,24,32,.12);pointer-events:none;}   /* 261026 추가 — 연한 테두리를 사진 · 영상 위에 그린다(밝은 영상 · 흰 배경 사진이 패널 바탕과 구분되게) */
   .lib-tile .ph{display:block;width:100%;}
   .lib-tile .dur{position:absolute;right:6px;bottom:6px;padding:2px 6px;border-radius:5px;background:rgba(35,39,46,.72);color:#fff;font-size:var(--fs-xs);font-weight:700;}
   .lib-tile .play{position:absolute;left:50%;top:50%;width:30px;height:30px;transform:translate(-50%,-50%);border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;color:var(--chrome);}
@@ -6796,10 +6797,16 @@
         <div class="lib-grid" id="libGridFree"></div>
         <div class="lib-more" id="libMoreFree">불러오는 중…</div>
       </div>
-      <div class="lib-pane" id="libPaneVid">
+      <!-- 261026 수정 — 동영상도 이미지처럼 「직접 업로드 / 무료 동영상」으로 나눈다. 올린 영상은 「내 동영상」에만, 샘플은 「무료 동영상」에만 -->
+      <div class="lib-pane" id="libPaneVidMine">
         <div class="lib-drop" id="libDropVid" data-kind="vid" onclick="document.getElementById('libFileVid').click()"><svg class="ico" viewBox="0 0 24 24"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>동영상을 여기에 끌어다 놓기<small>또는 클릭해 선택 · MP4 · WEBM · 최대 200MB</small></div>
         <input type="file" id="libFileVid" accept="video/*" multiple style="display:none" onchange="libFilesAdd(this,'vid')">
-        <div class="lib-sec">샘플 동영상 <span id="libVidCnt">0</span></div>
+        <div class="lib-sec">내 동영상 <span id="libVidMineCnt">0</span></div>
+        <div class="lib-grid" id="libGridVidMine"></div>
+        <div class="lib-fd-empty" id="libVidMineEmpty">아직 올린 동영상이 없습니다<br>위에 파일을 끌어다 놓거나, 「무료 동영상」에서 골라 쓰세요</div>
+      </div>
+      <div class="lib-pane" id="libPaneVid">
+        <div class="lib-sec">무료 동영상 <span id="libVidCnt">0</span></div>
         <div class="lib-grid" id="libGridVid"></div>
       </div>
       <div class="lib-pane" id="libPaneIco">
@@ -18676,11 +18683,16 @@
   window.openBgmGuide=openBgmGuide; window.closeBgmGuide=closeBgmGuide; window.bgGo=bgGo;
 
   /* ── 보관함 탭 / 이미지 소스 전환 ── */
-  var libState={tab:'img',src:'mine'};
+  var libState={tab:'img',src:'mine',vsrc:'free'};   /* 261026 추가 — vsrc: 동영상 탭의 직접 업로드(mine) / 무료 동영상(free). 올린 영상이 없을 땐 무료부터 */
+  function libSrcSync(){   /* 261026 추가 — 이미지 · 동영상 탭이 같은 「직접 업로드 / 무료 ○○」 버튼을 함께 쓴다 */
+    var vid=(libState.tab==='vid'), s=vid?libState.vsrc:libState.src;
+    document.querySelectorAll('#libSrc button').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-src')===s); });
+    var fb=document.querySelector('#libSrc button[data-src="free"]'); if(fb) fb.textContent=vid?'무료 동영상':'무료 이미지';
+  }
   function libTab(t){
     libState.tab=t;
     document.querySelectorAll('#panelLib .lib-tabs button').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-tab')===t); });
-    document.getElementById('libSrc').style.display=(t==='img')?'':'none';
+    document.getElementById('libSrc').style.display=(t==='img'||t==='vid')?'':'none'; libSrcSync();   /* 261026 수정 — 동영상 탭에도 */
     var is=document.getElementById('libIcoSrc'); if(is) is.style.display=(t==='ico')?'':'none';
     var ic=document.getElementById('libIcoCtl'); if(ic) ic.style.display=(t==='ico')?'':'none';
     var q=document.getElementById('libQ');
@@ -18688,12 +18700,12 @@
     libRender(); if(typeof libSearchApply==='function') libSearchApply();
   }
   function libSrc(s){
-    libState.src=s;
-    document.querySelectorAll('#libSrc button').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-src')===s); });
+    if(libState.tab==='vid') libState.vsrc=s; else libState.src=s;   /* 261026 수정 — 지금 탭의 출처만 바꾼다 */
+    libSrcSync();
     libRender(); if(typeof libSearchApply==='function') libSearchApply();
   }
   function libRender(){
-    var id={img:(libState.src==='free'?'libPaneImgFree':'libPaneImgMine'),vid:'libPaneVid',ico:'libPaneIco',emo:'libPaneEmo'}[libState.tab];
+    var id={img:(libState.src==='free'?'libPaneImgFree':'libPaneImgMine'),vid:(libState.vsrc==='mine'?'libPaneVidMine':'libPaneVid'),ico:'libPaneIco',emo:'libPaneEmo'}[libState.tab];
     document.querySelectorAll('#panelLib .lib-pane').forEach(function(p){ p.classList.toggle('on',p.id===id); });
     var body=document.querySelector('#panelLib .lib-body'); if(body) body.scrollTop=0;
   }
@@ -18821,13 +18833,13 @@
         g.insertAdjacentHTML('afterbegin',html);
         libFdRender();   /* 261020 추가 — 폴더 개수 · 보기 갱신 */
       } else {
-        var gv=document.getElementById('libGridVid'); if(!gv) return;
+        var gv=document.getElementById('libGridVidMine'); if(!gv) return;   /* 261026 수정 — 올린 영상은 「내 동영상」에만(샘플과 섞지 않는다) */
         gv.insertAdjacentHTML('afterbegin',libVidTileHtml(url,cap));
-        var cv=document.getElementById('libVidCnt'); if(cv) cv.textContent=gv.querySelectorAll('.lib-tile').length;
+        libVidMineSync();
       }
       n++;
     });
-    if(n){ if(!quiet){ if(kind==='img' && typeof libSrc==='function') libSrc('mine'); clToast(n+'개를 보관함에 추가했습니다. 캔버스로 드래그하거나 클릭해 넣으세요.'); } if(typeof libSearchApply==='function') libSearchApply(); }
+    if(n){ if(!quiet){ if(kind==='img' && typeof libSrc==='function') libSrc('mine'); if(kind==='vid' && typeof libSrc==='function'){ if(libState.tab!=='vid') libState.vsrc='mine'; else libSrc('mine'); } clToast(n+'개를 보관함에 추가했습니다. 캔버스로 드래그하거나 클릭해 넣으세요.'); } if(typeof libSearchApply==='function') libSearchApply(); }
     return added;
   }
   (function(){
@@ -19070,6 +19082,13 @@
     var g=document.getElementById('libGridVid'); if(!g) return;
     g.innerHTML=LIB_VIDEOS.map(function(a){ return libVidTileHtml(a[0],a[1]); }).join('');
     var c=document.getElementById('libVidCnt'); if(c) c.textContent=LIB_VIDEOS.length;
+    libVidMineSync();
+  }
+  /* 261026 추가 — 「내 동영상」 개수 · 빈 안내 */
+  function libVidMineSync(){
+    var gv=document.getElementById('libGridVidMine'), n=gv?gv.querySelectorAll('.lib-tile').length:0;
+    var cv=document.getElementById('libVidMineCnt'); if(cv) cv.textContent=n;
+    var em=document.getElementById('libVidMineEmpty'); if(em) em.style.display=n?'none':'';
   }
   /* ── 아이콘 ── */
   function libIcoStyleAttr(){ return "font-variation-settings:'FILL' "+libIco.fill+",'wght' "+libIco.wght+",'GRAD' 0,'opsz' 48"; }
