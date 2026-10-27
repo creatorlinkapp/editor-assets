@@ -13137,6 +13137,8 @@
               <div id="fmMailList"></div>
               <div class="add"><input type="email" id="fmMailIn" placeholder="받는 메일 주소" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();fmMailAdd();}"><button type="button" class="btn-sm" id="fmMailAddB" onclick="fmMailAdd()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
               <div class="mtk-hint" id="fmMailHint">최대 5개. 비워 두면 사이트 관리자 메일로 보냅니다.</div>
+              <!-- 261027 추가 — 발송 메일 표시 (컨택트와 같음 · 사이트 전체 값) -->
+              <div class="sms-box mail-snd"><div class="sms-h"><span>발송 메일 <i class="st-help" data-tip="알림 메일의 「보낸 사람」 주소입니다. 기본은 크리에이터링크 주소(help@creatorlink.net)이고, 구글 · 네이버 · 다음 또는 직접 설정한 메일 주소로 바꿀 수 있습니다."></i></span><button type="button" class="sms-lk" onclick="clSmtpOpen()">발송 메일 설정</button></div><div class="row"><span class="m" id="fmMailSnd">help@creatorlink.net</span></div></div>
             </div>
             <!-- 261026 추가 — 문자 알림 (기존 편집기 「문자 알림 설정」 이식) -->
             <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help" data-tip="이 블럭으로 신청이 접수되면 지정한 번호로 문자(SMS)를 보냅니다. 베이직 요금제 이상에서 쓸 수 있습니다."></i></span><button type="button" class="sw on" id="fmSmsSw" onclick="fmSw(this,'smsOn'); clSmsSync('fm');"></button></div>
@@ -14009,8 +14011,8 @@
               <div id="ctMailList"></div>
               <div class="add"><input type="email" id="ctMailIn" placeholder="받는 메일 주소" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();ctMailAdd();}"><button type="button" class="btn-sm" id="ctMailAddB" onclick="ctMailAdd()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
               <div class="mtk-hint" id="ctMailHint">최대 5개. 비워 두면 사이트 관리자 메일로 보냅니다.</div>
-              <!-- 261027 추가 — 발송 메일 표시 (기존 편집기 「발송메일 설정」: 사이트 전체 값이라 여기서는 보여 주기만, 바꾸기는 대시보드) -->
-              <div class="sms-box mail-snd"><div class="sms-h"><span>발송 메일 <i class="st-help" data-tip="알림 메일의 「보낸 사람」 주소입니다. 기본은 크리에이터링크 주소(help@creatorlink.net)이고, 구글 · 네이버 · 다음 또는 직접 설정한 메일 주소로 바꿀 수 있습니다."></i></span><button type="button" class="sms-lk" onclick="clMailDash()">발송 메일 설정</button></div><div class="row"><span class="m" id="ctMailSnd">help@creatorlink.net</span></div></div>
+              <!-- 261027 추가 — 발송 메일 표시 (기존 편집기 「발송메일 설정」 · 사이트 전체 값. 「발송 메일 설정」 → 발송 메일 주소 설정 모달 #smtpModal) -->
+              <div class="sms-box mail-snd"><div class="sms-h"><span>발송 메일 <i class="st-help" data-tip="알림 메일의 「보낸 사람」 주소입니다. 기본은 크리에이터링크 주소(help@creatorlink.net)이고, 구글 · 네이버 · 다음 또는 직접 설정한 메일 주소로 바꿀 수 있습니다."></i></span><button type="button" class="sms-lk" onclick="clSmtpOpen()">발송 메일 설정</button></div><div class="row"><span class="m" id="ctMailSnd">help@creatorlink.net</span></div></div>
             </div>
             <!-- 261026 추가 — 문자 알림 (기존 편집기 「문자 알림 설정」 이식) -->
             <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help" data-tip="이 블럭으로 문의·신청이 접수되면 지정한 번호로 문자(SMS)를 보냅니다. 베이직 요금제 이상에서 쓸 수 있습니다."></i></span><button type="button" class="sw on" id="ctSmsSw" onclick="ctSw(this,'smsOn'); clSmsSync('ct');"></button></div>
@@ -62000,11 +62002,238 @@ function ghvDemo(blk){
   window.clSmsDel=function(p,i){ var c=cfg(p); if(!c) return; c.sms.splice(i,1); errMsg[p]=''; dirty(); clSmsSync(p); };
   window.clSmsAdmin=function(p,n){ var c=cfg(p); if(!c) return; var k=c.smsOff.indexOf(n); if(k<0) c.smsOff.push(n); else c.smsOff.splice(k,1); dirty(); clSmsSync(p); };
   window.clSmsDash=function(){ var w=window.clWinOpen||window.open; try{ w(window.CL_SITE_SMS.dash,'_blank','noopener'); }catch(x){} };
-  /* 261027 추가 — 발송 메일 (사이트 전체 값 표시만. CL_SITE_MAIL — 실제 값은 서버 연동 시 채움) */
-  window.CL_SITE_MAIL=window.CL_SITE_MAIL||{sender:'help@creatorlink.net', dash:'https://www.creatorlink.net/dashboard/'};
-  window.clMailDash=function(){ var w=window.clWinOpen||window.open; try{ w(window.CL_SITE_MAIL.dash,'_blank','noopener'); }catch(x){} };
-  function mailSnd(){ var el=document.getElementById('ctMailSnd'); if(el) el.textContent=window.CL_SITE_MAIL.sender||'help@creatorlink.net'; }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mailSnd); else mailSnd();
+})();
+</script>
+<!-- 261027 추가 — 발송 메일 주소 설정 모달 + 앱 비밀번호 생성 가이드 (대시보드 「알림 > 메일 > 발송 메일 주소 설정」 모달과 같은 항목 · 문구. 화면은 에디터 dm 모달 · kg 가이드 틀)
+     · 사이트 전체 값(CL_SITE_MAIL) — 컨택트 · 폼 블럭 설정 「발송 메일」 칸이 함께 바뀐다. 실제 저장 · 발송은 서버 몫 -->
+<style>
+  .rt-lm-box.smtp-box{width:600px;}
+  .smtp-box .smtp-desc{text-align:center;font-size:var(--fs-base);line-height:1.7;color:var(--ink-2);margin:-16px 0 24px;word-break:keep-all;}
+  .smtp-box .smtp-req{color:var(--danger);}
+  .smtp-plats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .smtp-plat{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;height:66px;padding:0 4px;border:1px solid var(--border);border-radius:var(--r-md);background:#fff;cursor:pointer;font-family:inherit;font-size:var(--fs-md);font-weight:600;color:var(--ink-2);transition:border-color .13s,background .13s,color .13s;}
+  .smtp-plat img,.smtp-plat svg{width:20px;height:20px;display:block;flex:none;}
+  @media (hover:hover) and (pointer:fine){ .smtp-plat:hover{border-color:var(--border-hover);color:var(--ink);} }
+  .smtp-plat.on{border:2px solid var(--green);color:var(--green-text);background:#F3FCF7;}
+  .smtp-box .smtp-srv{display:none;}
+  .smtp-box .smtp-srv.on{display:block;}
+  .smtp-box .smtp-gd{margin-top:10px;}
+  .smtp-note{border:1px solid var(--bg-3);border-radius:var(--r-lg);overflow:hidden;margin-top:20px;}
+  .smtp-note-h{display:flex;align-items:center;justify-content:space-between;width:100%;padding:13px 15px;border:none;background:var(--bg-2);cursor:pointer;font-family:inherit;font-size:var(--fs-md);font-weight:700;color:var(--ink);}
+  .smtp-note-h svg{width:14px;height:14px;color:var(--ink-3);transition:transform .15s;}
+  .smtp-note.closed .smtp-note-h svg{transform:rotate(180deg);}
+  .smtp-note-b{padding:15px;border-top:1px solid var(--bg-3);}
+  .smtp-note.closed .smtp-note-b{display:none;}
+  .smtp-note-b .t{font-size:var(--fs-md);font-weight:700;color:var(--ink);margin-bottom:5px;}
+  .smtp-note-b .t:not(:first-child){margin-top:14px;}
+  .smtp-note-b .d{font-size:var(--fs-sm);line-height:1.7;color:var(--ink-2);}
+  @media (max-width:560px){ .smtp-plats{grid-template-columns:repeat(2,1fr);} }
+  /* 가이드 — 무료 음원 가이드와 같은 kg 틀. 설정 모달(.rt-lm z240) 위 */
+  #smtpGuideOverlay{display:none;position:fixed;inset:0;background:rgba(14,18,25,.62);z-index:300;}
+  #smtpGuideOverlay.open{display:block;}
+  #smtpGuideOverlay .kg-step,#smtpGuideOverlay .kg-close{-webkit-tap-highlight-color:transparent;}
+  #smtpGuideOverlay .kg-inner{max-width:880px;margin:0 auto;padding:34px 28px 90px;}
+  #smtpGuideOverlay .kg-stepline span{font-weight:500;color:var(--ink-2);line-height:1.7;}
+  #smtpGuideOverlay .kg-stepline span b{font-weight:700;color:var(--ink);}
+  #smtpGuideOverlay .kg-stepline{align-items:flex-start;}
+  #smtpGuideOverlay .kg-stepline em{margin-top:2px;flex:none;}
+  #smtpGuideOverlay .kg-note{margin:0 0 12px;}
+  #smtpGuideOverlay .kg-ul{margin:0 0 12px;}
+  #smtpGuideOverlay .sg-img{width:540px;max-width:100%;height:auto;display:block;}
+</style>
+<div class="dm-overlay rt-lm" id="smtpModal" role="dialog" aria-modal="true" aria-label="발송 메일 주소 설정" onclick="if(event.target===this) clSmtpClose()">
+  <div class="dm-modal rt-lm-box smtp-box">
+    <button type="button" class="dm-close" onclick="clSmtpClose()" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h3>발송 메일 주소 설정</h3>
+    <p class="smtp-desc">메시지 등록 시 알림을 보낼 이메일 주소를 설정해 주세요.</p>
+    <div class="dm-row"><div class="dm-label">이메일 플랫폼</div><div class="dm-body"><div class="smtp-plats">
+      <button type="button" class="smtp-plat on" id="smtpPlat_google" onclick="clSmtpPlat('google')"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYZJREFUeNpiYBgo8NzR2IAYdYx4DHAAUvlAHIAmdQGIFwLxAsn9Zz8QNBBokACQWg/EDgQc8wCIA4GGXkAWZMJi2H4iDAMBBSDGCAYWNP58LIo2APFGIAZ5zx6IE4AYZHEi0HULcHr5524Gh/d9Bvv//2CGCX2AeukAFl84AMU34I0UoIHzgYYlfFqqxvD3JRcD1LANpKYGZAPPw7z7/bDUA4GmZ4rICu2aPjbgMefDoTr+CehhCA87Tttn2FxWT8BxEzBimRqACS3BgsHVP0IBWNQeQMPIifoDtmQDMtBg6095hglf9BWMlrMGnItcC/c6MIwckcITFNP30SzDcOHCCV/1GVo+mzB8+c8KTpNGy4MxEjjUsPnQtAgDG7FmPaAB67HkXVjCBmU1f5A8yxdDBfaXyQyM/8DJ6wHQ9Yq4ckoiliwVgG7JH57zDP9Yuxg4XiZ8YPqpEIgzLwPDDBS4jlBX4QX/2B99+Cm6KhDougtEFV/Q8MNWfD2AFl8ToA4YYgAgwACzqoVW5ZKKiwAAAABJRU5ErkJggg==" alt="">구글</button>
+      <button type="button" class="smtp-plat" id="smtpPlat_naver" onclick="clSmtpPlat('naver')"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAKtJREFUeNpiYBjsgBHOOhHcgEX+A4PF2gkoIieCHYCkAxa1C4BqH7AgCdRjtfJEMAOaoQ441B4A4gdMRPiiHmioArFeJsZAASCeT00DId48EZxATQNBoB9oqAA1DSTK6ywkJrMASl14AJwWSTCUGC83kuIFwgZCEvUBaiebRCxep8BAYB4l1uvEJxsivc5EYrIh6HXkdOiItfhC9/qJYEdoIkcHFxiGBAAIMADhaSV2UO+3+AAAAABJRU5ErkJggg==" alt="">네이버</button>
+      <button type="button" class="smtp-plat" id="smtpPlat_daum" onclick="clSmtpPlat('daum')"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAANNJREFUeNpiYBjsgBHGUDcNWg+kAgio/wDEG4B44c3T6w5gU8CExBYgwgEgNQlAvB/ogH5CBpIKCoCGzqemgSCQADS0gVgDHwCxIxQHAvEEaBiig3ygofDgYsFnIFrAbwBqbASFHxAbYAnXCSR7GWjBB6hr0YE92WEINBQUFBewxD5VIoXyZAMMRwW0MGRAjiwmEg0DeW09FqmDxMSyAtAAB6QwsofGpgAW1y0gykBoEiEEJkJjnyqRsgBoWAO1st4EoGGJ6IIs2GKKkuJr8AOAAAMA4A06Fm2R9xUAAAAASUVORK5CYII=" alt="">다음</button>
+      <button type="button" class="smtp-plat" id="smtpPlat_etc" onclick="clSmtpPlat('etc')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.6"/><path d="M3.2 6.6 12 12.9l8.8-6.3"/></svg>기타 메일</button>
+    </div></div></div>
+    <div class="dm-row"><div class="dm-label">발신자명 <span class="smtp-req">*</span></div><div class="dm-body"><input type="text" class="dm-input" id="smtpName" placeholder="발신자명을 입력해 주세요." autocomplete="off" spellcheck="false"><div class="cpn-note">이메일에 표시될 발신자 이름입니다.</div></div></div>
+    <div class="dm-row"><div class="dm-label">발신자 이메일 주소 <span class="smtp-req">*</span></div><div class="dm-body"><input type="text" class="dm-input" id="smtpMail" placeholder="" autocomplete="off" spellcheck="false"><div class="cpn-note">이메일에 표시될 발신자 이메일 주소입니다.</div></div></div>
+    <div class="dm-row"><div class="dm-label">앱 비밀번호 <span class="smtp-req">*</span></div><div class="dm-body"><input type="password" class="dm-input" id="smtpPw" placeholder="앱 비밀번호를 입력해 주세요." autocomplete="new-password"><div class="cpn-note" id="smtpPwNote">구글에서 설정한 외부메일용 앱 비밀번호</div><button type="button" class="sn-guide smtp-gd" id="smtpPwGuide" onclick="clSmtpGuide()">앱 비밀번호 생성 방법<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+    <!-- 기타 메일은 직접 서버를 적는다 -->
+    <div class="smtp-srv" id="smtpSrv">
+      <div class="dm-row"><div class="dm-label">메일 서버 <span class="smtp-req">*</span></div><div class="dm-body"><input type="text" class="dm-input" id="smtpHost" placeholder="IP 또는 도메인" autocomplete="off" spellcheck="false"><div class="cpn-note">SMTP 서버</div></div></div>
+      <div class="dm-row"><div class="dm-label">연결 포트 <span class="smtp-req">*</span></div><div class="dm-body"><input type="text" class="dm-input" id="smtpPort" value="587" placeholder="1 ~ 65535" inputmode="numeric" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,5)"><div class="cpn-note">SMTP 포트</div></div></div>
+      <div class="dm-row"><div class="dm-label">보안 연결 <span class="smtp-req">*</span></div><div class="dm-body"><div class="radio-row" style="margin-bottom:0;">
+        <label class="radio-opt"><input type="radio" name="smtpSec" value="TLS" checked> TLS</label>
+        <label class="radio-opt"><input type="radio" name="smtpSec" value="SSL"> SSL</label>
+      </div></div></div>
+    </div>
+    <div class="smtp-note" id="smtpNote">
+      <button type="button" class="smtp-note-h" onclick="document.getElementById('smtpNote').classList.toggle('closed')">유의사항 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      <div class="smtp-note-b" id="smtpNoteBody"></div>
+    </div>
+    <div class="cpn-note err" id="smtpErr" hidden></div>
+    <button type="button" class="dm-save" onclick="clSmtpSave()">저장</button>
+    <button type="button" class="dm-cancel" onclick="clSmtpClose()">취소</button>
+  </div>
+</div>
+<div id="smtpGuideOverlay" onclick="if(event.target===this) clSmtpGuideClose()">
+  <div class="kg-panel">
+    <div class="kg-head">
+      <h3 id="smtpGuideTitle">구글 연동 가이드</h3>
+      <span class="kg-sub" id="smtpGuideSub"></span>
+      <button class="kg-close" onclick="clSmtpGuideClose()" title="닫기 (ESC)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="kg-body" id="sgBody">
+      <div class="kg-steps" id="sgSteps"></div>
+      <div class="kg-inner" id="sgSecs"></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var DEF='help@creatorlink.net';
+  /* 사이트 전체 값 — 서버 연동 전 예시(비어 있으면 기본 주소로 보낸다) */
+  window.CL_SITE_MAIL=window.CL_SITE_MAIL||{plat:'', name:'', mail:'', pw:'', host:'', port:'587', sec:'TLS'};
+  /* 플랫폼마다 비밀번호 안내 · 유의사항이 다르다 (대시보드 SMTP_PLAT 과 같은 내용) */
+  var PLAT={
+    google:{ pw:'구글에서 설정한 외부메일용 앱 비밀번호', mail:'Google 계정의 이메일을 입력해 주세요.', guide:'google',
+      notes:[['Gmail 메일 전송 한도','Gmail은 회당 최대 500명, 하루 최대 500건까지만 발송할 수 있습니다.<br>이 한도를 초과하면 메일이 정상적으로 전송되지 않을 수 있습니다.'],
+             ['Gmail 유료 요금제 설정 안내','Gmail 유료 요금제를 설정하면 발송 실패 없이 안정적으로 메일을 보낼 수 있습니다.']] },
+    naver:{ pw:'네이버에서 설정한 외부메일용 앱 비밀번호', mail:'Naver 계정의 아이디를 입력해 주세요.', guide:'naver',
+      notes:[['Naver 메일 전송 한도','Naver는 회당 최대 100명까지만 발송할 수 있습니다.<br>이 한도를 초과하면 메일이 정상적으로 전송되지 않을 수 있습니다.']] },
+    daum:{ pw:'Daum/Hanmail에서 설정한 외부메일용 앱 비밀번호', mail:'Daum 또는 Hanmail 계정의 이메일을 입력해 주세요.', guide:'daum',
+      notes:[['Daum 메일 전송 한도','Daum은 회당 최대 150명 또는 하루 1만건까지만 발송할 수 있습니다.<br>이 한도를 초과하면 메일이 정상적으로 전송되지 않을 수 있습니다.'],
+             ['Daum 유료 요금제 설정 안내','Daum 유료 요금제를 설정하면 발송 실패 없이 안정적으로 메일을 보낼 수 있습니다.']] },
+    etc:{ pw:'기타 메일의 로그인 또는 앱 비밀번호', mail:'기타 메일 계정의 이메일을 입력해 주세요.', guide:'', pwPh:'로그인 비밀번호 또는 앱 비밀번호를 입력해 주세요.', server:true, notes:[] }
+  };
+  var cur='google';
+  function $(id){ return document.getElementById(id); }
+  /* 블럭 설정창 「발송 메일」 칸 (컨택트 · 폼) */
+  function snd(){ var S=window.CL_SITE_MAIL, v=(S&&S.mail)?S.mail:DEF; ['ctMailSnd','fmMailSnd'].forEach(function(id){ var el=$(id); if(el) el.textContent=v; }); }
+  window.clMailSndSync=snd;
+  function err(msg){ var e=$('smtpErr'); if(!e) return; e.textContent=msg||''; e.hidden=!msg; }
+  window.clSmtpPlat=function(k){
+    var d=PLAT[k]; if(!d) return; cur=k;
+    ['google','naver','daum','etc'].forEach(function(x){ var b=$('smtpPlat_'+x); if(b) b.classList.toggle('on',x===k); });
+    $('smtpPwNote').textContent=d.pw;
+    $('smtpPw').placeholder=d.pwPh||'앱 비밀번호를 입력해 주세요.';
+    $('smtpMail').placeholder=d.mail;
+    $('smtpPwGuide').style.display=d.guide?'':'none';
+    $('smtpSrv').classList.toggle('on',!!d.server);
+    var n=$('smtpNote'); n.style.display=d.notes.length?'':'none';   /* 안내가 없는 플랫폼은 상자째 숨김 */
+    $('smtpNoteBody').innerHTML=d.notes.map(function(x){ return '<div class="t">'+x[0]+'</div><div class="d">'+x[1]+'</div>'; }).join('');
+    err(''); document.querySelectorAll('#smtpModal .dm-input.invalid').forEach(function(i){ i.classList.remove('invalid'); });
+  };
+  window.clSmtpOpen=function(){
+    var m=$('smtpModal'), S=window.CL_SITE_MAIL; if(!m) return;
+    $('smtpName').value=S.name||''; $('smtpMail').value=S.mail||''; $('smtpPw').value=S.pw||'';
+    $('smtpHost').value=S.host||''; $('smtpPort').value=S.port||'587';
+    document.querySelectorAll('#smtpModal input[name="smtpSec"]').forEach(function(r){ r.checked=(r.value===(S.sec||'TLS')); });
+    clSmtpPlat(PLAT[S.plat]?S.plat:'google');
+    m.classList.add('show');
+  };
+  window.clSmtpClose=function(){ var m=$('smtpModal'); if(m) m.classList.remove('show'); err(''); };
+  window.clSmtpSave=function(){
+    var f={name:$('smtpName'), mail:$('smtpMail'), pw:$('smtpPw'), host:$('smtpHost'), port:$('smtpPort')}, v={}, miss=[];
+    Object.keys(f).forEach(function(k){ v[k]=(f[k].value||'').trim(); f[k].classList.remove('invalid'); });
+    ['name','mail','pw'].forEach(function(k){ if(!v[k]) miss.push(k); });
+    if(miss.length){ miss.forEach(function(k){ f[k].classList.add('invalid'); }); err('필수 항목을 모두 입력해 주세요.'); f[miss[0]].focus(); return; }
+    if(PLAT[cur].server){
+      var bad=[]; if(!v.host) bad.push('host'); if(!v.port || +v.port<1 || +v.port>65535) bad.push('port');
+      if(bad.length){ bad.forEach(function(k){ f[k].classList.add('invalid'); }); err('메일 서버와 연결 포트를 입력해 주세요.'); f[bad[0]].focus(); return; }
+    }
+    var sec=document.querySelector('#smtpModal input[name="smtpSec"]:checked');
+    window.CL_SITE_MAIL={plat:cur, name:v.name, mail:v.mail, pw:v.pw, host:PLAT[cur].server?v.host:'', port:PLAT[cur].server?v.port:'587', sec:sec?sec.value:'TLS'};
+    snd(); if(typeof markDirty==='function') markDirty();
+    clSmtpClose();
+    if(typeof showToast==='function') showToast('저장되었습니다.');
+  };
+
+  /* ── 앱 비밀번호 생성 가이드 (대시보드 EXT_GUIDE mailGoogle · mailNaver · mailDaum 과 같은 내용) ── */
+  var IMG='https://storage.googleapis.com/i.addblock.net/';
+  var SUB='이메일 환경설정부터 앱 비밀번호 적용까지 3단계 · 상단 단계를 클릭하면 해당 내용으로 이동합니다.';
+  var BACK='발송 메일 주소 설정 창으로 돌아와, <b>복사한 앱 비밀번호</b>를 <b>비밀번호 입력란</b>에 붙여넣어 주세요.';
+  var GUIDE={
+    google:{ title:'구글 연동 가이드', steps:[
+      {id:'sg_g1', name:'이메일 환경설정', items:[
+        {t:'<a class="kg-lk" href="https://www.google.com/" target="_blank" rel="noopener noreferrer">구글 홈페이지</a>에 접속해 로그인 후, <b>[우측 상단 프로필 아이콘 클릭 → Google 계정 관리]</b>를 선택해 주세요.', img:'smtp_google_guide_01.png'},
+        {t:'왼쪽 메뉴에서 <b>[보안 및 로그인 → 2단계 인증]</b>을 클릭해 주세요.', img:'smtp_google_guide_02.png'},
+        {t:'<b>[전화번호]</b>를 클릭해 주세요.', img:'smtp_google_guide_03.png'},
+        {t:'2단계 인증 전화번호에서 <b>[전화번호 추가]</b>를 클릭해 주세요.', img:'smtp_google_guide_04.png'},
+        {t:'<b>번호를 입력</b>한 후 <b>[다음]</b> 버튼을 클릭해 등록을 완료해 주세요.', img:'smtp_google_guide_05.png'} ]},
+      {id:'sg_g2', name:'앱 비밀번호 생성', items:[
+        {t:'좌측 상단의 <b>[Google 계정]</b>을 클릭해 계정 설정 화면으로 돌아간 뒤, <b>[Google 계정 설정 → 보안 및 로그인]</b> 메뉴로 이동해 주세요.', img:'smtp_google_guide_06.png'},
+        {t:'검색창에 <b>앱 비밀번호를 입력해 검색</b>한 뒤, 결과 목록에서 <b>[앱 비밀번호]</b> 항목을 선택해 주세요.', img:'smtp_google_guide_07.png'},
+        {t:'<b>[앱 이름]</b>을 입력한 뒤 <b>[만들기]</b> 버튼을 클릭하세요.', note:'* 메일 발송용이라면 mail-sender와 같이 용도에 맞는 이름으로 설정하는 것이 좋습니다.', img:'smtp_google_guide_08.png'},
+        {t:'생성된 <b>앱 비밀번호를 복사</b>해 주세요.', img:'smtp_google_guide_09.png'} ]},
+      {id:'sg_g3', name:'메일 발송 설정', items:[ {t:BACK, img:'smtp_google_guide_10.png'} ]} ]},
+    naver:{ title:'네이버 연동 가이드', steps:[
+      {id:'sg_n1', name:'이메일 환경설정', items:[
+        {t:'<a class="kg-lk" href="https://www.naver.com/" target="_blank" rel="noopener noreferrer">네이버</a>에 로그인한 후, 왼쪽 하단의 <b>[환경설정]</b>을 클릭해 주세요.', img:'smtp_naver_guide_01.png'},
+        {t:'<b>[POP3/IMAP → IMAP/SMTP 설정]</b>으로 이동해 주세요.', img:'smtp_naver_guide_02.png'},
+        {t:'<b>IMAP/SMTP 사용 → 사용함</b>으로 변경하고 <b>[설정하기]</b> 버튼을 클릭해 주세요.', img:'smtp_naver_guide_03.png'} ]},
+      {id:'sg_n2', name:'앱 비밀번호 생성', items:[
+        {t:'<b>[좌측 메뉴 보안설정 → 기본보안설정 → 2단계 인증 항목 → 관리]</b>를 클릭해 주세요.', img:'smtp_naver_guide_04.png'},
+        {t:'등록된 기기가 없다면 먼저 기기 등록을 진행해 주세요. 원하는 기기가 목록에 없다면, 먼저 아래 네이버 가이드를 진행 후 <b>[새로 고침]</b>을 눌러주세요.', note:'* 아래 안내창은 [원하는 기기가 없음] 클릭 시 노출됩니다.', imgs:['smtp_naver_guide_05.png','smtp_naver_guide_06.png']},
+        {t:'<b>원하는 기기가 없는 경우</b>', list:[
+          '인증 알림을 받을 기기의 네이버앱을 최신 버전으로 업데이트 하세요.',
+          '최신 버전의 네이버앱에서 2단계 인증을 설정할 아이디로 로그인 하세요.',
+          '해당 기기에서 "통화" 가능한 지 확인해 주세요. USIM이 없거나, 아이패드와 같이 통화 기능이 없는 경우 OTP 인증 정보를 생성할 수 없습니다.' ], img:'smtp_naver_guide_07.png'},
+        {t:'위 설정을 완료했는데도 기기가 표시되지 않는다면, 아래 <b>Check!</b> 내용을 확인 후 다시 시도해 주세요.', list:[
+          '사용하지 않는 기기를 삭제한 후, 더욱 안전한 사용을 위해 로그인 목록 페이지에서 삭제한 기기의 \'로그아웃\'을 진행해 주세요.',
+          '선택한 기기의 네이버 앱 설정에서 알림을 허용해야 합니다.',
+          '기기(OS) 설정에서 네이버 앱의 알림을 허용해야 합니다.',
+          '기기의 시간이 \'자동\'으로 설정되어야 인증을 완료할 수 있습니다.' ]},
+        {t:'<b>[애플리케이션 비밀번호 관리 → 애플리케이션 비밀번호 생성]</b>으로 이동해 <b>종류 선택</b>한 뒤, <b>[생성하기]</b> 버튼을 클릭해 주세요.', img:'smtp_naver_guide_08.png'},
+        {t:'하단에 표시된 생성된 <b>[비밀번호 코드]</b>를 복사해 주세요.', img:'smtp_naver_guide_09.png'} ]},
+      {id:'sg_n3', name:'메일 발송 설정', items:[ {t:BACK, img:'smtp_naver_guide_10.png'} ]} ]},
+    daum:{ title:'다음 연동 가이드', steps:[
+      {id:'sg_d1', name:'이메일 환경설정', items:[
+        {t:'<a class="kg-lk" href="https://www.daum.net/" target="_blank" rel="noopener noreferrer">다음</a>에 로그인한 후, 왼쪽 하단의 <b>[설정]</b>을 클릭해 주세요.', img:'smtp_daum_guide_01.png'},
+        {t:'<b>[IMAP/POP3 → IMAP/SMTP 사용]</b> 설정 항목에서 <b>[사용함]</b>으로 선택 후 <b>[비밀번호 확인하기]</b>를 클릭해 주세요.', img:'smtp_daum_guide_02.png'} ]},
+      {id:'sg_d2', name:'앱 비밀번호 생성', items:[
+        {t:'비밀번호 확인 후 <b>[앱 이름]</b>을 생성해 주세요.', img:'smtp_daum_guide_03.png'},
+        {t:'발급된 앱 <b>[비밀번호를 복사]</b>합니다.', img:'smtp_daum_guide_04.png'} ]},
+      {id:'sg_d3', name:'메일 발송 설정', items:[ {t:BACK, img:'smtp_daum_guide_05.png'} ]} ]}
+  };
+  var ARW='<span class="kg-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>';
+  window.clSmtpGuide=function(){
+    var g=GUIDE[PLAT[cur].guide], ov=$('smtpGuideOverlay'); if(!g||!ov) return;
+    var steps='', secs='';
+    g.steps.forEach(function(s,i){
+      steps+=(i?ARW:'')+'<button class="kg-step'+(i?'':' on')+'" data-t="'+s.id+'" onclick="clSmtpGuideGo(\''+s.id+'\')">'+(i+1)+'. '+s.name+'</button>';
+      var body=s.items.map(function(it,n){
+        var h='<div class="kg-stepline"><em>STEP '+(n+1<10?'0':'')+(n+1)+'</em><span>'+it.t+'</span></div>';
+        if(it.note) h+='<div class="kg-note"><i>·</i><span>'+it.note.replace(/^\*\s*/,'')+'</span></div>';
+        if(it.list) h+='<ul class="kg-ul">'+it.list.map(function(x){ return '<li>- '+x+'</li>'; }).join('')+'</ul>';
+        var pics=it.imgs||(it.img?[it.img]:[]);
+        if(pics.length) h+='<div class="kg-shot">'+pics.map(function(f){ return '<img class="sg-img" loading="lazy" decoding="async" src="'+IMG+f+'" alt="">'; }).join('')+'</div>';
+        return h;
+      }).join('');
+      secs+='<section class="kg-sec" id="'+s.id+'"><h4><span class="kg-sec-no">'+(i+1)+'</span>'+s.name+'</h4>'+body+'</section>';
+    });
+    $('smtpGuideTitle').textContent=g.title; $('smtpGuideSub').textContent=SUB;
+    $('sgSteps').innerHTML=steps; $('sgSecs').innerHTML=secs;
+    ov.classList.add('open'); var b=$('sgBody'); if(b) b.scrollTop=0; spy();
+  };
+  window.clSmtpGuideClose=function(){ var ov=$('smtpGuideOverlay'); if(ov) ov.classList.remove('open'); };
+  window.clSmtpGuideGo=function(id){
+    var body=$('sgBody'), sec=$(id), steps=$('sgSteps'); if(!body||!sec) return;
+    var off=steps?steps.offsetHeight:0, top=body.scrollTop+sec.getBoundingClientRect().top-body.getBoundingClientRect().top-off-10;
+    body.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+  };
+  function spy(){   /* 무료 음원 가이드 bgSpy 와 같은 규칙 */
+    var body=$('sgBody'), steps=$('sgSteps'); if(!body||!steps) return;
+    var off=steps.offsetHeight+24, bt=body.getBoundingClientRect().top, btns=steps.querySelectorAll('.kg-step'), c=btns.length?btns[0].getAttribute('data-t'):null;
+    for(var i=0;i<btns.length;i++){ var sec=$(btns[i].getAttribute('data-t')); if(sec && (sec.getBoundingClientRect().top-bt)<=off) c=btns[i].getAttribute('data-t'); }
+    if(btns.length && body.scrollTop+body.clientHeight>=body.scrollHeight-4) c=btns[btns.length-1].getAttribute('data-t');
+    for(var j=0;j<btns.length;j++) btns[j].classList.toggle('on',btns[j].getAttribute('data-t')===c);
+  }
+  function init(){ var b=$('sgBody'); if(b&&!b._sg){ b._sg=1; b.addEventListener('scroll',spy,{passive:true}); } snd(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+  /* ESC — 가이드가 열려 있으면 가이드만, 아니면 설정 모달을 닫는다 */
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape') return;
+    if(document.querySelector('#smtpGuideOverlay.open')){ e.stopPropagation(); clSmtpGuideClose(); }
+    else if(document.querySelector('#smtpModal.show')){ e.stopPropagation(); clSmtpClose(); }
+  },true);
 })();
 </script>
 </body>
