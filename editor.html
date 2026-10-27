@@ -14009,12 +14009,16 @@
               <div id="ctMailList"></div>
               <div class="add"><input type="email" id="ctMailIn" placeholder="받는 메일 주소" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();ctMailAdd();}"><button type="button" class="btn-sm" id="ctMailAddB" onclick="ctMailAdd()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
               <div class="mtk-hint" id="ctMailHint">최대 5개. 비워 두면 사이트 관리자 메일로 보냅니다.</div>
+              <!-- 261027 추가 — 발송 메일 표시 (기존 편집기 「발송메일 설정」: 사이트 전체 값이라 여기서는 보여 주기만, 바꾸기는 대시보드) -->
+              <div class="sms-box mail-snd"><div class="sms-h"><span>발송 메일 <i class="st-help" data-tip="알림 메일의 「보낸 사람」 주소입니다. 기본은 크리에이터링크 주소(help@creatorlink.net)이고, 구글 · 네이버 · 다음 또는 직접 설정한 메일 주소로 바꿀 수 있습니다."></i></span><button type="button" class="sms-lk" onclick="clMailDash()">발송 메일 설정</button></div><div class="row"><span class="m" id="ctMailSnd">help@creatorlink.net</span></div></div>
             </div>
             <!-- 261026 추가 — 문자 알림 (기존 편집기 「문자 알림 설정」 이식) -->
             <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help" data-tip="이 블럭으로 문의·신청이 접수되면 지정한 번호로 문자(SMS)를 보냅니다. 베이직 요금제 이상에서 쓸 수 있습니다."></i></span><button type="button" class="sw on" id="ctSmsSw" onclick="ctSw(this,'smsOn'); clSmsSync('ct');"></button></div>
             <div class="fm-mails sms-box" id="ctSmsBox"></div>
             <div class="sline"><span class="lbl">개인정보 수집 및 이용 동의</span><button type="button" class="sw" id="ctPrivSw" onclick="ctSw(this,'privacy'); ctRowsSync();"></button></div>
             <div class="fm-fin" id="ctPrivTxtRow" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">동의 내용</span><textarea id="ctPrivTxt" rows="3" placeholder="「보기」를 누르면 보이는 동의 내용" spellcheck="false" oninput="ctUpd('privTxt',this.value)"></textarea></div>
+            <!-- 261027 추가 — 단일IP 중복차단 (기존 편집기 동일: 같은 IP 1분 3회 → 10분 차단. 실제 차단은 게시 화면 서버 몫, 편집기는 설정 저장까지) -->
+            <div class="sline" id="ctIpRow"><span class="lbl">단일IP 중복차단 <i class="st-help" data-tip="같은 IP에서 1분 안에 3번 연달아 보내면 10분 동안 보낼 수 없게 막습니다."></i></span><button type="button" class="sw" id="ctIpSw" onclick="ctSw(this,'ipBlock')"></button></div>
             <div class="sline" id="ctCapRow"><span class="lbl">CAPTCHA <i class="st-help" data-tip="보내기 전에 보안문자를 입력하게 해 자동 등록(스팸)을 막습니다."></i></span><button type="button" class="sw" id="ctCapSw" onclick="ctSw(this,'captcha')"></button></div>
             <div class="mtk-hint" style="margin-top:10px;">응답은 사이트 게시 뒤 대시보드 「폼 응답」(상담 신청은 「상담신청 응답」)에서 확인합니다.</div>
           </div></div>
@@ -48117,7 +48121,7 @@ global.PolyFX = API;
     CT_COL.forEach(function(r){ var v=c[r[1]]||'#ffffff'; set(r[0],v); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(v); });
     ctSegSync('ctTaSeg',c.ta||'left'); ctSegSync('ctIsSeg',c.is||'box'); ctSegSync('ctBaSeg',c.ba||'left'); ctSegSync('ctBsSeg',c.bs||'fill'); ctSegSync('ctLeadSeg',c.leadL||'stack'); ctSegSync('ctMsSeg',c.map.ms||'normal');
     ctSegSync('ctLMap',c.layout); ctSegSync('ctLForm',c.layout); ctSegSync('ctLBr',c.layout);
-    [['ctMailSw',!!c.mailOn],['ctPrivSw',!!c.privacy],['ctCapSw',!!c.captcha],['ctSrRegionSw',c.srRegion!==false],['ctSrKwSw',c.srKw!==false],['ctFixSw',!!c.fix],['ctMapLiveSw',c.map.live!==false],['ctMapCardSw',!!c.map.card],['ctMapZmSw',!!c.map.zm]].forEach(function(r){ var el=document.getElementById(r[0]); if(el) el.classList.toggle('on',r[1]); });
+    [['ctMailSw',!!c.mailOn],['ctPrivSw',!!c.privacy],['ctCapSw',!!c.captcha],['ctIpSw',!!c.ipBlock],['ctSrRegionSw',c.srRegion!==false],['ctSrKwSw',c.srKw!==false],['ctFixSw',!!c.fix],['ctMapLiveSw',c.map.live!==false],['ctMapCardSw',!!c.map.card],['ctMapZmSw',!!c.map.zm]].forEach(function(r){ var el=document.getElementById(r[0]); if(el) el.classList.toggle('on',r[1]); });
     ctRowsSync();
   }
   window.ctCfg=ctCfg; window.ctApply=ctApply; window.ctCloneInit=ctCloneInit; window.ctUpd=ctUpd; window.ctSeg=ctSeg; window.ctSw=ctSw; window.ctLayout=ctLayout; window.ctMapSet=ctMapSet; window.ctMapSw=ctMapSw; window.ctMapSeg=ctMapSeg; window.ctPickFont=ctPickFont;
@@ -58008,7 +58012,7 @@ global.PolyFX = API;
       tiltgal     :{items:1, gt:1, posts:1},   /* 261008 추가 */
       stackgal    :{items:1, gt:1, posts:1},   /* 260923 추가 */
       stackcard   :{items:1},   /* 260923 추가 — 스택 카드 · 카드 목록(이미지·문구·링크)은 PC·모바일이 함께 쓴다. 쌓임·모양·색·여백은 기기별 */
-      ctblk       :{kind:1, preset:1, fields:1, info:1, branches:1, map:1, title:1, desc:1, titleH:1, descH:1, showT:1, showD:1, lead:1, phone:1, leadL:1, fix:1, btnT:1, done:1, mailOn:1, mails:1, smsOn:1, sms:1, smsOff:1, privacy:1, privTxt:1, captcha:1, srRegion:1, srKw:1, srPh:1, bgImg:1, bgGray:1},   /* 260929 추가 — 컨택트/지점 · 항목·지점·연락처·지도·문구·제출 옵션은 PC·모바일 공유, 배치·색·크기·여백은 기기별 */
+      ctblk       :{kind:1, preset:1, fields:1, info:1, branches:1, map:1, title:1, desc:1, titleH:1, descH:1, showT:1, showD:1, lead:1, phone:1, leadL:1, fix:1, btnT:1, done:1, mailOn:1, mails:1, smsOn:1, sms:1, smsOff:1, privacy:1, privTxt:1, captcha:1, ipBlock:1, srRegion:1, srKw:1, srPh:1, bgImg:1, bgGray:1},   /* 260929 추가 — 컨택트/지점 · 항목·지점·연락처·지도·문구·제출 옵션은 PC·모바일 공유, 배치·색·크기·여백은 기기별 */
       bdblk       :{board:1, layout:1, gcols:1, per:1, pg:1, cols:1, notice:1, isNew:1, cmt:1, tabs:1, total:1, search:1, write:1, writeT:1, prevnext:1, comments:1, wpos:1},   /* 261008 추가 — 게시판 · 연결 게시판·레이아웃·표시 항목·상단·글 보기는 PC·모바일 공유, 색·크기·여백은 기기별 */
       nmblk       :{items:1, eb:1, desc:1, comma:1, bgImg:1, bgGray:1},   /* 261019 추가 — 숫자 카운터 · 항목·문구·배경 소재 공유 */
       qrblk       :{url:1, eb:1, desc:1, cap:1, bgImg:1, bgGray:1},   /* 261019 추가 — QR 코드 · 링크·문구·배경 소재 공유 */
@@ -61945,6 +61949,9 @@ function ghvDemo(blk){
   .sms-box .row .m.off{color:var(--ink-3,#9096A0);text-decoration:line-through;}
   .sms-box .sms-err{margin-top:6px;font-size:var(--fs-sm);color:#e5484d;}
   .sms-box .sms-err:empty{display:none;}
+  .sms-box .sms-h > span:has(> .help-ico){display:inline-flex;align-items:center;gap:5px;}   /* 261027 추가 — 발송 메일 물음표 정렬(설정창 다른 물음표와 같게) */
+  .mail-snd{margin-top:12px;}   /* 문자 알림 안 소제목 사이 간격(12px)과 같게 */
+  .mail-snd .sms-h:first-child{margin-top:0;}
 </style>
 <script>
 (function(){
@@ -61993,6 +62000,11 @@ function ghvDemo(blk){
   window.clSmsDel=function(p,i){ var c=cfg(p); if(!c) return; c.sms.splice(i,1); errMsg[p]=''; dirty(); clSmsSync(p); };
   window.clSmsAdmin=function(p,n){ var c=cfg(p); if(!c) return; var k=c.smsOff.indexOf(n); if(k<0) c.smsOff.push(n); else c.smsOff.splice(k,1); dirty(); clSmsSync(p); };
   window.clSmsDash=function(){ var w=window.clWinOpen||window.open; try{ w(window.CL_SITE_SMS.dash,'_blank','noopener'); }catch(x){} };
+  /* 261027 추가 — 발송 메일 (사이트 전체 값 표시만. CL_SITE_MAIL — 실제 값은 서버 연동 시 채움) */
+  window.CL_SITE_MAIL=window.CL_SITE_MAIL||{sender:'help@creatorlink.net', dash:'https://www.creatorlink.net/dashboard/'};
+  window.clMailDash=function(){ var w=window.clWinOpen||window.open; try{ w(window.CL_SITE_MAIL.dash,'_blank','noopener'); }catch(x){} };
+  function mailSnd(){ var el=document.getElementById('ctMailSnd'); if(el) el.textContent=window.CL_SITE_MAIL.sender||'help@creatorlink.net'; }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mailSnd); else mailSnd();
 })();
 </script>
 </body>
