@@ -3867,7 +3867,8 @@
   .ct-map{position:relative;min-height:var(--ctmh);border-radius:var(--ctr);overflow:hidden;background:#e9edf2;}
   .ct-map .sk{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .ct-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:transparent;}
-  .ct-map[data-ms="grey"] .sk,.ct-map[data-ms="grey"] iframe{filter:grayscale(1);}
+  .ct-map[data-ms="grey"] .sk,.ct-map[data-ms="grey"] iframe{filter:grayscale(1);}  #bsetCt .sline.off,#bsetCt .fm-fin.off{opacity:.38;pointer-events:none;} #bsetCt .sline.off .help-ico{pointer-events:auto;}   /* 막힌 줄도 물음표로 이유를 볼 수 있게 */
+  #bsetCt .fm-fin.off:has(#ctMapPlace,#ctMapDesc){pointer-events:auto;cursor:pointer;} #bsetCt .fm-fin.off :is(#ctMapPlace,#ctMapDesc){pointer-events:none;}   /* 막힌 장소명 · 상세내용 칸은 누르면 안내 팝업 */   /* 261028 추가 — 지도 링크일 때 쓰지 않는 줄 */
   .ct-map[data-ms="dark"] .sk,.ct-map[data-ms="dark"] iframe{filter:grayscale(1) invert(.92) hue-rotate(180deg) contrast(.9);}
   .ct-map .pin{position:absolute;left:50%;top:50%;width:26px;height:34px;margin:-32px 0 0 -13px;z-index:2;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));}
   .ct-map .pin svg{width:100%;height:100%;display:block;}
@@ -13892,13 +13893,20 @@
         <div class="fld sfold" id="ctMapAcc" data-k="map branch">
           <div class="fld-h fold-h" onclick="smAcc(this)">지도<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
+            <div class="mt-seg" id="ctMpSeg">   <!-- 261028 추가 — 지도 제공처 (기존 편집기 구글 · 네이버 · 카카오 탭) -->
+              <button type="button" class="mt-seg-b active" data-m="google" onclick="ctMapPv('google')">구글</button>
+              <button type="button" class="mt-seg-b" data-m="naver" onclick="ctMapPv('naver')">네이버</button>
+              <button type="button" class="mt-seg-b" data-m="kakao" onclick="ctMapPv('kakao')">카카오</button>
+            </div>
             <div id="ctMapAddrRows">
-              <div class="fm-fin" style="margin-top:0;"><span class="k">주소</span><input type="text" id="ctMapAddr" placeholder="도로명 주소" spellcheck="false" oninput="ctMapSet('addr',this.value)"></div>
+              <div class="fm-fin" style="margin-top:0;"><span class="k" id="ctMapAddrK">주소</span><input type="text" id="ctMapAddr" placeholder="도로명 주소" spellcheck="false" oninput="ctMapSet('addr',this.value); ctMapUiSync();"></div>
               <div class="fm-fin"><span class="k">장소명</span><input type="text" id="ctMapPlace" placeholder="지도 카드에 보이는 이름" maxlength="30" spellcheck="false" oninput="ctMapSet('place',this.value)"></div>
+              <div class="fm-fin"><span class="k">상세내용</span><input type="text" id="ctMapDesc" placeholder="장소명 아래에 보이는 글 (비우면 주소)" maxlength="40" spellcheck="false" oninput="ctMapSet('desc',this.value)"></div>   <!-- 261028 추가 — 기존 편집기 「상세내용」 -->
+
             </div>
             <div class="mtk-hint" id="ctMapAddrHint" style="margin-top:6px;">주소만 넣으면 구글 지도가 뜹니다(키 불필요). 지도를 불러오기 전이나 오프라인에서는 약도가 보입니다.</div>
-            <div class="sline" style="padding-top:12px;"><span class="lbl">구글 지도 불러오기</span><button type="button" class="sw on" id="ctMapLiveSw" onclick="ctMapSw(this,'live')"></button></div>
-            <div class="sline"><span class="lbl">장소 카드 <i class="st-help" data-tip="약도에만 적용됩니다. 구글 지도를 불러오면 구글이 자기 장소 카드(이름·주소·큰 지도 보기)를 그립니다."></i></span><button type="button" class="sw on" id="ctMapCardSw" onclick="ctMapSw(this,'card')"></button></div>
+            <div class="sline" style="padding-top:12px;"><span class="lbl">구글 지도 불러오기</span><button type="button" class="sw on" id="ctMapLiveSw" onclick="ctMapSw(this,'live'); if(!this.classList.contains('on')){ var cd=document.getElementById('ctMapCardSw'); if(cd&&!cd.classList.contains('on')) ctMapSw(cd,'card'); } ctMapUiSync();"></button></div>
+            <div class="sline"><span class="lbl">장소 카드 <i class="st-help" data-tip="약도에만 적용됩니다. 구글 지도를 불러오면 구글이 자기 장소 카드(이름·주소·큰 지도 보기)를 그립니다."></i></span><button type="button" class="sw on" id="ctMapCardSw" onclick="ctMapSw(this,'card'); ctMapUiSync();"></button></div>
             <div class="sline"><span class="lbl">확대/축소 버튼 <i class="st-help" data-tip="약도에만 적용됩니다. 구글 지도는 자기 버튼을 씁니다."></i></span><button type="button" class="sw on" id="ctMapZmSw" onclick="ctMapSw(this,'zm')"></button></div>
             <div class="srow" style="margin:12px 0 6px;"><span class="k">스타일</span></div>
             <div class="mt-seg" id="ctMsSeg">
@@ -47654,15 +47662,19 @@ global.PolyFX = API;
   function ctMapHTML(c,addr,place,live){
     var m=c.map, a=String(addr==null?m.addr:addr).trim(), p=String(place==null?m.place:place).trim();
     var h='<div class="ct-map'+((m.card&&(p||a))?' has-card':'')+'" data-ms="'+ctEsc(m.ms||'normal')+'" style="min-height:'+txNum(m.h,420)+'px">'+ctSketch(a||'seoul',m.ms==='dark');
-    var isLive=(live!==false && m.live!==false && !!a);
+    /* 261028 추가 — 제공처(구글 · 네이버 · 카카오)와 구글 지도 링크 · 퍼가기 코드. 제공처는 컨택트 지도(kind map)에서만 고른다 (지점 찾기는 구글 그대로) */
+    var pv=(c.kind==='map' && m.pv) || 'google', S=(pv==='google')?ctMapSrc(a):{t:'addr'};
+    var isLive=(live!==false && m.live!==false && !!a && pv==='google' && S.t!=='err');
     /* 260929 수정 — 구글 임베드는 자기 장소 카드(이름·주소·큰 지도 보기)와 확대/축소 버튼을 스스로 그린다. 같은 자리에 우리 것까지 그리면 겹쳐 보였다 → 장소 카드·확대/축소 스위치는 약도(불러오기 전·오프라인·카드)에만 적용 */
-    if(isLive) h+='<iframe src="https://maps.google.com/maps?q='+encodeURIComponent(a)+'&z='+txNum(m.zoom,16)+'&hl=ko&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="지도"></iframe>';
+    if(isLive) h+='<iframe src="'+(S.t==='emb'?ctEsc(S.src.replace('&z=Z','&z='+txNum(m.zoom,16))):'https://maps.google.com/maps?q='+encodeURIComponent(a)+'&z='+txNum(m.zoom,16)+'&hl=ko&output=embed')+'" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="지도"></iframe>';
     else {
+      var ad=(S.t==='addr')?a:'', ds=String(m.desc||'').trim(), sub=ds||ad;   /* 링크를 넣었으면 카드에 주소 대신 링크가 찍히지 않게 · 261028 — 상세내용이 있으면 주소 대신 (기존 편집기: 장소명 + 상세내용) */
       h+=CT_PIN;
-      if(m.card && (p||a)) h+='<div class="card">'+(p?'<b>'+ctEsc(p)+'</b>':'')+(a?'<span>'+ctEsc(a)+'</span>':'')+'</div>';
+      if(m.card && (p||sub)) h+='<div class="card">'+(p?'<b>'+ctEsc(p)+'</b>':'')+(sub?'<span>'+ctEsc(sub)+'</span>':'')+'</div>';
       if(m.zm) h+='<div class="zm"><i>+</i><i>−</i></div>';
     }
-    if(a && !isLive) h+='<a class="open" href="https://maps.google.com/maps?q='+encodeURIComponent(a)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">지도에서 열기<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></a>';
+    var openU=(pv==='naver')?'https://map.naver.com/p/search/'+encodeURIComponent(a):(pv==='kakao')?'https://map.kakao.com/?q='+encodeURIComponent(a):'https://maps.google.com/maps?q='+encodeURIComponent(a);
+    if(a && !isLive && S.t==='addr') h+='<a class="open" href="'+openU+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">지도에서 열기<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></a>';
     return h+'</div>';
   }
   function ctInfoHTML(c){
@@ -47899,6 +47911,78 @@ global.PolyFX = API;
     ctApply(ctCurBlk); ctFillBset();
   }
   function ctMapSet(k,v){ if(!ctCurBlk) return; ctCfg(ctCurBlk).map[k]=v; clearTimeout(ctMapSet._t); ctMapSet._t=setTimeout(function(){ if(ctCurBlk) ctApply(ctCurBlk); },500); }
+  /* 261028 추가 — 지도 제공처 · 구글 지도 링크
+     · 주소 칸 하나로 받는다: 주소면 주소로, 구글 지도 링크(URL) · 퍼가기 코드(<iframe>)면 그 지도를 그대로 (자동 구분)
+     · 기존 편집기와 같은 제한: 약식 URL · 위성 모드 URL 은 받지 않는다
+     · 네이버 · 카카오 : 무료 요금제면 업그레이드 안내, 사이트 앱 키가 없으면 「설정하러 가기」 안내 (기존 편집기 문구)
+     · CL_SITE_MAPKEY 는 서버 연동 전 예시 값 — naver / kakao 키와 키 설정 화면 주소(set)를 서버에서 채움 */
+  window.CL_SITE_MAPKEY=window.CL_SITE_MAPKEY||{naver:'', kakao:'', set:''};
+  function ctMapSrc(a){
+    a=String(a||'').trim(); if(!a) return {t:'addr'};
+    var f=a.match(/<iframe[^>]*\ssrc=["']([^"']+)["']/i), src=f?f[1]:(/^https?:\/\//i.test(a)?a:(/^(www\.)?(google\.|maps\.google\.|goo\.gl|maps\.app\.goo\.gl)/i.test(a)?'https://'+a:''));
+    if(!src) return {t:'addr'};
+    src=src.replace(/&amp;/g,'&');
+    if(/(^|\/\/)(goo\.gl|maps\.app\.goo\.gl|g\.co)\//i.test(src)) return {t:'err', e:'약식 URL은 지원하지 않습니다.'};
+    if(!/google\.[a-z.]+\/maps|maps\.google\./i.test(src)) return {t:'err', e:'구글 지도 링크나 지도 퍼가기 코드만 넣을 수 있습니다.'};
+    if(/!1e3|[?&]t=[kh](&|$)/i.test(src)) return {t:'err', e:'구글맵의 위성 모드 URL은 지원하지 않습니다.'};
+    if(/\/maps\/embed|output=embed/i.test(src)) return {t:'emb', src:src, fixed:true};   /* 퍼가기 코드 — 확대는 코드에 들어 있어 바꿀 수 없다 */
+    var pl=src.match(/\/maps\/place\/([^\/@?]+)/), q=src.match(/[?&](?:q|query)=([^&]+)/), ll=src.match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+    var key=pl?decodeURIComponent(pl[1].replace(/\+/g,' ')):(q?decodeURIComponent(q[1].replace(/\+/g,' ')):(ll?ll[1]+','+ll[2]:''));
+    if(!key) return {t:'err', e:'이 링크로는 위치를 찾지 못했습니다. 지도 퍼가기 코드를 넣어 주세요.'};
+    return {t:'emb', src:'https://maps.google.com/maps?q='+encodeURIComponent(key)+'&z=Z&hl=ko&output=embed'};
+  }
+  function ctMapPv(v){
+    if(!ctCurBlk) return; var m=ctCfg(ctCurBlk).map, P=window.CL_SITE_PLAN||{}, K=window.CL_SITE_MAPKEY||{};
+    if(v!=='google'){
+      if(P.free){ if(typeof clPlanOpen==='function') clPlanOpen(v+'Up'); return; }
+      if(!K[v]){ if(typeof clPlanOpen==='function') clPlanOpen(v+'Key'); return; }
+    }
+    if((m.pv||'google')!==v) m.card=(v!=='google');   /* 탭을 바꿀 때 장소 카드 기본값 — 네이버 · 카카오 켬(실제 지도에 장소 상자), 구글 끔(구글이 자기 카드를 그림). 같은 탭 안에서 바꾼 값은 유지 */
+    m.pv=v; ctApply(ctCurBlk); ctFillBset(); if(typeof markDirty==='function') markDirty();
+  }
+  function ctMapUiSync(){
+    if(!ctCurBlk) return; var c=ctCfg(ctCurBlk), m=c.map, isMap=(c.kind==='map'), pv=(isMap&&m.pv)||'google', S=(pv==='google')?ctMapSrc(m.addr):{t:'addr'}, NM={google:'구글',naver:'네이버',kakao:'카카오'}[pv];
+    var seg=document.getElementById('ctMpSeg'); if(seg){ seg.style.display=isMap?'':'none'; ctSegSync('ctMpSeg',pv); }
+    var ip=document.getElementById('ctMapAddr'); if(ip) ip.placeholder=(pv==='google')?'도로명 주소 또는 구글 지도 링크 · 퍼가기 코드':'도로명 주소';
+    var lv=document.getElementById('ctMapLiveSw'), lr=lv&&lv.closest('.sline'); if(lr) lr.style.display=(pv==='google')?'':'none';   /* 「구글 지도 불러오기」(실제 지도 ↔ 약도)는 구글에만. 네이버 · 카카오는 그 지도를 쓰려고 고른 것이라 약도로 바꿀 일이 없다 */
+    var hn=document.getElementById('ctMapAddrHint');
+    if(hn){
+      hn.style.color=(S.t==='err')?'var(--danger)':'';
+      hn.textContent=(S.t==='err')?S.e:(S.t==='emb')?'구글 지도 링크로 표시 중입니다. 링크 지도는 장소 카드를 쓰지 않습니다.'
+        :(pv!=='google')?'주소 검색은 한글로 국내만 검색이 가능합니다. 편집 화면에서는 약도로 보이고, 게시한 사이트에서 '+NM+' 지도가 보입니다.'
+        :'주소만 넣으면 구글 지도가 뜹니다(키 불필요). 구글 지도 링크나 퍼가기 코드를 넣으면 그 지도를 그대로 씁니다. 지도를 불러오기 전이나 오프라인에서는 약도가 보입니다.';
+    }
+    function off(id,on){ var el=document.getElementById(id), r=el&&el.closest('.sline,.srow,.fm-fin'); if(r) r.classList.toggle('off',!!on); }
+    /* 261028 추가 — 구글 지도를 불러오는 중이면 장소명 · 상세내용 · 장소 카드 · 확대/축소 버튼은 화면에 반영되지 않아 비활성 (불러오기를 끄면 약도에 적용) */
+    var glLive=(pv==='google' && m.live!==false && !!String(m.addr||'').trim() && S.t!=='err');
+    /* 261028 추가 — 장소 카드 · 확대/축소 물음표: 구글은 약도에만 적용(구글 지도는 자기 카드 · 버튼), 네이버 · 카카오는 실제 지도에도 적용 */
+    [['ctMapCardSw','약도에만 적용됩니다. 구글 지도를 불러오면 구글이 자기 장소 카드(이름·주소·큰 지도 보기)를 그립니다.','지도 위에 장소명과 상세내용 상자를 보여 줍니다.'],
+     ['ctMapZmSw','약도에만 적용됩니다. 구글 지도는 자기 버튼을 씁니다.','지도 위에 확대/축소 버튼을 보여 줍니다.']].forEach(function(t){
+      var sw=document.getElementById(t[0]), q=sw&&sw.closest('.sline')&&sw.closest('.sline').querySelector('.help-ico,.st-help'); if(q) q.setAttribute('data-tip',(pv!=='google')?t[2]:glLive?'구글 지도 불러오기를 끄면(약도) 적용됩니다.':t[1]);
+    });
+    var cardOff=!m.card;   /* 장소명 · 상세내용은 장소 카드 안에 보이므로 카드가 꺼져 있으면 비활성 (누르면 「장소 카드 켜기」 안내) */
+    off('ctMapPlace',S.t==='emb'||glLive||cardOff); off('ctMapDesc',S.t==='emb'||glLive||cardOff); off('ctMapCardSw',S.t==='emb'||glLive); off('ctMapZmSw',glLive); off('ctMapZoom',S.t==='emb'&&S.fixed);   /* 링크 지도는 장소 카드 · 장소명이 없고, 퍼가기 코드는 확대도 코드에 들어 있다 */
+  }
+  /* 261028 추가 — 막힌 장소명 · 상세내용 칸을 누르면 왜 막혔는지 안내 (구글 지도 불러오는 중이면 「불러오기 끄기」로 바로 풀 수 있게) */
+  document.addEventListener('click',function(e){
+    var r=e.target.closest&&e.target.closest('#bsetCt .fm-fin.off'); if(!r||!ctCurBlk) return;
+    var ip=r.querySelector('#ctMapPlace,#ctMapDesc'); if(!ip) return;
+    e.preventDefault(); var m=ctCfg(ctCurBlk).map, nm=(ip.id==='ctMapPlace')?'장소명':'상세내용';
+    if(typeof clInfoOpen!=='function') return;
+    var c=ctCfg(ctCurBlk), pv=(c.kind==='map'&&m.pv)||'google', S=(pv==='google')?ctMapSrc(m.addr):{t:'addr'};
+    var glLive=(pv==='google' && m.live!==false && !!String(m.addr||'').trim() && S.t!=='err');
+    if(S.t==='emb') clInfoOpen(nm,'구글 지도 링크로 표시 중에는 장소명 · 상세내용을 쓰지 않습니다. 링크 지도에는 구글이 그린 장소 정보가 나옵니다.');
+    else if(!glLive) clInfoOpen(nm,'장소 카드를 켜면 지도에 장소명 · 상세내용이 표시됩니다.','장소 카드 켜기',function(){
+      var cd=document.getElementById('ctMapCardSw'); if(cd&&!cd.classList.contains('on')) cd.click();
+      var f=document.getElementById(ip.id); if(f) f.focus();
+    });
+    else clInfoOpen(nm,'구글 지도를 불러오는 중에는 구글이 자기 장소 카드를 보여 줘서 장소명 · 상세내용이 지도에 나오지 않습니다. 구글 지도 불러오기를 끄면 약도 위에 표시됩니다.','구글 지도 불러오기 끄기',function(){
+      var lv=document.getElementById('ctMapLiveSw'), cd=document.getElementById('ctMapCardSw');
+      if(lv&&lv.classList.contains('on')) lv.click();
+      if(cd&&!cd.classList.contains('on')) cd.click();   /* 장소 카드가 꺼져 있으면 같이 켜서 바로 보이게 */
+      var f=document.getElementById(ip.id); if(f) f.focus();
+    });
+  });
   function ctMapSw(el,k){ if(!ctCurBlk) return; var on=!el.classList.contains('on'); el.classList.toggle('on',on); ctCfg(ctCurBlk).map[k]=on; ctApply(ctCurBlk); }
   function ctMapSeg(k,m){ if(!ctCurBlk) return; ctSegSync('ctMsSeg',m); ctCfg(ctCurBlk).map[k]=m; ctApply(ctCurBlk); }
   function ctPickFont(e,i){
@@ -47938,6 +48022,7 @@ global.PolyFX = API;
     show('ctTsRow',k!=='strip'); show('ctLsRow',k!=='branch');
     show('ctLnRow',k==='branch');   /* 261028 추가 — 선 색(--ctln)은 지점 찾기(검색칸 · 지점 카드 · 상세 구분선)에만 쓰인다. 종류는 블럭을 넣을 때 정해지고 바꿀 수 없어 다른 종류에서는 숨김 (입력칸 밑줄은 입력칸 > 테두리 색) */
     ['ctMailSw','ctSmsSw'].forEach(function(id){ var s=document.getElementById(id), q=s&&s.previousElementSibling&&s.previousElementSibling.querySelector('.help-ico,.st-help'); if(q) q.style.display=(k==='strip')?'':'none'; });   /* 261028 추가 — 기존 편집기처럼 이메일 · 문자 알림 물음표는 상담 신청 띠에서만 (폼 블럭은 항상) */
+    ctMapUiSync();
     var rr=document.getElementById('ctRRow'); if(rr) rr.classList.toggle('off',!((k==='form'&&(lay==='bgcard'||lay==='2col'))||k==='map'||k==='branch'));   /* 261028 추가 — 여백 > 라운딩(--ctr)은 폼 카드(배경 카드 · 2단) · 지도 · 지점 찾기 상자에만 보인다. 그 밖의 모양은 비활성 */
     var tsr=document.getElementById('ctTsRow'); if(tsr) tsr.classList.toggle('off',!ctVis(c,'title'));   /* 261028 추가 — 제목 크기(--ctts)는 블럭 제목에만 쓰여서 제목이 꺼지면 모든 모양에서 비활성 */
     var tcr=document.getElementById('ctTcRow'); if(tcr) tcr.classList.toggle('off',!(ctVis(c,'title')||infoOn||k==='branch'));   /* 261028 추가 — 제목 색(--cttc)은 블럭 제목 · 연락처 묶음 제목 · 지점 이름/상세에 쓰인다. 셋 다 없으면(제목 꺼진 폼 등) 비활성 */
@@ -48126,7 +48211,7 @@ global.PolyFX = API;
     ctOpenIdx=-1; ctOpenBr=-1; ctOpenInfo=-1;
     ctKindSync(); ctAccSync(ctFillBset._kind!==c.kind); ctFillBset._kind=c.kind; ctFieldRender(); ctInfoRender(); ctBrRender(); ctMailSync(); if(typeof clSmsSync==='function') clSmsSync('ct'); ctBgSync();
     ctHeadChips(); set('ctBtnT',c.btnT||''); set('ctDone',c.done||''); set('ctPrivTxt',c.privTxt||''); set('ctLead',c.lead||''); set('ctPhone',c.phone||''); set('ctSrPh',c.srPh||'');
-    set('ctMapAddr',c.map.addr||''); set('ctMapPlace',c.map.place||'');
+    set('ctMapAddr',c.map.addr||''); set('ctMapPlace',c.map.place||''); set('ctMapDesc',c.map.desc||'');
     var dd=document.getElementById('ctFDD');
     if(dd){ var fi=txNum(c.f,5); var lb=dd.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=(SM_FONTS[fi]||SM_FONTS[0]).n; dd.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', +b.getAttribute('data-i')===fi); }); }
     CT_RNG.forEach(function(r){ var v=r[3]?c.map[r[1]]:c[r[1]]; set(r[0],v); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[2]; });
@@ -62083,17 +62168,23 @@ function ghvDemo(blk){
     <button type="button" class="dm-close" onclick="clPlanClose()" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <h3 id="clPlanTtl"></h3>
     <p class="pl-txt" id="clPlanTxt"></p>
-    <button type="button" class="pl-go" onclick="clPlanGo()"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>업그레이드</button>
-    <button type="button" class="pl-close" onclick="clPlanClose()">닫기</button>
+    <button type="button" class="pl-go" id="clPlanGoB" onclick="clPlanGo()"></button>
+    <button type="button" class="pl-close" id="clPlanCloseB" onclick="clPlanClose()">닫기</button>
   </div>
 </div>
 <script>
 (function(){
-  window.CL_SITE_PLAN=window.CL_SITE_PLAN||{free:false, smsDash:true, upgrade:'https://www.creatorlink.net/upgrade/site'};   /* 서버 연동 전 예시 값 */
+  window.CL_SITE_PLAN=window.CL_SITE_PLAN||{free:false, smsDash:true, upgrade:'https://www.creatorlink.net/upgrade'};   /* 서버 연동 전 예시 값 · 업그레이드 주소는 기존 편집기와 같은 /upgrade */
   var MSG={
     mail:['이메일 알림 설정','이메일 알림 설정은 베이직 요금제 이상부터 지원합니다. 요금제를 업그레이드하여 이메일로 알림을 받아보세요.'],
-    sms:['문자 알림 설정','문자 알림 설정은 베이직 요금제 이상부터 지원합니다. 요금제를 업그레이드하여 문자 알림을 받아보세요.']
+    sms:['문자 알림 설정','문자 알림 설정은 베이직 요금제 이상부터 지원합니다. 요금제를 업그레이드하여 문자 알림을 받아보세요.'],
+    /* 261028 추가 — 컨택트 지도 제공처 (ctMapPv) : 무료 요금제 / 앱 키 없음 */
+    naverUp:['네이버 지도','네이버 지도는 유료 요금제 적용 후 이용 가능합니다. 요금제를 업그레이드하여 네이버 지도를 이용해 보세요.'],
+    kakaoUp:['카카오 지도','카카오 지도는 유료 요금제 적용 후 이용 가능합니다. 요금제를 업그레이드하여 카카오 지도를 이용해 보세요.'],
+    naverKey:['네이버 지도','네이버 지도를 사용하기 위해서는 네이버 앱을 먼저 설정해 주세요.','key'],
+    kakaoKey:['카카오 지도','카카오 지도를 사용하기 위해서는 카카오 앱을 먼저 설정해 주세요.','key']
   };   /* 기존 편집기 문구 그대로 */
+  var UP_ICO='<svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>', GO_ICO='<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>', cur='';
   window.clPlanSync=function(){
     var P=window.CL_SITE_PLAN||{};
     document.body.classList.toggle('cl-plan-free',!!P.free);
@@ -62102,10 +62193,28 @@ function ghvDemo(blk){
   window.clPlanOpen=function(k){
     var m=document.getElementById('clPlanModal'), t=MSG[k]; if(!m||!t) return;
     document.getElementById('clPlanTtl').textContent=t[0]; document.getElementById('clPlanTxt').textContent=t[1];
+    cur=t[2]||'up'; document.getElementById('clPlanGoB').style.display='';
+    document.getElementById('clPlanGoB').innerHTML=(cur==='key')?'설정하러 가기'+GO_ICO:UP_ICO+'업그레이드';
+    document.getElementById('clPlanCloseB').textContent=(cur==='key')?'취소':'닫기';   /* 기존 편집기: 앱 키 안내는 「취소」, 업그레이드 안내는 「닫기」 */
     m.classList.add('show');
   };
   window.clPlanClose=function(){ var m=document.getElementById('clPlanModal'); if(m) m.classList.remove('show'); };
-  window.clPlanGo=function(){ var w=window.clWinOpen||window.open; try{ w(window.CL_SITE_PLAN.upgrade,'_blank','noopener'); }catch(x){} clPlanClose(); };
+  /* 261028 추가 — 같은 모양의 일반 안내 팝업 (제목 · 내용 · 주 버튼(선택) · 닫기). 주 버튼을 누르면 fn 실행 */
+  var rawFn=null;
+  window.clInfoOpen=function(ttl,txt,goLabel,fn){
+    var m=document.getElementById('clPlanModal'); if(!m) return;
+    document.getElementById('clPlanTtl').textContent=ttl; document.getElementById('clPlanTxt').textContent=txt;
+    var g=document.getElementById('clPlanGoB'); cur='raw'; rawFn=fn||null;
+    g.style.display=goLabel?'':'none'; g.textContent=goLabel||'';
+    document.getElementById('clPlanCloseB').textContent=goLabel?'닫기':'확인';
+    m.classList.add('show');
+  };
+  window.clPlanGo=function(){
+    if(cur==='raw'){ var f=rawFn; clPlanClose(); if(typeof f==='function') f(); return; }
+    var u=(cur==='key')?(window.CL_SITE_MAPKEY||{}).set:window.CL_SITE_PLAN.upgrade;
+    if(!u){ if(typeof clToast==='function') clToast('앱 키 설정 화면 주소는 서버 연동 때 연결됩니다.'); clPlanClose(); return; }
+    var w=window.clWinOpen||window.open; try{ w(u,'_blank','noopener'); }catch(x){} clPlanClose();
+  };
   /* 막힌 스위치 클릭은 스위치 자체 동작(켜고 끄기)보다 먼저 가로챈다 */
   document.addEventListener('click',function(e){
     var sw=e.target.closest&&e.target.closest('#ctMailSw,#fmMailSw,#ctSmsSw,#fmSmsSw'); if(!sw) return;
