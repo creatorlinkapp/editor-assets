@@ -1049,6 +1049,8 @@
     font-size:12.5px;font-weight:700;border-radius:8px;cursor:pointer;transition:background .12s,border-color .12s;}
   .mt-imgadd:hover{background:#F0F1F3;border-color:#9A9EA6;}
   .mt-imgadd:disabled{opacity:.4;cursor:default;background:var(--green-tint);border-color:var(--green-line);}
+  :is(#ctMailAddB,#fmMailAddB):disabled{opacity:.4;cursor:default;}   /* 261028 추가 — 받는 메일 5개가 차면 입력칸 · 추가 버튼이 막힌 게 보이게 */
+  :is(#ctMailIn,#fmMailIn):disabled{background:var(--bg-2);cursor:default;} :is(#ctMailIn,#fmMailIn):disabled::placeholder{opacity:.5;}
   .mt-imgadd.picking{box-shadow:0 0 0 2px var(--green);animation:rtThumbPulse 1s ease-in-out infinite;}   /* 260919 추가 — 보관함 추가 모드 대기 표시(이미지 블럭 「추가」와 같은 매너) */
   .mt-imgadd.plain{border:1px solid var(--border-2);background:#fff;color:var(--ink-2);} .mt-imgadd.plain:hover{border-color:#9A9EA6;background:#F0F1F3;}   /* 260919 추가 — 「추가」가 아닌 일반 동작 버튼(되돌리기 · 다시 보기): 점선 그린 대신 흰 보조 버튼 매너 */
   .mt-imgadd.mt-imgup{margin-left:8px;}   /* 260906 추가 — 목록 옆 '업로드' 버튼 (보관함 + 목록 동시 추가) */
@@ -4815,6 +4817,7 @@
   .im-addrow .btn-sm.picking{animation:rtThumbPulse 1s ease-in-out infinite;}
   .im-addrow button:disabled{opacity:.4;pointer-events:none;}
   .srow.off,.mt-seg-b.off{opacity:.38;pointer-events:none;}
+  #ctTcRow .help-ico{display:none;vertical-align:-2px;margin-left:2px;} #ctTcRow.off .help-ico{display:inline-block;pointer-events:auto;}   /* 261028 추가 — 컨택트 제목 색이 막혀 있을 때만 물음표로 이유를 알린다 */
   .im-sub{margin:4px 0 2px 0;padding:2px 0 8px 12px;border-left:2px solid var(--line);}
   .im-bgpick{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
   .im-bgth.vid{background-color:#23272E;color:#fff;} .im-bgth.vid > svg{display:none;} .im-bgth.vid::after{content:"동영상";font-size:10px;font-weight:700;letter-spacing:-.01em;}   /* 260928 추가 — 배경이 동영상일 때 */
@@ -14037,7 +14040,7 @@
             </div>
             <div class="srow" id="ctTsRow"><span class="k">제목 크기</span><input class="rng" type="range" id="ctTs" min="14" max="48" step="1" value="22"><span class="v" id="ctTsV">22px</span></div>
             <div class="srow" id="ctLsRow"><span class="k">항목 크기</span><input class="rng" type="range" id="ctLs" min="11" max="20" step="0.5" value="13.5"><span class="v" id="ctLsV">13.5px</span></div>
-            <div class="srow"><span class="k">제목 색</span><span class="sw-col"><input type="color" id="ctTc" value="#1c1f24"><span class="hex" id="ctTcV">#1C1F24</span></span></div>
+            <div class="srow" id="ctTcRow"><span class="k">제목 색 <svg class="help-ico pg-tip" data-tip="블럭 제목을 켜면 적용됩니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><span class="sw-col"><input type="color" id="ctTc" value="#1c1f24"><span class="hex" id="ctTcV">#1C1F24</span></span></div>
             <div class="srow"><span class="k">본문 색</span><span class="sw-col"><input type="color" id="ctLc" value="#5b6270"><span class="hex" id="ctLcV">#5B6270</span></span></div>
             <div class="srow"><span class="k">보조 색</span><span class="sw-col"><input type="color" id="ctDc" value="#9aa0a8"><span class="hex" id="ctDcV">#9AA0A8</span></span></div>
             <div class="srow" id="ctLnRow"><span class="k">선 색</span><span class="sw-col"><input type="color" id="ctLn" value="#e6e8ec"><span class="hex" id="ctLnV">#E6E8EC</span></span></div>
@@ -47718,7 +47721,7 @@ global.PolyFX = API;
     var host=document.getElementById('ctHeadChips'); if(!host||!ctCurBlk) return; var c=ctCfg(ctCurBlk);
     host.innerHTML=[['title','제목'],['desc','설명']].map(function(x){ var on=ctVis(c,x[0]); return '<div class="gt-chip'+(on?' on':'')+'"><button type="button" class="lb" onclick="ctShowTog(\''+x[0]+'\')" aria-pressed="'+on+'">'+x[1]+'</button></div>'; }).join('');
   }
-  function ctShowTog(k){ if(!ctCurBlk) return; var c=ctCfg(ctCurBlk); c[k==='title'?'showT':'showD']=!ctVis(c,k); ctApply(ctCurBlk); ctHeadChips(); if(typeof markDirty==='function') markDirty(); }
+  function ctShowTog(k){ if(!ctCurBlk) return; var c=ctCfg(ctCurBlk); c[k==='title'?'showT':'showD']=!ctVis(c,k); ctApply(ctCurBlk); ctHeadChips(); ctRowsSync(); if(typeof markDirty==='function') markDirty(); }
   window.ctShowTog=ctShowTog;
   /* 지점 찾기 — 검색·목록·지도(·상세). 고른 지점(_ctSel)과 검색어(_ctQ)는 블럭 런타임 상태 */
   function ctBrFiltered(c,blk){
@@ -47932,6 +47935,7 @@ global.PolyFX = API;
     show('ctCapRow',k!=='strip'); show('ctPrivTxtRow',!!c.privacy);
     show('ctTsRow',k!=='strip'); show('ctLsRow',k!=='branch');
     show('ctLnRow',k==='branch');   /* 261028 추가 — 선 색(--ctln)은 지점 찾기(검색칸 · 지점 카드 · 상세 구분선)에만 쓰인다. 종류는 블럭을 넣을 때 정해지고 바꿀 수 없어 다른 종류에서는 숨김 (입력칸 밑줄은 입력칸 > 테두리 색) */
+    var tcr=document.getElementById('ctTcRow'); if(tcr) tcr.classList.toggle('off',!(ctVis(c,'title')||infoOn||k==='branch'));   /* 261028 추가 — 제목 색(--cttc)은 블럭 제목 · 연락처 묶음 제목 · 지점 이름/상세에 쓰인다. 셋 다 없으면(제목 꺼진 폼 등) 비활성 */
     show('ctIrRow',c.is!=='line'); show('ctIbdRow',c.is!=='fill'); show('ctBfgRow',c.bs!=='outline');
     var ibr=document.getElementById('ctIbR'); if(ibr) ibr.classList.toggle('off',!c.ib);
     var ibv=document.getElementById('ctIbV'); if(ibv) ibv.textContent=c.ib?smHex(c.ib):'없음';
