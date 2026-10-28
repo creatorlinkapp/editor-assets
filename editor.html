@@ -61962,7 +61962,7 @@ function ghvDemo(blk){
 (function(){
   var MAX=10;
   /* 대시보드 값 자리 — 서버 연동 전 예시 */
-  window.CL_SITE_SMS=window.CL_SITE_SMS||{admin:['01012345678'], sender:'0212345678', point:1250, dash:'https://www.creatorlink.net/dashboard/'};
+  window.CL_SITE_SMS=window.CL_SITE_SMS||{admin:['01012345678'], sender:'0212345678', point:1250, dash:'https://www.creatorlink.net/notificationtalkmail'};   /* 261028 수정 — 「대시보드 알림 설정」 = 기존 편집기 관리자 수신번호 톱니와 같은 화면(대시보드 알림 > 문자/알림톡). 충전하기는 편집 화면 팝업(clChargeOpen) */
   var errMsg={ct:'',fm:''};
   function cfg(p){ var f=window[p+'SmsCfg']; var c=f&&f(); if(!c) return null; if(typeof c.smsOn==='undefined') c.smsOn=true; if(!Array.isArray(c.sms)) c.sms=[]; if(!Array.isArray(c.smsOff)) c.smsOff=[]; return c; }
   function norm(v){ v=String(v||'').trim(); var plus=v.charAt(0)==='+'; v=v.replace(/[^0-9]/g,'').slice(0,15); return (plus?'+':'')+v; }
@@ -61985,7 +61985,7 @@ function ghvDemo(blk){
     h+='<div class="add"><input type="tel" id="'+p+'SmsIn" placeholder="번호를 입력해 주세요." autocomplete="off" spellcheck="false"'+(full?' disabled':'')+' oninput="this.value=this.value.replace(/[^0-9+\-\s]/g,\'\')" onkeydown="if(event.key===\'Enter\'){event.preventDefault();clSmsAdd(\''+p+'\');}"><button type="button" class="btn-sm"'+(full?' disabled':'')+' onclick="clSmsAdd(\''+p+'\')">'+PLUS+'추가</button></div>';
     h+='<div class="sms-err">'+esc(errMsg[p]||'')+'</div>';
     h+='<div class="sms-h"><span>발신번호</span></div><div class="row"><span class="m'+(S.sender?'':' off')+'" style="text-decoration:none;">'+(S.sender?esc(show(norm(S.sender))):'등록된 발신번호가 없습니다.')+'</span></div>';
-    h+='<div class="mtk-hint" style="margin-top:8px;">관리자 수신번호 외에 이 블럭만 받을 번호를 최대 '+MAX+'개 추가할 수 있습니다. 발신번호가 없으면 문자가 가지 않습니다. 잔여 포인트 '+Number(S.point||0).toLocaleString()+'건 (문자 1통에 1.4건) · <button type="button" class="sms-lk" onclick="clSmsDash()">충전하기</button></div>';
+    h+='<div class="mtk-hint" style="margin-top:8px;">관리자 수신번호 외에 이 블럭만 받을 번호를 최대 '+MAX+'개 추가할 수 있습니다. 발신번호가 없으면 문자가 가지 않습니다. 잔여 포인트 '+Number(S.point||0).toLocaleString()+'건 (문자 1통에 1.4건) · <button type="button" class="sms-lk" onclick="clChargeOpen()">충전하기</button></div>';   /* 261028 수정 — 충전하기 = 대시보드와 같은 「포인트 충전」 팝업을 편집 화면에서 */
     box.innerHTML=h;
     var ni=document.getElementById(p+'SmsIn'); if(ni&&keep&&!full) ni.value=keep;
   };
@@ -62031,6 +62031,96 @@ function ghvDemo(blk){
     sp.replaceWith(inp); btn.style.display='none';
     inp.focus(); inp.select();
   };
+})();
+</script>
+<!-- 261028 추가 — 포인트 충전 팝업 (문자 알림 「충전하기」). 대시보드 「알림 > 문자 알림/카카오 알림톡 > 충전하기」 팝업과 같은 항목 · 모양
+     · 충전 금액 6단(문자/알림톡 건수 · 보너스) · 안내 2줄 · 결제 담당자 이름 / 전화번호 / 이메일 · 결제하기 / 취소
+     · 실제 결제(PG)는 서버 연동 몫. 편집기에서는 고른 건수만큼 잔여 포인트를 늘려 보여 준다(CL_SITE_SMS.point) -->
+<style>
+  #clChargeModal.rt-lm{align-items:flex-start;padding:40px 16px;}
+  #clChargeModal .ch-box{--cx-ink:#222428;--cx-ink2:#8A8F98;--cx-mute:#B4B8BF;--cx-line:#E5E7EB;--cx-green:#03C75A;--cx-green-h:#02B351;--cx-green-t:#13b059;
+    position:relative;width:560px;max-width:96vw;margin:0 auto;background:#fff;border-radius:14px;box-shadow:0 24px 64px rgba(0,0,0,.28);padding:36px 40px 30px;box-sizing:border-box;font-family:inherit;color:var(--cx-ink);animation:pop .18s ease;}
+  #clChargeModal h3{text-align:center;font-size:22px;font-weight:700;margin:0 0 28px;color:var(--cx-ink);}
+  #clChargeModal .ch-x{position:absolute;top:20px;right:22px;width:30px;height:30px;border:none;background:none;padding:0;cursor:pointer;color:var(--cx-mute);display:inline-flex;align-items:center;justify-content:center;border-radius:8px;transition:color .15s,background .15s,transform .18s cubic-bezier(.34,1.56,.64,1);}
+  #clChargeModal .ch-x svg{width:20px;height:20px;display:block;}
+  #clChargeModal .ch-x:hover{color:var(--cx-ink);background:#F1F2F5;transform:rotate(90deg);}
+  #clChargeModal .ch-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+  #clChargeModal .ch-row{display:flex;align-items:center;gap:13px;border:1.5px solid var(--cx-line);border-radius:12px;padding:15px 18px;cursor:pointer;transition:border-color .12s,background .12s;}
+  #clChargeModal .ch-row:hover{border-color:#B7E7C9;}
+  #clChargeModal .ch-row.sel{border-color:var(--cx-green);background:#F1FBF5;}
+  #clChargeModal .ch-radio{width:18px;height:18px;box-sizing:border-box;border:2px solid var(--cx-line);border-radius:50%;flex:none;display:inline-grid;place-content:center;}
+  #clChargeModal .ch-row.sel .ch-radio{border-color:var(--cx-green);}
+  #clChargeModal .ch-row.sel .ch-radio::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--cx-green);}
+  #clChargeModal .ch-amt{font-size:17px;font-weight:700;color:var(--cx-ink);}
+  #clChargeModal .ch-info{margin-left:auto;text-align:right;line-height:1.35;}
+  #clChargeModal .ch-info .t{font-size:12px;color:var(--cx-mute);}
+  #clChargeModal .ch-info .c{font-size:13.5px;color:var(--cx-ink2);font-weight:500;}
+  #clChargeModal .ch-info .c b{color:var(--cx-green-t);font-weight:700;}
+  #clChargeModal .ch-note{font-size:12.5px;color:#E5484D;line-height:1.95;margin:0 0 20px;}
+  #clChargeModal .ch-crow{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+  #clChargeModal .ch-crow.last{margin-bottom:22px;}
+  #clChargeModal .ch-lb{width:120px;flex:none;font-size:13.5px;font-weight:600;color:var(--cx-ink);}
+  #clChargeModal .ch-in{flex:1;min-width:0;height:40px;box-sizing:border-box;border:1px solid var(--cx-line);border-radius:8px;padding:0 13px;font-family:inherit;font-size:13.5px;color:var(--cx-ink);background:#fff;outline:none;}
+  #clChargeModal .ch-in:focus{border-color:var(--cx-green);box-shadow:0 0 0 3px rgba(3,199,90,.12);}
+  #clChargeModal .ch-in::placeholder{color:var(--cx-mute);}
+  #clChargeModal .ch-in.error,#clChargeModal .ch-in.error:focus{border-color:#E5484D;box-shadow:0 0 0 3px rgba(229,72,77,.13);}
+  #clChargeModal .ch-pay{width:100%;background:var(--cx-green);color:#fff;border:none;border-radius:8px;padding:15px 0;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;margin-top:0;}
+  #clChargeModal .ch-pay:hover{background:var(--cx-green-h);}
+  #clChargeModal .ch-cancel{display:block;width:100%;text-align:center;margin:14px auto 0;padding:11px;border-radius:9px;background:none;border:none;color:var(--cx-ink2);font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .13s,color .13s;}
+  #clChargeModal .ch-cancel:hover{background:#EAF9F0;color:var(--cx-green-t);}
+  @media (max-width:560px){ #clChargeModal .ch-box{padding:30px 20px 24px;} #clChargeModal .ch-crow{flex-direction:column;align-items:stretch;gap:6px;} #clChargeModal .ch-lb{width:auto;} }
+</style>
+<div class="rt-lm" id="clChargeModal" role="dialog" aria-modal="true" aria-label="포인트 충전" onclick="if(event.target===this) clChargeClose()">
+  <div class="ch-box">
+    <button type="button" class="ch-x" onclick="clChargeClose()" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h3>포인트 충전</h3>
+    <div class="ch-grid" id="clChargeGrid"></div>
+    <div class="ch-note">* 결제된 금액은 환불되지 않습니다.<br>* 알림 받을 항목과 쇼핑알림이 같이 사용됩니다.</div>
+    <div class="ch-crow"><div class="ch-lb">결제 담당자 이름</div><input class="ch-in" id="clChargeName" placeholder="이름을 입력해 주세요." autocomplete="off" spellcheck="false"></div>
+    <div class="ch-crow"><div class="ch-lb">전화번호</div><input class="ch-in" id="clChargeTel" placeholder="전화번호를 입력해 주세요." inputmode="tel" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9\-]/g,'')"></div>
+    <div class="ch-crow last"><div class="ch-lb">이메일</div><input class="ch-in" id="clChargeMail" placeholder="이메일을 입력해 주세요." autocomplete="off" spellcheck="false"></div>
+    <button type="button" class="ch-pay" onclick="clChargePay()">결제하기</button>
+    <button type="button" class="ch-cancel" onclick="clChargeClose()">취소</button>
+  </div>
+</div>
+<script>
+(function(){
+  /* 대시보드 atRenderChargeCards 와 같은 금액표 */
+  var ROWS=[ {amt:30000, base:2143, bonus:0}, {amt:50000, base:3571, bonus:0}, {amt:100000, base:7143, bonus:156},
+             {amt:200000, base:14286, bonus:529}, {amt:500000, base:35714, bonus:1880}, {amt:1000000, base:71429, bonus:5495} ];
+  var sel=0;
+  function $(id){ return document.getElementById(id); }
+  function n(v){ return Number(v).toLocaleString(); }
+  function render(){
+    $('clChargeGrid').innerHTML=ROWS.map(function(c,i){
+      var cnt=n(c.base)+'건'+(c.bonus?' <b>+ '+n(c.bonus)+'건</b>':'');
+      return '<div class="ch-row'+(i===sel?' sel':'')+'" role="radio" aria-checked="'+(i===sel)+'" tabindex="0" onclick="clChargePick('+i+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();clChargePick('+i+');}">'+
+        '<span class="ch-radio"></span><span class="ch-amt">₩'+n(c.amt)+'</span>'+
+        '<span class="ch-info"><span class="t">문자/알림톡</span><br><span class="c">'+cnt+'</span></span></div>';
+    }).join('');
+  }
+  window.clChargePick=function(i){ sel=i; render(); };
+  window.clChargeOpen=function(){
+    var m=$('clChargeModal'); if(!m) return;
+    var P=(window.CL_SITE_SMS&&window.CL_SITE_SMS.payer)||{};   /* 결제 담당자 — 서버 연동 시 계정 정보로 채움 */
+    $('clChargeName').value=P.name||''; $('clChargeTel').value=P.tel||''; $('clChargeMail').value=P.mail||'';
+    document.querySelectorAll('#clChargeModal .ch-in.error').forEach(function(x){ x.classList.remove('error'); });
+    sel=0; render(); m.classList.add('show');
+  };
+  window.clChargeClose=function(){ var m=$('clChargeModal'); if(m) m.classList.remove('show'); };
+  window.clChargePay=function(){
+    var f={name:$('clChargeName'), tel:$('clChargeTel'), mail:$('clChargeMail')}, v={}, miss=[];
+    Object.keys(f).forEach(function(k){ v[k]=(f[k].value||'').trim(); f[k].classList.remove('error'); if(!v[k]) miss.push(k); });
+    if(miss.length){ miss.forEach(function(k){ f[k].classList.add('error'); }); if(typeof showToast==='function') showToast('결제 담당자 정보를 모두 입력해 주세요.','warn'); f[miss[0]].focus(); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.mail)){ f.mail.classList.add('error'); if(typeof showToast==='function') showToast('이메일 형식이 올바르지 않습니다.','warn'); f.mail.focus(); return; }
+    var S=window.CL_SITE_SMS||(window.CL_SITE_SMS={}), r=ROWS[sel];
+    S.payer={name:v.name, tel:v.tel, mail:v.mail};
+    S.point=Number(S.point||0)+r.base+r.bonus;   /* 실제로는 결제(PG) 완료 후 서버 값으로 갱신 */
+    clChargeClose();
+    ['ct','fm'].forEach(function(p){ if(typeof clSmsSync==='function') try{ clSmsSync(p); }catch(e){} });
+    if(typeof showToast==='function') showToast('충전되었습니다.');
+  };
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && document.querySelector('#clChargeModal.show')){ e.stopPropagation(); clChargeClose(); } },true);
 })();
 </script>
 <!-- 261027 추가 — 발송 메일 주소 설정 모달 + 앱 비밀번호 생성 가이드 (대시보드 「알림 > 메일 > 발송 메일 주소 설정」 모달과 같은 항목 · 문구. 화면은 에디터 dm 모달 · kg 가이드 틀)
