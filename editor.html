@@ -47680,8 +47680,9 @@ global.PolyFX = API;
     var fields=c.fields.map(function(f){ var ff=ctClone(f); if(strip){ ff.d=''; if(!ff.p) ff.p=ff.l; } return (typeof fmFieldHTML==='function')?fmFieldHTML(ff):''; }).join('');
     return '<div class="fm-wrap" data-is="'+ctEsc(c.is||'box')+'" data-ba="'+(strip?'left':ctEsc(c.ba||'left'))+'" data-bs="'+ctEsc(c.bs||'fill')+'" style="'+ctFmVars(c)+'">'
       +'<div class="fm-fields">'+fields+'</div>'
+      +(extra&&!strip?'<div class="fm-extra">'+extra+'</div>':'')   /* 261028 수정 — 동의 · 보안문자는 보내기 전에 하는 일이라 버튼 위로 (폼 블럭과 같은 순서). 띠는 한 줄 배치라 그대로 버튼 뒤 */
       +'<div class="fm-act"><button type="button" class="fm-btn" tabindex="-1">'+ctEsc(c.btnT||'보내기')+'</button></div>'
-      +(extra?'<div class="fm-extra">'+extra+'</div>':'')+'</div>';
+      +(extra&&strip?'<div class="fm-extra">'+extra+'</div>':'')+'</div>';
   }
   /* 261022 수정 — 제목 · 설명은 블럭에서 바로 고치는 글 칸(.cred.ct-e · 텍스트 블럭 편집기).
      값: title/desc = 글만(다른 곳에서 쓰는 값) · titleH/descH = 서식 HTML(있으면 이것으로 그린다).
