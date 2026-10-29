@@ -3979,7 +3979,7 @@
   .ct-br .ct-search .go{flex:none;height:42px;padding:0 18px;border:none;border-radius:var(--ctr);background:var(--ctac);color:var(--ctab);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;}
   .ct-br .ct-search .go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;display:block;}
   .ct-br .ct-search .go.ico{background:transparent;color:var(--ctlc);padding:0 8px;}
-  .ct-br .ct-search.bar{padding:16px min(24px,3cqw);border-radius:var(--ctr);background:color-mix(in srgb,var(--ctac) 6%,var(--ctcb));justify-content:center;}
+  .ct-br .ct-search.bar{padding:16px min(24px,3cqw);border-radius:var(--ctr);background:color-mix(in srgb,var(--ctac) 6%,var(--ctbgc,#ffffff));justify-content:center;}   /* 261029 수정 — 띠는 블럭 배경색 기준(전: 카드 배경 기준이라 카드 색을 바꾸면 띠 · 입력칸이 같은 색으로 묻혔다). 카드 배경은 지점 카드 · 입력칸에만 */
   .ct-br .ct-search.bar .sel,.ct-br .ct-search.bar .kw{flex:0 1 220px;}
   .ct-br .ct-search.bar .kw{flex-basis:260px;}
   .ct-br .ct-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:min(24px,3cqw);align-items:start;margin-top:20px;}
@@ -48053,7 +48053,7 @@ global.PolyFX = API;
   }
   function ctStyleStr(c){
     return '--ctf:'+smStack(txNum(c.f,5))+';--cttc:'+(c.tc||'#1c1f24')+';--ctlc:'+(c.lc||'#5b6270')+';--ctdc:'+(c.dc||'#9aa0a8')+';--ctic:'+(c.ic||'#23272e')+';--ctac:'+(c.bc||'#23272e')+';--ctab:'+(c.bfg||ctInk(c.bc))
-      +';--ctln:'+(c.ln||'#e6e8ec')+';--ctcb:'+(c.cb||'transparent')+';--ctpv:'+txNum(c.pv,72)+'px;--ctmw:'+txNum(c.mw,1140)+'px;--ctts:'+txNum(c.ts,22)+'px;--ctls:'+txNum(c.ls,12.5)+'px;--ctr:'+txNum(c.r,6)+'px;--ctmh:'+txNum((c.map||{}).h,420)+'px;--ctcw:'+txNum(c.cw,640)+'px;';
+      +';--ctln:'+(c.ln||'#e6e8ec')+';--ctcb:'+(c.cb||'transparent')+';--ctpv:'+txNum(c.pv,72)+'px;--ctmw:'+txNum(c.mw,1140)+'px;--ctbgc:'+(c.bg||'#ffffff')+';--ctts:'+txNum(c.ts,22)+'px;--ctls:'+txNum(c.ls,12.5)+'px;--ctr:'+txNum(c.r,6)+'px;--ctmh:'+txNum((c.map||{}).h,420)+'px;--ctcw:'+txNum(c.cw,640)+'px;';
   }
   function ctBlockHTML(){ return '<span class="tag-badge">컨택트</span>'+SM_GEAR+'<div class="ct-wrap"></div>'; }
   function ctApply(blk){
@@ -48332,6 +48332,7 @@ global.PolyFX = API;
     show('ctCwRow',k==='form'&&(lay==='plain'||lay==='bgcard'||lay==='2col'));
     show('ctLayoutHint',k==='form');
     show('ctCbRow',(k==='form'&&(lay==='2col'||lay==='bgcard'))||k==='branch');
+    var cbk=document.querySelector('#ctCbRow > .k'); if(cbk){ cbk.textContent=(k==='branch')?'지점 · 검색칸 색':'카드 배경'; cbk.style.width=(k==='branch')?'auto':''; }   /* 레이아웃 섹션엔 색 줄이 하나라 이름 칸 너비를 글자에 맞춘다 (74px 고정이면 3px 넘침) */   /* 261029 추가 — 지점 찾기에서는 지점 카드와 검색 입력칸 색을 함께 바꾼다 */
     show('ctCapRow',true); show('ctPrivTxtRow',!!c.privacy);   /* 261029 수정 — 상담 신청 띠에도 CAPTCHA (기존 편집기와 같음) */
     show('ctRespLk',k==='strip');   /* 261029 추가 — 상담신청 응답 보기 */
     /* 261029 추가 — 지점 찾기: 버튼 라운딩은 쓰이는 곳이 없어 숨김(검색 버튼 모서리는 여백 > 라운딩). 검색 띠(가운데 · 상세)는 돋보기 아이콘이라 문구 비활성. 지점명 검색이 꺼지면 기본 메시지 비활성 */
