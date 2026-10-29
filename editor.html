@@ -48029,7 +48029,7 @@ global.PolyFX = API;
     show('ctIrRow',c.is!=='line'); show('ctIbdRow',c.is!=='fill'); show('ctBfgRow',c.bs!=='outline');
     var ibr=document.getElementById('ctIbR'); if(ibr) ibr.classList.toggle('off',!c.ib);
     var ibv=document.getElementById('ctIbV'); if(ibv) ibv.textContent=c.ib?smHex(c.ib):'없음';
-    var ih=document.getElementById('ctInfoHint'); if(ih) ih.textContent=(k==='map'&&lay==='map-form')?'':'묶음(제목 + 내용)으로 적습니다. 영문 대문자 제목은 자간을 넓혀 보입니다.';
+    var ih=document.getElementById('ctInfoHint'); if(ih){ ih.textContent=''; ih.style.display='none'; }   /* 261029 수정 — 「묶음(제목 + 내용)으로 적습니다…」 안내 숨김: 항목을 펼치면 칸 예시글(제목 (예: Address) · 줄바꿈으로 여러 줄)이 같은 내용을 알려 준다 */
   }
   var CT_DI={
     drag:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>',
