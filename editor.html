@@ -3890,6 +3890,10 @@
      · 설정창은 용도별로 구역을 보이고 숨긴다 — 제목·글자·버튼·배경·여백은 공통, 지도·연락처·입력 항목·제출·지점·검색·띠는 용도별
      ═════════════════════════════════════════════════════════════════ */
   .blk.ct-blk{padding:0;}
+  /* 261029 추가 — 지점 찾기 버튼 섹션의 「버튼 색 → 포인트 색」 바로 가기 줄 */
+  #ctBtnPtRow .ct-ptgo{display:inline-flex;align-items:center;gap:0;padding:0;border:0;background:none;color:var(--green-text);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap;vertical-align:baseline;}
+  #ctBtnPtRow .ct-ptgo svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;align-self:center;}
+  #bsetCt .srow.ct-flash{background:var(--green-soft);border-radius:6px;transition:background .3s;}
   #ctBaBox[style*="none"] + #ctBsSeg{margin-top:12px;}   /* 261029 추가 — 상담 신청 띠는 버튼 정렬 줄이 없어, 채움/외곽선 탭이 문구 칸에 붙지 않게 */
   .blk.ct-blk[data-fix="1"]{position:sticky;bottom:0;z-index:30;}
   /* 261029 추가 — 다른 페이지에 붙는 하단 고정 바 사본: 고칠 수 없고 누르면 원래 블럭으로 */
@@ -14092,6 +14096,8 @@
           <div class="fld-h fold-h" onclick="smAcc(this)">버튼<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
             <div class="fm-fin" style="margin-top:0;"><span class="k">문구</span><input type="text" id="ctBtnT" maxlength="20" spellcheck="false" oninput="ctUpd('btnT',this.value)"></div>
+            <div class="mtk-hint" id="ctBtnPtRow" style="display:none;margin-top:8px;">버튼 색은 레이아웃 &gt; 포인트 색을 따릅니다.<span> <button type="button" class="ct-ptgo" onclick="ctGoPoint()">바꾸기<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></span></div>   <!-- 261029 추가 — 지점 찾기(검색 한 줄 · 지도 크게): 검색 버튼은 레이아웃 > 포인트 색으로 칠해진다. 버튼 섹션에서 찾는 사람을 위한 안내와 바로 가기 (눌리지 않는 색 칩은 두지 않는다) -->
+
             <div id="ctBaBox">
               <div class="srow" style="margin:12px 0 6px;"><span class="k">정렬</span></div>
               <div class="mt-seg" id="ctBaSeg">
@@ -48278,6 +48284,14 @@ global.PolyFX = API;
     cl.addEventListener('click',function(e){ e.stopPropagation(); var pg=ctFixPage(own); if(typeof pgxGo==='function') pgxGo(pg); setTimeout(function(){ if(own.isConnected){ own.scrollIntoView({block:'center'}); if(typeof selectBlock==='function') selectBlock(own); } },400); });
     var ft=(host===site)?site.querySelector(':scope > .site-ft'):null; if(ft) host.insertBefore(cl,ft); else host.appendChild(cl);
   };
+  /* 261029 추가 — 버튼 섹션 「바꾸기」: 레이아웃 섹션을 열고 포인트 색 줄로 옮겨 잠깐 강조 */
+  window.ctGoPoint=function(){
+    var acc=document.getElementById('ctLayoutAcc'), bc=document.getElementById('ctBc'), row=bc&&bc.closest('.srow'); if(!acc||!row) return;
+    if(!acc.classList.contains('open')){ var h=acc.querySelector(':scope > .fold-h'); if(h) smAcc(h); }
+    setTimeout(function(){ var sc=row.parentElement; while(sc && sc!==document.body && !(sc.scrollHeight>sc.clientHeight && /auto|scroll/.test(getComputedStyle(sc).overflowY))) sc=sc.parentElement;   /* 설정창 스크롤 상자 안에서만 옮긴다 (캔버스는 그대로) */
+      if(sc && sc!==document.body){ var r=row.getBoundingClientRect(), s=sc.getBoundingClientRect(); sc.scrollTo({top:sc.scrollTop+(r.top-s.top)-s.height/2+r.height/2,behavior:'smooth'}); }
+      row.classList.add('ct-flash'); setTimeout(function(){ row.classList.remove('ct-flash'); },1200); },60);
+  };
   /* 261029 추가 — 상담신청 응답 보기 (기존 편집기: 대시보드 /consult). CL_SITE_DASH_URL 은 서버 연동 때 사이트 대시보드 주소로 */
   window.ctRespOpen=function(){ var u=(window.CL_SITE_DASH_URL||'https://www.creatorlink.net/dashboard')+'/consult', w=window.clWinOpen||window.open; try{ w(u,'_blank','noopener'); }catch(x){} };
   /* 261029 추가 — 막힌 정렬 버튼을 누르면 안내 (값은 바꾸지 않는다) · 「제목 켜기」로 바로 풀기 */
@@ -48349,7 +48363,9 @@ global.PolyFX = API;
       else { if(bfgRow.previousElementSibling!==bcRow) bfgRow.before(bcRow); }
       var bck=bcRow.querySelector('.k'); if(bck){ bck.textContent=(k==='branch')?'포인트 색':'버튼 색'; bck.style.width=(k==='branch')?'80px':''; }
       if(bh) bh.textContent='검색 버튼 · 선택한 지점 테두리 · 전화번호 · 검색 띠에 쓰입니다.';
-    }   /* 261029 추가 — 지점 찾기에서는 지점 카드와 검색 입력칸 색을 함께 바꾼다 */
+    }
+    /* 261029 추가 — 버튼 섹션의 「버튼 색 → 포인트 색」 줄: 글자 검색 버튼이 있는 검색 한 줄 · 지도 크게에서만 */
+    show('ctBtnPtRow',k==='branch'&&(lay==='titlel'||lay==='mapl'));
     show('ctCapRow',true); show('ctPrivTxtRow',!!c.privacy);   /* 261029 수정 — 상담 신청 띠에도 CAPTCHA (기존 편집기와 같음) */
     show('ctRespLk',k==='strip');   /* 261029 추가 — 상담신청 응답 보기 */
     /* 261029 추가 — 지점 찾기: 버튼 라운딩은 쓰이는 곳이 없어 숨김(검색 버튼 모서리는 여백 > 라운딩). 검색 띠(가운데 · 상세)는 돋보기 아이콘이라 문구 비활성. 지점명 검색이 꺼지면 기본 메시지 비활성 */
