@@ -13203,6 +13203,7 @@
             <div class="fm-mails" id="fmMailBox">
               <div id="fmMailList"></div>
               <div class="add"><input type="email" id="fmMailIn" placeholder="받는 메일 주소" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();fmMailAdd();}"><button type="button" class="btn-sm" id="fmMailAddB" onclick="fmMailAdd()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
+              <div class="mail-err" id="fmMailErr"></div>   <!-- 261029 추가 — 받는 메일 오류는 칸 아래 빨간 글씨 (수신번호 추가와 같게) -->
               <div class="mtk-hint" id="fmMailHint">최대 5개. 비워 두면 사이트 관리자 메일로 보냅니다.</div>
               <!-- 261027 추가 — 발송 메일 표시 (컨택트와 같음 · 사이트 전체 값) -->
               <div class="sms-box mail-snd"><div class="sms-h"><span>발송 메일 <i class="st-help" data-tip="알림 메일의 「보낸 사람」 주소입니다. 기본은 크리에이터링크 주소(help@creatorlink.net)이고, 구글 · 네이버 · 다음 또는 직접 설정한 메일 주소로 바꿀 수 있습니다."></i></span><button type="button" class="sms-lk" onclick="clSmtpOpen()">발송 메일 설정</button></div><div class="row"><span class="m" id="fmMailSnd">help@creatorlink.net</span></div></div>
@@ -14084,6 +14085,7 @@
             <div class="fm-mails" id="ctMailBox">
               <div id="ctMailList"></div>
               <div class="add"><input type="email" id="ctMailIn" placeholder="받는 메일 주소" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();ctMailAdd();}"><button type="button" class="btn-sm" id="ctMailAddB" onclick="ctMailAdd()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
+              <div class="mail-err" id="ctMailErr"></div>   <!-- 261029 추가 — 받는 메일 오류는 칸 아래 빨간 글씨 (수신번호 추가와 같게) -->
               <div class="mtk-hint" id="ctMailHint">최대 5개. 비워 두면 사이트 관리자 메일로 보냅니다.</div>
               <!-- 261027 추가 — 발송 메일 표시 (기존 편집기 「발송메일 설정」 · 사이트 전체 값. 「발송 메일 설정」 → 발송 메일 주소 설정 모달 #smtpModal) -->
               <div class="sms-box mail-snd"><div class="sms-h"><span>발송 메일 <i class="st-help" data-tip="알림 메일의 「보낸 사람」 주소입니다. 기본은 크리에이터링크 주소(help@creatorlink.net)이고, 구글 · 네이버 · 다음 또는 직접 설정한 메일 주소로 바꿀 수 있습니다."></i></span><button type="button" class="sms-lk" onclick="clSmtpOpen()">발송 메일 설정</button></div><div class="row"><span class="m" id="ctMailSnd">help@creatorlink.net</span></div></div>
@@ -44067,11 +44069,12 @@ global.PolyFX = API;
   function fmMailAdd(){
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk), inp=document.getElementById('fmMailIn'); if(!inp) return;
     var v=String(inp.value||'').trim();
-    if(!v) return;
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ clToast('메일 주소 형식이 아닙니다.'); return; }
-    if(c.mails.indexOf(v)>=0){ clToast('이미 있는 주소입니다.'); inp.value=''; return; }
-    if(c.mails.length>=FM_MAIL_MAX){ clToast('받는 메일은 최대 '+FM_MAIL_MAX+'개입니다.'); return; }
-    c.mails.push(v); inp.value=''; fmMailSync(); if(typeof markDirty==='function') markDirty();
+    /* 261029 수정 — 오류는 칸 아래 빨간 글씨(clMailErr · 수신번호 추가와 같게) · 빈칸 안내 추가 */
+    if(!v){ clMailErr('fm','메일 주소를 입력해 주세요.'); inp.focus(); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ clMailErr('fm','메일 주소 형식이 아닙니다.'); inp.focus(); return; }
+    if(c.mails.indexOf(v)>=0){ clMailErr('fm','이미 있는 주소입니다.'); inp.focus(); return; }
+    if(c.mails.length>=FM_MAIL_MAX){ clMailErr('fm','받는 메일은 최대 '+FM_MAIL_MAX+'개입니다.'); return; }
+    c.mails.push(v); inp.value=''; clMailErr('fm',''); fmMailSync(); if(typeof markDirty==='function') markDirty();
   }
   function fmMailDel(i){ if(!fmCurBlk) return; var c=fmCfg(fmCurBlk); c.mails.splice(i,1); fmMailSync(); if(typeof markDirty==='function') markDirty(); }
   window.fmSmsCfg=function(){ return fmCurBlk?fmCfg(fmCurBlk):null; };   /* 261026 추가 — 문자 알림(clSmsSync)이 현재 폼 블럭 설정을 읽는 통로 */
@@ -48349,7 +48352,7 @@ global.PolyFX = API;
     var inp=document.getElementById('ctMailIn'), b=document.getElementById('ctMailAddB'); if(inp) inp.disabled=full; if(b) b.disabled=full;
     var h=document.getElementById('ctMailHint'); if(h) h.textContent=full?('받는 메일은 최대 '+CT_MAIL_MAX+'개입니다.'):(c.mails.length?(c.mails.length+'/'+CT_MAIL_MAX+' · 등록되면 이 주소로 알림을 보냅니다.'):('최대 '+CT_MAIL_MAX+'개. 비워 두면 사이트 관리자 메일로 보냅니다.'));
   }
-  function ctMailAdd(){ if(!ctCurBlk) return; var c=ctCfg(ctCurBlk), inp=document.getElementById('ctMailIn'); if(!inp) return; var v=String(inp.value||'').trim(); if(!v) return; if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ clToast('메일 주소 형식이 아닙니다.'); return; } if(c.mails.indexOf(v)>=0){ clToast('이미 있는 주소입니다.'); inp.value=''; return; } if(c.mails.length>=CT_MAIL_MAX){ clToast('받는 메일은 최대 '+CT_MAIL_MAX+'개입니다.'); return; } c.mails.push(v); inp.value=''; ctMailSync(); if(typeof markDirty==='function') markDirty(); }
+  function ctMailAdd(){ if(!ctCurBlk) return; var c=ctCfg(ctCurBlk), inp=document.getElementById('ctMailIn'); if(!inp) return; var v=String(inp.value||'').trim(); if(!v){ clMailErr('ct','메일 주소를 입력해 주세요.'); inp.focus(); return; }   /* 261029 수정 — 오류는 칸 아래 빨간 글씨(clMailErr · 수신번호 추가와 같게) · 빈칸 안내 추가 */ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ clMailErr('ct','메일 주소 형식이 아닙니다.'); inp.focus(); return; } if(c.mails.indexOf(v)>=0){ clMailErr('ct','이미 있는 주소입니다.'); inp.focus(); return; } if(c.mails.length>=CT_MAIL_MAX){ clMailErr('ct','받는 메일은 최대 '+CT_MAIL_MAX+'개입니다.'); return; } c.mails.push(v); inp.value=''; clMailErr('ct',''); ctMailSync(); if(typeof markDirty==='function') markDirty(); }
   function ctMailDel(i){ if(!ctCurBlk) return; ctCfg(ctCurBlk).mails.splice(i,1); ctMailSync(); if(typeof markDirty==='function') markDirty(); }
   window.ctSmsCfg=function(){ return ctCurBlk?ctCfg(ctCurBlk):null; };   /* 261026 추가 — 문자 알림(clSmsSync)이 현재 컨택트 블럭 설정을 읽는 통로 */
   /* 배경 소재 — 폼 블럭과 같은 세 길 */
@@ -62260,7 +62263,9 @@ function ghvDemo(blk){
   .sms-box .sms-lk:hover{text-decoration:underline;}
   .sms-box .row .sw{margin-right:6px;}
   .sms-box .row .m.off{color:var(--ink-3,#9096A0);text-decoration:line-through;}
-  .sms-box .sms-err{margin-top:6px;font-size:var(--fs-sm);color:#e5484d;}
+  .sms-box .sms-err{margin-top:6px;font-size:var(--fs-sm);color:var(--danger);}   /* 261029 수정 — 색값 대신 토큰 */
+  .fm-mails .mail-err{margin-top:6px;font-size:var(--fs-sm);color:var(--danger);}
+  :is(#ctMailIn,#fmMailIn,#ctSmsIn,#fmSmsIn).err,.fm-mails .row input.m-in.err{border-color:var(--danger)!important;box-shadow:var(--ring-danger)!important;}   /* 261029 추가 — 오류 입력칸 (팀장님 .pg-nm-field input.err 와 같은 모양) */ .fm-mails .mail-err:empty{display:none;}   /* 261029 추가 — 받는 메일 오류 (수신번호 추가 .sms-err 와 같은 모양) */
   .sms-box .sms-err:empty{display:none;}
   /* 261028 추가 — 잔여 포인트 줄 · 물음표 툴팁 */
   .sms-box .sms-pt{display:flex;align-items:center;gap:8px;margin-top:8px;padding:9px 10px;border-radius:var(--r-md);background:var(--bg-2);font-size:var(--fs-sm);font-weight:700;color:var(--ink-2);}   /* 「문자 알림」 줄과 8px 띄움 */
@@ -62284,6 +62289,8 @@ function ghvDemo(blk){
   /* 대시보드 값 자리 — 서버 연동 전 예시 */
   window.CL_SITE_SMS=window.CL_SITE_SMS||{admin:['01012345678'], sender:'0212345678', point:1250, dash:'https://www.creatorlink.net/notificationtalkmail'};   /* 261028 수정 — 「대시보드 알림 설정」 = 기존 편집기 관리자 수신번호 톱니와 같은 화면(대시보드 알림 > 문자/알림톡). 충전하기는 편집 화면 팝업(clChargeOpen) */
   var errMsg={ct:'',fm:''};
+  /* 261029 추가 — 수신번호 칸에 다시 쓰면 오류 글씨 · 빨간 테두리를 지운다 */
+  document.addEventListener('input',function(e){ var t=e.target; if(!t||(t.id!=='ctSmsIn'&&t.id!=='fmSmsIn')) return; var p=t.id.slice(0,2); if(!errMsg[p]) return; errMsg[p]=''; t.classList.remove('err'); var bx=document.getElementById(p+'SmsBox'), er=bx&&bx.querySelector('.sms-err'); if(er) er.textContent=''; });
   function cfg(p){ var f=window[p+'SmsCfg']; var c=f&&f(); if(!c) return null; if(typeof c.smsOn==='undefined') c.smsOn=true; if(!Array.isArray(c.sms)) c.sms=[]; if(!Array.isArray(c.smsOff)) c.smsOff=[]; return c; }
   function norm(v){ v=String(v||'').trim(); var plus=v.charAt(0)==='+'; v=v.replace(/[^0-9]/g,'').slice(0,15); return (plus?'+':'')+v; }
   function show(n){ if(n.charAt(0)==='+') return n; if(/^02/.test(n)) return n.replace(/^(02)(\d{3,4})(\d{4})$/,'$1-$2-$3'); return n.replace(/^(\d{3})(\d{3,4})(\d{4})$/,'$1-$2-$3'); }
@@ -62307,7 +62314,7 @@ function ghvDemo(blk){
       :'<div class="mtk-hint" style="margin-top:6px;">대시보드에 등록된 번호가 없습니다.</div>';
     h+='<div class="sms-h"><span>수신번호 추가 '+tip('smsTipAdd')+'</span><span class="cnt">'+c.sms.length+'/'+MAX+'</span></div>';
     h+=c.sms.map(function(n,i){ return '<div class="row"><span class="m">'+esc(show(n))+'</span><button type="button" class="mt-imgdel" title="삭제" aria-label="삭제" onclick="clSmsDel(\''+p+'\','+i+')">'+DEL+'</button></div>'; }).join('');
-    h+='<div class="add"><input type="tel" id="'+p+'SmsIn" placeholder="번호를 입력해 주세요." autocomplete="off" spellcheck="false"'+(full?' disabled':'')+' oninput="this.value=this.value.replace(/[^0-9+\-\s]/g,\'\')" onkeydown="if(event.key===\'Enter\'){event.preventDefault();clSmsAdd(\''+p+'\');}"><button type="button" class="btn-sm"'+(full?' disabled':'')+' onclick="clSmsAdd(\''+p+'\')">'+PLUS+'추가</button></div>';
+    h+='<div class="add"><input type="tel" id="'+p+'SmsIn"'+(errMsg[p]?' class="err"':'')+' placeholder="번호를 입력해 주세요." autocomplete="off" spellcheck="false"'+(full?' disabled':'')+' oninput="this.value=this.value.replace(/[^0-9+\-\s]/g,\'\')" onkeydown="if(event.key===\'Enter\'){event.preventDefault();clSmsAdd(\''+p+'\');}"><button type="button" class="btn-sm"'+(full?' disabled':'')+' onclick="clSmsAdd(\''+p+'\')">'+PLUS+'추가</button></div>';
     h+='<div class="sms-err">'+esc(errMsg[p]||'')+'</div>';
     h+='<div class="sms-h"><span>발신번호 '+tip('smsTipSender')+'</span></div><div class="row"><span class="m'+(S.sender?'':' off')+'" style="text-decoration:none;">'+(S.sender?esc(show(norm(S.sender))):'등록된 발신번호가 없습니다.')+'</span></div>';
     /* 261028 수정 — 아래 긴 안내 문구는 물음표로 옮기고 뺌. 충전하기 = 편집 화면 「포인트 충전」 팝업(clChargeOpen) */
@@ -62334,19 +62341,22 @@ function ghvDemo(blk){
   /* 261028 추가 — 받는 메일 주소 수정 (기존 편집기 「이메일 주소 설정」의 연필 버튼과 같은 기능 · 컨택트 ct · 폼 fm 공통)
      연필 → 그 줄이 입력칸으로 바뀜. Enter · 입력칸 밖 클릭 = 저장, Esc = 취소. 형식 · 중복 확인은 추가할 때와 같고 순서는 그대로 */
   var PEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>';
+  /* 261029 추가 — 받는 메일 오류 문구 (칸 아래 빨간 글씨 · 컨택트 ct / 폼 fm). 빈 글이면 지움. 입력칸에 다시 쓰면 자동으로 지운다 */
+  window.clMailErr=function(p,m){ var e=document.getElementById(p+'MailErr'); if(e) e.textContent=m||''; var i=document.getElementById(p+'MailIn'); if(i) i.classList.toggle('err',!!m&&!document.querySelector('#'+p+'MailList input.m-in')); var mi=document.querySelector('#'+p+'MailList input.m-in'); if(mi) mi.classList.toggle('err',!!m); };   /* 261029 — 오류면 해당 입력칸(추가 칸 또는 수정 중인 칸) 테두리 빨강 */
+  document.addEventListener('input',function(e){ var t=e.target; if(t&&(t.id==='ctMailIn'||t.id==='fmMailIn')) clMailErr(t.id.slice(0,2),''); else if(t&&t.classList&&t.classList.contains('m-in')){ var bx=t.closest('#ctMailBox,#fmMailBox'); if(bx) clMailErr(bx.id.slice(0,2),''); } });
   window.clMailEdBtn=function(p,i){ return '<button type="button" class="mt-imgdel ml-ed" title="수정" aria-label="수정" onclick="clMailEdit(\''+p+'\','+i+',this)">'+PEN+'</button>'; };
   window.clMailEdit=function(p,i,btn){
     var c=cfg(p), row=btn&&btn.closest('.row'), sp=row&&row.querySelector('.m'); if(!c||!sp||!Array.isArray(c.mails)) return;
     var old=c.mails[i], done=false, inp=document.createElement('input');
     inp.type='email'; inp.className='m-in'; inp.value=old; inp.spellcheck=false; inp.autocomplete='off';
-    function resync(){ var f=window[p+'MailSync']; if(typeof f==='function') f(); }
-    function toast(m){ if(typeof clToast==='function') clToast(m); else if(typeof showToast==='function') showToast(m); }
+    function resync(){ clMailErr(p,''); var f=window[p+'MailSync']; if(typeof f==='function') f(); }   /* 저장 · 취소로 수정이 끝나면 오류 글씨도 지움 */
+    function toast(m){ clMailErr(p,m); }   /* 261029 수정 — 토스트 대신 칸 아래 빨간 글씨 */
     function commit(){
       if(done) return; var v=String(inp.value||'').trim();
       if(v===old || !v){ done=true; resync(); return; }   /* 그대로이거나 비우면 원래 주소로 */
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ toast('메일 주소 형식이 아닙니다.'); inp.focus(); return; }
       if(c.mails.some(function(m,k){ return k!==i && m===v; })){ toast('이미 있는 주소입니다.'); inp.focus(); return; }
-      done=true; c.mails[i]=v; dirty(); resync();
+      done=true; c.mails[i]=v; clMailErr(p,''); dirty(); resync();
     }
     inp.addEventListener('keydown',function(e){
       if(e.key==='Enter'){ e.preventDefault(); commit(); }
