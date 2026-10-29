@@ -2570,12 +2570,28 @@
   .fm-i.fm-selr{pointer-events:auto;cursor:pointer;}
   .fm-i.fm-selr > span{color:var(--fmic);} .fm-i.fm-selr.ph > span{color:var(--fmdc);}
   .fm-selw.open .fm-selr svg{transform:rotate(180deg);}
+  .fm-datew.open .fm-selr svg{transform:none;}   /* 261029 추가 — 달력 아이콘은 열어도 뒤집지 않는다 (화살표만) */
   .fm-selpop{display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:5;box-sizing:border-box;max-height:212px;overflow:auto;padding:5px;background:#fff;color:#23272e;border:1px solid var(--fmbd);border-radius:var(--fmr);box-shadow:0 8px 24px rgba(0,0,0,.12);font:inherit;text-align:left;}
   .fm-wrap[data-is="line"] .fm-selpop{border-color:#d5d9e0;border-radius:4px;}
   .fm-selw.open .fm-selpop{display:block;}
   .fm-selpop button{display:block;width:100%;box-sizing:border-box;padding:8px 10px;border:0;border-radius:4px;background:transparent;color:inherit;font:inherit;font-size:14px;text-align:left;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .fm-selpop button:hover{background:#f3f5f8;} .fm-selpop button.on{color:var(--fmac);font-weight:700;}
   .fm-selpop .none{padding:8px 10px;font-size:13px;color:#9aa0a8;}
+  .fm-selpop{scrollbar-width:thin;scrollbar-color:#cdd2d9 transparent;}   /* 261029 추가 — 시 · 분 등 긴 목록: OS 기본 스크롤바(위아래 화살표) 대신 얇게 */
+  .fm-selpop::-webkit-scrollbar{width:8px;} .fm-selpop::-webkit-scrollbar-button{display:none;height:0;} .fm-selpop::-webkit-scrollbar-thumb{background:#cdd2d9;border-radius:4px;border:2px solid #fff;}
+  /* 261029 추가 — 날짜 달력 팝업 (목록 팝업 .fm-selpop 과 같은 상자) */
+  .fm-calpop{right:auto;width:244px;max-height:none;padding:10px;}
+  .fm-calpop .cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;font-size:13.5px;}
+  .fm-calpop .cal-h b{font-weight:700;}
+  .fm-calpop button.cal-nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}   /* 261029 수정 — 글자 ‹ › 대신 목록 화살표와 같은 선 아이콘 */
+  .fm-calpop button.cal-nav{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:0;font-size:18px;line-height:1;text-align:center;}
+  .fm-calpop .cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+  .fm-calpop .cal-g span{padding:4px 0;font-size:11px;text-align:center;color:#9aa0a8;}
+  .fm-calpop .cal-g button{display:flex;align-items:center;justify-content:center;height:30px;padding:0;font-size:12.5px;text-align:center;}
+  .fm-calpop .cal-g button.today{box-shadow:inset 0 0 0 1px #d5d9e0;}
+  .fm-calpop .cal-g button.on{background:var(--fmac);color:var(--fmab);font-weight:700;}
+  .fm-selw.up .fm-selpop{top:auto;bottom:calc(100% + 4px);}   /* 261029 수정 — 아래 공간이 모자랄 때만 위로 연다 (fmSelDir · 화면 하단 고정 띠 등). 전엔 띠는 늘 위로 열려 맨 위 띠에서 머리글 뒤로 숨었다 */
+  .ct-strip .fm-f[data-t="datetime"]{flex:2.6 1 300px;} .ct-strip .fm-dt{gap:6px;}   /* 띠의 날짜/시간은 칸 3개라 더 넓게 */
   .fm-pv .fm-i.fm-selr{pointer-events:none;}
   /* 260929 추가 — 글·장문 입력칸은 캔버스에서 실제로 타이핑해 볼 수 있다 (참조 편집기와 같은 매너). 값은 어디에도 저장하지 않고 다시 그리면 비워진다 */
   input.fm-i,textarea.fm-i{pointer-events:auto;cursor:text;}
@@ -3875,6 +3891,21 @@
      ═════════════════════════════════════════════════════════════════ */
   .blk.ct-blk{padding:0;}
   .blk.ct-blk[data-fix="1"]{position:sticky;bottom:0;z-index:30;}
+  /* 261029 추가 — 다른 페이지에 붙는 하단 고정 바 사본: 고칠 수 없고 누르면 원래 블럭으로 */
+  .ct-fixclone{position:sticky;bottom:0;z-index:30;cursor:pointer;container-type:inline-size;}
+  .ct-fixclone .ct-wrap{pointer-events:none;}
+  /* 261029 수정 — 하단 고정 배지: 블럭 이름 배지(.tag-badge) 옆에 같은 자리 · 모양으로 (기존 편집기 「하단 고정블럭 설정됨」 태그). 사본은 이름 배지가 없어 왼쪽 끝 */
+  .ct-fixtag{position:absolute;top:0;left:calc(var(--tbw,0px) + 4px);z-index:6;display:none;align-items:center;gap:4px;padding:3px 9px;border-radius:0 0 8px 8px;background:var(--green-soft);color:var(--green-text);box-shadow:inset 0 0 0 1px var(--green-line);font-size:11px;font-weight:700;white-space:nowrap;pointer-events:none;}
+  .ct-fixclone .ct-fixtag{left:0;border-radius:0 0 8px 0;}
+  .ct-fixtag svg{width:11px;height:11px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+  .blk:hover > .ct-fixtag,.ct-fixclone:hover > .ct-fixtag{display:inline-flex;}
+  @media (hover:none){ .blk.sel > .ct-fixtag{display:inline-flex;} }
+  html.pview #stage .ct-fixtag{display:none !important;}
+  /* 261029 추가 — 상담 신청 띠의 CAPTCHA: 동의 줄과 같은 두 번째 줄에 작게 */
+  .ct-strip .fm-extra{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;}
+  .ct-strip .fm-cap{margin:0;gap:8px;}
+  .ct-strip .fm-capimg{width:84px;height:32px;}
+  .ct-strip .fm-cap .fm-i{max-width:130px;height:32px;min-height:0;}
   .ct-wrap{position:relative;container-type:inline-size;font-family:var(--ctf);color:var(--ctic);
     --ctf:'CreatorlinkSansKR',sans-serif;--cttc:#1c1f24;--ctlc:#5b6270;--ctdc:#9aa0a8;--ctic:#23272e;--ctac:#23272e;--ctab:#ffffff;
     --ctln:#e6e8ec;--ctcb:#ffffff;--ctpv:72px;--ctmw:1140px;--ctts:22px;--ctr:6px;--ctmh:420px;}
@@ -13915,6 +13946,8 @@
       </div>
       <!-- 260929 추가 — 컨택트/지점 블럭 설정 (CONTACT01~18 · 접두어 ct). 구역마다 data-k 로 어느 용도(map form branch strip)에 보일지 적는다 -->
       <div id="bsetCt" style="display:none;" data-acc-init="1">
+        <!-- 261029 수정 — 화면 하단 고정: 안내 문구 섹션 → 설정 맨 위 한 줄 (블럭 전체 배치라서 · 기존 편집기도 블럭설정 위쪽에 따로) -->
+        <div class="fld" id="ctFixFld" data-k="strip"><div class="fld-h ct-fix-h"><span>화면 하단 고정 <i class="st-help" data-tip="스크롤해도 화면 아래에 붙어 있고, 사이트의 모든 페이지에 보입니다. 하단 고정은 상담 신청 블럭 하나만 됩니다. 다른 페이지에서 보이는 고정 바를 누르면 원래 블럭으로 이동합니다."></i></span><button type="button" class="sw" id="ctFixSw" onclick="ctSw(this,'fix'); ctFixOne();"></button></div></div>
 
         <div class="fld sfold open acc-flush" id="ctFieldAcc" data-k="form strip">
           <div class="fld-h fold-h" onclick="smAcc(this)">입력 항목 <span class="n" id="ctFieldCount"></span><span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
@@ -13992,7 +14025,6 @@
               <button type="button" class="mt-seg-b active" data-m="stack" onclick="ctSeg('leadL','ctLeadSeg','stack')">두 줄</button>
               <button type="button" class="mt-seg-b" data-m="row" onclick="ctSeg('leadL','ctLeadSeg','row')">한 줄</button>
             </div>
-            <div class="sline"><span class="lbl">화면 하단 고정 <i class="st-help" data-tip="스크롤해도 화면 아래에 붙어 있습니다. 게시 화면과 편집 화면 모두 같습니다."></i></span><button type="button" class="sw" id="ctFixSw" onclick="ctSw(this,'fix')"></button></div>
           </div></div>
         </div>
 
@@ -14099,6 +14131,8 @@
             <div class="sline" id="ctIpRow"><span class="lbl">단일IP 중복차단 <i class="st-help" data-tip="같은 IP에서 1분 안에 3번 연달아 보내면 10분 동안 보낼 수 없게 막습니다."></i></span><button type="button" class="sw" id="ctIpSw" onclick="ctSw(this,'ipBlock')"></button></div>
             <div class="sline" id="ctCapRow"><span class="lbl">CAPTCHA <i class="st-help" data-tip="보내기 전에 보안문자를 입력하게 해 자동 등록(스팸)을 막습니다."></i></span><button type="button" class="sw" id="ctCapSw" onclick="ctSw(this,'captcha')"></button></div>
             <div class="mtk-hint" style="margin-top:10px;">응답은 사이트 게시 뒤 대시보드 「폼 응답」(상담 신청은 「상담신청 응답」)에서 확인합니다.</div>
+            <button type="button" class="ct-resp-lk" id="ctRespLk" onclick="ctRespOpen()">상담신청 응답 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></button>   <!-- 261029 추가 — 기존 편집기 「상담신청 응답 보기」(상담 신청 띠에서만) · 설정창 초록 글자 링크(「대시보드 알림 설정」)와 같은 모양 -->
+
           </div></div>
         </div>
 
@@ -20849,7 +20883,8 @@
     if(id!=='home' && PGX_PAGES[id] && PGX_PAGES[id].seed && !PGX_PAGES[id].seeded) try{ pgxSeed(site.querySelector(':scope > .pgx-page'), id); }catch(x){ try{ console.warn('[pgx] seed',x); }catch(_){} }   /* 261005 추가 — 처음 여는 견본 페이지에 블럭을 심는다 (.pgx-sub 가 붙은 뒤여야 pgxBlkHost 가 이 페이지를 부모로 잡는다) */
     if(typeof tmRender==='function') try{ tmRender(); }catch(x){ try{ console.warn('[tm] render',x); }catch(_){} }
     if(typeof gdRender==='function') try{ gdRender(); }catch(x){ try{ console.warn('[gd] render',x); }catch(_){} }
-    if(typeof hdApply==='function') try{ hdApply(); if(typeof hdFill==='function') hdFill(); }catch(x){}   /* 261026 추가 — 겹치기는 페이지마다(HD.overlap.pg) */   /* 261006 추가 — 상세 페이지면 타이틀·하단을 붙이고, 아니면 걷어낸다 */
+    if(typeof hdApply==='function') try{ hdApply(); if(typeof hdFill==='function') hdFill(); }catch(x){}   /* 261026 추가 — 겹치기는 페이지마다(HD.overlap.pg) */
+    if(typeof ctFixMirror==='function') try{ ctFixMirror(); }catch(x){}   /* 261029 추가 — 하단 고정 상담 신청 바를 모든 페이지에 */   /* 261006 추가 — 상세 페이지면 타이틀·하단을 붙이고, 아니면 걷어낸다 */
     /* 261001 추가 — 이 페이지가 탭메뉴에 속하면 맨 위에 탭메뉴 블럭 (여기서 오류가 나도 아래 페이지 전환 마무리는 계속) */
     pgxNavMark(); if(typeof renderSubPages==='function') renderSubPages();   /* 260921 추가 — 페이지 구역의 현재 표시 */
     /* 260920 추가 — 화면 가득 블럭의 높이 변수 · 다시 붙인 배경 동영상 재생(DOM 에서 떼면 멈춘다) · 새 블럭의 + 바 롤오버 바인딩 */
@@ -43822,21 +43857,39 @@ global.PolyFX = API;
       h+='<div class="fm-selw"><div class="fm-i fm-sel fm-selr ph" data-ph="'+_mtAttr(ph||'선택하세요')+'" onclick="if(window.fmSelOpen)fmSelOpen(this,event)"><span>'+rsEsc(ph||'선택하세요')+'</span>'+FM_I.chev+'</div>'
         +'<div class="fm-selpop">'+(opts.length?opts.map(function(o,i){ return '<button type="button" tabindex="-1" onclick="if(window.fmSelPick)fmSelPick(this,event)">'+rsEsc(o)+'</button>'; }).join(''):'<div class="none">선택지를 입력하세요</div>')+'</div></div>';
     }
-    else if(t==='date') h+='<div class="fm-i fm-sel"><span>'+rsEsc(ph||'YYYY-MM-DD')+'</span>'+FM_I.cal+'</div>';
-    else if(t==='datetime') h+='<div class="fm-dt"><div class="fm-i fm-sel"><span>'+rsEsc(ph||'YYYY-MM-DD')+'</span>'+FM_I.cal+'</div><div class="fm-i fm-sel"><span>00시</span>'+FM_I.chev+'</div><div class="fm-i fm-sel"><span>00분</span>'+FM_I.chev+'</div></div>';
+    /* 261029 수정 — 날짜는 누르면 달력, 시 · 분은 목록처럼 선택지가 열린다 (미리보기 · 캔버스에서 확인용, 고른 값은 저장하지 않는다 · 모양은 그대로) */
+    else if(t==='date') h+=fmDateBox(ph);
+    else if(t==='datetime') h+='<div class="fm-dt">'+fmDateBox(ph)+fmPickBox('00시',FM_HH)+fmPickBox('00분',FM_MM)+'</div>';
     else if(t==='file') h+='<div class="fm-i fm-file">'+FM_I.clip+'<span>'+rsEsc(ph||'파일을 선택하거나 끌어다 놓으세요')+'</span></div>';
     else h+='<input class="fm-i" type="'+fmInputType(f.l)+'" placeholder="'+_mtAttr(ph)+'" autocomplete="off">';   /* 260929 수정 — 캔버스에서 바로 타이핑해 볼 수 있게 (값은 저장하지 않는다) */
     return h+'</div>';
   }
   /* 260929 추가 — 목록 미리보기 펼침창: 캔버스에서 선택지를 눌러 볼 수 있다. 고른 값은 어디에도 저장하지 않는다 (다시 그리면 예시글로 돌아감) */
   function fmSelClose(){ document.querySelectorAll('.fm-selw.open').forEach(function(w){ w.classList.remove('open'); }); }
-  function fmSelOpen(el,e){ if(e) e.stopPropagation(); var w=el.parentElement, was=w.classList.contains('open'); fmSelClose(); if(!was) w.classList.add('open'); }
+  function fmSelOpen(el,e){ if(e) e.stopPropagation(); var w=el.parentElement, was=w.classList.contains('open'); fmSelClose(); if(!was){ w.classList.add('open'); fmSelDir(w); } }
+  /* 261029 추가 — 펼친 목록 · 달력이 화면 아래로 넘치면 위로 연다 (위 공간이 더 넓을 때만) */
+  function fmSelDir(w){ var pop=w.querySelector('.fm-selpop'); if(!pop) return; w.classList.remove('up'); var r=w.getBoundingClientRect(), h=pop.offsetHeight, vh=window.innerHeight||document.documentElement.clientHeight; var below=vh-r.bottom, above=r.top; w.classList.toggle('up', below<h+8 && above>below); }
   function fmSelPick(el,e){
     if(e) e.stopPropagation(); var w=el.closest('.fm-selw'); if(!w) return; var box=w.querySelector('.fm-selr'), sp=box&&box.querySelector('span');
     w.querySelectorAll('.fm-selpop button').forEach(function(b){ b.classList.toggle('on',b===el); });
     if(sp) sp.textContent=el.textContent; if(box) box.classList.remove('ph'); w.classList.remove('open');
   }
   document.addEventListener('click',function(){ fmSelClose(); });
+  /* 261029 추가 — 날짜 달력 · 시분 선택 (컨택트 · 폼 블럭 공통 fmFieldHTML) */
+  var FM_HH=[], FM_MM=['00분','10분','20분','30분','40분','50분']; for(var _h=0;_h<24;_h++) FM_HH.push((_h<10?'0':'')+_h+'시');
+  function fmDateBox(ph){ return '<div class="fm-selw fm-datew"><div class="fm-i fm-sel fm-selr ph" onclick="if(window.fmCalOpen)fmCalOpen(this,event)"><span>'+rsEsc(ph||'YYYY-MM-DD')+'</span>'+FM_I.cal+'</div><div class="fm-selpop fm-calpop" onclick="event.stopPropagation()"></div></div>'; }
+  function fmPickBox(lb,opts){ return '<div class="fm-selw"><div class="fm-i fm-sel fm-selr" onclick="if(window.fmSelOpen)fmSelOpen(this,event)"><span>'+lb+'</span>'+FM_I.chev+'</div><div class="fm-selpop">'+opts.map(function(o){ return '<button type="button" tabindex="-1" onclick="if(window.fmSelPick)fmSelPick(this,event)">'+o+'</button>'; }).join('')+'</div></div>'; }
+  function fmCalDraw(w){
+    var pop=w.querySelector('.fm-calpop'); if(!pop) return; var y=w._y, m=w._m, first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate(), t=new Date(), h='';
+    h+='<div class="cal-h"><button type="button" class="cal-nav" onclick="fmCalMove(this,-1)" aria-label="이전 달"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><b>'+y+'년 '+(m+1)+'월</b><button type="button" class="cal-nav" onclick="fmCalMove(this,1)" aria-label="다음 달"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div><div class="cal-g">';
+    ['일','월','화','수','목','금','토'].forEach(function(d){ h+='<span>'+d+'</span>'; });
+    for(var i=0;i<first;i++) h+='<i></i>';
+    for(var d=1;d<=days;d++){ var v=y+'-'+(m<9?'0':'')+(m+1)+'-'+(d<10?'0':'')+d, cls=(v===w._v?'on':'')+((y===t.getFullYear()&&m===t.getMonth()&&d===t.getDate())?' today':''); h+='<button type="button" class="'+cls+'" onclick="fmCalPick(this,\''+v+'\')">'+d+'</button>'; }
+    pop.innerHTML=h+'</div>';
+  }
+  window.fmCalOpen=function(el,e){ if(e) e.stopPropagation(); var w=el.parentElement, was=w.classList.contains('open'); fmSelClose(); if(was) return; var b=w._v?new Date(w._v):new Date(); w._y=b.getFullYear(); w._m=b.getMonth(); fmCalDraw(w); w.classList.add('open'); fmSelDir(w); };
+  window.fmCalMove=function(btn,n){ var w=btn.closest('.fm-selw'); w._m+=n; if(w._m<0){ w._m=11; w._y--; } if(w._m>11){ w._m=0; w._y++; } fmCalDraw(w); };
+  window.fmCalPick=function(btn,v){ var w=btn.closest('.fm-selw'), box=w.querySelector('.fm-selr'), sp=box&&box.querySelector('span'); w._v=v; if(sp) sp.textContent=v; if(box) box.classList.remove('ph'); w.classList.remove('open'); };
   function fmInnerHTML(c){
     var lay=c.layout||'plain', side='';
     if(lay==='img') side='<div class="fm-side fm-img'+(c.img?'':' empty')+'"'+(c.img?' style="background-image:url(&quot;'+_mtAttr(c.img)+'&quot;)"':'')+'></div>';
@@ -47779,7 +47832,7 @@ global.PolyFX = API;
     pv:72, mw:1140, r:6
   };
   var CT_MAX_F=12, CT_MAX_BR=30, CT_MAX_INFO=8, CT_MAIL_MAX=5;
-  var CT_TYPES=[['text','단문'],['memo','장문'],['select','목록']];
+  var CT_TYPES=[['text','단문'],['memo','장문'],['select','목록'],['date','날짜'],['datetime','날짜/시간']];   /* 261029 수정 — 날짜 · 날짜/시간 추가 (기존 편집기 상담 신청 · 폼 블럭과 같음) */
   var CT_TYPE_SHORT={text:'단문',memo:'장문',select:'목록'};
   function ctF(l,t,o){ var f={t:t||'text', l:l, d:'', p:l, req:true, opts:[]}; if(o){ for(var k in o) f[k]=o[k]; } return f; }
   var CT_INFO_A=[{h:'Address', t:'서울특별시 강남구\n학동로 19길'},{h:'Email us', t:'이메일 : support@kantu.com'},{h:'Call us', t:'전화번호 : +82 (0) 10 1234 5678\n월-금 : 9:00 AM to 6:00 PM'}];
@@ -47886,7 +47939,7 @@ global.PolyFX = API;
   function ctFormHTML(c,strip){
     var extra='';
     if(c.privacy) extra+='<label class="fm-priv"><span class="fm-ob check"></span>개인정보'+(strip?'수집 동의':' 수집 및 이용에 동의합니다.')+'<u>'+(strip?'[보기]':'내용 보기')+'</u></label>';
-    if(!strip && c.captcha && typeof FM_I!=='undefined') extra+='<div class="fm-cap"><span class="fm-capimg">'+FM_I.cap+'</span><div class="fm-i fm-capin"><span>보안문자</span></div></div>';
+    if(c.captcha && typeof FM_I!=='undefined') extra+='<div class="fm-cap"><span class="fm-capimg">'+FM_I.cap+'</span><div class="fm-i fm-capin"><span>보안문자</span></div></div>';
     var fields=c.fields.map(function(f){ var ff=ctClone(f); if(strip){ ff.d=''; if(!ff.p) ff.p=ff.l; } return (typeof fmFieldHTML==='function')?fmFieldHTML(ff):''; }).join('');
     return '<div class="fm-wrap" data-is="'+ctEsc(c.is||'box')+'" data-ba="'+(strip?'left':ctEsc(c.ba||'left'))+'" data-bs="'+ctEsc(c.bs||'fill')+'" style="'+ctFmVars(c)+'">'
       +'<div class="fm-fields">'+fields+'</div>'
@@ -48001,6 +48054,9 @@ global.PolyFX = API;
     wrap.style.cssText=ctStyleStr(c);
     wrap.setAttribute('data-ta',c.ta||'left'); wrap.setAttribute('data-k',c.kind||'form');
     if(c.kind==='strip' && c.fix) blk.setAttribute('data-fix','1'); else blk.removeAttribute('data-fix');
+    ctFixTag(blk, c.kind==='strip' && !!c.fix, '하단 고정');   /* 261029 추가 — 마우스를 올리면 이름 배지 옆에 「하단 고정」 */
+    if(c.kind==='strip' && typeof ctFixMirror==='function') setTimeout(ctFixMirror,0);   /* 261029 추가 — 다른 페이지용 고정 바 사본 갱신 */
+    if(c.kind==='strip' && typeof ctStripWrap==='function') setTimeout(function(){ ctStripWrap(blk); },0);   /* 261029 추가 — 줄바꿈이면 동의 · CAPTCHA 를 버튼 위로 */
     var sigH=JSON.stringify([c.title,c.desc,c.titleH,c.descH]);
     var sig=JSON.stringify([c.kind,c.layout,ctVis(c,'title'),ctVis(c,'desc'),c.fields,c.btnT,c.privacy,c.captcha,c.info,c.map,c.branches,c.srRegion,c.srKw,c.srPh,c.lead,c.phone,c.leadL,c.ba,c.bs,c.is,blk._ctSel,blk._ctQ]);
     if(blk.classList.contains('rt-editing') && blk._ctSig===sig && wrap.firstElementChild){ blk._ctSigH=sigH; }   /* 261022 — 글 편집 중 */
@@ -48160,6 +48216,50 @@ global.PolyFX = API;
     var cardOff=!m.card;   /* 장소명 · 상세내용은 장소 카드 안에 보이므로 카드가 꺼져 있으면 비활성 (누르면 「장소 카드 켜기」 안내) */
     off('ctMapPlace',S.t==='emb'||glLive||cardOff); off('ctMapDesc',S.t==='emb'||glLive||cardOff); off('ctMapCardSw',S.t==='emb'||glLive); off('ctMapZmSw',glLive); off('ctMapZoom',S.t==='emb'&&S.fixed);   /* 링크 지도는 장소 카드 · 장소명이 없고, 퍼가기 코드는 확대도 코드에 들어 있다 */
   }
+  /* 261029 추가 — 상담 신청 하단 고정 (기존 편집기와 같은 규칙)
+     · 고정은 사이트 전체에서 상담 신청 블럭 하나만 — 하나를 켜면 다른 블럭의 고정은 풀고 알린다
+     · 모든 페이지에 보인다 — 원래 블럭이 지금 화면에 없으면(다른 페이지) 그 모습을 사본(.ct-fixclone)으로 페이지 아래에 붙인다.
+       사본은 고칠 수 없고, 누르면 원래 블럭이 있는 페이지로 가서 그 블럭을 고른다 */
+  /* 261029 추가 — 상담 신청 띠 줄바꿈 감지: 보내기 버튼이 첫 칸과 다른 줄로 내려가면 .wrapd → 동의 · CAPTCHA 를 버튼 위로. 폭이 바뀌면 다시 잰다 */
+  window.ctStripWrap=function(blk){
+    var fw=blk&&blk.querySelector('.ct-strip .fm-wrap'); if(!fw) return;
+    var f=fw.querySelector('.fm-f'), a=fw.querySelector('.fm-act'); if(!f||!a){ fw.classList.remove('wrapd'); return; }
+    fw.classList.remove('wrapd'); var on=a.getBoundingClientRect().top > f.getBoundingClientRect().top+4; fw.classList.toggle('wrapd',on);
+    if(window.ResizeObserver && !fw._ctRo){ fw._ctRo=new ResizeObserver(function(){ if(fw._ctRaf) return; fw._ctRaf=requestAnimationFrame(function(){ fw._ctRaf=0; ctStripWrap(blk); }); }); fw._ctRo.observe(fw.parentElement||fw); }
+  };
+  function ctAllBlks(){
+    var a=[].slice.call(document.querySelectorAll('#stage .blk[data-block="ctblk"]'));
+    if(typeof pgxKeep!=='undefined') Object.keys(pgxKeep).forEach(function(k){ var pg=pgxKeep[k]; if(pg && !pg.isConnected) [].slice.call(pg.querySelectorAll('.blk[data-block="ctblk"]')).forEach(function(b){ a.push(b); }); });
+    return a;
+  }
+  function ctFixPage(b){ if(typeof pgxKeep!=='undefined') for(var k in pgxKeep){ if(pgxKeep[k] && pgxKeep[k].contains(b)) return k; } return 'home'; }
+  function ctFixOne(){
+    if(!ctCurBlk) return; var c=ctCfg(ctCurBlk);
+    if(c.fix){ var n=0; ctAllBlks().forEach(function(b){ if(b===ctCurBlk) return; var o=ctCfg(b); if(o.kind==='strip' && o.fix){ o.fix=false; ctApply(b); n++; } }); if(n) clToast('하단 고정은 상담 신청 블럭 하나만 됩니다. 다른 블럭의 고정을 풀었습니다.'); }
+    ctFixMirror();
+  }
+  /* 261029 추가 — 하단 고정 배지. 이름 배지는 평소 숨어 있어 잠깐 보이게 해 너비를 재고 그 옆에 둔다 */
+  function ctFixTag(el,on,txt){
+    var t=el.querySelector(':scope > .ct-fixtag');
+    if(!on){ if(t) t.remove(); return; }
+    if(!t){ t=document.createElement('span'); t.className='ct-fixtag'; el.appendChild(t); }
+    t.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 17v5"/><path d="M9 3h6l-1 6 3 3v2H7v-2l3-3z"/></svg>'+txt;
+    var bd=el.querySelector(':scope > .tag-badge');
+    if(bd){ var d=bd.style.display; bd.style.display='block'; el.style.setProperty('--tbw',bd.offsetWidth+'px'); bd.style.display=d; }
+  }
+  window.ctFixMirror=function(){
+    document.querySelectorAll('#stage .ct-fixclone').forEach(function(x){ x.remove(); });
+    var own=null; ctAllBlks().some(function(b){ var o=ctCfg(b); if(o.kind==='strip' && o.fix){ own=b; return true; } return false; });
+    if(!own || (own.isConnected && own.offsetParent!==null)) return;   /* 원래 블럭이 지금 보이면 그 블럭 자체가 고정 바 */
+    var site=document.querySelector('#stage .site'), w=own.querySelector('.ct-wrap'); if(!site||!w) return;
+    var host=pgxBlkHost(site), cl=document.createElement('div'); cl.className='ct-fixclone'; cl.setAttribute('title','하단 고정된 상담 신청 바 — 누르면 원래 블럭으로 이동합니다.');
+    var oc=ctCfg(own); cl.style.backgroundColor=oc.bg||'#ffffff'; cl.innerHTML=w.outerHTML;   /* 배경색은 블럭 설정 값으로 */
+    ctFixTag(cl, true, '하단 고정 · 누르면 원래 블럭으로');
+    cl.addEventListener('click',function(e){ e.stopPropagation(); var pg=ctFixPage(own); if(typeof pgxGo==='function') pgxGo(pg); setTimeout(function(){ if(own.isConnected){ own.scrollIntoView({block:'center'}); if(typeof selectBlock==='function') selectBlock(own); } },400); });
+    var ft=(host===site)?site.querySelector(':scope > .site-ft'):null; if(ft) host.insertBefore(cl,ft); else host.appendChild(cl);
+  };
+  /* 261029 추가 — 상담신청 응답 보기 (기존 편집기: 대시보드 /consult). CL_SITE_DASH_URL 은 서버 연동 때 사이트 대시보드 주소로 */
+  window.ctRespOpen=function(){ var u=(window.CL_SITE_DASH_URL||'https://www.creatorlink.net/dashboard')+'/consult', w=window.clWinOpen||window.open; try{ w(u,'_blank','noopener'); }catch(x){} };
   /* 261029 추가 — 막힌 정렬 버튼을 누르면 안내 (값은 바꾸지 않는다) · 「제목 켜기」로 바로 풀기 */
   document.addEventListener('click',function(e){
     var b=e.target.closest&&e.target.closest('#ctTaSeg.dis .mt-seg-b'); if(!b||!ctCurBlk) return;
@@ -48221,7 +48321,8 @@ global.PolyFX = API;
     show('ctCwRow',k==='form'&&(lay==='plain'||lay==='bgcard'||lay==='2col'));
     show('ctLayoutHint',k==='form');
     show('ctCbRow',(k==='form'&&(lay==='2col'||lay==='bgcard'))||k==='branch');
-    show('ctCapRow',k!=='strip'); show('ctPrivTxtRow',!!c.privacy);
+    show('ctCapRow',true); show('ctPrivTxtRow',!!c.privacy);   /* 261029 수정 — 상담 신청 띠에도 CAPTCHA (기존 편집기와 같음) */
+    show('ctRespLk',k==='strip');   /* 261029 추가 — 상담신청 응답 보기 */
     show('ctTsRow',k!=='strip'); show('ctLsRow',k!=='branch');
     show('ctLnRow',k==='branch');   /* 261028 추가 — 선 색(--ctln)은 지점 찾기(검색칸 · 지점 카드 · 상세 구분선)에만 쓰인다. 종류는 블럭을 넣을 때 정해지고 바꿀 수 없어 다른 종류에서는 숨김 (입력칸 밑줄은 입력칸 > 테두리 색) */
     ['ctMailSw','ctSmsSw'].forEach(function(id){ var s=document.getElementById(id), q=s&&s.previousElementSibling&&s.previousElementSibling.querySelector('.help-ico,.st-help'); if(q) q.style.display=(k==='strip')?'':'none'; });   /* 261028 추가 — 기존 편집기처럼 이메일 · 문자 알림 물음표는 상담 신청 띠에서만 (폼 블럭은 항상) */
@@ -62261,6 +62362,12 @@ function ghvDemo(blk){
   .sms-box .sms-h .cnt{font-weight:400;color:var(--ink-3,#9096A0);}
   .sms-box .sms-lk{border:none;background:none;padding:0;font:inherit;font-size:var(--fs-sm);font-weight:400;color:var(--green);cursor:pointer;}
   .sms-box .sms-lk:hover{text-decoration:underline;}
+  #bsetCt #ctFixFld{margin:0;} #bsetCt .ct-fix-h{cursor:default;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;min-height:44px;padding:13px 24px;margin:0 -16px;border-top:1px solid var(--border,#e5e7eb);}   /* 261029 수정 — 아래 섹션 머리줄(입력 항목 등)과 같은 높이 · 여백 · 윗선 */ #bsetCt .ct-fix-h > span{display:inline-flex;align-items:center;gap:5px;}   /* 261029 추가 — 설정 맨 위 「화면 하단 고정」 한 줄 (접기 없음) */
+  /* 261029 추가 — 모바일에서 상담 신청 띠가 세로로 쌓이면 동의 · CAPTCHA 줄을 보내기 버튼 위로 (보내기 전에 할 일) */
+  .ct-strip .fm-wrap.wrapd .fm-extra{order:2;} .ct-strip .fm-wrap.wrapd .fm-act{order:3;}   /* 칸이 여러 줄로 넘어가면(항목이 많거나 폭이 좁을 때 · ctStripWrap) 동의 · CAPTCHA 를 보내기 버튼 위로. 한 줄 띠는 그대로 */
+  #bsetCt .ct-resp-lk{display:inline-flex;align-items:center;gap:4px;margin-top:6px;border:none;background:none;padding:0;font:inherit;font-size:var(--fs-sm);font-weight:400;color:var(--green);cursor:pointer;}   /* 261029 추가 — 상담신청 응답 보기 (.sms-lk 와 같은 초록 글자 링크 + 새 창 아이콘) */
+  #bsetCt .ct-resp-lk:hover{text-decoration:underline;}
+  #bsetCt .ct-resp-lk svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   .sms-box .row .sw{margin-right:6px;}
   .sms-box .row .m.off{color:var(--ink-3,#9096A0);text-decoration:line-through;}
   .sms-box .sms-err{margin-top:6px;font-size:var(--fs-sm);color:var(--danger);}   /* 261029 수정 — 색값 대신 토큰 */
