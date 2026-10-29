@@ -3983,8 +3983,9 @@
   .ct-br .ct-search.bar .sel,.ct-br .ct-search.bar .kw{flex:0 1 220px;}
   .ct-br .ct-search.bar .kw{flex-basis:260px;}
   .ct-br .ct-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:min(24px,3cqw);align-items:start;margin-top:20px;}
-  .ct-br[data-bl="mapl"] .ct-body{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);}
+  .ct-br[data-bl="mapl"] .ct-body{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:stretch;}   /* 261029 수정 — 오른쪽 열이 지도보다 길어지면 지도가 열 높이만큼 늘어나 아래 빈칸이 생기지 않게 */
   .ct-br[data-bl="mapl"] .ct-body .ct-map{order:-1;min-height:520px;}
+  .ct-wrap[data-pv0="1"] .ct-br[data-bl="mapl"] .ct-body .ct-map{margin-left:calc(min(48px,5cqw) * -1);border-radius:0;}   /* 261029 추가 — 지도 크게 + 위아래 여백 0: 지도가 위 · 아래에 붙으니 왼쪽 끝까지 붙여 꽉 채운다 (기존 편집기 CONTACT44). 경계에 붙는 면이라 라운딩도 뺀다 */
   .ct-br[data-bl="detail"] .ct-body{grid-template-columns:minmax(0,220px) minmax(0,1fr);}
   .ct-list{display:flex;flex-direction:column;gap:10px;max-height:var(--ctlh,560px);overflow:auto;scrollbar-width:thin;padding:2px;margin:-2px;}   /* 261029 수정 — 스크롤 상자라 선택한 지점의 바깥 강조선(1px)이 가장자리에서 잘렸다 → 안쪽 2px 여유, 바깥 위치는 음수 여백으로 그대로 */
   .ct-item{padding:14px 16px;border:1px solid var(--ctln);border-radius:var(--ctr);background:var(--ctcb);cursor:pointer;transition:border-color .12s,box-shadow .12s;}
@@ -4005,7 +4006,7 @@
   .ct-detail .memo{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--ctln);font-size:calc(var(--ctls,12.5px) + .5px);line-height:1.75;color:var(--ctlc);white-space:pre-line;}
   .ct-detail .mh{margin:28px 0 12px;font-size:15px;font-weight:700;color:var(--cttc);}
   .ct-br[data-bl="center"] .ct-head,.ct-br[data-bl="mapl"] .ct-head{margin-bottom:18px;}
-  .ct-br[data-bl="mapl"] .ct-side{min-width:0;}
+  .ct-br[data-bl="mapl"] .ct-side{min-width:0;padding:max(0px,calc(min(48px,5cqw) - var(--ctpv,0px))) 0;box-sizing:border-box;}   /* 261029 수정 — 지도 크게: 지도를 위아래 꽉 채우려고 블럭 여백이 0이라 제목이 위 경계에 붙었다 → 오른쪽 열만 좌우 여백과 같은 48px (블럭 위아래 여백을 올리면 그만큼 줄어 이중으로 벌어지지 않게) */
   /* 상담 신청 띠 */
   .ct-strip{display:flex;align-items:center;flex-wrap:wrap;gap:12px 28px;padding:18px min(36px,4cqw);box-sizing:border-box;max-width:var(--ctmw);margin:0 auto;}
   .ct-strip .lead{flex:none;display:flex;flex-direction:column;gap:2px;min-width:0;}
@@ -4031,6 +4032,7 @@
     .ct-in[data-l="2col"] .fm-fields{grid-template-columns:1fr;}
     .ct-br .ct-body,.ct-br[data-bl="mapl"] .ct-body,.ct-br[data-bl="detail"] .ct-body{grid-template-columns:1fr;}
     .ct-br[data-bl="mapl"] .ct-body .ct-map{order:0;min-height:320px;}
+    .ct-wrap[data-pv0="1"] .ct-br[data-bl="mapl"] .ct-body .ct-map{margin-left:0;border-radius:var(--ctr);}   /* 좁은 화면(위아래로 쌓임)에서는 붙이지 않는다 */
     .ct-list{max-height:none;} .ct-detail .top{grid-template-columns:1fr;}
     .ct-map{min-height:300px;}
     .ct-strip{padding:16px 20px;} .ct-strip .lead{width:100%;} .ct-strip .fm-f{flex-basis:100%;}
@@ -48062,6 +48064,7 @@ global.PolyFX = API;
     blk.style.padding='0';
     wrap.style.cssText=ctStyleStr(c);
     wrap.setAttribute('data-ta',c.ta||'left'); wrap.setAttribute('data-k',c.kind||'form');
+    wrap.setAttribute('data-pv0',txNum(c.pv,72)===0?'1':'0');   /* 261029 추가 — 위아래 여백 0 (지도 크게에서 지도를 왼쪽 끝까지) */
     if(c.kind==='strip' && c.fix) blk.setAttribute('data-fix','1'); else blk.removeAttribute('data-fix');
     ctFixTag(blk, c.kind==='strip' && !!c.fix, '하단 고정');   /* 261029 추가 — 마우스를 올리면 이름 배지 옆에 「하단 고정」 */
     if(c.kind==='strip' && typeof ctFixMirror==='function') setTimeout(ctFixMirror,0);   /* 261029 추가 — 다른 페이지용 고정 바 사본 갱신 */
@@ -48126,7 +48129,7 @@ global.PolyFX = API;
     var c=ctPresetCfg(preset), bm=String(c.bgImg||'').trim(), tmp={_ctCfg:c,_ctSel:0,_ctQ:null};
     c.map.live=false;
     var st=ctStyleStr(c)+'background-color:'+(c.bg||'#fff')+';'+((bm&&!ctIsVid(bm))?('background-image:url("'+bm.replace(/"/g,'%22')+'");'):'');
-    return '<div class="fm-pv"><div class="ct-wrap'+((bm&&c.bgGray)?' gray':'')+'" data-ta="'+(c.ta||'left')+'" data-k="'+c.kind+'" style="'+st+'">'+(bm?'<i class="fm-pvdim" style="opacity:'+(Math.max(0,Math.min(90,txNum(c.bgDim,0)))/100)+'"></i>':'')+ctInnerHTML(c,tmp)+'</div></div>';
+    return '<div class="fm-pv"><div class="ct-wrap'+((bm&&c.bgGray)?' gray':'')+'" data-ta="'+(c.ta||'left')+'" data-k="'+c.kind+'" data-pv0="'+(txNum(c.pv,72)===0?'1':'0')+'" style="'+st+'">'+(bm?'<i class="fm-pvdim" style="opacity:'+(Math.max(0,Math.min(90,txNum(c.bgDim,0)))/100)+'"></i>':'')+ctInnerHTML(c,tmp)+'</div></div>';
   }
   function baInsertCt(card){
     var stage=document.getElementById('stage');
