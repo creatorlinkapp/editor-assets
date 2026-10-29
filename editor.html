@@ -3986,7 +3986,7 @@
   .ct-br[data-bl="mapl"] .ct-body{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);}
   .ct-br[data-bl="mapl"] .ct-body .ct-map{order:-1;min-height:520px;}
   .ct-br[data-bl="detail"] .ct-body{grid-template-columns:minmax(0,220px) minmax(0,1fr);}
-  .ct-list{display:flex;flex-direction:column;gap:10px;max-height:var(--ctlh,560px);overflow:auto;scrollbar-width:thin;}
+  .ct-list{display:flex;flex-direction:column;gap:10px;max-height:var(--ctlh,560px);overflow:auto;scrollbar-width:thin;padding:2px;margin:-2px;}   /* 261029 수정 — 스크롤 상자라 선택한 지점의 바깥 강조선(1px)이 가장자리에서 잘렸다 → 안쪽 2px 여유, 바깥 위치는 음수 여백으로 그대로 */
   .ct-item{padding:14px 16px;border:1px solid var(--ctln);border-radius:var(--ctr);background:var(--ctcb);cursor:pointer;transition:border-color .12s,box-shadow .12s;}
   .ct-item:hover{border-color:color-mix(in srgb,var(--ctac) 50%,var(--ctln));}
   .ct-item.on{border-color:var(--ctac);box-shadow:0 0 0 1px var(--ctac);}
@@ -48332,7 +48332,15 @@ global.PolyFX = API;
     show('ctCwRow',k==='form'&&(lay==='plain'||lay==='bgcard'||lay==='2col'));
     show('ctLayoutHint',k==='form');
     show('ctCbRow',(k==='form'&&(lay==='2col'||lay==='bgcard'))||k==='branch');
-    var cbk=document.querySelector('#ctCbRow > .k'); if(cbk){ cbk.textContent=(k==='branch')?'지점 · 검색칸 색':'카드 배경'; cbk.style.width=(k==='branch')?'auto':''; }   /* 레이아웃 섹션엔 색 줄이 하나라 이름 칸 너비를 글자에 맞춘다 (74px 고정이면 3px 넘침) */   /* 261029 추가 — 지점 찾기에서는 지점 카드와 검색 입력칸 색을 함께 바꾼다 */
+    var cbk=document.querySelector('#ctCbRow > .k'); if(cbk){ cbk.textContent=(k==='branch')?'지점 · 검색칸 색':'카드 배경'; cbk.style.width=(k==='branch')?'80px':''; }   /* 74px 고정이면 3px 넘쳐 지점 찾기에서는 80px (아래 포인트 색과 색 칸 줄 맞춤) */
+    /* 261029 추가 — 지점 찾기: 버튼 색은 선택한 지점 테두리 · 전화번호 · 검색 띠 · 검색 버튼에 쓰이는 「포인트 색」이라 레이아웃의 지점 · 검색칸 색 아래로 옮긴다 (기존 편집기 「컬러: 지점 배경 · 포인트」). 다른 종류는 버튼 섹션 그대로 */
+    var bcIn=document.getElementById('ctBc'), bcRow=bcIn&&bcIn.closest('.srow'), cbRow=document.getElementById('ctCbRow'), bfgRow=document.getElementById('ctBfgRow'), bh=document.getElementById('ctBtnHint');
+    if(bcRow && cbRow && bfgRow){
+      if(k==='branch'){ if(cbRow.nextElementSibling!==bcRow) cbRow.after(bcRow); if(bh && bcRow.nextElementSibling!==bh) bcRow.after(bh); }
+      else { if(bfgRow.previousElementSibling!==bcRow) bfgRow.before(bcRow); }
+      var bck=bcRow.querySelector('.k'); if(bck){ bck.textContent=(k==='branch')?'포인트 색':'버튼 색'; bck.style.width=(k==='branch')?'80px':''; }
+      if(bh) bh.textContent='검색 버튼 · 선택한 지점 테두리 · 전화번호 · 검색 띠에 쓰입니다.';
+    }   /* 261029 추가 — 지점 찾기에서는 지점 카드와 검색 입력칸 색을 함께 바꾼다 */
     show('ctCapRow',true); show('ctPrivTxtRow',!!c.privacy);   /* 261029 수정 — 상담 신청 띠에도 CAPTCHA (기존 편집기와 같음) */
     show('ctRespLk',k==='strip');   /* 261029 추가 — 상담신청 응답 보기 */
     /* 261029 추가 — 지점 찾기: 버튼 라운딩은 쓰이는 곳이 없어 숨김(검색 버튼 모서리는 여백 > 라운딩). 검색 띠(가운데 · 상세)는 돋보기 아이콘이라 문구 비활성. 지점명 검색이 꺼지면 기본 메시지 비활성 */
