@@ -3938,7 +3938,7 @@
   #stage .blk[data-block="ctblk"] .ct-wrap .cred.rt-ph[data-ph]::after{opacity:.42;}
   html.mview #stage .blk[data-block="ctblk"] .ct-wrap .cred{outline-color:transparent !important;cursor:auto;}
   /* 빈 칸 자리표시는 고른 블럭에서만 — 안 고른 블럭에서는 빈 칸을 접는다 */
-  #stage .blk[data-block="ctblk"]:not(.sel):not(.rt-editing) .ct-wrap :is(.ct-title,.ct-desc):has(> .cred.rt-ph){display:none;}
+  #stage .blk[data-block="ctblk"]:not(.sel):not(.rt-editing) .ct-wrap :is(.ct-title,.ct-desc,.ct-detail .mh):has(> .cred.rt-ph){display:none;}   /* 261029 수정 — 상세의 지도 제목(.mh)도 같은 규칙 */
   #stage .blk[data-block="ctblk"]:not(.sel):not(.rt-editing) .ct-wrap .ct-head:not(:has(> div > .cred:not(.rt-ph))){display:none;}
   .ct-in[data-l="hero"] .ct-head:not(:has(> div > .cred:not(.rt-ph))){display:block !important;}
   .ct-in[data-l="hero"] .ct-head{margin:0;} .ct-in[data-l="hero"] .ct-title{font-size:calc(var(--ctts) * 1.8);} .ct-in[data-l="hero"] .ct-desc{color:var(--ctlc);font-size:15px;}
@@ -3990,8 +3990,8 @@
   .ct-item{padding:14px 16px;border:1px solid var(--ctln);border-radius:var(--ctr);background:var(--ctcb);cursor:pointer;transition:border-color .12s,box-shadow .12s;}
   .ct-item:hover{border-color:color-mix(in srgb,var(--ctac) 50%,var(--ctln));}
   .ct-item.on{border-color:var(--ctac);box-shadow:0 0 0 1px var(--ctac);}
-  .ct-item b{display:block;font-size:14.5px;font-weight:700;color:var(--cttc);margin-bottom:6px;}
-  .ct-item p{margin:0;font-size:12.5px;line-height:1.6;color:var(--ctlc);}
+  .ct-item b{display:block;font-size:calc(var(--ctls,12.5px) + 2px);font-weight:700;color:var(--cttc);margin-bottom:6px;}   /* 261029 수정 — 글자 > 항목 크기(--ctls)를 따른다 (기본 12.5 → 지점명 14.5 · 카드 글 12.5 · 상세 표 13.5 · 소개 13 으로 전과 같음) */
+  .ct-item p{margin:0;font-size:var(--ctls,12.5px);line-height:1.6;color:var(--ctlc);}
   .ct-item p + p{margin-top:6px;}
   .ct-br[data-bl="detail"] .ct-item{padding:12px 14px;} .ct-br[data-bl="detail"] .ct-item p{display:none;} .ct-br[data-bl="detail"] .ct-item b{margin:0;}
   .ct-list .none{padding:28px 0;text-align:center;font-size:13px;color:var(--ctdc);}
@@ -3999,10 +3999,10 @@
   .ct-detail .top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:min(28px,3cqw);align-items:start;}
   .ct-detail .img{aspect-ratio:4/3;border-radius:var(--ctr);background:#e9edf2 center/cover no-repeat;}
   .ct-detail .img.empty{display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ctdc);letter-spacing:.06em;}
-  .ct-detail table{border-collapse:collapse;font-size:13.5px;}
+  .ct-detail table{border-collapse:collapse;font-size:calc(var(--ctls,12.5px) + 1px);}
   .ct-detail th{text-align:left;font-weight:700;color:var(--cttc);padding:6px 20px 6px 0;white-space:nowrap;vertical-align:top;}
   .ct-detail td{padding:6px 0;color:var(--ctlc);line-height:1.6;}
-  .ct-detail .memo{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--ctln);font-size:13px;line-height:1.75;color:var(--ctlc);white-space:pre-line;}
+  .ct-detail .memo{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--ctln);font-size:calc(var(--ctls,12.5px) + .5px);line-height:1.75;color:var(--ctlc);white-space:pre-line;}
   .ct-detail .mh{margin:28px 0 12px;font-size:15px;font-weight:700;color:var(--cttc);}
   .ct-br[data-bl="center"] .ct-head,.ct-br[data-bl="mapl"] .ct-head{margin-bottom:18px;}
   .ct-br[data-bl="mapl"] .ct-side{min-width:0;}
@@ -47961,6 +47961,13 @@ global.PolyFX = API;
     if(!v && window.CL_MVIEW) return '';
     return '<div class="'+cls+'"><div class="cred ct-e'+(v?'':' rt-ph')+'" data-ct-ed="'+k+'" data-ph="'+ph+'">'+(v||'<p><br></p>')+'</div></div>';
   }
+  /* 261029 추가 — 상세(검색 위 · 상세)의 지도 위 제목. 기존 편집기처럼 캔버스에서 바로 고친다. 비우면 게시 화면에서 빠진다 */
+  function ctMhHTML(c){
+    var H=String(c.mhH||''), t=String(c.mh==null?'가맹점 오시는 길':c.mh).trim(), v='';
+    if(H && (ctPlain(H) || ctHasMedia(H))) v=H; else if(t) v=ctEsc(t);
+    if(!v && window.CL_MVIEW) return '';
+    return '<div class="mh"><div class="cred ct-e'+(v?'':' rt-ph')+'" data-ct-ed="mh" data-ph="지도 제목">'+(v||'<p><br></p>')+'</div></div>';
+  }
   function ctHeadHTML(c){ var h=ctHF('ct-title',c,'title','제목')+ctHF('ct-desc',c,'desc','설명'); return h?'<div class="ct-head">'+h+'</div>':''; }
   /* 편집 중 · 끝날 때 rtSaveRegions 가 부른다 */
   function ctRtSave(blk){
@@ -47969,7 +47976,7 @@ global.PolyFX = API;
       try{ rtCleanFonts(r); }catch(x){}
       var h=(typeof rtHtmlOf==='function')?rtHtmlOf(r):r.innerHTML, k=r.getAttribute('data-ct-ed'), p=ctPlain(h);
       if(!p && !ctHasMedia(h)) h='';
-      c[k]=p; c[k+'H']=h; c[k==='title'?'showT':'showD']=true;
+      c[k]=p; c[k+'H']=h; if(k==='title'||k==='desc') c[k==='title'?'showT':'showD']=true;   /* 261029 수정 — 지도 제목(mh)은 켜기/끄기 값이 없다 */
       if(typeof rtPhSync==='function') rtPhSync(r);
     });
   }
@@ -48019,7 +48026,7 @@ global.PolyFX = API;
     if(lay==='detail'){
       var det='<div class="ct-detail"><div class="top"><div class="img'+(sel.img?'':' empty')+'"'+(sel.img?' style="background-image:url(&quot;'+ctEsc(sel.img)+'&quot;)"':'')+'>'+(sel.img?'':'이미지')+'</div>'
         +'<table><tr><th>가맹점명</th><td>'+ctEsc(sel.n||'')+'</td></tr>'+(sel.addr?'<tr><th>주소</th><td>'+ctEsc(sel.addr)+'</td></tr>':'')+(sel.tel?'<tr><th>전화번호</th><td>'+ctEsc(sel.tel)+'</td></tr>':'')+(sel.hours?'<tr><th>운영시간</th><td>'+ctEsc(sel.hours)+'</td></tr>':'')+(sel.web?'<tr><th>홈페이지</th><td>'+ctEsc(sel.web)+'</td></tr>':'')+'</table></div>'
-        +(String(sel.memo||'').trim()?'<p class="memo">'+ctEsc(sel.memo)+'</p>':'')+'<div class="mh">가맹점 오시는 길</div>'+map+'</div>';
+        +(String(sel.memo||'').trim()?'<p class="memo">'+ctEsc(sel.memo)+'</p>':'')+ctMhHTML(c)+map+'</div>';
       return '<div class="ct-br" data-bl="detail">'+head+ctSearchHTML(c,blk,true)+'<div class="ct-body">'+ctListHTML(c,blk)+det+'</div></div>';
     }
     if(lay==='mapl') return '<div class="ct-br" data-bl="mapl"><div class="ct-body" style="margin-top:0">'+map+'<div class="ct-side">'+head+ctSearchHTML(c,blk,false)+'<div style="height:16px"></div>'+ctListHTML(c,blk)+'</div></div></div>';
@@ -48045,7 +48052,7 @@ global.PolyFX = API;
   }
   function ctStyleStr(c){
     return '--ctf:'+smStack(txNum(c.f,5))+';--cttc:'+(c.tc||'#1c1f24')+';--ctlc:'+(c.lc||'#5b6270')+';--ctdc:'+(c.dc||'#9aa0a8')+';--ctic:'+(c.ic||'#23272e')+';--ctac:'+(c.bc||'#23272e')+';--ctab:'+(c.bfg||ctInk(c.bc))
-      +';--ctln:'+(c.ln||'#e6e8ec')+';--ctcb:'+(c.cb||'transparent')+';--ctpv:'+txNum(c.pv,72)+'px;--ctmw:'+txNum(c.mw,1140)+'px;--ctts:'+txNum(c.ts,22)+'px;--ctr:'+txNum(c.r,6)+'px;--ctmh:'+txNum((c.map||{}).h,420)+'px;--ctcw:'+txNum(c.cw,640)+'px;';
+      +';--ctln:'+(c.ln||'#e6e8ec')+';--ctcb:'+(c.cb||'transparent')+';--ctpv:'+txNum(c.pv,72)+'px;--ctmw:'+txNum(c.mw,1140)+'px;--ctts:'+txNum(c.ts,22)+'px;--ctls:'+txNum(c.ls,12.5)+'px;--ctr:'+txNum(c.r,6)+'px;--ctmh:'+txNum((c.map||{}).h,420)+'px;--ctcw:'+txNum(c.cw,640)+'px;';
   }
   function ctBlockHTML(){ return '<span class="tag-badge">컨택트</span>'+SM_GEAR+'<div class="ct-wrap"></div>'; }
   function ctApply(blk){
@@ -48058,7 +48065,7 @@ global.PolyFX = API;
     ctFixTag(blk, c.kind==='strip' && !!c.fix, '하단 고정');   /* 261029 추가 — 마우스를 올리면 이름 배지 옆에 「하단 고정」 */
     if(c.kind==='strip' && typeof ctFixMirror==='function') setTimeout(ctFixMirror,0);   /* 261029 추가 — 다른 페이지용 고정 바 사본 갱신 */
     if(c.kind==='strip' && typeof ctStripWrap==='function') setTimeout(function(){ ctStripWrap(blk); },0);   /* 261029 추가 — 줄바꿈이면 동의 · CAPTCHA 를 버튼 위로 */
-    var sigH=JSON.stringify([c.title,c.desc,c.titleH,c.descH]);
+    var sigH=JSON.stringify([c.title,c.desc,c.titleH,c.descH,c.mh,c.mhH]);   /* 261029 수정 — 상세 지도 제목(mh)도 */
     var sig=JSON.stringify([c.kind,c.layout,ctVis(c,'title'),ctVis(c,'desc'),c.fields,c.btnT,c.privacy,c.captcha,c.info,c.map,c.branches,c.srRegion,c.srKw,c.srPh,c.lead,c.phone,c.leadL,c.ba,c.bs,c.is,blk._ctSel,blk._ctQ]);
     if(blk.classList.contains('rt-editing') && blk._ctSig===sig && wrap.firstElementChild){ blk._ctSigH=sigH; }   /* 261022 — 글 편집 중 */
     else if(blk._ctSig!==sig || blk._ctSigH!==sigH || !wrap.firstElementChild){
@@ -48324,7 +48331,7 @@ global.PolyFX = API;
     show('ctCbRow',(k==='form'&&(lay==='2col'||lay==='bgcard'))||k==='branch');
     show('ctCapRow',true); show('ctPrivTxtRow',!!c.privacy);   /* 261029 수정 — 상담 신청 띠에도 CAPTCHA (기존 편집기와 같음) */
     show('ctRespLk',k==='strip');   /* 261029 추가 — 상담신청 응답 보기 */
-    show('ctTsRow',k!=='strip'); show('ctLsRow',k!=='branch');
+    show('ctTsRow',k!=='strip'); show('ctLsRow',true);   /* 261029 수정 — 지점 찾기도 항목 크기로 지점명 · 카드 글 · 상세 글 크기를 정한다 (기존 편집기 「지점명 폰트」 크기) */
     show('ctTcRow',k!=='strip');   /* 261029 추가 — 상담 신청 띠는 제목 · 연락처 묶음 · 지점이 없어 제목 색이 쓰일 곳이 없다 (제목 크기와 같이 숨김) */
     show('ctLnRow',k==='branch');   /* 261028 추가 — 선 색(--ctln)은 지점 찾기(검색칸 · 지점 카드 · 상세 구분선)에만 쓰인다. 종류는 블럭을 넣을 때 정해지고 바꿀 수 없어 다른 종류에서는 숨김 (입력칸 밑줄은 입력칸 > 테두리 색) */
     ['ctMailSw','ctSmsSw'].forEach(function(id){ var s=document.getElementById(id), q=s&&s.previousElementSibling&&s.previousElementSibling.querySelector('.help-ico,.st-help'); if(q) q.style.display=(k==='strip')?'':'none'; });   /* 261028 추가 — 기존 편집기처럼 이메일 · 문자 알림 물음표는 상담 신청 띠에서만 (폼 블럭은 항상) */
