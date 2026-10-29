@@ -4819,7 +4819,8 @@
   .im-addrow .btn-sm.picking{animation:rtThumbPulse 1s ease-in-out infinite;}
   .im-addrow button:disabled{opacity:.4;pointer-events:none;}
   .srow.off,.mt-seg-b.off{opacity:.38;pointer-events:none;}
-  :is(#ctTcRow,#ctTsRow,#ctRRow) .help-ico{display:none;vertical-align:-2px;margin-left:2px;} :is(#ctTcRow,#ctTsRow,#ctRRow).off .help-ico{display:inline-block;pointer-events:auto;}   /* 261028 추가 — 컨택트 제목 색이 막혀 있을 때만 물음표로 이유를 알린다 */
+  :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow) .help-ico{display:none;vertical-align:-2px;margin-left:2px;} :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow).off .help-ico{display:inline-block;pointer-events:auto;}
+  #ctTaSeg.dis{opacity:.38;} #ctTaSeg.dis .mt-seg-b{cursor:pointer;}   /* 261029 추가 — 제목 · 설명이 모두 꺼지면 정렬은 흐리게, 누르면 안내 팝업 */   /* 261028 추가 — 컨택트 제목 색이 막혀 있을 때만 물음표로 이유를 알린다 */
   .im-sub{margin:4px 0 2px 0;padding:2px 0 8px 12px;border-left:2px solid var(--line);}
   .im-bgpick{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
   .im-bgth.vid{background-color:#23272E;color:#fff;} .im-bgth.vid > svg{display:none;} .im-bgth.vid::after{content:"동영상";font-size:10px;font-weight:700;letter-spacing:-.01em;}   /* 260928 추가 — 배경이 동영상일 때 */
@@ -13939,7 +13940,7 @@
             <!-- 261022 수정 — 제목 · 설명 글은 블럭에서 바로 고친다(텍스트 블럭 편집기). 여기서는 보이기만 켜고 끈다 -->
             <div class="gt-chips" id="ctHeadChips"></div>
             <div class="mtk-hint" style="margin-top:8px;">글은 블럭에서 눌러 바로 고칩니다. + 삽입은 설명 칸에서 쓸 수 있습니다.</div>
-            <div class="srow" style="margin:12px 0 6px;"><span class="k">정렬</span></div>
+            <div class="srow" id="ctTaRow" style="margin:12px 0 6px;"><span class="k">정렬 <svg class="help-ico pg-tip" data-tip="제목이나 설명을 켜면 적용됩니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span></div>
             <div class="mt-seg" id="ctTaSeg">
               <button type="button" class="mt-seg-b active" data-m="left" onclick="ctSeg('ta','ctTaSeg','left')">왼쪽</button>
               <button type="button" class="mt-seg-b" data-m="center" onclick="ctSeg('ta','ctTaSeg','center')">가운데</button>
@@ -47963,6 +47964,12 @@ global.PolyFX = API;
     var cardOff=!m.card;   /* 장소명 · 상세내용은 장소 카드 안에 보이므로 카드가 꺼져 있으면 비활성 (누르면 「장소 카드 켜기」 안내) */
     off('ctMapPlace',S.t==='emb'||glLive||cardOff); off('ctMapDesc',S.t==='emb'||glLive||cardOff); off('ctMapCardSw',S.t==='emb'||glLive); off('ctMapZmSw',glLive); off('ctMapZoom',S.t==='emb'&&S.fixed);   /* 링크 지도는 장소 카드 · 장소명이 없고, 퍼가기 코드는 확대도 코드에 들어 있다 */
   }
+  /* 261029 추가 — 막힌 정렬 버튼을 누르면 안내 (값은 바꾸지 않는다) · 「제목 켜기」로 바로 풀기 */
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('#ctTaSeg.dis .mt-seg-b'); if(!b||!ctCurBlk) return;
+    e.preventDefault(); e.stopPropagation();
+    if(typeof clInfoOpen==='function') clInfoOpen('정렬','정렬은 제목 · 설명 글에 적용됩니다. 위의 제목 · 설명 버튼으로 켤 수 있습니다.','제목 켜기',function(){ ctShowTog('title'); });
+  },true);
   /* 261028 추가 — 막힌 장소명 · 상세내용 칸을 누르면 왜 막혔는지 안내 (구글 지도 불러오는 중이면 「불러오기 끄기」로 바로 풀 수 있게) */
   document.addEventListener('click',function(e){
     var r=e.target.closest&&e.target.closest('#bsetCt .fm-fin.off'); if(!r||!ctCurBlk) return;
@@ -48023,6 +48030,9 @@ global.PolyFX = API;
     show('ctLnRow',k==='branch');   /* 261028 추가 — 선 색(--ctln)은 지점 찾기(검색칸 · 지점 카드 · 상세 구분선)에만 쓰인다. 종류는 블럭을 넣을 때 정해지고 바꿀 수 없어 다른 종류에서는 숨김 (입력칸 밑줄은 입력칸 > 테두리 색) */
     ['ctMailSw','ctSmsSw'].forEach(function(id){ var s=document.getElementById(id), q=s&&s.previousElementSibling&&s.previousElementSibling.querySelector('.help-ico,.st-help'); if(q) q.style.display=(k==='strip')?'':'none'; });   /* 261028 추가 — 기존 편집기처럼 이메일 · 문자 알림 물음표는 상담 신청 띠에서만 (폼 블럭은 항상) */
     ctMapUiSync();
+    var taOff=!(ctVis(c,'title')||ctVis(c,'desc'));   /* 261029 추가 — 정렬(ta)은 제목 · 설명(.ct-head)에만 적용 → 둘 다 꺼지면 비활성 */
+    var tar=document.getElementById('ctTaRow'); if(tar) tar.classList.toggle('off',taOff);
+    var tas=document.getElementById('ctTaSeg'); if(tas) tas.classList.toggle('dis',taOff);
     var rr=document.getElementById('ctRRow'); if(rr) rr.classList.toggle('off',!((k==='form'&&(lay==='bgcard'||lay==='2col'))||k==='map'||k==='branch'));   /* 261028 추가 — 여백 > 라운딩(--ctr)은 폼 카드(배경 카드 · 2단) · 지도 · 지점 찾기 상자에만 보인다. 그 밖의 모양은 비활성 */
     var tsr=document.getElementById('ctTsRow'); if(tsr) tsr.classList.toggle('off',!ctVis(c,'title'));   /* 261028 추가 — 제목 크기(--ctts)는 블럭 제목에만 쓰여서 제목이 꺼지면 모든 모양에서 비활성 */
     var tcr=document.getElementById('ctTcRow'); if(tcr) tcr.classList.toggle('off',!(ctVis(c,'title')||infoOn||k==='branch'));   /* 261028 추가 — 제목 색(--cttc)은 블럭 제목 · 연락처 묶음 제목 · 지점 이름/상세에 쓰인다. 셋 다 없으면(제목 꺼진 폼 등) 비활성 */
