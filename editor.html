@@ -22,6 +22,57 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Playfair+Display:wght@500;700&amp;family=Cormorant+Garamond:wght@400;600&amp;family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500&amp;family=Gowun+Batang:wght@400;700&amp;family=Noto+Serif+KR:wght@400;600&amp;family=Noto+Sans+KR:wght@400;700&amp;display=swap" rel="stylesheet">
+<!-- 261028 추가 — 좌측 사이트(크리에이터링크) 글꼴 목록 이식. 구글 폰트에 있는 것은 구글에서, 나머지는 좌측 사이트가 쓰는 원본 파일(cr-resource · jsDelivr npm)을 그대로 참조.
+     @font-face 는 선언만이라 글꼴을 실제로 쓸 때(또는 풀다운을 열 때)만 받는다. 유료 라이선스 글꼴(Helvetica Neue)은 목록에서 빼고 Inter 로 대체 -->
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=IBM+Plex+Sans+KR:wght@300;400;700&amp;family=Nanum+Gothic:wght@400;700;800&amp;family=Nanum+Gothic+Coding:wght@400;700&amp;family=Nanum+Myeongjo:wght@400;700;800&amp;family=Nanum+Pen+Script&amp;family=Nanum+Brush+Script&amp;family=Do+Hyeon&amp;family=Jua&amp;family=Yeon+Sung&amp;family=Abel&amp;family=Abril+Fatface&amp;family=Alegreya:ital,wght@0,400;0,700;1,400&amp;family=Archivo:wght@100;400;700&amp;family=Belleza&amp;family=Cardo:ital,wght@0,400;0,700;1,400&amp;family=Chakra+Petch:wght@400;700&amp;family=Caveat:wght@400;700&amp;family=Cookie&amp;family=Cutive+Mono&amp;family=Dancing+Script:wght@400;700&amp;family=Dosis:wght@400;700&amp;family=Fredoka:wght@400;600&amp;family=Great+Vibes&amp;family=Ibarra+Real+Nova:wght@400;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;family=Jost:wght@300;400;700&amp;family=Krona+One&amp;family=Lato:ital,wght@0,400;0,700;1,400&amp;family=League+Spartan:wght@400;700&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;family=Lora:ital,wght@0,400;0,700;1,400&amp;family=Montserrat:ital,wght@0,300;0,400;0,600;0,800;1,400&amp;family=Mulish:wght@400;700&amp;family=Nixie+One&amp;family=Noto+Sans:ital,wght@0,400;0,700;1,400&amp;family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400&amp;family=Oswald:wght@400;700&amp;family=Parisienne&amp;family=Playball&amp;family=Poppins:wght@300;400;600;700&amp;family=PT+Sans:ital,wght@0,400;0,700;1,400&amp;family=PT+Serif:ital,wght@0,400;0,700;1,400&amp;family=Questrial&amp;family=Quicksand:wght@400;700&amp;family=Raleway:ital,wght@0,400;0,700;1,400&amp;family=Roboto:ital,wght@0,400;0,700;1,400&amp;family=Roboto+Slab:wght@300;400;700&amp;family=Space+Mono:wght@400;700&amp;family=Source+Code+Pro:wght@400;700&amp;family=Staatliches&amp;family=Stalemate&amp;family=Titillium+Web:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+<style id="clSiteFonts">
+@font-face{font-family:'KoPub Batang';font-weight:300;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@noonnu/ko-pub-batang@0.1.0/fonts/kopub-batang-300.woff2) format('woff2'),url(https://cdn.jsdelivr.net/npm/@noonnu/ko-pub-batang@0.1.0/fonts/kopub-batang-300.woff) format('woff')}
+@font-face{font-family:'KoPub Batang';font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@noonnu/ko-pub-batang@0.1.0/fonts/kopub-batang-400.woff2) format('woff2'),url(https://cdn.jsdelivr.net/npm/@noonnu/ko-pub-batang@0.1.0/fonts/kopub-batang-400.woff) format('woff')}
+@font-face{font-family:'KoPub Batang';font-weight:700;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@noonnu/ko-pub-batang@0.1.0/fonts/kopub-batang-700.woff) format('woff')}
+@font-face{font-family:'Gmarket Sans';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/GmarketSansTTFMedium.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/GmarketSansTTFMedium.woff) format('woff')}
+@font-face{font-family:'Godo';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/GodoM.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/GodoM.ttf) format('truetype')}
+@font-face{font-family:'Kukdetopokki';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SDKukdetopokki-aLt00.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/SDKukdetopokki-aLt00.ttf) format('truetype')}
+@font-face{font-family:'Nanum Barun Gothic';font-weight:300;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/NanumBarunGothic-Light.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/NanumBarunGothic-Light.ttf) format('truetype')}
+@font-face{font-family:'Nanum Barun Gothic';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/NanumBarunGothic-Regular.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/NanumBarunGothic-Regular.ttf) format('truetype')}
+@font-face{font-family:'Nanum Barun Gothic';font-weight:700;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/NanumBarunGothic-Bold.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/NanumBarunGothic-Bold.ttf) format('truetype')}
+@font-face{font-family:'Nanum Barun Pen';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/NanumBarunpenOTF.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/NanumBarunpenOTF.ttf) format('truetype')}
+@font-face{font-family:'Nanum Square';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/NanumSquareR.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/NanumSquareR.woff) format('woff')}
+@font-face{font-family:'Nanum Square Round';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/NanumSquareRoundR.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/NanumSquareRoundR.woff) format('woff')}
+@font-face{font-family:'Daraehand';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/drfont_daraehand_Basic.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/drfont_daraehand_Basic.ttf) format('truetype')}
+@font-face{font-family:'Recipekorea';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/Recipekorea.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/Recipekorea.ttf) format('truetype')}
+@font-face{font-family:'Monsori';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/TmonMonsori.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/TmonMonsori.ttf) format('truetype')}
+@font-face{font-family:'BB Tree Gothic';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/BBTreeGR.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/BBTreeGR.ttf) format('truetype')}
+@font-face{font-family:'BB Tree Namu';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/BBTreeT_RA.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/BBTreeT_RA.ttf) format('truetype')}
+@font-face{font-family:'BB Tree Hand';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/BBTreeCR.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/BBTreeCR.ttf) format('truetype')}
+@font-face{font-family:'Seoul Namsan';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SeoulNamsanB.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/SeoulNamsanB.ttf) format('truetype')}
+@font-face{font-family:'Seoul Hangang';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SeoulHangangB.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/SeoulHangangB.ttf) format('truetype')}
+@font-face{font-family:'Suit';font-weight:300;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SUIT-Light.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SUIT-Light.woff) format('woff')}
+@font-face{font-family:'Suit';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SUIT-Regular.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SUIT-Regular.woff) format('woff')}
+@font-face{font-family:'Suit';font-weight:700;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SUIT-Bold.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SUIT-Bold.woff) format('woff')}
+@font-face{font-family:'Spoqa Han Sans';font-weight:100;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Thin.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Thin.woff) format('woff')}
+@font-face{font-family:'Spoqa Han Sans';font-weight:300;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Light.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Light.woff) format('woff')}
+@font-face{font-family:'Spoqa Han Sans';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Regular.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Regular.woff) format('woff')}
+@font-face{font-family:'Spoqa Han Sans';font-weight:500;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Medium.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Medium.woff) format('woff')}
+@font-face{font-family:'Spoqa Han Sans';font-weight:700;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Bold.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SpoqaHanSansNeo-Bold.woff) format('woff')}
+@font-face{font-family:'S CoreDream';font-weight:300;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SCDream1.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SCDream1.woff) format('woff')}
+@font-face{font-family:'S CoreDream';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SCDream3.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SCDream3.woff) format('woff')}
+@font-face{font-family:'S CoreDream';font-weight:700;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SCDream5.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SCDream5.woff) format('woff')}
+@font-face{font-family:'S CoreDream';font-weight:900;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/SCDream7.woff2) format('woff2'),url(https://storage.googleapis.com/cr-resource/fonts/SCDream7.woff) format('woff')}
+@font-face{font-family:'Oseong and HanEum';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/OSeongandHanEum-RegularA1.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/OSeongandHanEum-RegularA1.ttf) format('truetype')}
+@font-face{font-family:'Oseong and HanEum';font-weight:700;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/OSeongandHanEum-BoldA1.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/OSeongandHanEum-BoldA1.ttf) format('truetype')}
+@font-face{font-family:'Iropke Batang';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/IropkeBatangM.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/IropkeBatangM.ttf) format('truetype')}
+@font-face{font-family:'EASTARJET';font-weight:300;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/EASTARJET-DemiLight.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/EASTARJET-DemiLight.ttf) format('truetype')}
+@font-face{font-family:'EASTARJET';font-weight:500;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/EASTARJET-Medium.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/EASTARJET-Medium.ttf) format('truetype')}
+@font-face{font-family:'EASTARJET';font-weight:900;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/EASTARJET-Heavy.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/EASTARJET-Heavy.ttf) format('truetype')}
+@font-face{font-family:'Jalnan';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/JalnanOTF00.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/JalnanOTF00.ttf) format('truetype')}
+@font-face{font-family:'Jeju Gothic';font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@noonnu/jeju-gothic@0.1.0/fonts/jeju-gothic-400.woff2) format('woff2'),url(https://cdn.jsdelivr.net/npm/@noonnu/jeju-gothic@0.1.0/fonts/jeju-gothic-400.woff) format('woff')}
+@font-face{font-family:'Jeju Myeongjo';font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@noonnu/jeju-myeongjo@0.1.0/fonts/jeju-myeongjo-400.woff2) format('woff2'),url(https://cdn.jsdelivr.net/npm/@noonnu/jeju-myeongjo@0.1.0/fonts/jeju-myeongjo-400.woff) format('woff')}
+@font-face{font-family:'Jeju Hallasan';font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@noonnu/jeju-hallasan@0.1.0/fonts/jeju-hallasan-400.woff2) format('woff2'),url(https://cdn.jsdelivr.net/npm/@noonnu/jeju-hallasan@0.1.0/fonts/jeju-hallasan-400.woff) format('woff')}
+@font-face{font-family:'Youth';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/Youth.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/Youth.ttf) format('truetype')}
+@font-face{font-family:'Hangyule';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/TSThgrgl.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/TSThgrgl.ttf) format('truetype')}
+@font-face{font-family:'Hanna';font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@kfonts/bm-hanna-pro@0.2.0/BMHANNAPro.woff2) format('woff2'),url(https://cdn.jsdelivr.net/npm/@kfonts/bm-hanna-pro@0.2.0/BMHANNAPro.woff) format('woff')}
+@font-face{font-family:'Aliquam';font-weight:400;font-display:swap;src:url(https://storage.googleapis.com/cr-resource/fonts/Aliquam-UltraLight.woff) format('woff'),url(https://storage.googleapis.com/cr-resource/fonts/Aliquam-UltraLight.ttf) format('truetype')}
+</style>
 <!-- 260904 추가 — 보관함 아이콘 폰트: Material Symbols(Outlined/Rounded/Sharp · 가변 굵기/채우기) + Font Awesome 6 Free -->
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block">
@@ -834,7 +885,7 @@
 
   /* ══════════════════════════════════════════════════════════
      260824 추가 — MOTO 3D 이미지 블럭 (부유 타일 히어로)
-     · 블럭추가 > 이미지 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261028 이미지 / 영상에서 이동 · IMAGE01)
      · 블럭설정 전용 패널(메인카피/버튼 · 3D효과 · 타일 · 배경)
      ══════════════════════════════════════════════════════════ */
   .blk.mt-blk{padding:0;overflow:hidden;}
@@ -858,7 +909,7 @@
     background:radial-gradient(ellipse 46% 52% at center,rgba(6,6,6,.9) 0%,rgba(6,6,6,.45) 46%,rgba(6,6,6,0) 74%);}
   .mt-content{position:relative;z-index:5;text-align:center;display:flex;flex-direction:column;
     align-items:center;pointer-events:none;padding:0 24px;max-width:90%;}
-  .mt-title{font-family:'Helvetica Neue',Arial,sans-serif;font-size:var(--mts,44px);font-weight:800;
+  .mt-title{font-family:'Inter',Arial,sans-serif;font-size:var(--mts,44px);font-weight:800;
     line-height:1.04;letter-spacing:-.01em;color:var(--mtc,#fff);white-space:pre-line;
     text-shadow:0 4px 40px rgba(0,0,0,.75);margin:0 0 1.9rem;}
   .mt-title.upper{text-transform:uppercase;}
@@ -1009,7 +1060,7 @@
   #bset :is(.mt-imglist,.sg-imglist).mt-grid .fl-imgrow.mt-open .fl-caps > input:nth-of-type(2){order:20;flex:1 1 100%;width:auto;}
   /* ══ 261015 추가 — 리스트 뷰 줄 = 손잡이 · 썸네일 · 제목 칸(+ 덧칸) · 휴지통. 썸네일 뷰 패널과 같은 칸 규칙.
      · 주소 칸(첫 input)은 늘 숨김 — 261015 에 항목 URL 입력을 뺐다(라이브에서는 소재가 서버에서 오고, 🔗 아이콘이 페이지 링크와 혼동됨). 교체는 썸네일 → 보관함 · 끌어 놓기 · 업로드
-     · 갈래는 썸네일 뷰와 같다: data-nourl(스트립 · 제목·부제) · data-urlonly(3D 배경 · 구김 → 칸 묶음 숨김 = 썸네일 + 휴지통) · 떠다님(.fl-cap2 한 줄) · 카드 회전(.mtk-field 인라인 column 을 덮어씀) ══ */
+     · 갈래는 썸네일 뷰와 같다: data-nourl(스트립 · 제목·부제) · data-urlonly(3D 배경 → 칸 묶음 숨김 = 썸네일 + 휴지통 · 261028 구김은 사진별 링크로 빠짐) · 떠다님(.fl-cap2 한 줄) · 카드 회전(.mtk-field 인라인 column 을 덮어씀) ══ */
   #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid]:not(.mt-grid) :is(.mt-imgrow,.sg-imgrow,.fl-imgrow) :is(.vc-caps,.sg-caps,.fl-caps,.mtk-field){display:flex !important;flex-direction:row !important;flex-wrap:wrap;align-items:center;gap:4px 6px;}   /* 261015 수정 — 제목·내용 칸 사이 6 → 4px */
   #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid]:not(.mt-grid) :is(.mt-imgrow,.sg-imgrow,.fl-imgrow) :is(.vc-caps,.sg-caps,.fl-caps,.mtk-field) > *{order:20;flex:1 1 100%;min-width:0;}
   #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid]:not(.mt-grid) :is(.mt-imgrow,.sg-imgrow,.fl-imgrow) :is(.vc-caps,.sg-caps,.fl-caps,.mtk-field) > input:first-of-type{order:10;display:none;}
@@ -1023,6 +1074,7 @@
   #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid]:not(.mt-grid)[data-nourl] :is(.mt-imgrow,.sg-imgrow,.fl-imgrow) :is(.vc-caps,.sg-caps,.fl-caps,.mtk-field) > input:first-of-type{display:block;order:1;flex:1 1 0;width:0;}
   #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid]:not(.mt-grid)[data-nourl] :is(.mt-imgrow,.sg-imgrow,.fl-imgrow) :is(.vc-caps,.sg-caps,.fl-caps,.mtk-field) > input:nth-of-type(2){order:20;flex:1 1 100%;width:auto;}
   #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid][data-urlonly] :is(.mt-imgrow,.sg-imgrow,.fl-imgrow) :is(.vc-caps,.sg-caps,.fl-caps,.mtk-field){display:none !important;}   /* 261015 수정 — 주소만 있던 목록: 칸 묶음을 통째로 숨겨 썸네일 + 휴지통 줄 */
+  #bset .mt-imglist[data-urlonly]:not(.mt-grid) .mt-imgrow > .mt-imgdel{margin-left:auto;}   /* 261027 추가 — 주소만 있던 목록(3D 배경 mt · 261028 까지 구김 ck)의 리스트 뷰: 칸 묶음이 숨어 휴지통이 썸네일 바로 옆에 붙었다 → 다른 목록처럼 줄 오른쪽 끝 */
   #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid]:not(.mt-grid) .fl-imgrow .fl-caps > .fl-cap2{order:1;flex:1 1 0;min-width:0;display:flex;gap:4px;}
   #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid]:not(.mt-grid) .fl-imgrow .fl-caps > .fl-cap2 > input:first-child{flex:2 1 0;width:0;} #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid]:not(.mt-grid) .fl-imgrow .fl-caps > .fl-cap2 > input:last-child{flex:1 1 0;width:0;}
   #bset :is(.mt-imglist,.sg-imglist)[data-mtgrid]:not(.mt-grid) .fl-imgrow .fl-caps > input:nth-of-type(2){order:20;flex:1 1 100%;width:auto;}
@@ -1164,7 +1216,7 @@
     transition:opacity .5s ease .1s,transform .5s ease .1s;pointer-events:none;}
   .sg-card.active .sg-cap{opacity:1;transform:translateY(0) scale(var(--sg-k-inv,1));}
   .sg-wrap.sg-cap-off .sg-cap{opacity:0!important;}
-  .sg-cap .t{font-size:calc(22px * var(--sg-k,1) * var(--cap-t,1));font-weight:600;letter-spacing:calc(.2px * var(--sg-k,1));font-family:var(--cap-f,'Helvetica Neue',Arial,sans-serif);}
+  .sg-cap .t{font-size:calc(22px * var(--sg-k,1) * var(--cap-t,1));font-weight:600;letter-spacing:calc(.2px * var(--sg-k,1));font-family:var(--cap-f,'Inter',Arial,sans-serif);}
   .sg-cap .s{font-family:var(--cap-f,inherit);font-size:calc(12px * var(--sg-k,1) * var(--cap-s,1));font-weight:400;opacity:.7;margin-top:calc(3px * var(--sg-k,1));text-transform:uppercase;letter-spacing:calc(1.5px * var(--sg-k,1));}
   .sg-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;
     border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.05);
@@ -1179,7 +1231,7 @@
   .sg-nav[disabled]{opacity:.25;pointer-events:none;}
   .sg-counter{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:#fff;
     font-size:13px;letter-spacing:3px;font-variant-numeric:tabular-nums;opacity:.75;z-index:10;
-    font-family:'Helvetica Neue',Arial,sans-serif;}
+    font-family:'Inter',Arial,sans-serif;}
   .sg-counter b{font-weight:600;}
   .sg-counter span{opacity:.45;margin:0 6px;}
   .sg-counter i{font-style:normal;}
@@ -1275,7 +1327,7 @@
   .sg-wrap.sg-zoom-off .sg-card.active{cursor:inherit;}
 
   /* ══════════════════════════════════════════════════════════
-     260824 추가 — 플로팅 3D 갤러리 블럭 (갤러리 카테고리 · 261016 「갤러리/쇼핑」에서 개명)
+     260824 추가 — 플로팅 3D 갤러리 블럭 (히어로 섹션 카테고리 · 261027 갤러리에서 이동)
      · 흩뿌려진 카드 부유 · 드래그 회전(트랙볼+관성) · 클릭 확대
      · 이미지 직접 입력(URL) · 개수/크기/속도 옵션
      ══════════════════════════════════════════════════════════ */
@@ -1306,13 +1358,13 @@
     pointer-events:none;z-index:60;}
   .fl-desc.show{opacity:1;}
   /* 캡션/커서 색: 배경 명도에 따라 JS 가 --flink/--flsub 를 자동 세팅 */
-  .fl-capline .name{font-size:calc(13px * var(--cap-t,1));font-weight:700;color:var(--flink,#111);letter-spacing:.01em;font-family:var(--cap-f,'Helvetica Neue',Arial,sans-serif);transition:color .3s ease;}
+  .fl-capline .name{font-size:calc(13px * var(--cap-t,1));font-weight:700;color:var(--flink,#111);letter-spacing:.01em;font-family:var(--cap-f,'Inter',Arial,sans-serif);transition:color .3s ease;}
   .fl-capline .cat{font-size:calc(13.5px * var(--cap-s,1));color:var(--flsub,#9a9a9a);font-family:var(--cap-f,Georgia,'Times New Roman',serif);transition:color .3s ease;}
-  .fl-capline .meta{font-size:13px;color:var(--flsub,#9a9a9a);font-family:var(--cap-f,'Helvetica Neue',Arial,sans-serif);} .fl-capline .meta:empty{display:none;} .fl-capline .meta .gt-cmeta{margin:0;font-size:1em;}   /* 261008 추가 — 좋아요 · 댓글 수 */
+  .fl-capline .meta{font-size:13px;color:var(--flsub,#9a9a9a);font-family:var(--cap-f,'Inter',Arial,sans-serif);} .fl-capline .meta:empty{display:none;} .fl-capline .meta .gt-cmeta{margin:0;font-size:1em;}   /* 261008 추가 — 좋아요 · 댓글 수 */
   .fl-capline .name:empty,.fl-capline .cat:empty{display:none;}
   .fl-close{position:absolute;left:0;top:0;font-size:13px;font-weight:700;color:var(--flink,#111);letter-spacing:.01em;
     white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .5s ease .15s,color .3s ease;z-index:70;will-change:transform;
-    font-family:'Helvetica Neue',Arial,sans-serif;}
+    font-family:'Inter',Arial,sans-serif;}
   .fl-close.show{opacity:1;}
   .fl-dot{position:absolute;left:0;top:0;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;
     background:var(--flink,#111);pointer-events:none;z-index:69;opacity:0;
@@ -1984,8 +2036,8 @@
     --ixpt:#3358f4;--ixhov:rgba(51,88,244,.08);--ixline:#dcdfe4;--ixlw:1px;
     --ixcols:minmax(0,1fr) 44% 20px;--ixcolsM:minmax(0,1fr) auto;
     --ixgap:22px;--ixpy:34px;--ixis:20px;--ixrx:24px;--ixpv:56px;
-    --ixmf:'Helvetica Neue',Arial,sans-serif;--ixms:44px;--ixmw:600;--ixml:-1px;--ixmc:#0e1013;
-    --ixsf:'Helvetica Neue',Arial,sans-serif;--ixss:14.5px;--ixsw:400;--ixsc:#4d5665;
+    --ixmf:'Inter',Arial,sans-serif;--ixms:44px;--ixmw:600;--ixml:-1px;--ixmc:#0e1013;
+    --ixsf:'Inter',Arial,sans-serif;--ixss:14.5px;--ixsw:400;--ixsc:#4d5665;
     --ixnf:'JetBrains Mono',ui-monospace,monospace;--ixns:12px;--ixnc:#8b939f;}
   .ix-in{margin:0 auto;box-sizing:border-box;width:100%;padding:var(--ixpv) var(--ixpadx,22px);}
   .ix-list{border-top:var(--ixlw) solid var(--ixline);}
@@ -2318,7 +2370,7 @@
   #bsetBc .bc-flds .s-ta{min-height:0;}
   #bsetBc .bc-tag{flex:none;width:28px;font-size:var(--fs-sm);font-weight:600;color:var(--ink-3);text-align:center;}
   /* ══════════════════════════════════════════════════════════════════
-     260923 추가 — 구김 이미지 블럭 (IMAGE04 · 접두어 ck)
+     260923 추가 — 구김 이미지 블럭 (IMAGE04 · 접두어 ck · 261028 이미지 / 영상 → 히어로 섹션)
      · 참조 사이트(thetriadicballetai.com) 3막 흑백 사진 — 커서를 올리면 종이처럼 구겨진다 (WebGL 캔버스)
      · 높이는 --ckh, 좁은 화면(컨테이너 폭)에서는 폭의 1.3배까지로 줄인다
      · WebGL 이 없거나 사진이 교차 출처로 막히면 .ck-nogl → 평면 이미지(.ck-fb)로 대신 보인다
@@ -2392,6 +2444,7 @@
   .ck-wrap{--ckui:#fff;}
   .ck-wrap.lt{--ckui:#16181d;}
   .ck-wrap.zoom .ck-stage{cursor:zoom-in;}
+  .ck-wrap.lk .ck-stage{cursor:pointer;}   /* 261028 추가 — 지금 사진에 링크가 있으면 확대보기 대신 링크 */
   .ck-nav{position:absolute;top:50%;z-index:3;width:46px;height:46px;margin-top:-23px;padding:0;border-radius:50%;cursor:pointer;
     border:1px solid color-mix(in srgb,var(--ckui) 32%,transparent);background:color-mix(in srgb,var(--ckbg) 40%,transparent);color:var(--ckui);
     display:flex;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .2s,border-color .2s,transform .2s;}
@@ -5057,12 +5110,12 @@
   .hg-face img,.hg-face video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;}
   .hg-dim{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;}   /* 260921 추가 — 지나간 카드 어둡게: filter:brightness 대신 검은 막의 투명도(합성만 다시 한다 → 재생 중 영상이 끌 때 멈칫하지 않는다) */
   .hg-lab{position:absolute;left:0;right:0;top:100%;padding-top:.9em;text-align:center;color:var(--cap-c,#fff);line-height:1.15;pointer-events:none;text-shadow:0 2px 12px rgba(0,0,0,.5);}
-  .hg-l1{font-family:var(--cap-f,'Helvetica Neue',Arial,sans-serif);font-weight:800;font-size:calc(1.05em * var(--cap-t,1));letter-spacing:.01em;text-transform:uppercase;}
+  .hg-l1{font-family:var(--cap-f,'Inter',Arial,sans-serif);font-weight:800;font-size:calc(1.05em * var(--cap-t,1));letter-spacing:.01em;text-transform:uppercase;}
   .hg-l2{font-family:var(--cap-f,inherit);font-size:calc(.66em * var(--cap-s,1));font-weight:500;letter-spacing:0;opacity:.78;margin-top:.35em;}   /* 260917 수정 — 서브텍스트는 소개글: 작은 고딕 */
   .hg-l1:empty,.hg-l2:empty{display:none;}
   /* 261008 수정 — 라벨은 갤러리 타입 공통 캡션(.gt-ct 제목 = 예전 이름 줄 · .gt-cd 내용 = 예전 서브텍스트 줄 · .gt-cmeta 수). 크기 100% 의 기준은 예전과 같다(제목 1.05em · 내용 .66em) */
   .hg-lab{font-size:calc(1em * var(--cap-t,1));--gt-dk:.63;}
-  .hg-lab .gt-ct{font-family:var(--cap-f,'Helvetica Neue',Arial,sans-serif);font-weight:800;font-size:1.05em;letter-spacing:.01em;text-transform:uppercase;line-height:1.15;}
+  .hg-lab .gt-ct{font-family:var(--cap-f,'Inter',Arial,sans-serif);font-weight:800;font-size:1.05em;letter-spacing:.01em;text-transform:uppercase;line-height:1.15;}
   .hg-lab .gt-cd{font-family:var(--cap-f,inherit);font-weight:500;letter-spacing:0;opacity:.78;margin-top:.35em;line-height:1.3;}
   .hg-lab .gt-cmeta{justify-content:center;}
   .hg-lab:empty{display:none;}
@@ -6349,7 +6402,7 @@
   html.ui-rail.mview .stage{left:0;right:0;}
   html.ui-rail.mview #blockAdd,html.ui-rail.mview .scrim{left:0;right:0;}
   /* ══════════════════════════════════════════════════════════════════
-     260915 추가 — 세로 스크롤 갤러리 블럭 (VERTICAL CAROUSEL · 갤러리 카테고리)
+     260915 추가 — 세로 스크롤 갤러리 블럭 (VERTICAL CAROUSEL · 히어로 섹션 카테고리 · 261027 갤러리에서 이동)
      · 미디어를 세로로 길게 쌓아 두고, 화면 한가운데에 가까운 항목일수록
        크고 또렷하게 — 스크롤이 곧 캐로절의 진행값이 된다.
      · 옆의 정보 패널은 화면에 붙어(sticky) 가운데 항목의 정보로 바뀐다.
@@ -6466,7 +6519,7 @@
     transition:box-shadow .12s,border-color .12s;}
   .vc-caps input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
   .vc-vals{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
-  #bset #vcItemList .mt-imgrow{align-items:flex-start;}
+  #bset #vcItemList .mt-imgrow{align-items:center;}   /* 261027 수정 — flex-start → center: 261015 줄 카드 규칙(손잡이 · 썸네일 · 휴지통이 줄 세로 가운데)과 맞춘다. 이 블럭만 위에 붙어 있었다 */
   #bset #vcItemList .mt-imgdrag,#bset #vcItemList .mt-imgthumb,#bset #vcItemList .mt-imgdel{margin-top:0;}
   .vc-labgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
   .vc-labgrid input{width:100%;box-sizing:border-box;height:34px;border:1px solid var(--border-2);border-radius:8px;
@@ -8853,6 +8906,9 @@
   .site-hd[data-hd-type="full"] .site-nav .nav-i .cv{display:none;}
   .site-hd[data-hd-type="full"] .hd-mega{display:block;position:absolute;left:0;right:0;top:100%;z-index:118;padding:26px var(--hd-side) 34px;background:var(--hd-bg-solid,#fff);color:var(--hd-fg);border-bottom:var(--hd-line);box-shadow:0 18px 40px rgba(20,24,32,.10);
     opacity:0;visibility:hidden;transform:translateY(-6px);pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility 0s linear .18s;font-family:var(--hd-font);letter-spacing:var(--hd-ls);}
+  /* 261028 추가 — 메뉴 줄 → 패널 다리: 메뉴 줄과 패널 사이(헤더 아래 여백)를 지나는 순간 :hover 가 풀려 패널이 닫히고(닫히는 즉시 pointer-events:none) 서브메뉴를 누를 수 없었다. 메뉴 줄 아래로 여백만큼 투명한 띠를 이어 붙인다 */
+  .site-hd[data-hd-type="full"]:not([data-hd-full-mode="always"]) .site-nav{position:relative;}
+  .site-hd[data-hd-type="full"]:not([data-hd-full-mode="always"]) .site-nav::after{content:'';position:absolute;left:0;right:0;top:100%;height:calc(var(--hd-pb,22px) + 2px);}
   .site-hd[data-hd-type="full"] .site-nav:hover ~ .hd-mega,.site-hd[data-hd-type="full"] .hd-mega:hover,.site-hd[data-hd-type="full"].hd-mega-open .hd-mega{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .18s ease,transform .18s ease,visibility 0s;}
   .site-hd[data-hd-type="full"][data-hd-full-mode="always"] .hd-mega{position:static;order:9;width:100%;opacity:1;visibility:visible;transform:none;pointer-events:auto;box-shadow:none;background:transparent;border-bottom:none;padding:var(--hd-top) 0 6px;margin-top:calc(-1 * var(--hd-top));}
   .site-hd[data-hd-type="full"][data-hd-full-mode="always"] .site-nav ~ .hd-br{display:block;}
@@ -8883,7 +8939,7 @@
   .site-hd[data-hd-full="line"] .hd-mega{border-top:1px solid color-mix(in srgb,var(--hd-fg) 18%,transparent);}
   .site-hd[data-hd-full="line"] .hd-mega .hd-mg-in{padding-left:var(--hd-mg-x,0px);gap:64px;}
   .site-hd[data-hd-full="line"] .hd-mega .hd-mg-h{font-size:calc(var(--hd-fs) - 3px);letter-spacing:.12em;text-transform:uppercase;color:var(--hd-fg);opacity:.7;font-weight:600;}
-  html.mview .site-hd .hd-mega{display:none!important;}
+  html.mview:not(.pview) .site-hd .hd-mega{display:none!important;}   /* 261028 수정 — 모바일 사본만. PC 미리보기(html.pview)도 mview 라 펼침 패널이 아예 안 나왔다 */
   /* 토글 — 로고·유틸·햄버거만 두고, 누르면 메뉴가 헤더 아래로 펼쳐진다 */
   .site-hd .hd-tog{display:none;width:38px;height:38px;border:none;background:none;color:var(--hd-ac);cursor:pointer;border-radius:8px;align-items:center;justify-content:center;flex:none;order:0;padding:0;}
   /* 토글 버튼 — 막대 3개(.bars i)와 글자(.t)로 모양을 만든다. data-hd-ticon: bars3 · bars2 · bars2s · dots · text · barstext / data-hd-tfx(롤오버): none · spread · slide · circle. 열리면 막대가 X 로 변형 */
@@ -9016,7 +9072,7 @@
   .site-hd.hd-editing[data-hd-type="toggle"].hd-open .site-nav{box-shadow:inset 2px 0 0 var(--ed,#03C75A),inset -2px 0 0 var(--ed,#03C75A),inset 0 -2px 0 var(--ed,#03C75A),0 18px 40px rgba(20,24,32,.10);}
   .site-hd.hd-editing[data-hd-type="toggle"][data-hd-tstyle="screen"].hd-open .site-nav{box-shadow:inset 0 0 0 2px var(--ed,#03C75A);}
   .site-hd.hd-editing[data-hd-type="toggle"][data-hd-tstyle="drawer"].hd-open .site-nav{box-shadow:inset 0 0 0 2px var(--ed,#03C75A),18px 0 40px rgba(20,24,32,.10);}
-  html.mview .site-hd .hd-gear,html.mview .site-hd .hd-tog{display:none!important;}
+  html.mview .site-hd .hd-gear,html.mview:not(.pview) .site-hd .hd-tog{display:none!important;}   /* 261028 수정 — 토글 버튼은 모바일 사본에서만 숨긴다(PC 미리보기에서 토글 메뉴를 열 수 없었다) */
   /* 261027 추가 — 모바일 편집 화면의 둥근 프레임(.mframe 18px · 태블릿 폭 --r-xl)에 헤더가 꼭 붙어 있어, 롤오버·편집 중 그린 테두리(inset 2px)의 위쪽 두 모서리가
      프레임 곡선에 잘려 끊겨 보였다 → 헤더 위 모서리를 프레임과 같은 반경으로 둥글려 테두리가 곡선을 따라가게 한다(프레임 라운딩은 유지). 새 창 미리보기는 프레임이 없으므로 제외 */
   html.mview:not(.mv-preview):not(.pview) .site > .site-hd{border-radius:18px 18px 0 0;}
@@ -9298,6 +9354,11 @@
   .hd-card .hdv .hdv-site{position:absolute;left:0;top:50%;width:980px;min-height:0;height:auto;padding:0;margin:0;transform:translateY(-50%);zoom:.56;pointer-events:none;background:var(--st-bg,#fff);}
   .hd-card .hdv .hdv-site > .site-hd{position:static;width:auto;margin:0;}
   .hd-card .hdv .hdv-site > .site-hd .hd-tog{display:none;}
+  /* 261028 추가 — 펼침 카드: 패널을 펼친 채 흐름 안에 둔다(카드 높이는 내용만큼, 위에서부터) */
+  .hd-card .hdv.full{height:auto;}
+  .hd-card .hdv .hdv-site.hdv-full{position:relative;top:0;transform:none;width:1280px;zoom:.43;}   /* 패널은 메뉴 수만큼 열이 늘어 980px 에선 끝 열이 잘린다 → 사본을 넓혀 실제 화면 비율에 가깝게 */
+  .hd-card .hdv .hdv-site.hdv-full > .site-hd{flex-wrap:wrap;}
+  .hd-card .hdv .hdv-site.hdv-full > .site-hd[data-hd-full-mode="hover"] .hd-mega{position:static;flex:0 0 calc(100% + 2 * var(--hd-side));order:99;margin:calc(var(--hd-pb,0px) - var(--hd-top,0px)) calc(-1 * var(--hd-side)) calc(-1 * var(--hd-pb,0px));opacity:1;visibility:visible;transform:none;box-shadow:none;transition:none;}
   .hd-card .dv{height:96px;position:relative;display:flex;flex-wrap:wrap;align-items:center;column-gap:14px;row-gap:8px;padding:14px 18px;background:var(--dv-bg,#fff);color:var(--dv-fg,#8a8f98);font-size:8px;overflow:hidden;}
   .hd-card .dv .L{order:1;font-weight:800;font-size:11px;color:var(--dv-logo,#23272E);letter-spacing:.02em;line-height:1;}
   .hd-card .dv .N{order:2;display:flex;gap:9px;}
@@ -11008,7 +11069,7 @@
           <div class="sgrp">
             <div class="srow srow-dd"><span class="k">폰트</span>
               <div class="sdd" id="mtTfDD">
-                <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Helvetica Neue</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Inter</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                 <div class="sdd-menu"></div>
               </div>
             </div>
@@ -11524,7 +11585,7 @@
           <div class="sgrp" style="margin-top:11px;">
             <div class="srow srow-dd"><span class="k">폰트</span>
               <div class="sdd" id="rsFDD">
-                <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Helvetica Neue</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Inter</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                 <div class="sdd-menu"></div>
               </div>
             </div>
@@ -11686,7 +11747,7 @@
             <div class="srow" id="axSepRow" style="display:none;"><span class="k">구분 기호</span><input class="s-in" type="text" id="axSep" placeholder="•" style="max-width:150px;"></div>
             <div class="srow srow-dd"><span class="k">폰트</span>
               <div class="sdd" id="axFDD">
-                <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Helvetica Neue</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Inter</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                 <div class="sdd-menu"></div>
               </div>
             </div>
@@ -11885,7 +11946,7 @@
             <div class="sgrp">
               <div class="srow srow-dd"><span class="k">폰트</span>
                 <div class="sdd" id="ixMfDD">
-                  <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Helvetica Neue</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Inter</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div class="sdd-menu"></div>
                 </div>
               </div>
@@ -11897,7 +11958,7 @@
             <div class="sgrp">
               <div class="srow srow-dd"><span class="k">폰트</span>
                 <div class="sdd" id="ixSfDD">
-                  <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Helvetica Neue</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <button class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Inter</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div class="sdd-menu"></div>
                 </div>
               </div>
@@ -13138,7 +13199,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="fm-fin" style="margin-top:0;"><span class="k">완료 메시지</span><input type="text" id="fmDone" maxlength="50" placeholder="신청 완료되었습니다." spellcheck="false" oninput="fmUpd('done',this.value)"></div>
             <div class="mtk-hint" style="margin-top:4px;">보내기를 누른 뒤 보이는 문구입니다 (최대 50자).</div>
-            <div class="sline" style="padding-top:14px;"><span class="lbl">이메일 알림 <i class="st-help" data-tip="해당 블록으로 신청 및 문의가 접수되면, 지정한 이메일로 알림을 보냅니다."></i></span><button type="button" class="sw on" id="fmMailSw" onclick="fmSw(this,'mailOn')"></button></div>
+            <div class="sline" style="padding-top:14px;"><span class="lbl">이메일 알림 <i class="st-help" data-tip="이 블럭으로 신청 및 문의가 접수되면, 지정한 이메일로 알림을 보냅니다."></i></span><button type="button" class="sw on" id="fmMailSw" onclick="fmSw(this,'mailOn')"></button></div>
             <div class="fm-mails" id="fmMailBox">
               <div id="fmMailList"></div>
               <div class="add"><input type="email" id="fmMailIn" placeholder="받는 메일 주소" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();fmMailAdd();}"><button type="button" class="btn-sm" id="fmMailAddB" onclick="fmMailAdd()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
@@ -13147,7 +13208,7 @@
               <div class="sms-box mail-snd"><div class="sms-h"><span>발송 메일 <i class="st-help" data-tip="알림 메일의 「보낸 사람」 주소입니다. 기본은 크리에이터링크 주소(help@creatorlink.net)이고, 구글 · 네이버 · 다음 또는 직접 설정한 메일 주소로 바꿀 수 있습니다."></i></span><button type="button" class="sms-lk" onclick="clSmtpOpen()">발송 메일 설정</button></div><div class="row"><span class="m" id="fmMailSnd">help@creatorlink.net</span></div></div>
             </div>
             <!-- 261026 추가 — 문자 알림 (기존 편집기 「문자 알림 설정」 이식) -->
-            <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help" data-tip="해당 블록으로 신청 및 문의가 접수되면, 지정한 전화번호로 SMS 알림을 보냅니다."></i></span><button type="button" class="sw on" id="fmSmsSw" onclick="fmSw(this,'smsOn'); clSmsSync('fm');"></button></div>
+            <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help" data-tip="이 블럭으로 신청 및 문의가 접수되면, 지정한 전화번호로 SMS 알림을 보냅니다."></i></span><button type="button" class="sw on" id="fmSmsSw" onclick="fmSw(this,'smsOn'); clSmsSync('fm');"></button></div>
             <div class="fm-mails sms-box" id="fmSmsBox"></div>
             <div class="sline"><span class="lbl">개인정보 수집 및 이용 동의</span><button type="button" class="sw" id="fmPrivSw" onclick="fmSw(this,'privacy')"></button></div>
             <div class="sline"><span class="lbl">CAPTCHA <i class="st-help" data-tip="보내기 전에 보안문자를 입력하게 해 자동 등록(스팸)을 막습니다."></i></span><button type="button" class="sw on" id="fmCapSw" onclick="fmSw(this,'captcha')"></button></div>
@@ -13319,7 +13380,7 @@
             </div>
             <div class="srow srow-dd"><span class="k">폰트</span>
               <div class="sdd" id="nmFDD">
-                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Helvetica Neue</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Inter</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                 <div class="sdd-menu"></div>
               </div>
             </div>
@@ -13670,7 +13731,7 @@
             </div>
             <div class="srow srow-dd"><span class="k">폰트</span>
               <div class="sdd" id="cdFDD">
-                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Helvetica Neue</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">Inter</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                 <div class="sdd-menu"></div>
               </div>
             </div>
@@ -14019,7 +14080,7 @@
           <div class="fld-h fold-h" onclick="smAcc(this)">제출<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in" id="ctSubmitBox">
             <div class="fm-fin" style="margin-top:0;"><span class="k">완료 메시지</span><input type="text" id="ctDone" maxlength="50" placeholder="문의가 완료되었습니다." spellcheck="false" oninput="ctUpd('done',this.value)"></div>
-            <div class="sline" style="padding-top:14px;"><span class="lbl">이메일 알림 <i class="st-help"data-tip="해당 블록으로 신청 및 문의가 접수되면, 지정한 이메일로 알림을 보냅니다."></i></span><button type="button" class="sw on" id="ctMailSw" onclick="ctSw(this,'mailOn'); ctMailSync();"></button></div>
+            <div class="sline" style="padding-top:14px;"><span class="lbl">이메일 알림 <i class="st-help" data-tip="이 블럭으로 신청 및 문의가 접수되면, 지정한 이메일로 알림을 보냅니다."></i></span><button type="button" class="sw on" id="ctMailSw" onclick="ctSw(this,'mailOn'); ctMailSync();"></button></div>
             <div class="fm-mails" id="ctMailBox">
               <div id="ctMailList"></div>
               <div class="add"><input type="email" id="ctMailIn" placeholder="받는 메일 주소" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();ctMailAdd();}"><button type="button" class="btn-sm" id="ctMailAddB" onclick="ctMailAdd()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
@@ -14028,7 +14089,7 @@
               <div class="sms-box mail-snd"><div class="sms-h"><span>발송 메일 <i class="st-help" data-tip="알림 메일의 「보낸 사람」 주소입니다. 기본은 크리에이터링크 주소(help@creatorlink.net)이고, 구글 · 네이버 · 다음 또는 직접 설정한 메일 주소로 바꿀 수 있습니다."></i></span><button type="button" class="sms-lk" onclick="clSmtpOpen()">발송 메일 설정</button></div><div class="row"><span class="m" id="ctMailSnd">help@creatorlink.net</span></div></div>
             </div>
             <!-- 261026 추가 — 문자 알림 (기존 편집기 「문자 알림 설정」 이식) -->
-            <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help"data-tip="해당 블록으로 신청 및 문의가 접수되면, 지정한 전화번호로 SMS 알림을 보냅니다."></i></span><button type="button" class="sw on" id="ctSmsSw" onclick="ctSw(this,'smsOn'); clSmsSync('ct');"></button></div>
+            <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help" data-tip="이 블럭으로 신청 및 문의가 접수되면, 지정한 전화번호로 SMS 알림을 보냅니다."></i></span><button type="button" class="sw on" id="ctSmsSw" onclick="ctSw(this,'smsOn'); clSmsSync('ct');"></button></div>
             <div class="fm-mails sms-box" id="ctSmsBox"></div>
             <div class="sline"><span class="lbl">개인정보 수집 및 이용 동의</span><button type="button" class="sw" id="ctPrivSw" onclick="ctSw(this,'privacy'); ctRowsSync();"></button></div>
             <div class="fm-fin" id="ctPrivTxtRow" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">동의 내용</span><textarea id="ctPrivTxt" rows="3" placeholder="「보기」를 누르면 보이는 동의 내용" spellcheck="false" oninput="ctUpd('privTxt',this.value)"></textarea></div>
@@ -21346,6 +21407,8 @@
     video:'<svg viewBox="0 0 38 38"><path d="M31.61 13.14c-.5-1.99-1.43-2.75-3.14-3.03-.98-.14-5.71-.33-9.47-.33-3.76 0-8.49.19-9.47.33-1.71.27-2.64 1.04-3.14 3.03-.16.66-.39 4.32-.39 5.71v.31c0 1.39.23 5.04.4 5.71.49 1.98 1.43 2.75 3.14 3.02.98.15 5.72.33 9.48.33H19c3.76 0 8.49-.19 9.48-.33 1.71-.27 2.64-1.04 3.14-3.02.15-.67.38-4.32.38-5.72v-.31c0-1.38-.23-5.04-.39-5.7zm-15.73 9.19v-6.66l6.23 3.25-6.23 3.41z"></path></svg>',
     content:'<svg viewBox="0 0 38 38"><g><path d="M16 12H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V14c0-1.1-.9-2-2-2zm0 12H5V14h11v10zM21 14h13c.55 0 1-.45 1-1s-.45-1-1-1H21c-.55 0-1 .45-1 1s.45 1 1 1zM34 16H21c-.55 0-1 .45-1 1s.45 1 1 1h13c.55 0 1-.45 1-1s-.45-1-1-1zM34 20H21c-.55 0-1 .45-1 1s.45 1 1 1h13c.55 0 1-.45 1-1s-.45-1-1-1zM28 24h-7c-.55 0-1 .45-1 1s.45 1 1 1h7c.55 0 1-.45 1-1s-.45-1-1-1z"></path></g></svg>',
     tab:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M27.88 5.93c-.08-.18-.19-.35-.33-.49s-.3-.25-.49-.33c-.18-.08-.38-.12-.59-.12h-3.83c.23.46.36.98.36 1.53v2.47h5V6.52c0-.21-.04-.41-.12-.59ZM15.91 9H21V6.53c0-.21-.04-.41-.12-.59-.08-.18-.19-.35-.33-.49s-.3-.25-.49-.33c-.18-.08-.38-.12-.59-.12h-3.8c.15.36.23.75.23 1.15V9Z"></path><path d="M26.96 11H14V6.15a1.156 1.156 0 0 0-.71-1.07 1.13 1.13 0 0 0-.45-.09H5.15c-.32 0-.61.13-.82.34-.21.21-.34.5-.34.82v19.8c0 .58.47 1.04 1.04 1.04h21.91c.58 0 1.04-.47 1.04-1.04V12.04c0-.58-.47-1.04-1.04-1.04Zm-.85 14.11H5.89V12.88h20.23v12.23Z"></path></svg>',
+    /* 261027 추가 — 히어로 섹션 아이콘(왕관 · 트로피 제안 09 「반짝 왕관」): 왕관(본체 · 끝 구슬 3 · 띠)을 왼쪽 아래로 조금 줄여 두고 오른쪽 위에 반짝임. 처음 넣은 제안 02 「꽉 찬 첫 화면」에서 교체 */
+    hero:'<svg viewBox="0 0 38 38"><g transform="translate(17.3 20.2) scale(.84) translate(-19 -18.8)"><path d="M8.6 14.5L13.2 19.2L19 11.8L24.8 19.2L29.4 14.5L27.8 23.6H10.2ZM6.7 13.2a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0zM17.3 10.1a1.7 1.7 0 1 0 3.4 0a1.7 1.7 0 1 0 -3.4 0zM28.1 13.2a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0zM11 25h16a1 1 0 0 1 1 1v0.6a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-0.6a1 1 0 0 1 1 -1z"/></g><path d="M28.5 7.2c.35 2.1 1.1 2.85 3.2 3.2-2.1.35-2.85 1.1-3.2 3.2-.35-2.1-1.1-2.85-3.2-3.2 2.1-.35 2.85-1.1 3.2-3.2z"/></svg>',
     gallery:'<svg viewBox="0 0 38 38"><g><path d="M12.86 11.29H8c-.55 0-1 .45-1 1v4.86c0 .55.45 1 1 1h4.86c.55 0 1-.45 1-1v-4.86c0-.56-.45-1-1-1zM21.43 11.29h-4.86c-.55 0-1 .45-1 1v4.86c0 .55.45 1 1 1h4.86c.55 0 1-.45 1-1v-4.86c0-.56-.45-1-1-1zM30 11.29h-4.86c-.55 0-1 .45-1 1v4.86c0 .55.45 1 1 1H30c.55 0 1-.45 1-1v-4.86c0-.56-.45-1-1-1zM12.86 19.86H8c-.55 0-1 .45-1 1v4.86c0 .55.45 1 1 1h4.86c.55 0 1-.45 1-1v-4.86c0-.56-.45-1-1-1zM21.43 19.86h-4.86c-.55 0-1 .45-1 1v4.86c0 .55.45 1 1 1h4.86c.55 0 1-.45 1-1v-4.86c0-.56-.45-1-1-1zM30 19.86h-4.86c-.55 0-1 .45-1 1v4.86c0 .55.45 1 1 1H30c.55 0 1-.45 1-1v-4.86c0-.56-.45-1-1-1z"></path></g></svg>',
     linkgal:'<svg viewBox="0 0 38 38"><path d="M21.43 15.14h-4.86c-.55 0-1-.45-1-1V9.29c0-.55.45-1 1-1h4.86c.55 0 1 .45 1 1v4.86c0 .55-.45.99-1 .99z"></path><path d="M12.86 28.71H8c-.55 0-1-.45-1-1v-4.86c0-.55.45-1 1-1h4.86c.55 0 1 .45 1 1v4.86c0 .56-.45 1-1 1z"></path><path d="M21.43 28.71h-4.86c-.55 0-1-.45-1-1v-4.86c0-.55.45-1 1-1h4.86c.55 0 1 .45 1 1v4.86c0 .56-.45 1-1 1z"></path><path d="M30 28.71h-4.86c-.55 0-1-.45-1-1v-4.86c0-.55.45-1 1-1H30c.55 0 1 .45 1 1v4.86c0 .56-.45 1-1 1z"></path><path d="M28.03 24h-1.06v-3.5c0-.81-.61-1.47-1.36-1.47H12.39c-.75 0-1.36.66-1.36 1.47V24H9.97v-3.5c0-1.39 1.08-2.53 2.42-2.53h13.22c1.33 0 2.42 1.13 2.42 2.53V24z"></path><path d="M18.46 15h1.09v9h-1.09z"></path></svg>',
     board:'<svg viewBox="0 0 38 38"><path d="M34 15h-8v-3c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h2v4l4-4h5v1c0 .55.45 1 1 1h11l4 4v-4h2c.55 0 1-.45 1-1v-7c0-.55-.45-1-1-1zm-18 1v4h-5l-2.5 2.5V20H6c-.55 0-1-.45-1-1v-6c0-.55.45-1 1-1h17c.55 0 1 .45 1 1v2h-7c-.55 0-1 .45-1 1zm4.5 5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>',
@@ -21365,7 +21428,7 @@
     /* 261012 수정 — 순서를 4묶음으로: ① 기본 재료(텍스트 · 이미지 / 영상 · 슬라이드쇼 · 갤러리 · 컨텐츠 · 탭) ② 사이트 데이터 연동(게시판 · 최근게시물 · 연동갤러리 · 쇼핑후기연동)
        ③ 방문자에게 받기 · 안내(폼 · 캘린더 · 컨택트 / 지점 · 소셜) ④ 작은 부품(버튼 · 구분선 · 기타). 열면 첫 칸이 선택된다. 같은 날 다시 수정 — 기본 재료 묶음은 이미지 / 영상 · 갤러리 / 쇼핑 · 텍스트 · 슬라이드쇼 순: 사진 중심 서비스라 사진·영상이 페이지의 중심 내용이고, 텍스트는 캡션·제목·본문으로 다른 블럭 안에서도 채워지며, 슬라이드쇼는 페이지당 한 번. 이미지(한 장)가 갤러리보다 자주 쓰여 맨 앞. 버튼은 구분선 앞(260919) 그대로 · 묶음 사이 구분선은 두지 않는다
        (261008 결정 유지 — 빗금 이름은 앞뒤를 띄운다 · 이미지 + 동영상은 한 칸, id 는 image 그대로 · BA_ICON.video 는 쓰지 않고 남겨 둔다) */
-    {n:'이미지 / 영상',i:'image'},{n:'갤러리',i:'gallery'},   /* 261016 수정 — 「갤러리 / 쇼핑」 → 「갤러리」 */{n:'텍스트',i:'text'},{n:'슬라이드쇼',i:'slide'},{n:'컨텐츠',i:'content'},{n:'탭',i:'tab'},
+    {n:'이미지 / 영상',i:'image'},{n:'히어로 섹션',i:'hero'},   /* 261027 추가 — 갤러리에서 컨텐츠 관리 창(gcm)을 쓰지 않는 블럭을 분리 · 두 번째 칸 */{n:'갤러리',i:'gallery'},   /* 261016 수정 — 「갤러리 / 쇼핑」 → 「갤러리」 */{n:'텍스트',i:'text'},{n:'슬라이드쇼',i:'slide'},{n:'컨텐츠',i:'content'},{n:'탭',i:'tab'},
     {n:'게시판',i:'board'},{n:'최근게시물',i:'recent'},   /* 261013 삭제 — 연동갤러리 · 쇼핑후기연동 카테고리 (BA_ICON 의 linkgal · review 그림은 남겨 둔다) */
     {n:'폼',i:'form'},{n:'캘린더',i:'calendar'},{n:'컨택트 / 지점',i:'map'},{n:'소셜',i:'social'},
     {n:'버튼',i:'button'},{n:'구분선',i:'divider'},{n:'기타',i:'etc'}
@@ -22702,7 +22765,90 @@
     {n:'고운바탕 (한글 명조)', f:"'Gowun Batang'", fb:'serif'},
     {n:'본명조 KR (한글 명조)', f:"'Noto Serif KR'", fb:'serif'},
     {n:'본고딕 KR (한글 고딕)', f:"'Noto Sans KR'", fb:'sans-serif'},
-    {n:'Helvetica Neue', f:"'Helvetica Neue'", fb:'Arial,sans-serif'}
+    {n:'Inter', f:"'Inter'", fb:'Arial,sans-serif'},   /* 261028 수정 — 9번 Helvetica Neue(유료 라이선스) → Inter. 번호(저장값)는 그대로 */
+    /* ── 261028 추가 — 좌측 사이트 글꼴 (번호가 저장값이라 항상 뒤에 이어 붙일 것 · 중간 삽입/삭제 금지) ── */
+    {n:'IBM Plex Sans KR', f:"'IBM Plex Sans KR'", fb:'sans-serif'},
+    {n:'KoPub 바탕', f:"'KoPub Batang'", fb:'serif'},
+    {n:'검은고딕', f:"'Black Han Sans'", fb:'sans-serif'},
+    {n:'G마켓 산스', f:"'Gmarket Sans'", fb:'sans-serif'},
+    {n:'고도', f:"'Godo'", fb:'sans-serif'},
+    {n:'국대떡볶이', f:"'Kukdetopokki'", fb:'sans-serif'},
+    {n:'나눔고딕', f:"'Nanum Gothic'", fb:'sans-serif'},
+    {n:'나눔고딕코딩', f:"'Nanum Gothic Coding'", fb:'monospace'},
+    {n:'나눔명조', f:"'Nanum Myeongjo'", fb:'serif'},
+    {n:'나눔바른고딕', f:"'Nanum Barun Gothic'", fb:'sans-serif'},
+    {n:'나눔바른펜', f:"'Nanum Barun Pen'", fb:'sans-serif'},
+    {n:'나눔손글씨 펜', f:"'Nanum Pen Script'", fb:'cursive'},
+    {n:'나눔손글씨 붓', f:"'Nanum Brush Script'", fb:'cursive'},
+    {n:'나눔스퀘어', f:"'Nanum Square'", fb:'sans-serif'},
+    {n:'나눔스퀘어라운드', f:"'Nanum Square Round'", fb:'sans-serif'},
+    {n:'다래손글씨', f:"'Daraehand'", fb:'cursive'},
+    {n:'도현', f:"'Do Hyeon'", fb:'sans-serif'},
+    {n:'레시피코리아', f:"'Recipekorea'", fb:'sans-serif'},
+    {n:'몬소리', f:"'Monsori'", fb:'sans-serif'},
+    {n:'비비트리고딕', f:"'BB Tree Gothic'", fb:'sans-serif'},
+    {n:'비비트리나무', f:"'BB Tree Namu'", fb:'sans-serif'},
+    {n:'비비트리손글씨', f:"'BB Tree Hand'", fb:'cursive'},
+    {n:'서울남산', f:"'Seoul Namsan'", fb:'sans-serif'},
+    {n:'서울한강', f:"'Seoul Hangang'", fb:'serif'},
+    {n:'수트', f:"'Suit'", fb:'sans-serif'},
+    {n:'스포카한산스', f:"'Spoqa Han Sans'", fb:'sans-serif'},
+    {n:'에스코어드림', f:"'S CoreDream'", fb:'sans-serif'},
+    {n:'연성', f:"'Yeon Sung'", fb:'cursive'},
+    {n:'오성과한음', f:"'Oseong and HanEum'", fb:'sans-serif'},
+    {n:'이롭게바탕', f:"'Iropke Batang'", fb:'serif'},
+    {n:'이스타체', f:"'EASTARJET'", fb:'sans-serif'},
+    {n:'잘난체', f:"'Jalnan'", fb:'sans-serif'},
+    {n:'제주고딕', f:"'Jeju Gothic'", fb:'sans-serif'},
+    {n:'제주명조', f:"'Jeju Myeongjo'", fb:'serif'},
+    {n:'제주한라산', f:"'Jeju Hallasan'", fb:'sans-serif'},
+    {n:'주아', f:"'Jua'", fb:'sans-serif'},
+    {n:'청소년체', f:"'Youth'", fb:'sans-serif'},
+    {n:'한겨레결체', f:"'Hangyule'", fb:'sans-serif'},
+    {n:'한나', f:"'Hanna'", fb:'sans-serif'},
+    {n:'Abel', f:"'Abel'", fb:'sans-serif'},
+    {n:'Abril Fatface', f:"'Abril Fatface'", fb:'serif'},
+    {n:'Alegreya', f:"'Alegreya'", fb:'serif'},
+    {n:'Aliquam', f:"'Aliquam'", fb:'sans-serif'},
+    {n:'Archivo', f:"'Archivo'", fb:'sans-serif'},
+    {n:'Belleza', f:"'Belleza'", fb:'sans-serif'},
+    {n:'Cardo', f:"'Cardo'", fb:'serif'},
+    {n:'Caveat', f:"'Caveat'", fb:'cursive'},
+    {n:'Chakra Petch', f:"'Chakra Petch'", fb:'sans-serif'},
+    {n:'Cookie', f:"'Cookie'", fb:'cursive'},
+    {n:'Cutive Mono', f:"'Cutive Mono'", fb:'monospace'},
+    {n:'Dancing Script', f:"'Dancing Script'", fb:'cursive'},
+    {n:'Dosis', f:"'Dosis'", fb:'sans-serif'},
+    {n:'Fredoka', f:"'Fredoka'", fb:'sans-serif'},
+    {n:'Great Vibes', f:"'Great Vibes'", fb:'cursive'},
+    {n:'Ibarra Real Nova', f:"'Ibarra Real Nova'", fb:'serif'},
+    {n:'Jost', f:"'Jost'", fb:'sans-serif'},
+    {n:'Krona One', f:"'Krona One'", fb:'sans-serif'},
+    {n:'Lato', f:"'Lato'", fb:'sans-serif'},
+    {n:'League Spartan', f:"'League Spartan'", fb:'sans-serif'},
+    {n:'Libre Baskerville', f:"'Libre Baskerville'", fb:'serif'},
+    {n:'Lora', f:"'Lora'", fb:'serif'},
+    {n:'Montserrat', f:"'Montserrat'", fb:'sans-serif'},
+    {n:'Mulish', f:"'Mulish'", fb:'sans-serif'},
+    {n:'Nixie One', f:"'Nixie One'", fb:'serif'},
+    {n:'Noto Sans', f:"'Noto Sans'", fb:'sans-serif'},
+    {n:'Open Sans', f:"'Open Sans'", fb:'sans-serif'},
+    {n:'Oswald', f:"'Oswald'", fb:'sans-serif'},
+    {n:'Parisienne', f:"'Parisienne'", fb:'cursive'},
+    {n:'Playball', f:"'Playball'", fb:'cursive'},
+    {n:'Poppins', f:"'Poppins'", fb:'sans-serif'},
+    {n:'PT Sans', f:"'PT Sans'", fb:'sans-serif'},
+    {n:'PT Serif', f:"'PT Serif'", fb:'serif'},
+    {n:'Questrial', f:"'Questrial'", fb:'sans-serif'},
+    {n:'Quicksand', f:"'Quicksand'", fb:'sans-serif'},
+    {n:'Raleway', f:"'Raleway'", fb:'sans-serif'},
+    {n:'Roboto', f:"'Roboto'", fb:'sans-serif'},
+    {n:'Roboto Slab', f:"'Roboto Slab'", fb:'serif'},
+    {n:'Source Code Pro', f:"'Source Code Pro'", fb:'monospace'},
+    {n:'Space Mono', f:"'Space Mono'", fb:'monospace'},
+    {n:'Staatliches', f:"'Staatliches'", fb:'sans-serif'},
+    {n:'Stalemate', f:"'Stalemate'", fb:'cursive'},
+    {n:'Titillium Web', f:"'Titillium Web'", fb:'sans-serif'}
   ];
   function smNum(v,d){ var n=parseFloat(v); return isFinite(n)?n:d; }
   function smStack(i){ var f=SM_FONTS[i]||SM_FONTS[0]; return f.f+','+f.fb; }
@@ -23107,7 +23253,7 @@
     '<svg xmlns="http://www.w3.org/2000/svg" width="551" height="230" viewBox="0 0 551 230">'
     +'<rect width="551" height="230" fill="#f2f2f0"/>'
     +'<path id="axth" d="M-1057 637.2 L-247.9 243 L-207.7 223.4 L-167.4 205.3 L-127.2 188.9 L-86.9 174 L-46.6 160.6 L-6.4 148.8 L33.9 138.6 L74.2 130 L114.4 123 L154.7 117.5 L195 113.5 L235.2 111.2 L275.5 110.4 L315.8 111.2 L356 113.5 L396.3 117.5 L436.6 123 L476.8 130 L517.1 138.6 L557.4 148.8 L597.6 160.6 L637.9 174 L678.2 188.9 L718.4 205.3 L758.7 223.4 L798.9 243 L1608 637.2" fill="none"/>'
-    +'<text font-family="Helvetica Neue,Arial,sans-serif" font-size="54" font-weight="800"'
+    +'<text font-family="Inter,Arial,sans-serif" font-size="54" font-weight="800"'
     +' fill="none" stroke="#ff780a" stroke-width="1.2">'
     +'<textPath href="#axth" startOffset="797.3">BEHIND THE ILLUSION THERE ARE THREE ACTS.</textPath></text>'
     +'</svg>');
@@ -23118,7 +23264,7 @@
   /* 260916 추가 — 글자 올라오기 썸네일 (기본값 축소 · 마지막 줄 글자가 올라오는 중) */
   var BA_RISE_THUMB=(function(){
     var L1='WE DESIGN DIGITAL EXPERIENCES', L2='THAT MOVE WITH YOUR STORY,', L3='ONE LETTER AT A TIME.';
-    var ff='Helvetica Neue,Arial,sans-serif';
+    var ff='Inter,Arial,sans-serif';
     var dys=[], prev=0, i;
     for(i=0;i<L3.length;i++){ var y=Math.max(0,Math.min(1,(i-5)/11))*30; dys.push((y-prev).toFixed(1)); prev=y; }
     return 'data:image/svg+xml;utf8,'+encodeURIComponent(
@@ -23323,7 +23469,7 @@
   ];
   /* 슬라이드쇼 카테고리 카드 (3D 스트립 갤러리) — 썸네일은 인라인 SVG */
   var BA_STRIP_THUMB=ED_IMG+'ba/slide01-4.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
-  /* 갤러리 카테고리 카드 (플로팅 3D 갤러리) — 썸네일은 인라인 SVG */
+  /* 히어로 섹션 카테고리 카드 (플로팅 3D 갤러리 · 261027 갤러리에서 이동) — 썸네일은 인라인 SVG */
   var BA_FLOAT_THUMB=ED_IMG+'ba/gallery01-8.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   /* 260826 추가 / 260827 교체 — 3D 카드 회전 썸네일 (실제 블럭 스크린샷) */
   var BA_RING_THUMB=ED_IMG+'ba/slide02-4.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
@@ -23345,7 +23491,7 @@
     {no:7, kind:'imggrid', preset:'photo1',   label:'SLIDE07', ar:'800/573', img:BA_PRE_THUMB.photo1},
     {no:8, kind:'imggrid', preset:'multi4',   label:'SLIDE08', ar:'800/283', img:BA_PRE_THUMB.multi4},
     {no:9, kind:'imggrid', preset:'logoflow', label:'SLIDE09', ar:'800/100', img:BA_PRE_THUMB.logoflow},
-    {no:1, kind:'stripgal', label:'SLIDE01', tag:'3D', ar:'552/230', img:BA_STRIP_THUMB, vid:'ba/slide01-4'}   /* 261014 — 갤러리 카테고리에도 같은 카드가 들어간다(BA_CARDS_GALLERY 뒤 cross-listing) */   /* 260918 재녹화 — 드래그 스와이프 앞으로 4칸(1→5), 뒤로 3칸(5→2) */,
+    {no:1, kind:'stripgal', label:'SLIDE01', tag:'3D', ar:'552/230', img:BA_STRIP_THUMB, vid:'ba/slide01-4'}   /* 261014 — 갤러리 카테고리에도 같은 카드가 들어간다(BA_CARDS_GALLERY 뒤 cross-listing · 261027 → 히어로 섹션 BA_CARDS_HERO) */   /* 260918 재녹화 — 드래그 스와이프 앞으로 4칸(1→5), 뒤로 3칸(5→2) */,
     {no:2, kind:'cardring', label:'SLIDE02', tag:'3D', ar:'552/274', img:BA_RING_THUMB, vid:'ba/slide02-4'}   /* 260918 재녹화 — 느린 드래그 + 관성, 원본 25fps 그대로(30fps 변환 시 프레임 중복으로 끊겨 보였다) */,
     {no:3, kind:'bookflip2', label:'SLIDE03', tag:'3D', ar:'552/304', img:BA_BOOK2_THUMB, vid:'ba/slide03-2'}   /* 260921 재녹화 — 펼친 뒤 질감이 툭 바뀌던 것 수정 · 더 천천히 */
   ];
@@ -23454,6 +23600,15 @@
   (function(){ var c=BA_CARDS_SLIDE.filter(function(x){ return x.kind==='cardring'; })[0]; if(c) BA_CARDS_GALLERY.push(Object.assign({},c,{no:26, grp:'3D', tag:'3D · 카드 회전', preset:'gallery', img:ED_IMG+'ba/gallery26-2.jpg', vid:'ba/gallery26'})); })();   /* 261020 수정 — 갤러리형(글·버튼 없음) 롤오버 영상 새로 녹화 · 썸네일은 그 첫 컷(jsDelivr @main 캐시 때문에 새 이름 -2) */
   /* 261014 추가 — 갤러리 카드 차례: 움직이는 것(3D · 모션)을 위에, 정적인 그리드를 아래에. 묶음 안에서는 원래 차례 그대로(라벨 번호 · 영상 이름은 건드리지 않는다) */
   BA_CARDS_GALLERY=BA_CARDS_GALLERY.filter(function(c){ return c.grp!=='그리드'; }).concat(BA_CARDS_GALLERY.filter(function(c){ return c.grp==='그리드'; }));   /* 261014 — 썸네일은 카드만 찍힌 것(editor-assets/ba/gallery26.jpg · 1104×548) · 롤오버 영상은 글 포함이라 뺐다 → 261020 갤러리형 전용 영상 ba/gallery26 · 썸네일 gallery26-2.jpg 로 교체 */
+  /* 261027 추가 — 히어로 섹션 분리: 갤러리 카테고리에서 컨텐츠 관리 창(gcm · 그리드 갤러리 gridgal 전용)을 쓰지 않는 블럭(3D · 모션 15장)을 「히어로 섹션」으로 옮긴다.
+     카드 이름(GALLERY01 · SLIDE01 …) · 썸네일 · 미리보기 영상 · 배지(유형 · 이름)는 그대로 — 실제 이름은 바꾸지 않는다. 갤러리에는 그리드 11장만 남는다 */
+  var BA_CARDS_HERO=BA_CARDS_GALLERY.filter(function(c){ return c.kind!=='gridgal'; });
+  BA_CARDS_GALLERY=BA_CARDS_GALLERY.filter(function(c){ return c.kind==='gridgal'; });
+  /* 261027 추가 — 히어로 섹션 정리: 첫 화면용으로
+     · SLIDE02(3D 카드 회전)는 갤러리용 시작값(preset:'gallery' — 글 · 모티프 · 버튼 끄고 확대 보기) 대신 슬라이드쇼의 원래 카드(글 · 버튼 있음)를 쓴다
+     · 슬라이드쇼의 장면형 SLIDE04~06(전체 폭 · 한 장면씩 · 사진 위에 글)을 같이 둔다 — 261028 수정: 맨 앞 → 목록 맨 뒤(cross-listing — 정의는 슬라이드쇼 한 곳, 카드는 복사) · 위 탭 「와이드」 */
+  BA_CARDS_HERO=BA_CARDS_HERO.map(function(c){ if(c.kind!=='cardring') return c; var o=BA_CARDS_SLIDE.filter(function(x){ return x.kind==='cardring'; })[0]; return o?Object.assign({},o,{grp:'3D', tag:'3D · 카드 회전'}):c; });
+  BA_CARDS_HERO=BA_CARDS_HERO.concat(([['scene1','가운데 글'],['scene2','글 + 버튼'],['scene3','오른쪽 글']].map(function(p){ var o=BA_CARDS_SLIDE.filter(function(x){ return x.preset===p[0]; })[0]; return o?Object.assign({},o,{grp:'와이드', tag:'와이드 · '+p[1]}):null; }).filter(Boolean)));   /* 261028 수정 — 장면형은 뒤로 */
   /* 260825 수정 — 3D 텍스트 카드는 텍스트 카테고리로 이동
      260827 수정 — 3D 카드 회전은 갤러리 → 컨텐츠 카테고리로 이동
      260901 수정 — 3D 카드 회전은 컨텐츠 → 슬라이드쇼 카테고리로 이동 */
@@ -23467,7 +23622,7 @@
   /* 261022 추가 — 컨텐츠 블럭 시작값 (좌측 사이트 contentsNN 견본 그대로 — 문구 · 사진 · 글꼴 크기 · 색). 키 = 'k' + 사이트 번호.
      좌우 반전 짝(4↔5 · 25↔26 · 27↔28 · 31↔32 · 33↔34 · 35↔36 · 37↔38 · 39↔40 · 93↔94 · 95↔96 · 110↔111 · 112↔113 · 114↔115 · 116↔117 · 121↔122 · 123↔124 · 125↔126 · 118↔119↔120 · 29↔30 · 59↔60)은 「좌우 반전」으로,
      칸 수만 다른 묶음(6·7·8 · 11·12·13 · 16·17·18 · 19·20·21 · 41·42·43 · 44·45·46 · 47·48·49 · 50·51·52 · 53·54·55 · 61·62·63 · 67·68·69 · 73·74·75 · 77·78·79 · 80·81·82 · 83·84·85 · 97·98·99 · 102·103·104 · 106·107·108)은 「칸 수」로 합쳤다.
-     글꼴 번호 = SM_FONTS (0 Instrument Serif · 1 Playfair · 7 본명조 · 8 본고딕 · 9 Helvetica Neue) */
+     글꼴 번호 = SM_FONTS (0 Instrument Serif · 1 Playfair · 7 본명조 · 8 본고딕 · 9 Inter) */
   var CN_PRESETS=(function(){
     var G=8, M=7, E=9, P=1, R=0;
     function its(a){ return a.map(function(x){ return (typeof x==='string')?{img:x,t:'',s:'',d:''}:{img:x.img||'',t:x.t||'',s:x.s||'',d:x.d||''}; }); }
@@ -23631,14 +23786,15 @@
      예전 기본 탭(BA_FILTERS: 배경이미지 · 박스형 · 목업 …)은 어느 카드에도 맞지 않는 더미였다 */
   var BA_CAT_FILTERS={
     text:['전체','기본','모션','목록'],                 /* 기본 = 텍스트 블럭 시작값 9종 · 모션 = 번짐·3D·타이핑·곡선·올라오기·스크롤 읽기(갤러리와 같은 말) · 목록 = 인덱스·FAQ·Q&A */
-    image:['전체','이미지','동영상','로고','3D'],        /* 이미지 = 이미지 블럭 시작값 · 동영상 = 동영상 시작값 + VIDEO · 로고 = 로고 띠 · 3D = 3D 배경(CSS 3D)·구김(WebGL) */
+    image:['전체','이미지','동영상','로고'],        /* 이미지 = 이미지 블럭 시작값 · 동영상 = 동영상 시작값 + VIDEO · 로고 = 로고 띠 · 261028 삭제 — 3D(3D 배경 · 구김)는 히어로 섹션으로 */
     calendar:[],
     slide:['전체','3D','와이드','기본'],                /* 3D = 스트립·카드 회전·책자 / 와이드 = 장면형(가로 꽉 참 · 이미지 카테고리의 「와이드」와 같은 말) / 기본 = 사진만·여러 칸·로고 띠 */
     form:['전체','문의','정보 수집','신청'],             /* 문의 = 기본·문의·메시지 보내기 / 정보 수집 = 기본·개인·회사·고객 정보 / 신청 = 회의 일정·주문서·설문조사 */
     content:['전체','좌우','칸','가운데','목록','히스토리','3D','스크롤'],   /* 261022 수정 — 히스토리(연혁 블럭 6장 · 라이브 컨텐츠 > 히스토리 탭) */   /* 261022 수정 — 컨텐츠 블럭(cnblk) 배치 묶음: 좌우 = 이미지 + 글 · 칸 = 칸 · 이미지 위 글 · 바둑판 · 가운데 = 가운데 쌓기 · 액자 · 프로필 · 목록 = 글 목록 */                     /* 3D = 책자 넘김 · 스크롤 = 스택 카드. 이전·이후 비교는 어느 쪽도 아니라 「전체」에만 */
     button:['전체','채움','선','글자','움직임','빛·그림자'],   /* 효과(fx) 종류로 — 이름만 보고 가른 것이라 어긋나면 BA_GRP.button 에서 고친다 */
     map:['전체','지도','입력폼','상담 신청','지점'],      /* 컨택트 카드의 용도 태그 그대로 */
-    gallery:['전체','그리드','모션','3D'],
+    hero:['전체','와이드','모션','3D'],   /* 261027 추가 — 히어로 섹션(갤러리에서 분리한 3D · 모션 + 슬라이드쇼 장면형 와이드) */
+    gallery:[],   /* 261027 수정 — 그리드만 남아 위 탭 줄 없음(['전체','그리드','모션','3D'] → 모션 · 3D 는 히어로 섹션으로) */
     board:['전체','일반','이미지','FAQ','Q&A','방명록'],
     etc:['전체','카운트다운','숫자 카운터','QR 코드'],   /* 261019 수정 — 카운트다운 · 숫자 카운터 · QR 코드 */
     divider:['전체','선','장식']   /* 261019 추가 — 선 = 선만 · 장식 = 가운데·끝 장식이 있는 것 (33~38 도 같은 기준으로 가른다) */
@@ -23664,7 +23820,7 @@
     slide:{ stripgal:'3D', cardring:'3D', bookflip2:'3D', scene1:'와이드', scene2:'와이드', scene3:'와이드', photo1:'기본', multi4:'기본', logoflow:'기본' },
     form:{ basic:'문의', gray:'문의', message:'문의', info:'정보 수집', personal:'정보 수집', company:'정보 수집', customer:'정보 수집', meeting:'신청', order:'신청', survey:'신청' },
     text:{ cred:'기본', smeartext:'모션', polytext:'모션', typetext:'모션', arctext:'모션', risetext:'모션', scrollread:'모션', idxlist:'목록', faqacc:'목록', qnaacc:'목록' },
-    image:{ imggrid:'이미지', 'imggrid/video':'동영상', 'imggrid/yt1':'동영상', 'imggrid/yt2':'동영상', 'imggrid/shorts3':'동영상', 'cred/vtext':'동영상', 'cred/bgvid':'동영상', 'imggrid/logo5':'로고', 'imggrid/logo5d':'로고', moto3d:'3D', crumple:'3D' },
+    image:{ imggrid:'이미지', 'imggrid/video':'동영상', 'imggrid/yt1':'동영상', 'imggrid/yt2':'동영상', 'imggrid/shorts3':'동영상', 'cred/vtext':'동영상', 'cred/bgvid':'동영상', 'imggrid/logo5':'로고', 'imggrid/logo5d':'로고' },   /* 261028 삭제 — moto3d · crumple 은 히어로 섹션(grp 를 옮길 때 직접 준다) */
     button:{ invert:'채움', fill:'채움', wipe:'채움', bgrow:'채움', highlight:'채움', fade:'채움',
              line:'선', cline:'선', bracket:'선', ring:'선', dot:'선', round:'선', circle:'채움',
              roll:'글자', scramble:'글자', swap:'글자', hswap:'글자', flip:'글자', tshadow:'글자',
@@ -23677,8 +23833,24 @@
       L.forEach(function(c){ var k2=c.kind+'/'+(c.preset||''); c.grp=(M[k2]!=null)?M[k2] : ((c.preset && M[c.preset]!=null)?M[c.preset] : (M[c.kind]||'')); }); });   /* kind/preset → preset → kind 차례로 찾는다 */
     BA_CARDS_CONTACT.forEach(function(c){ c.grp=c.tag; });   /* 컨택트: 용도 태그 = 탭 */
   }
-  /* 261014 추가 — 이미지: 3D(3D 배경 · 구김)를 위에, 나머지는 원래 차례(기본형 묶음 → 동영상) */
-  BA_CARDS_IMAGE=BA_CARDS_IMAGE.filter(function(c){ return c.kind==='moto3d'||c.kind==='crumple'; }).concat(BA_CARDS_IMAGE.filter(function(c){ return !(c.kind==='moto3d'||c.kind==='crumple'); }));
+  /* 261014 추가 — 이미지: 3D(3D 배경 · 구김)를 위에, 나머지는 원래 차례(기본형 묶음 → 동영상)
+     261028 수정 — 3D 두 장(3D 배경 IMAGE01 · 구김 IMAGE04)은 히어로 섹션 「3D」로 옮긴다: 첫 화면용 3D 연출이고, 목록도 갤러리 방식(썸네일 · 리스트 뷰)이라 이미지 블럭 방식(상자 + 도구줄)과 갈린다.
+     카드 이름 · 썸네일 · 영상은 그대로. 이미지 / 영상에는 사진 배치 기본형 · 동영상 · 로고만 남는다 */
+  (function(){
+    function is3d(c){ return c.kind==='moto3d'||c.kind==='crumple'; }
+    var mv=BA_CARDS_IMAGE.filter(is3d); BA_CARDS_IMAGE=BA_CARDS_IMAGE.filter(function(c){ return !is3d(c); });
+    mv.forEach(function(c){ c.grp='3D'; c.tag='3D · '+(c.kind==='moto3d'?'3D 배경':'구김'); });
+    var k=0; while(k<BA_CARDS_HERO.length && BA_CARDS_HERO[k].grp!=='와이드') k++;   /* 장면형(와이드 · 맨 뒤) 앞에 넣는다 */
+    BA_CARDS_HERO=BA_CARDS_HERO.slice(0,k).concat(mv,BA_CARDS_HERO.slice(k));
+  })();
+  /* 261028 추가 — 히어로 섹션 카드 이름 HERO01~15. 카드 이름 규칙(261026 「이름 · 번호는 바꾸지 않고 뺀 번호는 비워 둔다」)을 이렇게 정리한다:
+     카테고리를 새로 만들거나 다른 카테고리로 옮길 때만 그 카테고리 이름으로 새로 붙이고, 그 뒤로는 번호를 바꾸지 않는다(차례를 바꿔도 번호 고정 — 그래서 목록 차례로 세지 않고 표로 준다).
+     · 두 카테고리에 같이 있는 슬라이드쇼 카드(SLIDE01 · 02 · 04~06)는 SLIDE 이름 그대로 — 같은 블럭이 이름 둘을 갖지 않게
+     · 옛 이름: GALLERY01~11 · 18 · 19 → HERO01~13, IMAGE01 → HERO14, IMAGE04 → HERO15. 미리보기 영상 · 썸네일 파일 이름(gallery01-8 · image04 …)은 그대로 */
+  (function(){
+    var NO={floatgal:1, spiralgal:2, depthgal:3, scrollslider:4, vcgal:5, infgal:6, wheelcar:7, helixgal:8, gaugeslider:9, stackgal:10, imgring:11, hscrollgal:12, tiltgal:13, moto3d:14, crumple:15};
+    BA_CARDS_HERO.forEach(function(c){ var n=NO[c.kind]; if(!n || /^SLIDE/.test(c.label||'')) return; c.no=n; c.label='HERO'+(n<10?'0':'')+n; });
+  })();
   /* 261022 추가 — 소셜 카테고리: 소셜 블럭(snblk) 15장. 시작값 이름 = SN_PRESETS(아래 모듈). 위 탭 = 종류(아이콘 · 배너 · 이미지 피드) · 보라 태그 = 모양 */
   var BA_CARDS_SOCIAL=[['brand','아이콘','브랜드 색'],['circle','아이콘','원'],['round','아이콘','둥근 사각'],['mono','아이콘','검정'],['monoc','아이콘','검정 원'],['line','아이콘','외곽선'],['tile','아이콘','흰 사각'],['photo','아이콘','사진 위'],
     ['brow','배너','글 왼쪽'],['bover','배너','사진 위'],['bcard','배너','가운데'],['f6','이미지 피드','6열'],['f7','이미지 피드','7열 한 줄'],['f4','이미지 피드','4열'],['fhead','이미지 피드','계정 머리줄']].map(function(p,i){
@@ -23692,9 +23864,9 @@
   var BA_CARDS_RECENT=[['l1','목록','기본'],['l2','목록','윗선'],['l3','목록','밑줄'],['l4','목록','진한 바탕'],['l5','목록','옅은 바탕'],['c5','이미지','카드'],['r1l','이미지','리스트 크게'],['r1s','이미지','리스트'],['r2r','이미지','2열 오른쪽'],['r2l','이미지','2열 왼쪽']].map(function(p,i){
     return {no:i+1, kind:'ltblk', preset:p[0], label:'LATEST'+(i<9?'0':'')+(i+1), grp:p[1], tag:p[2], ar:(p[1]==='목록'?'552/110':'552/170')};
   });
-  var BA_CAT_CARDS={ text: BA_CARDS_TEXT, image: BA_CARDS_IMAGE, gallery: BA_CARDS_GALLERY, content: BA_CARDS_CONTENT, button: BA_CARDS_BUTTON, form: BA_CARDS_FORM, calendar: BA_CARDS_CALENDAR, map: BA_CARDS_CONTACT, board: BA_CARDS_BOARD, divider: BA_CARDS_DIVIDER, etc: BA_CARDS_ETC };   /* 261019 수정 — 구분선 */   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */
+  var BA_CAT_CARDS={ text: BA_CARDS_TEXT, image: BA_CARDS_IMAGE, hero: BA_CARDS_HERO, gallery: BA_CARDS_GALLERY, content: BA_CARDS_CONTENT, button: BA_CARDS_BUTTON, form: BA_CARDS_FORM, calendar: BA_CARDS_CALENDAR, map: BA_CARDS_CONTACT, board: BA_CARDS_BOARD, divider: BA_CARDS_DIVIDER, etc: BA_CARDS_ETC };   /* 261019 수정 — 구분선 */   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */
   baGrpAssign();
-  var BA_CAT_PFX={ text:'TEXT', image:'IMAGE', gallery:'GALLERY', content:'CONTENT', button:'BUTTON', form:'FORM', calendar:'CALENDAR', map:'CONTACT', board:'BOARD', divider:'DIVIDER', etc:'COUNTDOWN' };   /* 261019 수정 — 구분선 */   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */
+  var BA_CAT_PFX={ text:'TEXT', image:'IMAGE', hero:'HERO', gallery:'GALLERY', content:'CONTENT', button:'BUTTON', form:'FORM', calendar:'CALENDAR', map:'CONTACT', board:'BOARD', divider:'DIVIDER', etc:'COUNTDOWN' };   /* 261019 수정 — 구분선 */   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */
   BA_CAT_CARDS.social=BA_CARDS_SOCIAL; BA_CAT_PFX.social='SOCIAL';   /* 261022 추가 — 소셜 */
   BA_CAT_CARDS.tab=BA_CARDS_TAB; BA_CAT_PFX.tab='TAB'; if(typeof BA_CAT_FILTERS!=='undefined') BA_CAT_FILTERS.tab=[];   /* 261023 추가 — 탭 (8장이라 위 탭 줄 없음) */
   BA_CAT_CARDS.recent=BA_CARDS_RECENT; BA_CAT_PFX.recent='LATEST'; if(typeof BA_CAT_FILTERS!=='undefined') BA_CAT_FILTERS.recent=['전체','목록','이미지'];   /* 261023 추가 — 최근게시물 */
@@ -24303,7 +24475,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260824 추가 — MOTO 3D 이미지 블럭
-     · 블럭추가 > 이미지 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261028 이미지 / 영상에서 이동 · IMAGE01)
      · 블럭설정 전용 패널(메인카피/버튼 · 3D효과 · 타일 · 배경)
      ══════════════════════════════════════════════════════════════════ */
   var MT_TILES=[
@@ -25686,7 +25858,7 @@
      · 패널은 한 줄 — 제목 칸(+ 내용·카테고리 등 덧칸). 삭제는 타일 모서리 ×
      · 261015 수정 — 항목의 주소(URL) 입력은 뺐다: 줄의 URL 아이콘·주소 칸, 버튼 줄 「URL」, 빈 줄 자동 펼침 모두. 라이브에서는 소재가 전부 서버(업로드 → 보관함)에서 오므로 외부 주소는 입력값이 아니고,
        🔗 아이콘이 이미지 블럭의 「페이지 링크」와 같은 모양이라 뜻이 충돌했다. 항목 교체는 썸네일 → 보관함 · 끌어 놓기 · 업로드. 데이터(src)는 그대로(견본의 외부 URL 은 계속 돈다)
-     · 주소만 있던 목록(data-urlonly · 3D 배경 mt · 구김 ck)은 패널이 비므로 격자에서 패널을 열지 않는다(타일 클릭 = 보관함만)
+     · 주소만 있던 목록(data-urlonly · 3D 배경 mt — 261028 구김 ck 는 사진별 링크가 생겨 빠짐)은 패널이 비므로 격자에서 패널을 열지 않는다(타일 클릭 = 보관함만)
      · 엔진의 xxImgRender 가 innerHTML 을 다시 그려도 펼친 줄(list._mtOpen)을 지킨다 ══ */
   (function(){
     var ROW='.mt-imgrow,.sg-imgrow,.fl-imgrow', TH='.mt-imgthumb,.sg-imgthumb,.fl-imgthumb', CAPS='.vc-caps,.sg-caps,.fl-caps,.mtk-field';   /* 261014 — 스트립(.sg-*) · 떠다님(.fl-*) · 카드 회전(.mtk-field)도 */
@@ -25727,7 +25899,7 @@
     });
     /* ── 뷰 전환 ── 썸네일 뷰(격자)를 쓸 수 있는 목록 = 항목의 정체가 사진인 갤러리들(엔진 키 → 목록 id 는 BLK_PICK_LIST). 폼·퀵메뉴·게시판·스택 카드 등 글이 본체인 목록은 넣지 않는다 */
     var GRID_KEYS=['hx','dg','ig','wc','hg','ss','sk','ir','hz','tg','gs','sg','cr','fl','mt','ck','vc'];   /* 261015 추가 — 세로 스크롤 갤러리(vc · 정보 칸 4개 + 링크는 둘째 줄 이후 전체 폭) */   /* 261014 — 나선 + A 11종 + 스트립(sg · 제목·부제만 → data-nourl) + 카드 회전(cr · .mtk-field) + 떠다님(fl · .fl-*) + 3D 스트립(mt) · 구김(ck · 주소만 → data-urlonly) */
-    var GRID_NOURL={sg:1}, GRID_URLONLY={mt:1,ck:1};
+    var GRID_NOURL={sg:1}, GRID_URLONLY={mt:1};   /* 261028 수정 — 구김(ck)은 사진별 링크가 생겨 패널을 연다(썸네일 뷰 클릭 = 링크 · 리스트 뷰 줄 = 썸네일 + 링크 + 휴지통) */
     var ICO_GRID='<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>';
     var ICO_LIST='<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
     /* 261015 수정 — 뷰 선택은 저장하지 않는다: 편집기를 열 때마다 모든 갤러리가 썸네일 뷰로 시작하고, 리스트 뷰로 바꾼 건 그 세션 안에서만(전체 공통) 유지 */
@@ -25918,7 +26090,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260824 추가 — 플로팅 3D 갤러리 블럭 (FLOATING GALLERY)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 흩뿌려진 카드 부유 + 드래그 회전(쿼터니언 트랙볼 + 관성) + 클릭 확대
      · 이미지 직접 입력(URL + 제목/카테고리) · 개수/크기/속도 등 옵션
      ══════════════════════════════════════════════════════════════════ */
@@ -26606,7 +26778,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260915 추가 — 깊이 갤러리 블럭 (DEPTH GALLERY · 참조: Originkit "Depth Gallery")
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 사진이 복도처럼 z축으로 늘어서고, 스크롤(또는 드래그)하면 다음 사진으로 날아 들어가며 교차 페이드.
        배경은 지금 보는 사진의 색으로 물든다(이미지 12×12 샘플 → HSL 무드 색 + 번짐 2개 + 그레인).
      · 260916 수정 — 스크롤 방식을 나선형 갤러리(GALLERY02)와 같은 두 갈래로 정리했다 (예전 '스크롤 잠금' 토글 · 자유 모드는 없앴다).
@@ -27585,8 +27757,8 @@
   /* 261012 추가 — 이미지 블럭(IMAGE02) 프리셋: 블럭추가 > 이미지 / 영상의 기본형 카드(IMAGE05~10). 블럭은 같은 imggrid 하나이고 시작값만 다르다 — 넣은 뒤에는 IMAGE02 와 같은 설정창에서 모두 바꿀 수 있다.
      값은 IM_DEF 에 덮는 것만 적는다 · items 는 함수가 만든다 · mob = 모바일 덧값(IM_MOB 에 덮음)
      견본 사진은 갤러리 12~24 와 같은 editor-assets 의 gallery-sample/(GG_SITE) — 카드 썸네일(실제 화면 정지컷)과 넣었을 때 보이는 사진이 같다. 동영상은 헬릭스 갤러리 견본(hg/) */
-  function imPreItems(names,ar,key,cap){
-    return names.map(function(nm,i){ var it=imItem(GG_SITE+nm); it.crop={key:key,ar:ar}; it.link=imZoomLink(); if(cap) it.html=cap[i%cap.length]; return it; });
+  function imPreItems(names,ar,key,cap,plain){   /* 261028 추가 — plain: 확대보기 없이(견본이 작아 확대하면 깨지는 것) */
+    return names.map(function(nm,i){ var it=imItem(GG_SITE+nm); it.crop={key:key,ar:ar}; if(!plain) it.link=imZoomLink(); if(cap) it.html=cap[i%cap.length]; return it; });
   }
   var IM_PRESETS={
     wide:   function(){ return {cfg:{cols:1, wrap:false, px:0, pt:0, pb:0, hover:'none', items:imPreItems(['sample/gallery_41_1.jpg'],2.4,'free')}, mob:{px:0}}; },   /* 전체 폭 한 장 · 위아래 여백 없음 · 261012 수정 — 「좌우 폭 제한」 끔(wrap:false · .im-full): 좌우 여백 0 만으로는 콘텐츠 최대 폭 1180 에 막혀 양옆에 배경이 남았다 */
@@ -27595,19 +27767,19 @@
     caption:function(){ return {cfg:{cols:3, gx:32, gy:40, cap:true, items:imPreItems(['sample/beige_bl_01.jpg','sample/beige_bl_02.jpg','sample/beige_bl_05.jpg'],3/2,'3:2',[
                 '<p><strong>공간의 결</strong></p><p>사진 아래에 짧은 설명을 적어 보세요.</p>',
                 '<p><strong>빛과 그림자</strong></p><p>글은 눌러서 바로 고칠 수 있습니다.</p>',
-                '<p><strong>머무는 시간</strong></p><p>필요 없으면 「텍스트」를 끄면 됩니다.</p>'])}}; },   /* 사진 + 아래 글 */
+                '<p><strong>머무는 시간</strong></p><p>필요 없으면 「텍스트」를 끄면 됩니다.</p>'],true)}}; },   /* 261028 수정 — 확대보기 없이: 견본 560×354 라 확대하면 깨진다 */   /* 사진 + 아래 글 */
     slide:  function(){ return {cfg:{type:'slide', cols:3, gx:20, motion:'space', delay:3, items:imPreItems(['sample/gallery_2_1.jpg','sample/gallery_2_10.jpg','sample/gallery_2_11.jpg','sample/gallery_2_12.jpg','sample/gallery_2_14.jpg','sample/gallery_2_15.jpg'],3/2,'3:2')}}; },   /* 한 칸씩 넘기는 슬라이드 */
-    video:  function(){ var it=imItem(BA_ASSET_BASE+'hg/hg-03-hd.mp4'); it.crop={key:'16:9',ar:16/9};
+    video:  function(){ var it=imItem(BA_ASSET_BASE+'hg/hg-03-hd.mp4'); it.crop={key:'16:9',ar:16/9}; it.link=imZoomLink();   /* 261028 추가 — 이미지 / 영상 카테고리 기본값: 클릭 = 확대보기(동영상도) */
                         return {cfg:{cols:1, px:120, items:[it]}, mob:{px:20}}; },   /* 동영상 한 편 · 좌우 여백 넉넉히 */
     /* 261012 추가 — 좌측 사이트(addblock) 이미지 · 동영상 카테고리의 기본 블럭을 같은 imggrid 프리셋으로(IMAGE11~20 · VIDEO01 · 02 · 05). 괄호 안이 사이트의 블럭 이름.
        사진은 사이트 견본 원본 그대로(IM_SITE) · 열 수 · 간격 · 셀 비율(--item-thumb-height 0.7 → 1/0.7) · 둥근 모서리 · 배경도 사이트 값. 유튜브 영상도 사이트 견본과 같은 영상 */
     one:    function(){ return {cfg:{cols:1, items:imSiteItems(['image1_1.jpg'])}}; },   /* (image1) 한 장 · 원본 비율 */
     banner: function(){ return {cfg:{cols:1, hover:'none', items:imSiteItems(['image35_1.jpg'])}}; },   /* (image35) 가로로 긴 띠 한 장 */
-    land2:  function(){ return {cfg:{cols:2, items:imSiteItems(['image19_1.jpg','image19_2.jpg'],1/0.7)}}; },   /* (image19) 가로 사진 2열 */
+    land2:  function(){ return {cfg:{cols:2, items:imSiteItems(['image19_1.jpg','image19_2.jpg'],1/0.7,'',true)}}; },   /* 261028 수정 — 확대보기 없이: 견본 700×500 */   /* (image19) 가로 사진 2열 */
     port3:  function(){ return {cfg:{cols:3, items:imSiteItems(['image14_1.jpg','image14_2.jpg','image14_3.jpg'],1/1.46)}}; },   /* (image14) 세로 사진 3열 */
     land4:  function(){ return {cfg:{cols:4, gx:20, gy:20, items:imSiteItems(['image12_1.jpg','image12_2.jpg','image12_3.jpg','image12_4.jpg'],1/0.7)}, mob:{cols:2, gx:12, gy:12}}; },   /* (image12) 가로 사진 4열 */
     flush3: function(){ return {cfg:{cols:3, gx:0, gy:0, items:imSiteItems(['image5_1.jpg','image5_2.jpg','image5_3.jpg'],1,'1:1')}}; },   /* (image5) 틈 없이 붙인 정사각 3열 */
-    circle3:function(){ return {cfg:{cols:3, gx:100, gy:30, rad:100, radC:true, rtl:300, rtr:300, rbr:300, rbl:300, items:imSiteItems(['image32_1.jpg','image32_2.jpg','image32_3.jpg'],1,'1:1')}, mob:{cols:3, gx:16, gy:16}}; },   /* (image32) 원형 3열 — 코너별 모서리 네 곳 모두 최대(셀 크기와 상관없이 원) · 간격 넓게 */
+    circle3:function(){ return {cfg:{cols:3, gx:100, gy:30, rad:100, radC:true, rtl:300, rtr:300, rbr:300, rbl:300, items:imSiteItems(['image32_1.jpg','image32_2.jpg','image32_3.jpg'],1,'1:1',true)}, mob:{cols:3, gx:16, gy:16}}; },   /* (image32) 원형 3열 — 코너별 모서리 네 곳 모두 최대(셀 크기와 상관없이 원) · 간격 넓게 */
     logo5:  function(){ return {cfg:{cols:5, gx:70, gy:30, hover:'none', items:imSiteItems(['image27_1.png','image27_2.png','image27_3.png','image27_4.png','image27_5.png'],0,'',true)}, mob:{cols:3, gx:20, gy:20}}; },   /* (image27) 로고 5열 — 간격 70: 폭 1180 에서 로고가 원본 크기(180px)로 놓인다 */
     logo5d: function(){ return {tone:'dark', cfg:{cols:5, gx:100, gy:30, hover:'none', bg:'#202020', items:imSiteItems(['image25_1.png','image25_2.png','image25_3.png','image25_4.png','image25_5.png'],0,'',true)}, mob:{cols:3, gx:20, gy:20}}; },   /* (image25) 로고 5열 · 어두운 배경 */
     parallax:function(){ return {tone:'dark', cfg:{items:[], pt:172, pb:172, bgImg:IM_SITE+'image28_1.jpg', bgFix:true}}; },   /* (image28) 패럴랙스 배경 띠 — 사진 없이 블럭 배경(고정)만 · 높이 344px */
@@ -27636,7 +27808,7 @@
   IM_PRESETS.logoflow=function(){ return {tone:'light', cfg:{show:true, type:'slide', cols:6, gx:100, ch:1, hover:'none', motion:'slow', speed:1, arrows:false, dots:false, bg:'#f2f2f2', pt:70, pb:70,
       items:imSlItems([1,2,3,4,5,6,7,8].map(function(n){ return 'slideshow_68_'+n+'.png'; }))}, mob:{cols:3, gx:32, px:20}}; };   /* (slideshow68) 로고가 끊김 없이 흐르는 띠 */
   var IM_SITE=ED_IMG+'image-sample/';   /* 261012 추가(폴더명 image-sample — gallery-sample 과 짝) — 좌측 사이트 이미지 블럭의 견본 사진(원본 그대로) · 이름 = 사이트 블럭 이름_순번 */
-  function imSiteItems(names,ar,key,plain){ return names.map(function(nm){ var it=imItem(IM_SITE+nm); if(ar) it.crop={key:key||'free',ar:ar}; if(!plain) it.link=imZoomLink(); return it; }); }   /* plain — 확대보기 링크 없이(로고) */
+  function imSiteItems(names,ar,key,plain){ return names.map(function(nm){ var it=imItem(IM_SITE+nm); if(ar) it.crop={key:key||'free',ar:ar}; if(!plain) it.link=imZoomLink(); return it; }); }   /* plain — 확대보기 링크 없이. 261028 정리 — 이미지 / 영상 카테고리 기본값은 클릭 = 확대보기, 예외는 로고(IMAGE18 · 19)와 견본이 작아 확대하면 깨지는 것(IMAGE08 · 13 · 17 — 확대창 높이 약 900px 기준 1.5배 넘게 늘어나는 견본) */
   function imYtItem(id,ar,key,cap){ var it=imItem(imYtSrc(id)); it.crop={key:key||'16:9',ar:ar||16/9}; if(cap) it.html=cap; return it; }
   function imPresetApply(blk,key){
     var f=IM_PRESETS[key]; if(!f) return; var P=f(), c=imCfg(blk);
@@ -28599,7 +28771,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260916 추가 — 곡면 갤러리 블럭 (CURVED GALLERY · 처음 이름 '무한 갤러리' · 참조: sashamartynchuk.com Intro)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 사진 격자가 끝없이 이어지고, 끌면 관성으로 미끄러진다. 격자 전체가 구면 위에 놓여
        가운데가 부풀고 가장자리가 물러나는 배럴 왜곡이 생긴다.
        ※ 왜곡은 후처리(화면을 휘는 필터)가 아니라 진짜 기하다 — 카드 한 장을 10×10 으로 잘게 나눈
@@ -29505,7 +29677,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260916 추가 — 헬릭스 갤러리 블럭 (HELIX GALLERY · 참조: schemeengine.com 홈의 작업 나선)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 카드들이 나선 계단처럼 한 줄로 이어져 카메라 둘레를 돌며 내려간다. 스크롤(또는 드래그)하면 나선 전체가
        위로 올라오며 아래쪽 카드가 차례로 정면(가운데)을 지나간다. 정면 근처 카드 아래에만 이름·브랜드·제목 라벨이 보인다.
      · 원본은 three.js — 인트로가 끝나면 카메라가 나선 바깥 (0,0,20) 에서 -z 를 본다(R=14.5). 가장 가까운 카드(θ=0)가
@@ -29911,7 +30083,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260916 추가 — 휠 캐러셀 블럭 (WHEEL CAROUSEL · 참조: gabrielbeaugonin.com 작업 목록)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 가운데 카드는 평평하게, 위·아래 카드는 X축으로 '각도'만큼 넘어가 '거리' 밖에 얇게 쌓인다.
        d = (항목 번호 − 현재 위치) 로 |d|≤1 구간은 선형 보간, 그 너머는 '쌓임 간격'씩 겹친다.
      · 끌기(세로)·휠·점·옆 카드 클릭으로 넘기고, 스프링으로 붙는다(탄성).
@@ -30294,7 +30466,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260922 추가 — 게이지 슬라이더 블럭 (GAUGE SLIDER · 참조: remyshoots.co.za 작업 목록)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 세로 카드가 가로로 이어지고 가운데 카드만 또렷하다(옆 카드는 반투명·흑백).
        위치 pos 는 목표 target 으로 지수 감쇠(1−e^(−7·dt))로 따라간다.
      · 하단 게이지: 항목마다 눈금 7개 묶음이 자(ruler)처럼 흐르고, 가운데 묶음만 이름·정보가 올라오며 가운데 눈금이 강조색으로 길어진다.
@@ -30684,7 +30856,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      261008 추가 — 가로 스크롤 갤러리 블럭 (GALLERY18 · 좌측 사이트 gallery61 = pGallery04 · fixedscroll 3 이식)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 사이트 원본: Swiper freeMode · slidesPerView 2.3(태블릿 2.2 · 모바일 1.2) · spaceBetween 0 · 높이 = 카드 폭 × 0.7 · mousewheel.
        편집기에는 Swiper 가 없어 같은 값으로 직접 만든다 — 위치 pos 가 목표 target 을 지수 감쇠(1−e^(−6·dt))로 따라간다.
      · 끌기(놓으면 속도만큼 더 흐른다) · 휠(끝에 닿으면 페이지 스크롤로 넘긴다) · 자동 넘김 · 칸 맞춤.
@@ -31038,7 +31210,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      261008 추가 — 틸트 갤러리 블럭 (GALLERY19 · 좌측 사이트 gallery62 = pGallery05 · fixedscroll 4 이식)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 사이트 원본: 판(.fs-container)을 −8° 기울이고 3칸 격자(칸 25vw · 간격 17.5vw)에 왼쪽·가운데·오른쪽 카드만 보인다.
        카드 = 번호(위) · 사진(칸의 98% · 높이 32vw) · 제목·설명(아래). 옆 영역을 누르면 1.2초 동안 사진이 가로로 1.3배 늘었다 돌아오며 한 칸 넘어가고
        번호·글은 조금 다른 속도로 따라온다(TweenMax Quart/Quint InOut). 사진은 마우스 가로 위치에 따라 ±15px 밀린다. 가운데 = 열기.
@@ -31359,7 +31531,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260923 추가 — 스택 갤러리 블럭 (STACK GALLERY · 참조: brand.squarespace.com/campaign 의 interactiveGallery)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 판(.sk-inner)을 rotateX(−기울기) rotateY(−기울기)로 돌리고 원근(perspective)은 두지 않는다 → 직교 투영.
        카드마다 translateZ 로 깊이를 주면 판의 법선 방향(왼쪽 아래 ↔ 오른쪽 위)으로 비껴 쌓인다.
        참조 실측: 맨 앞 z = 장 간격×1.21, 장마다 scale −0.09(0.85 → 0.49), 보이는 5장 + 뒤에 숨은 1장(들어올 자리).
@@ -31894,7 +32066,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260915 추가 — 스크롤 슬라이더 블럭 (SMOOTH SCROLL SLIDER · 참조: Originkit "Smooth Scroll Slider")
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 슬라이드가 가로로 흐르고, 가운데를 지나 앞으로 오는 쪽은 커지고 뒤로 가는 쪽은 작아지며 어두워진다.
        휠·드래그에 관성(ease)이 붙는다. 목록은 항상 무한 반복 — 화면을 덮을 만큼 되풀이해 깔아 둔다.
      · 260916 수정 — 스크롤 방식을 나선형 갤러리(GALLERY02)와 같은 두 갈래로 정리했다 (예전 '스크롤 잠금' 토글 · 자유 모드는 없앴다).
@@ -32301,7 +32473,7 @@
 
   /* ══════════════════════════════════════════════════════════════════
      260915 추가 — 세로 스크롤 갤러리 블럭 (VERTICAL CAROUSEL)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 미디어를 세로로 길게 쌓아 두고, 화면 한가운데에 가까운 항목일수록
        크고 또렷하게 그린다 — 스크롤이 그대로 캐로절의 진행값이 된다.
        (페이지 스크롤을 가로채지 않는다. 블럭 위에서도 평소처럼 스크롤된다)
@@ -33378,7 +33550,7 @@ const TIER_ORDER = ["high", "medium", "low"];
 
 const DEFAULTS = {
   text         : "CREATOR",
-  font         : '700 300px "Helvetica Neue", Arial, sans-serif',
+  font         : '700 300px "Inter", Arial, sans-serif',
   size         : 1.00,      // 글자 크기 배율
   depth        : 0.34,      // 압출 두께 (0~1)
   bevel        : 0.30,      // 베벨 (0~1)
@@ -36555,7 +36727,7 @@ global.CursorFX = CursorAPI;
 
 const DEFAULTS = {
   text     : "CREATOR",
-  font     : '800 240px "Helvetica Neue", Arial, sans-serif',
+  font     : '800 240px "Inter", Arial, sans-serif',
   size     : 1.00,          // 글자 크기 배율
   depth    : 0.34,          // 압출 두께 (0~1)
   facet    : 0.50,          // 각짐 — 등고선 단순화 강도 (0~1)
@@ -42483,16 +42655,20 @@ global.PolyFX = API;
   function ckPager(blk){
     var S=blk._ck, c=ckCfg(blk), pg=blk.querySelector('.ck-pg'); if(!pg||!S) return;
     var n=c.items.length, i=S.idx;
+    var w0=blk.querySelector('.ck-wrap'), it0=c.items[i]; if(w0) w0.classList.toggle('lk',!!(it0&&it0.link&&it0.link.url));   /* 261028 추가 — 사진별 링크 커서(넘길 때마다) */
     if(c.pager==='num') pg.innerHTML='<span class="ck-pgn"><b>'+String(i+1).padStart(2,'0')+'</b> / '+String(n).padStart(2,'0')+'</span>';
     else { var h=''; for(var k=0;k<n;k++) h+='<button type="button" class="ck-dot'+(k===i?' on':'')+'" data-i="'+k+'" aria-label="'+(k+1)+'번"></button>'; pg.innerHTML=h; }
   }
   /* 사진 클릭 → 확대보기. 편집 화면에서는 이미 선택된 블럭일 때만(첫 클릭은 선택) */
   function ckTap(blk,e){
-    var S=blk._ck, c=ckCfg(blk); if(!S || c.zoom===false || typeof igLbOpen!=='function') return;
+    var S=blk._ck, c=ckCfg(blk); if(!S) return;
+    var it=c.items[S.idx], lk=(it && it.link && it.link.url)?it.link:null;   /* 261028 추가 — 사진별 링크: 있으면 확대보기보다 먼저(갤러리 게시물 링크와 같은 규칙) */
+    if(!lk && (c.zoom===false || typeof igLbOpen!=='function')) return;
     var ed=!window.CL_MVIEW && blk.closest('#stage') && document.getElementById('bset');
     if(ed && (!blk.classList.contains('sel') || e.ctrlKey || e.metaKey || e.shiftKey)) return;
     var r=S.cv.getBoundingClientRect(), bw=S.ppw?S.tw*S.ppw:r.width*0.5;
     if(S.gl && S.ready && S.ppw){ var px=e.clientX-(r.left+r.width/2), py=e.clientY-(r.top+r.height/2); if(Math.abs(px)>S.tw*S.ppw/2 || Math.abs(py)>S.th*S.ppw/2) return; }   /* 사진 상자 밖(배경) 클릭은 열지 않는다 */
+    if(lk){ if(typeof gtLinkOpen==='function') gtLinkOpen(lk); return; }
     igLbOpen({ srcs:c.items.map(function(it){ var u=String(it.src||''); return ckIsVid(u)?libVidMark(u,true):u; }), idx:S.idx, blk:blk,
       ars:c.items.map(function(it,k){ return k===S.idx?(S.texAr||0):0; }),   /* 원본 비율로 (모르는 항목은 불러온 뒤 실제 크기로) */
       from:{x:r.left+r.width/2,y:r.top+r.height/2,w:bw}, radius:txNum(c.rad,0),
@@ -42740,13 +42916,29 @@ global.PolyFX = API;
       return '<div class="mt-imgrow'+(i===cur?' ck-cur':'')+'" data-i="'+i+'">'
         +'<span class="mt-imgdrag" title="드래그하여 순서 변경"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></span>'
         +'<span class="mt-imgthumb"'+bg+'>'+vd+'</span>'
-        +'<div class="vc-caps"><input type="text" value="'+_mtAttr(u)+'" placeholder="https:// … 이미지·동영상 URL" spellcheck="false" autocomplete="off" autocapitalize="off" onfocus="ckShow('+i+')" oninput="ckSrcInput('+i+',this.value)"></div>'
+        +'<div class="vc-caps"><input type="text" value="'+_mtAttr(u)+'" placeholder="https:// … 이미지·동영상 URL" spellcheck="false" autocomplete="off" autocapitalize="off" onfocus="ckShow('+i+')" oninput="ckSrcInput('+i+',this.value)">'+ckLinkBtn(it,i)+'</div>'
         +'<button type="button" class="mt-imgdel" onclick="ckItemDel('+i+')" title="삭제" aria-label="삭제"'+(dis?' disabled':'')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg></button>'
         +'</div>';
     }).join('');
     var cnt=document.getElementById('ckItemCount'); if(cnt) cnt.textContent=c.items.length+'/'+CK_MAX;
     var add=document.getElementById('ckItemAdd'); if(add) add.disabled=(c.items.length>=CK_MAX);
     if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',ckItemReorder);
+  }
+  /* 261028 추가 — 사진별 링크(items[i].link = {url, kind, newTab, download}). 줄 · 썸네일 뷰 패널에 갤러리와 같은 「🔗 링크」 버튼, 고르는 창은 공통 링크 설정(rtLinkOpen) */
+  function ckLinkBtn(it,i){
+    var lk=(it && it.link && it.link.url)?it.link:null, t=lk?((typeof gtLinkTxt==='function')?gtLinkTxt(lk):lk.url):'링크';
+    function e(v){ return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+    return '<button type="button" class="gt-lkbtn'+(lk?' on':'')+'" onclick="ckLinkEdit('+i+')" title="'+(lk?e(t)+' — 누르면 바꾸거나 해제합니다':'누르면 이 사진에 링크를 겁니다(확대보기 대신 이동)')+'">'+(typeof GT_LK_SVG!=='undefined'?GT_LK_SVG:'')+'<span>'+e(t)+'</span></button>';
+  }
+  function ckLinkEdit(i){
+    var blk=ckCurBlk; if(!blk || typeof rtLinkOpen!=='function') return; var it=ckCfg(blk).items[i]; if(!it) return;
+    ckShow(i);
+    var lk=it.link||{}, a=document.createElement('a'); a.className='rt-btn-a';
+    if(lk.url){ a.setAttribute('href',lk.url); a.setAttribute('data-rt-link',lk.kind||'url'); if(lk.newTab) a.setAttribute('target','_blank'); if(lk.download) a.setAttribute('download',lk.download); }
+    function done(msg){ ckItemRender(); ckApply(blk); clToast(msg); }
+    rtLinkOpen(a,{blk:blk, has:!!lk.url,
+      apply:function(v){ it.link={url:v.url,kind:v.kind,newTab:!!v.newTab,download:v.download||''}; done('링크를 연결했습니다. 사진을 누르면 확대보기 대신 이 링크로 갑니다.'); },
+      remove:function(){ delete it.link; done('링크를 해제했습니다.'); }});
   }
   function ckShow(i){ if(!ckCurBlk) return; ckGo(ckCurBlk,i); var l=document.getElementById('ckItemList'); if(l) l.querySelectorAll('.mt-imgrow').forEach(function(r){ r.classList.toggle('ck-cur', +r.getAttribute('data-i')===i); }); }
   var _ckTypeTimer=null;
@@ -48638,7 +48830,7 @@ global.PolyFX = API;
     if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
     closeBlockAdd();
     if(typeof selectBlock==='function') selectBlock(blk);
-    if(card.getAttribute('data-preset')==='gallery'){   /* 261014 추가 — 갤러리 카테고리의 「3D · 카드 회전」: 같은 블럭, 시작값만 — 아래 글·모티프·버튼 끄고 확대 보기로 */
+    if(card.getAttribute('data-preset')==='gallery'){   /* 261014 추가 — 갤러리 카테고리(261027 → 히어로 섹션)의 「3D · 카드 회전」: 같은 블럭, 시작값만 — 아래 글·모티프·버튼 끄고 확대 보기로 */
       var c0=crCfg(blk); c0.title=false; c0.motifs=false; c0.btn=false; c0.gt.type='zoom'; c0.zoom=true;
       c0.ht=730; c0.cpb=70; c0.pt=0;   /* 261020 수정 — 갤러리형은 글·버튼이 없어 860 높이면 위아래가 비어 보였다 → 여백 기본값 높이 730 · 카피 아래 70 · 상단 0 */
     }
@@ -49869,7 +50061,7 @@ global.PolyFX = API;
   }
   /* ══════════════════════════════════════════════════════════════════
      260831 추가 — 나선형 3D 갤러리 블럭 (SPIRAL GALLERY)
-     · 블럭추가 > 갤러리 카테고리 카드 → 블럭 삽입
+     · 블럭추가 > 히어로 섹션 카테고리 카드 → 블럭 삽입 (261027 갤러리에서 이동)
      · 참고 사이트(loop-agency / SPIRAL)의 배치를 그대로 옮겼다.
        측정해 보면 카드 한 장마다 360/N 도 돌면서 pitch 만큼 내려가고,
        회전과 하강이 하나의 진행값 p 로 묶여 있다(나사 운동).
@@ -58872,7 +59064,8 @@ function hdApply(hdEl){
   /* 배경 */
   var bgc=bg.col==='auto'?'var(--st-bg,#fff)':(bg.col?hdRGBA(bg.col,bg.alpha):'transparent');
   if(hdMob() && bgc==='transparent') bgc='var(--st-bg,#fff)';   /* 모바일 사본: 헤더가 상단 고정이라 투명이면 사이트 배경색으로 */
-  sv('--hd-bg',bgc); var solid=bg.col==='auto'?'var(--st-bg,#fff)':(bg.col?hdRGBA(bg.col,1):'var(--st-bg,#fff)'); sv('--hd-bg-solid',solid); sv('--hd-fxfg',solid);   /* fill 효과 위 글자색 = 헤더 바탕색 */
+  sv('--hd-bg',bgc); var sb=(st==='overlap' && HD.overlap.clear)?HD.bg.base:bg;   /* 261028 수정 — 겹치기 배경 투명이면 헤더 줄만 투명하고, 펼침 패널 · 검색창 · 서브 면은 기본 배경색을 쓴다(지금까진 색을 걷어 낸 값이라 늘 사이트 배경색이었고, 배경색을 바꿔도 반응이 없었다) */
+  var solid=sb.col==='auto'?'var(--st-bg,#fff)':(sb.col?hdRGBA(sb.col,1):'var(--st-bg,#fff)'); sv('--hd-bg-solid',solid); sv('--hd-fxfg',solid);   /* fill 효과 위 글자색 = 헤더 바탕색 */
   sv('--hd-blur',(bg.blur||0)+'px'); hd.classList.toggle('hd-blur',(bg.blur||0)>0);
   sv('--hd-bgimg',bg.img?'url("'+bg.img.replace(/"/g,'%22')+'")':'none'); sv('--hd-bgsize',bg.size); sv('--hd-bgpos',bg.pos); sv('--hd-bgrep',bg.rep);
   sv('--hd-line',(bg.line && !(st==='sticky' && !hdStuck))?('1px solid '+bg.lineCol):'none');   /* 261026 수정 — 하단 구분선은 스크롤이 시작된 뒤에만: 플로팅 탭 미리 보기라도 최상단(hdStuck=false)이면 감춘다(어두운 첫 화면 위 흰 줄 · 녹색 테두리 밖 한 줄 문제) */
@@ -58924,8 +59117,8 @@ function hdApply(hdEl){
 /* 겹치기 상태에서 헤더 높이가 바뀌면(레이아웃·여백) 음수 여백을 다시 잰다 */
 (function(){ if(!window.ResizeObserver) return; function boot(){ var hd=hdSiteHd(); if(!hd) return; new ResizeObserver(function(){ if(hd.parentNode&&hd.parentNode.classList.contains('hd-overlap')) hd.style.marginBottom='calc(-1 * '+hd.offsetHeight+'px)'; }).observe(hd); } if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else setTimeout(boot,0); })();
 /* 펼침 패널 — 내비의 항목·서브메뉴를 그대로 열로 옮겨 그린다. 'col' 스타일은 각 열을 그 메뉴의 x 자리에 놓는다 */
-function hdMegaBuild(){
-  var hd=hdSiteHd(); if(!hd) return; var mg=hd.querySelector(':scope > .hd-mega'), nav=hd.querySelector(':scope > .site-nav'); if(!mg||!nav) return;
+function hdMegaBuild(hdEl){   /* 261028 수정 — hdEl 을 주면 그 헤더(디자인 고르기 카드의 사본)에 지금 HD 로 패널을 채운다 */
+  var hd=hdEl||hdSiteHd(); if(!hd) return; var mg=hd.querySelector(':scope > .hd-mega'), nav=hd.querySelector(':scope > .site-nav'); if(!mg||!nav) return;
   var inn=mg.querySelector('.hd-mg-in'); if(!inn){ inn=document.createElement('div'); inn.className='hd-mg-in'; mg.appendChild(inn); }
   if(HD.type!=='full'){ inn.innerHTML=''; return; }
   var items=nav.querySelectorAll(':scope > .nav-i'), h='';
@@ -58936,13 +59129,13 @@ function hdMegaBuild(){
     h+='</div>';
   });
   if(inn.getAttribute('data-hd-html')!==h){ inn.innerHTML=h; inn.setAttribute('data-hd-html',h); }
-  hdMegaLayout();
+  if(!hdEl) hdMegaLayout();   /* 카드 사본은 문서에 붙은 뒤 hdPickRender 가 잰다 */
 }
-function hdMegaLayout(){
-  var hd=hdSiteHd(); if(!hd||HD.type!=='full') return; var mg=hd.querySelector(':scope > .hd-mega'), nav=hd.querySelector(':scope > .site-nav'), inn=mg&&mg.querySelector('.hd-mg-in'); if(!inn) return;
-  var z=(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-zoom'))||1), hr=hd.getBoundingClientRect(), nr=nav.getBoundingClientRect(), side=parseFloat(getComputedStyle(hd).getPropertyValue('--hd-side'))||0;
+function hdMegaLayout(hdEl){   /* 261028 수정 — hdEl: 카드 사본(zoom 배율은 사본 자신의 실제 폭/원래 폭으로 잰다 · 스타일은 사본의 data-hd-full) */
+  var hd=hdEl||hdSiteHd(); if(!hd||(hdEl?hd.getAttribute('data-hd-type'):HD.type)!=='full') return; var mg=hd.querySelector(':scope > .hd-mega'), nav=hd.querySelector(':scope > .site-nav'), inn=mg&&mg.querySelector('.hd-mg-in'); if(!inn||!nav) return;
+  var z=hdEl?((hd.getBoundingClientRect().width/hd.offsetWidth)||1):(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-zoom'))||1), hr=hd.getBoundingClientRect(), nr=nav.getBoundingClientRect(), side=parseFloat(getComputedStyle(hd).getPropertyValue('--hd-side'))||0;
   hd.style.setProperty('--hd-mg-x',Math.max(0,(nr.left-hr.left)/z-side)+'px');
-  if(HD.fullStyle!=='col'){ hd.style.removeProperty('--hd-mg-h'); return; }
+  if((hdEl?hd.getAttribute('data-hd-full'):HD.fullStyle)!=='col'){ hd.style.removeProperty('--hd-mg-h'); return; }
   var cols=inn.querySelectorAll('.hd-mg-col'), items=nav.querySelectorAll(':scope > .nav-i'), maxH=0;
   cols.forEach(function(c,i){ var it=items[i]; if(!it) return; var r=it.getBoundingClientRect(); c.style.setProperty('--x',((r.left-hr.left)/z-side)+'px'); if(!c.classList.contains('nosub')) maxH=Math.max(maxH,c.offsetHeight); });
   hd.style.setProperty('--hd-mg-h',maxH+'px');
@@ -59039,7 +59232,7 @@ function hdAutoTone(){
   var tone=hdToneRead(hd,null,9); if(!tone) return;
   var sig=st+':'+tone, pt={};
   parts.forEach(function(q){ var el=q[1]; if(!el||!el.offsetWidth) return; var r=el.getBoundingClientRect(); pt[q[0]]=hdToneRead(hd,{left:r.left,top:r.top,width:r.width,height:r.height},q[0]==='nav'?5:3)||tone; sig+=','+pt[q[0]]; });
-  if(hd.getAttribute('data-hd-tone')===sig) return;
+  var same=(hd.getAttribute('data-hd-tone')===sig);   /* 261028 수정 — 같은 톤이어도 아래 패널 색은 칠한다(검색창은 열 때 새로 생긴다) */
   hd.setAttribute('data-hd-tone',sig);
   var col=hdColOf(st), base=HD.col.base;
   function L(c){ return hdLumOf(hdRgb(c)); }
@@ -59054,10 +59247,15 @@ function hdAutoTone(){
     var F='var(--st-fg,#23272E)', M='var(--st-muted,#9096A0)';
     return {'--hd-logo':src.logo||F,'--hd-fg':src.fg||M,'--hd-ac':src.ac||F,'--hd-fx':src.fx||src.ac||F,'--hd-ubtn':src.ufg||src.fg||M,'--hd-uac':src.uac||src.ac||F};
   }
-  var P=pal(tone); Object.keys(P).forEach(function(k){ hd.style.setProperty(k,P[k]); });
-  parts.forEach(function(q){ var el=q[1]; if(!el) return; var t=pt[q[0]], Q=(t&&t!==tone)?pal(t):null; q[2].forEach(function(k){ if(Q) el.style.setProperty(k,Q[k]); else el.style.removeProperty(k); }); });
+  if(!same){ var P=pal(tone); Object.keys(P).forEach(function(k){ hd.style.setProperty(k,P[k]); });
+  parts.forEach(function(q){ var el=q[1]; if(!el) return; var t=pt[q[0]], Q=(t&&t!==tone)?pal(t):null; q[2].forEach(function(k){ if(Q) el.style.setProperty(k,Q[k]); else el.style.removeProperty(k); }); }); }
+  /* 261028 추가 — 제 바탕(--hd-bg-solid)을 칠하는 패널(펼침 패널 · 검색창)은 아래 내용이 아니라 그 바탕 밝기로 글자색을 정한다.
+     헤더에 얹은 자동 맞춤 색(어두운 사진 위 흰 글자)을 그대로 물려받아 흰 패널에 흰 글자가 깔렸다. 항상 펼침 패널은 바탕이 투명한 헤더의 일부라 제외 */
+  var sl=L(getComputedStyle(hd).getPropertyValue('--hd-bg-solid')), PP=pal(sl!=null&&sl<0.56?'dark':'light');
+  hdPanels(hd).forEach(function(el){ Object.keys(PP).forEach(function(k){ el.style.setProperty(k,PP[k]); }); });
 }
-function hdToneClearParts(hd){ ['.logo','.site-nav','.hd-tog','.hd-util'].forEach(function(c){ var el=hd.querySelector(':scope > '+c); if(el) ['--hd-logo','--hd-fg','--hd-ac','--hd-fx','--hd-ubtn','--hd-uac'].forEach(function(k){ el.style.removeProperty(k); }); }); }
+function hdPanels(hd){ var a=[], mg=hd.querySelector(':scope > .hd-mega'), sr=hd.querySelector(':scope > .hd-srch'); if(mg && !(HD.type==='full'&&HD.fullMode==='always')) a.push(mg); if(sr) a.push(sr); return a; }   /* 261028 추가 — 자기 바탕이 있는 헤더 패널 */
+function hdToneClearParts(hd){ ['.logo','.site-nav','.hd-tog','.hd-util','.hd-mega','.hd-srch'].forEach(function(c){ var el=hd.querySelector(':scope > '+c); if(el) ['--hd-logo','--hd-fg','--hd-ac','--hd-fx','--hd-ubtn','--hd-uac'].forEach(function(k){ el.style.removeProperty(k); }); }); }
 window.addEventListener('resize',function(){ if(hdToneOn){ var hd=hdSiteHd(); if(hd) hd.removeAttribute('data-hd-tone'); hdToneKick(); } });
 /* 260930 추가 — 검색 버튼 → 검색창. 방식 3가지(HD.util.srch)
    full   전체 화면 : 사이트 보이는 영역을 어둡게 덮고 큰 입력칸 (.site 안 absolute — 사이트 배율(zoom)을 그대로 따른다)
@@ -59096,7 +59294,7 @@ function hdSrchOpen(){
     host.appendChild(el);
   }
   if(m==='full') el.style.fontFamily=getComputedStyle(hd).getPropertyValue('--hd-font')||'';
-  hdSrchPos(el,m);
+  hdSrchPos(el,m); if(hdToneOn && m!=='full') hdAutoTone();   /* 261028 추가 — 투명 헤더의 자동 맞춤 중이면 새로 생긴 검색창에도 바탕 밝기 색을 */
   void el.offsetWidth; el.classList.add('show'); hd.classList.add('hd-srch-on'); hdSrchEl=el;
   var inp=el.querySelector('input'); setTimeout(function(){ try{ inp.focus({preventScroll:true}); }catch(e){} },m==='full'?120:60);
 }
@@ -59403,7 +59601,7 @@ function hdPickRender(){
   /* 261006 수정 — 서브메뉴는 기본/추가 탭 없이 한 목록 */
   tabs.innerHTML=th; tabs.style.display=th?'':'none';
   grid.className='hd-pk-grid'+(ctx.kind==='mo'?' c4':'')+(ctx.kind==='design'?((ctx.tab==='side'||ctx.tab==='toggle')?' c3':' c2'):'');   /* 261006 수정 — 상단·펼침(실제 축소본)은 2열, 좌측·토글(도식)은 3열 */
-  var liveFill=function(){ grid.querySelectorAll('.hdv[data-hdv]').forEach(function(h){ var d=null, id=h.getAttribute('data-hdv'); HD_DESIGNS.forEach(function(x){ if(x.id===id) d=x; }); var el=d?hdDesignLive(d):null; if(el){ h.innerHTML=''; h.appendChild(el); } }); };
+  var liveFill=function(){ grid.querySelectorAll('.hdv[data-hdv]').forEach(function(h){ var d=null, id=h.getAttribute('data-hdv'); HD_DESIGNS.forEach(function(x){ if(x.id===id) d=x; }); var el=d?hdDesignLive(d):null; if(el){ h.innerHTML=''; h.appendChild(el); if(d.cat==='full'){ var c=el.querySelector('.site-hd'); h.classList.add('full'); try{ hdMegaLayout(c); }catch(e){} } } }); };   /* 261028 수정 — 펼침 카드: 붙인 뒤 「메뉴 아래」 열 자리를 잰다 */
   var h='';
   if(ctx.kind==='mo'){
     MO_DR.filter(function(d){ return d.cat===ctx.tab; }).forEach(function(d){ h+='<button type="button" class="hd-card'+(HD.mo.dr.design===d.id?' on':'')+'" onclick="moPickDesign(\''+d.id+'\')">'+moCardHtml(d)+'<span class="cap">'+d.sub+'<small>'+d.nm+'</small></span></button>'; });
@@ -59436,10 +59634,11 @@ function hdDesignLive(d){
   var wrap=document.createElement('div'); wrap.className='site hdv-site'; wrap.setAttribute('data-theme',document.querySelector('#stage .site')?(document.querySelector('#stage .site').getAttribute('data-theme')||''):'');
   var st0=document.querySelector('#stage .site'); if(st0){ ['--st-bg','--st-fg','--st-muted','--st-muted2','--st-line'].forEach(function(k){ var x=st0.style.getPropertyValue(k); if(x) wrap.style.setProperty(k,x); }); }
   var hd=src.cloneNode(true); hd.removeAttribute('id'); hd.querySelectorAll('[id]').forEach(function(x){ x.removeAttribute('id'); });
-  hd.querySelectorAll(':scope > .hd-gear, :scope > .snav-ham, :scope > .hd-mega').forEach(function(x){ x.remove(); });
+  hd.querySelectorAll(':scope > .hd-gear, :scope > .snav-ham'+(d.cat==='full'?'':', :scope > .hd-mega')).forEach(function(x){ x.remove(); });   /* 261028 수정 — 펼침 카드는 패널을 남겨 펼친 모습으로 그린다(캔버스 · 토글 카드와 같은 매너, 항상 펼침은 패널이 곧 메뉴) */
   hd.removeAttribute('style'); hd.className='site-hd';
   wrap.appendChild(hd);
-  var saved=HD; HD=fresh; try{ hdApply(hd); }catch(e){} HD=saved;
+  var saved=HD; HD=fresh; try{ hdApply(hd); if(d.cat==='full') hdMegaBuild(hd); }catch(e){} HD=saved;
+  if(d.cat==='full') wrap.classList.add('hdv-full');
   return wrap;
 }
 function hdDesignThumb(d){
@@ -61499,6 +61698,11 @@ var GT_LK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 function gtLinkOf(c,i){ var p=((c&&c.posts)||[])[i]; return (p && p.link && p.link.url)?p.link:null; }
 function gtLinkGo(blk,i){
   var ad=gtAd(blk); if(!ad || i==null || i<0) return false; var lk=gtLinkOf(ad.cfg(blk),i); if(!lk) return false;
+  return gtLinkOpen(lk);
+}
+/* 261028 분리 — 링크 하나 열기(갤러리 게시물 · 구김 이미지 사진별 링크 공통) */
+function gtLinkOpen(lk){
+  if(!lk || !lk.url) return false;
   if(window.CL_MVIEW && lk.kind!=='page' && lk.kind!=='anchor' && lk.kind!=='cal'){
     var pv=document.documentElement.classList.contains('pview');
     try{ if(lk.download){ var a=document.createElement('a'); a.href=lk.url; a.download=lk.download; document.body.appendChild(a); a.click(); a.remove(); } else window.open(lk.url,(pv && !lk.newTab)?'_self':'_blank'); }catch(e){}
