@@ -2809,6 +2809,8 @@
   /* 내용 — 탭마다 한 칸(텍스트 편집기 영역). 지금 탭만 보인다 */
   .tk-panes{margin-top:var(--tkgap);}
   .tk-pane{display:none;max-width:820px;margin:0 auto;font-size:var(--tkcs);line-height:1.75;color:var(--tktc);text-align:var(--tkcal);word-break:keep-all;}
+  .tk-wrap[data-pos="top"][data-cal="left"] .tk-pane{margin-left:0;}   /* 261030 추가 — 내용 칸(820px)을 내용 정렬 쪽에 붙여 탭 줄 시작선과 맞춘다 */
+  .tk-wrap[data-pos="top"][data-cal="right"] .tk-pane{margin-right:0;}
   .site[data-theme] .tk-wrap .tk-pane.cred{color:var(--tktc);}   /* 사이트 테마 글자색(.site[data-theme] .cred)보다 앞서게 — 기본 색은 설정창 「내용」 */
   .tk-pane.on{display:block;animation:tkIn .35s ease both;}
   @keyframes tkIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
@@ -2823,7 +2825,7 @@
   html.pview #stage .tk-blk .tk-pane.cred,html.pview #stage .tk-blk .tk-pane.cred:hover{outline-color:transparent !important;cursor:inherit;}
   html.pview .tk-pane.rt-ph::before{content:none;}
   /* 세로 탭(탭 위치 = 왼쪽) — 왼쪽 탭 목록 · 오른쪽 내용. 스타일 8 은 세로로 놓아도 같은 말을 쓴다(선은 왼쪽 세로선, 구분선은 가로선) */
-  .tk-wrap[data-pos="left"] .tk-in{display:grid;grid-template-columns:var(--tkvw) minmax(0,1fr);column-gap:var(--tkgap);align-items:start;}
+  .tk-wrap[data-pos="left"] .tk-in{display:grid;grid-template-columns:min(var(--tkvw),36%) minmax(0,1fr);column-gap:var(--tkgap);align-items:start;}   /* 261030 수정 — 탭 목록 너비는 설정값과 블록 폭 36% 중 작은 값 (좁은 창에서 내용 칸이 너무 좁아지지 않게) */
   .tk-wrap[data-pos="left"] .tk-bar{width:auto;margin:0;}
   .tk-wrap[data-pos="left"] .tk-sc{overflow:visible;}
   .tk-wrap[data-pos="left"] .tk-list,.tk-wrap[data-pos="left"][data-wrap] .tk-list{display:flex;flex-direction:column;row-gap:var(--g);}
@@ -2860,7 +2862,7 @@
   @container (max-width:560px){
     .tk-in{padding-left:20px;padding-right:20px;}
     .tk-bar{width:100%;}
-    .tk-tab{flex-basis:calc((100% - var(--g) * (var(--tkcolsm) - 1)) / var(--tkcolsm));height:max(40px,calc(var(--tkh) * .82));padding:0 8px;font-size:calc(var(--tkfs) * .9);}
+    .tk-tab{flex-basis:calc((100% - var(--g) * (var(--tkcolsm) - 1)) / var(--tkcolsm));height:max(40px,calc(var(--tkh) * .82));padding:0 8px;font-size:min(calc(var(--tkfs) * .9),16px);}   /* 261030 수정 — 모바일 탭 글자는 최대 16px (칸이 좁아 크면 이름이 잘림) */
     .tk-wrap[data-pos="left"] .tk-tab{padding:0 8px;}
     .tk-wrap[data-wrap="multi"] .tk-list{grid-template-columns:repeat(var(--tkcolsm),minmax(0,1fr));}
     /* 261030 추가 — 세로 탭도 모바일에서 「여러 줄」(모바일 편집 탭 줄)이면 줄을 바꾼다 */
@@ -46584,7 +46586,7 @@ global.PolyFX = API;
       +((c.r!=null&&c.r!=='')?'--tkr:'+Math.max(0,Math.min(30,txNum(c.r,0)))+'px;':'')+((c.gp!=null&&c.gp!=='')?'--tkg:'+Math.max(0,Math.min(40,txNum(c.gp,0)))+'px;':'')   /* 261030 추가 — 라운딩 · 탭 간격 (비어 있으면 스타일 기본값) */
       +'--tkvw:'+Math.max(140,Math.min(360,txNum(c.vw,220)))+'px;--tkpg:'+(c.bg||'#ffffff')+';--tkgap:'+txNum(c.gapB,44)+'px;--tkcs:'+txNum(c.cs,15)+'px;--tktc:'+(c.tc||'#222428')+';--tkcal:'+tkCal(c)+';';
   }
-  function tkAttrs(w,c){ w.setAttribute('data-ds',c.ds||'under'); w.setAttribute('data-pos',c.pos==='left'?'left':'top'); w.setAttribute('data-wrap',c.wrap==='multi'?'multi':'line'); w.setAttribute('data-al',c.al||'center'); }
+  function tkAttrs(w,c){ w.setAttribute('data-ds',c.ds||'under'); w.setAttribute('data-pos',c.pos==='left'?'left':'top'); w.setAttribute('data-wrap',c.wrap==='multi'?'multi':'line'); w.setAttribute('data-al',c.al||'center'); w.setAttribute('data-cal',tkCal(c)); }
   function tkBlockHTML(){ return '<span class="tag-badge">탭</span>'+SM_GEAR+'<div class="tk-wrap"></div>'; }
   function tkApply(blk){
     if(!blk) return;
