@@ -12904,6 +12904,7 @@
             <div class="mt-seg" id="tkCalSeg">
               <button type="button" class="mt-seg-b" data-m="left" onclick="tkSeg('cal','tkCalSeg','left')">왼쪽</button>
               <button type="button" class="mt-seg-b active" data-m="center" onclick="tkSeg('cal','tkCalSeg','center')">가운데</button>
+              <button type="button" class="mt-seg-b" data-m="right" onclick="tkSeg('cal','tkCalSeg','right')">오른쪽</button>   <!-- 261030 추가 — 내용 정렬 오른쪽 (탭 정렬과 맞춤) -->
             </div>
             <div class="srow"><span class="k">글자 크기</span><input class="rng" type="range" id="tkCs" min="12" max="20" step="1" value="15"><span class="v" id="tkCsV">15px</span></div>
             <div class="srow"><span class="k">글자 색</span><span class="sw-col"><input type="color" id="tkTc" value="#222428" data-cp-title="내용 글자 색"><span class="hex" id="tkTcV">#222428</span></span></div>
@@ -46577,7 +46578,7 @@ global.PolyFX = API;
       +'--tkcols:'+cols+';--tkcolsm:'+Math.min(cols,4)+';--tkbw:'+Math.max(30,Math.min(100,txNum(c.bw,100)))+'%;'
       +'--tkfg:'+(c.fg||'#8a8f98')+';--tkafg:'+(c.afg||'#222428')+';--tkac:'+(c.ac||'#222428')+';--tklc:'+(c.lc||'#e5e7eb')+';--tkbb:'+(c.bb||'#f1f2f5')+';--tkarc:'+(c.arc||'#222428')+';'
       +((c.r!=null&&c.r!=='')?'--tkr:'+Math.max(0,Math.min(30,txNum(c.r,0)))+'px;':'')+((c.gp!=null&&c.gp!=='')?'--tkg:'+Math.max(0,Math.min(40,txNum(c.gp,0)))+'px;':'')   /* 261030 추가 — 라운딩 · 탭 간격 (비어 있으면 스타일 기본값) */
-      +'--tkvw:'+Math.max(140,Math.min(360,txNum(c.vw,220)))+'px;--tkpg:'+(c.bg||'#ffffff')+';--tkgap:'+txNum(c.gapB,44)+'px;--tkcs:'+txNum(c.cs,15)+'px;--tktc:'+(c.tc||'#222428')+';--tkcal:'+(c.cal==='left'?'left':'center')+';';
+      +'--tkvw:'+Math.max(140,Math.min(360,txNum(c.vw,220)))+'px;--tkpg:'+(c.bg||'#ffffff')+';--tkgap:'+txNum(c.gapB,44)+'px;--tkcs:'+txNum(c.cs,15)+'px;--tktc:'+(c.tc||'#222428')+';--tkcal:'+tkCal(c)+';';
   }
   function tkAttrs(w,c){ w.setAttribute('data-ds',c.ds||'under'); w.setAttribute('data-pos',c.pos==='left'?'left':'top'); w.setAttribute('data-wrap',c.wrap==='multi'?'multi':'line'); w.setAttribute('data-al',c.al||'center'); }
   function tkBlockHTML(){ return '<span class="tag-badge">탭</span>'+SM_GEAR+'<div class="tk-wrap"></div>'; }
@@ -46683,9 +46684,10 @@ global.PolyFX = API;
   function tkDirty(){ if(typeof markDirty==='function') markDirty(); }
   function tkUpd(key,val){ var blk=tkCurBlk; if(!blk) return; if(key==='bg') tkBgInk(blk,val); var pf=(key==='pos')&&tkPosDef(tkCfg(blk),val); tkCfg(blk)[key]=val; tkApply(blk); if(pf) tkFillBset(); else tkRows(); tkDirty(); }
   /* 261030 추가 — 탭 위치를 바꾸면 내용 정렬 · 탭-내용 간격이 앞 위치 기본값 그대로일 때 새 위치 기본값으로 (세로: 왼쪽 · 64 / 위: 가운데 · 44). 직접 바꾼 값은 유지 */
+  function tkCal(c){ return (c.cal==='left'||c.cal==='right')?c.cal:'center'; }   /* 261030 추가 — 내용 정렬 값 (왼쪽 · 가운데 · 오른쪽) */
   function tkPosDef(c,nv){
     var D={left:{cal:'left',gapB:64}, top:{cal:'center',gapB:44}}, o=D[c.pos==='left'?'left':'top'], n=D[nv==='left'?'left':'top']; if(o===n) return false;
-    var ch=false; if((c.cal==='left'?'left':'center')===o.cal){ c.cal=n.cal; ch=true; } if(txNum(c.gapB,44)===o.gapB){ c.gapB=n.gapB; ch=true; } return ch;
+    var ch=false; if(tkCal(c)===o.cal){ c.cal=n.cal; ch=true; } if(txNum(c.gapB,44)===o.gapB){ c.gapB=n.gapB; ch=true; } return ch;
   }
   /* 261030 추가 — 라운딩 · 탭 간격: 값이 없으면 스타일 기본값을 슬라이더에 보인다 */
   function tkRDef(c){ return (c.pos==='left'&&c.ds==='fill')?8:({box:4,block:4,seg:9,fill:0})[c.ds]||0; }
@@ -46844,7 +46846,7 @@ global.PolyFX = API;
     TK_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
     TK_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
     tkFontSync(txNum(c.tf,5));
-    tkSegSync('tkPosSeg',c.pos==='left'?'left':'top'); tkSegSync('tkWrapSeg',c.wrap==='multi'?'multi':'line'); tkSegSync('tkAlSeg',c.al||'center'); tkSegSync('tkMvSeg',c.mv==='page'?'page':'one'); tkSegSync('tkFwSeg',txNum(c.fw,500)); tkSegSync('tkCalSeg',c.cal==='left'?'left':'center');
+    tkSegSync('tkPosSeg',c.pos==='left'?'left':'top'); tkSegSync('tkWrapSeg',c.wrap==='multi'?'multi':'line'); tkSegSync('tkAlSeg',c.al||'center'); tkSegSync('tkMvSeg',c.mv==='page'?'page':'one'); tkSegSync('tkFwSeg',txNum(c.fw,500)); tkSegSync('tkCalSeg',tkCal(c));
     tkStyleSync(); tkListRender(); if(typeof bgPanelSync==='function') bgPanelSync('tk'); tkRows();
   }
   if(typeof BGP==='object' && BGP) BGP.tk={cur:function(){ return tkCurBlk; }, cfg:tkCfg, apply:tkApply};
