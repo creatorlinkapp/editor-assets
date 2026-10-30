@@ -4911,7 +4911,7 @@
   .im-addrow .btn-sm.picking{animation:rtThumbPulse 1s ease-in-out infinite;}
   .im-addrow button:disabled{opacity:.4;pointer-events:none;}
   .srow.off,.mt-seg-b.off{opacity:.38;pointer-events:none;}
-  :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow) .help-ico{display:none;vertical-align:-2px;margin-left:2px;} :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow).off .help-ico{display:inline-block;pointer-events:auto;}
+  :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow) .help-ico{display:none;vertical-align:-2px;margin-left:2px;} :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow).off .help-ico{display:inline-block;pointer-events:auto;}   /* 261030 수정 — 탭 블록 화살표 이동 · 화살표 색 (화살표가 안 나올 때) */
   #ctTaSeg.dis{opacity:.38;} #ctTaSeg.dis .mt-seg-b{cursor:pointer;}   /* 261029 추가 — 제목 · 설명이 모두 꺼지면 정렬은 흐리게, 누르면 안내 팝업 */   /* 261028 추가 — 컨택트 제목 색이 막혀 있을 때만 물음표로 이유를 알린다 */
   .im-sub{margin:4px 0 2px 0;padding:2px 0 8px 12px;border-left:2px solid var(--line);}
   .im-bgpick{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
@@ -12852,7 +12852,7 @@
             <div class="srow" id="tkGpRow"><span class="k">탭 간격</span><input class="rng" type="range" id="tkGp" min="0" max="40" step="1" value="10"><span class="v" id="tkGpV">10px</span></div>   <!-- 261030 추가 — 탭 사이 · 줄 사이 간격 (기존 편집기 「좌우 간격」 · 「버튼 상하 간격」을 하나로). 떨어진 모양(알약 · 테두리 · 블럭) · 여러 줄에서만 -->
             <div class="srow"><span class="k">탭 · 내용 간격</span><input class="rng" type="range" id="tkGapB" min="0" max="120" step="2" value="40"><span class="v" id="tkGapBV">40px</span></div>
             <div id="tkMvRow">
-              <div class="srow" style="margin:12px 0 6px;"><span class="k">화살표 이동</span></div>
+              <div class="srow" id="tkMvLbl" style="margin:12px 0 6px;"><span class="k">화살표 이동 <svg class="help-ico pg-tip" data-tip="탭이 가로 개수보다 많을 때 화살표가 나옵니다. 모바일은 한 줄에 4칸까지라 탭이 5개 이상이면 화살표가 나옵니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span></div>
               <div class="mt-seg" id="tkMvSeg">
                 <button type="button" class="mt-seg-b active" data-m="one" onclick="tkSeg('mv','tkMvSeg','one')">한 칸씩</button>
                 <button type="button" class="mt-seg-b" data-m="page" onclick="tkSeg('mv','tkMvSeg','page')">한 화면씩</button>
@@ -12888,7 +12888,7 @@
             <div class="srow"><span class="k" id="tkAcLbl">선택 표시</span><span class="sw-col"><input type="color" id="tkAc" value="#222428" data-cp-title="선택 표시 색"><span class="hex" id="tkAcV">#222428</span></span></div>
             <div class="srow" id="tkLcRow"><span class="k">선</span><span class="sw-col"><input type="color" id="tkLc" value="#e5e7eb" data-cp-title="선 색"><span class="hex" id="tkLcV">#E5E7EB</span></span></div>
             <div class="srow" id="tkBbRow"><span class="k">탭 바탕</span><span class="sw-col"><input type="color" id="tkBb" value="#f1f2f5" data-cp-title="탭 바탕색"><span class="hex" id="tkBbV">#F1F2F5</span></span></div>
-            <div class="srow" id="tkArcRow"><span class="k">화살표</span><span class="sw-col"><input type="color" id="tkArc" value="#222428" data-cp-title="화살표 색"><span class="hex" id="tkArcV">#222428</span></span></div>
+            <div class="srow" id="tkArcRow"><span class="k">화살표 <svg class="help-ico pg-tip" data-tip="탭이 가로 개수보다 많을 때 화살표가 나옵니다. 모바일은 한 줄에 4칸까지라 탭이 5개 이상이면 화살표가 나옵니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><span class="sw-col"><input type="color" id="tkArc" value="#222428" data-cp-title="화살표 색"><span class="hex" id="tkArcV">#222428</span></span></div>
           </div></div>
         </div>
         <div class="fld sfold" id="tkPaneAcc">
@@ -46670,7 +46670,12 @@ global.PolyFX = API;
   function tkLibDrop(blk,src){ if(typeof bpBgSet==='function') bpBgSet('tk',blk,src); clToast((rtBgIsVid(src)?'블럭 배경 동영상을':'블럭 배경 이미지를')+' 넣었습니다.'); }
   /* ── 블럭설정 ── */
   function tkDirty(){ if(typeof markDirty==='function') markDirty(); }
-  function tkUpd(key,val){ var blk=tkCurBlk; if(!blk) return; if(key==='bg') tkBgInk(blk,val); tkCfg(blk)[key]=val; tkApply(blk); tkRows(); tkDirty(); }
+  function tkUpd(key,val){ var blk=tkCurBlk; if(!blk) return; if(key==='bg') tkBgInk(blk,val); var pf=(key==='pos')&&tkPosDef(tkCfg(blk),val); tkCfg(blk)[key]=val; tkApply(blk); if(pf) tkFillBset(); else tkRows(); tkDirty(); }
+  /* 261030 추가 — 탭 위치를 바꾸면 내용 정렬 · 탭-내용 간격이 앞 위치 기본값 그대로일 때 새 위치 기본값으로 (세로: 왼쪽 · 64 / 위: 가운데 · 44). 직접 바꾼 값은 유지 */
+  function tkPosDef(c,nv){
+    var D={left:{cal:'left',gapB:64}, top:{cal:'center',gapB:44}}, o=D[c.pos==='left'?'left':'top'], n=D[nv==='left'?'left':'top']; if(o===n) return false;
+    var ch=false; if((c.cal==='left'?'left':'center')===o.cal){ c.cal=n.cal; ch=true; } if(txNum(c.gapB,44)===o.gapB){ c.gapB=n.gapB; ch=true; } return ch;
+  }
   /* 261030 추가 — 라운딩 · 탭 간격: 값이 없으면 스타일 기본값을 슬라이더에 보인다 */
   function tkRDef(c){ return (c.pos==='left'&&c.ds==='fill')?8:({box:4,block:4,seg:9,fill:0})[c.ds]||0; }
   function tkGDef(c){ var m={pill:10,box:10,block:8}; return (m[c.ds]!=null)?m[c.ds]:6; }
@@ -46729,6 +46734,11 @@ global.PolyFX = API;
     show('tkTopRows', top); show('tkVwRow', !top); show('tkLayHint', top); show('tkLayHintL', !top);
     show('tkAlRow', top && txNum(c.bw,100)<100);
     show('tkMvRow', line); show('tkArcRow', line);
+    /* 261030 추가 — 화살표가 PC · 모바일 어디에도 안 나오면(탭 수 ≤ 가로 개수, 그리고 ≤ 4 — 모바일은 한 줄 4칸) 화살표 이동 · 화살표 색은 바꿔도 안 보여 비활성 */
+    var arOff=c.tabs.length<=Math.min(Math.max(1,Math.min(8,Math.round(txNum(c.cols,4)))),4);
+    var ml=document.getElementById('tkMvLbl'); if(ml) ml.classList.toggle('off',arOff);
+    var ms=document.getElementById('tkMvSeg'); if(ms) ms.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('off',arOff); });
+    var ar=document.getElementById('tkArcRow'); if(ar) ar.classList.toggle('off',arOff);
     show('tkLcRow', use==='lc'); show('tkBbRow', use==='bb');
     /* 261030 추가 — 라운딩은 상자 모양 탭(채움 · 테두리 · 블럭 · 세그먼트), 탭 간격은 떨어진 모양(알약 · 테두리 · 블럭) 또는 여러 줄(줄 사이)에서만 */
     show('tkRRow', /^(fill|box|block|seg)$/.test(c.ds)); show('tkGpRow', /^(pill|box|block)$/.test(c.ds) || (top && c.wrap==='multi'));
