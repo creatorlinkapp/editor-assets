@@ -2862,7 +2862,7 @@
   @container (max-width:560px){
     .tk-in{padding-left:20px;padding-right:20px;}
     .tk-bar{width:100%;}
-    .tk-tab{flex-basis:calc((100% - var(--g) * (var(--tkcolsm) - 1)) / var(--tkcolsm));height:max(40px,calc(var(--tkh) * .82));padding:0 8px;font-size:min(calc(var(--tkfs) * .9),16px);}   /* 261030 수정 — 모바일 탭 글자는 최대 16px (칸이 좁아 크면 이름이 잘림) */
+    .tk-tab{flex-basis:calc((100% - var(--g) * (var(--tkcolsm) - 1)) / var(--tkcolsm));height:max(40px,calc(var(--tkh) * .82));padding:0 8px;font-size:clamp(min(var(--tkfs),12px),calc(var(--tkfs) * .9),16px);}   /* 261030 수정 — 모바일 탭 글자는 0.9배로 줄이되 최대 16px (칸이 좁아 크면 이름이 잘림) · 12px 아래로는 줄이지 않음 (설정값이 12px보다 작으면 설정값) */
     .tk-wrap[data-pos="left"] .tk-tab{padding:0 8px;}
     .tk-wrap[data-wrap="multi"] .tk-list{grid-template-columns:repeat(var(--tkcolsm),minmax(0,1fr));}
     /* 261030 추가 — 세로 탭도 모바일에서 「여러 줄」(모바일 편집 탭 줄)이면 줄을 바꾼다 */
@@ -12859,7 +12859,7 @@
                 <button type="button" class="mt-seg-b" data-m="right" onclick="tkSeg('al','tkAlSeg','right')">오른쪽</button>
               </div>
             </div>
-            <div class="srow"><span class="k">탭 높이</span><input class="rng" type="range" id="tkH" min="32" max="96" step="2" value="60"><span class="v" id="tkHV">60px</span></div>
+            <div class="srow"><span class="k">탭 높이</span><input class="rng" type="range" id="tkH" min="32" max="160" step="2" value="60"><span class="v" id="tkHV">60px</span></div>
             <div class="srow" id="tkRRow"><span class="k">라운딩</span><input class="rng" type="range" id="tkR" min="0" max="30" step="1" value="4"><span class="v" id="tkRV">4px</span></div>   <!-- 261030 추가 — 탭 모서리 (기존 편집기 TAB3 · 4 · 5 · 8 「둥근 모서리」). 상자 모양 스타일(채움 · 테두리 · 블럭 · 세그먼트)에서만 -->
             <div class="srow" id="tkGpRow"><span class="k">탭 간격</span><input class="rng" type="range" id="tkGp" min="0" max="40" step="1" value="10"><span class="v" id="tkGpV">10px</span></div>   <!-- 261030 추가 — 탭 사이 · 줄 사이 간격 (기존 편집기 「좌우 간격」 · 「버튼 상하 간격」을 하나로). 떨어진 모양(알약 · 테두리 · 블럭) · 여러 줄에서만 -->
             <div class="srow"><span class="k">탭 · 내용 간격</span><input class="rng" type="range" id="tkGapB" min="0" max="120" step="2" value="40"><span class="v" id="tkGapBV">40px</span></div>
@@ -12883,7 +12883,7 @@
                 <div class="sdd-menu"></div>
               </div>
             </div>
-            <div class="srow"><span class="k">크기</span><input class="rng" type="range" id="tkFs" min="12" max="24" step="1" value="16"><span class="v" id="tkFsV">16px</span></div>
+            <div class="srow"><span class="k">크기</span><input class="rng" type="range" id="tkFs" min="10" max="30" step="1" value="16"><span class="v" id="tkFsV">16px</span></div>
             <div class="srow" style="margin:12px 0 6px;"><span class="k">굵기</span></div>
             <div class="mt-seg" id="tkFwSeg">
               <button type="button" class="mt-seg-b" data-m="400" onclick="tkSeg('fw','tkFwSeg',400)">보통</button>
