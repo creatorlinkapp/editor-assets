@@ -2863,6 +2863,10 @@
     .tk-tab{flex-basis:calc((100% - var(--g) * (var(--tkcolsm) - 1)) / var(--tkcolsm));height:max(40px,calc(var(--tkh) * .82));padding:0 8px;font-size:calc(var(--tkfs) * .9);}
     .tk-wrap[data-pos="left"] .tk-tab{padding:0 8px;}
     .tk-wrap[data-wrap="multi"] .tk-list{grid-template-columns:repeat(var(--tkcolsm),minmax(0,1fr));}
+    /* 261030 추가 — 세로 탭도 모바일에서 「여러 줄」(모바일 편집 탭 줄)이면 줄을 바꾼다 */
+    .tk-wrap[data-pos="left"][data-wrap="multi"] .tk-sc{overflow:visible;}
+    .tk-wrap[data-pos="left"][data-wrap="multi"] .tk-list{display:grid;grid-template-columns:repeat(var(--tkcolsm),minmax(0,1fr));row-gap:var(--tkg,max(var(--g),6px));}
+    .tk-wrap[data-pos="left"][data-wrap="multi"] .tk-tab{flex:none;}
     .tk-wrap[data-ds="seg"] .tk-tab{height:max(36px,calc(var(--tkh) * .82 - 8px));}   /* 바탕 4px 안쪽 칸 — 바탕까지 44px */
     .tk-ar{width:26px;}
     .tk-panes{margin-top:calc(var(--tkgap) * .75);}
@@ -12830,19 +12834,19 @@
         <div class="fld sfold" id="tkLayAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">배치<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="srow" style="margin:0 0 6px;"><span class="k">탭 위치</span></div>
+            <div class="srow" id="tkPosLbl" style="margin:0 0 6px;"><span class="k">탭 위치</span></div>
             <div class="mt-seg" id="tkPosSeg">
               <button type="button" class="mt-seg-b active" data-m="top" onclick="tkSeg('pos','tkPosSeg','top')">위</button>
               <button type="button" class="mt-seg-b" data-m="left" onclick="tkSeg('pos','tkPosSeg','left')">왼쪽 (세로)</button>
             </div>
             <div id="tkTopRows">
-              <div class="srow" style="margin:12px 0 6px;"><span class="k">탭 줄</span></div>
+              <div class="srow" id="tkWrapLbl" style="margin:12px 0 6px;"><span class="k">탭 줄</span></div>
               <div class="mt-seg" id="tkWrapSeg">
                 <button type="button" class="mt-seg-b active" data-m="line" onclick="tkSeg('wrap','tkWrapSeg','line')">한 줄</button>
                 <button type="button" class="mt-seg-b" data-m="multi" onclick="tkSeg('wrap','tkWrapSeg','multi')">여러 줄</button>
               </div>
               <div class="srow"><span class="k">가로 개수</span><input class="rng" type="range" id="tkCols" min="1" max="8" step="1" value="4"><span class="v" id="tkColsV">4</span></div>
-              <div class="srow"><span class="k">탭 줄 너비</span><input class="rng" type="range" id="tkBw" min="30" max="100" step="5" value="100"><span class="v" id="tkBwV">100%</span></div>
+              <div class="srow" id="tkBwRow"><span class="k">탭 줄 너비</span><input class="rng" type="range" id="tkBw" min="30" max="100" step="5" value="100"><span class="v" id="tkBwV">100%</span></div>
             </div>
             <div class="srow" id="tkVwRow"><span class="k">탭 목록 너비</span><input class="rng" type="range" id="tkVw" min="140" max="360" step="10" value="220"><span class="v" id="tkVwV">220px</span></div>
             <div id="tkAlRow">
@@ -46682,7 +46686,12 @@ global.PolyFX = API;
   function tkLibDrop(blk,src){ if(typeof bpBgSet==='function') bpBgSet('tk',blk,src); clToast((rtBgIsVid(src)?'블럭 배경 동영상을':'블럭 배경 이미지를')+' 넣었습니다.'); }
   /* ── 블럭설정 ── */
   function tkDirty(){ if(typeof markDirty==='function') markDirty(); }
-  function tkUpd(key,val){ var blk=tkCurBlk; if(!blk) return; if(key==='bg') tkBgInk(blk,val); var pf=(key==='pos')&&tkPosDef(tkCfg(blk),val); tkCfg(blk)[key]=val; tkApply(blk); if(pf) tkFillBset(); else tkRows(); tkDirty(); }
+  function tkUpd(key,val){ var blk=tkCurBlk; if(!blk) return;
+    /* 261030 추가 — 모바일 편집에서 값을 PC 값과 같게 되돌리면, 공통 저장(mvReconcile)은 '바뀐 것 없음'으로 보고 예전 모바일 값을 남긴다 → 탭 블록에서는 모바일 값을 지워 PC 를 따르게 */
+    var ov=blk._mvOv, mvSh={tabs:1,def:1,bgImg:1,bgGray:1}, drop=false;
+    if(ov && (key in ov) && !mvSh[key] && typeof window.mvTarget==='function' && window.mvTarget()==='mobile' && JSON.stringify(tkCfg(blk)[key])===JSON.stringify(val)){ delete ov[key]; drop=true; }
+    if(drop && typeof window.mvKick==='function') setTimeout(function(){ window.mvKick(0); },0);
+    if(key==='bg') tkBgInk(blk,val); var pf=(key==='pos')&&tkPosDef(tkCfg(blk),val); tkCfg(blk)[key]=val; tkApply(blk); if(pf) tkFillBset(); else tkRows(); tkDirty(); }
   /* 261030 추가 — 탭 위치를 바꾸면 내용 정렬 · 탭-내용 간격이 앞 위치 기본값 그대로일 때 새 위치 기본값으로 (세로: 왼쪽 · 64 / 위: 가운데 · 44). 직접 바꾼 값은 유지 */
   function tkCal(c){ return (c.cal==='left'||c.cal==='right')?c.cal:'center'; }   /* 261030 추가 — 내용 정렬 값 (왼쪽 · 가운데 · 오른쪽) */
   function tkPosDef(c,nv){
@@ -46743,9 +46752,13 @@ global.PolyFX = API;
   function tkRows(){
     var blk=tkCurBlk; if(!blk) return; var c=tkCfg(blk);
     function show(id,on){ var el=document.getElementById(id); if(el) el.style.display=on?'':'none'; }
-    var top=(c.pos!=='left'), line=top && (c.wrap!=='multi'), use=TK_USE[c.ds]||'lc';
-    show('tkTopRows', top); show('tkVwRow', !top); show('tkLayHint', top); show('tkLayHintL', !top);
-    show('tkAlRow', top && txNum(c.bw,100)<100);
+    /* 261030 추가 — 모바일 편집: 모바일은 늘 위쪽 가로 탭 · 꽉 찬 탭 줄이라 탭 위치 · 탭 목록 너비 · 탭 줄 너비 · 정렬은 숨기고, 탭 줄 · 가로 개수는 PC 가 세로 탭이어도 보인다 */
+    var mo=(typeof window.mvTarget==='function' && window.mvTarget()==='mobile');
+    if(mo && blk._mvOv){ c=Object.assign({},c,blk._mvOv); }   /* 261030 추가 — 모바일 편집 중에는 모바일 값으로 판단 (PC 값으로 읽어 가로 개수 슬라이더가 되돌아가던 문제) */
+    var top=mo || (c.pos!=='left'), line=top && (c.wrap!=='multi'), use=TK_USE[c.ds]||'lc';
+    show('tkPosLbl', !mo); show('tkPosSeg', !mo); var wl=document.getElementById('tkWrapLbl'); if(wl) wl.style.marginTop=mo?'0':'12px';
+    show('tkTopRows', top); show('tkBwRow', !mo); show('tkVwRow', !top); show('tkLayHint', top); show('tkLayHintL', !top);
+    show('tkAlRow', !mo && top && txNum(c.bw,100)<100);
     show('tkMvRow', line); show('tkArcRow', line);
     /* 261030 추가 — 화살표가 PC · 모바일 어디에도 안 나오면(탭 수 ≤ 가로 개수, 그리고 ≤ 4 — 모바일은 한 줄 4칸) 화살표 이동 · 화살표 색은 바꿔도 안 보여 비활성 */
     var arOff=c.tabs.length<=Math.min(Math.max(1,Math.min(8,Math.round(txNum(c.cols,4)))),4);
