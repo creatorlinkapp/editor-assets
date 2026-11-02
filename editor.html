@@ -2813,8 +2813,12 @@
   .tk-kids{display:none;} .tk-kids.on{display:block;margin-top:var(--tkkg,40px);} .tk-kids > .blk ~ .blk{margin-top:var(--tkkg,40px);}   /* 261102 수정 — 탭 글 ↔ 블록 · 블록 ↔ 블록 간격 = 탭 설정 「블록 간격」(--tkkg) */
   /* 261030 수정 — 글 칸은 모든 탭에서 탭 줄 폭 (.tk-pane max-width:none). data-kids 표시는 빈 글 칸 숨김 등에 쓴다 */
   /* 261030 추가 — 탭 안 블록은 탭 블록의 좌우 여백 하나만 쓴다 (블록 자체 좌우 여백 40~48px 이 겹쳐 내용이 탭 줄보다 안쪽에서 시작하던 것). 위아래 여백 · 자기 폭(텍스트 760 · 폼 640 등)은 그대로 */
-  .tk-kids > .blk :is(.im-wrap,.fq-in,.qn-in,.bc-in,.fm-in,.ca-in,.bd-in,.ct-in,.cn-in,.lt-in,.nm-in,.sn-in,.qr-in,.cd-in,.dv-in){padding-left:0!important;padding-right:0!important;}
-  .tk-kids > .blk .ct-wrap[data-pv0="1"] .ct-br[data-bl="mapl"] .ct-body .ct-map{margin-left:0;}   /* 컨택트 '지도 크게' — 여백만큼 바깥으로 빼던 지도도 탭 줄 안에 */
+  .tk-kids > .blk:not(.tk-kid-bg) :is(.im-wrap,.fq-in,.qn-in,.bc-in,.fm-in,.ca-in,.bd-in,.ct-in,.cn-in,.lt-in,.nm-in,.sn-in,.qr-in,.cd-in,.dv-in){padding-left:0!important;padding-right:0!important;}   /* 261102 — 배경 있는 블록(.tk-kid-bg)은 색 상자 안 좌우 여백 유지 */
+  .tk-kids > .blk:not(.tk-kid-bg) .ct-wrap[data-pv0="1"] .ct-br[data-bl="mapl"] .ct-body .ct-map{margin-left:0;}   /* 컨택트 '지도 크게' — 여백만큼 바깥으로 빼던 지도도 탭 줄 안에 */
+  /* 261102 수정 — 탭 안 텍스트 블록(위아래 여백 0) : 글 편집 점선(글에서 10px 바깥)이 블록 테두리 밖으로 나가지 않게, 편집 화면에서만 점선 자리만큼 블록 높이를 늘린다 */
+  html:not(.pview) #stage .tk-kids > .blk[data-block="cred"] > .cred{display:flow-root;}
+  html:not(.pview) #stage .tk-kids > .blk[data-block="cred"][style*="padding-top: 0px"] > .cred{margin-top:22px;}
+  html:not(.pview) #stage .tk-kids > .blk[data-block="cred"][style*="padding-bottom: 0px"] > .cred{margin-bottom:22px;}
   /* 261030 추가 — 탭 안 블록은 탭 줄 밖으로 나가지 않게 : 띄어쓰기 없는 긴 글자는 칸 끝에서 줄바꿈(편집 중에도 같게), 그래도 넘치는 것은 좌우만 잘라 낸다(위아래 펼침 메뉴는 그대로) */
   .tk-kids{overflow-wrap:break-word;}
   #stage .tk-kids .blk[data-block="cred"].rt-editing .cred{overflow-wrap:break-word;}
@@ -46729,6 +46733,13 @@ global.PolyFX = API;
   var TK_ADDCTX=null;
   /* 261102 추가 — 블록마다 위아래 여백을 정하는 설정 (상단 · 하단 pt/pb · 위아래 한 값 pv) */
   var TK_KID_PAD={bdblk:['pv'],calblk:['pv'],ctblk:['pv'],formblk:['pv'],beforeafter:['pv'],faqacc:['pt','pb','pv'],qnaacc:['pt','pb','pv']};
+  function tkKidHasBg(cf){   /* 블록 배경이 흰색 · 투명이 아닌지 (배경 이미지 포함) */
+    if(cf.bgImg) return true; var b=String(cf.bg||'').trim().toLowerCase().replace(/\s+/g,'');
+    if(!b || b==='transparent' || b==='white' || /^rgba\(.*,0(\.0+)?\)$/.test(b) || /^#[0-9a-f]{6}00$/.test(b)) return false;
+    var h=b.replace('#',''); if(h.length===3) h=h.split('').map(function(x){ return x+x; }).join('');
+    if(/^[0-9a-f]{6}/.test(h)){ var r=parseInt(h.substr(0,2),16), g=parseInt(h.substr(2,2),16), bl=parseInt(h.substr(4,2),16); if(r>=250 && g>=250 && bl>=250) return false; }   /* 거의 흰색(#fafafa 이상)은 흰색으로 — 여백이 간격처럼 보이지 않게 */
+    return true;
+  }
   function tkKidEditor(blk){ return !window.CL_MVIEW && !!(blk.closest && blk.closest('#stage')); }
   function tkKidUid(){ return 'tk'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
   function tkKidBind(k,el){ var m=TK_KID[k.k]; if(!m) return; var key=m[0];
@@ -46772,6 +46783,7 @@ global.PolyFX = API;
         if(fresh){ el=tkKidMake(k); if(!el) return; }
         box.appendChild(el); used[k.id]=1; cache[k.id]=el;
         if(fresh) tkKidBoot(el,k); else tkKidRefresh(el,k);
+        var m=TK_KID[k.k], cf=m&&el[m[0]]; if(cf && typeof cf==='object') el.classList.toggle('tk-kid-bg',tkKidHasBg(cf));   /* 261102 — 배경 있는 블록 표시 (다시 그릴 때 · 사본) */
       }); }
     c.tabs.forEach(function(t,i){
       var top=document.createElement('div'); top.className='tk-kids tk-kids-top'+(i===cur?' on':''); top.setAttribute('data-tk-kids',i);
@@ -46895,7 +46907,9 @@ global.PolyFX = API;
     nb.setAttribute('data-tkkid',tkKidUid());
     /* 261102 수정 — 탭 안에서는 블록 자체 위아래 여백을 0 으로 (블록 사이 간격은 탭 설정 '블록 간격'이 맡는다). 블록 설정에서 다시 늘리면 그 값 */
     var ty=nb.getAttribute('data-block'), m=TK_KID[ty], cf=m&&nb[m[0]];
-    if(cf && typeof cf==='object'){ (TK_KID_PAD[ty]||['pt','pb']).forEach(function(p){ cf[p]=0; }); tkKidApply(nb,ty); }
+    /* 261102 수정 — 배경색 · 배경 이미지가 있는 블록은 색 상자 안쪽 여백 48px 를 남긴다 (0 이면 글 · 버튼이 상자 위아래 끝에 붙음). 흰색 · 투명 배경은 0 */
+    if(cf && typeof cf==='object') nb.classList.toggle('tk-kid-bg',tkKidHasBg(cf));   /* 배경 있는 블록 표시 — 색 상자 안 좌우 여백 유지 */
+    if(cf && typeof cf==='object'){ var pad=tkKidHasBg(cf)?48:0, keys=TK_KID_PAD[ty]||['pt','pb']; keys.forEach(function(p){ cf[p]=(p==='pv' && keys.length>1)?0:pad; }); tkKidApply(nb,ty); }   /* FAQ · QnA 는 블록(pt · pb)과 안쪽(pv) 두 군데 → 안쪽은 0, 블록에만 48 */
     if(typeof bindBlockHoverAddbars==='function') try{ bindBlockHoverAddbars(); }catch(e){}
     if(typeof selectBlock==='function') selectBlock(nb);
     setTimeout(function(){ try{ nb.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} },120);
