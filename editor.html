@@ -2810,7 +2810,7 @@
   .tk-panes{margin-top:var(--tkgap);}
   .tk-pane{display:none;max-width:none;margin:0 auto;font-size:var(--tkcs);line-height:1.75;color:var(--tktc);text-align:var(--tkcal);word-break:keep-all;overflow-wrap:break-word;}   /* 261030 수정 — 띄어쓰기 없는 긴 글자가 칸 밖으로 넘치지 않게 (다른 블록과 같은 방식) */
   /* 261030 추가 — 탭 안에 넣은 블록 : 탭 줄과 같은 폭(글 칸 820px 제한 없음), 고른 탭의 블록만 보인다 */
-  .tk-kids{display:none;} .tk-kids.on{display:block;margin-top:calc(var(--tkgap) * .5);}
+  .tk-kids{display:none;} .tk-kids.on{display:block;margin-top:var(--tkkg,24px);} .tk-kids > .blk ~ .blk{margin-top:var(--tkkg,24px);}   /* 261102 수정 — 탭 글 ↔ 블록 · 블록 ↔ 블록 간격 = 탭 설정 「블록 간격」(--tkkg) */
   /* 261030 수정 — 글 칸은 모든 탭에서 탭 줄 폭 (.tk-pane max-width:none). data-kids 표시는 빈 글 칸 숨김 등에 쓴다 */
   /* 261030 추가 — 탭 안 블록은 탭 블록의 좌우 여백 하나만 쓴다 (블록 자체 좌우 여백 40~48px 이 겹쳐 내용이 탭 줄보다 안쪽에서 시작하던 것). 위아래 여백 · 자기 폭(텍스트 760 · 폼 640 등)은 그대로 */
   .tk-kids > .blk :is(.im-wrap,.fq-in,.qn-in,.bc-in,.fm-in,.ca-in,.bd-in,.ct-in,.cn-in,.lt-in,.nm-in,.sn-in,.qr-in,.cd-in,.dv-in){padding-left:0!important;padding-right:0!important;}
@@ -2818,14 +2818,14 @@
   /* 261030 추가 — 탭 안 블록은 탭 줄 밖으로 나가지 않게 : 띄어쓰기 없는 긴 글자는 칸 끝에서 줄바꿈(편집 중에도 같게), 그래도 넘치는 것은 좌우만 잘라 낸다(위아래 펼침 메뉴는 그대로) */
   .tk-kids{overflow-wrap:break-word;}
   #stage .tk-kids .blk[data-block="cred"].rt-editing .cred{overflow-wrap:break-word;}
-  .tk-kids > .blk{overflow-x:clip;max-width:100%;}
+  .tk-kids > .blk{overflow-x:clip;max-width:100%;display:flow-root;}   /* 261102 — 예방 : 블록 자체 위아래 여백이 0 일 때 블록 안쪽 글의 바깥 여백이 블록 밖으로 빠져 간격을 바꾸지 않게 */
   .tk-kids :is(.rt-btn,.rt-btn-a,.fm-btn,.bd-wbtn,.qr-auto){max-width:100%;box-sizing:border-box;overflow:hidden;text-overflow:ellipsis;}   /* 한 줄 고정 버튼 · 주소 — 모양은 칸 안에, 긴 글자는 말줄임 */
   .tk-kids .rt-btn-a > *{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .tk-kids > .blk :is(.ct-in,.bd-top,.fm-act,.cn-split,.bc-in,.qn-in) > *{min-width:0;}   /* 안쪽 배치 칸(그리드 · 줄)이 긴 글자만큼 넓어져 탭 폭을 넘지 않게 */
   .tk-kids .bd-top > *{flex-shrink:1;} .tk-kids .bd-wbtn{max-width:50%;} .tk-kids .rt-btn{max-width:calc(100% - 6px);}   /* 게시판 글쓰기 버튼이 밀려 나가지 않게 · 텍스트 버튼 앞 띄어쓰기(약 3px)만큼 여유 */
   #stage .tk-blk .tk-in .tk-pane.cred{outline-offset:0;padding-top:10px;padding-bottom:10px;margin-top:-10px;margin-bottom:-10px;}   /* 261030 수정 — 모든 탭 : 편집 화면 점선을 칸 좌우 끝에 맞춘다(바깥 10px 띄우면 탭 줄 · 블록보다 넓어 보임). 위아래 여유는 안쪽 여백으로, 자리는 그대로 */
   .tk-wrap[data-tkno] .tk-pane.on{display:none;} #stage .tk-wrap[data-tkno] .tk-pane.on{display:block;} html.pview #stage .tk-wrap[data-tkno] .tk-pane.on{display:none;}
-  .tk-wrap[data-tkno] .tk-kids.on{margin-top:0;} #stage .tk-wrap[data-tkno] .tk-kids.on{margin-top:calc(var(--tkgap) * .5);} html.pview #stage .tk-wrap[data-tkno] .tk-kids.on{margin-top:0;}
+  .tk-wrap[data-tkno] .tk-kids.on{margin-top:0;} #stage .tk-wrap[data-tkno] .tk-kids.on{margin-top:var(--tkkg,24px);} html.pview #stage .tk-wrap[data-tkno] .tk-kids.on{margin-top:0;}
   .tk-kid-add{display:flex;justify-content:center;padding:12px 0 4px;} html.pview .tk-kid-add{display:none;}
   .tk-kid-add button{display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;height:40px;border:1px dashed var(--border-hover);border-radius:var(--r-md);background:rgba(255,255,255,.7);color:var(--ink-2s);font:inherit;font-size:var(--fs-md);font-weight:600;cursor:pointer;transition:border-color .12s,color .12s,background .12s;}
   .tk-kid-add button:hover{border-color:var(--green);color:var(--green-text);background:var(--green-soft);} .tk-kid-add svg{width:14px;height:14px;}
@@ -2837,7 +2837,7 @@
   .tk-kid-gap button svg{width:12px;height:12px;}
   .tk-kid-gap.show button,.tk-kid-gap:hover button{opacity:1;pointer-events:auto;}
   .tk-kid-gap button:hover{border-color:var(--green);color:var(--green-text);background:var(--green-soft);}
-  .tk-kids-top.on{margin-top:0;} .tk-kids-top.on:has(> .blk){margin-bottom:calc(var(--tkgap) * .5);}   /* 탭 글 칸 위 블록 칸 */
+  .tk-kids-top.on{margin-top:0;} .tk-kids-top.on:has(> .blk){margin-bottom:var(--tkkg,24px);}   /* 탭 글 칸 위 블록 칸 */
   html.pview .tk-kid-gap{display:none;}
   #blockAdd.ba-tkin .ba-card:not([data-kind="cred"]):not([data-kind="imggrid"]):not([data-kind="gridgal"]):not([data-kind="cnblk"]):not([data-kind="formblk"]):not([data-kind="ctblk"]):not([data-kind="calblk"]):not([data-kind="bdblk"]):not([data-kind="ltblk"]):not([data-kind="nmblk"]):not([data-kind="cdblk"]):not([data-kind="qrblk"]):not([data-kind="snblk"]):not([data-kind="faqacc"]):not([data-kind="qnaacc"]):not([data-kind="beforeafter"]):not([data-kind="dvblk"]):not([data-kind="fxbutton"]){display:none;}   /* 블록 추가 창 — 탭 안에 넣을 수 있는 블록만 */
   #blockAdd.ba-tkin #baCatsFoot{display:none;}   /* 보관함 등은 탭 안 추가에서 뺀다 */
@@ -12895,6 +12895,7 @@
             <div class="srow" id="tkRRow"><span class="k">라운딩</span><input class="rng" type="range" id="tkR" min="0" max="30" step="1" value="4"><span class="v" id="tkRV">4px</span></div>   <!-- 261030 추가 — 탭 모서리 (기존 편집기 TAB3 · 4 · 5 · 8 「둥근 모서리」). 상자 모양 스타일(채움 · 테두리 · 블럭 · 세그먼트)에서만 -->
             <div class="srow" id="tkGpRow"><span class="k">탭 간격</span><input class="rng" type="range" id="tkGp" min="0" max="40" step="1" value="10"><span class="v" id="tkGpV">10px</span></div>   <!-- 261030 추가 — 탭 사이 · 줄 사이 간격 (기존 편집기 「좌우 간격」 · 「버튼 상하 간격」을 하나로). 떨어진 모양(알약 · 테두리 · 블럭) · 여러 줄에서만 -->
             <div class="srow"><span class="k">탭 · 내용 간격</span><input class="rng" type="range" id="tkGapB" min="0" max="120" step="2" value="40"><span class="v" id="tkGapBV">40px</span></div>
+            <div class="srow" id="tkKgRow"><span class="k">블록 간격</span><input class="rng" type="range" id="tkKg" min="0" max="120" step="2" value="24"><span class="v" id="tkKgV">24px</span></div>   <!-- 261102 추가 — 탭 안 블록 간격 (탭 글 ↔ 블록 · 블록 ↔ 블록). 탭 안에 블록이 있을 때만 -->
             <div id="tkMvRow">
               <div class="srow" id="tkMvLbl" style="margin:12px 0 6px;"><span class="k">화살표 이동 <svg class="help-ico pg-tip" data-tip="탭이 가로 개수보다 많을 때 화살표가 나옵니다. 모바일은 한 줄에 4칸까지라 탭이 5개 이상이면 화살표가 나옵니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span></div>
               <div class="mt-seg" id="tkMvSeg">
@@ -46558,7 +46559,7 @@ global.PolyFX = API;
   ];
   var TK_DEF={ ds:'under', tabs:null, def:0, pos:'top', vw:220, wrap:'line', cols:4, bw:100, al:'center', h:60, fs:16, fw:500, tf:5,
     fg:'#8a8f98', afg:'#222428', ac:'#222428', lc:'#e5e7eb', bb:'#f1f2f5', arc:'#222428', mv:'one',
-    gapB:44, cal:'center', cs:15, tc:'#222428', bg:'#ffffff', bgImg:'', bgDim:0, bgGray:false, pt:80, pb:80 };
+    gapB:44, kg:24, cal:'center', cs:15, tc:'#222428', bg:'#ffffff', bgImg:'', bgDim:0, bgGray:false, pt:80, pb:80 };
   /* 시작값 = 디자인. 주석의 번호는 좌측 사이트 탭 번호(tabN). 색은 리뉴얼 토큰(잉크 · 보조 · 선 · 그린 · 블루 · 레드)으로 바꿨다 */
   var TK_PRESETS={
     under :{ds:'under',  fg:'#8a8f98', afg:'#222428', ac:'#222428', lc:'#e5e7eb', h:60},   /* tab1 */
@@ -46618,7 +46619,7 @@ global.PolyFX = API;
       +'--tkcols:'+cols+';--tkcolsm:'+Math.min(cols,4)+';--tkbw:'+Math.max(30,Math.min(100,txNum(c.bw,100)))+'%;'
       +'--tkfg:'+(c.fg||'#8a8f98')+';--tkafg:'+(c.afg||'#222428')+';--tkac:'+(c.ac||'#222428')+';--tklc:'+(c.lc||'#e5e7eb')+';--tkbb:'+(c.bb||'#f1f2f5')+';--tkarc:'+(c.arc||'#222428')+';'
       +((c.r!=null&&c.r!=='')?'--tkr:'+Math.max(0,Math.min(30,txNum(c.r,0)))+'px;':'')+((c.gp!=null&&c.gp!=='')?'--tkg:'+Math.max(0,Math.min(40,txNum(c.gp,0)))+'px;':'')   /* 261030 추가 — 라운딩 · 탭 간격 (비어 있으면 스타일 기본값) */
-      +'--tkvw:'+Math.max(140,Math.min(360,txNum(c.vw,220)))+'px;--tkpg:'+(c.bg||'#ffffff')+';--tkgap:'+txNum(c.gapB,44)+'px;--tkcs:'+txNum(c.cs,15)+'px;--tktc:'+(c.tc||'#222428')+';--tkcal:'+tkCal(c)+';';
+      +'--tkvw:'+Math.max(140,Math.min(360,txNum(c.vw,220)))+'px;--tkpg:'+(c.bg||'#ffffff')+';--tkgap:'+txNum(c.gapB,44)+'px;--tkkg:'+txNum(c.kg,24)+'px;--tkcs:'+txNum(c.cs,15)+'px;--tktc:'+(c.tc||'#222428')+';--tkcal:'+tkCal(c)+';';
   }
   function tkAttrs(w,c){ w.setAttribute('data-ds',c.ds||'under'); w.setAttribute('data-pos',c.pos==='left'?'left':'top'); w.setAttribute('data-wrap',c.wrap==='multi'?'multi':'line'); w.setAttribute('data-al',c.al||'center'); w.setAttribute('data-cal',tkCal(c)); }
   function tkBlockHTML(){ return '<span class="tag-badge">탭</span>'+SM_GEAR+'<div class="tk-wrap"></div>'; }
@@ -46724,6 +46725,8 @@ global.PolyFX = API;
     calblk:['_caCfg','caApply'],bdblk:['_bdCfg','bdApply'],ltblk:['_ltCfg','ltApply'],nmblk:['_nmCfg','nmApply'],cdblk:['_cdCfg','cdApply'],qrblk:['_qrCfg','qrApply'],snblk:['_snCfg','snApply'],
     faqacc:['_fqCfg','fqApply'],qnaacc:['_qnCfg','qnApply'],beforeafter:['_bcCfg','bcApply'],dvblk:['_dvCfg','dvApply'],fxbutton:['_btCfg','btApply']};
   var TK_ADDCTX=null;
+  /* 261102 추가 — 블록마다 위아래 여백을 정하는 설정 (상단 · 하단 pt/pb · 위아래 한 값 pv) */
+  var TK_KID_PAD={bdblk:['pv'],calblk:['pv'],ctblk:['pv'],formblk:['pv'],beforeafter:['pv'],faqacc:['pt','pb','pv'],qnaacc:['pt','pb','pv']};
   function tkKidEditor(blk){ return !window.CL_MVIEW && !!(blk.closest && blk.closest('#stage')); }
   function tkKidUid(){ return 'tk'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
   function tkKidBind(k,el){ var m=TK_KID[k.k]; if(!m) return; var key=m[0];
@@ -46808,7 +46811,7 @@ global.PolyFX = API;
     var add=box.querySelector(':scope > .tk-kid-add'); if(add && add.nextElementSibling) box.appendChild(add);
     if(list.length!==cur.length || list.some(function(k,j){ return cur[j]!==k; })) ch=true;
     tkKidGaps(box); if(!ch) return;
-    t[key]=list; tkKidFlag(blk); tkDirty();
+    t[key]=list; tkKidFlag(blk); tkDirty(); if(typeof tkCurBlk!=='undefined' && tkCurBlk===blk) tkRows();   /* 블록 간격 줄 보이기 */
     if(typeof window.mvKick==='function') setTimeout(function(){ window.mvKick(0); },0);
   }
   /* 사이 자리(.tk-kid-gap) : 블록마다 위 경계 하나 (위 칸은 끝 = 탭 글 칸 바로 위에도 하나). 평소엔 숨기고, 마우스에 가까운 경계 한 곳만 작은 버튼으로 */
@@ -46879,8 +46882,9 @@ global.PolyFX = API;
     var ab=nb.nextElementSibling; if(ab && ab.classList.contains('addbar')) ab.remove();
     var add=box.querySelector(':scope > .tk-kid-add'), endGap=ctxTop?box.lastElementChild:null, bf=(ctxBefore && ctxBefore.parentNode===box)?ctxBefore:(ctxTop?endGap:add); box.insertBefore(nb,bf||null);
     nb.setAttribute('data-tkkid',tkKidUid());
-    var m=TK_KID[nb.getAttribute('data-block')], cf=m&&nb[m[0]];   /* 탭 안에서는 위아래 여백을 작게 (24px) — 블록 설정에서 다시 바꿀 수 있다 */
-    if(cf && typeof cf==='object'){ var chg=false; ['pt','pb'].forEach(function(p){ if(typeof cf[p]==='number' && cf[p]>24){ cf[p]=24; chg=true; } }); if(chg) tkKidApply(nb,nb.getAttribute('data-block')); }
+    /* 261102 수정 — 탭 안에서는 블록 자체 위아래 여백을 0 으로 (블록 사이 간격은 탭 설정 '블록 간격'이 맡는다). 블록 설정에서 다시 늘리면 그 값 */
+    var ty=nb.getAttribute('data-block'), m=TK_KID[ty], cf=m&&nb[m[0]];
+    if(cf && typeof cf==='object'){ (TK_KID_PAD[ty]||['pt','pb']).forEach(function(p){ cf[p]=0; }); tkKidApply(nb,ty); }
     if(typeof bindBlockHoverAddbars==='function') try{ bindBlockHoverAddbars(); }catch(e){}
     if(typeof selectBlock==='function') selectBlock(nb);
     setTimeout(function(){ try{ nb.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} },120);
@@ -46997,6 +47001,7 @@ global.PolyFX = API;
     show('tkLcRow', use==='lc'); show('tkBbRow', use==='bb');
     /* 261030 추가 — 라운딩은 상자 모양 탭(채움 · 테두리 · 블럭 · 세그먼트), 탭 간격은 떨어진 모양(알약 · 테두리 · 블럭) 또는 여러 줄(줄 사이)에서만 */
     show('tkRRow', /^(fill|box|block|seg)$/.test(c.ds)); show('tkGpRow', /^(pill|box|block)$/.test(c.ds) || (top && c.wrap==='multi'));
+    show('tkKgRow', c.tabs.some(function(t){ return tkKidN(t)>0; }));   /* 261102 추가 — 블록 간격은 탭 안에 블록이 있을 때만 */
     tkRGSync(c);
     var al=document.getElementById('tkAcLbl'); if(al) al.textContent=(c.ds==='under'||c.ds==='bar')?'선택 표시':((c.ds==='box')?'선택 테두리':'선택한 탭 바탕');
     var cnt=document.getElementById('tkCount'); if(cnt) cnt.textContent=c.tabs.length+'/'+TK_MAX;
@@ -47061,7 +47066,7 @@ global.PolyFX = API;
     c.def=Math.max(0,L.indexOf(dObj)); blk._tkCur=Math.max(0,L.indexOf(cObj));   /* 「처음」 · 지금 보는 탭은 자리를 옮겨도 같은 탭 */
     tkApply(blk); tkListRender(); tkDirty();
   }
-  var TK_RNG=[['tkCols','cols',''],['tkBw','bw','%'],['tkVw','vw','px'],['tkH','h','px'],['tkGapB','gapB','px'],['tkFs','fs','px'],['tkCs','cs','px'],['tkBgDim','bgDim','%'],['tkPt','pt','px'],['tkPb','pb','px']];
+  var TK_RNG=[['tkKg','kg','px'],['tkCols','cols',''],['tkBw','bw','%'],['tkVw','vw','px'],['tkH','h','px'],['tkGapB','gapB','px'],['tkFs','fs','px'],['tkCs','cs','px'],['tkBgDim','bgDim','%'],['tkPt','pt','px'],['tkPb','pb','px']];
   var TK_COL=[['tkFg','fg'],['tkAfg','afg'],['tkAc','ac'],['tkLc','lc'],['tkBb','bb'],['tkArc','arc'],['tkTc','tc'],['tkBg','bg']];
   function tkFontSync(i){ var dd=document.getElementById('tkFDD'); if(!dd) return; var lb=dd.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=(SM_FONTS[i]||SM_FONTS[0]).n; dd.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', +b.getAttribute('data-i')===i); }); }
   function tkPickFont(e,i){ if(e) e.stopPropagation(); var dd=document.getElementById('tkFDD'); if(dd) dd.classList.remove('open'); tkFontSync(i); tkUpd('tf',i); }
