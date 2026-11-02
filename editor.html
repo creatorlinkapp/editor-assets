@@ -2834,7 +2834,7 @@
   #stage .tk-blk .tk-in .tk-pane.cred{outline-offset:0;}   /* 261102 수정 — 편집 화면 점선을 글 칸 가장자리에 (블록 테두리와 같은 방식 → 점선 ↔ 블록 간격 = 블록 ↔ 블록 간격). 전 261030 : 점선을 칸 좌우 끝에 맞춘다(바깥 10px 띄우면 탭 줄 · 블록보다 넓어 보임). 위아래 여유는 안쪽 여백으로, 자리는 그대로 */
   .tk-wrap[data-tkno] .tk-pane.on{display:none;} #stage .tk-wrap[data-tkno] .tk-pane.on{display:block;} html.pview #stage .tk-wrap[data-tkno] .tk-pane.on{display:none;}
   .tk-wrap[data-tkno] .tk-kids.on{margin-top:0;} #stage .tk-wrap[data-tkno] .tk-kids.on{margin-top:var(--tkkg,40px);} html.pview #stage .tk-wrap[data-tkno] .tk-kids.on{margin-top:0;}
-  .tk-kid-add{display:flex;justify-content:center;padding:0 0 4px;} .tk-kids:has(> .blk) > .tk-kid-add{padding-top:var(--tkkg,40px);}   /* 261102 수정 — 버튼 위 간격 = 블록 간격 (빈 탭은 블록 칸 위 간격, 블록이 있으면 마지막 블록과의 간격) */ html.pview .tk-kid-add{display:none;}
+  .tk-kid-add{display:flex;justify-content:center;padding:0 0 4px;} .tk-kids:has(> .blk) > .tk-kid-add{padding-top:calc(var(--tkkg,40px) / 2);}   /* 261102 수정 — 버튼 위 간격 = 블록 간격의 절반 (블록 사이 '여기에 블록 추가'처럼 간격 안쪽에 뜬 버튼으로). 빈 탭은 탭 줄 아래 바로 */ html.pview .tk-kid-add{display:none;}
   .tk-kid-add button{display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;height:40px;border:1px dashed var(--border-hover);border-radius:var(--r-md);background:rgba(255,255,255,.7);color:var(--ink-2s);font:inherit;font-size:var(--fs-md);font-weight:600;cursor:pointer;transition:border-color .12s,color .12s,background .12s;}
   .tk-kid-add button:hover{border-color:var(--green);color:var(--green-text);background:var(--green-soft);} .tk-kid-add svg{width:14px;height:14px;}
   body.tk-kid-sel #bset .act[onclick*="'move'"]{display:none;}   /* 탭 안 블록은 페이지 순서 이동 대상이 아님 */
