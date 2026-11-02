@@ -23506,13 +23506,14 @@
   /* 261012 추가 — 기본형 카드(IMAGE05~10 · TEXT11~18) 썸네일: 실제 블록 정지컷(편집 화면 1440 · 2배로 찍어 폭 828 JPEG · 텍스트는 글이 있는 가운데 폭만 잘라 글씨가 읽히게).
      견본 사진은 gallery-sample/ · 동영상은 hg/hg-03-hd.mp4 의 4초 프레임. 파일은 editor-assets img/ba/ — IMAGE05 는 옛 IMAGE05(3D 이미지 링 · image05.jpg)와 겹치지 않게 -2부터.
      같은 날 패럴럭스 배율을 고친 뒤(1.8 → 약 1.2배) 이미지 6장은 다시 찍어 새 이름(-2 · IMAGE05 는 -3)으로: jsDelivr @main 캐시가 옛 파일을 잡고 있을 수 있어 같은 이름에 덮어쓰지 않는다 */
+  /* 261102 수정 — IMAGE06~10 썸네일을 지금 블록(흰 배경 · 진한 캡션 글자)으로 다시 찍어 -3 으로 교체 (옛 -2 는 어두운 배경으로 찍혀 실제와 달랐다) */
   var BA_PRE_THUMB={
     wide:ED_IMG+'ba/image05-3.jpg',
-    pair:ED_IMG+'ba/image06-2.jpg',
-    tile:ED_IMG+'ba/image07-2.jpg',
-    caption:ED_IMG+'ba/image08-2.jpg',
-    slide:ED_IMG+'ba/image09-2.jpg',
-    video:ED_IMG+'ba/image10-2.jpg',
+    pair:ED_IMG+'ba/image06-3.jpg',
+    tile:ED_IMG+'ba/image07-3.jpg',
+    caption:ED_IMG+'ba/image08-3.jpg',
+    slide:ED_IMG+'ba/image09-3.jpg',
+    video:ED_IMG+'ba/image10-3.jpg',
     /* 261012 추가 — 좌측 사이트에서 옮긴 블록(IMAGE11~20 · VIDEO01~05)의 썸네일: 사이트 블록 목록의 썸네일 원본 그대로(폭 800 · 파일 형식도 그대로) */
     one:ED_IMG+'ba/image11.jpg', banner:ED_IMG+'ba/image12.png', land2:ED_IMG+'ba/image13.png', port3:ED_IMG+'ba/image14.png', land4:ED_IMG+'ba/image15.jpg',
     flush3:ED_IMG+'ba/image16.jpg', circle3:ED_IMG+'ba/image17.jpg', logo5:ED_IMG+'ba/image18.png', logo5d:ED_IMG+'ba/image19.png', parallax:ED_IMG+'ba/image20.png',
