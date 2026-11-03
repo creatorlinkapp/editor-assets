@@ -46702,7 +46702,14 @@ global.PolyFX = API;
     blk.querySelectorAll('.tk-pane').forEach(function(p){ p.classList.toggle('on', +p.getAttribute('data-tk-ed')===i); });
     blk.querySelectorAll(':scope .tk-wrap > .tk-in .tk-kids').forEach(function(k){ k.classList.toggle('on', +k.getAttribute('data-tk-kids')===i); });   /* 261030 추가 — 탭 안 블록 */
     tkKidFlag(blk);
+    tkKidReflow(blk);
     tkReveal(blk,quiet);
+  }
+  /* 261103 추가 — 숨은 탭에서 만들어진 블록(탭 블록 복제 · 사본 등)은 폭을 재지 못해 슬라이드 칸 · 벽돌형 갤러리 높이가 틀어진다
+     → 탭을 열 때, 지금 폭으로 그려진 적 없는 블록만 다시 그린다 */
+  function tkKidReflow(blk){
+    var box=blk.querySelector('.tk-wrap > .tk-in .tk-kids.on'); if(!box) return; var w=box.clientWidth; if(!w) return;
+    [].slice.call(box.children).forEach(function(el){ if(!el.classList.contains('blk') || el._tkW===w) return; el._tkW=w; tkKidApply(el,el.getAttribute('data-block')); });
   }
   function tkStep(blk,dir){
     var c=tkCfg(blk), sc=blk.querySelector('.tk-sc'), t=blk.querySelector('.tk-tab'), L=blk.querySelector('.tk-list'); if(!sc||!t) return;
@@ -46848,6 +46855,7 @@ global.PolyFX = API;
         if(fresh){ el=tkKidMake(k); if(!el) return; }
         box.appendChild(el); used[k.id]=1; cache[k.id]=el;
         if(fresh) tkKidBoot(el,k); else tkKidRefresh(el,k);
+        el._tkW=box.clientWidth;   /* 261103 — 그려질 때의 폭 (숨은 탭이면 0 → 탭을 열 때 다시 그림 : tkKidReflow) */
         var m=TK_KID[k.k], cf=m&&el[m[0]]; if(cf && typeof cf==='object') el.classList.toggle('tk-kid-bg',tkKidHasBg(cf));   /* 261102 — 배경 있는 블록 표시 (다시 그릴 때 · 사본) */
       }); }
     /* 261102 수정 — 탭 글도 블록이 되어 탭마다 블록 칸 하나 (예전 글 칸 위 칸 tabs[i].top 은 tkTxtMigrate 가 합친다) */
@@ -46961,12 +46969,12 @@ global.PolyFX = API;
     var box=blk.querySelector('.tk-kids'+(ctxTop?'.tk-kids-top':':not(.tk-kids-top)')+'[data-tk-kids="'+i+'"]'); if(!box||!nb) return;
     var ab=nb.nextElementSibling; if(ab && ab.classList.contains('addbar')) ab.remove();
     var add=box.querySelector(':scope > .tk-kid-add'), endGap=ctxTop?box.lastElementChild:null, bf=(ctxBefore && ctxBefore.parentNode===box)?ctxBefore:(ctxTop?endGap:add); box.insertBefore(nb,bf||null);
-    nb.setAttribute('data-tkkid',tkKidUid());
+    nb.setAttribute('data-tkkid',tkKidUid()); nb._tkW=box.clientWidth;
     /* 261102 수정 — 탭 안에서는 블록 자체 위아래 여백을 0 으로 (블록 사이 간격은 탭 설정 '블록 간격'이 맡는다). 블록 설정에서 다시 늘리면 그 값 */
     var ty=nb.getAttribute('data-block'), m=TK_KID[ty], cf=m&&nb[m[0]];
     /* 261102 수정 — 배경색 · 배경 이미지가 있는 블록은 색 상자 안쪽 여백 48px 를 남긴다 (0 이면 글 · 버튼이 상자 위아래 끝에 붙음). 흰색 · 투명 배경은 0 */
     if(cf && typeof cf==='object') nb.classList.toggle('tk-kid-bg',tkKidHasBg(cf));   /* 배경 있는 블록 표시 — 색 상자 안 좌우 여백 유지 */
-    if(cf && typeof cf==='object' && !tkKidBand(ty,cf)){ var pad=tkKidHasBg(cf)?48:0, keys=TK_KID_PAD[ty]||['pt','pb']; keys.forEach(function(p){ cf[p]=(keys.indexOf('pv')>=0)?(p==='pv'?pad:0):pad; });   /* 261103 수정 — FAQ · QnA 는 배경이 안쪽 상자에 칠해져서 여백도 안쪽(pv)에 (블록 위아래 pt · pb 는 0). 전 : 블록 pt · pb 에 48 → 여백이 색 상자 밖 흰 띠로 보였다 */
+    if(cf && typeof cf==='object' && !tkKidBand(ty,cf) && !cf.bgImg){   /* 261103 — 배경 이미지 블록은 기본 여백 그대로 (사진 보이는 높이가 여백으로 정해져 줄이면 썸네일보다 납작해진다, 예 CONTENT73) */ var pad=tkKidHasBg(cf)?48:0, keys=TK_KID_PAD[ty]||['pt','pb']; keys.forEach(function(p){ cf[p]=(keys.indexOf('pv')>=0)?(p==='pv'?pad:0):pad; });   /* 261103 수정 — FAQ · QnA 는 배경이 안쪽 상자에 칠해져서 여백도 안쪽(pv)에 (블록 위아래 pt · pb 는 0). 전 : 블록 pt · pb 에 48 → 여백이 색 상자 밖 흰 띠로 보였다 */
       if(!tkKidHasBg(cf)){ var wp=tkKidWPad(nb,ty); if(wp){ cf.pt=wp.pt; cf.pb=wp.pb; } }   /* 261103 — 흰 배경 텍스트 12 · 12, 캡션 이미지 아래 12 (실제 여백 값) */
       tkKidApply(nb,ty); }   /* FAQ · QnA 는 블록(pt · pb)과 안쪽(pv) 두 군데 → 안쪽은 0, 블록에만 48 */
     if(typeof bindBlockHoverAddbars==='function') try{ bindBlockHoverAddbars(); }catch(e){}
