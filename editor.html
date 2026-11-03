@@ -2771,6 +2771,17 @@
   /* 화살표 — 한 줄에서 탭이 넘칠 때만(JS 가 .ov) */
   .tk-ar{display:none;flex:none;width:36px;height:36px;align-items:center;justify-content:center;margin:0;padding:0;border:0;background:none;color:var(--tkarc);cursor:pointer;transition:opacity .2s ease;}
   .tk-ar svg{width:22px;height:22px;display:block;}
+  /* 261103 추가 — 화살표 사이즈(--tkas 28 · 40 · 52, 기본 40 = 칸 36 · 그림 22 그대로). 탭 줄 높이보다 커지지 않게 */
+  .tk-ar{width:calc(var(--tkas,40px) * .9);height:min(calc(var(--tkas,40px) * .9),var(--tkh,60px));}
+  .tk-ar svg{width:min(calc(var(--tkas,40px) * .55),calc(var(--tkh,60px) - 6px));height:auto;aspect-ratio:1;}
+  .tk-wrap[data-ars="circle"] .tk-ar svg{width:min(calc(var(--tkas,40px) * .7),calc(var(--tkh,60px) - 6px));}
+  /* 261103 추가 — 넓은 화면(가로 탭) : 화살표를 탭 줄 바깥 양옆에 → 탭 줄 폭 = 탭 안 블록 폭 (화살표가 생겨도 탭 · 선 · 블록 끝이 맞는다).
+     좁은 화면(760px 아래 · 모바일)은 바깥 자리가 없어 지금처럼 안쪽 */
+  @container (min-width:761px){
+    .tk-wrap:not([data-pos="left"]) .tk-bar .tk-ar{position:absolute;top:50%;transform:translateY(-50%);}
+    .tk-wrap:not([data-pos="left"]) .tk-bar .tk-ar.prev{right:calc(100% + 4px);}
+    .tk-wrap:not([data-pos="left"]) .tk-bar .tk-ar.next{left:calc(100% + 4px);}
+  }
   .tk-ar.next svg{transform:scaleX(-1);}
   .tk-bar.ov .tk-ar{display:flex;}
   .tk-bar.ov.at-s .tk-ar.prev,.tk-bar.ov.at-e .tk-ar.next{opacity:.22;pointer-events:none;}
@@ -2923,7 +2934,7 @@
     .tk-wrap[data-pos="left"][data-wrap="multi"] .tk-list{display:grid;grid-template-columns:repeat(var(--tkcolsm),minmax(0,1fr));row-gap:var(--tkg,max(var(--g),6px));}
     .tk-wrap[data-pos="left"][data-wrap="multi"] .tk-tab{flex:none;}
     .tk-wrap[data-ds="seg"] .tk-tab{height:max(36px,calc(var(--tkh) * .82 - 8px));}   /* 바탕 4px 안쪽 칸 — 바탕까지 44px */
-    .tk-ar{width:26px;}
+    .tk-ar{width:calc(var(--tkas,40px) * .65);}   /* 261103 수정 — 26px 고정 → 사이즈 비례 (기본 40 → 26) */
     .tk-panes{margin-top:calc(var(--tkgap) * .75);}
   }
   /* 아주 좁은 화면(320px 대) — 글자가 덜 잘리게 탭 안쪽 여백을 줄인다 */
@@ -4976,7 +4987,7 @@
   .im-addrow .btn-sm.picking{animation:rtThumbPulse 1s ease-in-out infinite;}
   .im-addrow button:disabled{opacity:.4;pointer-events:none;}
   .srow.off,.mt-seg-b.off{opacity:.38;pointer-events:none;}
-  :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow,#tkKgRow) .help-ico{display:none;vertical-align:-2px;margin-left:2px;} :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow,#tkKgRow).off .help-ico{display:inline-block;pointer-events:auto;}   /* 261030 수정 — 탭 블록 화살표 이동 · 화살표 색 (화살표가 안 나올 때) · 261103 추가 — 블록 간격 (블록 1개뿐일 때) */
+  :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow,#tkKgRow,#tkArLbl) .help-ico{display:none;vertical-align:-2px;margin-left:2px;} :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow,#tkKgRow,#tkArLbl).off .help-ico{display:inline-block;pointer-events:auto;}   /* 261030 수정 — 탭 블록 화살표 이동 · 화살표 색 (화살표가 안 나올 때) · 261103 추가 — 블록 간격 (블록 1개뿐일 때) */
   #ctTaSeg.dis{opacity:.38;} #ctTaSeg.dis .mt-seg-b{cursor:pointer;}   /* 261029 추가 — 제목 · 설명이 모두 꺼지면 정렬은 흐리게, 누르면 안내 팝업 */   /* 261028 추가 — 컨택트 제목 색이 막혀 있을 때만 물음표로 이유를 알린다 */
   .im-sub{margin:4px 0 2px 0;padding:2px 0 8px 12px;border-left:2px solid var(--line);}
   .im-bgpick{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
@@ -12917,7 +12928,17 @@
             <div class="srow" id="tkRRow"><span class="k">라운딩</span><input class="rng" type="range" id="tkR" min="0" max="30" step="1" value="4"><span class="v" id="tkRV">4px</span></div>   <!-- 261030 추가 — 탭 모서리 (기존 편집기 TAB3 · 4 · 5 · 8 「둥근 모서리」). 상자 모양 스타일(채움 · 테두리 · 블록 · 세그먼트)에서만 -->
             <div class="srow" id="tkGpRow"><span class="k">탭 간격</span><input class="rng" type="range" id="tkGp" min="0" max="40" step="1" value="10"><span class="v" id="tkGpV">10px</span></div>   <!-- 261030 추가 — 탭 사이 · 줄 사이 간격 (기존 편집기 「좌우 간격」 · 「버튼 상하 간격」을 하나로). 떨어진 모양(알약 · 테두리 · 블록) · 여러 줄에서만 -->
             <div class="srow"><span class="k">탭 · 내용 간격</span><input class="rng" type="range" id="tkGapB" min="0" max="120" step="2" value="40"><span class="v" id="tkGapBV">40px</span></div>
-            <div class="srow" id="tkKgRow"><span class="k">블록 간격 <svg class="help-ico pg-tip" data-tip="탭 안에 블록이 2개 이상일 때 블록 사이에 적용됩니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><input class="rng" type="range" id="tkKg" min="0" max="120" step="2" value="40"><span class="v" id="tkKgV">40px</span></div>   <!-- 261102 추가 — 탭 안 블록 간격 (탭 글 ↔ 블록 · 블록 ↔ 블록). 탭 안에 블록이 있을 때만 -->            <div id="tkMvRow">
+            <div class="srow" id="tkKgRow"><span class="k">블록 간격 <svg class="help-ico pg-tip" data-tip="탭 안에 블록이 2개 이상일 때 블록 사이에 적용됩니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><input class="rng" type="range" id="tkKg" min="0" max="120" step="2" value="40"><span class="v" id="tkKgV">40px</span></div>   <!-- 261102 추가 — 탭 안 블록 간격 (탭 글 ↔ 블록 · 블록 ↔ 블록). 탭 안에 블록이 있을 때만 -->
+            <div id="tkMvRow">
+              <!-- 261103 추가 — 화살표 모양 · 사이즈 · 색 (슬라이드쇼 블록 '화살표'와 같은 구성. 켜고 끄기는 없음 — 넘친 탭으로 갈 길이 없어진다). 색은 '색' 칸에서 옮겨 옴 -->
+              <div class="srow" id="tkArLbl" style="margin:12px 0 6px;"><span class="k">화살표 <svg class="help-ico pg-tip" data-tip="탭이 가로 개수보다 많을 때 화살표가 나옵니다. 모바일은 한 줄에 4칸까지라 탭이 5개 이상이면 화살표가 나옵니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span></div>
+              <div class="mt-seg" id="tkArSSeg">
+                <button type="button" class="mt-seg-b active" data-m="chev" onclick="tkSeg('ars','tkArSSeg','chev')">꺾쇠</button>
+                <button type="button" class="mt-seg-b" data-m="arrow" onclick="tkSeg('ars','tkArSSeg','arrow')">화살표</button>
+                <button type="button" class="mt-seg-b" data-m="circle" onclick="tkSeg('ars','tkArSSeg','circle')">원형</button>
+              </div>
+              <div class="srow" id="tkAsRow"><span class="k">사이즈</span><input class="rng" type="range" id="tkAs" min="28" max="52" step="12" value="40"><span class="v" id="tkAsV">40px</span></div>
+              <div class="srow" id="tkArcRow"><span class="k">색</span><span class="sw-col"><input type="color" id="tkArc" value="#222428" data-cp-title="화살표 색"><span class="hex" id="tkArcV">#222428</span></span></div>
               <div class="srow" id="tkMvLbl" style="margin:12px 0 6px;"><span class="k">화살표 이동 <svg class="help-ico pg-tip" data-tip="탭이 가로 개수보다 많을 때 화살표가 나옵니다. 모바일은 한 줄에 4칸까지라 탭이 5개 이상이면 화살표가 나옵니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span></div>
               <div class="mt-seg" id="tkMvSeg">
                 <button type="button" class="mt-seg-b active" data-m="one" onclick="tkSeg('mv','tkMvSeg','one')">한 칸씩</button>
@@ -12954,7 +12975,6 @@
             <div class="srow" id="tkAcRow"><span class="k" id="tkAcLbl">선택 표시</span><span class="sw-col"><input type="color" id="tkAc" value="#222428" data-cp-title="선택 표시 색"><span class="hex" id="tkAcV">#222428</span></span></div>
             <div class="srow" id="tkLcRow"><span class="k">선</span><span class="sw-col"><input type="color" id="tkLc" value="#e5e7eb" data-cp-title="선 색"><span class="hex" id="tkLcV">#E5E7EB</span></span></div>
             <div class="srow" id="tkBbRow"><span class="k">탭 바탕</span><span class="sw-col"><input type="color" id="tkBb" value="#f1f2f5" data-cp-title="탭 바탕색"><span class="hex" id="tkBbV">#F1F2F5</span></span></div>
-            <div class="srow" id="tkArcRow"><span class="k">화살표 <svg class="help-ico pg-tip" data-tip="탭이 가로 개수보다 많을 때 화살표가 나옵니다. 모바일은 한 줄에 4칸까지라 탭이 5개 이상이면 화살표가 나옵니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><span class="sw-col"><input type="color" id="tkArc" value="#222428" data-cp-title="화살표 색"><span class="hex" id="tkArcV">#222428</span></span></div>
           </div></div>
         </div>
         <div class="fld sfold" id="tkPaneAcc" style="display:none;">   <!-- 261102 수정 — 탭 글이 텍스트 블록이 되어 숨김 (정렬 · 글자 크기 · 글자 색은 텍스트 블록에서) -->
@@ -46583,7 +46603,7 @@ global.PolyFX = API;
     {n:'사진', h:tkSample('제품과 공간의 결을 담는 촬영','사진 촬영','빛과 구도를 먼저 정하고 촬영해<br>상세페이지와 SNS 에 바로 쓸 수 있게 드립니다.')}
   ];
   var TK_DEF={ ds:'under', tabs:null, def:0, pos:'top', vw:220, wrap:'line', cols:4, bw:100, al:'center', h:60, fs:16, fw:500, tf:5,
-    fg:'#8a8f98', afg:'#222428', ac:'#222428', lc:'#e5e7eb', bb:'#f1f2f5', arc:'#222428', mv:'one',
+    fg:'#8a8f98', afg:'#222428', ac:'#222428', lc:'#e5e7eb', bb:'#f1f2f5', arc:'#222428', mv:'one', ars:'chev', as:40,   /* 261103 추가 — 화살표 모양 · 사이즈 */
     gapB:44, kg:40, cal:'center', cs:15, tc:'#222428', bg:'#ffffff', bgImg:'', bgDim:0, bgGray:false, pt:80, pb:80 };
   /* 시작값 = 디자인. 주석의 번호는 좌측 사이트 탭 번호(tabN). 색은 리뉴얼 토큰(잉크 · 보조 · 선 · 그린 · 블루 · 레드)으로 바꿨다 */
   var TK_PRESETS={
@@ -46639,14 +46659,20 @@ global.PolyFX = API;
   function tkEmpty(h){ h=String(h||''); if(!h) return true; if(/<(img|video|figure|hr|table|iframe)\b|rt-ico|rt-btn/i.test(h)) return false; return !h.replace(/<[^>]*>/g,'').replace(/&nbsp;| /g,' ').trim(); }
   function tkIdx(blk,c){ var n=c.tabs.length, i=(blk && blk._tkCur!=null)?blk._tkCur:txNum(c.def,0); i=Math.round(+i)||0; return Math.max(0,Math.min(n-1,i)); }
   var TK_AR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
+  /* 261103 추가 — 화살표 모양 3종 (슬라이드쇼 블록과 같은 꺾쇠 · 화살표 · 원형). 왼쪽 모양 하나로 그리고 다음 쪽은 CSS 로 뒤집는다.
+     원형 : 옅은 원(화살표 색 8%) + 꺾쇠(화살표 색) — 세 모양 모두 '색' = 화살표 선 색, 탭보다 튀지 않게 */
+  var TK_ARS={ chev:TK_AR,
+    arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M10 6l-6 6 6 6"/></svg>',
+    circle:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="currentColor" fill-opacity=".08"/><path d="M13.5 7.5L9 12l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>' };
+  function tkArSvg(c){ return TK_ARS[c && c.ars]||TK_AR; }
   function tkBarHTML(c,cur,card){
     var tabs=c.tabs.map(function(t,i){
       var on=(i===cur), nm=String(t.n||'').trim()||('탭 '+(i+1));
       return '<button type="button" class="tk-tab'+(on?' on':'')+'" role="tab" aria-selected="'+on+'" data-i="'+i+'" title="'+tkEsc(nm)+'" tabindex="'+((on&&!card)?'0':'-1')+'"><span>'+tkEsc(nm)+'</span></button>';   /* title — 이름이 길어 … 으로 줄면 올려서 전체를 본다 */
     }).join('');
-    return '<div class="tk-bar"><button type="button" class="tk-ar prev" aria-label="이전 탭" tabindex="-1">'+TK_AR+'</button>'
+    return '<div class="tk-bar"><button type="button" class="tk-ar prev" aria-label="이전 탭" tabindex="-1">'+tkArSvg(c)+'</button>'
       +'<div class="tk-sc"><div class="tk-list" role="tablist">'+tabs+'</div></div>'
-      +'<button type="button" class="tk-ar next" aria-label="다음 탭" tabindex="-1">'+TK_AR+'</button></div>';
+      +'<button type="button" class="tk-ar next" aria-label="다음 탭" tabindex="-1">'+tkArSvg(c)+'</button></div>';
   }
   /* 261102 수정 — 블록 위 내용은 블록 칸(tkKidsMount)만. 글 칸(.tk-pane)은 블록 추가 창 카드 미리보기(세로 탭 카드)에서만 그린다 */
   function tkPanesHTML(c,cur,card){
@@ -46665,11 +46691,11 @@ global.PolyFX = API;
     var cols=Math.max(1,Math.min(8,Math.round(txNum(c.cols,4)),c.tabs.length));   /* 탭이 가로 개수보다 적으면 탭 수만큼(줄이 비어 보이지 않게) */
     return '--tkf:'+smStack(txNum(c.tf,5))+';--tkfs:'+txNum(c.fs,16)+'px;--tkfw:'+txNum(c.fw,500)+';--tkh:'+txNum(c.h,60)+'px;'
       +'--tkcols:'+cols+';--tkcolsm:'+Math.min(cols,4)+';--tkbw:'+Math.max(30,Math.min(100,txNum(c.bw,100)))+'%;'
-      +'--tkfg:'+(c.fg||'#8a8f98')+';--tkafg:'+(c.afg||'#222428')+';--tkac:'+(c.ac||'#222428')+';--tklc:'+(c.lc||'#e5e7eb')+';--tkbb:'+(c.bb||'#f1f2f5')+';--tkarc:'+(c.arc||'#222428')+';'
+      +'--tkfg:'+(c.fg||'#8a8f98')+';--tkafg:'+(c.afg||'#222428')+';--tkac:'+(c.ac||'#222428')+';--tklc:'+(c.lc||'#e5e7eb')+';--tkbb:'+(c.bb||'#f1f2f5')+';--tkarc:'+(c.arc||'#222428')+';--tkas:'+Math.max(28,Math.min(52,txNum(c.as,40)))+'px;'
       +((c.r!=null&&c.r!=='')?'--tkr:'+Math.max(0,Math.min(30,txNum(c.r,0)))+'px;':'')+((c.gp!=null&&c.gp!=='')?'--tkg:'+Math.max(0,Math.min(40,txNum(c.gp,0)))+'px;':'')   /* 261030 추가 — 라운딩 · 탭 간격 (비어 있으면 스타일 기본값) */
       +'--tkvw:'+Math.max(140,Math.min(360,txNum(c.vw,220)))+'px;--tkpg:'+(c.bg||'#ffffff')+';--tkgap:'+txNum(c.gapB,44)+'px;--tkkg:'+txNum(c.kg,40)+'px;--tkcs:'+txNum(c.cs,15)+'px;--tktc:'+(c.tc||'#222428')+';--tkcal:'+tkCal(c)+';';
   }
-  function tkAttrs(w,c){ w.setAttribute('data-ds',c.ds||'under'); w.setAttribute('data-pos',c.pos==='left'?'left':'top'); w.setAttribute('data-wrap',c.wrap==='multi'?'multi':'line'); w.setAttribute('data-al',c.al||'center'); w.setAttribute('data-cal',tkCal(c)); }
+  function tkAttrs(w,c){ w.setAttribute('data-ds',c.ds||'under'); w.setAttribute('data-pos',c.pos==='left'?'left':'top'); w.setAttribute('data-wrap',c.wrap==='multi'?'multi':'line'); w.setAttribute('data-al',c.al||'center'); w.setAttribute('data-cal',tkCal(c)); w.setAttribute('data-ars',TK_ARS[c.ars]?c.ars:'chev'); }
   function tkBlockHTML(){ return '<span class="tag-badge">탭</span>'+SM_GEAR+'<div class="tk-wrap"></div>'; }
   function tkApply(blk){
     if(!blk) return;
@@ -47113,6 +47139,8 @@ global.PolyFX = API;
     var ml=document.getElementById('tkMvLbl'); if(ml) ml.classList.toggle('off',arOff);
     var ms=document.getElementById('tkMvSeg'); if(ms) ms.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('off',arOff); });
     var ar=document.getElementById('tkArcRow'); if(ar) ar.classList.toggle('off',arOff);
+    ['tkArLbl','tkAsRow'].forEach(function(id){ var e=document.getElementById(id); if(e) e.classList.toggle('off',arOff); });   /* 261103 추가 — 화살표 모양 · 사이즈도 같은 규칙 */
+    var as=document.getElementById('tkArSSeg'); if(as) as.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('off',arOff); });
     show('tkLcRow', use==='lc'); show('tkBbRow', use==='bb');
     /* 261030 추가 — 라운딩은 상자 모양 탭(채움 · 테두리 · 블록 · 세그먼트), 탭 간격은 떨어진 모양(알약 · 테두리 · 블록) 또는 여러 줄(줄 사이)에서만 */
     show('tkRRow', /^(fill|box|block|seg)$/.test(c.ds)); show('tkGpRow', /^(pill|box|block)$/.test(c.ds) || (top && c.wrap==='multi'));
@@ -47184,7 +47212,7 @@ global.PolyFX = API;
     c.def=Math.max(0,L.indexOf(dObj)); blk._tkCur=Math.max(0,L.indexOf(cObj));   /* 「처음」 · 지금 보는 탭은 자리를 옮겨도 같은 탭 */
     tkApply(blk); tkListRender(); tkDirty();
   }
-  var TK_RNG=[['tkKg','kg','px'],['tkCols','cols',''],['tkBw','bw','%'],['tkVw','vw','px'],['tkH','h','px'],['tkGapB','gapB','px'],['tkFs','fs','px'],['tkCs','cs','px'],['tkBgDim','bgDim','%'],['tkPt','pt','px'],['tkPb','pb','px']];
+  var TK_RNG=[['tkAs','as','px'],['tkKg','kg','px'],['tkCols','cols',''],['tkBw','bw','%'],['tkVw','vw','px'],['tkH','h','px'],['tkGapB','gapB','px'],['tkFs','fs','px'],['tkCs','cs','px'],['tkBgDim','bgDim','%'],['tkPt','pt','px'],['tkPb','pb','px']];
   var TK_COL=[['tkFg','fg'],['tkAfg','afg'],['tkAc','ac'],['tkLc','lc'],['tkBb','bb'],['tkArc','arc'],['tkTc','tc'],['tkBg','bg']];
   function tkFontSync(i){ var dd=document.getElementById('tkFDD'); if(!dd) return; var lb=dd.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=(SM_FONTS[i]||SM_FONTS[0]).n; dd.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', +b.getAttribute('data-i')===i); }); }
   function tkPickFont(e,i){ if(e) e.stopPropagation(); var dd=document.getElementById('tkFDD'); if(dd) dd.classList.remove('open'); tkFontSync(i); tkUpd('tf',i); }
@@ -47211,7 +47239,7 @@ global.PolyFX = API;
     TK_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
     TK_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
     tkFontSync(txNum(c.tf,5));
-    tkSegSync('tkPosSeg',c.pos==='left'?'left':'top'); tkSegSync('tkWrapSeg',c.wrap==='multi'?'multi':'line'); tkSegSync('tkAlSeg',c.al||'center'); tkSegSync('tkMvSeg',c.mv==='page'?'page':'one'); tkSegSync('tkFwSeg',txNum(c.fw,500)); tkSegSync('tkCalSeg',tkCal(c));
+    tkSegSync('tkPosSeg',c.pos==='left'?'left':'top'); tkSegSync('tkWrapSeg',c.wrap==='multi'?'multi':'line'); tkSegSync('tkAlSeg',c.al||'center'); tkSegSync('tkMvSeg',c.mv==='page'?'page':'one'); tkSegSync('tkArSSeg',TK_ARS[c.ars]?c.ars:'chev'); tkSegSync('tkFwSeg',txNum(c.fw,500)); tkSegSync('tkCalSeg',tkCal(c));
     tkStyleSync(); tkListRender(); if(typeof bgPanelSync==='function') bgPanelSync('tk'); tkRows();
   }
   if(typeof BGP==='object' && BGP) BGP.tk={cur:function(){ return tkCurBlk; }, cfg:tkCfg, apply:tkApply};
