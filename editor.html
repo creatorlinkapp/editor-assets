@@ -47001,7 +47001,7 @@ global.PolyFX = API;
     blk.addEventListener('mousemove',function(e){
       if(!tkKidEditor(blk)) return;
       var tg=e.target; if(!tg || !tg.closest) return;
-      var g0=tg.closest('.tk-kid-gap'); if(g0 && g0.closest('.blk[data-block="tkblk"]')===blk){ if(t){ clearTimeout(t); t=null; } gaps().forEach(function(g){ if(g!==g0) g.classList.remove('show','ab-up','ab-down'); }); cur=null; return; }   /* 버튼 위에서는 그 + 하나만 남긴다 (일반 블록과 같게 — 위 · 아래 선이 같이 남아 좌우 없는 테두리처럼 보이던 문제) */
+      var g0=tg.closest('.tk-kid-gap'); if(g0 && g0.closest('.blk[data-block="tkblk"]')===blk){ if(t){ clearTimeout(t); t=null; } return; }   /* 버튼 위에서는 그대로 (일반 블록과 같게 위 · 아래 + 둘 다 유지) */
       var kid=tg.closest('.tk-kids > .blk'); if(kid && kid.closest('.blk[data-block="tkblk"]')===blk && kid.parentNode.classList.contains('on')) show(kid); else if(cur) later();
     });
     blk.addEventListener('mouseleave',later);
