@@ -12947,7 +12947,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow" style="margin-top:0;"><span class="k">글자</span><span class="sw-col"><input type="color" id="tkFg" value="#8a8f98" data-cp-title="탭 글자 색"><span class="hex" id="tkFgV">#8A8F98</span></span></div>
             <div class="srow"><span class="k">선택한 탭 글자</span><span class="sw-col"><input type="color" id="tkAfg" value="#222428" data-cp-title="선택한 탭 글자 색"><span class="hex" id="tkAfgV">#222428</span></span></div>
-            <div class="srow"><span class="k" id="tkAcLbl">선택 표시</span><span class="sw-col"><input type="color" id="tkAc" value="#222428" data-cp-title="선택 표시 색"><span class="hex" id="tkAcV">#222428</span></span></div>
+            <div class="srow" id="tkAcRow"><span class="k" id="tkAcLbl">선택 표시</span><span class="sw-col"><input type="color" id="tkAc" value="#222428" data-cp-title="선택 표시 색"><span class="hex" id="tkAcV">#222428</span></span></div>
             <div class="srow" id="tkLcRow"><span class="k">선</span><span class="sw-col"><input type="color" id="tkLc" value="#e5e7eb" data-cp-title="선 색"><span class="hex" id="tkLcV">#E5E7EB</span></span></div>
             <div class="srow" id="tkBbRow"><span class="k">탭 바탕</span><span class="sw-col"><input type="color" id="tkBb" value="#f1f2f5" data-cp-title="탭 바탕색"><span class="hex" id="tkBbV">#F1F2F5</span></span></div>
             <div class="srow" id="tkArcRow"><span class="k">화살표 <svg class="help-ico pg-tip" data-tip="탭이 가로 개수보다 많을 때 화살표가 나옵니다. 모바일은 한 줄에 4칸까지라 탭이 5개 이상이면 화살표가 나옵니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><span class="sw-col"><input type="color" id="tkArc" value="#222428" data-cp-title="화살표 색"><span class="hex" id="tkArcV">#222428</span></span></div>
@@ -47115,6 +47115,7 @@ global.PolyFX = API;
     var kgOff=!c.tabs.some(function(t){ return tkKidN(t)>1; }), kgr=document.getElementById('tkKgRow');   /* 261103 추가 — 모든 탭이 블록 1개 이하면 사이가 없어 바꿔도 안 보임 → 흐리게 (이유는 ? 아이콘) */
     if(kgr) kgr.classList.toggle('off',kgOff);
     tkRGSync(c);
+    show('tkAcRow', c.ds!=='folder' && c.ds!=='bar');   /* 261103 추가 — 폴더(선택 탭 바탕 = 페이지 배경 고정) · 구분선(글자 색만)은 이 색을 안 써서 숨김 */
     var al=document.getElementById('tkAcLbl'); if(al) al.textContent=(c.ds==='under'||c.ds==='bar')?'선택 표시':((c.ds==='box')?'선택 테두리':'선택한 탭 바탕');
     var cnt=document.getElementById('tkCount'); if(cnt) cnt.textContent=c.tabs.length+'/'+TK_MAX;
     /* 가로 개수는 탭 수까지만 고를 수 있다(저장 값은 그대로 두어 탭을 늘리면 다시 넓어진다) */
