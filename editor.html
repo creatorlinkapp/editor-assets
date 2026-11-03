@@ -2850,6 +2850,9 @@
   html.pview .tk-kid-gap{display:none;}  /* 261102 수정 — 탭 글도 블록 : 탭마다 내용은 블록 칸 하나(.tk-kids). 첫 블록은 탭 줄 아래 '탭 · 내용 간격' 자리, 블록 사이는 '블록 간격' */
   .tk-wrap .tk-kids.on{margin-top:0;}
   .tk-kids:not(.tk-kids-top) > .tk-kid-gap:first-child button{top:calc(var(--tkgap) / -2) !important;}   /* 첫 블록 위 사이 버튼 = 탭 줄과 첫 블록 사이 가운데 */
+  /* 261103 추가 — 세로 탭 : 첫 블록이 탭 목록과 같은 높이에서 시작해 위 간격이 없다 → 버튼을 블록 사이 버튼과 같은 거리(20px 위)에. 좁은 화면(가로로 바뀜)은 실제 간격(탭 · 내용 간격의 절반) 가운데 */
+  .tk-wrap[data-pos="left"] .tk-kids > .tk-kid-gap:first-child button{top:-20px !important;}
+  @container (max-width:760px){ .tk-wrap[data-pos="left"] .tk-kids > .tk-kid-gap:first-child button{top:calc(var(--tkgap) * -.25) !important;} }
   /* 기본 탭 글 텍스트 블록(.tk-txt) — 예전 탭 글 칸과 같은 글 모양 (줄 간격 · 제목 · 문단 간격) */
   .tk-kids > .blk.tk-txt .cred{line-height:1.75;word-break:keep-all;overflow-wrap:break-word;}
   .tk-kids > .blk.tk-txt .cred > :first-child{margin-top:0;}
