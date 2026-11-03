@@ -46815,7 +46815,21 @@ global.PolyFX = API;
      텍스트 블록 위아래 12px · 캡션 있는 이미지 블록 아래 12px. 그 외 흰 배경 블록은 0 */
   var TK_KID_WPAD=12;   /* 예전 값 (아래 정리에서 '자동으로 들어간 값'을 알아보는 데만 쓴다) */
   /* 261103 추가 — '블록 간격'을 없애고 블록 위아래 여백으로 간격을 준다 : 흰 배경 블록 기본 위 · 아래 20 (블록 사이 40 = 예전 '블록 간격' 기본값) */
-  var TK_KID_GAP=20;
+  var TK_KID_GAP=20;   /* 아래 표에 없는 블록의 기본 위 · 아래 여백 */
+  /* 261103 추가 — 흰 배경 탭 안 블록 기본 위 · 아래 여백 = 블록 추가 썸네일에 보이는 위아래 흰 여백 (썸네일 폭 대비 비율 × 탭 폭 1100px, 최대 60, 2px 단위).
+     썸네일이 잘려 한쪽이 0 이면 반대쪽 값, 위아래 한 값(pv)만 있는 블록은 평균. 키 = 블록 종류|카드 번호|프리셋. 배경 있는 블록 · 배경 띠 · 배경 이미지 블록은 표를 쓰지 않는다 */
+  var TK_KID_TPAD=(function(s){ var o={}; s.split(';').forEach(function(p){ var a=p.split(':'), v=(a[1]||'').split(','); o[a[0]]=[+v[0],+v[1]]; }); return o; })(
+    'cred|11|intro:60,60;cred|12|split:60,60;cred|13|cols3:60,60;cred|14|stats:60,60;cred|15|notice:60,60;cred|16|quote:60,60;cred|10|:60,60;imggrid|2|:44,46;imggrid|5|wide:0,0;imggrid|6|pair:42,42;imggrid|7|tile:42,42;imggrid|8|caption:42,50;imggrid|9|slide:42,42;imggrid|10|video:42,42;imggrid|11|one:18,18;imggrid|12|banner:14,14;imggrid|13|land2:46,46;imggrid|14|port3:46,46;imggrid|15|land4:18,16;imggrid|16|flush3:18,16;imggrid|17|circle3:46,46;imggrid|18|logo5:60,60;imggrid|21|yt1:46,44;imggrid|22|yt2:46,46;cred|23|vtext:46,44;imggrid|25|shorts3:26,26;imggrid|4|scene1:0,0;imggrid|5|scene2:0,0;imggrid|6|scene3:0,0;'
+   +'gridgal|12|line:26,30;gridgal|13|card:34,18;gridgal|14|ring:14,14;gridgal|15|wide:36,16;gridgal|16|soft:0,0;gridgal|17|plain:14,12;gridgal|20|card2:24,34;gridgal|21|tile:0,0;gridgal|22|masonry:0,0;gridgal|23|list:14,16;gridgal|24|side:44,30;'
+   +'cnblk|4|k4:60,60;cnblk|7|k25:60,60;cnblk|8|k27:18,16;cnblk|9|k31:48,46;cnblk|11|k35:28,26;cnblk|12|k37:60,60;cnblk|13|k39:60,60;cnblk|19|k110:42,40;cnblk|21|k114:42,42;cnblk|22|k116:34,30;cnblk|23|k118:60,60;cnblk|24|k121:60,56;cnblk|25|k123:22,24;cnblk|26|k125:0,0;cnblk|27|k127:0,0;cnblk|30|k135:22,32;cnblk|32|k146:60,60;cnblk|34|k11:52,56;cnblk|35|k16:48,46;cnblk|39|k47:18,20;cnblk|40|k50:18,20;cnblk|72|k50c3:40,44;cnblk|41|k53:56,60;cnblk|42|k61:18,18;cnblk|44|k80:18,20;cnblk|45|k83:60,60;cnblk|47|k102:28,28;cnblk|51|k134:60,60;cnblk|52|k138:16,16;cnblk|53|k29:46,46;cnblk|55|k58:18,16;cnblk|57|k128:0,0;cnblk|58|k130:0,0;cnblk|59|k133:36,36;cnblk|60|k3:36,60;cnblk|62|k90:42,38;cnblk|63|k100:24,24;cnblk|67|k147:44,50;cnblk|69|k73:34,38;cnblk|70|k67:60,60;cnblk|71|k149:60,60;'
+   +'fxbutton|1|invert:60,60;fxbutton|2|roll:60,60;fxbutton|3|line:60,60;fxbutton|4|fill:52,52;fxbutton|5|arrow:42,42;fxbutton|6|wide:60,60;fxbutton|7|flip:52,52;fxbutton|8|scramble:60,60;fxbutton|9|magnet:26,26;fxbutton|10|slide:52,52;fxbutton|11|shine:52,52;fxbutton|12|lift:26,26;fxbutton|13|bracket:60,60;fxbutton|14|swap:60,60;fxbutton|15|expand:18,18;fxbutton|16|glow:60,60;fxbutton|17|dot:60,60;fxbutton|18|highlight:60,60;fxbutton|19|shadow:34,34;fxbutton|20|tilt:42,42;fxbutton|21|ring:52,52;fxbutton|22|arrow2:60,20;fxbutton|23|jump:60,60;fxbutton|24|circle:52,52;fxbutton|25|wipe:52,52;fxbutton|26|tshadow:54,58;fxbutton|27|fade:60,60;fxbutton|28|cline:60,60;fxbutton|29|round:52,52;fxbutton|30|bounce:18,18;fxbutton|31|hswap:60,60;fxbutton|32|bgrow:18,18;fxbutton|33|lline:60,60;'
+   +'formblk|1|basic:60,60;formblk|2|gray:60,60;formblk|3|survey:60,60;formblk|6|personal:60,60;formblk|8|customer:60,60;formblk|10|order:60,60;calblk|1|month:60,60;calblk|3|week:60,60;calblk|4|mini:60,60;'
+   +'ctblk|1|map-form:60,60;ctblk|3|map-r-a:60,60;ctblk|4|map-r-b:60,60;ctblk|5|map-l:60,60;ctblk|6|form-info:60,60;ctblk|7|info-form:60,60;ctblk|8|form-plain:60,60;ctblk|9|form-2col:60,60;ctblk|11|strip-red:46,46;ctblk|13|strip-green:48,48;ctblk|15|br-titlel:60,60;ctblk|16|br-mapl:58,58;ctblk|17|br-center:60,60;ctblk|18|br-detail:60,60;'
+   +'bdblk|1|basic:60,60;bdblk|2|tableg:60,60;bdblk|3|list:60,60;bdblk|4|profile:60,60;bdblk|5|card:60,60;bdblk|6|tile:60,60;bdblk|7|thumb:60,60;bdblk|8|over:60,60;bdblk|9|masonry:0,0;bdblk|10|webzine:60,60;bdblk|11|webzr:60,60;bdblk|12|mini:60,60;bdblk|13|faq:60,60;bdblk|14|faqp:60,60;bdblk|15|faqb:60,60;bdblk|16|faqn:60,60;bdblk|17|qna:60,60;bdblk|18|qnal:60,60;bdblk|19|qnab:60,60;bdblk|20|qnac:60,60;bdblk|21|guest:60,60;bdblk|22|guestl:60,60;bdblk|23|guestb:60,60;bdblk|24|guestc:60,60;'
+   +'dvblk|1|thin:60,60;dvblk|2|dark:60,60;dvblk|3|fade:60,60;dvblk|4|dashed:60,60;dvblk|5|dotted:60,60;dvblk|6|wave:60,60;dvblk|7|beads:60,60;dvblk|8|chevron:60,60;dvblk|9|hatch:60,60;dvblk|10|blank:60,60;dvblk|11|ldot:60,60;dvblk|12|dia4:60,60;dvblk|13|dia:60,60;dvblk|14|text:60,60;dvblk|15|dia3:60,60;dvblk|16|bar:60,60;dvblk|17|chev:60,60;dvblk|18|vline:60,60;dvblk|19|lhook:60,60;dvblk|20|twotone:60,60;dvblk|21|larrow:60,60;dvblk|22|zig:60,60;dvblk|23|slash:60,60;dvblk|24|x:60,60;dvblk|25|dots3:60,60;dvblk|26|stars3:60,60;dvblk|27|grad:60,60;dvblk|28|edots:60,60;dvblk|29|ring:60,60;'
+   +'nmblk|10|row:60,60;qrblk|15|side:60,60;snblk|1|brand:60,60;snblk|2|circle:60,60;snblk|3|round:60,60;snblk|4|mono:60,60;snblk|5|monoc:60,60;snblk|9|brow:60,60;snblk|12|f6:60,60;snblk|13|f7:60,60;snblk|14|f4:60,60;snblk|15|fhead:60,60;'
+   +'ltblk|1|l1:60,60;ltblk|2|l2:60,60;ltblk|3|l3:60,60;ltblk|4|l4:60,60;ltblk|5|l5:60,60;ltblk|6|c5:60,60;ltblk|7|r1l:60,60;ltblk|8|r1s:60,60;ltblk|9|r2r:60,60;ltblk|10|r2l:60,60');
+  function tkKidCardKey(card){ return card?(card.getAttribute('data-kind')+'|'+card.getAttribute('data-no')+'|'+(card.getAttribute('data-preset')||'')):''; }
   /* 예전 저장본 한 번 정리 — 흰 배경 블록 중 자동으로 들어간 여백(0 · 0, 텍스트 12 · 12, 캡션 이미지 0 · 12, 위아래 한 값 0)만 20 으로.
      직접 바꾼 값 · 배경 블록 · 배경 띠 · 배경 이미지 블록은 그대로. 위 탭 '탭 · 내용 간격' 44(예전 기본) → 36 (첫 블록 위 여백이 늘어난 만큼) */
   function tkKidGapMigrate(c){
@@ -47036,7 +47050,7 @@ global.PolyFX = API;
     if(!actOk && first && typeof baPick==='function') baPick(first);
   }
   /* 블록 추가 창에서 고른 블록을 탭 안으로 옮긴다 */
-  function tkKidAdopt(blk,i,nb,ctxBefore,ctxTop){
+  function tkKidAdopt(blk,i,nb,ctxBefore,ctxTop,cardKey){
     var box=blk.querySelector('.tk-kids'+(ctxTop?'.tk-kids-top':':not(.tk-kids-top)')+'[data-tk-kids="'+i+'"]'); if(!box||!nb) return;
     var ab=nb.nextElementSibling; if(ab && ab.classList.contains('addbar')) ab.remove();
     var add=box.querySelector(':scope > .tk-kid-add'), endGap=ctxTop?box.lastElementChild:null, bf=(ctxBefore && ctxBefore.parentNode===box)?ctxBefore:(ctxTop?endGap:add); box.insertBefore(nb,bf||null);
@@ -47046,7 +47060,10 @@ global.PolyFX = API;
     /* 261102 수정 — 배경색 · 배경 이미지가 있는 블록은 색 상자 안쪽 여백 48px 를 남긴다 (0 이면 글 · 버튼이 상자 위아래 끝에 붙음). 흰색 · 투명 배경은 0 */
     if(cf && typeof cf==='object') nb.classList.toggle('tk-kid-bg',tkKidHasBg(cf));   /* 배경 있는 블록 표시 — 색 상자 안 좌우 여백 유지 */
     if(cf && typeof cf==='object' && !tkKidBand(ty,cf) && !cf.bgImg){   /* 261103 — 배경 이미지 블록은 기본 여백 그대로 (사진 보이는 높이가 여백으로 정해져 줄이면 썸네일보다 납작해진다, 예 CONTENT73) */ var pad=tkKidHasBg(cf)?48:TK_KID_GAP, keys=TK_KID_PAD[ty]||['pt','pb'];   /* 261103 수정 — 흰 배경 0 → 20 ('블록 간격'을 없애고 블록 위아래 여백으로 : 사이 40) */ keys.forEach(function(p){ cf[p]=(keys.indexOf('pv')>=0)?(p==='pv'?pad:0):pad; });   /* 261103 수정 — FAQ · QnA 는 배경이 안쪽 상자에 칠해져서 여백도 안쪽(pv)에 (블록 위아래 pt · pb 는 0). 전 : 블록 pt · pb 에 48 → 여백이 색 상자 밖 흰 띠로 보였다 */
-      if(!tkKidHasBg(cf)) tkKidPx0(nb,ty,cf);   /* 261103 수정 — 흰 배경은 모두 20 · 20 (전 : 텍스트 12 · 12, 캡션 이미지 아래 12, 나머지 0) */
+      if(!tkKidHasBg(cf)){ tkKidPx0(nb,ty,cf);   /* 261103 수정 — 흰 배경 기본 20 · 20 (전 : 텍스트 12 · 12, 캡션 이미지 아래 12, 나머지 0) */
+        var tp=cardKey && TK_KID_TPAD[cardKey];   /* 261103 추가 — 썸네일에 보이는 위아래 여백 (표에 있는 카드만) */
+        if(tp){ if(keys.indexOf('pv')<0){ cf.pt=tp[0]; cf.pb=tp[1]; } else { var pv=Math.round((tp[0]+tp[1])/4)*2; keys.forEach(function(p){ cf[p]=(p==='pv')?pv:0; }); } }
+      }
       tkKidApply(nb,ty); }   /* FAQ · QnA 는 블록(pt · pb)과 안쪽(pv) 두 군데 → 안쪽은 0, 블록에만 48 */
     if(typeof bindBlockHoverAddbars==='function') try{ bindBlockHoverAddbars(); }catch(e){}
     if(typeof selectBlock==='function') selectBlock(nb);
@@ -47063,7 +47080,7 @@ global.PolyFX = API;
       TK_ADDCTX=null; var before=new Set([].slice.call(document.querySelectorAll('#stage .blk')));
       var r=orig.apply(this,arguments);
       var nb=[].slice.call(document.querySelectorAll('#stage .blk')).filter(function(x){ return !before.has(x); })[0];
-      if(nb && ctx.blk.isConnected) tkKidAdopt(ctx.blk,ctx.i,nb,ctx.before,ctx.top);
+      if(nb && ctx.blk.isConnected) tkKidAdopt(ctx.blk,ctx.i,nb,ctx.before,ctx.top,tkKidCardKey(card));
       return r;
     };
     w._tk=1; window.baInsertBlock=w;
