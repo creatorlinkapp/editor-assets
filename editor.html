@@ -8268,6 +8268,7 @@
   /* 260915 수정 — 레이아웃 도식 버튼(.rt-lay) 삭제: 구성 선택은 세그먼트(mt-seg)로 통합 */
   /* 260915 추가 — 열 구조 선택 버튼: 칸의 flex 비율이 곧 열 비율 */
   .rt-cst{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:8px 0 4px;}
+  #rtLabelWRow,#rtColRows > .srow:first-child{margin-top:10px;}   /* 261103 추가 — 레이아웃 버튼 → 라벨 폭 · 열 모양 아이콘 → 열 간격 4px → 10px (다른 버튼 → 슬라이더 간격과 같게) */
   .rt-cst-b{height:28px;border:1px solid var(--border-2);background:#fff;border-radius:var(--r-sm);padding:4px;display:flex;gap:2px;min-width:0;cursor:pointer;transition:border-color .12s,box-shadow .12s;}
   .rt-cst-b i{display:block;flex:1;border-radius:2px;background:var(--border-hover);}
   .rt-cst-b:hover{border-color:var(--ink-3);}
