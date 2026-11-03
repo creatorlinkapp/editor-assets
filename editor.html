@@ -2847,8 +2847,7 @@
   .tk-kid-gap.show button,.tk-kid-gap:hover button{opacity:1;pointer-events:auto;}
   .tk-kid-gap button:hover{border-color:var(--green);color:var(--green-text);background:var(--green-soft);}
   .tk-kids-top.on{margin-top:0;} .tk-kids-top.on:has(> .blk){margin-bottom:var(--tkkg,40px);}   /* 탭 글 칸 위 블록 칸 */
-  html.pview .tk-kid-gap{display:none;}
-  /* 261102 수정 — 탭 글도 블록 : 탭마다 내용은 블록 칸 하나(.tk-kids). 첫 블록은 탭 줄 아래 '탭 · 내용 간격' 자리, 블록 사이는 '블록 간격' */
+  html.pview .tk-kid-gap{display:none;}  /* 261102 수정 — 탭 글도 블록 : 탭마다 내용은 블록 칸 하나(.tk-kids). 첫 블록은 탭 줄 아래 '탭 · 내용 간격' 자리, 블록 사이는 '블록 간격' */
   .tk-wrap .tk-kids.on{margin-top:0;}
   .tk-kids:not(.tk-kids-top) > .tk-kid-gap:first-child button{top:calc(var(--tkgap) / -2) !important;}   /* 첫 블록 위 사이 버튼 = 탭 줄과 첫 블록 사이 가운데 */
   /* 기본 탭 글 텍스트 블록(.tk-txt) — 예전 탭 글 칸과 같은 글 모양 (줄 간격 · 제목 · 문단 간격) */
@@ -4974,7 +4973,7 @@
   .im-addrow .btn-sm.picking{animation:rtThumbPulse 1s ease-in-out infinite;}
   .im-addrow button:disabled{opacity:.4;pointer-events:none;}
   .srow.off,.mt-seg-b.off{opacity:.38;pointer-events:none;}
-  :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow) .help-ico{display:none;vertical-align:-2px;margin-left:2px;} :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow).off .help-ico{display:inline-block;pointer-events:auto;}   /* 261030 수정 — 탭 블록 화살표 이동 · 화살표 색 (화살표가 안 나올 때) */
+  :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow,#tkKgRow) .help-ico{display:none;vertical-align:-2px;margin-left:2px;} :is(#ctTcRow,#ctTsRow,#ctRRow,#ctTaRow,#ctIrRow,#fmIrRow,#tkMvLbl,#tkArcRow,#tkKgRow).off .help-ico{display:inline-block;pointer-events:auto;}   /* 261030 수정 — 탭 블록 화살표 이동 · 화살표 색 (화살표가 안 나올 때) · 261103 추가 — 블록 간격 (블록 1개뿐일 때) */
   #ctTaSeg.dis{opacity:.38;} #ctTaSeg.dis .mt-seg-b{cursor:pointer;}   /* 261029 추가 — 제목 · 설명이 모두 꺼지면 정렬은 흐리게, 누르면 안내 팝업 */   /* 261028 추가 — 컨택트 제목 색이 막혀 있을 때만 물음표로 이유를 알린다 */
   .im-sub{margin:4px 0 2px 0;padding:2px 0 8px 12px;border-left:2px solid var(--line);}
   .im-bgpick{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
@@ -12914,8 +12913,7 @@
             <div class="srow" id="tkRRow"><span class="k">라운딩</span><input class="rng" type="range" id="tkR" min="0" max="30" step="1" value="4"><span class="v" id="tkRV">4px</span></div>   <!-- 261030 추가 — 탭 모서리 (기존 편집기 TAB3 · 4 · 5 · 8 「둥근 모서리」). 상자 모양 스타일(채움 · 테두리 · 블록 · 세그먼트)에서만 -->
             <div class="srow" id="tkGpRow"><span class="k">탭 간격</span><input class="rng" type="range" id="tkGp" min="0" max="40" step="1" value="10"><span class="v" id="tkGpV">10px</span></div>   <!-- 261030 추가 — 탭 사이 · 줄 사이 간격 (기존 편집기 「좌우 간격」 · 「버튼 상하 간격」을 하나로). 떨어진 모양(알약 · 테두리 · 블록) · 여러 줄에서만 -->
             <div class="srow"><span class="k">탭 · 내용 간격</span><input class="rng" type="range" id="tkGapB" min="0" max="120" step="2" value="40"><span class="v" id="tkGapBV">40px</span></div>
-            <div class="srow" id="tkKgRow"><span class="k">블록 간격</span><input class="rng" type="range" id="tkKg" min="0" max="120" step="2" value="40"><span class="v" id="tkKgV">40px</span></div>   <!-- 261102 추가 — 탭 안 블록 간격 (탭 글 ↔ 블록 · 블록 ↔ 블록). 탭 안에 블록이 있을 때만 -->
-            <div id="tkMvRow">
+            <div class="srow" id="tkKgRow"><span class="k">블록 간격 <svg class="help-ico pg-tip" data-tip="탭 안에 블록이 2개 이상일 때 블록 사이에 적용됩니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><input class="rng" type="range" id="tkKg" min="0" max="120" step="2" value="40"><span class="v" id="tkKgV">40px</span></div>   <!-- 261102 추가 — 탭 안 블록 간격 (탭 글 ↔ 블록 · 블록 ↔ 블록). 탭 안에 블록이 있을 때만 -->            <div id="tkMvRow">
               <div class="srow" id="tkMvLbl" style="margin:12px 0 6px;"><span class="k">화살표 이동 <svg class="help-ico pg-tip" data-tip="탭이 가로 개수보다 많을 때 화살표가 나옵니다. 모바일은 한 줄에 4칸까지라 탭이 5개 이상이면 화살표가 나옵니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span></div>
               <div class="mt-seg" id="tkMvSeg">
                 <button type="button" class="mt-seg-b active" data-m="one" onclick="tkSeg('mv','tkMvSeg','one')">한 칸씩</button>
@@ -47114,6 +47112,8 @@ global.PolyFX = API;
     /* 261030 추가 — 라운딩은 상자 모양 탭(채움 · 테두리 · 블록 · 세그먼트), 탭 간격은 떨어진 모양(알약 · 테두리 · 블록) 또는 여러 줄(줄 사이)에서만 */
     show('tkRRow', /^(fill|box|block|seg)$/.test(c.ds)); show('tkGpRow', /^(pill|box|block)$/.test(c.ds) || (top && c.wrap==='multi'));
     show('tkKgRow', c.tabs.some(function(t){ return tkKidN(t)>0; }));   /* 261102 추가 — 블록 간격은 탭 안에 블록이 있을 때만 */
+    var kgOff=!c.tabs.some(function(t){ return tkKidN(t)>1; }), kgr=document.getElementById('tkKgRow');   /* 261103 추가 — 모든 탭이 블록 1개 이하면 사이가 없어 바꿔도 안 보임 → 흐리게 (이유는 ? 아이콘) */
+    if(kgr) kgr.classList.toggle('off',kgOff);
     tkRGSync(c);
     var al=document.getElementById('tkAcLbl'); if(al) al.textContent=(c.ds==='under'||c.ds==='bar')?'선택 표시':((c.ds==='box')?'선택 테두리':'선택한 탭 바탕');
     var cnt=document.getElementById('tkCount'); if(cnt) cnt.textContent=c.tabs.length+'/'+TK_MAX;
