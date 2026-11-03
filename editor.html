@@ -2834,7 +2834,8 @@
   .tk-kids{overflow-wrap:break-word;}
   #stage .tk-kids .blk[data-block="cred"].rt-editing .cred{overflow-wrap:break-word;}
   .tk-kids > .blk{overflow-x:clip;max-width:100%;display:flow-root;}   /* 261102 — 예방 : 블록 자체 위아래 여백이 0 일 때 블록 안쪽 글의 바깥 여백이 블록 밖으로 빠져 간격을 바꾸지 않게 */
-  .tk-kids > .blk{--gear-top:14px;}   /* 261102 수정 — 톱니 위치 값(--gear-top)을 탭 블록에서 물려받지 않게 : 탭 블록 위쪽이 화면 밖이면 탭 안 블록 톱니까지 같이 내려가 블록 밖으로 나왔다 (자기 값은 gearTrack 이 인라인으로 넣는다) */
+  .tk-kids > .blk > .gear-fab{width:34px;height:34px;right:15px;} .tk-kids > .blk > .gear-fab .ico{width:20px;height:20px;}   /* 261103 추가 — 탭 안 블록 톱니는 조금 작게 (39 → 34, 탭 블록 톱니와 구분) */
+  .tk-kids > .blk{--gear-top:12px;}   /* 261103 수정 — 14 → 12 (작아진 톱니에 맞춰 모서리 쪽으로) · 261102 수정 — 톱니 위치 값(--gear-top)을 탭 블록에서 물려받지 않게 : 탭 블록 위쪽이 화면 밖이면 탭 안 블록 톱니까지 같이 내려가 블록 밖으로 나왔다 (자기 값은 gearTrack 이 인라인으로 넣는다) */
   .tk-kids :is(.rt-btn,.rt-btn-a,.fm-btn,.bd-wbtn,.qr-auto){max-width:100%;box-sizing:border-box;overflow:hidden;text-overflow:ellipsis;}   /* 한 줄 고정 버튼 · 주소 — 모양은 칸 안에, 긴 글자는 말줄임 */
   .tk-kids .rt-btn-a > *{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .tk-kids > .blk :is(.ct-in,.bd-top,.fm-act,.cn-split,.bc-in,.qn-in) > *{min-width:0;}   /* 안쪽 배치 칸(그리드 · 줄)이 긴 글자만큼 넓어져 탭 폭을 넘지 않게 */
