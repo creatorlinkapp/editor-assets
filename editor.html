@@ -60698,17 +60698,23 @@ document.addEventListener('click',function(e){
   if(t.closest('[data-srch]')){ moOpen(false); if(typeof hdSrchOpen==='function') setTimeout(hdSrchOpen,220); return; }
   if(t.closest('.mo-ct a.s')) return;   /* SNS — 주소가 있으면 새 창으로(링크 그대로) */
   var tt=t.closest('[data-t]'); if(tt){ var two=tt.closest('.mo-two'), i=tt.getAttribute('data-t'); two.querySelectorAll('.l .mo-i').forEach(function(x){ x.classList.toggle('on',x===tt); }); two.querySelectorAll('.r .p').forEach(function(x){ x.classList.toggle('on',x.getAttribute('data-p')===i); }); return; }
-  var r=t.closest('[data-r]'); if(r){ moOpen(false); moGo(r.getAttribute('data-r')); }
+  var r=t.closest('[data-r]'); if(r){
+    /* 261104 수정 — 펼침 메뉴를 편집하는 중(디자인 고르기 · 「펼침 메뉴」 묶음 열림)에는 미리보기라 메뉴를 열어 둔 채 페이지만 옮긴다(현재 메뉴 표시가 바뀌는 것까지 보이게). 실제 사이트 · 편집 중이 아닐 땐 전처럼 닫고 이동 */
+    if(moEdPrev==='dr'){ moGo(r.getAttribute('data-r')); setTimeout(function(){ var l=moLay(); if(!moActive()) return; if(l.classList.contains('show')) moLayRender(); else moOpen(true); },80); return; }
+    moOpen(false); moGo(r.getAttribute('data-r'));
+  }
 });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ var l=document.getElementById('moLay'); if(l && l.classList.contains('show')) moOpen(false); } });
 window.addEventListener('resize',function(){ var l=document.getElementById('moLay'); if(l && l.classList.contains('show') && !moActive()) moOpen(false); });
 /* 사본 — 설정창 상태(편집기에서 온 스냅샷 moEd: '' · hd · dr) */
-var moEdPrev='';
+var moEdPrev='', moEdDsg='';
 function moEdit(v){
   v=v||''; var hd=hdSiteHd(); if(hd) hd.classList.toggle('hd-editing',!!v);
+  var dsg=(HD && HD.mo && HD.mo.dr)?HD.mo.dr.design:'';
   if(v==='dr' && moEdPrev!=='dr'){ if(moActive()) moOpen(true); }
   else if(v!=='dr' && moEdPrev==='dr') moOpen(false);
-  moEdPrev=v;
+  else if(v==='dr' && dsg!==moEdDsg && moActive()) moOpen(true);   /* 261104 추가 — 미리보기에서 메뉴를 닫은 뒤 다른 디자인을 고르면 다시 열어 고른 모습을 보여 준다 */
+  moEdPrev=v; moEdDsg=dsg;
 }
 /* ── 편집기 쪽 — 설정창 ── */
 function moEdState(){
