@@ -9491,10 +9491,15 @@
   /* 261104 추가 — 연락처 · SNS(ct) */
   .mo-ct{display:flex;flex-direction:column;align-items:var(--mo-jc,flex-start);gap:8px;padding:20px 24px 28px;flex:none;border-top:1px solid var(--mo-line,#eee);font-size:13px;color:var(--mo-fg);}
   .mo-ct .ln{display:flex;align-items:baseline;gap:10px;}
+  .mo-ct a.ln > span{text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 35%,transparent);text-underline-offset:3px;}   /* 261104 추가 — 누를 수 있는 줄 표시(옅은 밑줄) */
+  .mo-ct a.ln > span.mo-tap{animation:moTap .4s ease;}
+  @keyframes moTap{40%{opacity:.4;}}
   .mo-ct .ln em{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--mo-ac,#222);min-width:34px;}
   .mo-ct .sns{display:flex;flex-wrap:wrap;gap:16px;margin-top:8px;color:var(--mo-btn,#222);}
   .mo-ct .sns .s{display:inline-flex;color:inherit;}
   .mo-ct .sns svg{width:22px;height:22px;fill:currentColor;display:block;}
+  .site-ft .ft-biz.mo-ft-flash{outline:2px solid var(--green,#03C75A);outline-offset:4px;border-radius:4px;animation:moFtFlash 2.2s ease;}   /* 261104 추가 — 「푸터에서 고치기」로 왔을 때 고칠 줄 표시 */
+  @keyframes moFtFlash{0%,60%{outline-color:var(--green,#03C75A);}100%{outline-color:transparent;}}
   /* 하단 배너 */
   .mo-bn{padding:0 var(--mo-bnp,16px) var(--mo-bnp,16px);display:flex;justify-content:center;flex:none;}
   .mo-bn .im{display:block;width:var(--mo-bnw,100%);border-radius:var(--mo-bnr,5px);overflow:hidden;}
@@ -16726,6 +16731,7 @@
         <div class="fld-h fold-h" onclick="smAcc(this);moEdKick()">펼침 메뉴<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
         <div class="acc-body"><div class="acc-in">
           <div class="srow" style="margin-top:0;"><span class="k">디자인</span><div class="hd-pick"><span class="nm" id="moDrNm">서랍 01</span><button type="button" class="btn-sm" onclick="hdPickOpen('mo')">바꾸기</button></div></div>
+          <div class="srow" id="moFtRow" style="display:none;"><span class="k">연락처 · SNS</span><div class="hd-pick"><span class="nm">푸터 내용</span><button type="button" class="btn-sm" onclick="moFtGo()">푸터에서 고치기</button></div></div>   <!-- 261104 추가 — 전체 화면 05 -->
           <div class="tx-hint" id="moDrDsHint" style="display:none;"></div>
           <div class="gt-h">표시 항목</div>
           <div class="gt-chips" id="moDrChips"></div>
@@ -60632,14 +60638,38 @@ function moDrHtml(dr,D,model,ics,logo){
   return '<div class="mo-dim" data-mo-x="1"></div><div class="mo-dr">'+h+'</div>';
 }
 /* 261104 추가 — 연락처 · SNS(ct) : 푸터에 적은 사업자 정보의 「전화 · 이메일」과 푸터 SNS 를 그대로 쓴다(따로 적는 칸 없음) */
+function moFtParts(){ var on=(typeof FT!=='undefined') && FT.on!==false, p=(on && typeof ftDesign==='function')?(ftDesign(FT.design).parts||{}):{}; return {on:on, biz:!!p.biz, sns:!!p.sns}; }
+/* 261104 추가 — 「푸터에서 고치기」: 연락처 · SNS 는 PC 편집 화면의 푸터에서만 고칠 수 있다 → PC 로 바꾸고 푸터로 이동 · 사업자 정보 줄 강조 · 푸터 설정창(아이콘) 열기 */
+function moFtGo(){
+  if(typeof mvSetMode==='function') try{ mvSetMode('pc'); }catch(e){}
+  setTimeout(function(){
+    /* 설정창을 먼저 연다 — 열 때 푸터를 다시 그려(ftRender) 먼저 시작한 스크롤 · 강조가 끊겼다 */
+    if(typeof ftSetOpen==='function') try{ ftSetOpen(); }catch(e){}
+    var a=document.getElementById('ftSnsAcc'); if(a && !a.classList.contains('open') && a.style.display!=='none'){ var h=a.querySelector('.fold-h'); if(h) h.click(); }
+    /* PC 로 넓어지는 전환 · 설정창이 열리며 캔버스 배율(--site-zoom)이 바뀌는 동안은 편집기가 「보던 자리」를 다시 맞춰 먼저 시작한 이동을 되돌린다 → 전환이 끝나고 배율이 멈춘 뒤 내려간다 */
+    var t0=Date.now(), zPrev='', same=0, rs=document.documentElement.style;
+    (function wait(){ var b=document.body.classList, z=rs.getPropertyValue('--site-zoom'); same=(z===zPrev)?same+1:0; zPrev=z;
+      if((b.contains('mv-motion')||b.contains('mv-switching')||same<3) && Date.now()-t0<2500){ setTimeout(wait,80); return; } go(); })();
+    function go(){
+      var ft=document.querySelector('#stage .site-ft'); if(!ft) return;
+      var stg=document.getElementById('stage'), fr=ft.getBoundingClientRect(), sr=stg.getBoundingClientRect();
+      var y=stg.scrollTop+(fr.bottom-sr.bottom)+24; try{ stg.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }catch(e){ stg.scrollTop=Math.max(0,y); }
+      var biz=ft.querySelector('.ft-biz'); if(biz){ biz.classList.remove('mo-ft-flash'); void biz.offsetWidth; biz.classList.add('mo-ft-flash'); setTimeout(function(){ biz.classList.remove('mo-ft-flash'); },2400); }
+    }
+  },350);
+}
 function moCtHtml(){
-  if(typeof FT==='undefined' || typeof ftTxt!=='function') return '';
-  var biz=String(ftTxt(FT,'biz')||''), tel=(biz.match(/전화\s*[:：]\s*([^·\n]+)/)||[])[1], em=(biz.match(/이메일\s*[:：]\s*([^·\s]+)/)||[])[1];
-  var sn=(FT.sns||[]).filter(function(s){ return FT_SVG[s.k]; }), r='';
-  if(tel && tel.trim()) r+='<span class="ln"><em>TEL</em><span>'+hdEsc(tel.trim())+'</span></span>';
-  if(em && em.trim()) r+='<span class="ln"><em>MAIL</em><span>'+hdEsc(em.trim())+'</span></span>';
-  if(sn.length) r+='<span class="sns">'+sn.map(function(s){ var u=String(s.url||'').trim(); if(u && !/^(https?:|mailto:|tel:|\/|#)/i.test(u)) u='https://'+u.replace(/^\/+/,'');
-    return '<a class="s" data-k="'+s.k+'"'+(u?' href="'+hdEsc(u)+'" target="_blank" rel="noopener noreferrer"':'')+'>'+FT_SVG[s.k]+'</a>'; }).join('')+'</span>';
+  /* 261104 수정 — 값(FT) 대신 화면에 그려진 푸터에서 읽는다 : 모바일 사본은 푸터를 그려진 마크업으로만 받아 FT 가 처음 기본값 그대로였다(푸터에서 고쳐도 02-000-0000 이 나왔다).
+     그려진 푸터를 읽으면 푸터를 끈 경우(없음) · 사업자 정보가 없는 디자인(footer-06 — 전화 · 이메일 없음) · 아이콘이 없는 디자인도 저절로 맞는다 */
+  var ft=document.querySelector('#stage .site > .site-ft') || document.querySelector('.site:not(.hdv-site) > .site-ft'); if(!ft || typeof FT_SVG==='undefined') return '';
+  var be=ft.querySelector('.ft-biz'), biz=be?String(be.innerText||be.textContent||''):'', tel=(biz.match(/전화\s*[:：]\s*([^·\n]+)/)||[])[1], em=(biz.match(/이메일\s*[:：]\s*([^·\s]+)/)||[])[1];
+  var sn=[].filter.call(ft.querySelectorAll('.ft-sns .ft-ic[data-k]'),function(a){ return FT_SVG[a.getAttribute('data-k')]; }), r='';
+  /* 261104 수정 — 글자만 보이던 전화 · 메일을 누르면 바로 걸리고 쓰이게(tel: · mailto:). 번호는 숫자와 + 만 남겨 링크로 */
+  var tn=tel?tel.trim().replace(/[^\d+]/g,''):'', ea=em?em.trim():'';
+  if(tel && tel.trim()) r+=(tn?'<a class="ln" href="tel:'+hdEsc(tn)+'">':'<span class="ln">')+'<em>TEL</em><span>'+hdEsc(tel.trim())+'</span>'+(tn?'</a>':'</span>');
+  if(ea) r+=(/@/.test(ea)?'<a class="ln" href="mailto:'+hdEsc(ea)+'">':'<span class="ln">')+'<em>MAIL</em><span>'+hdEsc(ea)+'</span>'+(/@/.test(ea)?'</a>':'</span>');
+  if(sn.length) r+='<span class="sns">'+sn.map(function(a){ var k=a.getAttribute('data-k'), u=a.getAttribute('href')||'';   /* 주소는 푸터가 이미 https:// 를 붙여 둔 값 */
+    return '<a class="s" data-k="'+k+'"'+(u?' href="'+hdEsc(u)+'" target="_blank" rel="noopener noreferrer"':'')+'>'+FT_SVG[k]+'</a>'; }).join('')+'</span>';
   return r?'<div class="mo-ct">'+r+'</div>':'';
 }
 /* 261104 추가 — 이미지 카드 : 메뉴 id(없으면 순서) 로 사진을 찾는다 */
@@ -60792,6 +60822,7 @@ document.addEventListener('click',function(e){
   var dn=t.closest('[data-dn]'); if(dn){ var dl=dn.closest('.mo-drl'), pn=dl && dl.querySelector('.pn.sb[data-pn="'+dn.getAttribute('data-dn')+'"]'); if(pn){ dl.querySelector('.pn.rt').classList.add('out'); pn.classList.add('on'); var dw=dl.closest('.mo-dr'); if(dw) dw.scrollTop=0; } return; }
   if(t.closest('[data-bk]')){ moDrillReset(t.closest('#moLay')); return; }
   if(t.closest('.mo-srch')) return;   /* 261104 수정 — 검색란은 그 자리에서 입력(메뉴를 닫지 않는다) */
+  var cl=t.closest('.mo-ct a.ln'); if(cl){ if(window.CL_MVIEW){ e.preventDefault(); var sp=cl.querySelector('span'); if(sp){ sp.classList.remove('mo-tap'); void sp.offsetWidth; sp.classList.add('mo-tap'); } } return; }   /* 261104 추가 — 전화 · 메일 : 실제 사이트에서는 바로 걸기 · 메일 쓰기. 편집기 미리보기에서는 PC 의 전화 · 메일 앱 고르기 창이 뜨지 않게 막고 눌린 표시만 */
   if(t.closest('.mo-ct a.s') || t.closest('.mo-bn a.im')) return;   /* SNS · 배너 — 주소가 있으면 새 창으로(링크 그대로) */
   if(t.closest('.mo-ic[data-u="search"]')){ moOpen(false); if(typeof hdSrchOpen==='function') setTimeout(hdSrchOpen,220); return; }   /* 261104 추가 — 아이콘 줄의 검색도 상단 바 검색 버튼처럼 검색창을 연다 */
   var tt=t.closest('[data-t]'); if(tt){ var two=tt.closest('.mo-two'), i=tt.getAttribute('data-t'); two.querySelectorAll('.l .mo-i').forEach(function(x){ x.classList.toggle('on',x===tt); }); two.querySelectorAll('.r .p').forEach(function(x){ x.classList.toggle('on',x.getAttribute('data-p')===i); }); return; }
@@ -61001,7 +61032,9 @@ function moFill(){
   var nm=document.getElementById('moDrNm'); if(nm){ nm.textContent=moDrOf(M.dr.design).nm; }
   /* 261104 추가 — 새 디자인 안내 · 카드 이미지 칸 */
   var DS=moDrOf(M.dr.design).s, dh=document.getElementById('moDrDsHint');
-  if(dh){ dh.textContent=DS.ct?'아래 전화 · 이메일 · SNS 는 푸터에 적은 내용을 그대로 씁니다.':(DS.srch && !(HD.util||{}).search)?'PC 상단 메뉴에서 검색을 켜면 검색창이 나옵니다.':'';   /* 261104 수정 — 검색을 끈 사이트는 눌러도 동작하지 않는 검색창을 숨긴다(moDrHtml) */ dh.style.display=dh.textContent?'':'none'; }
+  var fp=moFtParts(), fr=document.getElementById('moFtRow'); if(fr) fr.style.display=DS.ct?'':'none';   /* 261104 추가 — 연락처 · SNS 디자인 : 고칠 곳(푸터)으로 가는 버튼 + 지금 푸터 상태에 맞는 안내 */
+  var ctT=!fp.on?'푸터를 끈 상태라 아래 전화 · 이메일 · SNS 가 나오지 않습니다.':(!fp.biz?'지금 푸터 디자인에는 사업자 정보가 없어 전화 · 이메일은 나오지 않습니다. SNS 는 푸터 아이콘을 그대로 씁니다.':'아래 전화 · 이메일 · SNS 는 PC 편집 화면의 푸터 내용을 그대로 씁니다.');
+  if(dh){ dh.textContent=DS.ct?ctT:(DS.srch && !(HD.util||{}).search)?'PC 상단 메뉴에서 검색을 켜면 검색창이 나옵니다.':'';   /* 261104 수정 — 검색을 끈 사이트는 눌러도 동작하지 않는 검색창을 숨긴다(moDrHtml) */ dh.style.display=dh.textContent?'':'none'; }
   var cb=document.getElementById('moCimgBox'); if(cb){ var isC=(DS.ls==='cards'); cb.style.display=isC?'':'none'; var ch=isC?moCimgHtml():''; if(cb.getAttribute('data-h')!==ch){ cb.innerHTML=ch; cb.setAttribute('data-h',ch); } }
   var tb=document.getElementById('moTabBody'); if(tb) tb.classList.toggle('mo-off',!M.tab.on);
   moFillLinks(); moFillResets();
@@ -61759,10 +61792,11 @@ function ftApplyRemote(html,site){
   if(!site || html==null) return;
   var el=site.querySelector(':scope > .site-ft');
   site.classList.toggle('ft-on',!!html);
-  if(!html){ if(el) el.remove(); ftRemoteHtml=''; return; }
+  if(!html){ if(el) el.remove(); ftRemoteHtml=''; if(typeof moLayRender==='function') try{ moLayRender(); }catch(e){} return; }
   if(el && html===ftRemoteHtml){ if(site.lastElementChild!==el) site.appendChild(el); return; }
   var tmp=document.createElement('div'); tmp.innerHTML=html; var nu=tmp.firstElementChild; if(!nu) return;
   if(el) el.remove(); site.appendChild(nu); ftRemoteHtml=html;
+  if(typeof moLayRender==='function') try{ moLayRender(); }catch(e){}   /* 261104 추가 — 펼침 메뉴 「연락처 · SNS」(전체 화면 05)는 푸터를 읽으므로 푸터가 바뀌면 다시 그린다 */
 }
 /* 다른 설정창이 열리면 닫는다(감시자는 탭메뉴와 같은 이유로 스크립트가 읽히는 지금 만든다) · 처음 그리기 · 맨 끝 자리 지키기 */
 (function(){
