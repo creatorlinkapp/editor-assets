@@ -9500,6 +9500,8 @@
   #hdPickModal.hd-pk-clear .hd-pk{box-shadow:0 24px 64px rgba(20,24,32,.28),0 0 0 1px rgba(20,24,32,.08);}
   #hdPickModal.hd-pk-low .hd-pk-grid{max-height:calc(100vh - 260px - var(--hdpk-top,16px));}
   #hdPickModal .hd-pk.c2w{width:1180px;}
+  html.mo-pk #mpane{z-index:245;}   /* 261104 추가 — 펼침 메뉴 디자인 고르는 중: 미리보기를 모달 바깥 배경(240) 위로 */
+  html.mo-pk #hdPickModal .hd-pk{max-width:100%;}
   .hd-pk .hd-pk-grid.c3{grid-template-columns:repeat(3,1fr);}   /* 261006 추가 — 좌측·토글 도식 카드 */   /* 261006 수정 — 4열 → 2열 · 넓게: 실제 헤더 축소본의 글자가 읽히도록(스크롤은 감수) */
   .hd-pk h3{margin-bottom:18px;}
   .hd-pk .hd-pk-tabs{display:flex;gap:4px;background:#EDEFF3;border-radius:9px;padding:4px;margin:0 auto 18px;width:max-content;}
@@ -60406,9 +60408,18 @@ document.addEventListener('mouseover',function(e){ var it=e.target.closest && e.
 document.addEventListener('click',function(e){ var it=e.target.closest && e.target.closest('.site-hd[data-hd-sub] .site-nav > .nav-i.has-sub'); if(it) hdSubGuard(it); },true);
 /* 261006 추가 — 헤더가 보이도록 모달을 헤더 아래에서 시작(--hdpk-top). 디자인을 고를 때마다 다시 잰다 — 두 줄 메뉴처럼 헤더가 높아지면 그만큼 내려간다(패딩 전환으로 부드럽게).
    세로 메뉴(좌측·토글)나 헤더가 화면 45% 아래/밖이면 가운데 그대로 */
+/* 261104 추가 — 펼침 메뉴 디자인을 고르는 동안 오른쪽 모바일 미리보기(#mpane)를 모달 바깥 배경 위로 올려 직접 눌러 볼 수 있게 한다.
+   (전엔 투명한 바깥 배경이 미리보기를 덮고 있어, 미리보기를 누르면 「바깥 누름 = 취소」로 창이 닫혔다) 모달 상자는 미리보기 왼쪽 공간의 가운데로 옮겨 겹치지 않게 */
+function moPkSide(m){
+  var p=document.getElementById('mpane'), r=p?p.getBoundingClientRect():null;
+  var on=!!(hdPickCtx && hdPickCtx.kind==='mo' && r && r.width>0 && r.left>320 && getComputedStyle(p).visibility!=='hidden' && getComputedStyle(p).display!=='none');
+  document.documentElement.classList.toggle('mo-pk',on);
+  if(m) m.style.paddingRight=on?Math.max(16,Math.round(window.innerWidth-r.left+16))+'px':'';
+}
+window.addEventListener('resize',function(){ if(typeof hdPickCtx!=='undefined' && hdPickCtx && hdPickCtx.kind==='mo') moPkSide(document.getElementById('hdPickModal')); });
 function hdPickPlace(first){
   var m=document.getElementById('hdPickModal'); if(!m || !hdPickCtx) return;
-  if(hdPickCtx.kind==='mo'){ m.classList.remove('hd-pk-low'); return; }   /* 261027 추가 — 모바일 펼침 메뉴는 PC 헤더와 상관없이 가운데 */
+  if(hdPickCtx.kind==='mo'){ m.classList.remove('hd-pk-low'); moPkSide(m); return; }   /* 261027 추가 — 모바일 펼침 메뉴는 PC 헤더와 상관없이 가운데 · 261104 수정 — 미리보기가 열려 있으면 그 왼쪽 공간의 가운데(moPkSide) */
   function measure(){
     var low=false; try{ var st=document.getElementById('stage'), hd=document.querySelector('#stage .site > .site-hd');
       if(hd && !hdVert()){ if(first && st) st.scrollTop=0; var r=hd.getBoundingClientRect(), bottom=r.bottom;
@@ -60428,6 +60439,7 @@ function hdPickClose(keep){
   if(keep && hdPickCtx && hdPickCtx.kind==='sub') hdSubShow();   /* 261006 추가 — 서브메뉴 디자인을 고르면 캔버스의 서브메뉴를 펼쳐 보여 준다 */
   var wasMo=!!(hdPickCtx && hdPickCtx.kind==='mo');
   hdPickCtx=null;
+  if(wasMo){ document.documentElement.classList.remove('mo-pk'); if(m) m.style.paddingRight=''; }   /* 261104 추가 — moPkSide 되돌림 */
   if(wasMo){ moFill(); moEdKick(); }   /* 261027 추가 — 모바일 펼침 메뉴: 설정창 값 · 사본의 펼침 상태 */
 }
 document.addEventListener('keydown',function(e){ if(e.key==='Escape' && hdPickCtx) hdPickClose(false); });
