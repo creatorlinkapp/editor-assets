@@ -9316,12 +9316,26 @@
     html.mob .site-hd[data-mo] > .mo-tab{display:flex;order:9;flex:0 0 calc(100% + var(--mo-side,18px) * 2);margin:0 calc(var(--mo-side,18px) * -1);overflow-x:auto;scrollbar-width:none;
       background:var(--mo-tbg,var(--hd-bg-solid,#fff));border-top:1px solid var(--mo-tline,color-mix(in srgb,var(--hd-fg,#9096A0) 22%,transparent));border-bottom:1px solid var(--mo-tline,color-mix(in srgb,var(--hd-fg,#9096A0) 22%,transparent));
       font-family:var(--mo-tfont,inherit);font-size:var(--mo-tfs,14px);font-weight:var(--mo-tfw,400);}
-    html.mob .site-hd[data-mo] > .mo-tab[data-al="center"] .t:first-child{margin-left:auto;} html.mob .site-hd[data-mo] > .mo-tab[data-al="center"] .t:last-child{margin-right:auto;}   /* 가운데 — justify-content:center 는 넘칠 때 앞쪽이 잘린다 */
+    html.mob .site-hd[data-mo] > .mo-tab[data-al="center"] .t:first-of-type{margin-left:auto;} html.mob .site-hd[data-mo] > .mo-tab[data-al="center"] .t:last-of-type{margin-right:auto;}   /* 261104 수정 — first/last-child → of-type (화살표 버튼이 양 끝에 들어와도) */   /* 가운데 — justify-content:center 는 넘칠 때 앞쪽이 잘린다 */
     html.mob .site-hd[data-mo] > .mo-tab::-webkit-scrollbar{display:none;}
     html.mob .site-hd[data-mo] > .mo-tab .t{flex:0 0 calc(100% / var(--mo-tcols,4));min-width:0;padding:12px 8px;text-align:var(--mo-tal,center);color:var(--mo-tfg,var(--hd-fg,#9096A0));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;box-sizing:border-box;}
     html.mob .site-hd[data-mo] > .mo-tab[data-al="left"] .t{padding-left:var(--mo-side,18px);}
     html.mob .site-hd[data-mo] > .mo-tab .t.cur{color:var(--mo-tac,var(--hd-ac,#23272E));box-shadow:inset 0 -2px 0 var(--mo-tac,var(--hd-ac,#23272E));font-weight:700;}
     html.mob .site-hd.hd-stuck[data-mo] > .mo-tab[data-stick="0"]{display:none;}
+    /* 261104 추가 — 메뉴 바 모양 '격자' : 한 줄에 가로 개수만큼, 넘치면 다음 줄. 칸 테두리 = 선 색, 칸 바탕 = 배경 색, 현재 메뉴 = 활성 색 + 옅은 바탕 (좌측 사이트 중단 메뉴 스타일 2 · 3) */
+    html.mob .site-hd[data-mo] > .mo-tab[data-sh="grid"]{display:grid;grid-template-columns:repeat(var(--mo-gcols,4),minmax(0,1fr));overflow:visible;border-bottom:0;}
+    html.mob .site-hd[data-mo] > .mo-tab[data-sh="grid"] .t{margin:0!important;padding:12px 6px;border-right:1px solid var(--mo-tline,color-mix(in srgb,var(--hd-fg,#9096A0) 22%,transparent));border-bottom:1px solid var(--mo-tline,color-mix(in srgb,var(--hd-fg,#9096A0) 22%,transparent));}
+    html.mob .site-hd[data-mo] > .mo-tab[data-sh="grid"][data-al="left"] .t{padding-left:12px;}
+    html.mob .site-hd[data-mo] > .mo-tab[data-sh="grid"] .t.re{border-right:0;}
+    html.mob .site-hd[data-mo] > .mo-tab[data-sh="grid"] .t.cur{box-shadow:none;background:color-mix(in srgb,var(--mo-tac,var(--hd-ac,#23272E)) 7%,transparent);}
+    /* 261104 추가 — 가로 스크롤 화살표 (스타일 5) : 넘칠 때만, 끝에 닿은 쪽은 숨김. 줄 양 끝에 붙어(스크롤 따라 안 움직임) 바탕색으로 살짝 덮는다 */
+    html.mob .site-hd[data-mo] > .mo-tab > .ar{display:none;position:sticky;z-index:2;flex:0 0 30px;align-self:stretch;align-items:center;justify-content:center;border:0;padding:0;margin:0;color:var(--mo-tac,var(--hd-ac,#23272E));cursor:pointer;}
+    html.mob .site-hd[data-mo] > .mo-tab[data-ov="1"] > .ar{display:flex;}
+    html.mob .site-hd[data-mo] > .mo-tab > .ar svg{width:16px;height:16px;}
+    html.mob .site-hd[data-mo] > .mo-tab > .ar.pv{left:0;margin-right:-30px;background:linear-gradient(270deg,transparent,var(--mo-tbg,var(--hd-bg-solid,#fff)) 40%);}
+    html.mob .site-hd[data-mo] > .mo-tab > .ar.nx{right:0;margin-left:-30px;background:linear-gradient(90deg,transparent,var(--mo-tbg,var(--hd-bg-solid,#fff)) 40%);}
+    html.mob .site-hd[data-mo] > .mo-tab > .ar.nx svg{transform:scaleX(-1);}
+    html.mob .site-hd[data-mo] > .mo-tab[data-at-s="1"] > .ar.pv,html.mob .site-hd[data-mo] > .mo-tab[data-at-e="1"] > .ar.nx{visibility:hidden;}
     /* 편집 표시 — 블록과 같은 롤오버 외곽선 + 아래 가장자리 오른쪽 톱니(세로 가운데 오른쪽은 메뉴 버튼과 겹친다)
        261027 수정 — 가운데 → 오른쪽(right:16px). 경계선 가운데의 둥근 버튼은 PC 의 블록 사이 「+ 블록 추가」 자리와 같은 말이라 헷갈렸고,
        가운데 정렬이 많은 첫 블록(제목 · 비주얼)의 내용을 가렸다. 오른쪽은 PC 톱니(블록 오른쪽 위 · 헤더 오른쪽 가장자리)와 같은 쪽 */
@@ -16605,8 +16619,15 @@
         <div class="acc-body"><div class="acc-in" id="moTabBody">
           <div class="gt-h" style="margin-top:0;">노출 메뉴</div>
           <div class="gt-chips" id="moTabChips"></div>
+          <!-- 261104 추가 — 모양 : 가로 스크롤(좌측 사이트 중단 메뉴 스타일 4 · 화살표 켜면 5) · 격자(스타일 2 · 3 — 선 · 배경 색으로 테두리 칸 / 회색 칸) -->
+          <div class="srow" style="margin:14px 0 6px;"><span class="k">모양</span></div>
+          <div class="mt-seg" id="moTabShSeg" style="margin-bottom:0;">
+            <button type="button" class="mt-seg-b active" data-m="scroll" onclick="moSet('tab.shape','scroll')">가로 스크롤</button>
+            <button type="button" class="mt-seg-b" data-m="grid" onclick="moSet('tab.shape','grid')">격자</button>
+          </div>
           <div class="srow" style="margin-top:14px;"><span class="k">가로 개수</span><input class="rng" type="range" min="2" max="6" step="1" value="4" data-p="tab.cols" data-u="개"><span class="v">4개</span></div>
-          <div class="tx-hint">넘치는 메뉴는 옆으로 밀어서 봅니다.</div>
+          <div class="tx-hint" id="moTabShHint">넘치는 메뉴는 옆으로 밀어서 봅니다.</div>
+          <div class="sline" id="moTabArRow"><span class="lbl">화살표</span><button type="button" class="sw" data-p="tab.arrow" onclick="moTog('tab.arrow')"></button></div>
           <div class="srow" style="margin:14px 0 6px;"><span class="k">정렬</span></div>
           <div class="mt-seg" id="moTabAlSeg" style="margin-bottom:0;">
             <button type="button" class="mt-seg-b" data-m="left" onclick="moSet('tab.align','left')">왼쪽</button>
@@ -60413,7 +60434,7 @@ function moDrDefault(){ return {design:'dr01', show:{icons:true,member:false,sub
   fg:'#9A9A9A', ac:'#222222', line:'#EEEEEE', bg:'#FFFFFF', btn:'#222222', dim:'#000000', dimA:0.5, bn:{img:'',w:100,rad:5,pad:16,link:''}}; }
 function moDefault(){ return {
   lay:'l', logo:22, h:60, menu:true, show:{search:false,login:false,cart:true,lang:false}, ico:'bars3', isz:'m', lk:true, col:{fg:'',bg:''},
-  tab:{on:false, hide:{}, cols:4, align:'center', font:-1, size:14, bold:false, fg:'', ac:'', line:'', bg:'', stick:true},
+  tab:{on:false, hide:{}, cols:4, align:'center', font:-1, size:14, bold:false, fg:'', ac:'', line:'', bg:'', stick:true, shape:'scroll', arrow:false},   /* 261104 추가 — 모양(scroll 가로 스크롤 · grid 격자) · 화살표(가로 스크롤일 때) */
   dr:moDrDefault() }; }
 /* 펼침 메뉴 디자인 12 — s(구조): k 열림(drawer 서랍 · screen 전체 화면 · sheet 아래 시트 · drop 헤더 아래 · card 떠 있는 카드) · side · head(icons · logo · close · grab · none)
    · ip 아이콘 줄 자리(head · above · foot · none) · ls 목록(line · plain · big · acc · two · tiles) · al 정렬 · mem(card = 회원 카드) · num 번호 · vc 세로 가운데 · serif
@@ -60540,11 +60561,19 @@ function moTabRender(hd){
   var T=HD.mo.tab, el=hd.querySelector(':scope > .mo-tab');
   if(!T.on){ if(el) el.remove(); return; }
   if(!el){ el=document.createElement('div'); el.className='mo-tab'; hd.appendChild(el); }
-  var h=''; moModel().forEach(function(m,i){ if(m.mid && T.hide[m.mid]) return; h+='<span class="t'+(m.cur?' cur':'')+'" data-r="'+i+'">'+hdEsc(m.n)+'</span>'; });
+  /* 261104 수정 — 모양 : 격자(grid)는 칸마다 오른쪽 · 아래 선(줄 끝 칸 .re 는 오른쪽 선 없음), 가로 스크롤은 화살표(.ar · 넘칠 때만)를 양 끝에 */
+  var grid=(T.shape==='grid'), arw=!grid && !!T.arrow, ms=moModel().filter(function(m){ return !(m.mid && T.hide[m.mid]); }), gc=Math.max(1,Math.min(+T.cols||4,ms.length||1));
+  var AR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
+  var h=arw?'<button type="button" class="ar pv" aria-label="이전 메뉴" tabindex="-1">'+AR+'</button>':''; var n=0;
+  moModel().forEach(function(m,i){ if(m.mid && T.hide[m.mid]) return; h+='<span class="t'+(m.cur?' cur':'')+(grid && (n%gc===gc-1)?' re':'')+'" data-r="'+i+'">'+hdEsc(m.n)+'</span>'; n++; });
+  if(arw) h+='<button type="button" class="ar nx" aria-label="다음 메뉴" tabindex="-1">'+AR+'</button>';
   if(el.getAttribute('data-h')!==h){ el.innerHTML=h; el.setAttribute('data-h',h); }
-  el.setAttribute('data-al',T.align); el.setAttribute('data-stick',T.stick?'1':'0');
+  el.setAttribute('data-al',T.align); el.setAttribute('data-stick',T.stick?'1':'0'); el.setAttribute('data-sh',grid?'grid':'scroll');
   var s=el.style; function sv(k,v){ if(v==null||v==='') s.removeProperty(k); else s.setProperty(k,v); }
-  sv('--mo-tcols',T.cols); sv('--mo-tal',T.align==='left'?'left':'center');
+  sv('--mo-tcols',T.cols); sv('--mo-gcols',gc); sv('--mo-tal',T.align==='left'?'left':'center');
+  if(arw){ if(!el._moAr){ el._moAr=function(){ var ov=el.scrollWidth>el.clientWidth+2; el.setAttribute('data-ov',ov?'1':'0'); el.setAttribute('data-at-s',el.scrollLeft<=2?'1':'0'); el.setAttribute('data-at-e',el.scrollLeft+el.clientWidth>=el.scrollWidth-2?'1':'0'); };
+      el.addEventListener('scroll',el._moAr,{passive:true}); window.addEventListener('resize',el._moAr); }
+    el._moAr(); setTimeout(el._moAr,60); } else el.removeAttribute('data-ov');
   sv('--mo-tfont',T.font>=0?hdFontCss(T.font):''); sv('--mo-tfs',T.size+'px'); sv('--mo-tfw',T.bold?'700':'400');
   sv('--mo-tfg',T.fg); sv('--mo-tac',T.ac); sv('--mo-tline',T.line); sv('--mo-tbg',T.bg);
 }
@@ -60568,6 +60597,7 @@ function moOpen(on){
 document.addEventListener('click',function(e){
   var t=e.target; if(!t || !t.closest) return;
   var tab=t.closest('.site-hd > .mo-tab [data-r]'); if(tab){ e.stopPropagation(); moGo(tab.getAttribute('data-r')); return; }
+  var mar=t.closest('.site-hd > .mo-tab > .ar'); if(mar){ e.stopPropagation(); var tb=mar.parentNode; try{ tb.scrollBy({left:(mar.classList.contains('pv')?-1:1)*tb.clientWidth*0.7,behavior:'smooth'}); }catch(x){ tb.scrollLeft+=(mar.classList.contains('pv')?-1:1)*tb.clientWidth*0.7; } return; }   /* 261104 추가 — 메뉴 바 화살표 : 한 화면의 70% 씩 */
   if(!t.closest('#moLay')) return;
   e.stopPropagation();
   if(t.closest('[data-mo-x]')){ moOpen(false); return; }
@@ -60731,6 +60761,9 @@ function moFill(){
   });
   d.querySelectorAll('#moLaySeg button').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-l')===M.lay); });
   hdSeg('moTabAlSeg',M.tab.align);
+  var grid=(M.tab.shape==='grid'); hdSeg('moTabShSeg',grid?'grid':'scroll');   /* 261104 추가 — 메뉴 바 모양 */
+  var shH=document.getElementById('moTabShHint'); if(shH) shH.textContent=grid?'넘치는 메뉴는 다음 줄로 내려갑니다. 칸 테두리는 선 색, 칸 바탕은 배경 색입니다.':'넘치는 메뉴는 옆으로 밀어서 봅니다.';
+  var arR=document.getElementById('moTabArRow'); if(arR) arR.style.display=grid?'none':'';
   var nm=document.getElementById('moDrNm'); if(nm){ nm.textContent=moDrOf(M.dr.design).nm; }
   var tb=document.getElementById('moTabBody'); if(tb) tb.classList.toggle('mo-off',!M.tab.on);
   moFillLinks(); moFillResets();
