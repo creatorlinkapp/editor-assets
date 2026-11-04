@@ -9301,10 +9301,20 @@
     html.mob .site > .site-hd[data-mo]{flex-wrap:wrap;column-gap:14px;row-gap:0;padding:0 var(--mo-side,18px);z-index:121;}
     html.mob .site[data-hd-type="side"] > .site-hd[data-mo]{padding:0 var(--mo-side,18px);}
     html.mob .site > .site-hd[data-mo]:not(.hd-stick){position:relative;}
+    /* 261104 추가 — 모바일 검색창 : 전체 화면은 PC 크기(40px)라 안내 글자가 잘렸고 키보드 안내(Enter · Esc)는 휴대폰에 맞지 않았다 / 펼치기는 13px 이라 아이폰에서 누르면 화면이 확대됐다(16px 미만) */
+    html.mob .site > .hd-srch[data-m="full"] .hd-srch-in{width:calc(100% - 48px);font-size:22px;gap:12px;padding-bottom:12px;}
+    html.mob .site > .hd-srch[data-m="full"] .ic svg{width:24px;height:24px;}
+    html.mob .site > .hd-srch[data-m="full"] .hd-srch-hint{display:none;}
+    html.mob .site > .hd-srch[data-m="full"] .hd-srch-close{top:12px;right:12px;}
+    html.mob .site-hd[data-mo] > .hd-srch[data-m="expand"]{font-size:16px;}
     html.mob .site-hd[data-mo] > .mo-sp{display:block;order:0;flex:none;width:0;height:var(--mo-h,60px);}
     html.mob .site-hd[data-mo] > :is(.site-nav,.hd-util:not(.mo-util),.hd-br,.hd-mega,.snav-mob,.hd-tog){display:none!important;}
     html.mob .site-hd[data-mo] > .logo{font-size:var(--mo-lfs,22px);}
     html.mob .site-hd[data-mo] > .logo img{max-height:var(--mo-lmax,31px);max-width:200px;}
+    /* 261104 추가 — 상단 바 자리 맞춤(moFit) : 가운데 자리가 없으면 메뉴 버튼과 기능 버튼 사이 가운데로 · 그래도 좁으면 로고 폭을 줄인다 */
+    html.mob .site-hd[data-mo="c"].mo-cflow > .logo{position:static;transform:none;order:2;margin-left:auto;margin-right:auto;}
+    html.mob .site-hd[data-mo="c"].mo-cflow > .mo-util{margin-left:0;}
+    html.mob .site-hd[data-mo].mo-lgfit > .logo{white-space:nowrap;}   /* 크기는 moFit 이 --mo-lfs · --mo-lmax 로 줄인다(자르지 않음) */
     html.mob .site-hd[data-mo] > .mo-util{display:flex!important;align-items:center;gap:calc(14px * var(--mo-isc,1));--hd-usz:var(--mo-isc,1);}
     html.mob .site-hd[data-mo] > .mo-util .nav-dd{display:none!important;}
     html.mob .site-hd[data-mo] > .snav-ham{display:inline-flex;width:auto;min-width:var(--mo-isz,26px);height:40px;padding:0;margin:0;border-radius:6px;}
@@ -9396,8 +9406,10 @@
   .mo-mem.card{flex-direction:column;gap:12px;padding:22px 20px;text-align:center;}
   .mo-mem.card .hi{font-size:13px;color:var(--mo-ac,#222);}
   .mo-mem.card .bt{display:flex;gap:8px;width:100%;}
-  .mo-mem.card .bt a{flex:1;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--mo-line,#ddd);border-radius:6px;font-size:12px;color:var(--mo-ac,#222);}
-  .mo-mem.card .bt a:first-child{background:var(--mo-ac,#222);border-color:var(--mo-ac,#222);color:var(--mo-bg,#fff);}
+  .mo-mem.card .bt > :is(a,span){flex:1;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--mo-line,#ddd);border-radius:6px;font-size:12px;color:var(--mo-ac,#222);}
+  .mo-mem.card .bt > :is(a,span):first-child{background:var(--mo-ac,#222);border-color:var(--mo-ac,#222);color:var(--mo-bg,#fff);}   /* 261104 수정 — 마크업은 span 인데 a 에만 걸려 있어 회원 카드의 두 버튼이 글자만 보였다 */
+  .mo-lay[data-k="sheet"] .mo-hd[data-mo-x]{cursor:pointer;}   /* 261104 추가 — 아래 시트 손잡이 줄을 누르면 닫힌다 */
+  .mo-ic[data-u="search"]{cursor:pointer;}
   /* 메뉴 목록 — line(구분선) · plain · big(큰 글자) · acc(카드) · two(2단) · tiles(타일) */
   .mo-ls{font-size:var(--mo-fs,16px);font-weight:var(--mo-fw,400);text-align:var(--mo-al,left);}
   .mo-i{display:flex;align-items:center;gap:8px;justify-content:var(--mo-jc,flex-start);padding:15px 20px;color:var(--mo-fg);line-height:1.35;}
@@ -16653,6 +16665,7 @@
           </div>
           <div class="srow" style="margin-top:14px;"><span class="k">로고 크기</span><input class="rng" type="range" min="14" max="48" step="1" value="22" data-p="logo" data-u="px"><span class="v">22px</span></div>
           <div class="srow"><span class="k">높이</span><input class="rng" type="range" min="44" max="96" step="1" value="60" data-p="h" data-u="px"><span class="v">60px</span></div>
+          <div class="tx-hint" id="moLogoHint" style="display:none;">버튼이 많아 로고가 상단 바에 맞게 줄어 보입니다.</div>   <!-- 261104 추가 — 사본의 moFit 이 로고를 줄였을 때만(cl-mo-fit) -->
           <div class="gt-h">표시 항목</div>
           <div class="gt-chips" id="moBarChips"></div>
           <div class="srow" id="moColRow" style="margin-top:14px;"><span class="k">색<button type="button" class="hd-lk" id="moLk" onclick="event.stopPropagation();moLkToggle()" title="PC 메뉴 색 따르기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.25 13.11l3.18-3.18a4.5 4.5 0 0 0-6.36-6.36L10.89 6.75"/><path d="M6.75 10.89l-3.18 3.18a4.5 4.5 0 0 0 6.36 6.36l3.18-3.18"/><path d="M9.3 14.7l5.4-5.4"/></svg></button></span><div class="hd-col2">
@@ -59988,7 +60001,11 @@ window.addEventListener('resize',function(){ if(hdToneOn){ var hd=hdSiteHd(); if
    bar    아래로 펼침: 헤더 바로 아래 띠가 내려온다 (좌측 메뉴는 아래가 없어 옆으로 펼침으로 대신) */
 var hdSrchEl=null;
 var HD_SRCH_X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-function hdSrchMode(){ var m=(HD.util&&HD.util.srch)||'full'; if(HD.type==='side'&&m==='bar') m='expand'; return m; }
+function hdSrchMode(){ var m=(HD.util&&HD.util.srch)||'full';
+  /* 261104 추가 — 모바일 상단 바(moActive) : 좌측 메뉴형 헤더도 가로 바라 「아래로 펼침」을 그대로 쓰고, 「펼치기」는 상단 바에 검색 아이콘이 있을 때만(없으면 펼칠 자리가 없어 아래로 펼침) */
+  if(typeof moActive==='function' && moActive()) return (m==='expand' && !hdSrchMoIc())?'bar':m;
+  if(HD.type==='side'&&m==='bar') m='expand'; return m; }
+function hdSrchMoIc(){ var hd=hdSiteHd(); return hd?hd.querySelector(':scope > .mo-util .u[data-u="search"]'):null; }   /* 261104 추가 — 모바일 상단 바의 검색 아이콘 */
 function hdSrchZ(){ return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-zoom'))||1; }
 function hdSrchPos(el,m){
   var hd=hdSiteHd(); if(!hd||!el) return; var z=hdSrchZ();
@@ -59997,8 +60014,9 @@ function hdSrchPos(el,m){
     var t=Math.max(sr.top,si.top), b=Math.min(sr.top+stg.clientHeight,si.bottom);
     el.style.top=((t-si.top)/z)+'px'; el.style.height=Math.max(0,(b-t)/z)+'px';
   } else if(m==='expand'){
-    var ic=hd.querySelector('.hd-util .u[data-u="search"]'); if(!ic) return;
-    var ir=ic.getBoundingClientRect(), hr=hd.getBoundingClientRect(), side=parseFloat(getComputedStyle(hd).getPropertyValue('--hd-side'))||0;
+    /* 261104 수정 — 모바일에서는 PC 버튼 줄(.hd-util)이 숨겨져 위치가 0 으로 잡혀 화면 위쪽 밖에 그려졌다 → 모바일 상단 바의 검색 아이콘 · 모바일 좌우 여백 기준 */
+    var mob=(typeof moActive==='function' && moActive()), ic=(mob && hdSrchMoIc()) || hd.querySelector('.hd-util .u[data-u="search"]'); if(!ic) return;
+    var ir=ic.getBoundingClientRect(), hr=hd.getBoundingClientRect(), side=parseFloat(getComputedStyle(hd).getPropertyValue(mob?'--mo-side':'--hd-side'))||(mob?18:0);
     var toL=(ir.left+ir.right)/2 > (hr.left+hr.right)/2 || HD.type==='side' && HD.sideAlign==='right';
     var avail=toL?((ir.left-hr.left)/z-side-10):((hr.right-ir.right)/z-side-10);
     el.setAttribute('data-dir',toL?'l':'r');
@@ -60590,15 +60608,17 @@ function moDrHtml(dr,D,model,ics,logo){
   if(D.srch) ics=ics.filter(function(k){ return k!=='search'; });   /* 261104 추가 — 검색창이 있는 디자인은 아이콘 줄에서 검색을 뺀다 */
   var icH=(sh.icons && D.ip!=='none' && ics.length)?'<span class="mo-ics">'+ics.map(moIcHtml).join('')+'</span>':'';
   var h='';
-  if(D.head==='grab') h+='<div class="mo-hd"><span class="mo-grab"></span></div>';
+  if(D.head==='grab') h+='<div class="mo-hd" data-mo-x="1" role="button" aria-label="닫기"><span class="mo-grab"></span></div>';   /* 261104 수정 — 손잡이만 있고 닫기 버튼이 없어 바깥을 눌러야만 닫혔다 → 손잡이 줄도 닫기 */
   else if(D.head!=='none') h+='<div class="mo-hd">'+(D.head==='logo'?'<span class="lg">'+logo+'</span>':'')+(D.ip==='head'?icH:'')+'<span class="sp"></span>'+X+'</div>';
-  if(sh.member) h+=(D.mem==='card')?'<div class="mo-mem card"><span class="hi">로그인하고 더 많은 혜택을 받아 보세요</span><span class="bt"><span>로그인</span><span>회원가입</span></span></div>':'<div class="mo-mem"><b>로그인</b><span>·</span><b>회원가입</b></div>';
+  if(sh.member && moMemOk()) h+=(D.mem==='card')?'<div class="mo-mem card"><span class="hi">로그인하고 더 많은 혜택을 받아 보세요</span><span class="bt"><span>로그인</span><span>회원가입</span></span></div>':'<div class="mo-mem"><b>로그인</b><span>·</span><b>회원가입</b></div>';
   if(D.ip==='above' && icH) h+='<div class="mo-ics-a">'+icH+'</div>';
   if(D.srch) h+='<div class="mo-srch" data-srch="1" role="button" aria-label="검색"><span class="in">'+HD_I.search+'<span>검색어를 입력하세요</span></span></div>';   /* 261104 추가 — 누르면 메뉴를 닫고 사이트 검색(hdSrchOpen)을 연다 */
   if(D.ls==='cat') h+='<div class="mo-cap">카테고리</div>';
   h+=moListHtml(dr,D,model);
   if(D.ls!=='two' && !D.vc) h+='<div class="mo-sp2"></div>';
-  if(sh.banner){ var b=dr.bn||{}; h+='<div class="mo-bn"><span class="im">'+(b.img?'<img src="'+hdEsc(b.img)+'" alt="">':'<span class="ph">배너 이미지</span>')+'</span></div>'; }
+  if(sh.banner){ var b=dr.bn||{}, bu=String(b.link||'').trim(); if(bu && !/^(https?:|mailto:|tel:|\/|#)/i.test(bu)) bu='https://'+bu.replace(/^\/+/,'');   /* 261104 수정 — 「링크」 칸을 적어도 배너에 걸리지 않았다 → 주소가 있으면 배너를 링크로(새 창) */
+    var bi=(b.img?'<img src="'+hdEsc(b.img)+'" alt="">':'<span class="ph">배너 이미지</span>');
+    h+='<div class="mo-bn">'+(bu?'<a class="im" href="'+hdEsc(bu)+'" target="_blank" rel="noopener noreferrer">'+bi+'</a>':'<span class="im">'+bi+'</span>')+'</div>'; }
   if(D.ct) h+=moCtHtml();
   if(D.ip==='foot' && icH) h+='<div class="mo-ft">'+icH+'</div>';
   return '<div class="mo-dim" data-mo-x="1"></div><div class="mo-dr">'+h+'</div>';
@@ -60652,7 +60672,38 @@ function moApply(){
   var ham=hd.querySelector(':scope > .snav-ham'); if(ham){ var hh=moHamHtml(M.ico); if(ham.getAttribute('data-h')!==hh){ ham.innerHTML=hh; ham.setAttribute('data-h',hh); } }
   moTabRender(hd);
   moLayRender();
+  moFit(hd);
 }
+/* 261104 추가 — 상단 바 자리 맞춤 : 버튼을 많이 켜거나 로고가 크면 ① 로고 가운데 레이아웃에서 로고가 버튼과 겹치고 ② 왼쪽 · 오른쪽 레이아웃에서 메뉴 버튼이 다음 줄로 떨어졌다.
+   → 가운데에 둘 자리가 없으면 로고를 메뉴 버튼과 기능 버튼 사이 빈자리의 가운데로 옮기고(mo-cflow), 그래도 좁으면 로고를 자르지 않고 글자(이미지) 크기를 들어갈 만큼 줄인다(mo-lgfit · 설정값은 그대로).
+   로고는 브랜드 이름이라 잘리면 안 된다 — 처음엔 폭을 줄여 말줄임으로 했으나 글자 중간이 잘려 보였다 */
+function moFit(hd){
+  hd=hd||hdSiteHd(); if(!hd || !hd.hasAttribute('data-mo') || !HD.mo) return;
+  var lg=hd.querySelector(':scope > .logo'); if(!lg) return;
+  var base=+HD.mo.logo||22, was=hd.classList.contains('mo-lgfit');
+  hd.classList.remove('mo-cflow','mo-lgfit'); hd.style.setProperty('--mo-lfs',base+'px'); hd.style.setProperty('--mo-lmax',Math.round(base*1.4)+'px');
+  function done(){ var on=hd.classList.contains('mo-lgfit'); if(on!==was || moFit.sent!==on){ moFit.sent=on; if(window.CL_MVIEW && window.parent!==window) try{ window.parent.postMessage({t:'cl-mo-fit',on:on},'*'); }catch(e){} } }   /* 편집기 설정창 안내(로고가 줄어 보임) */
+  function shrink(px){
+    px=Math.max(24,px); var f=px/Math.max(1,lg.getBoundingClientRect().width);
+    for(var i=0;i<14;i++){ hd.style.setProperty('--mo-lfs',Math.max(10,Math.floor(base*f))+'px'); hd.style.setProperty('--mo-lmax',Math.max(12,Math.floor(base*1.4*f))+'px'); if(lg.getBoundingClientRect().width<=px) break; f*=0.94; }
+    hd.classList.add('mo-lgfit');
+  }
+  if(!moActive()){ done(); return; }
+  var ut=hd.querySelector(':scope > .mo-util'), hm=hd.querySelector(':scope > .snav-ham'), cs=getComputedStyle(hd);
+  var inner=hd.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0), gap=parseFloat(cs.columnGap)||14;
+  function w(el){ return (el && getComputedStyle(el).display!=='none')?el.getBoundingClientRect().width:0; }
+  var uw=w(ut), hw=w(hm), lw=lg.getBoundingClientRect().width;
+  /* 맨 앞의 높이 받침(.mo-sp · 폭 0)도 칸이라 그 뒤에 간격 하나가 더 생긴다 → 칸 수 = 받침 · 로고 · (버튼) · (메뉴) */
+  if(hd.getAttribute('data-mo')==='c'){ var side=Math.max(gap+hw,uw), room=Math.floor(inner-2*side-2*gap-2);
+    if(lw<=room){ done(); return; }                              /* 그대로 가운데 */
+    if(room>=lw*0.8){ shrink(room); done(); return; }           /* 조금만 줄이면 가운데에 들어간다 → 가운데 유지 */
+    hd.classList.add('mo-cflow'); }                              /* 가운데 자리가 너무 좁다 → 두 버튼 사이 가운데로 */
+  var avail=Math.floor(inner-uw-hw-(1+(uw?1:0)+(hw?1:0))*gap-2);
+  if(lw>avail) shrink(avail);
+  done();
+}
+window.addEventListener('resize',function(){ if(typeof moFit==='function') try{ moFit(); }catch(e){} });
+document.addEventListener('load',function(e){ var t=e.target; if(t && t.tagName==='IMG' && t.closest && t.closest('.site-hd[data-mo] > .logo')) try{ moFit(); }catch(x){} },true);   /* 이미지 로고는 다 읽힌 뒤 폭이 정해진다 */
 function moTabRender(hd){
   var T=HD.mo.tab, el=hd.querySelector(':scope > .mo-tab');
   if(!T.on){ if(el) el.remove(); return; }
@@ -60702,7 +60753,8 @@ document.addEventListener('click',function(e){
   var dn=t.closest('[data-dn]'); if(dn){ var dl=dn.closest('.mo-drl'), pn=dl && dl.querySelector('.pn.sb[data-pn="'+dn.getAttribute('data-dn')+'"]'); if(pn){ dl.querySelector('.pn.rt').classList.add('out'); pn.classList.add('on'); var dw=dl.closest('.mo-dr'); if(dw) dw.scrollTop=0; } return; }
   if(t.closest('[data-bk]')){ moDrillReset(t.closest('#moLay')); return; }
   if(t.closest('[data-srch]')){ moOpen(false); if(typeof hdSrchOpen==='function') setTimeout(hdSrchOpen,220); return; }
-  if(t.closest('.mo-ct a.s')) return;   /* SNS — 주소가 있으면 새 창으로(링크 그대로) */
+  if(t.closest('.mo-ct a.s') || t.closest('.mo-bn a.im')) return;   /* SNS · 배너 — 주소가 있으면 새 창으로(링크 그대로) */
+  if(t.closest('.mo-ic[data-u="search"]')){ moOpen(false); if(typeof hdSrchOpen==='function') setTimeout(hdSrchOpen,220); return; }   /* 261104 추가 — 아이콘 줄의 검색도 상단 바 검색 버튼처럼 검색창을 연다 */
   var tt=t.closest('[data-t]'); if(tt){ var two=tt.closest('.mo-two'), i=tt.getAttribute('data-t'); two.querySelectorAll('.l .mo-i').forEach(function(x){ x.classList.toggle('on',x===tt); }); two.querySelectorAll('.r .p').forEach(function(x){ x.classList.toggle('on',x.getAttribute('data-p')===i); }); return; }
   var r=t.closest('[data-r]'); if(r){
     /* 261104 수정 — 펼침 메뉴를 편집하는 중(디자인 고르기 · 「펼침 메뉴」 묶음 열림)에는 미리보기라 메뉴를 열어 둔 채 페이지만 옮긴다(현재 메뉴 표시가 바뀌는 것까지 보이게). 실제 사이트 · 편집 중이 아닐 땐 전처럼 닫고 이동 */
@@ -60726,15 +60778,23 @@ function moEdit(v){
 function moEdState(){
   var pk=(typeof hdPickCtx!=='undefined' && hdPickCtx && hdPickCtx.kind==='mo');
   var d=document.getElementById('moDock'); if(!d || !d.classList.contains('show')) return pk?'dr':'';
-  var a=document.getElementById('moDrAcc'); return (pk || (a && a.classList.contains('open')))?'dr':'hd';
+  var a=document.getElementById('moDrAcc'); return (pk || (a && a.classList.contains('open') && (!moEdSec || moEdSec==='moDrAcc')))?'dr':'hd';
 }
+/* 261104 수정 — 「펼침 메뉴」 묶음이 열려 있기만 하면 상단 바 · 메뉴 바를 고치는 동안에도 미리보기의 펼침 메뉴가 열린 채 상단 바를 덮어 결과가 안 보였다.
+   → 마지막으로 만진 묶음(moEdSec)이 펼침 메뉴일 때만 열어 둔다. 다른 묶음을 누르면 닫히고, 펼침 메뉴 묶음을 다시 누르면 열린다 */
+var moEdSec='';
+document.addEventListener('pointerdown',function(e){
+  var t=e.target; if(!t || !t.closest) return; var d=t.closest('#moDock'); if(!d) return;
+  var s=t.closest('#moDock .sfold'), id=s?s.id:''; if(!id || id===moEdSec) return;
+  moEdSec=id; moEdKick();
+},true);
 function moEdKick(){ if(typeof mvKick==='function') try{ mvKick(0); }catch(e){} }
 function moSetOpen(){
   if(window.CL_MVIEW) return;
   moBuild();
   if(typeof closeBset==='function') try{ closeBset(); }catch(e){}
   ['qmClose','puClose','calClose','tmClose','ftClose','hdClose','gdClose'].forEach(function(f){ if(typeof window[f]==='function') try{ window[f](); }catch(x){} });
-  var d=document.getElementById('moDock'); if(!d) return; d.classList.add('show');
+  var d=document.getElementById('moDock'); if(!d) return; d.classList.add('show'); moEdSec='';
   moFill(); moEdKick();
 }
 function moClose(){ var d=document.getElementById('moDock'); if(!d || !d.classList.contains('show')) return; d.classList.remove('show'); hdPickEnd(); moEdKick(); }
@@ -60745,6 +60805,7 @@ function moClose(){ var d=document.getElementById('moDock'); if(!d || !d.classLi
     var mo=new MutationObserver(function(){ if(!me.classList.contains('show')) return; if(document.querySelector('.bset.show:not(#moDock):not(.inline)')) moClose(); });
     document.querySelectorAll('.bset').forEach(function(p){ if(p!==me) mo.observe(p,{attributes:true,attributeFilter:['class']}); });
     new MutationObserver(function(){ if(!document.body.classList.contains('mview-on')) moClose(); }).observe(document.body,{attributes:true,attributeFilter:['class']});   /* 모바일 편집을 닫으면 함께 닫는다 */
+    window.addEventListener('message',function(e){ var d=e.data; if(d && typeof d==='object' && d.t==='cl-mo-fit'){ var h=document.getElementById('moLogoHint'); if(h) h.style.display=d.on?'':'none'; } });   /* 261104 추가 — 로고가 상단 바에 맞게 줄어 보이는 중 */
     window.addEventListener('message',function(e){ var d=e.data; if(d && typeof d==='object' && d.t==='cl-mo-open'){ var m=document.getElementById('moDock'); if(m && m.classList.contains('show')) moClose(); else moSetOpen(); } });   /* 사본 헤더 톱니 — 다시 누르면 닫는다(블록 톱니와 같은 토글) */
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else setTimeout(boot,0);
@@ -60817,6 +60878,7 @@ function moPan(g,k){
   return '';
 }
 /* 261104 추가 — 이미지 카드 디자인 : 메뉴별 사진 칸(설정창 #moCimgBox) */
+function moMemOk(){ return !!(HD.util && HD.util.login); }   /* 261104 추가 — 회원 정보(로그인 · 회원가입)는 PC 상단 메뉴에서 로그인을 켠 사이트만 */
 function moNoSub(){ var ls=moDrOf(HD.mo.dr.design).s.ls; return ls==='tiles' || ls==='cards'; }
 function moCimgHtml(){
   var ci=HD.mo.dr.cimg||{}, ms=moModel(); if(!ms.length) return '';
@@ -60838,6 +60900,7 @@ function moChipTog(g,k){
   else if(g==='dr'){
     if(k==='icons' && moDrOf(M.dr.design).s.ip==='none'){ clToast('이 디자인에는 아이콘 줄이 없습니다.'); return; }
     if(k==='sub' && moNoSub()){ clToast('이 디자인은 서브메뉴를 보여 주지 않습니다.'); return; }   /* 261104 추가 */
+    if(k==='member' && !moMemOk()){ clToast('PC 상단 메뉴에서 로그인을 켜면 고를 수 있습니다.'); return; }   /* 261104 추가 — 로그인이 없는 사이트에 로그인 · 회원가입이 보이지 않게 */
     M.dr.show[k]=!M.dr.show[k]; if(!M.dr.show[k] && moChipOpen.dr===k) moChipOpen.dr='';
   }
   moFill(); hdChanged();
@@ -60850,8 +60913,8 @@ function moChips(){
   if((el=document.getElementById('moTabChips'))){ var t=''; (typeof PAGES!=='undefined'?PAGES:[]).filter(function(n){ return !n.hidden; }).forEach(function(n){ t+=moChip('tab',n.id,hdEsc(n.name),{on:!M.tab.hide[n.id]}); }); el.innerHTML=t; }
   if((el=document.getElementById('moDrChips'))){ var D=moDrOf(M.dr.design).s, S=M.dr.show, noIc=(D.ip==='none');
     var noSub=moNoSub();   /* 261104 추가 — 타일 · 이미지 카드는 서브메뉴를 그리지 않으므로 칩을 흐리게 */
-    el.innerHTML=moChip('dr','icons','아이콘 줄',{on:!noIc && !!S.icons,na:noIc,tip:noIc?'이 디자인에는 아이콘 줄이 없습니다':''})+moChip('dr','member','회원 정보',{on:!!S.member})+moChip('dr','sub','서브메뉴',{on:!noSub && S.sub!==false,has:true,na:noSub,tip:noSub?'이 디자인은 서브메뉴를 보여 주지 않습니다':''})+moChip('dr','banner','하단 배너',{on:!!S.banner,has:true});
-    var hint=document.getElementById('moDrIcHint'); if(hint){ var du=moDrU().map(function(k){ var n=''; MO_UTIL.forEach(function(x){ if(x[0]===k) n=x[1]; }); return n; });
+    el.innerHTML=moChip('dr','icons','아이콘 줄',{on:!noIc && !!S.icons,na:noIc,tip:noIc?'이 디자인에는 아이콘 줄이 없습니다':''})+moChip('dr','member','회원 정보',{on:moMemOk() && !!S.member,na:!moMemOk(),tip:moMemOk()?'':'PC 상단 메뉴에서 로그인을 켜면 고를 수 있습니다'})+moChip('dr','sub','서브메뉴',{on:!noSub && S.sub!==false,has:true,na:noSub,tip:noSub?'이 디자인은 서브메뉴를 보여 주지 않습니다':''})+moChip('dr','banner','하단 배너',{on:!!S.banner,has:true});
+    var hint=document.getElementById('moDrIcHint'); if(hint){ var du=moDrU().filter(function(k){ return !(D.srch && k==='search'); }).map(   /* 261104 수정 — 검색창이 있는 디자인은 아이콘 줄에 검색이 없으므로 안내에서도 뺀다 */function(k){ var n=''; MO_UTIL.forEach(function(x){ if(x[0]===k) n=x[1]; }); return n; });
       hint.textContent=(noIc||!S.icons)?'':(du.length?'아이콘 줄에는 상단 바에 없는 '+du.join(' · ')+' 버튼이 들어갑니다.':'아이콘 줄에 넣을 버튼이 없습니다 — 모두 상단 바에 있습니다.'); hint.style.display=hint.textContent?'':'none'; } }
 }
 function moFillLinks(){
