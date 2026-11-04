@@ -9341,7 +9341,7 @@
        가운데 정렬이 많은 첫 블록(제목 · 비주얼)의 내용을 가렸다. 오른쪽은 PC 톱니(블록 오른쪽 위 · 헤더 오른쪽 가장자리)와 같은 쪽 */
     html.mob:not(.mv-preview):not(.pview) #stage .site > .site-hd[data-mo]:hover,html.mob:not(.mv-preview):not(.pview) #stage .site > .site-hd[data-mo].hd-editing{box-shadow:var(--hd-shadow,0 0 0 0 transparent);}
     /* 261104 수정 — 테두리를 헤더 안쪽 그림자 → 헤더 위 덮개 층(::after · 클릭 통과)으로 : 메뉴 바(.mo-tab)가 자기 배경을 양끝까지 칠해 그 높이만큼 좌우 · 아래 테두리가 가려지던 문제 */
-    html.mob:not(.mv-preview):not(.pview) #stage .site > .site-hd[data-mo]:is(:hover,.hd-editing)::after{content:"";position:absolute;inset:0;z-index:130;pointer-events:none;box-shadow:inset 0 0 0 2px var(--green,#03C75A);border-radius:18px 18px 0 0;}   /* 위 모서리 = 모바일 미리보기 틀(#mpane .mframe) 모서리 18px — 네모면 틀에 잘려 모서리가 끊겨 보인다 */
+    html.mob:not(.mv-preview):not(.pview) #stage .site > .site-hd[data-mo]:is(:hover,.hd-editing)::after{content:"";position:absolute;inset:0;z-index:120;pointer-events:none;   /* 120 = 헤더 톱니(.hd-gear 121) 바로 아래 — 위에 있으면 선이 톱니를 가로지른다 */box-shadow:inset 0 0 0 2px var(--green,#03C75A);border-radius:18px 18px 0 0;}   /* 위 모서리 = 모바일 미리보기 틀(#mpane .mframe) 모서리 18px — 네모면 틀에 잘려 모서리가 끊겨 보인다 */
     html.mob:not(.mv-preview):not(.pview) .site-hd[data-mo] > .hd-gear{top:auto;bottom:-15px;right:16px;left:auto;transform:none;}
     html.mob:not(.mv-preview):not(.pview) .site-hd[data-mo]:hover > .hd-gear,html.mob:not(.mv-preview):not(.pview) .site-hd[data-mo].hd-editing > .hd-gear{display:flex!important;}
   }
