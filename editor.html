@@ -9272,7 +9272,7 @@
   /* ══════ 261027 추가 — 모바일 메뉴 (접두어 mo · HD.mo) : 좌측 사이트 「모바일 메뉴 설정」(상단 메뉴 · 중단 메뉴 · 펼침 메뉴) 이식
      · 설정창 #moDock — 모바일 편집 화면에서 헤더 톱니로 연다. 묶음 셋: 상단 바 · 메뉴 바(= 좌측 「중단 메뉴」) · 펼침 메뉴
      · 캔버스 — 모바일 사본(html.mob)의 640px 이하에서만: 헤더에 data-mo(레이아웃) · .mo-util(버튼) · .mo-tab(메뉴 바), 펼침 메뉴는 body 의 #moLay(화면 고정 층)
-     · 펼침 메뉴 디자인 12종은 프리셋(구조 MO_DR[].s + 값 묶음 v) — 고른 뒤 색 · 글꼴 · 표시 항목을 이어서 고친다. 디자인 카드는 실제 펼침 메뉴 마크업(moDrHtml)을 축소해 그린다 ══════ */
+     · 펼침 메뉴 디자인 16종(261104 — 12 → 16)은 프리셋(구조 MO_DR[].s + 값 묶음 v) — 고른 뒤 색 · 글꼴 · 표시 항목을 이어서 고친다. 디자인 카드는 실제 펼침 메뉴 마크업(moDrHtml)을 축소해 그린다 ══════ */
   :is(#hdDock,#moDock) .hd-lay.mo3{grid-template-columns:repeat(3,1fr);}
   #moDock .hd-lay .lm .H{width:9px;height:7px;border-radius:0;background:linear-gradient(#C8CDD4 0 1.5px,transparent 1.5px 2.75px,#C8CDD4 2.75px 4.25px,transparent 4.25px 5.5px,#C8CDD4 5.5px 7px);}
   #moDock .hd-lay button.on .lm .H{background:linear-gradient(var(--green) 0 1.5px,transparent 1.5px 2.75px,var(--green) 2.75px 4.25px,transparent 4.25px 5.5px,var(--green) 5.5px 7px);}
@@ -9430,6 +9430,45 @@
   .mo-tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 16px 4px;}
   .mo-tiles .mo-t{display:flex;align-items:flex-end;min-height:64px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--mo-line,#eee) 60%,var(--mo-bg,#fff));color:var(--mo-fg);font-size:var(--mo-fs,15px);font-weight:var(--mo-fw,400);box-sizing:border-box;}
   .mo-tiles .mo-t.cur{background:var(--mo-ac,#222);color:var(--mo-bg,#fff);font-weight:700;}
+  /* 261104 추가 — 단계형(drill) : 화면들을 한 칸에 겹쳐 두고 옆으로 밀어 바꾼다 */
+  .mo-drl{display:grid;flex:none;overflow:hidden;font-size:var(--mo-fs,16px);font-weight:var(--mo-fw,400);}
+  .mo-drl > .pn{grid-area:1/1;align-self:start;min-width:0;background:var(--mo-bg,#fff);transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .3s ease;}
+  .mo-drl > .pn.rt.out{transform:translateX(-30%);opacity:0;pointer-events:none;}
+  .mo-drl > .pn.sb{transform:translateX(100%);opacity:0;pointer-events:none;}
+  .mo-drl > .pn.sb.on{transform:none;opacity:1;pointer-events:auto;}
+  .mo-drl .mo-i{border-bottom:1px solid var(--mo-line,#eee);}
+  .mo-drl .mo-i .cv{margin-left:auto;}
+  .mo-drl .mo-i.sub{font-size:var(--mo-sfs,14px);font-weight:400;}
+  .mo-drl .mo-i.sub.cur{font-weight:700;}
+  .mo-bk{display:flex;align-items:center;gap:2px;padding:14px 16px 6px;font-size:13px;color:var(--mo-fg);cursor:pointer;}
+  .mo-bk svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .mo-dh{display:block;padding:4px 20px 14px;font-size:calc(var(--mo-fs,16px) + 4px);font-weight:700;color:var(--mo-ac,#222);border-bottom:1px solid var(--mo-line,#eee);}
+  .mo-lay:is([data-ls="drill"],[data-ls="cat"]) .mo-hd{border-bottom:1px solid var(--mo-line,#eee);}
+  /* 261104 추가 — 검색창 · 카테고리(cat) : 서브메뉴는 2열 칸 */
+  .mo-srch{padding:14px 16px 4px;flex:none;}
+  .mo-srch .in{display:flex;align-items:center;gap:8px;height:42px;padding:0 14px;border-radius:8px;background:color-mix(in srgb,var(--mo-line,#eee) 60%,var(--mo-bg,#fff));color:var(--mo-fg);font-size:14px;font-weight:400;cursor:text;}
+  .mo-srch svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;flex:none;}
+  .mo-cap{padding:16px 20px 4px;font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--mo-fg);opacity:.75;flex:none;}
+  .mo-lay[data-ls="cat"] .mo-g{border-bottom:1px solid var(--mo-line,#eee);}
+  .mo-lay[data-ls="cat"] .mo-sub > div{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 16px;}
+  .mo-lay[data-ls="cat"] .mo-g.open > .mo-sub > div{padding-bottom:14px;}
+  .mo-lay[data-ls="cat"] .mo-sub .mo-si{padding:9px 12px;border-radius:6px;background:color-mix(in srgb,var(--mo-line,#eee) 55%,var(--mo-bg,#fff));opacity:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  /* 261104 추가 — 이미지 카드(cards) */
+  .mo-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px 16px 4px;}
+  .mo-c{position:relative;display:block;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:color-mix(in srgb,var(--mo-line,#eee) 80%,var(--mo-bg,#fff));cursor:pointer;}
+  .mo-c .im{position:absolute;inset:0;display:block;}
+  .mo-c img{display:block;width:100%;height:100%;object-fit:cover;}
+  .mo-c .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mo-fg);opacity:.5;}
+  .mo-c .ph svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;margin-bottom:22px;}
+  .mo-c .nm{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;color:#fff;font-size:var(--mo-fs,15px);font-weight:var(--mo-fw,400);line-height:1.3;background:linear-gradient(transparent,rgba(0,0,0,.55));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .mo-c.cur::after{content:"";position:absolute;inset:0;border:2px solid var(--mo-ac,#222);border-radius:inherit;pointer-events:none;}
+  /* 261104 추가 — 연락처 · SNS(ct) */
+  .mo-ct{display:flex;flex-direction:column;align-items:var(--mo-jc,flex-start);gap:8px;padding:20px 24px 28px;flex:none;border-top:1px solid var(--mo-line,#eee);font-size:13px;color:var(--mo-fg);}
+  .mo-ct .ln{display:flex;align-items:baseline;gap:10px;}
+  .mo-ct .ln em{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--mo-ac,#222);min-width:34px;}
+  .mo-ct .sns{display:flex;flex-wrap:wrap;gap:16px;margin-top:8px;color:var(--mo-btn,#222);}
+  .mo-ct .sns .s{display:inline-flex;color:inherit;}
+  .mo-ct .sns svg{width:22px;height:22px;fill:currentColor;display:block;}
   /* 하단 배너 */
   .mo-bn{padding:0 var(--mo-bnp,16px) var(--mo-bnp,16px);display:flex;justify-content:center;flex:none;}
   .mo-bn .im{display:block;width:var(--mo-bnw,100%);border-radius:var(--mo-bnr,5px);overflow:hidden;}
@@ -16658,9 +16697,11 @@
         <div class="fld-h fold-h" onclick="smAcc(this);moEdKick()">펼침 메뉴<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
         <div class="acc-body"><div class="acc-in">
           <div class="srow" style="margin-top:0;"><span class="k">디자인</span><div class="hd-pick"><span class="nm" id="moDrNm">서랍 01</span><button type="button" class="btn-sm" onclick="hdPickOpen('mo')">바꾸기</button></div></div>
+          <div class="tx-hint" id="moDrDsHint" style="display:none;"></div>
           <div class="gt-h">표시 항목</div>
           <div class="gt-chips" id="moDrChips"></div>
           <div class="tx-hint" id="moDrIcHint"></div>
+          <div id="moCimgBox" style="display:none;"></div>
           <div class="srow srow-dd" style="margin-top:14px;"><span class="k">메뉴 글꼴</span>
             <div class="sdd" id="moDrFontDD" data-p="dr.font"><button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">사이트 글꼴</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="sdd-menu"></div></div>
           </div>
@@ -60428,18 +60469,18 @@ function bsetRowFirst(bset){
    · 상단 바 — 레이아웃 3 · 로고 크기 · 높이 · 표시 항목(메뉴 ▸ 아이콘 모양 · 크기 / 검색 · 로그인 · 장바구니 · 다국어) · 색(🔗 PC 메뉴 따름)
        버튼은 PC 상단 메뉴에서 켠 것만 고를 수 있고, 모양은 PC 의 버튼 스타일을 그대로 쓴다. 상단 바에 없는 버튼은 펼침 메뉴의 아이콘 줄로 간다
    · 메뉴 바(= 좌측 「중단 메뉴」) — 헤더 아래 가로 메뉴 줄: 노출 메뉴 · 가로 개수 · 정렬 · 글자 · 색 · 상단 고정. 켜면 상단 바의 「메뉴」 버튼을 끌 수 있다
-   · 펼침 메뉴 — 디자인 12종(MO_DR: 구조 s + 값 v) · 표시 항목(아이콘 줄 · 회원 정보 · 서브메뉴 ▸ · 하단 배너 ▸) · 메뉴 글자 · 색 · 바깥 배경
+   · 펼침 메뉴 — 디자인 16종(MO_DR: 구조 s + 값 v) · 표시 항목(아이콘 줄 · 회원 정보 · 서브메뉴 ▸ · 하단 배너 ▸) · 메뉴 글자 · 색 · 바깥 배경
    · 캔버스는 모바일 사본(hdMob)의 640px 이하에서만 바뀐다. 펼침 메뉴는 body 의 #moLay — 항목을 누르면 #siteNavMob 의 같은 항목을 눌러 기존 이동 규칙을 그대로 탄다
    · 편집 표시 — 설정창이 열려 있으면 사본 헤더에 hd-editing, 「펼침 메뉴」 묶음이 열려 있거나 디자인을 고르는 중이면 펼침 메뉴를 열어 둔다(스냅샷 moEd)
    ══════════════════════════════════════════════════════════════════ */
 function moDrDefault(){ return {design:'dr01', show:{icons:true,member:false,sub:true,banner:false}, sub:'tap', subSize:14, font:-1, size:16, bold:false,
-  fg:'#9A9A9A', ac:'#222222', line:'#EEEEEE', bg:'#FFFFFF', btn:'#222222', dim:'#000000', dimA:0.5, bn:{img:'',w:100,rad:5,pad:16,link:''}}; }
+  fg:'#9A9A9A', ac:'#222222', line:'#EEEEEE', bg:'#FFFFFF', btn:'#222222', dim:'#000000', dimA:0.5, bn:{img:'',w:100,rad:5,pad:16,link:''}, cimg:{}}; }   /* 261104 추가 — cimg : 이미지 카드 디자인의 메뉴별 사진(메뉴 id → 주소) */
 function moDefault(){ return {
   lay:'l', logo:22, h:60, menu:true, show:{search:false,login:false,cart:true,lang:false}, ico:'bars3', isz:'m', lk:true, col:{fg:'',bg:''},
   tab:{on:false, hide:{}, cols:4, align:'center', font:-1, size:14, bold:false, fg:'', ac:'', line:'', bg:'', stick:true, shape:'scroll', arrow:false},   /* 261104 추가 — 모양(scroll 가로 스크롤 · grid 격자) · 화살표(가로 스크롤일 때) */
   dr:moDrDefault() }; }
-/* 펼침 메뉴 디자인 12 — s(구조): k 열림(drawer 서랍 · screen 전체 화면 · sheet 아래 시트 · drop 헤더 아래 · card 떠 있는 카드) · side · head(icons · logo · close · grab · none)
-   · ip 아이콘 줄 자리(head · above · foot · none) · ls 목록(line · plain · big · acc · two · tiles) · al 정렬 · mem(card = 회원 카드) · num 번호 · vc 세로 가운데 · serif
+/* 펼침 메뉴 디자인 16(261104 — 단계형 · 검색 · 카테고리 · 연락처 · SNS · 이미지 카드 추가) — s(구조): k 열림(drawer 서랍 · screen 전체 화면 · sheet 아래 시트 · drop 헤더 아래 · card 떠 있는 카드) · side · head(icons · logo · close · grab · none)
+   · ip 아이콘 줄 자리(head · above · foot · none) · ls 목록(line · plain · big · acc · two · tiles · drill 단계형 · cat 카테고리 · cards 이미지 카드) · srch 검색창 · ct 연락처 · SNS · al 정렬 · mem(card = 회원 카드) · num 번호 · vc 세로 가운데 · serif
    v = 값 묶음(moDrDefault 위에 덮는다). 좌측 사이트 스타일 1~6 → 서랍 01~03 · 전체 화면 01 / 나머지는 추가 */
 var MO_DR=[
   {id:'dr01',cat:'drawer',nm:'서랍 01',sub:'기본',s:{k:'drawer',side:'left',head:'icons',ip:'head',ls:'line',al:'left'},v:{}},
@@ -60447,10 +60488,14 @@ var MO_DR=[
   {id:'dr03',cat:'drawer',nm:'서랍 03',sub:'아이콘 아래',s:{k:'drawer',side:'left',head:'close',ip:'foot',ls:'line',al:'left'},v:{}},
   {id:'dr04',cat:'drawer',nm:'서랍 04',sub:'오른쪽 · 배너',s:{k:'drawer',side:'right',head:'icons',ip:'head',ls:'plain',al:'left'},v:{show:{banner:true},fg:'#8A8F97',ac:'#1C1F24',line:'#ECEDEF'}},
   {id:'dr05',cat:'drawer',nm:'서랍 05',sub:'카드 아코디언',s:{k:'drawer',side:'left',head:'logo',ip:'foot',ls:'acc',al:'left'},v:{bg:'#F4F5F7',fg:'#6B7178',ac:'#1F2227',line:'#E6E8EC',size:15}},
+  {id:'dr06',cat:'drawer',nm:'서랍 06',sub:'단계형',s:{k:'drawer',side:'left',head:'close',ip:'foot',ls:'drill',al:'left'},v:{}},   /* 261104 추가 — 서브메뉴가 다음 화면으로 넘어가고 ‹ 뒤로 */
+  {id:'dr07',cat:'drawer',nm:'서랍 07',sub:'검색 · 카테고리',s:{k:'drawer',side:'left',head:'logo',ip:'foot',ls:'cat',al:'left',srch:true},v:{fg:'#4A4F57',ac:'#111317',size:15,bold:true}},   /* 261104 추가 — 맨 위 검색창 + 카테고리(서브는 2열 칸) */
   {id:'sc01',cat:'screen',nm:'전체 화면 01',sub:'다크 · 가운데',s:{k:'screen',head:'close',ip:'above',ls:'plain',al:'center'},v:{bg:'#1F2023',fg:'#8A8D93',ac:'#FFFFFF',line:'#34363B',btn:'#FFFFFF'}},
   {id:'sc02',cat:'screen',nm:'전체 화면 02',sub:'큰 글자 · 번호',s:{k:'screen',head:'close',ip:'foot',ls:'big',al:'left',num:true,vc:true},v:{bg:'#111214',fg:'#5F636A',ac:'#FFFFFF',line:'#2A2C30',btn:'#FFFFFF',size:28,bold:true,show:{sub:false}}},
   {id:'sc03',cat:'screen',nm:'전체 화면 03',sub:'밝은 · 세리프',s:{k:'screen',head:'logo',ip:'foot',ls:'plain',al:'left',serif:true},v:{bg:'#F4F1EA',fg:'#A39E93',ac:'#1E1E1E',line:'#E2DCCF',btn:'#1E1E1E',size:22}},
   {id:'sc04',cat:'screen',nm:'전체 화면 04',sub:'2단 · 카테고리',s:{k:'screen',head:'logo',ip:'head',ls:'two',al:'left'},v:{size:15}},
+  {id:'sc05',cat:'screen',nm:'전체 화면 05',sub:'연락처 · SNS',s:{k:'screen',head:'logo',ip:'head',ls:'plain',al:'left',ct:true},v:{fg:'#9AA0A8',ac:'#1C1F24',size:22,bold:true}},   /* 261104 추가 — 아래에 푸터의 전화 · 이메일 · SNS */
+  {id:'sc06',cat:'screen',nm:'전체 화면 06',sub:'이미지 카드',s:{k:'screen',head:'logo',ip:'foot',ls:'cards',al:'left'},v:{size:15,bold:true}},   /* 261104 추가 — 메뉴마다 사진 카드(dr.cimg) */
   {id:'dn01',cat:'down',nm:'아래 시트',sub:'타일',s:{k:'sheet',head:'grab',ip:'foot',ls:'tiles',al:'center'},v:{fg:'#4A4F57',size:15}},
   {id:'dn02',cat:'down',nm:'아래로 01',sub:'헤더 아래 펼침',s:{k:'drop',head:'none',ip:'foot',ls:'line',al:'left'},v:{}},
   {id:'dn03',cat:'down',nm:'아래로 02',sub:'떠 있는 카드',s:{k:'card',head:'none',ip:'none',ls:'plain',al:'left'},v:{fg:'#5A616B',ac:'#23272E',size:15,show:{icons:false}}}
@@ -60489,6 +60534,19 @@ function moIcHtml(k){ var I={search:HD_I.search,login:HD_I.user,cart:HD_I.bag,la
 function moListHtml(dr,D,model){
   var sh=dr.show||{}, subOn=sh.sub!==false, h='';
   if(D.ls==='tiles') return '<div class="mo-tiles">'+model.map(function(m,i){ return '<span class="mo-t'+(m.cur?' cur':'')+'" data-r="'+i+'">'+hdEsc(m.n)+'</span>'; }).join('')+'</div>';
+  /* 261104 추가 — 이미지 카드(cards) : 메뉴마다 사진 카드 2열 · 비운 카드는 회색 바탕 */
+  if(D.ls==='cards'){ var ci=dr.cimg||{}, PH='<span class="ph"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.5"/></svg></span>';
+    return '<div class="mo-cards">'+model.map(function(m,i){ var src=ci[moCimgKey(m,i)]||''; return '<span class="mo-c'+(m.cur?' cur':'')+'" data-r="'+i+'"><span class="im">'+(src?'<img src="'+hdEsc(src)+'" alt="">':PH)+'</span><span class="nm">'+hdEsc(m.n)+'</span></span>'; }).join('')+'</div>'; }
+  /* 261104 추가 — 단계형(drill) : 서브메뉴가 있는 메뉴를 누르면 그 서브 화면(.pn.sb)이 옆에서 들어오고 ‹ 뒤로 로 돌아온다 */
+  if(D.ls==='drill'){
+    var R='', P='', ch='<svg class="cv" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>', bk='<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>';
+    model.forEach(function(m,i){ var hs=subOn && m.s.length>0;
+      R+='<span class="mo-i'+(m.cur?' cur':'')+(hs?' hs':'')+'" '+(hs?'data-dn="'+i+'"':'data-r="'+i+'"')+'><span>'+hdEsc(m.n)+'</span>'+(hs?ch:'')+'</span>';
+      if(hs) P+='<div class="pn sb" data-pn="'+i+'"><span class="mo-bk" data-bk="1" role="button">'+bk+'<span>뒤로</span></span><span class="mo-dh">'+hdEsc(m.n)+'</span>'
+        +m.s.map(function(s,j){ return '<span class="mo-i sub'+(s.cur?' cur':'')+'" data-r="'+i+'.'+j+'"><span>'+hdEsc(s.n)+'</span></span>'; }).join('')+'</div>';
+    });
+    return '<div class="mo-drl"><div class="pn rt">'+R+'</div>'+P+'</div>';
+  }
   if(D.ls==='two'){
     var act=0; model.forEach(function(m,i){ if(m.cur) act=i; }); var l='', r='';
     model.forEach(function(m,i){
@@ -60511,18 +60569,36 @@ function moListHtml(dr,D,model){
 }
 function moDrHtml(dr,D,model,ics,logo){
   var sh=dr.show||{}, X='<span class="mo-x" data-mo-x="1" role="button" aria-label="닫기">'+HD_SRCH_X+'</span>';
+  if(D.srch) ics=ics.filter(function(k){ return k!=='search'; });   /* 261104 추가 — 검색창이 있는 디자인은 아이콘 줄에서 검색을 뺀다 */
   var icH=(sh.icons && D.ip!=='none' && ics.length)?'<span class="mo-ics">'+ics.map(moIcHtml).join('')+'</span>':'';
   var h='';
   if(D.head==='grab') h+='<div class="mo-hd"><span class="mo-grab"></span></div>';
   else if(D.head!=='none') h+='<div class="mo-hd">'+(D.head==='logo'?'<span class="lg">'+logo+'</span>':'')+(D.ip==='head'?icH:'')+'<span class="sp"></span>'+X+'</div>';
   if(sh.member) h+=(D.mem==='card')?'<div class="mo-mem card"><span class="hi">로그인하고 더 많은 혜택을 받아 보세요</span><span class="bt"><span>로그인</span><span>회원가입</span></span></div>':'<div class="mo-mem"><b>로그인</b><span>·</span><b>회원가입</b></div>';
   if(D.ip==='above' && icH) h+='<div class="mo-ics-a">'+icH+'</div>';
+  if(D.srch) h+='<div class="mo-srch" data-srch="1" role="button" aria-label="검색"><span class="in">'+HD_I.search+'<span>검색어를 입력하세요</span></span></div>';   /* 261104 추가 — 누르면 메뉴를 닫고 사이트 검색(hdSrchOpen)을 연다 */
+  if(D.ls==='cat') h+='<div class="mo-cap">카테고리</div>';
   h+=moListHtml(dr,D,model);
   if(D.ls!=='two' && !D.vc) h+='<div class="mo-sp2"></div>';
   if(sh.banner){ var b=dr.bn||{}; h+='<div class="mo-bn"><span class="im">'+(b.img?'<img src="'+hdEsc(b.img)+'" alt="">':'<span class="ph">배너 이미지</span>')+'</span></div>'; }
+  if(D.ct) h+=moCtHtml();
   if(D.ip==='foot' && icH) h+='<div class="mo-ft">'+icH+'</div>';
   return '<div class="mo-dim" data-mo-x="1"></div><div class="mo-dr">'+h+'</div>';
 }
+/* 261104 추가 — 연락처 · SNS(ct) : 푸터에 적은 사업자 정보의 「전화 · 이메일」과 푸터 SNS 를 그대로 쓴다(따로 적는 칸 없음) */
+function moCtHtml(){
+  if(typeof FT==='undefined' || typeof ftTxt!=='function') return '';
+  var biz=String(ftTxt(FT,'biz')||''), tel=(biz.match(/전화\s*[:：]\s*([^·\n]+)/)||[])[1], em=(biz.match(/이메일\s*[:：]\s*([^·\s]+)/)||[])[1];
+  var sn=(FT.sns||[]).filter(function(s){ return FT_SVG[s.k]; }), r='';
+  if(tel && tel.trim()) r+='<span class="ln"><em>TEL</em><span>'+hdEsc(tel.trim())+'</span></span>';
+  if(em && em.trim()) r+='<span class="ln"><em>MAIL</em><span>'+hdEsc(em.trim())+'</span></span>';
+  if(sn.length) r+='<span class="sns">'+sn.map(function(s){ var u=String(s.url||'').trim(); if(u && !/^(https?:|mailto:|tel:|\/|#)/i.test(u)) u='https://'+u.replace(/^\/+/,'');
+    return '<a class="s" data-k="'+s.k+'"'+(u?' href="'+hdEsc(u)+'" target="_blank" rel="noopener noreferrer"':'')+'>'+FT_SVG[s.k]+'</a>'; }).join('')+'</span>';
+  return r?'<div class="mo-ct">'+r+'</div>':'';
+}
+/* 261104 추가 — 이미지 카드 : 메뉴 id(없으면 순서) 로 사진을 찾는다 */
+function moCimgKey(m,i){ return (m && m.mid)?m.mid:('i'+i); }
+function moDrillReset(l){ (l||document).querySelectorAll('.mo-drl').forEach(function(dl){ dl.querySelectorAll('.pn.sb.on').forEach(function(x){ x.classList.remove('on'); }); var rt=dl.querySelector('.pn.rt'); if(rt) rt.classList.remove('out'); }); }
 function moDrVars(dr,D,font){
   var f=dr.font>=0?hdFontCss(dr.font):(font||''), b=dr.bn||{};
   return '--mo-bg:'+dr.bg+';--mo-fg:'+dr.fg+';--mo-ac:'+dr.ac+';--mo-line:'+dr.line+';--mo-btn:'+dr.btn+';--mo-dim:'+hdRGBA(dr.dim||'#000000',dr.dimA==null?0.5:dr.dimA)+';'
@@ -60592,7 +60668,7 @@ function moLayRender(){
 }
 function moOpen(on){
   var l=moLay(); if(on==null) on=!l.classList.contains('show');
-  if(on) moLayRender();
+  if(on){ moLayRender(); moDrillReset(l); }   /* 261104 추가 — 단계형은 열 때마다 첫 화면부터 */
   l.classList.toggle('show',!!on); l.setAttribute('aria-hidden',on?'false':'true');
   var hd=hdSiteHd(); if(hd) hd.classList.toggle('mo-open',!!on);
 }
@@ -60604,6 +60680,11 @@ document.addEventListener('click',function(e){
   e.stopPropagation();
   if(t.closest('[data-mo-x]')){ moOpen(false); return; }
   var g=t.closest('.mo-i[data-g]'); if(g){ var gg=g.parentNode, op=!gg.classList.contains('open'); gg.parentNode.querySelectorAll(':scope > .mo-g.open').forEach(function(x){ if(x!==gg && x.querySelector(':scope > .mo-i[data-g]')) x.classList.remove('open'); }); gg.classList.toggle('open',op); return; }
+  /* 261104 추가 — 단계형 : 다음 화면 · 뒤로 / 검색창 : 메뉴를 닫고 사이트 검색 */
+  var dn=t.closest('[data-dn]'); if(dn){ var dl=dn.closest('.mo-drl'), pn=dl && dl.querySelector('.pn.sb[data-pn="'+dn.getAttribute('data-dn')+'"]'); if(pn){ dl.querySelector('.pn.rt').classList.add('out'); pn.classList.add('on'); var dw=dl.closest('.mo-dr'); if(dw) dw.scrollTop=0; } return; }
+  if(t.closest('[data-bk]')){ moDrillReset(t.closest('#moLay')); return; }
+  if(t.closest('[data-srch]')){ moOpen(false); if(typeof hdSrchOpen==='function') setTimeout(hdSrchOpen,220); return; }
+  if(t.closest('.mo-ct a.s')) return;   /* SNS — 주소가 있으면 새 창으로(링크 그대로) */
   var tt=t.closest('[data-t]'); if(tt){ var two=tt.closest('.mo-two'), i=tt.getAttribute('data-t'); two.querySelectorAll('.l .mo-i').forEach(function(x){ x.classList.toggle('on',x===tt); }); two.querySelectorAll('.r .p').forEach(function(x){ x.classList.toggle('on',x.getAttribute('data-p')===i); }); return; }
   var r=t.closest('[data-r]'); if(r){ moOpen(false); moGo(r.getAttribute('data-r')); }
 });
@@ -60703,7 +60784,7 @@ function moPan(g,k){
       +MO_ICO.map(function(x){ return '<button type="button" class="'+(x[0]===M.ico?'on':'')+'" onclick="moDD(event,\'ico\',\''+x[0]+'\')">'+x[1]+'</button>'; }).join('')+'</div></div></div>'
       +'<div class="srow"><span class="k">크기</span>'+seg('isz',[['s','작게'],['m','중간'],['l','크게']])+'</div>';
   }
-  if(g==='dr' && k==='sub') return '<div class="srow"><span class="k">펼침</span>'+seg('dr.sub',[['tap','눌러서'],['open','늘 펼침']])+'</div>'+rng('dr.subSize','크기',11,20,'px');
+  if(g==='dr' && k==='sub') return (moDrOf(M.dr.design).s.ls==='drill'?'':'<div class="srow"><span class="k">펼침</span>'+seg('dr.sub',[['tap','눌러서'],['open','늘 펼침']])+'</div>')+rng('dr.subSize','크기',11,20,'px');   /* 261104 수정 — 단계형은 늘 다음 화면으로 넘어가므로 펼침 방식을 숨긴다 */
   if(g==='dr' && k==='banner'){ var b=M.dr.bn, img=b.img||'';
     return '<div class="srow"><span class="k">이미지</span><div class="hd-thumb '+(img?'has':'empty')+'" id="moBnTh" onclick="moBnPick()" title="보관함에서 이미지를 고릅니다"'+(img?' style="background-image:url(&quot;'+hdEsc(img)+'&quot;)"':'')+'><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.5"/></svg><span class="del" onclick="event.stopPropagation();moSet(\'dr.bn.img\',\'\')" title="지우기">×</span></div></div>'
       +rng('dr.bn.w','너비',30,100,'%')+rng('dr.bn.rad','둥근 모서리',0,30,'px')+rng('dr.bn.pad','여백',0,40,'px')
@@ -60711,6 +60792,17 @@ function moPan(g,k){
   }
   return '';
 }
+/* 261104 추가 — 이미지 카드 디자인 : 메뉴별 사진 칸(설정창 #moCimgBox) */
+function moNoSub(){ var ls=moDrOf(HD.mo.dr.design).s.ls; return ls==='tiles' || ls==='cards'; }
+function moCimgHtml(){
+  var ci=HD.mo.dr.cimg||{}, ms=moModel(); if(!ms.length) return '';
+  var IC='<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.5"/></svg>';
+  return '<div class="gt-h" style="margin-top:16px;">카드 이미지</div>'+ms.map(function(m,i){ var img=ci[moCimgKey(m,i)]||'';
+    return '<div class="srow"><span class="k" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+hdEsc(m.n)+'">'+hdEsc(m.n)+'</span><div class="hd-thumb '+(img?'has':'empty')+'" id="moCi'+i+'" onclick="moCimgPick('+i+')" title="보관함에서 이미지를 고릅니다"'+(img?' style="background-image:url(&quot;'+hdEsc(img)+'&quot;)"':'')+'>'+IC+'<span class="del" onclick="event.stopPropagation();moCimgSet('+i+',\'\')" title="지우기">×</span></div></div>'; }).join('')
+    +'<div class="tx-hint">비워 둔 카드는 회색 바탕으로 보입니다.</div>';
+}
+function moCimgSet(i,src){ var m=moModel()[i]; if(!m) return; var dr=HD.mo.dr, k=moCimgKey(m,i); if(!dr.cimg) dr.cimg={}; if(src) dr.cimg[k]=src; else delete dr.cimg[k]; moFill(); hdChanged(); }
+function moCimgPick(i){ hdPickLib('moCi'+i,function(src){ moCimgSet(i,src); },'카드 이미지'); }
 function moBnPick(){ hdPickLib('moBnTh',function(src){ HD.mo.dr.bn.img=src; HD.mo.dr.show.banner=true; moFill(); hdChanged(); },'배너 이미지'); }
 function moChipTog(g,k){
   var M=HD.mo;
@@ -60720,6 +60812,7 @@ function moChipTog(g,k){
   } else if(g==='tab'){ if(M.tab.hide[k]) delete M.tab.hide[k]; else M.tab.hide[k]=true; }
   else if(g==='dr'){
     if(k==='icons' && moDrOf(M.dr.design).s.ip==='none'){ clToast('이 디자인에는 아이콘 줄이 없습니다.'); return; }
+    if(k==='sub' && moNoSub()){ clToast('이 디자인은 서브메뉴를 보여 주지 않습니다.'); return; }   /* 261104 추가 */
     M.dr.show[k]=!M.dr.show[k]; if(!M.dr.show[k] && moChipOpen.dr===k) moChipOpen.dr='';
   }
   moFill(); hdChanged();
@@ -60731,7 +60824,8 @@ function moChips(){
     MO_UTIL.forEach(function(x){ var na=!HD.util[x[0]]; h+=moChip('bar',x[0],x[1],{on:!na && !!M.show[x[0]],na:na,tip:na?'PC 상단 메뉴에서 켜면 고를 수 있습니다':''}); }); el.innerHTML=h; }
   if((el=document.getElementById('moTabChips'))){ var t=''; (typeof PAGES!=='undefined'?PAGES:[]).filter(function(n){ return !n.hidden; }).forEach(function(n){ t+=moChip('tab',n.id,hdEsc(n.name),{on:!M.tab.hide[n.id]}); }); el.innerHTML=t; }
   if((el=document.getElementById('moDrChips'))){ var D=moDrOf(M.dr.design).s, S=M.dr.show, noIc=(D.ip==='none');
-    el.innerHTML=moChip('dr','icons','아이콘 줄',{on:!noIc && !!S.icons,na:noIc,tip:noIc?'이 디자인에는 아이콘 줄이 없습니다':''})+moChip('dr','member','회원 정보',{on:!!S.member})+moChip('dr','sub','서브메뉴',{on:S.sub!==false,has:true})+moChip('dr','banner','하단 배너',{on:!!S.banner,has:true});
+    var noSub=moNoSub();   /* 261104 추가 — 타일 · 이미지 카드는 서브메뉴를 그리지 않으므로 칩을 흐리게 */
+    el.innerHTML=moChip('dr','icons','아이콘 줄',{on:!noIc && !!S.icons,na:noIc,tip:noIc?'이 디자인에는 아이콘 줄이 없습니다':''})+moChip('dr','member','회원 정보',{on:!!S.member})+moChip('dr','sub','서브메뉴',{on:!noSub && S.sub!==false,has:true,na:noSub,tip:noSub?'이 디자인은 서브메뉴를 보여 주지 않습니다':''})+moChip('dr','banner','하단 배너',{on:!!S.banner,has:true});
     var hint=document.getElementById('moDrIcHint'); if(hint){ var du=moDrU().map(function(k){ var n=''; MO_UTIL.forEach(function(x){ if(x[0]===k) n=x[1]; }); return n; });
       hint.textContent=(noIc||!S.icons)?'':(du.length?'아이콘 줄에는 상단 바에 없는 '+du.join(' · ')+' 버튼이 들어갑니다.':'아이콘 줄에 넣을 버튼이 없습니다 — 모두 상단 바에 있습니다.'); hint.style.display=hint.textContent?'':'none'; } }
 }
@@ -60767,12 +60861,16 @@ function moFill(){
   var shH=document.getElementById('moTabShHint'); if(shH) shH.textContent=grid?'넘치는 메뉴는 다음 줄로 내려갑니다. 칸 테두리는 선 색, 칸 바탕은 배경 색입니다.':'넘치는 메뉴는 옆으로 밀어서 봅니다.';
   var arR=document.getElementById('moTabArRow'); if(arR) arR.style.display=grid?'none':'';
   var nm=document.getElementById('moDrNm'); if(nm){ nm.textContent=moDrOf(M.dr.design).nm; }
+  /* 261104 추가 — 새 디자인 안내 · 카드 이미지 칸 */
+  var DS=moDrOf(M.dr.design).s, dh=document.getElementById('moDrDsHint');
+  if(dh){ dh.textContent=DS.ct?'아래 전화 · 이메일 · SNS 는 푸터에 적은 내용을 그대로 씁니다.':(DS.srch && !(HD.util||{}).search)?'검색창은 PC 상단 메뉴에서 검색을 켜야 동작합니다.':''; dh.style.display=dh.textContent?'':'none'; }
+  var cb=document.getElementById('moCimgBox'); if(cb){ var isC=(DS.ls==='cards'); cb.style.display=isC?'':'none'; var ch=isC?moCimgHtml():''; if(cb.getAttribute('data-h')!==ch){ cb.innerHTML=ch; cb.setAttribute('data-h',ch); } }
   var tb=document.getElementById('moTabBody'); if(tb) tb.classList.toggle('mo-off',!M.tab.on);
   moFillLinks(); moFillResets();
 }
 /* 디자인 고르기 — 상단 메뉴 고르기 모달(#hdPickModal)을 같이 쓴다(kind 'mo'). 카드는 실제 펼침 메뉴 마크업을 375 폰 화면에 그려 축소 */
 function moCardHtml(d){
-  var dr=moDrPreset(d.id); dr.bn.img=HD.mo.dr.bn.img;
+  var dr=moDrPreset(d.id); dr.bn.img=HD.mo.dr.bn.img; dr.cimg=HD.mo.dr.cimg||{};
   var model=moModel(); if(!model.length) model=[{n:'회사 소개',cur:true,s:[{n:'인사말',cur:true},{n:'오시는 길',cur:false}]},{n:'서비스',cur:false,s:[]},{n:'포트폴리오',cur:false,s:[]},{n:'문의',cur:false,s:[]}];
   var D=d.s, st=moDrVars(dr,D,moSiteFont())+'--mo-top:60px;';
   return '<span class="mo-pv"><span class="mo-ph"><span class="bar">'+moLogoHtml()+'<i></i></span><span class="pg"></span><span class="mo-lay pv show" '+moLayAttrs(D)+' style="'+hdEsc(st)+'">'+moDrHtml(dr,D,model,moDrU(),moLogoHtml())+'</span></span></span>';
@@ -60780,6 +60878,7 @@ function moCardHtml(d){
 function moPickDesign(id){
   var cur=HD.mo.dr, f=moDrPreset(id);
   f.bn.img=cur.bn.img; f.bn.link=cur.bn.link; f.sub=cur.sub; f.subSize=cur.subSize; if(cur.bn.img && cur.show.banner) f.show.banner=true;   /* 내용(배너 이미지 · 링크) · 서브메뉴 펼침 방식은 그대로 */
+  f.cimg=cur.cimg||{};   /* 261104 추가 — 카드 사진도 내용이라 디자인을 바꿔도 둔다 */
   HD.mo.dr=f; hdPickRender(); moFill(); hdChanged();
 }
 /* 사본(모바일 미리보기)이 받는 쪽 */
