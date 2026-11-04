@@ -9386,7 +9386,7 @@
   /* 머리 줄 — 아이콘 · 로고 · 닫기 */
   .mo-hd{display:flex;align-items:center;gap:14px;min-height:60px;padding:0 20px;flex:none;color:var(--mo-btn,#222);}
   .mo-lay[data-side="right"] .mo-hd{flex-direction:row-reverse;}
-  .mo-hd .lg{font-size:17px;font-weight:800;letter-spacing:.02em;color:var(--mo-ac,#222);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mo-hd .lg{font-size:17px;font-weight:800;letter-spacing:.02em;color:var(--mo-btn,#222);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}   /* 261104 수정 — 활성(현재 메뉴) 색 → 버튼 색 : 메뉴 글자 활성 색을 바꾸면 로고까지 바뀌었다. 맨 위 줄(로고 · 닫기 · 아이콘)을 한 색으로 */
   .mo-hd .sp{flex:1;}
   .mo-x{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;color:var(--mo-btn,#222);flex:none;}
   .mo-x svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;}
@@ -16752,7 +16752,7 @@
             <span class="sw-col"><span class="cl">선</span><input type="color" value="#EEEEEE" data-p="dr.line" data-cp-title="구분선 색"></span>
             <button type="button" class="sw-reset" data-r="dr.bg dr.line" title="디자인 기본 색으로" onclick="moColReset(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
           </div></div>
-          <div class="srow"><span class="k">버튼 색</span><span class="sw-col"><input type="color" value="#222222" data-p="dr.btn" data-cp-title="닫기 · 아이콘 색"><span class="hex" data-hex="dr.btn">#222222</span></span></div>
+          <div class="srow"><span class="k">버튼 색</span><span class="sw-col"><input type="color" value="#222222" data-p="dr.btn" data-cp-title="로고 · 닫기 · 아이콘 색"><span class="hex" data-hex="dr.btn">#222222</span></span></div>
           <div class="srow"><span class="k">바깥 배경</span><span class="sw-col"><input type="color" value="#000000" data-p="dr.dim" data-a="dr.dimA" data-cp-alpha data-cp-title="펼침 메뉴 바깥 배경"><span class="hex" data-hex="dr.dim">#000000</span></span></div>
         </div></div>
       </div>
