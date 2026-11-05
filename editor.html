@@ -2589,7 +2589,9 @@
   .fm-calpop .cal-g span{padding:4px 0;font-size:11px;text-align:center;color:#9aa0a8;}
   .fm-calpop .cal-g button{display:flex;align-items:center;justify-content:center;height:30px;padding:0;font-size:12.5px;text-align:center;}
   .fm-calpop .cal-g button.today{box-shadow:inset 0 0 0 1px #d5d9e0;}
-  .fm-calpop .cal-g button.on{background:var(--fmac);color:var(--fmab);font-weight:700;}
+  .fm-calpop .cal-g button.on{background:var(--fmhc,var(--fmac));color:var(--fmab);font-weight:700;}   /* 261105 수정 — 강조 컬러(--fmhc · 없으면 버튼 색) */
+  .fm-calpop .cal-g button.off{color:#c9cdd3;text-decoration:line-through;cursor:default;background:none;}   /* 261105 추가 — 고를 수 없는 날 */
+  .fm-dt.slot{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}   /* 261105 추가 — 날짜 + 시간 목록 두 칸 */
   .fm-selw.up .fm-selpop{top:auto;bottom:calc(100% + 4px);}   /* 261029 수정 — 아래 공간이 모자랄 때만 위로 연다 (fmSelDir · 화면 하단 고정 띠 등). 전엔 띠는 늘 위로 열려 맨 위 띠에서 머리글 뒤로 숨었다 */
   .ct-strip .fm-f[data-t="datetime"]{flex:2.6 1 300px;} .ct-strip .fm-dt{gap:6px;}   /* 띠의 날짜/시간은 칸 3개라 더 넓게 */
   .fm-pv .fm-i.fm-selr{pointer-events:none;}
@@ -3081,6 +3083,35 @@
   .fm-types button:hover{border-color:#9A9EA6;}
   .fm-types button.on{border-color:var(--green);color:var(--green-text);background:var(--green-soft);}
   .fm-fin{margin-top:6px;display:flex;align-items:center;gap:8px;}
+  /* 261105 추가 · 수정 — 폼 항목 : 날짜 · 시간 세부 설정 (선택 기간 · 요일 · 제외 날짜 · 강조 컬러 · 시간 간격 · 운영 · 쉬는 시간)
+     설정창 공통 부품으로 : 하나 고르기 = .mt-seg(「정렬」과 같은 회색 바탕 세그먼트) · 여러 개 고르기(요일) = 항목 종류 칩(.fm-types)과 같은 칩 · 날짜 · 시간 = 캘린더 블록 일정 편집과 같은 입력칸
+     같은 항목 안 이름 칸 폭을 맞춰(설명글 · 예시글도 54px) 입력칸 시작선이 한 줄로 */
+  .fm-dset{margin-top:10px;}
+  #fmFieldList .mt-imgrow:has(.fm-dset) .fm-fin .k{width:54px;}
+  .fm-dset .mt-seg.fm-dseg{flex:1;min-width:0;margin:0;padding:3px;gap:3px;border-radius:8px;}
+  .fm-dset .mt-seg.fm-dseg .mt-seg-b{height:26px;padding:0;font-size:12px;border-radius:5px;}
+  .fm-dset .fm-types.fm-wd7{flex:1;margin:0;grid-template-columns:repeat(7,1fr);gap:3px;}
+  .fm-dset .fm-types.fm-wd7 button{height:28px;padding:0;}
+  .fm-dset .dt{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;min-width:0;}
+  .fm-dset .dt input{padding:0 6px;}
+  .fm-dset .dt.dr{grid-template-columns:1fr;}   /* 날짜 두 칸은 좁아 끝자리가 잘려 위아래로 */
+  .fm-dset .fm-exin{grid-template-columns:1fr auto;}
+  .fm-dset .fm-exin .btn-sm{height:32px;}
+  .fm-dset .fm-exl{display:flex;flex-wrap:wrap;gap:4px;flex:1;}
+  .fm-dset .fm-exl span{display:inline-flex;align-items:center;gap:2px;height:24px;padding:0 4px 0 9px;border:1px solid var(--border-2);border-radius:12px;background:#fff;font-size:var(--fs-xs);color:var(--ink-2);}
+  .fm-dset .fm-exl button{width:18px;height:18px;border:0;background:none;color:var(--ink-3);font-size:14px;line-height:1;cursor:pointer;padding:0;}
+  .fm-dset .fm-exl button:hover{color:var(--ink);}
+  .fm-dset .sw-col{flex:1;}
+  /* 261105 추가 — 설정창 날짜 · 시간 칸 : 브라우저 기본 달력 · 시계 대신 캔버스 폼과 같은 편집기 달력 · 펼침 목록. 색 · 테두리는 설정창 토큰으로(선택 = 초록) */
+  .fm-dset{--fmic:var(--ink);--fmdc:var(--ink-3);--fmib:#fff;--fmbd:var(--border-2);--fmr:var(--r-md);--fmac:var(--green);--fmab:#fff;}
+  .fm-dset .fm-dk{min-width:0;}
+  .fm-dset .fm-dk .fm-i{height:32px;padding:0 9px;gap:6px;font-size:var(--fs-sm);}
+  .fm-dset .fm-dk .fm-i svg{width:15px;height:15px;flex:none;color:var(--ink-3);}
+  .fm-dset .fm-dk .fm-selr:hover{border-color:#9A9EA6;}
+  .fm-dset .fm-dk.open .fm-selr{border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
+  .fm-dset .fm-dk .fm-selpop{z-index:30;}
+  .fm-dset .fm-dk .fm-selpop button{padding:7px 10px;font-size:var(--fs-sm);}
+  .fm-dset .fm-dk .fm-calpop{left:auto;right:0;}
   .fm-fin .k{flex:none;width:44px;font-size:var(--fs-sm);font-weight:700;color:var(--ink-2);}
   .fm-fin input,.fm-fin textarea{flex:1;min-width:0;width:100%;box-sizing:border-box;height:32px;border:1px solid var(--border-2);border-radius:var(--r-md);padding:0 9px;font:inherit;font-size:var(--fs-sm);color:var(--ink);background:#fff;}
   .fm-fin textarea{height:auto;min-height:66px;padding:7px 9px;line-height:1.5;resize:vertical;}
@@ -8228,6 +8259,8 @@
   .rt-lm-open{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
   .rt-lm .dm-save{width:100%;background:var(--green);color:#fff;border:none;border-radius:var(--r-md);padding:15px 0;font-family:inherit;font-size:var(--fs-xl);font-weight:700;cursor:pointer;margin-top:22px;transition:background .13s;}
   .rt-lm .dm-save:hover{background:var(--green-hover);}
+  .rt-lm .dm-save.danger{background:#EE445F;}   /* 261105 추가 — 삭제 확인 창의 삭제 버튼 */
+  .rt-lm .dm-save.danger:hover{background:#DC3550;}
   .rt-lm .dm-cancel{display:block;width:100%;text-align:center;margin:14px auto 0;padding:11px;border-radius:var(--r-md);background:none;border:none;color:var(--ink-2);font-family:inherit;font-size:var(--fs-base);font-weight:600;cursor:pointer;transition:background .13s,color .13s;}
   .rt-lm .dm-cancel:hover{background:#EAF9F0;color:var(--green-text);}
   .rt-lm .rt-lm-rm{display:none;height:30px;padding:0 10px;border:none;border-radius:var(--ui-r-btn);background:none;color:var(--danger);font-family:inherit;font-size:var(--fs-md);font-weight:600;cursor:pointer;}
@@ -8519,10 +8552,12 @@
   .rt-vm .rt-vm-lbl{display:flex;align-items:center;gap:5px;font-size:var(--fs-base);color:var(--ink);margin:6px 0 10px;}
   .rt-vm .dm-input{width:100%;height:46px;}
   /* 261012 추가 — 삭제 확인 모달(.cl-cfm) — 대시보드 '수집항목 삭제' 확인 모달 매너: 가운데 정렬 · 제목 · 두 줄 안내 · 삭제 / 취소. 지금은 게시판 블록 삭제(글이 함께 지워진다)에 쓴다 */
-  .rt-lm-box.cl-cfm{width:560px;text-align:center;padding:44px 36px 32px 44px;}
+  .rt-lm-box.cl-cfm{width:440px;max-width:calc(100vw - 32px);box-sizing:border-box;text-align:center;padding:44px 20px 32px 28px;}   /* 261105 수정 — 560 → 440px · 버튼 384px (왼쪽 28 + 오른쪽 20 + 스크롤 자리 흰 테두리 8 = 56) · 좁은 화면은 양옆 16px 남기고 줄어든다 */
+  @media (max-width:480px){ .rt-lm-box.cl-cfm{padding:36px 12px 26px 20px;} .rt-lm-box.cl-cfm h3{font-size:19px;margin-bottom:16px;} }   /* 261105 추가 — 휴대폰 폭 : 여백을 줄여 안내 글 자리를 넓힌다 */
   .rt-lm-box.cl-cfm h3{font-size:21px;margin:0 0 22px;line-height:1.4;}
   .cl-cfm-desc{font-size:var(--fs-xl);color:var(--ink-2);line-height:1.7;margin:0 0 8px;word-break:keep-all;}
   .cl-cfm-desc b{color:var(--ink);font-weight:600;}
+  .cl-cfm-desc a{color:var(--green-text,var(--green));text-decoration:underline;text-underline-offset:3px;}   /* 261105 추가 — 안내 속 링크(폼 응답)는 편집기 초록 링크 색 */
   html.mview .rt-vrz{display:none!important;}
   .blk.rt-editing figure.rt-media:hover,.blk.rt-editing figure.rt-media.rt-focus{outline:1.5px solid var(--green-line);outline-offset:4px;border-radius:8px;}
   .blk.rt-editing figure.rt-media[data-rt="table"]:hover{outline-offset:6px;}
@@ -13429,9 +13464,13 @@
             <!-- 261026 추가 — 문자 알림 (기존 편집기 「문자 알림 설정」 이식) -->
             <div class="sline" style="padding-top:14px;"><span class="lbl">문자 알림 <i class="st-help" data-tip="이 블록으로 신청 및 문의가 접수되면, 지정한 전화번호로 SMS 알림을 보냅니다."></i></span><button type="button" class="sw on" id="fmSmsSw" onclick="fmSw(this,'smsOn'); clSmsSync('fm');"></button></div>
             <div class="fm-mails sms-box" id="fmSmsBox"></div>
-            <div class="sline"><span class="lbl">개인정보 수집 및 이용 동의</span><button type="button" class="sw" id="fmPrivSw" onclick="fmSw(this,'privacy')"></button></div>
+            <div class="sline"><span class="lbl">개인정보 수집 및 이용 동의</span><button type="button" class="sw" id="fmPrivSw" onclick="fmSw(this,'privacy'); fmRowsSync();"></button></div>
+            <!-- 261105 추가 — 동의 내용 · 단일IP 중복차단 (기존 편집기 폼 블록 · 리뉴얼 컨택트 블록과 같게) -->
+            <div class="fm-fin" id="fmPrivTxtRow" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">동의 내용</span><textarea id="fmPrivTxt" rows="3" placeholder="「내용 보기」를 누르면 보이는 동의 내용" spellcheck="false" oninput="fmUpd('privTxt',this.value)"></textarea></div>
+            <div class="sline" id="fmIpRow"><span class="lbl">단일IP 중복차단 <i class="st-help" data-tip="동일한 IP로 1일 동안 연속으로 3회 등록 시 10분 동안 차단합니다."></i></span><button type="button" class="sw" id="fmIpSw" onclick="fmSw(this,'ipBlock')"></button></div>
             <div class="sline"><span class="lbl">CAPTCHA <i class="st-help" data-tip="보내기 전에 보안문자를 입력하게 해 자동 등록(스팸)을 막습니다."></i></span><button type="button" class="sw on" id="fmCapSw" onclick="fmSw(this,'captcha')"></button></div>
-            <div class="mtk-hint" style="margin-top:10px;">폼 응답은 사이트 게시 뒤 대시보드 「폼 응답」에서 확인합니다.</div>
+            <!-- 261105 수정 — 안내 문구만 있던 자리에 「폼 응답 보기」 바로가기 (기존 편집기와 같게 · 대시보드 폼 응답 목록) -->
+            <div class="sms-box mail-snd fm-resp"><div class="sms-h"><span>폼 응답 <i class="st-help" data-tip="이 폼으로 들어온 응답은 사이트 게시 뒤 대시보드의 「폼 응답」에서 확인합니다."></i></span><button type="button" class="sms-lk ext" onclick="fmRespOpen()">폼 응답 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></button></div></div>
           </div></div>
         </div>
 
@@ -14316,8 +14355,8 @@
             <div class="fm-mails sms-box" id="ctSmsBox"></div>
             <div class="sline"><span class="lbl">개인정보 수집 및 이용 동의</span><button type="button" class="sw" id="ctPrivSw" onclick="ctSw(this,'privacy'); ctRowsSync();"></button></div>
             <div class="fm-fin" id="ctPrivTxtRow" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">동의 내용</span><textarea id="ctPrivTxt" rows="3" placeholder="「보기」를 누르면 보이는 동의 내용" spellcheck="false" oninput="ctUpd('privTxt',this.value)"></textarea></div>
-            <!-- 261027 추가 — 단일IP 중복차단 (기존 편집기 동일: 같은 IP 1분 3회 → 10분 차단. 실제 차단은 게시 화면 서버 몫, 편집기는 설정 저장까지) -->
-            <div class="sline" id="ctIpRow"><span class="lbl">단일IP 중복차단 <i class="st-help" data-tip="같은 IP에서 1분 안에 3번 연달아 보내면 10분 동안 보낼 수 없게 막습니다."></i></span><button type="button" class="sw" id="ctIpSw" onclick="ctSw(this,'ipBlock')"></button></div>
+            <!-- 261027 추가 — 단일IP 중복차단 (기존 편집기 동일: 같은 IP 1일 연속 3회 → 10분 차단 · 261105 수정 — 도움말을 기존 편집기 문구로. 실제 차단은 게시 화면 서버 몫, 편집기는 설정 저장까지) -->
+            <div class="sline" id="ctIpRow"><span class="lbl">단일IP 중복차단 <i class="st-help" data-tip="동일한 IP로 1일 동안 연속으로 3회 등록 시 10분 동안 차단합니다."></i></span><button type="button" class="sw" id="ctIpSw" onclick="ctSw(this,'ipBlock')"></button></div>
             <div class="sline" id="ctCapRow"><span class="lbl">CAPTCHA <i class="st-help" data-tip="보내기 전에 보안문자를 입력하게 해 자동 등록(스팸)을 막습니다."></i></span><button type="button" class="sw" id="ctCapSw" onclick="ctSw(this,'captcha')"></button></div>
             <div class="mtk-hint" style="margin-top:10px;">응답은 사이트 게시 뒤 대시보드 「폼 응답」(상담 신청은 「상담신청 응답」)에서 확인합니다.</div>
             <button type="button" class="ct-resp-lk" id="ctRespLk" onclick="ctRespOpen()">상담신청 응답 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></button>   <!-- 261029 추가 — 기존 편집기 「상담신청 응답 보기」(상담 신청 띠에서만) · 설정창 초록 글자 링크(「대시보드 알림 설정」)와 같은 모양 -->
@@ -21954,6 +21993,7 @@
     var m=document.getElementById('clCfm'); if(!m){ if(o && o.run) o.run(); return; }
     document.getElementById('clCfmT').textContent=o.title||'삭제'; document.getElementById('clCfmD').innerHTML=o.html||'';
     var ok=document.getElementById('clCfmOkBtn'); ok.textContent=o.ok||'삭제';
+    ok.classList.toggle('danger', (o.danger!=null)?!!o.danger:/삭제/.test(o.ok||'삭제'));   /* 261105 추가 — 삭제 버튼은 빨간색(#EE445F). 「되돌리기」 같은 다른 확인은 그대로 초록 */
     var no=document.getElementById('clCfmNoBtn'); if(no) no.textContent=o.no||'취소';   /* 261026 추가 */
     clCfmRun=o.run||null; m.classList.add('show'); setTimeout(function(){ try{ ok.focus(); }catch(e){} },0);
   }
@@ -43982,7 +44022,7 @@ global.PolyFX = API;
     btnT:'제출하기', ba:'left', bs:'fill', bc:'#23272e', bfg:'#ffffff', br:4,
     cb:'#ffffff', cbd:'', cr:6, cw:560,
     bg:'#ffffff', bgImg:'', bgDim:40, bgGray:false,
-    done:'신청 완료되었습니다.', mailOn:true, mails:[], privacy:false, captcha:true,
+    done:'신청 완료되었습니다.', mailOn:true, mails:[], privacy:false, privTxt:'', ipBlock:false, captcha:true,   /* 261105 추가 — privTxt 동의 내용 · ipBlock 단일IP 중복차단 */
     pv:80, mw:1140
   };
   function fmF(l,t,o){ var f={t:t||'text', l:l, d:'', p:'', req:true, opts:[]}; if(o){ for(var k in o) f[k]=o[k]; } return f; }
@@ -44064,38 +44104,52 @@ global.PolyFX = API;
         +'<div class="fm-selpop">'+(opts.length?opts.map(function(o,i){ return '<button type="button" tabindex="-1" onclick="if(window.fmSelPick)fmSelPick(this,event)">'+rsEsc(o)+'</button>'; }).join(''):'<div class="none">선택지를 입력하세요</div>')+'</div></div>';
     }
     /* 261029 수정 — 날짜는 누르면 달력, 시 · 분은 목록처럼 선택지가 열린다 (미리보기 · 캔버스에서 확인용, 고른 값은 저장하지 않는다 · 모양은 그대로) */
-    else if(t==='date') h+=fmDateBox(ph);
-    else if(t==='datetime') h+='<div class="fm-dt">'+fmDateBox(ph)+fmPickBox('00시',FM_HH)+fmPickBox('00분',FM_MM)+'</div>';
+    else if(t==='date') h+=fmDateBox(ph,f);
+    /* 261105 수정 — 날짜/시간 : 시간 설정(간격 · 운영 시간 · 쉬는 시간)이 있으면 고를 수 있는 시간만 한 목록으로. 없으면(컨택트 블록 등) 전처럼 시 · 분 */
+    else if(t==='datetime') h+='<div class="fm-dt'+(f.ti?' slot':'')+'">'+fmDateBox(ph,f)+(f.ti?fmPickBox('시간 선택',fmSlots(f)):fmPickBox('00시',FM_HH)+fmPickBox('00분',FM_MM))+'</div>';
     else if(t==='file') h+='<div class="fm-i fm-file">'+FM_I.clip+'<span>'+rsEsc(ph||'파일을 선택하거나 끌어다 놓으세요')+'</span></div>';
     else h+='<input class="fm-i" type="'+fmInputType(f.l)+'" placeholder="'+_mtAttr(ph)+'" autocomplete="off">';   /* 260929 수정 — 캔버스에서 바로 타이핑해 볼 수 있게 (값은 저장하지 않는다) */
     return h+'</div>';
   }
   /* 260929 추가 — 목록 미리보기 펼침창: 캔버스에서 선택지를 눌러 볼 수 있다. 고른 값은 어디에도 저장하지 않는다 (다시 그리면 예시글로 돌아감) */
   function fmSelClose(){ document.querySelectorAll('.fm-selw.open').forEach(function(w){ w.classList.remove('open'); }); }
-  function fmSelOpen(el,e){ if(e) e.stopPropagation(); var w=el.parentElement, was=w.classList.contains('open'); fmSelClose(); if(!was){ w.classList.add('open'); fmSelDir(w); } }
+  function fmSelOpen(el,e){ if(e) e.stopPropagation(); var w=el.parentElement, was=w.classList.contains('open'); fmSelClose(); if(!was){ w.classList.add('open'); fmSelDir(w); var on=w.querySelector('.fm-selpop button.on'), pop=w.querySelector('.fm-selpop'); if(on && pop) pop.scrollTop=Math.max(0,on.offsetTop-pop.clientHeight/2+on.offsetHeight/2); } }   /* 261105 수정 — 고른 값이 보이게 목록을 그 자리로 */
   /* 261029 추가 — 펼친 목록 · 달력이 화면 아래로 넘치면 위로 연다 (위 공간이 더 넓을 때만) */
   function fmSelDir(w){ var pop=w.querySelector('.fm-selpop'); if(!pop) return; w.classList.remove('up'); var r=w.getBoundingClientRect(), h=pop.offsetHeight, vh=window.innerHeight||document.documentElement.clientHeight; var below=vh-r.bottom, above=r.top; w.classList.toggle('up', below<h+8 && above>below); }
   function fmSelPick(el,e){
     if(e) e.stopPropagation(); var w=el.closest('.fm-selw'); if(!w) return; var box=w.querySelector('.fm-selr'), sp=box&&box.querySelector('span');
     w.querySelectorAll('.fm-selpop button').forEach(function(b){ b.classList.toggle('on',b===el); });
     if(sp) sp.textContent=el.textContent; if(box) box.classList.remove('ph'); w.classList.remove('open');
+    if(w.hasAttribute('data-fk')) fmDkPick(w,el.getAttribute('data-v')||'');   /* 261105 추가 — 설정창 시간 칸이면 값으로 */
   }
   document.addEventListener('click',function(){ fmSelClose(); });
   /* 261029 추가 — 날짜 달력 · 시분 선택 (컨택트 · 폼 블록 공통 fmFieldHTML) */
   var FM_HH=[], FM_MM=['00분','10분','20분','30분','40분','50분']; for(var _h=0;_h<24;_h++) FM_HH.push((_h<10?'0':'')+_h+'시');
-  function fmDateBox(ph){ return '<div class="fm-selw fm-datew"><div class="fm-i fm-sel fm-selr ph" onclick="if(window.fmCalOpen)fmCalOpen(this,event)"><span>'+rsEsc(ph||'YYYY-MM-DD')+'</span>'+FM_I.cal+'</div><div class="fm-selpop fm-calpop" onclick="event.stopPropagation()"></div></div>'; }
+  /* 261105 추가 — 날짜형 세부 설정(기존 편집기 「선택가능 기간 설정 · 제외 날짜 · 강조 컬러」) : 필드 값 dm(all · range) · df/dt 기간 · wd 고를 수 있는 요일(0=일 … 6=토) · ex 제외 날짜 · hc 강조 색
+     날짜/시간형 「시간 설정」 : ti 간격(60 · 30 · 20 · 10분) · ts/te 운영 시간 · bs/be 쉬는 시간(비우면 없음) */
+  function fmDateAttr(f){ if(!f) return ''; var a=''; if(f.dm==='range'){ if(f.df) a+=' data-df="'+_mtAttr(f.df)+'"'; if(f.dt) a+=' data-dt="'+_mtAttr(f.dt)+'"'; }
+    if(f.wd!=null && String(f.wd)!=='0123456') a+=' data-wd="'+_mtAttr(String(f.wd))+'"'; if(Array.isArray(f.ex) && f.ex.length) a+=' data-ex="'+_mtAttr(f.ex.join(','))+'"';
+    if(f.hc) a+=' style="--fmhc:'+_mtAttr(f.hc)+'"'; return a; }
+  function fmMin(s){ var m=/^(\d{1,2}):(\d{2})$/.exec(String(s||'')); return m?(+m[1])*60+(+m[2]):null; }
+  function fmHm(n){ var h=Math.floor(n/60), m=n%60; return (h<10?'0':'')+h+':'+(m<10?'0':'')+m; }
+  function fmSlots(f){ var step=+f.ti||30, s=fmMin(f.ts), e=fmMin(f.te), bs=fmMin(f.bs), be=fmMin(f.be), out=[]; if(s==null) s=540; if(e==null) e=1080;
+    for(var n=s;n<=e && out.length<200;n+=step){ if(bs!=null && be!=null && n>=bs && n<be) continue; out.push(fmHm(n)); } return out.length?out:['선택할 수 있는 시간이 없습니다']; }
+  function fmDayOk(w,v,dow){ var d=w.getAttribute('data-df'), t=w.getAttribute('data-dt'), wd=w.getAttribute('data-wd'), ex=w.getAttribute('data-ex');
+    if(d && v<d) return false; if(t && v>t) return false; if(wd!=null && wd.indexOf(String(dow))<0) return false; if(ex && (','+ex+',').indexOf(','+v+',')>=0) return false; return true; }
+  function fmDateBox(ph,f){ return '<div class="fm-selw fm-datew"'+fmDateAttr(f)+'><div class="fm-i fm-sel fm-selr ph" onclick="if(window.fmCalOpen)fmCalOpen(this,event)"><span>'+rsEsc(ph||'YYYY-MM-DD')+'</span>'+FM_I.cal+'</div><div class="fm-selpop fm-calpop" onclick="event.stopPropagation()"></div></div>'; }
   function fmPickBox(lb,opts){ return '<div class="fm-selw"><div class="fm-i fm-sel fm-selr" onclick="if(window.fmSelOpen)fmSelOpen(this,event)"><span>'+lb+'</span>'+FM_I.chev+'</div><div class="fm-selpop">'+opts.map(function(o){ return '<button type="button" tabindex="-1" onclick="if(window.fmSelPick)fmSelPick(this,event)">'+o+'</button>'; }).join('')+'</div></div>'; }
   function fmCalDraw(w){
     var pop=w.querySelector('.fm-calpop'); if(!pop) return; var y=w._y, m=w._m, first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate(), t=new Date(), h='';
     h+='<div class="cal-h"><button type="button" class="cal-nav" onclick="fmCalMove(this,-1)" aria-label="이전 달"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><b>'+y+'년 '+(m+1)+'월</b><button type="button" class="cal-nav" onclick="fmCalMove(this,1)" aria-label="다음 달"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div><div class="cal-g">';
     ['일','월','화','수','목','금','토'].forEach(function(d){ h+='<span>'+d+'</span>'; });
     for(var i=0;i<first;i++) h+='<i></i>';
-    for(var d=1;d<=days;d++){ var v=y+'-'+(m<9?'0':'')+(m+1)+'-'+(d<10?'0':'')+d, cls=(v===w._v?'on':'')+((y===t.getFullYear()&&m===t.getMonth()&&d===t.getDate())?' today':''); h+='<button type="button" class="'+cls+'" onclick="fmCalPick(this,\''+v+'\')">'+d+'</button>'; }
+    for(var d=1;d<=days;d++){ var v=y+'-'+(m<9?'0':'')+(m+1)+'-'+(d<10?'0':'')+d, ok=fmDayOk(w,v,(first+d-1)%7), cls=(v===w._v?'on':'')+((y===t.getFullYear()&&m===t.getMonth()&&d===t.getDate())?' today':'')+(ok?'':' off');   /* 261105 수정 — 기간 밖 · 막은 요일 · 제외 날짜는 흐리게, 누를 수 없음 */
+      h+='<button type="button" class="'+cls+'"'+(ok?' onclick="fmCalPick(this,\''+v+'\')"':' disabled tabindex="-1"')+'>'+d+'</button>'; }
     pop.innerHTML=h+'</div>';
   }
-  window.fmCalOpen=function(el,e){ if(e) e.stopPropagation(); var w=el.parentElement, was=w.classList.contains('open'); fmSelClose(); if(was) return; var b=w._v?new Date(w._v):new Date(); w._y=b.getFullYear(); w._m=b.getMonth(); fmCalDraw(w); w.classList.add('open'); fmSelDir(w); };
+  window.fmCalOpen=function(el,e){ if(e) e.stopPropagation(); var w=el.parentElement, was=w.classList.contains('open'); fmSelClose(); if(was) return; if(!w._v && w.getAttribute('data-v')) w._v=w.getAttribute('data-v'); var b=w._v?new Date(w._v):new Date(), df=w.getAttribute('data-df'); if(!w._v && df && new Date(df)>b) b=new Date(df); w._y=b.getFullYear();   /* 261105 수정 — 선택 기간이 나중이면 그 달부터 */ w._m=b.getMonth(); fmCalDraw(w); w.classList.add('open'); fmSelDir(w); };
   window.fmCalMove=function(btn,n){ var w=btn.closest('.fm-selw'); w._m+=n; if(w._m<0){ w._m=11; w._y--; } if(w._m>11){ w._m=0; w._y++; } fmCalDraw(w); };
-  window.fmCalPick=function(btn,v){ var w=btn.closest('.fm-selw'), box=w.querySelector('.fm-selr'), sp=box&&box.querySelector('span'); w._v=v; if(sp) sp.textContent=v; if(box) box.classList.remove('ph'); w.classList.remove('open'); };
+  window.fmCalPick=function(btn,v){ var w=btn.closest('.fm-selw'), box=w.querySelector('.fm-selr'), sp=box&&box.querySelector('span'); w._v=v; if(sp) sp.textContent=v; if(box) box.classList.remove('ph'); w.classList.remove('open'); if(w.hasAttribute('data-fk')) fmDkPick(w,v); };   /* 261105 수정 — 설정창 날짜 칸이면 값으로 */
   function fmInnerHTML(c){
     var lay=c.layout||'plain', side='';
     if(lay==='img') side='<div class="fm-side fm-img'+(c.img?'':' empty')+'"'+(c.img?' style="background-image:url(&quot;'+_mtAttr(c.img)+'&quot;)"':'')+'></div>';
@@ -44230,6 +44284,7 @@ global.PolyFX = API;
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk);
     function show(id,on){ var el=document.getElementById(id); if(el) el.style.display=on?'':'none'; }
     show('fmCardRows',c.layout==='card'); show('fmImgRows',c.layout==='img'); show('fmInfoRows',c.layout==='info'); show('fmCwRow',c.layout!=='img'&&c.layout!=='info');
+    show('fmPrivTxtRow',!!c.privacy);   /* 261105 추가 — 동의를 켰을 때만 동의 내용 칸 */
     show('fmIrRow',c.is!=='line'); show('fmIbdRow',c.is!=='fill'); show('fmBfgRow',c.bs!=='outline');
     var r=document.getElementById('fmCbdR'); if(r) r.classList.toggle('off',!c.cbd);
     var ibr=document.getElementById('fmIbR'); if(ibr) ibr.classList.toggle('off',!c.ib);
@@ -44261,6 +44316,7 @@ global.PolyFX = API;
         +'<div class="fm-fin"><span class="k">설명글</span><input type="text" value="'+_mtAttr(f.d||'')+'" placeholder="항목 아래 작은 안내" maxlength="80" spellcheck="false" oninput="fmFieldSet('+i+',&#39;d&#39;,this.value)"></div>'
         +(hasPh?'<div class="fm-fin"><span class="k">예시글</span><input type="text" value="'+_mtAttr(f.p||'')+'" placeholder="'+(t==='select'?'선택하세요':(t==='file'?'파일을 선택하거나 끌어다 놓으세요':'입력칸 안 흐린 글'))+'" maxlength="60" spellcheck="false" oninput="fmFieldSet('+i+',&#39;p&#39;,this.value)"></div>':'')
         +(hasOpts?'<div class="fm-fin" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">선택지</span><textarea rows="3" placeholder="한 줄에 하나" spellcheck="false" oninput="fmFieldOpts('+i+',this.value)">'+_mtAttr((f.opts||[]).join('\n'))+'</textarea></div>':'')
+        +((t==='date'||t==='datetime')?fmDateSetHTML(f,i,t,c):'')   /* 261105 추가 — 날짜 · 시간 세부 설정 */
         +'</div>';
       return '<div class="mt-imgrow'+(openRow?' open':'')+'" data-i="'+i+'">'
         +'<span class="mt-imgdrag" title="드래그하여 순서 변경">'+FM_DI.drag+'</span>'
@@ -44275,11 +44331,65 @@ global.PolyFX = API;
     var add=document.getElementById('fmFieldAdd'); if(add) add.disabled=(c.fields.length>=FM_MAX);
     if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',fmFieldReorder);
   }
+  /* 261105 추가 — 날짜형 · 날짜/시간형 세부 설정 (기존 편집기 「선택가능 기간 설정 · 제외 날짜 · 시간 설정 · 강조 컬러」를 설정창 안 행으로 · 모달 없음) */
+  var FM_WD=['일','월','화','수','목','금','토'];
+  function fmDateSetHTML(f,i,t,c){
+    function q(s){ return '&#39;'+s+'&#39;'; }
+    /* 261105 수정 — 하나만 고르는 값(선택 기간 · 요일 묶음 · 시간 간격)은 설정창 공통 세그먼트(.mt-seg · 「정렬」과 같은 회색 바탕 + 흰 선택 칸)로. 항목 종류 칩(.fm-types)은 종류 고르기에만 */
+    function seg(k,cur,opts,fn){ return '<div class="mt-seg fm-dseg">'+opts.map(function(o){ return '<button type="button" class="mt-seg-b'+(String(cur)===String(o[0])?' active':'')+'" onclick="'+(fn?fn(o[0]):'fmFieldSet('+i+','+q(k)+','+(typeof o[0]==='number'?o[0]:q(o[0]))+')')+'">'+o[1]+'</button>'; }).join('')+'</div>'; }
+    if(t==='datetime' && !f.ti){ f.ti=30; f.ts=f.ts||'09:00'; f.te=f.te||'18:00'; var bk=fmCurBlk; setTimeout(function(){ if(bk && bk.isConnected) fmApply(bk); },0); }   /* 예전에 만든 날짜/시간 항목도 설정창을 열면 시간 설정 기본값으로 */
+    var wd=(f.wd==null)?'0123456':String(f.wd), ex=Array.isArray(f.ex)?f.ex:[], h='<div class="fm-dset">';
+    h+='<div class="fm-fin"><span class="k">선택 기간</span>'+seg('dm',f.dm==='range'?'range':'all',[['all','전체'],['range','기간']])+'</div>';
+    if(f.dm==='range') h+='<div class="fm-fin"><span class="k"></span><div class="dt dr">'+fmDkDate(i,'df',f.df,'시작 날짜','')+fmDkDate(i,'dt',f.dt,'끝 날짜',f.df||'')+'</div></div>';   /* 261105 수정 — 브라우저 기본 달력 → 편집기 달력(캔버스 폼과 같은 모양) · 끝 날짜는 시작 날짜 앞을 막는다 */
+    /* 요일 — 위: 묶음(전체 · 주중 · 주말 · 직접 고르면 선택 없음) / 아래: 요일 칩 7개(여러 개 고르기 · 항목 종류 칩과 같은 모양) */
+    h+='<div class="fm-fin"><span class="k">요일</span>'+seg('wd',wd==='0123456'?'all':(wd==='12345'?'wk':(wd==='06'?'we':'')),[['all','전체'],['wk','주중'],['we','주말']],function(v){ return 'fmWdSet('+i+','+q(v==='all'?'0123456':(v==='wk'?'12345':'06'))+')'; })+'</div>';
+    h+='<div class="fm-fin"><span class="k"></span><div class="fm-types fm-wd7">'+FM_WD.map(function(n,d){ return '<button type="button"'+(wd.indexOf(String(d))>=0?' class="on"':'')+' title="'+n+'요일 '+(wd.indexOf(String(d))>=0?'고를 수 있음 — 누르면 막기':'막음 — 누르면 고를 수 있게')+'" aria-pressed="'+(wd.indexOf(String(d))>=0)+'" onclick="fmWdTog('+i+','+d+')">'+n+'</button>'; }).join('')+'</div></div>';
+    h+='<div class="fm-fin"><span class="k">제외 날짜</span><div class="dt dr">'+fmDkDate(i,'ex','','날짜를 골라 추가',(f.dm==='range'&&f.df)?f.df:'',(f.dm==='range'&&f.dt)?f.dt:'')+'</div></div>';   /* 261105 수정 — 달력에서 고르면 바로 추가(추가 버튼 없음) */
+    if(ex.length) h+='<div class="fm-fin"><span class="k"></span><div class="fm-exl">'+ex.map(function(v,j){ return '<span>'+_mtAttr(v)+'<button type="button" title="제외 해제" aria-label="'+_mtAttr(v)+' 제외 해제" onclick="fmExDel('+i+','+j+')">×</button></span>'; }).join('')+'</div></div>';
+    h+='<div class="fm-fin"><span class="k">강조 컬러</span><span class="sw-col"><input type="color" value="'+_mtAttr(f.hc||c.bc||'#23272e')+'" data-cp-title="고른 날짜 강조 색" oninput="fmFieldSet('+i+','+q('hc')+',this.value); var x=this.parentNode.querySelector(&#39;.hex&#39;); if(x) x.textContent=this.value.toUpperCase();" onchange="fmFieldRender()"><span class="hex">'+(f.hc?_mtAttr(smHex(f.hc)):'버튼 색')+'</span></span>'
+      +(f.hc?'<button type="button" class="sw-reset" title="버튼 색 따르기" onclick="fmFieldSet('+i+','+q('hc')+',&#39;&#39;)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>':'')+'</div>';
+    if(t==='datetime'){
+      h+='<div class="fm-fin"><span class="k">시간 간격</span>'+seg('ti',+f.ti||30,[[60,'1시간'],[30,'30분'],[20,'20분'],[10,'10분']])+'</div>';
+      var tl=fmTimeList(+f.ti||30);   /* 261105 수정 — 브라우저 기본 시계 → 편집기 펼침 목록(캔버스 「시간 선택」과 같은 모양) · 간격대로 */
+      h+='<div class="fm-fin"><span class="k">운영 시간</span><div class="dt">'+fmDkTime(i,'ts',f.ts||'09:00',tl,'시작')+fmDkTime(i,'te',f.te||'18:00',tl,'끝')+'</div></div>';
+      h+='<div class="fm-fin"><span class="k">쉬는 시간</span><div class="dt">'+fmDkTime(i,'bs',f.bs||'',tl,'없음',true)+fmDkTime(i,'be',f.be||'',tl,'없음',true)+'</div></div>';
+      h+='<div class="mtk-hint" style="margin:4px 0 0;">운영 시간 안에서 간격마다 고를 수 있습니다. 쉬는 시간은 비워 두면 없습니다.</div>';
+    }
+    return h+'</div>';
+  }
+  /* 261105 추가 — 설정창 날짜 · 시간 칸 : 캔버스 폼과 같은 편집기 달력(.fm-calpop) · 펼침 목록(.fm-selpop)을 그대로 쓴다. 고르면 data-fi(항목 번호) · data-fk(값 이름)로 fmDkPick 이 값을 넣는다 */
+  function fmDkDate(i,k,v,ph,min,max){ var a=' data-fi="'+i+'" data-fk="'+k+'"'+(v?' data-v="'+_mtAttr(v)+'"':'')+(min?' data-df="'+_mtAttr(min)+'"':'')+(max?' data-dt="'+_mtAttr(max)+'"':'');
+    return '<div class="fm-selw fm-datew fm-dk"'+a+'><div class="fm-i fm-sel fm-selr'+(v?'':' ph')+'" role="button" aria-label="'+_mtAttr(ph)+'" onclick="if(window.fmCalOpen)fmCalOpen(this,event)"><span>'+_mtAttr(v||ph)+'</span>'+FM_I.cal+'</div><div class="fm-selpop fm-calpop" onclick="event.stopPropagation()"></div></div>'; }
+  function fmTimeList(step){ var s=Math.min(30,step||30), out=[]; for(var n=0;n<24*60;n+=s) out.push(fmHm(n)); return out; }
+  function fmDkTime(i,k,v,list,ph,clr){ return '<div class="fm-selw fm-dk" data-fi="'+i+'" data-fk="'+k+'"><div class="fm-i fm-sel fm-selr'+(v?'':' ph')+'" role="button" aria-label="'+_mtAttr(ph)+'" onclick="if(window.fmSelOpen)fmSelOpen(this,event)"><span>'+_mtAttr(v||ph)+'</span>'+FM_I.chev+'</div><div class="fm-selpop">'
+      +(clr?'<button type="button" tabindex="-1" data-v=""'+(v?'':' class="on"')+' onclick="if(window.fmSelPick)fmSelPick(this,event)">없음</button>':'')
+      +list.map(function(t){ return '<button type="button" tabindex="-1" data-v="'+t+'"'+(t===v?' class="on"':'')+' onclick="if(window.fmSelPick)fmSelPick(this,event)">'+t+'</button>'; }).join('')+'</div></div>'; }
+  function fmDkPick(w,v){
+    if(!fmCurBlk || !w) return; var i=+w.getAttribute('data-fi'), k=w.getAttribute('data-fk'), f=fmCfg(fmCurBlk).fields[i]; if(!f) return;
+    if(k==='ex'){ if(!Array.isArray(f.ex)) f.ex=[]; if(f.ex.indexOf(v)>=0){ clToast('이미 제외한 날짜입니다.'); return; } f.ex.push(v); f.ex.sort(); fmApply(fmCurBlk); fmFieldRender(); return; }
+    if(k==='dt' && f.df && v && v<f.df){ clToast('끝 날짜는 시작 날짜와 같거나 뒤여야 합니다.'); fmFieldRender(); return; }
+    if(k==='df' && f.dt && v && v>f.dt) f.dt='';   /* 시작을 끝보다 뒤로 옮기면 끝을 비운다 */
+    if((k==='te' && fmMin(v)<=fmMin(f.ts)) || (k==='ts' && f.te && fmMin(v)>=fmMin(f.te))){ clToast('운영 시간의 끝은 시작보다 뒤여야 합니다.'); fmFieldRender(); return; }
+    f[k]=v; if(k==='bs' && !v) f.be=''; if(k==='be' && !v) f.bs='';   /* 쉬는 시간은 둘 다 있어야 뜻이 있다 */
+    if(k==='bs' && v && !f.be) f.be=fmHm(fmMin(v)+60); if(k==='be' && v && !f.bs) f.bs=fmHm(Math.max(0,fmMin(v)-60));
+    fmApply(fmCurBlk); fmFieldRender();
+  }
+  window.fmDkPick=fmDkPick;
+  function fmWdSet(i,v){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f) return; f.wd=v; fmApply(fmCurBlk); fmFieldRender(); }
+  function fmWdTog(i,d){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f) return; var wd=(f.wd==null)?'0123456':String(f.wd), s=String(d);
+    wd=(wd.indexOf(s)>=0)?wd.replace(s,''):(wd+s); if(!wd){ clToast('요일은 하나 이상 골라야 합니다.'); return; } fmWdSet(i,wd.split('').sort().join('')); }
+  function fmExAdd(i){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i], inp=document.getElementById('fmExIn'+i); if(!f||!inp) return; var v=inp.value; if(!v){ clToast('제외할 날짜를 고르세요.'); return; }
+    if(!Array.isArray(f.ex)) f.ex=[]; if(f.ex.indexOf(v)>=0){ clToast('이미 제외한 날짜입니다.'); return; } f.ex.push(v); f.ex.sort(); fmApply(fmCurBlk); fmFieldRender(); }
+  function fmExDel(i,j){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f||!Array.isArray(f.ex)) return; f.ex.splice(j,1); fmApply(fmCurBlk); fmFieldRender(); }
+  window.fmWdSet=fmWdSet; window.fmWdTog=fmWdTog; window.fmExAdd=fmExAdd; window.fmExDel=fmExDel;
   function fmFieldFold(i){ fmOpenIdx=(fmOpenIdx===i)?-1:i; fmFieldRender(); }
   function fmFieldSet(i,k,v){
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk), f=c.fields[i]; if(!f) return;
-    f[k]=v; fmApply(fmCurBlk);
-    if(k==='t'||k==='req'){ fmFieldRender(); }
+    f[k]=v;
+    if(k==='t' && v==='datetime' && !f.ti){ f.ti=30; f.ts=f.ts||'09:00'; f.te=f.te||'18:00'; }   /* 261105 추가 — 날짜/시간형은 시간 설정 기본값(30분 · 09:00~18:00 · 기존 편집기와 같게) */
+    if(k==='dm' && v==='range' && !f.df){ var td=new Date(); f.df=td.getFullYear()+'-'+('0'+(td.getMonth()+1)).slice(-2)+'-'+('0'+td.getDate()).slice(-2); }   /* 기간을 고르면 시작은 오늘부터 */
+    fmApply(fmCurBlk);
+    if(k==='t'||k==='req'||k==='dm'||k==='ti'||k==='hc'&&!v){ fmFieldRender(); }
   }
   function fmFieldOpts(i,v){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f) return; f.opts=String(v||'').split('\n').map(function(s){ return s.trim(); }); fmApply(fmCurBlk); }
   function fmFieldAddRow(){
@@ -44290,6 +44400,11 @@ global.PolyFX = API;
   function fmFieldDel(i){
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk);
     if(c.fields.length<=FM_MIN){ clToast('항목은 최소 '+FM_MIN+'개가 있어야 합니다.'); return; }
+    /* 261105 추가 — 지우기 전에 확인 : 게시한 폼이면 이 항목에 쌓인 응답도 함께 지워진다(기존 편집기와 같은 안내 · 엑셀 받기는 대시보드 폼 응답에서) */
+    if(!fmFieldDel._ok && typeof clCfmOpen==='function'){ var nm=rsEsc(String(c.fields[i].l||'').trim()||'이름 없는 항목');
+      clCfmOpen({title:'항목 삭제', ok:'삭제', run:function(){ fmFieldDel._ok=true; try{ fmFieldDel(i); }finally{ fmFieldDel._ok=false; } },
+        html:'<b>'+nm+'</b> 항목을 삭제하면 이 항목에 쌓인 응답도 함께 삭제됩니다.<br>지난 응답이 필요하면 먼저 <a href="https://www.creatorlink.net/forms" target="_blank" rel="noopener">폼 응답</a>에서 엑셀 파일로 받아 두세요.<br>선택한 항목을 삭제하시겠습니까?'});
+      return; }
     var gone=c.fields.splice(i,1)[0]; if(fmOpenIdx===i) fmOpenIdx=-1; else if(fmOpenIdx>i) fmOpenIdx--;
     fmFieldRender(); fmApply(fmCurBlk);
     var blk=fmCurBlk;
@@ -44423,8 +44538,12 @@ global.PolyFX = API;
     var sw=document.getElementById('fmRuleSw'); if(sw) sw.classList.toggle('on',!!c.rule);
     var pv=document.getElementById('fmPrivSw'); if(pv) pv.classList.toggle('on',!!c.privacy);
     var cp=document.getElementById('fmCapSw'); if(cp) cp.classList.toggle('on',!!c.captcha);
+    var ip=document.getElementById('fmIpSw'); if(ip) ip.classList.toggle('on',!!c.ipBlock); set('fmPrivTxt',c.privTxt||'');   /* 261105 추가 */
     fmRowsSync();
   }
+  /* 261105 추가 — 「폼 응답 보기」: 대시보드 폼 응답 목록(새 창) */
+  function fmRespOpen(){ var url='https://www.creatorlink.net/forms', w=window.clWinOpen||window.open; try{ w(url,'_blank','noopener'); }catch(e){ location.href=url; } }
+  window.fmRespOpen=fmRespOpen;
   window.fmCfg=fmCfg; window.fmApply=fmApply; window.fmCloneInit=fmCloneInit; window.fmUpd=fmUpd; window.fmSeg=fmSeg; window.fmSw=fmSw; window.fmLayout=fmLayout; window.fmPickFont=fmPickFont;
   window.fmFieldFold=fmFieldFold; window.fmFieldSet=fmFieldSet; window.fmFieldOpts=fmFieldOpts; window.fmFieldAddRow=fmFieldAddRow; window.fmFieldDel=fmFieldDel; window.fmFieldReorder=fmFieldReorder;
   window.fmInfoSet=fmInfoSet; window.fmInfoRow=fmInfoRow; window.fmMailAdd=fmMailAdd; window.fmMailDel=fmMailDel; window.fmMediaPick=fmMediaPick; window.fmMediaClear=fmMediaClear; window.fmMediaUpload=fmMediaUpload; window.fmMediaUrl=fmMediaUrl;
@@ -59069,7 +59188,7 @@ global.PolyFX = API;
       snblk       :{icons:1, eb:1, desc:1, ebH:1, descH:1, introTH:1, acct:1, href:1, imgs:1, introT:1, moreT:1, bgImg:1},   /* 261022 추가 — 소셜 블록 · 아이콘·문구·계정·이미지·배경 소재는 PC·모바일 공유, 모양·크기·열·색·여백은 기기별 */
       tkblk       :{tabs:1, def:1, bgImg:1, bgGray:1},   /* 261023 추가 — 탭 블록 · 탭(이름 · 내용) · 처음 탭 · 배경 소재는 PC·모바일 공유, 줄 · 가로 개수 · 높이 · 글자 · 색 · 여백은 기기별 */
       ltblk       :{boards:1, show:1, _Bs:1, bgImg:1, bgGray:1},   /* 261023 추가 — 최근게시물 블록 · 게시판 · 표시 항목 · 배경 소재는 PC·모바일 공유, 스타일 · 개수 · 배치 · 글자 · 색 · 여백은 기기별 */
-      formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, smsOn:1, sms:1, smsOff:1, privacy:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블록 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
+      formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, smsOn:1, sms:1, smsOff:1, privacy:1, privTxt:1, ipBlock:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블록 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
     };
     /* 텍스트 문구 키 — 기본은 PC 와 공유하고, 블록별 '문구 따로 쓰기'(blk._mvTextSplit)를 켠 경우에만 모바일 전용이 된다 */
     var MV_TEXT={
@@ -63217,6 +63336,8 @@ function ghvDemo(blk){
   .sms-box .sms-h .cnt{font-weight:400;color:var(--ink-3,#9096A0);}
   .sms-box .sms-lk{border:none;background:none;padding:0;font:inherit;font-size:var(--fs-sm);font-weight:400;color:var(--green);cursor:pointer;}
   .sms-box .sms-lk:hover{text-decoration:underline;}
+  .sms-box .sms-lk.ext{display:inline-flex;align-items:center;gap:4px;}   /* 261105 추가 — 새 창으로 열리는 링크(폼 응답 보기) : 컨택트 「상담신청 응답 보기」와 같은 새 창 아이콘 */
+  .sms-box .sms-lk.ext svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   #bsetCt #ctFixFld{margin:0;} #bsetCt .ct-fix-h{cursor:default;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;min-height:44px;padding:13px 24px;margin:0 -16px;border-top:1px solid var(--border,#e5e7eb);}   /* 261029 수정 — 아래 섹션 머리줄(입력 항목 등)과 같은 높이 · 여백 · 윗선 */ #bsetCt .ct-fix-h > span{display:inline-flex;align-items:center;gap:5px;}   /* 261029 추가 — 설정 맨 위 「화면 하단 고정」 한 줄 (접기 없음) */
   /* 261029 추가 — 모바일에서 상담 신청 띠가 세로로 쌓이면 동의 · CAPTCHA 줄을 보내기 버튼 위로 (보내기 전에 할 일) */
   .ct-strip .fm-wrap.wrapd .fm-extra{order:2;} .ct-strip .fm-wrap.wrapd .fm-act{order:3;}   /* 칸이 여러 줄로 넘어가면(항목이 많거나 폭이 좁을 때 · ctStripWrap) 동의 · CAPTCHA 를 보내기 버튼 위로. 한 줄 띠는 그대로 */
