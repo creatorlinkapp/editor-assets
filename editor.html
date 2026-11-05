@@ -3125,6 +3125,7 @@
   .fm-info-ed textarea{height:auto;min-height:52px;padding:6px 9px;line-height:1.5;resize:vertical;}
   .fm-info-ed input:focus,.fm-info-ed textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
   .fm-info-ed .grp{margin-top:10px;} .fm-info-ed .grp .k{font-size:var(--fs-sm);font-weight:700;color:var(--ink-2);}
+  .fm-info-ed .grp .k{display:flex;align-items:center;justify-content:space-between;} .fm-info-ed .grp .k .mt-imgdel:disabled{opacity:.35;pointer-events:none;}   /* 261105 추가 — 안내 항목 삭제 */
   /* ═════════════════════════════════════════════════════════════════
      260929 추가 — 캘린더 블록 (CALENDAR01 · 접두어 ca · cfg _caCfg)
      · 기존 편집기(addblock.net config) 블록추가 > 캘린더 CALENDAR1(FullCalendar 6 월/주/일 보기)을 바닐라로 옮겼다.
@@ -13343,14 +13344,15 @@
         <div class="fld sfold" id="fmHeadAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">제목<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="fm-fin"><span class="k">제목</span><input type="text" id="fmTitle" placeholder="비우면 제목 없이" maxlength="60" spellcheck="false" oninput="fmUpd('title',this.value)"></div>
+            <div class="fm-fin"><span class="k">제목</span><input type="text" id="fmTitle" onkeydown="if(event.key==='Enter' && !event.isComposing){ event.preventDefault(); this.blur(); }" placeholder="비우면 제목 없이" maxlength="60" spellcheck="false" oninput="fmUpd('title',this.value)"></div>
             <div class="fm-fin"><span class="k">설명</span><textarea id="fmDesc" rows="2" placeholder="제목 아래 안내 문구" spellcheck="false" oninput="fmUpd('desc',this.value)"></textarea></div>
             <div class="srow" style="margin-bottom:6px;"><span class="k">정렬</span></div>
             <div class="mt-seg" id="fmTaSeg">
               <button type="button" class="mt-seg-b active" data-m="left" onclick="fmSeg('ta','fmTaSeg','left')">왼쪽</button>
               <button type="button" class="mt-seg-b" data-m="center" onclick="fmSeg('ta','fmTaSeg','center')">가운데</button>
             </div>
-            <div class="sline"><span class="lbl">제목 아래 구분선</span><button type="button" class="sw" id="fmRuleSw" onclick="fmSw(this,'rule')"></button></div>
+            <div class="sline" id="fmRuleRow"><span class="lbl">제목 아래 구분선</span><button type="button" class="sw" id="fmRuleSw" onclick="fmSw(this,'rule')"></button></div>
+            <div class="mtk-hint" id="fmRuleHint">제목을 입력하면 구분선이 보입니다.</div>
           </div></div>
         </div>
 
@@ -13388,7 +13390,8 @@
             <div id="fmInfoRows" class="fm-info-ed">
               <div class="grp"><span class="k">안내 제목</span><input type="text" id="fmInfoT" maxlength="30" spellcheck="false" oninput="fmInfoSet('t',this.value)"><input type="text" id="fmInfoS" placeholder="부제" maxlength="40" spellcheck="false" oninput="fmInfoSet('s',this.value)"></div>
               <div id="fmInfoRowsIn"></div>
-              <div class="mtk-hint">안내 항목 3개(이름 · 내용). 비워 두면 폼에서 빠집니다. 제목·항목 이름 색은 버튼 색을 따릅니다.</div>
+              <div class="im-addrow"><button type="button" class="btn-sm" id="fmInfoAddB" onclick="fmInfoAdd()" title="안내 항목을 끝에 추가합니다"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
+              <div class="mtk-hint">안내 항목은 최대 5개(이름 · 내용)입니다. 비워 두면 폼에서 빠집니다. 제목·항목 이름 색은 버튼 색을 따릅니다.</div>
             </div>
             <div class="srow" id="fmCwRow"><span class="k">폼 폭</span><input class="rng" type="range" id="fmCw" min="360" max="960" step="10" value="560"><span class="v" id="fmCwV">560px</span></div>
           </div></div>
@@ -13402,7 +13405,7 @@
               <button type="button" class="mt-seg-b" data-m="line" onclick="fmSeg('is','fmIsSeg','line')">밑줄</button>
               <button type="button" class="mt-seg-b" data-m="fill" onclick="fmSeg('is','fmIsSeg','fill'); clFillDef('fm');">채움</button>
             </div>
-            <div class="srow"><span class="k">칸 색</span><span class="sw-col"><input type="color" id="fmIb" value="#ffffff"><span class="hex" id="fmIbV">#FFFFFF</span><button type="button" class="sw-reset" id="fmIbR" onclick="fmUpd('ib',''); fmFillBset();" title="칸 색 없음 (투명)" aria-label="칸 색 없음"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
+            <div class="srow" id="fmIbRow"><span class="k">칸 색</span><span class="sw-col"><input type="color" id="fmIb" value="#ffffff"><span class="hex" id="fmIbV">#FFFFFF</span><button type="button" class="sw-reset" id="fmIbR" onclick="fmUpd('ib',''); fmFillBset();" title="칸 색 없음 (투명)" aria-label="칸 색 없음"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
             <div class="srow" id="fmIbdRow"><span class="k">테두리 색</span><span class="sw-col"><input type="color" id="fmIbd" value="#d5d9e0"><span class="hex" id="fmIbdV">#D5D9E0</span></span></div>
             <div class="srow"><span class="k">글자 색</span><span class="sw-col"><input type="color" id="fmIc" value="#23272e"><span class="hex" id="fmIcV">#23272E</span></span></div>
             <div class="srow" id="fmIrRow"><span class="k">라운딩 <svg class="help-ico pg-tip" data-tip="칸 색을 정하면 적용됩니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><input class="rng" type="range" id="fmIr" min="0" max="24" step="1" value="4"><span class="v" id="fmIrV">4px</span></div>
@@ -13418,9 +13421,10 @@
                 <div class="sdd-menu"></div>
               </div>
             </div>
-            <div class="srow"><span class="k">제목 크기</span><input class="rng" type="range" id="fmTs" min="14" max="48" step="1" value="24"><span class="v" id="fmTsV">24px</span></div>
+            <div class="srow" id="fmTsRow"><span class="k">제목 크기</span><input class="rng" type="range" id="fmTs" min="14" max="48" step="1" value="24"><span class="v" id="fmTsV">24px</span></div>
             <div class="srow"><span class="k">항목 크기</span><input class="rng" type="range" id="fmLs" min="11" max="20" step="0.5" value="13.5"><span class="v" id="fmLsV">13.5px</span></div>
-            <div class="srow"><span class="k">제목 색</span><span class="sw-col"><input type="color" id="fmTc" value="#1c1f24"><span class="hex" id="fmTcV">#1C1F24</span></span></div>
+            <div class="srow" id="fmTcRow"><span class="k">제목 색</span><span class="sw-col"><input type="color" id="fmTc" value="#1c1f24"><span class="hex" id="fmTcV">#1C1F24</span></span></div>
+            <div class="mtk-hint" id="fmTsHint">제목을 입력하면 제목 크기·색이 적용됩니다.</div>
             <div class="srow"><span class="k">항목 색</span><span class="sw-col"><input type="color" id="fmLc" value="#5b6270"><span class="hex" id="fmLcV">#5B6270</span></span></div>
             <div class="srow"><span class="k">설명 색</span><span class="sw-col"><input type="color" id="fmDc" value="#9aa0a8"><span class="hex" id="fmDcV">#9AA0A8</span></span></div>
           </div></div>
@@ -13429,7 +13433,7 @@
         <div class="fld sfold" id="fmBtnAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">버튼<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="fm-fin" style="margin-top:0;"><span class="k">문구</span><input type="text" id="fmBtnT" maxlength="20" spellcheck="false" oninput="fmUpd('btnT',this.value)"></div>
+            <div class="fm-fin" style="margin-top:0;"><span class="k">문구</span><input type="text" id="fmBtnT" onkeydown="if(event.key==='Enter' && !event.isComposing){ event.preventDefault(); this.blur(); }" maxlength="20" spellcheck="false" oninput="fmUpd('btnT',this.value)"></div>
             <div class="srow" style="margin:12px 0 6px;"><span class="k">정렬</span></div>
             <div class="mt-seg" id="fmBaSeg">
               <button type="button" class="mt-seg-b active" data-m="left" onclick="fmSeg('ba','fmBaSeg','left')">왼쪽</button>
@@ -13450,7 +13454,7 @@
         <div class="fld sfold" id="fmSubmitAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">제출<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="fm-fin" style="margin-top:0;"><span class="k">완료 메시지</span><input type="text" id="fmDone" maxlength="50" placeholder="신청 완료되었습니다." spellcheck="false" oninput="fmUpd('done',this.value)"></div>
+            <div class="fm-fin" style="margin-top:0;"><span class="k">완료 메시지</span><input type="text" id="fmDone" onkeydown="if(event.key==='Enter' && !event.isComposing){ event.preventDefault(); this.blur(); }" maxlength="50" placeholder="신청 완료되었습니다." spellcheck="false" oninput="fmUpd('done',this.value)"></div>
             <div class="mtk-hint" style="margin-top:4px;">보내기를 누른 뒤 보이는 문구입니다 (최대 50자).</div>
             <div class="sline" style="padding-top:14px;"><span class="lbl">이메일 알림 <i class="st-help" data-tip="이 블록으로 신청 및 문의가 접수되면, 지정한 이메일로 알림을 보냅니다."></i></span><button type="button" class="sw on" id="fmMailSw" onclick="fmSw(this,'mailOn')"></button></div>
             <div class="fm-mails" id="fmMailBox">
@@ -13470,7 +13474,7 @@
             <div class="sline" id="fmIpRow"><span class="lbl">단일IP 중복차단 <i class="st-help" data-tip="동일한 IP로 1일 동안 연속으로 3회 등록 시 10분 동안 차단합니다."></i></span><button type="button" class="sw" id="fmIpSw" onclick="fmSw(this,'ipBlock')"></button></div>
             <div class="sline"><span class="lbl">CAPTCHA <i class="st-help" data-tip="보내기 전에 보안문자를 입력하게 해 자동 등록(스팸)을 막습니다."></i></span><button type="button" class="sw on" id="fmCapSw" onclick="fmSw(this,'captcha')"></button></div>
             <!-- 261105 추가 — 폼 이름 (기존 편집기 항목 편집 맨 위 「폼 이름」) : 대시보드 폼 응답 목록에서 폼을 구분하는 이름. 비우면 제목 → 없으면 「페이지 이름 + 폼」으로 자동 -->
-            <div class="fm-fin" style="margin-top:14px;"><span class="k">폼 이름</span><input type="text" id="fmName" maxlength="40" spellcheck="false" autocomplete="off" oninput="fmUpd('fname',this.value)"></div>
+            <div class="fm-fin" style="margin-top:14px;"><span class="k">폼 이름</span><input type="text" id="fmName" onkeydown="if(event.key==='Enter' && !event.isComposing){ event.preventDefault(); this.blur(); }" maxlength="40" spellcheck="false" autocomplete="off" oninput="fmUpd('fname',this.value)"></div>
             <div class="mtk-hint" style="margin-top:4px;">대시보드 폼 응답 목록에 보이는 이름입니다. 방문자에게는 보이지 않습니다.</div>
             <!-- 261105 수정 — 안내 문구만 있던 자리에 「폼 응답 보기」 바로가기 (기존 편집기와 같게 · 대시보드 폼 응답 목록) -->
             <div class="sms-box mail-snd fm-resp"><div class="sms-h"><span>폼 응답 <i class="st-help" data-tip="이 폼으로 들어온 응답은 사이트 게시 뒤 대시보드의 「폼 응답」에서 확인합니다."></i></span><button type="button" class="sms-lk ext" onclick="fmRespOpen()">폼 응답 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></button></div></div>
@@ -13499,7 +13503,7 @@
           <div class="fld-h fold-h" onclick="smAcc(this)">여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="fmPv" min="0" max="200" step="4" value="80"><span class="v" id="fmPvV">80px</span></div>
-            <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="fmMw" min="720" max="1600" step="10" value="1140"><span class="v" id="fmMwV">1140px</span></div>
+            <div class="srow" id="fmMwRow"><span class="k">최대 폭</span><input class="rng" type="range" id="fmMw" min="720" max="1600" step="10" value="1140"><span class="v" id="fmMwV">1140px</span></div>
           </div></div>
         </div>
 
@@ -19536,8 +19540,9 @@
   }
   function libRender(){
     var id={img:(libState.src==='free'?'libPaneImgFree':'libPaneImgMine'),vid:(libState.vsrc==='mine'?'libPaneVidMine':'libPaneVid'),ico:'libPaneIco',emo:'libPaneEmo'}[libState.tab];
+    var cur=document.querySelector('#panelLib .lib-pane.on'), same=!!(cur && cur.id===id);
     document.querySelectorAll('#panelLib .lib-pane').forEach(function(p){ p.classList.toggle('on',p.id===id); });
-    var body=document.querySelector('#panelLib .lib-body'); if(body) body.scrollTop=0;
+    var body=document.querySelector('#panelLib .lib-body'); if(body && !same) body.scrollTop=0;   /* 261105 수정 — 같은 목록을 다시 열 때(블록 설정의 「보관함에서 고르기」 등)는 보던 스크롤 자리를 지킨다 */
   }
   /* ══════ 260904 추가 — 보관함 미디어 모듈: 이미지(Unsplash) · 동영상 · 아이콘(머터리얼/폰트어썸/기본) · 이모티콘 + 캔버스 드래그 앤 드롭 ══════ */
   var LIB_UNSPLASH=[
@@ -44078,7 +44083,7 @@ global.PolyFX = API;
     if(!Array.isArray(c.mails)) c.mails=[];
     if(!c.info||typeof c.info!=='object') c.info=fmClone(FM_DEF.info);
     if(!Array.isArray(c.info.rows)) c.info.rows=[];
-    while(c.info.rows.length<3) c.info.rows.push({k:'',v:''});
+    if(!c.info.rows.length) c.info.rows.push({k:'',v:''});   /* 261105 수정 — 안내 항목 수를 고를 수 있게 (1~5, 예전엔 늘 3칸) */
     return c;
   }
   function fmIsVid(u){ return (typeof rtBgIsVid==='function')?rtBgIsVid(u):/\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(String(u||'')); }
@@ -44230,13 +44235,45 @@ global.PolyFX = API;
     if(!clone || clone.getAttribute('data-block')!=='formblk') return;
     clone._fmSig=null;
     try{ clone._fmCfg=fmClone(fmCfg(src)); }catch(e){ clone._fmCfg=null; }
+    if(clone._fmCfg && String(clone._fmCfg.fname||'').trim()) clone._fmCfg.fname=String(clone._fmCfg.fname).trim()+' (복사본)';   /* 261105 추가 — 폼 응답 목록에서 원본과 구분되게 */
     setTimeout(function(){ fmInit(clone); },0);
   }
   /* 보관함 → 캔버스: 이미지 자리(.fm-img)면 옆 이미지, 그 밖이면 블록 배경 (libApply 에서 호출) */
+  /* 261105 추가 — 카드 없는 배치에서 배경 사진을 넣거나 빼면 글자색을 맞춘다 (fmLayout 과 같은 규칙 · 사진 위는 어둡게 40% + 밝은 글자) */
+  function fmBgInk(blk,had){
+    var c=fmCfg(blk), has=!!String(c.bgImg||'').trim(); if(c.layout==='card'||has===had) return false;
+    var textLight=fmInk(c.tc||'#1c1f24')!=='#fff', ch=false, K=['tc','lc','dc','ic','ibd','bc','bfg'];
+    if(has && !textLight){
+      /* 사진 위에 바로 놓이는 글자(제목·항목·설명)만 밝게. 칸 색이 있는 입력칸(채움·박스)은 칸이 글자를 받쳐 주니 그대로 둔다 */
+      var bak={}; K.forEach(function(k){ bak[k]=c[k]; }); c.inkBak=bak;
+      if(txNum(c.bgDim,0)<30) c.bgDim=40; c.tc='#ffffff'; c.lc='#e6e8eb'; c.dc='#c5c9cf';
+      if(c.is==='line' || !c.ib){ c.ic='#ffffff'; c.ibd='#c5c9cf'; }
+      if(c.bs==='outline' && fmInk(c.bc)==='#fff'){ c.bc='#ffffff'; c.bfg=''; }
+      ch=true;
+    }
+    else if(!has && textLight && fmInk(c.bg||'#ffffff')!=='#fff'){
+      /* 사진을 빼면 넣기 전 색으로 되돌린다 (자동으로 바꾼 기록이 없으면 기본 어두운 글자) */
+      var b=c.inkBak;
+      if(b) K.forEach(function(k){ if(k in b) c[k]=b[k]; });
+      else { c.tc='#1c1f24'; c.lc='#5b6270'; c.dc='#9aa0a8'; if(c.is==='line' || !c.ib){ c.ic='#23272e'; c.ibd='#d5d9e0'; } }
+      ch=true;
+    }
+    if(!has) delete c.inkBak;
+    if(ch && blk===fmCurBlk) fmColSync();
+    return ch;
+  }
+  /* 색 · 크기 칸만 다시 채운다 (항목 목록은 그대로) */
+  function fmColSync(){
+    if(!fmCurBlk) return; var c=fmCfg(fmCurBlk);
+    function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
+    FM_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
+    FM_COL.forEach(function(r){ var v=c[r[1]]||((r[1]==='ib')?'#ffffff':(r[1]==='cbd'?'#e3e6eb':'#ffffff')); set(r[0],v); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(v); });
+    fmRowsSync();
+  }
   function fmLibDrop(blk,src,kind){
     var c=fmCfg(blk);
     if(kind==='img'){ if(fmIsVid(src)){ clToast('옆 이미지 자리에는 이미지만 넣을 수 있습니다.'); return false; } c.img=src; fmApply(blk); if(fmCurBlk===blk) fmMediaSync(); clToast('이미지를 바꿨습니다.'); return true; }
-    c.bgImg=src; fmApply(blk); if(fmCurBlk===blk) fmMediaSync(); clToast((fmIsVid(src)?'블록 배경 동영상을':'블록 배경 이미지를')+' 넣었습니다.'); return true;
+    var had=!!String(c.bgImg||'').trim(); c.bgImg=src; fmBgInk(blk,had); fmApply(blk); if(fmCurBlk===blk) fmMediaSync(); clToast((fmIsVid(src)?'블록 배경 동영상을':'블록 배경 이미지를')+' 넣었습니다.'); return true;
   }
 
   /* ── 폼 카드 → 블록 삽입 ── */
@@ -44265,7 +44302,7 @@ global.PolyFX = API;
 
   /* ── 블록설정 ── */
   function fmUpd(key,val){ if(!fmCurBlk) return; fmCfg(fmCurBlk)[key]=val; fmApply(fmCurBlk);
-    if(key==='title'){ var fn=document.getElementById('fmName'); if(fn) fn.placeholder=fmAutoName(fmCfg(fmCurBlk))+' (자동)'; } }   /* 261105 추가 — 제목을 바꾸면 폼 이름 자동값도 따라간다 */
+    if(key==='title'){ var fn=document.getElementById('fmName'); if(fn) fn.placeholder=fmAutoName(fmCfg(fmCurBlk))+' (자동)'; fmRowsSync(); } }   /* 261105 추가 — 제목을 바꾸면 폼 이름 자동값도 따라간다 */
   function fmSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===m); }); }
   function fmSeg(key,id,m){ fmSegSync(id,m); fmUpd(key,m); if(key==='is'||key==='bs') fmRowsSync(); }
   function fmSw(el,key){ if(!fmCurBlk) return; var on=!el.classList.contains('on'); el.classList.toggle('on',on); fmUpd(key,on); if(key==='mailOn') fmMailSync(); }
@@ -44289,6 +44326,11 @@ global.PolyFX = API;
     function show(id,on){ var el=document.getElementById(id); if(el) el.style.display=on?'':'none'; }
     show('fmCardRows',c.layout==='card'); show('fmImgRows',c.layout==='img'); show('fmInfoRows',c.layout==='info'); show('fmCwRow',c.layout!=='img'&&c.layout!=='info');
     show('fmPrivTxtRow',!!c.privacy);   /* 261105 추가 — 동의를 켰을 때만 동의 내용 칸 */
+    show('fmIbRow',c.is!=='line'); show('fmMwRow',c.layout!=='img');   /* 261105 추가 — 밑줄형엔 칸 색이, 이미지 배치엔 최대 폭이 쓰이지 않는다 */
+    var noT=!String(c.title||'').trim();   /* 261105 추가 — 제목이 없으면 제목 크기·색·구분선은 흐리게 + 안내 (안내형 배치의 부제는 제목 색을 써서 색은 둔다) */
+    ['fmTsRow','fmRuleRow'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.toggle('off',noT); });
+    var tcr=document.getElementById('fmTcRow'); if(tcr) tcr.classList.toggle('off',noT && c.layout!=='info');
+    show('fmTsHint',noT); show('fmRuleHint',noT);
     show('fmIrRow',c.is!=='line'); show('fmIbdRow',c.is!=='fill'); show('fmBfgRow',c.bs!=='outline');
     var r=document.getElementById('fmCbdR'); if(r) r.classList.toggle('off',!c.cbd);
     var ibr=document.getElementById('fmIbR'); if(ibr) ibr.classList.toggle('off',!c.ib);
@@ -44391,6 +44433,7 @@ global.PolyFX = API;
   function fmFieldSet(i,k,v){
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk), f=c.fields[i]; if(!f) return;
     f[k]=v;
+    if(k==='t' && (v==='radio'||v==='check'||v==='select') && !(f.opts||[]).some(function(o){ return String(o).trim(); })) f.opts=['선택 1','선택 2'];   /* 261105 추가 — 캔버스 예시와 저장값을 같게 */
     if(k==='t' && v==='datetime' && !f.ti){ f.ti=30; f.ts=f.ts||'09:00'; f.te=f.te||'18:00'; }   /* 261105 추가 — 날짜/시간형은 시간 설정 기본값(30분 · 09:00~18:00 · 기존 편집기와 같게) */
     if(k==='dm' && v==='range' && !f.df){ var td=new Date(); f.df=td.getFullYear()+'-'+('0'+(td.getMonth()+1)).slice(-2)+'-'+('0'+td.getDate()).slice(-2); }   /* 기간을 고르면 시작은 오늘부터 */
     fmApply(fmCurBlk);
@@ -44424,13 +44467,20 @@ global.PolyFX = API;
   }
   /* 안내 옆(FORM10) 문구 */
   function fmInfoSet(k,v){ if(!fmCurBlk) return; fmCfg(fmCurBlk).info[k]=v; fmApply(fmCurBlk); }
+  var FM_INFO_MAX=5;   /* 261105 추가 */
+  function fmInfoAdd(){ if(!fmCurBlk) return; var rows=fmCfg(fmCurBlk).info.rows; if(rows.length>=FM_INFO_MAX) return; rows.push({k:'',v:''}); fmInfoRender(); fmApply(fmCurBlk);
+    var g=document.querySelectorAll('#fmInfoRowsIn .grp input'), last=g[g.length-1]; if(last) last.focus(); }
+  function fmInfoDel(i){ if(!fmCurBlk) return; var rows=fmCfg(fmCurBlk).info.rows; if(rows.length<=1) return; rows.splice(i,1); fmInfoRender(); fmApply(fmCurBlk); }
+  window.fmInfoAdd=fmInfoAdd; window.fmInfoDel=fmInfoDel;
   function fmInfoRow(i,k,v){ if(!fmCurBlk) return; var r=fmCfg(fmCurBlk).info.rows[i]; if(!r) return; r[k]=v; fmApply(fmCurBlk); }
   function fmInfoRender(){
     if(!fmCurBlk) return; var inf=fmCfg(fmCurBlk).info, host=document.getElementById('fmInfoRowsIn'); if(!host) return;
     var t=document.getElementById('fmInfoT'), s=document.getElementById('fmInfoS'); if(t) t.value=inf.t||''; if(s) s.value=inf.s||'';
-    host.innerHTML=inf.rows.slice(0,3).map(function(r,i){
-      return '<div class="grp"><span class="k">항목 '+(i+1)+'</span><input type="text" value="'+_mtAttr(r.k||'')+'" placeholder="이름 (예: TEL.)" maxlength="30" spellcheck="false" oninput="fmInfoRow('+i+',&#39;k&#39;,this.value)"><textarea rows="2" placeholder="내용" spellcheck="false" oninput="fmInfoRow('+i+',&#39;v&#39;,this.value)">'+_mtAttr(r.v||'')+'</textarea></div>';
+    var one=(inf.rows.length<=1);
+    host.innerHTML=inf.rows.slice(0,FM_INFO_MAX).map(function(r,i){
+      return '<div class="grp"><span class="k">항목 '+(i+1)+'<button type="button" class="mt-imgdel" title="삭제" aria-label="삭제"'+(one?' disabled':'')+' onclick="fmInfoDel('+i+')">'+FM_DI.del+'</button></span><input type="text" value="'+_mtAttr(r.k||'')+'" placeholder="이름 (예: TEL.)" maxlength="30" spellcheck="false" oninput="fmInfoRow('+i+',&#39;k&#39;,this.value)"><textarea rows="2" placeholder="내용" spellcheck="false" oninput="fmInfoRow('+i+',&#39;v&#39;,this.value)">'+_mtAttr(r.v||'')+'</textarea></div>';
     }).join('');
+    var ab=document.getElementById('fmInfoAddB'); if(ab) ab.disabled=(inf.rows.length>=FM_INFO_MAX);
   }
   /* 이메일 알림 — 받는 메일 목록 (최대 5) */
   function fmMailSync(){
@@ -44476,7 +44526,7 @@ global.PolyFX = API;
     var dr=document.getElementById('fmBgDimRow'); if(dr) dr.style.display=u2?'':'none';
     var gr=document.getElementById('fmBgGrayRow'), gs=document.getElementById('fmBgGraySw'); if(gr) gr.style.display=u2?'':'none'; if(gs) gs.classList.toggle('on',!!c.bgGray);
   }
-  function fmMediaSet(blk,w,src){ if(!blk||!blk.isConnected) return; fmCfg(blk)[fmMediaKey(w)]=src; fmApply(blk); if(blk===fmCurBlk) fmMediaSync(); if(typeof mvSync==='function') try{ mvSync(); }catch(x){} }
+  function fmMediaSet(blk,w,src){ if(!blk||!blk.isConnected) return; var c=fmCfg(blk), had=!!String(c.bgImg||'').trim(); c[fmMediaKey(w)]=src; if(w!=='img') fmBgInk(blk,had); fmApply(blk); if(blk===fmCurBlk) fmMediaSync(); if(typeof mvSync==='function') try{ mvSync(); }catch(x){} }
   function fmMediaPick(w){
     if(!fmCurBlk) return; var blk=fmCurBlk, id='fm:'+w;
     if(libThumbMode && libThumbMode.listId===id){ libThumbEnd(false); fmMediaSync(); clToast('선택을 끝냈습니다.'); return; }
@@ -59307,6 +59357,7 @@ global.PolyFX = API;
         bar.classList.toggle('split-on', hasText && split);
         if(sw) sw.classList.toggle('on', split);
         if(msg && MV_TARGET!=='mobile') msg.textContent='PC 값을 고치는 중 — 모바일에서 따로 바꾼 값이 없는 항목은 휴대폰에도 같이 바뀝니다.';   /* 261026 추가 */
+        else if(msg && type==='formblk') msg.textContent='모바일 전용 편집 — 색·크기·여백·레이아웃은 모바일에만, 항목·문구·제출 설정은 PC와 함께 바뀝니다.';   /* 261105 추가 — 폼은 항목·문구·제출 설정이 늘 PC 와 같다 */
         else if(msg) msg.textContent = (hasText && split)
           ? '모바일 전용 편집 — 문구·여백·효과 모두 모바일에만 반영됩니다.'
           : (hasText ? '모바일 전용 편집 — 여백·효과·옵션은 모바일에만, 문구는 PC 와 함께 바뀝니다.'
@@ -63513,6 +63564,7 @@ function ghvDemo(blk){
     var P=window.CL_SITE_PLAN||{};
     document.body.classList.toggle('cl-plan-free',!!P.free);
     document.body.classList.toggle('cl-sms-dash-off',!P.free && P.smsDash===false);
+    ['ctSmsSw','fmSmsSw'].forEach(function(id){ var sw=document.getElementById(id); if(!sw) return; if(!P.free && P.smsDash===false) sw.title='대시보드에서 문자 알림이 꺼져 있습니다'; else sw.removeAttribute('title'); });   /* 261105 추가 */
   };
   window.clPlanOpen=function(k){
     var m=document.getElementById('clPlanModal'), t=MSG[k]; if(!m||!t) return;
@@ -63550,7 +63602,7 @@ function ghvDemo(blk){
     var sw=e.target.closest&&e.target.closest('#ctMailSw,#fmMailSw,#ctSmsSw,#fmSmsSw'); if(!sw) return;
     var P=window.CL_SITE_PLAN||{}, sms=/SmsSw$/.test(sw.id);
     if(P.free){ e.preventDefault(); e.stopPropagation(); clPlanOpen(sms?'sms':'mail'); }
-    else if(sms && P.smsDash===false){ e.preventDefault(); e.stopPropagation(); }
+    else if(sms && P.smsDash===false){ e.preventDefault(); e.stopPropagation(); clInfoOpen('문자 알림','대시보드에서 문자 알림이 꺼져 있어 사용할 수 없습니다. 대시보드에서 문자 알림을 켠 뒤 다시 설정해 주세요.'); }   /* 261105 추가 — 막힌 이유를 알린다 */
   },true);
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ var m=document.getElementById('clPlanModal'); if(m&&m.classList.contains('show')){ e.stopPropagation(); clPlanClose(); } } },true);
   if(document.body) clPlanSync(); else document.addEventListener('DOMContentLoaded',clPlanSync);
