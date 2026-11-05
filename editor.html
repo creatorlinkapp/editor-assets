@@ -44360,7 +44360,7 @@ global.PolyFX = API;
   function fmSw(el,key){ if(!fmCurBlk) return; var on=!el.classList.contains('on'); el.classList.toggle('on',on); fmUpd(key,on); if(key==='mailOn') fmMailSync();
     if(key==='privacy' && on){ var c=fmCfg(fmCurBlk); if(!String(c.privTxt||'').trim()){   /* 261105 추가 — 동의를 켤 때 내용이 비어 있으면 기본 문구로 (방문자가 「내용 보기」에서 빈 내용을 보지 않게 · 항목은 지금 폼 항목 이름) */
       var nm=c.fields.map(function(f){ return String(f.l||'').trim(); }).filter(Boolean).join(', ')||'폼에 입력한 항목';
-      c.privTxt='개인정보 수집 및 이용 동의\n\n■ 개인정보 수집목적 및 이용목적\n문의 접수 및 결과 회신\n\n■ 수집하는 개인정보 항목\n'+nm+'\n\n■ 보유 및 이용기간\n접수 후 1년\n\n■ 동의를 거부할 권리\n동의를 거부할 수 있으며, 거부하면 문의 접수가 제한될 수 있습니다.';   /* 261105 수정 — 동의 받을 때 알릴 4가지(목적 · 항목 · 기간 · 거부할 권리) */
+      c.privTxt='개인정보 수집 및 이용 동의\n\n■ 개인정보 수집목적 및 이용목적\n문의 접수 및 결과 회신\n\n■ 수집하는 개인정보 항목\n'+nm+'\n\n■ 보유 및 이용기간\n접수 후 1년\n\n■ 동의를 거부할 권리\n동의를 거부할 수 있습니다. 다만 동의하지 않으면 폼을 제출할 수 없습니다.';   /* 261105 수정 — 동의 받을 때 알릴 4가지(목적 · 항목 · 기간 · 거부할 권리) */
       var pt=document.getElementById('fmPrivTxt'); if(pt) pt.value=c.privTxt; clToast('동의 내용에 기본 문구를 넣었습니다. 사이트에 맞게 고쳐 주세요.'); } } }
   function fmLayout(m){
     m=(m==='card'||m==='img'||m==='info')?m:'plain';
