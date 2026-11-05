@@ -2564,6 +2564,11 @@
   .fm-o{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--fmic);}
   .fm-ob{flex:none;width:16px;height:16px;box-sizing:border-box;border:1.5px solid var(--fmbd);border-radius:3px;background:var(--fmib);}
   .fm-ob.radio{border-radius:50%;}
+  /* 261105 추가 — 캔버스 · 미리보기에서 단일 · 다중 선택과 동의 체크를 눌러 볼 수 있게 (고른 값은 저장하지 않음 · 목록 · 달력과 같은 규칙). 켠 칸은 버튼 색 + 버튼 글자 색 표시 */
+  .fm-o,.fm-priv{cursor:pointer;user-select:none;} .fm-pv .fm-o,.fm-pv .fm-priv{cursor:default;}
+  .fm-ob{position:relative;} .fm-ob.on{background:var(--fmac);border-color:var(--fmac);}
+  .fm-ob.check.on::after{content:'';position:absolute;inset:0;background:var(--fmab);-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l4.5 4.5L19 7.5'/></svg>") center/10px no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l4.5 4.5L19 7.5'/></svg>") center/10px no-repeat;}
+  .fm-ob.radio.on::after{content:'';position:absolute;inset:3.5px;border-radius:50%;background:var(--fmab);}
   .fm-sel{justify-content:space-between;gap:10px;}
   /* 260929 수정 — 목록 미리보기: 브라우저 기본 <select> 는 펼침창 모양을 못 바꿔(OS 파란 강조·예시글이 선택지로 섞임) 블록 글꼴·입력칸 선·모서리를 따르는 펼침창으로 */
   .fm-selw{position:relative;}
@@ -22050,6 +22055,7 @@
         sel.parentNode.insertBefore(clone, anchor.nextSibling);
         sel.parentNode.insertBefore(addbar, clone.nextSibling);
         if(typeof smCloneInit==='function') smCloneInit(sel, clone);
+        if(clone.getAttribute('data-block')==='formblk' && typeof fmDupName==='function') fmDupName(clone);   /* 261105 추가 — 복제한 폼 이름에 (복사본) */
         if(typeof bkCodeSync==='function') bkCodeSync();   /* 261013 추가 — 블록 코드(CSS · JS)도 복제본에 */
         if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
         if(typeof selectBlock==='function') selectBlock(clone);
@@ -44134,6 +44140,13 @@ global.PolyFX = API;
     if(w.hasAttribute('data-fk')) fmDkPick(w,el.getAttribute('data-v')||'');   /* 261105 추가 — 설정창 시간 칸이면 값으로 */
   }
   document.addEventListener('click',function(){ fmSelClose(); });
+  /* 261105 추가 — 단일 선택은 하나만 · 다중 선택 · 동의 체크는 켜고 끄기 (「내용 보기」 글자는 제외 · 블록추가 카드는 제외 · 다시 그리면 처음으로) */
+  document.addEventListener('click',function(e){
+    var t=e.target, o=t && t.closest && t.closest('.fm-o,.fm-priv'); if(!o || o.closest('.fm-pv') || t.closest('u')) return;
+    var ob=o.querySelector('.fm-ob'); if(!ob) return;
+    if(ob.classList.contains('radio')){ var box=o.closest('.fm-opts'); if(box) box.querySelectorAll('.fm-ob.radio').forEach(function(x){ if(x!==ob) x.classList.remove('on'); }); ob.classList.add('on'); }
+    else ob.classList.toggle('on');
+  });
   /* 261029 추가 — 날짜 달력 · 시분 선택 (컨택트 · 폼 블록 공통 fmFieldHTML) */
   var FM_HH=[], FM_MM=['00분','10분','20분','30분','40분','50분']; for(var _h=0;_h<24;_h++) FM_HH.push((_h<10?'0':'')+_h+'시');
   /* 261105 추가 — 날짜형 세부 설정(기존 편집기 「선택가능 기간 설정 · 제외 날짜 · 강조 컬러」) : 필드 값 dm(all · range) · df/dt 기간 · wd 고를 수 있는 요일(0=일 … 6=토) · ex 제외 날짜 · hc 강조 색
@@ -44237,10 +44250,12 @@ global.PolyFX = API;
   function fmCloneInit(src,clone){
     if(!clone || clone.getAttribute('data-block')!=='formblk') return;
     clone._fmSig=null;
-    try{ clone._fmCfg=fmClone(fmCfg(src)); }catch(e){ clone._fmCfg=null; }
-    if(clone._fmCfg && String(clone._fmCfg.fname||'').trim()) clone._fmCfg.fname=String(clone._fmCfg.fname).trim()+' (복사본)';   /* 261105 추가 — 폼 응답 목록에서 원본과 구분되게 */
+    try{ clone._fmCfg=fmClone(fmCfg(src)); }catch(e){ clone._fmCfg=null; }   /* 261105 수정 — 「(복사본)」은 복제 버튼에서만 붙인다(fmDupName) · 이 함수는 모바일 화면 · 탭 안 블록을 다시 그릴 때도 불린다 */
     setTimeout(function(){ fmInit(clone); },0);
   }
+  /* 261105 추가 — 「복제」 버튼으로 만든 폼만 이름 뒤에 (복사본) : 폼 응답 목록에서 원본과 구분되게 (비워 둔 자동 이름은 fmAutoName 이 번호로 구분) */
+  function fmDupName(clone){ var c=clone && clone._fmCfg; if(c && String(c.fname||'').trim()) c.fname=String(c.fname).trim()+' (복사본)'; }
+  window.fmDupName=fmDupName;
   /* 보관함 → 캔버스: 이미지 자리(.fm-img)면 옆 이미지, 그 밖이면 블록 배경 (libApply 에서 호출) */
   /* 261105 추가 — 카드 없는 배치에서 배경 사진을 넣거나 빼면 글자색을 맞춘다 (fmLayout 과 같은 규칙 · 사진 위는 어둡게 40% + 밝은 글자) */
   function fmBgInk(blk,had){
@@ -44305,7 +44320,7 @@ global.PolyFX = API;
 
   /* ── 블록설정 ── */
   function fmUpd(key,val){ if(!fmCurBlk) return; fmCfg(fmCurBlk)[key]=val; fmApply(fmCurBlk);
-    if(key==='title'){ var fn=document.getElementById('fmName'); if(fn) fn.placeholder=fmAutoName(fmCfg(fmCurBlk))+' (자동)'; fmRowsSync(); }
+    if(key==='title'){ var fn=document.getElementById('fmName'); if(fn) fn.placeholder=fmAutoName(fmCfg(fmCurBlk),fmCurBlk)+' (자동)'; fmRowsSync(); }
     if(key==='desc') fmRowsSync(); }   /* 261105 추가 — 설명을 쓰거나 지우면 정렬 막힘도 따라간다 */   /* 261105 추가 — 제목을 바꾸면 폼 이름 자동값도 따라간다 */
   function fmSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===m); }); }
   function fmSeg(key,id,m){ fmSegSync(id,m); fmUpd(key,m); if(key==='is'||key==='bs') fmRowsSync(); }
@@ -44612,7 +44627,7 @@ global.PolyFX = API;
     var pv=document.getElementById('fmPrivSw'); if(pv) pv.classList.toggle('on',!!c.privacy);
     var cp=document.getElementById('fmCapSw'); if(cp) cp.classList.toggle('on',!!c.captcha);
     var ip=document.getElementById('fmIpSw'); if(ip) ip.classList.toggle('on',!!c.ipBlock); set('fmPrivTxt',c.privTxt||'');   /* 261105 추가 */
-    var fn=document.getElementById('fmName'); if(fn){ fn.value=c.fname||''; fn.placeholder=fmAutoName(c)+' (자동)'; }   /* 261105 추가 — 비워 두면 자동 이름을 흐린 글로 보여 준다 */
+    var fn=document.getElementById('fmName'); if(fn){ fn.value=c.fname||''; fn.placeholder=fmAutoName(c,fmCurBlk)+' (자동)'; }   /* 261105 추가 — 비워 두면 자동 이름을 흐린 글로 보여 준다 */
     fmRowsSync();
   }
   /* 261105 추가 — 폼 이름 자동값 : 적은 이름 → 폼 제목 → 「지금 페이지 이름 + 폼」 (대시보드 폼 응답 목록에서 쓰는 이름 · fmFormName) */
@@ -44621,8 +44636,12 @@ global.PolyFX = API;
     (function walk(a){ (a||[]).forEach(function(n){ if(!n) return; if(n.id===id) hit=n; if(n.cur && !cur) cur=n; walk(n.children); }); })(list);
     var n=hit||cur; return n && String(n.name||'').trim() ? String(n.name).trim() : '';
   }
-  function fmAutoName(c){ var t=String(c.title||'').trim(); if(t) return t; var p=fmPageName(); return p?(p+' 폼'):'폼'; }
-  function fmFormName(c){ return String(c.fname||'').trim() || fmAutoName(c); }
+  function fmAutoBase(c){ var t=String(c.title||'').trim(); if(t) return t; var p=fmPageName(); return p?(p+' 폼'):'폼'; }
+  /* 261105 수정 — 폼 이름을 비워 둔 폼끼리 자동 이름이 같으면 화면 순서대로 「홈 폼」 · 「홈 폼 2」 · 「홈 폼 3」 (대시보드 폼 응답 목록에서 구분되게) */
+  function fmAutoName(c,blk){ var base=fmAutoBase(c); if(!blk) return base;
+    var same=[].filter.call(document.querySelectorAll('#stage .blk[data-block="formblk"]'),function(b){ var bc=b._fmCfg; return bc && !String(bc.fname||'').trim() && fmAutoBase(bc)===base; });
+    var i=same.indexOf(blk); return i>0?(base+' '+(i+1)):base; }
+  function fmFormName(c,blk){ return String(c.fname||'').trim() || fmAutoName(c,blk); }
   window.fmFormName=fmFormName;
   /* 261105 추가 — 「폼 응답 보기」: 대시보드 폼 응답 목록(새 창) */
   function fmRespOpen(){ var url='https://www.creatorlink.net/forms', w=window.clWinOpen||window.open; try{ w(url,'_blank','noopener'); }catch(e){ location.href=url; } }
