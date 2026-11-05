@@ -13469,6 +13469,9 @@
             <div class="fm-fin" id="fmPrivTxtRow" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">동의 내용</span><textarea id="fmPrivTxt" rows="3" placeholder="「내용 보기」를 누르면 보이는 동의 내용" spellcheck="false" oninput="fmUpd('privTxt',this.value)"></textarea></div>
             <div class="sline" id="fmIpRow"><span class="lbl">단일IP 중복차단 <i class="st-help" data-tip="동일한 IP로 1일 동안 연속으로 3회 등록 시 10분 동안 차단합니다."></i></span><button type="button" class="sw" id="fmIpSw" onclick="fmSw(this,'ipBlock')"></button></div>
             <div class="sline"><span class="lbl">CAPTCHA <i class="st-help" data-tip="보내기 전에 보안문자를 입력하게 해 자동 등록(스팸)을 막습니다."></i></span><button type="button" class="sw on" id="fmCapSw" onclick="fmSw(this,'captcha')"></button></div>
+            <!-- 261105 추가 — 폼 이름 (기존 편집기 항목 편집 맨 위 「폼 이름」) : 대시보드 폼 응답 목록에서 폼을 구분하는 이름. 비우면 제목 → 없으면 「페이지 이름 + 폼」으로 자동 -->
+            <div class="fm-fin" style="margin-top:14px;"><span class="k">폼 이름</span><input type="text" id="fmName" maxlength="40" spellcheck="false" autocomplete="off" oninput="fmUpd('fname',this.value)"></div>
+            <div class="mtk-hint" style="margin-top:4px;">대시보드 폼 응답 목록에 보이는 이름입니다. 방문자에게는 보이지 않습니다.</div>
             <!-- 261105 수정 — 안내 문구만 있던 자리에 「폼 응답 보기」 바로가기 (기존 편집기와 같게 · 대시보드 폼 응답 목록) -->
             <div class="sms-box mail-snd fm-resp"><div class="sms-h"><span>폼 응답 <i class="st-help" data-tip="이 폼으로 들어온 응답은 사이트 게시 뒤 대시보드의 「폼 응답」에서 확인합니다."></i></span><button type="button" class="sms-lk ext" onclick="fmRespOpen()">폼 응답 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></button></div></div>
           </div></div>
@@ -44022,7 +44025,7 @@ global.PolyFX = API;
     btnT:'제출하기', ba:'left', bs:'fill', bc:'#23272e', bfg:'#ffffff', br:4,
     cb:'#ffffff', cbd:'', cr:6, cw:560,
     bg:'#ffffff', bgImg:'', bgDim:40, bgGray:false,
-    done:'신청 완료되었습니다.', mailOn:true, mails:[], privacy:false, privTxt:'', ipBlock:false, captcha:true,   /* 261105 추가 — privTxt 동의 내용 · ipBlock 단일IP 중복차단 */
+    done:'신청 완료되었습니다.', mailOn:true, mails:[], privacy:false, privTxt:'', ipBlock:false, captcha:true, fname:'',   /* 261105 추가 — privTxt 동의 내용 · ipBlock 단일IP 중복차단 · fname 폼 이름(비우면 자동) */
     pv:80, mw:1140
   };
   function fmF(l,t,o){ var f={t:t||'text', l:l, d:'', p:'', req:true, opts:[]}; if(o){ for(var k in o) f[k]=o[k]; } return f; }
@@ -44107,7 +44110,7 @@ global.PolyFX = API;
     else if(t==='date') h+=fmDateBox(ph,f);
     /* 261105 수정 — 날짜/시간 : 시간 설정(간격 · 운영 시간 · 쉬는 시간)이 있으면 고를 수 있는 시간만 한 목록으로. 없으면(컨택트 블록 등) 전처럼 시 · 분 */
     else if(t==='datetime') h+='<div class="fm-dt'+(f.ti?' slot':'')+'">'+fmDateBox(ph,f)+(f.ti?fmPickBox('시간 선택',fmSlots(f)):fmPickBox('00시',FM_HH)+fmPickBox('00분',FM_MM))+'</div>';
-    else if(t==='file') h+='<div class="fm-i fm-file">'+FM_I.clip+'<span>'+rsEsc(ph||'파일을 선택하거나 끌어다 놓으세요')+'</span></div>';
+    else if(t==='file') h+='<div class="fm-i fm-file">'+FM_I.clip+'<span>'+rsEsc(ph||'파일을 선택하거나 끌어다 놓으세요 (최대 10개)')+'</span></div>';   /* 261105 수정 — 기본 안내에 최대 개수(기존 편집기와 같은 10개) */
     else h+='<input class="fm-i" type="'+fmInputType(f.l)+'" placeholder="'+_mtAttr(ph)+'" autocomplete="off">';   /* 260929 수정 — 캔버스에서 바로 타이핑해 볼 수 있게 (값은 저장하지 않는다) */
     return h+'</div>';
   }
@@ -44261,7 +44264,8 @@ global.PolyFX = API;
   }
 
   /* ── 블록설정 ── */
-  function fmUpd(key,val){ if(!fmCurBlk) return; fmCfg(fmCurBlk)[key]=val; fmApply(fmCurBlk); }
+  function fmUpd(key,val){ if(!fmCurBlk) return; fmCfg(fmCurBlk)[key]=val; fmApply(fmCurBlk);
+    if(key==='title'){ var fn=document.getElementById('fmName'); if(fn) fn.placeholder=fmAutoName(fmCfg(fmCurBlk))+' (자동)'; } }   /* 261105 추가 — 제목을 바꾸면 폼 이름 자동값도 따라간다 */
   function fmSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===m); }); }
   function fmSeg(key,id,m){ fmSegSync(id,m); fmUpd(key,m); if(key==='is'||key==='bs') fmRowsSync(); }
   function fmSw(el,key){ if(!fmCurBlk) return; var on=!el.classList.contains('on'); el.classList.toggle('on',on); fmUpd(key,on); if(key==='mailOn') fmMailSync(); }
@@ -44314,8 +44318,9 @@ global.PolyFX = API;
       var body='<div class="fm-fbody">'
         +'<div class="fm-types">'+FM_TYPES.map(function(tp){ return '<button type="button"'+(tp[0]===t?' class="on"':'')+' onclick="fmFieldSet('+i+',&#39;t&#39;,&#39;'+tp[0]+'&#39;)">'+tp[1]+'</button>'; }).join('')+'</div>'
         +'<div class="fm-fin"><span class="k">설명글</span><input type="text" value="'+_mtAttr(f.d||'')+'" placeholder="항목 아래 작은 안내" maxlength="80" spellcheck="false" oninput="fmFieldSet('+i+',&#39;d&#39;,this.value)"></div>'
-        +(hasPh?'<div class="fm-fin"><span class="k">예시글</span><input type="text" value="'+_mtAttr(f.p||'')+'" placeholder="'+(t==='select'?'선택하세요':(t==='file'?'파일을 선택하거나 끌어다 놓으세요':'입력칸 안 흐린 글'))+'" maxlength="60" spellcheck="false" oninput="fmFieldSet('+i+',&#39;p&#39;,this.value)"></div>':'')
+        +(hasPh?'<div class="fm-fin"><span class="k">예시글</span><input type="text" value="'+_mtAttr(f.p||'')+'" placeholder="'+(t==='select'?'선택하세요':(t==='file'?'파일을 선택하거나 끌어다 놓으세요 (최대 10개)':'입력칸 안 흐린 글'))+'" maxlength="60" spellcheck="false" oninput="fmFieldSet('+i+',&#39;p&#39;,this.value)"></div>':'')
         +(hasOpts?'<div class="fm-fin" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">선택지</span><textarea rows="3" placeholder="한 줄에 하나" spellcheck="false" oninput="fmFieldOpts('+i+',this.value)">'+_mtAttr((f.opts||[]).join('\n'))+'</textarea></div>':'')
+        +(t==='file'?'<div class="mtk-hint" style="margin:6px 0 0;">방문자는 파일을 최대 10개까지 첨부할 수 있습니다.</div>':'')   /* 261105 추가 — 기존 편집기 파일 첨부형 안내 */
         +((t==='date'||t==='datetime')?fmDateSetHTML(f,i,t,c):'')   /* 261105 추가 — 날짜 · 시간 세부 설정 */
         +'</div>';
       return '<div class="mt-imgrow'+(openRow?' open':'')+'" data-i="'+i+'">'
@@ -44539,8 +44544,18 @@ global.PolyFX = API;
     var pv=document.getElementById('fmPrivSw'); if(pv) pv.classList.toggle('on',!!c.privacy);
     var cp=document.getElementById('fmCapSw'); if(cp) cp.classList.toggle('on',!!c.captcha);
     var ip=document.getElementById('fmIpSw'); if(ip) ip.classList.toggle('on',!!c.ipBlock); set('fmPrivTxt',c.privTxt||'');   /* 261105 추가 */
+    var fn=document.getElementById('fmName'); if(fn){ fn.value=c.fname||''; fn.placeholder=fmAutoName(c)+' (자동)'; }   /* 261105 추가 — 비워 두면 자동 이름을 흐린 글로 보여 준다 */
     fmRowsSync();
   }
+  /* 261105 추가 — 폼 이름 자동값 : 적은 이름 → 폼 제목 → 「지금 페이지 이름 + 폼」 (대시보드 폼 응답 목록에서 쓰는 이름 · fmFormName) */
+  function fmPageName(){
+    var id=(typeof pgxCur!=='undefined')?pgxCur:'', list=(typeof PAGES!=='undefined')?PAGES:[], hit=null, cur=null;
+    (function walk(a){ (a||[]).forEach(function(n){ if(!n) return; if(n.id===id) hit=n; if(n.cur && !cur) cur=n; walk(n.children); }); })(list);
+    var n=hit||cur; return n && String(n.name||'').trim() ? String(n.name).trim() : '';
+  }
+  function fmAutoName(c){ var t=String(c.title||'').trim(); if(t) return t; var p=fmPageName(); return p?(p+' 폼'):'폼'; }
+  function fmFormName(c){ return String(c.fname||'').trim() || fmAutoName(c); }
+  window.fmFormName=fmFormName;
   /* 261105 추가 — 「폼 응답 보기」: 대시보드 폼 응답 목록(새 창) */
   function fmRespOpen(){ var url='https://www.creatorlink.net/forms', w=window.clWinOpen||window.open; try{ w(url,'_blank','noopener'); }catch(e){ location.href=url; } }
   window.fmRespOpen=fmRespOpen;
@@ -59188,7 +59203,7 @@ global.PolyFX = API;
       snblk       :{icons:1, eb:1, desc:1, ebH:1, descH:1, introTH:1, acct:1, href:1, imgs:1, introT:1, moreT:1, bgImg:1},   /* 261022 추가 — 소셜 블록 · 아이콘·문구·계정·이미지·배경 소재는 PC·모바일 공유, 모양·크기·열·색·여백은 기기별 */
       tkblk       :{tabs:1, def:1, bgImg:1, bgGray:1},   /* 261023 추가 — 탭 블록 · 탭(이름 · 내용) · 처음 탭 · 배경 소재는 PC·모바일 공유, 줄 · 가로 개수 · 높이 · 글자 · 색 · 여백은 기기별 */
       ltblk       :{boards:1, show:1, _Bs:1, bgImg:1, bgGray:1},   /* 261023 추가 — 최근게시물 블록 · 게시판 · 표시 항목 · 배경 소재는 PC·모바일 공유, 스타일 · 개수 · 배치 · 글자 · 색 · 여백은 기기별 */
-      formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, smsOn:1, sms:1, smsOff:1, privacy:1, privTxt:1, ipBlock:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블록 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
+      formblk     :{preset:1, fields:1, title:1, desc:1, rule:1, info:1, img:1, imgSide:1, btnT:1, done:1, mailOn:1, mails:1, smsOn:1, sms:1, smsOff:1, privacy:1, privTxt:1, ipBlock:1, fname:1, captcha:1, bgImg:1, bgGray:1}   /* 260929 추가 — 폼 블록 · 항목·문구·안내·이미지·제출 옵션은 PC·모바일이 함께 쓴다. 레이아웃·색·크기·여백은 기기별 */
     };
     /* 텍스트 문구 키 — 기본은 PC 와 공유하고, 블록별 '문구 따로 쓰기'(blk._mvTextSplit)를 켠 경우에만 모바일 전용이 된다 */
     var MV_TEXT={
