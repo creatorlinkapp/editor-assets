@@ -2608,6 +2608,16 @@
   .fm-dt{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:8px;}
   .fm-file{border-style:dashed;gap:8px;justify-content:center;height:58px;color:var(--fmdc);}
   .fm-file > span{flex:none;}
+  /* 261105 추가 — 선택지 이미지 카드 · 파일 다운로드 */
+  .fm-opts.img{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px 12px;}
+  .fm-oi{flex-direction:column;align-items:stretch;gap:8px;min-width:0;}
+  .fm-oimg{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:1/1;object-fit:cover;box-sizing:border-box;border:1px solid var(--fmbd);border-radius:var(--fmr);background:var(--fmib);}
+  .fm-opts.img.ratio img.fm-oimg{aspect-ratio:auto;height:auto;object-fit:contain;}
+  .fm-oimg.empty{background:rgba(127,127,127,.08);color:var(--fmdc);}
+  .fm-oimg.empty svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}
+  .fm-ol{display:flex;align-items:center;gap:8px;min-width:0;word-break:keep-all;}
+  .fm-dl{gap:8px;} .fm-dl .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .fm-dlb{flex:none;height:28px;padding:0 12px;display:inline-flex;align-items:center;border-radius:var(--fmbr);background:var(--fmac);color:var(--fmab);font-size:12.5px;font-weight:700;}
   .fm-extra{margin:4px 0 8px;}
   .fm-priv{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--fmlc);margin-bottom:18px;}
   .fm-priv u{color:var(--fmdc);text-decoration:underline;text-underline-offset:2px;margin-left:2px;}
@@ -3081,7 +3091,7 @@
     font-size:10.5px;font-weight:800;letter-spacing:-.02em;color:#5B6270;cursor:pointer;transition:box-shadow .12s;}
   .fm-tb:hover{box-shadow:0 0 0 2px var(--green);}
   .fm-req-t{font-size:15px;font-weight:800;line-height:1;}
-  .fm-fbody{display:none;flex-basis:100%;padding:4px 0 8px 42px;}
+  .fm-fbody{display:none;flex-basis:100%;padding:4px 0 8px 42px;min-width:0;box-sizing:border-box;}   /* 261105 수정 — 긴 파일 이름 · 선택지 글이 들어와도 설정창 폭을 넘지 않게 */
   .mt-imgrow.open .fm-fbody{display:block;}
   .fm-types{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:2px 0 8px;}
   .fm-types button{height:30px;padding:0 4px;border:1px solid var(--border-2);border-radius:6px;background:#fff;font-family:inherit;font-size:11.5px;font-weight:700;color:var(--ink-2);cursor:pointer;white-space:nowrap;transition:border-color .12s,background .12s;}
@@ -3106,6 +3116,20 @@
   .fm-dset .fm-exl span{display:inline-flex;align-items:center;gap:2px;height:24px;padding:0 4px 0 9px;border:1px solid var(--border-2);border-radius:12px;background:#fff;font-size:var(--fs-xs);color:var(--ink-2);}
   .fm-dset .fm-exl button{width:18px;height:18px;border:0;background:none;color:var(--ink-3);font-size:14px;line-height:1;cursor:pointer;padding:0;}
   .fm-dset .fm-exl button:hover{color:var(--ink);}
+  /* 261105 추가 — 선택지 이미지 · 파일 다운로드 · 시간 칩 (설정창) */
+  .fm-fbody .fm-oisw{margin:8px 0 4px;}
+  .fm-oiml{display:flex;flex-direction:column;gap:6px;margin-top:6px;}
+  .fm-oimr{display:flex;align-items:center;gap:8px;min-width:0;}
+  .fm-oimr .n{flex:1;min-width:0;font-size:var(--fs-sm);color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .fm-oith{flex:none;width:40px;height:40px;padding:0;border:1px solid var(--border-2);border-radius:var(--r-md);background:var(--bg-2) center/cover no-repeat;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-3);}
+  .fm-oith svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
+  .fm-oith:hover{border-color:#9A9EA6;} .fm-oith.picking{border-color:var(--green);box-shadow:0 0 0 2px var(--green-soft);}
+  .fm-dlset{flex:1;display:flex;align-items:center;gap:6px;min-width:0;}
+  .fm-dlset .n{flex:1;min-width:0;font-size:var(--fs-sm);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;} .fm-dlset .n.none{color:var(--ink-3);}
+  .fm-dlset label.btn-sm{flex:none;cursor:pointer;}
+  .fm-dset .fm-types.fm-tm{flex:1;margin:0;grid-template-columns:repeat(4,1fr);gap:3px;}
+  .fm-dset .fm-types.fm-tm button{height:26px;padding:0;font-size:11px;}
+  .fm-dset .fm-tmall{border:0;background:none;padding:0;font:inherit;font-size:var(--fs-xs);color:var(--green-text);cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
   .fm-dset .sw-col{flex:1;}
   /* 261105 추가 — 설정창 날짜 · 시간 칸 : 브라우저 기본 달력 · 시계 대신 캔버스 폼과 같은 편집기 달력 · 펼침 목록. 색 · 테두리는 설정창 토큰으로(선택 = 초록) */
   .fm-dset{--fmic:var(--ink);--fmdc:var(--ink-3);--fmib:#fff;--fmbd:var(--border-2);--fmr:var(--r-md);--fmac:var(--green);--fmab:#fff;}
@@ -44025,9 +44049,9 @@ global.PolyFX = API;
      · 캔버스의 입력칸은 보기용(readonly · pointer-events:none). 게시 화면의 실제 전송은 서버 몫
      · 구조(항목·제목·안내·이미지·문구·알림·제출 옵션)는 PC·모바일이 함께 쓰고, 색·크기·여백은 기기별 (MV_CONTENT)
      ══════════════════════════════════════════════════════════════════ */
-  var FM_TYPES=[['text','단문'],['memo','장문'],['radio','단일 선택'],['check','다중 선택'],['select','목록'],['date','날짜'],['datetime','날짜/시간'],['file','파일 첨부']];
-  var FM_TYPE_SHORT={text:'단문',memo:'장문',radio:'단일',check:'다중',select:'목록',date:'날짜',datetime:'일시',file:'파일'};
-  var FM_MAX=20, FM_MIN=1, FM_MAIL_MAX=5;
+  var FM_TYPES=[['text','단문'],['memo','장문'],['radio','단일 선택'],['check','다중 선택'],['select','목록'],['date','날짜'],['datetime','날짜/시간'],['file','파일 첨부'],['download','파일 다운로드']];   /* 261105 수정 — 파일 다운로드 추가 (기존 편집기 「파일 다운로드형」) */
+  var FM_TYPE_SHORT={text:'단문',memo:'장문',radio:'단일',check:'다중',select:'목록',date:'날짜',datetime:'일시',file:'파일',download:'받기'};
+  var FM_MAX=50, FM_MIN=1, FM_MAIL_MAX=5;   /* 261105 수정 — 항목 최대 20 → 50 (기존 편집기와 같게 · 기존 폼이 잘리지 않게) */
   var FM_DEF={
     preset:'basic',
     layout:'plain', imgSide:'left', img:'',
@@ -44106,15 +44130,21 @@ global.PolyFX = API;
     chev:'<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>',
     cal:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
     clip:'<svg viewBox="0 0 24 24"><path d="M21 12.5l-8.5 8.5a5 5 0 0 1-7-7l9-9a3.5 3.5 0 0 1 5 5l-9 9a2 2 0 0 1-3-3l8-8"/></svg>',
+    img:'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 9"/></svg>',   /* 261105 추가 — 선택지 이미지 빈칸 */
     cap:'<svg viewBox="0 0 118 44"><g fill="none" stroke="#3b4048" stroke-width="2.2" stroke-linecap="round"><path d="M18 30c2-9 4-16 6-18 1 6 0 14-2 20 5-3 9-9 12-14"/><path d="M44 14c-6 2-8 9-6 15 2 5 8 4 12-1M52 20c0 4 1 8 3 10 3-4 5-9 5-14"/><path d="M70 30c-2-8 0-18 5-19 4 0 4 6 1 9 4 1 6 6 3 10-2 3-6 3-9 0"/><path d="M92 13c-3 4-5 10-4 16 1 4 5 4 8 0 2-4 2-10 0-14"/></g><path d="M8 36c30-6 60-10 102-8" fill="none" stroke="#3b4048" stroke-width="1" opacity=".45"/></svg>'
   };
   function fmFieldHTML(f){
     var t=f.t||'text', ph=String(f.p||''), opts=Array.isArray(f.opts)?f.opts.filter(function(o){ return String(o).trim(); }):[];
-    var h='<div class="fm-f" data-t="'+t+'"><label class="fm-l">'+rsEsc(f.l||'')+(f.req?'<i class="fm-req">*</i>':'')+'</label>'+(String(f.d||'').trim()?'<p class="fm-d">'+rsEsc(f.d)+'</p>':'');
+    var h='<div class="fm-f" data-t="'+t+'"><label class="fm-l">'+rsEsc(f.l||'')+((f.req && t!=='download')?'<i class="fm-req">*</i>':'')+'</label>'+(String(f.d||'').trim()?'<p class="fm-d">'+rsEsc(f.d)+'</p>':'');
     if(t==='memo') h+='<textarea class="fm-i fm-ta" placeholder="'+_mtAttr(ph)+'"></textarea>';   /* 260929 수정 — 캔버스에서 바로 타이핑해 볼 수 있게 (값은 저장하지 않는다) */
     else if(t==='radio'||t==='check'){
       if(!opts.length) opts=['선택 1','선택 2'];
-      h+='<div class="fm-opts">'+opts.map(function(o){ return '<label class="fm-o"><span class="fm-ob '+t+'"></span>'+rsEsc(o)+'</label>'; }).join('')+'</div>';
+      if(f.oimg){   /* 261105 추가 — 선택지 이미지 (기존 편집기 「단일 · 다중 선택형(이미지)」) : 선택지마다 이미지 카드 · 고정 크기(정사각 채움) / 비율 유지 */
+        var om=(f.oimgm && typeof f.oimgm==='object')?f.oimgm:{};
+        h+='<div class="fm-opts img'+(f.oim==='ratio'?' ratio':'')+'">'+opts.map(function(o){ var u=String(om[o]||'').trim();
+          return '<label class="fm-o fm-oi">'+(u?'<img class="fm-oimg" src="'+_mtAttr(u)+'" alt="" draggable="false">':'<span class="fm-oimg empty">'+FM_I.img+'</span>')+'<span class="fm-ol"><span class="fm-ob '+t+'"></span>'+rsEsc(o)+'</span></label>'; }).join('')+'</div>';
+      }
+      else h+='<div class="fm-opts">'+opts.map(function(o){ return '<label class="fm-o"><span class="fm-ob '+t+'"></span>'+rsEsc(o)+'</label>'; }).join('')+'</div>';
     }
     else if(t==='select'){   /* 260929 수정 — 목록은 실제 <select>: 캔버스에서 풀다운을 열어 선택지를 미리 볼 수 있다 (고른 값은 저장하지 않는다) */
       h+='<div class="fm-selw"><div class="fm-i fm-sel fm-selr ph" data-ph="'+_mtAttr(ph||'선택하세요')+'" onclick="if(window.fmSelOpen)fmSelOpen(this,event)"><span>'+rsEsc(ph||'선택하세요')+'</span>'+FM_I.chev+'</div>'
@@ -44124,6 +44154,7 @@ global.PolyFX = API;
     else if(t==='date') h+=fmDateBox(ph,f);
     /* 261105 수정 — 날짜/시간 : 시간 설정(간격 · 운영 시간 · 쉬는 시간)이 있으면 고를 수 있는 시간만 한 목록으로. 없으면(컨택트 블록 등) 전처럼 시 · 분 */
     else if(t==='datetime') h+='<div class="fm-dt'+(f.ti?' slot':'')+'">'+fmDateBox(ph,f)+(f.ti?fmPickBox('시간 선택',fmSlots(f)):fmPickBox('00시',FM_HH)+fmPickBox('00분',FM_MM))+'</div>';
+    else if(t==='download') h+='<div class="fm-i fm-dl">'+FM_I.clip+'<span class="n">'+rsEsc(String(f.dlName||'').trim()||'올린 파일이 없습니다')+'</span><b class="fm-dlb">다운로드</b></div>';   /* 261105 추가 — 파일 다운로드 (기존 편집기 「파일 다운로드형」 · 방문자가 받아 가는 파일) */
     else if(t==='file') h+='<div class="fm-i fm-file">'+FM_I.clip+'<span>'+rsEsc(ph||'파일을 선택하거나 끌어다 놓으세요 (최대 10개)')+'</span></div>';   /* 261105 수정 — 기본 안내에 최대 개수(기존 편집기와 같은 10개) */
     else h+='<input class="fm-i" type="'+fmInputType(f.l)+'" placeholder="'+_mtAttr(ph)+'" autocomplete="off">';   /* 260929 수정 — 캔버스에서 바로 타이핑해 볼 수 있게 (값은 저장하지 않는다) */
     return h+'</div>';
@@ -44156,8 +44187,10 @@ global.PolyFX = API;
     if(f.hc) a+=' style="--fmhc:'+_mtAttr(f.hc)+'"'; return a; }
   function fmMin(s){ var m=/^(\d{1,2}):(\d{2})$/.exec(String(s||'')); return m?(+m[1])*60+(+m[2]):null; }
   function fmHm(n){ var h=Math.floor(n/60), m=n%60; return (h<10?'0':'')+h+':'+(m<10?'0':'')+m; }
-  function fmSlots(f){ var step=+f.ti||30, s=fmMin(f.ts), e=fmMin(f.te), bs=fmMin(f.bs), be=fmMin(f.be), out=[]; if(s==null) s=540; if(e==null) e=1080;
-    for(var n=s;n<=e && out.length<200;n+=step){ if(bs!=null && be!=null && n>=bs && n<be) continue; out.push(fmHm(n)); } return out.length?out:['선택할 수 있는 시간이 없습니다']; }
+  /* 261105 수정 — 고를 수 있는 시간 = 운영 시간 안에서 간격마다(fmSlotsAll) − 뺀 시간(tx · 시간 칩). 예전 쉬는 시간(bs · be)도 그대로 뺀다 */
+  function fmSlotsAll(f){ var step=+f.ti||30, s=fmMin(f.ts), e=fmMin(f.te), out=[]; if(s==null) s=540; if(e==null) e=1080; for(var n=s;n<=e && out.length<200;n+=step) out.push(fmHm(n)); return out; }
+  function fmSlots(f){ var bs=fmMin(f.bs), be=fmMin(f.be), tx=Array.isArray(f.tx)?f.tx:[];
+    var out=fmSlotsAll(f).filter(function(t){ var n=fmMin(t); if(bs!=null && be!=null && n>=bs && n<be) return false; return tx.indexOf(t)<0; }); return out.length?out:['선택할 수 있는 시간이 없습니다']; }
   function fmDayOk(w,v,dow){ var d=w.getAttribute('data-df'), t=w.getAttribute('data-dt'), wd=w.getAttribute('data-wd'), ex=w.getAttribute('data-ex');
     if(d && v<d) return false; if(t && v>t) return false; if(wd!=null && wd.indexOf(String(dow))<0) return false; if(ex && (','+ex+',').indexOf(','+v+',')>=0) return false; return true; }
   function fmDateBox(ph,f){ return '<div class="fm-selw fm-datew"'+fmDateAttr(f)+'><div class="fm-i fm-sel fm-selr ph" onclick="if(window.fmCalOpen)fmCalOpen(this,event)"><span>'+rsEsc(ph||'YYYY-MM-DD')+'</span>'+FM_I.cal+'</div><div class="fm-selpop fm-calpop" onclick="event.stopPropagation()"></div></div>'; }
@@ -44327,7 +44360,7 @@ global.PolyFX = API;
   function fmSw(el,key){ if(!fmCurBlk) return; var on=!el.classList.contains('on'); el.classList.toggle('on',on); fmUpd(key,on); if(key==='mailOn') fmMailSync();
     if(key==='privacy' && on){ var c=fmCfg(fmCurBlk); if(!String(c.privTxt||'').trim()){   /* 261105 추가 — 동의를 켤 때 내용이 비어 있으면 기본 문구로 (방문자가 「내용 보기」에서 빈 내용을 보지 않게 · 항목은 지금 폼 항목 이름) */
       var nm=c.fields.map(function(f){ return String(f.l||'').trim(); }).filter(Boolean).join(', ')||'폼에 입력한 항목';
-      c.privTxt='개인정보 수집 및 이용 동의\n\n■ 개인정보 수집목적 및 이용목적\n문의 접수 및 결과 회신\n\n■ 수집하는 개인정보 항목\n'+nm+'\n\n■ 보유 및 이용기간\n접수 후 1년';
+      c.privTxt='개인정보 수집 및 이용 동의\n\n■ 개인정보 수집목적 및 이용목적\n문의 접수 및 결과 회신\n\n■ 수집하는 개인정보 항목\n'+nm+'\n\n■ 보유 및 이용기간\n접수 후 1년\n\n■ 동의를 거부할 권리\n동의를 거부할 수 있으며, 거부하면 문의 접수가 제한될 수 있습니다.';   /* 261105 수정 — 동의 받을 때 알릴 4가지(목적 · 항목 · 기간 · 거부할 권리) */
       var pt=document.getElementById('fmPrivTxt'); if(pt) pt.value=c.privTxt; clToast('동의 내용에 기본 문구를 넣었습니다. 사이트에 맞게 고쳐 주세요.'); } } }
   function fmLayout(m){
     m=(m==='card'||m==='img'||m==='info')?m:'plain';
@@ -44384,12 +44417,14 @@ global.PolyFX = API;
     var c=fmCfg(fmCurBlk), list=document.getElementById('fmFieldList'); if(!list) return;
     var dis=(c.fields.length<=FM_MIN);
     list.innerHTML=c.fields.map(function(f,i){
-      var t=f.t||'text', openRow=(i===fmOpenIdx), hasOpts=(t==='radio'||t==='check'||t==='select'), hasPh=(t!=='radio'&&t!=='check');
+      var t=f.t||'text', openRow=(i===fmOpenIdx), hasOpts=(t==='radio'||t==='check'||t==='select'), hasPh=(t!=='radio'&&t!=='check'&&t!=='download');
       var body='<div class="fm-fbody">'
         +'<div class="fm-types">'+FM_TYPES.map(function(tp){ return '<button type="button"'+(tp[0]===t?' class="on"':'')+' onclick="fmFieldSet('+i+',&#39;t&#39;,&#39;'+tp[0]+'&#39;)">'+tp[1]+'</button>'; }).join('')+'</div>'
         +'<div class="fm-fin"><span class="k">설명글</span><input type="text" value="'+_mtAttr(f.d||'')+'" placeholder="항목 아래 작은 안내" maxlength="80" spellcheck="false" oninput="fmFieldSet('+i+',&#39;d&#39;,this.value)"></div>'
         +(hasPh?'<div class="fm-fin"><span class="k">예시글</span><input type="text" value="'+_mtAttr(f.p||'')+'" placeholder="'+(t==='select'?'선택하세요':(t==='file'?'파일을 선택하거나 끌어다 놓으세요 (최대 10개)':'입력칸 안 흐린 글'))+'" maxlength="60" spellcheck="false" oninput="fmFieldSet('+i+',&#39;p&#39;,this.value)"></div>':'')
         +(hasOpts?'<div class="fm-fin" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">선택지</span><textarea rows="3" placeholder="한 줄에 하나" spellcheck="false" oninput="fmFieldOpts('+i+',this.value)" onchange="fmFieldOptsDone('+i+')">'+_mtAttr((f.opts||[]).join('\n'))+'</textarea></div>':'')
+        +((t==='radio'||t==='check')?fmOptImgHTML(f,i):'')   /* 261105 추가 — 선택지 이미지 */
+        +(t==='download'?fmDlHTML(f,i):'')   /* 261105 추가 — 파일 다운로드 */
         +(t==='file'?'<div class="mtk-hint" style="margin:6px 0 0;">방문자는 파일을 최대 10개까지 첨부할 수 있습니다.</div>':'')   /* 261105 추가 — 기존 편집기 파일 첨부형 안내 */
         +((t==='date'||t==='datetime')?fmDateSetHTML(f,i,t,c):'')   /* 261105 추가 — 날짜 · 시간 세부 설정 */
         +'</div>';
@@ -44397,7 +44432,7 @@ global.PolyFX = API;
         +'<span class="mt-imgdrag" title="드래그하여 순서 변경">'+FM_DI.drag+'</span>'
         +'<span class="fm-tb" title="종류: '+(FM_TYPES.filter(function(tp){ return tp[0]===t; })[0]||['','단문'])[1]+' — 눌러서 바꾸기" onclick="fmFieldFold('+i+')">'+(FM_TYPE_SHORT[t]||'단문')+'</span>'
         +'<div class="mtk-field"><input type="text" value="'+_mtAttr(f.l||'')+'" placeholder="항목 이름" maxlength="60" spellcheck="false" oninput="fmFieldSet('+i+',&#39;l&#39;,this.value)"></div>'
-        +'<button type="button" class="qm-tool fm-req-t'+(f.req?' on':'')+'" title="'+(f.req?'필수 항목 — 누르면 선택 항목으로':'선택 항목 — 누르면 필수로')+'" onclick="fmFieldSet('+i+',&#39;req&#39;,'+(f.req?'false':'true')+')">∗</button>'
+        +(t==='download'?'<button type="button" class="qm-tool fm-req-t" disabled title="파일 다운로드는 입력하는 항목이 아니라 필수를 정하지 않습니다.">∗</button>':'<button type="button" class="qm-tool fm-req-t'+(f.req?' on':'')+'" title="'+(f.req?'필수 항목 — 누르면 선택 항목으로':'선택 항목 — 누르면 필수로')+'" onclick="fmFieldSet('+i+',&#39;req&#39;,'+(f.req?'false':'true')+')">∗</button>')
         +'<button type="button" class="qm-tool fold" title="세부 설정" onclick="fmFieldFold('+i+')">'+FM_DI.fold+'</button>'
         +'<button type="button" class="mt-imgdel" title="삭제" aria-label="삭제" onclick="fmFieldDel('+i+')"'+(dis?' disabled':'')+'>'+FM_DI.del+'</button>'
         +body+'</div>';
@@ -44427,8 +44462,11 @@ global.PolyFX = API;
       h+='<div class="fm-fin"><span class="k">시간 간격</span>'+seg('ti',+f.ti||30,[[60,'1시간'],[30,'30분'],[20,'20분'],[10,'10분']])+'</div>';
       var tl=fmTimeList(+f.ti||30);   /* 261105 수정 — 브라우저 기본 시계 → 편집기 펼침 목록(캔버스 「시간 선택」과 같은 모양) · 간격대로 */
       h+='<div class="fm-fin"><span class="k">운영 시간</span><div class="dt">'+fmDkTime(i,'ts',f.ts||'09:00',tl,'시작')+fmDkTime(i,'te',f.te||'18:00',tl,'끝')+'</div></div>';
-      h+='<div class="fm-fin"><span class="k">쉬는 시간</span><div class="dt">'+fmDkTime(i,'bs',f.bs||'',tl,'없음',true)+fmDkTime(i,'be',f.be||'',tl,'없음',true)+'</div></div>';
-      h+='<div class="mtk-hint" style="margin:4px 0 0;">운영 시간 안에서 간격마다 고를 수 있습니다. 쉬는 시간은 비워 두면 없습니다.</div>';
+      /* 261105 수정 — 「쉬는 시간」 → 시간 칩(기존 편집기 「시간 설정」처럼 시간을 하나씩 켜고 끔). 예전 쉬는 시간 값은 칩에서 뺀 시간으로 옮긴다 */
+      var bs0=fmMin(f.bs), be0=fmMin(f.be); if(bs0!=null && be0!=null){ var tx0=Array.isArray(f.tx)?f.tx:[]; fmSlotsAll(f).forEach(function(t){ var n=fmMin(t); if(n>=bs0 && n<be0 && tx0.indexOf(t)<0) tx0.push(t); }); f.tx=tx0; } f.bs=''; f.be='';
+      var all=fmSlotsAll(f), tx=Array.isArray(f.tx)?f.tx:[];
+      h+='<div class="fm-fin" style="align-items:flex-start;"><span class="k" style="padding-top:5px;">시간</span><div class="fm-types fm-tm">'+all.map(function(t){ var on=tx.indexOf(t)<0; return '<button type="button"'+(on?' class="on"':'')+' title="'+t+' '+(on?'고를 수 있음 — 누르면 빼기':'뺌 — 누르면 고를 수 있게')+'" aria-pressed="'+on+'" onclick="fmTmTog('+i+',&#39;'+t+'&#39;)">'+t+'</button>'; }).join('')+'</div></div>';
+      h+='<div class="mtk-hint" style="margin:4px 0 0;">운영 시간 안에서 간격마다 시간이 생깁니다. 켜진 시간만 방문자가 고를 수 있습니다.'+(all.some(function(t){ return tx.indexOf(t)>=0; })?' <button type="button" class="fm-tmall" onclick="fmTmAll('+i+')">모두 켜기</button>':'')+'</div>';
     }
     return h+'</div>';
   }
@@ -44456,12 +44494,19 @@ global.PolyFX = API;
   function fmExAdd(i){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i], inp=document.getElementById('fmExIn'+i); if(!f||!inp) return; var v=inp.value; if(!v){ clToast('제외할 날짜를 고르세요.'); return; }
     if(!Array.isArray(f.ex)) f.ex=[]; if(f.ex.indexOf(v)>=0){ clToast('이미 제외한 날짜입니다.'); return; } f.ex.push(v); f.ex.sort(); fmApply(fmCurBlk); fmFieldRender(); }
   function fmExDel(i,j){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f||!Array.isArray(f.ex)) return; f.ex.splice(j,1); fmApply(fmCurBlk); fmFieldRender(); }
+  /* 261105 추가 — 시간 칩 켜고 끄기 (하나는 남겨야 함 · 기존 편집기 「시간을 1개 이상 선택해야 합니다.」) */
+  function fmTmTog(i,t){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f) return; var tx=Array.isArray(f.tx)?f.tx.slice():[], k=tx.indexOf(t);
+    if(k>=0) tx.splice(k,1); else { var left=fmSlotsAll(f).filter(function(x){ return x!==t && tx.indexOf(x)<0; }); if(!left.length){ clToast('시간은 하나 이상 남겨야 합니다.'); return; } tx.push(t); }
+    f.tx=tx; fmApply(fmCurBlk); fmFieldRender(); }
+  function fmTmAll(i){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f) return; f.tx=[]; fmApply(fmCurBlk); fmFieldRender(); }
+  window.fmTmTog=fmTmTog; window.fmTmAll=fmTmAll;
   window.fmWdSet=fmWdSet; window.fmWdTog=fmWdTog; window.fmExAdd=fmExAdd; window.fmExDel=fmExDel;
   function fmFieldFold(i){ fmOpenIdx=(fmOpenIdx===i)?-1:i; fmFieldRender(); }
   function fmFieldSet(i,k,v){
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk), f=c.fields[i]; if(!f) return;
     f[k]=v;
     if(k==='t' && (v==='radio'||v==='check'||v==='select') && !(f.opts||[]).some(function(o){ return String(o).trim(); })) f.opts=['선택 1','선택 2'];   /* 261105 추가 — 캔버스 예시와 저장값을 같게 */
+    if(k==='t' && v==='download') f.req=false;   /* 261105 추가 — 받기만 하는 항목이라 필수 없음 */
     if(k==='t' && v==='datetime' && !f.ti){ f.ti=30; f.ts=f.ts||'09:00'; f.te=f.te||'18:00'; }   /* 261105 추가 — 날짜/시간형은 시간 설정 기본값(30분 · 09:00~18:00 · 기존 편집기와 같게) */
     if(k==='dm' && v==='range' && !f.df){ var td=new Date(); f.df=td.getFullYear()+'-'+('0'+(td.getMonth()+1)).slice(-2)+'-'+('0'+td.getDate()).slice(-2); }   /* 기간을 고르면 시작은 오늘부터 */
     fmApply(fmCurBlk);
@@ -44473,6 +44518,45 @@ global.PolyFX = API;
     if((f.opts||[]).some(function(o){ return String(o).trim(); })) return;
     f.opts=['선택 1','선택 2']; fmApply(fmCurBlk); fmFieldRender(); clToast('선택지는 하나 이상 있어야 해서 기본 선택지로 채웠습니다.'); }
   window.fmFieldOptsDone=fmFieldOptsDone;
+  /* 261105 추가 — 선택지 이미지 (단일 · 다중 선택) : 스위치를 켜면 선택지마다 썸네일(누르면 보관함에서 고르기) · 표시 방식(고정 크기 · 비율 유지). 이미지는 선택지 글자로 이어 둔다(oimgm) */
+  function fmOptImgHTML(f,i){
+    var on=!!f.oimg, h='<div class="sline fm-oisw"><span class="lbl">선택지 이미지</span><button type="button" class="sw'+(on?' on':'')+'" onclick="fmFieldSet('+i+',&#39;oimg&#39;,'+(!on)+'); fmFieldRender();"></button></div>';
+    if(!on) return h;
+    var om=f.oimgm||{}, opts=(f.opts||[]).map(function(o){ return String(o).trim(); }).filter(Boolean);
+    h+='<div class="fm-fin"><span class="k">표시 방식</span><div class="mt-seg fm-dseg">'+[['fixed','고정 크기'],['ratio','비율 유지']].map(function(o){ return '<button type="button" class="mt-seg-b'+((f.oim==='ratio'?'ratio':'fixed')===o[0]?' active':'')+'" onclick="fmFieldSet('+i+',&#39;oim&#39;,&#39;'+o[0]+'&#39;); fmFieldRender();">'+o[1]+'</button>'; }).join('')+'</div></div>';
+    h+='<div class="fm-oiml">'+opts.map(function(o){ var u=String(om[o]||'').trim(), pk=!!(libThumbMode && libThumbMode.listId==='fm:oimg:'+i+':'+o), q=_mtAttr(JSON.stringify(o));
+      return '<div class="fm-oimr"><button type="button" class="fm-oith'+(u?'':' empty')+(pk?' picking':'')+'" title="보관함에서 이미지 고르기" onclick="fmOptImgPick('+i+','+q+')"'+(u?' style="background-image:url(&quot;'+_mtAttr(u)+'&quot;)"':'')+'>'+(u?'':FM_PLUS)+'</button><span class="n">'+rsEsc(o)+'</span>'
+        +(u?'<button type="button" class="mt-imgdel" title="이미지 빼기" aria-label="이미지 빼기" onclick="fmOptImgDel('+i+','+q+')">'+FM_DI.del+'</button>':'')+'</div>'; }).join('')+'</div>';
+    return h+'<div class="mtk-hint" style="margin:4px 0 0;">썸네일을 누르고 보관함에서 이미지를 고르세요. 선택지 글을 바꾸면 이미지를 다시 골라야 합니다.</div>';
+  }
+  function fmOptImgPick(i,o){
+    if(!fmCurBlk) return; var blk=fmCurBlk, id='fm:oimg:'+i+':'+o;
+    if(libThumbMode && libThumbMode.listId===id){ libThumbEnd(false); fmFieldRender(); clToast('선택을 끝냈습니다.'); return; }
+    if(libThumbMode) libThumbEnd(false);
+    libThumbMode={listId:id, idx:null, only:'', vidOk:false, quiet:true, apply:function(src){
+      if(!blk.isConnected || blk!==fmCurBlk) return; if(fmIsVid(src)){ clToast('선택지에는 이미지만 넣을 수 있습니다.'); return; }
+      var f=fmCfg(blk).fields[i]; if(!f) return; if(!f.oimgm || typeof f.oimgm!=='object') f.oimgm={}; f.oimgm[o]=src; fmApply(blk); fmFieldRender(); clToast('선택지 이미지를 넣었습니다. 다른 이미지를 누르면 다시 바뀝니다.');
+    }};
+    document.documentElement.classList.add('rt-lib-ins');
+    if(typeof libTab==='function') libTab('img');
+    if(open!=='lib' && typeof togglePanel==='function'){ window.libWantR=true; togglePanel('lib'); libOpenedByBset=true; }
+    fmFieldRender(); clToast('보관함에서 이미지를 고르세요.');
+  }
+  function fmOptImgDel(i,o){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f || !f.oimgm) return; if(libThumbMode && libThumbMode.listId==='fm:oimg:'+i+':'+o) libThumbEnd(false); delete f.oimgm[o]; fmApply(fmCurBlk); fmFieldRender(); }
+  window.fmOptImgPick=fmOptImgPick; window.fmOptImgDel=fmOptImgDel;
+  /* 261105 추가 — 파일 다운로드 : 방문자가 받아 갈 파일 하나(신청서 양식 등). 이름 · 주소만 둔다 */
+  function fmDlHTML(f,i){
+    var nm=String(f.dlName||'').trim();
+    return '<div class="fm-fin"><span class="k">파일</span><div class="fm-dlset"><span class="n'+(nm?'':' none')+'" title="'+_mtAttr(nm)+'">'+(nm?rsEsc(nm):'올린 파일이 없습니다')+'</span>'
+      +'<label class="btn-sm">'+(nm?'바꾸기':'파일 올리기')+'<input type="file" hidden onchange="fmDlUpload('+i+',this)"></label>'
+      +(nm?'<button type="button" class="mt-imgdel" title="파일 빼기" aria-label="파일 빼기" onclick="fmDlDel('+i+')">'+FM_DI.del+'</button>':'')+'</div></div>'
+      +'<div class="mtk-hint" style="margin:4px 0 0;">방문자가 받아 갈 수 있는 파일입니다 (신청서 양식 등). 파일은 하나만 올릴 수 있습니다.</div>';
+  }
+  function fmDlUpload(i,input){ if(!fmCurBlk || !input || !input.files || !input.files[0]) return; var fl=input.files[0], f=fmCfg(fmCurBlk).fields[i]; input.value=''; if(!f) return;
+    try{ if(f.dlUrl && /^blob:/.test(f.dlUrl)) URL.revokeObjectURL(f.dlUrl); }catch(e){}
+    f.dlName=fl.name; try{ f.dlUrl=URL.createObjectURL(fl); }catch(e){ f.dlUrl=''; } fmApply(fmCurBlk); fmFieldRender(); clToast('파일을 올렸습니다.'); }
+  function fmDlDel(i){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f) return; f.dlName=''; f.dlUrl=''; fmApply(fmCurBlk); fmFieldRender(); }
+  window.fmDlUpload=fmDlUpload; window.fmDlDel=fmDlDel;
   function fmFieldAddRow(){
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk); if(c.fields.length>=FM_MAX) return;
     c.fields.push(fmF('새 항목','text',{req:false})); fmOpenIdx=c.fields.length-1; fmFieldRender(); fmApply(fmCurBlk);
