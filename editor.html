@@ -44333,6 +44333,7 @@ global.PolyFX = API;
     ['fmTsRow','fmRuleRow'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.toggle('off',noT); });
     var tcr=document.getElementById('fmTcRow'); if(tcr) tcr.classList.toggle('off',noT && c.layout!=='info');
     show('fmTsHint',noT); show('fmRuleHint',noT);
+    var tsh=document.getElementById('fmTsHint'); if(tsh) tsh.textContent=(c.layout==='info')?'제목을 입력하면 제목 크기가 적용됩니다.':'제목을 입력하면 제목 크기·색이 적용됩니다.';   /* 261105 추가 — 안내 배치에선 제목 색이 막히지 않으니 크기만 안내 */
     show('fmIrRow',c.is!=='line'); show('fmIbdRow',c.is!=='fill'); show('fmBfgRow',c.bs!=='outline');
     var r=document.getElementById('fmCbdR'); if(r) r.classList.toggle('off',!c.cbd);
     var ibr=document.getElementById('fmIbR'); if(ibr) ibr.classList.toggle('off',!c.ib);
