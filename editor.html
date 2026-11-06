@@ -3133,15 +3133,21 @@
   .fm-dset .fm-tmall{border:0;background:none;padding:0;font:inherit;font-size:var(--fs-xs);color:var(--green-text);cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
   .fm-dset .sw-col{flex:1;}
   /* 261105 추가 — 설정창 날짜 · 시간 칸 : 브라우저 기본 달력 · 시계 대신 캔버스 폼과 같은 편집기 달력 · 펼침 목록. 색 · 테두리는 설정창 토큰으로(선택 = 초록) */
-  .fm-dset{--fmic:var(--ink);--fmdc:var(--ink-3);--fmib:#fff;--fmbd:var(--border-2);--fmr:var(--r-md);--fmac:var(--green);--fmab:#fff;}
-  .fm-dset .fm-dk{min-width:0;}
-  .fm-dset .fm-dk .fm-i{height:32px;padding:0 9px;gap:6px;font-size:var(--fs-sm);}
-  .fm-dset .fm-dk .fm-i svg{width:15px;height:15px;flex:none;color:var(--ink-3);}
-  .fm-dset .fm-dk .fm-selr:hover{border-color:#9A9EA6;}
-  .fm-dset .fm-dk.open .fm-selr{border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
-  .fm-dset .fm-dk .fm-selpop{z-index:30;}
-  .fm-dset .fm-dk .fm-selpop button{padding:7px 10px;font-size:var(--fs-sm);}
-  .fm-dset .fm-dk .fm-calpop{left:auto;right:0;}
+  .fm-dset,.cl-dts{--fmic:var(--ink);--fmdc:var(--ink-3);--fmib:#fff;--fmbd:var(--border-2);--fmr:var(--r-md);--fmac:var(--green);--fmab:#fff;}   /* 261106 수정 — 설정창 공통 날짜 · 시간 칸(.cl-dts)도 같은 모양 */
+  :is(.fm-dset,.cl-dts) .fm-dk{min-width:0;}
+  :is(.fm-dset,.cl-dts) .fm-dk .fm-i{height:32px;padding:0 9px;gap:6px;font-size:var(--fs-sm);}
+  :is(.fm-dset,.cl-dts) .fm-dk .fm-i svg{width:15px;height:15px;flex:none;color:var(--ink-3);}
+  :is(.fm-dset,.cl-dts) .fm-dk .fm-selr:hover{border-color:#9A9EA6;}
+  :is(.fm-dset,.cl-dts) .fm-dk.open .fm-selr{border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
+  :is(.fm-dset,.cl-dts) .fm-dk .fm-selpop{z-index:30;}
+  :is(.fm-dset,.cl-dts) .fm-dk .fm-selpop button{padding:7px 10px;font-size:var(--fs-sm);}
+  :is(.fm-dset,.cl-dts) .fm-dk .fm-calpop{left:auto;right:0;}
+  /* 261106 추가 — 설정창 공통 날짜 · 시간 칸 (카운트다운 일시 · 팝업 시작/종료 · 캘린더 일정 기간/시간) : 두 칸 나란히, 왼쪽 칸 달력은 왼쪽 맞춤 */
+  .cl-dts{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:6px;flex:1;min-width:0;}
+  .cl-dts.even{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+  .cl-dts > .fm-dk:first-child .fm-calpop{left:0;right:auto;}
+  .cl-dts.dr{grid-template-columns:minmax(0,1fr);} .cl-dts.dr > .fm-dk .fm-calpop{left:auto;right:0;}   /* 날짜 두 칸(기간)은 나란히 두면 끝자리가 잘려 위아래로 (폼 날짜 설정과 같게) */
+  .cl-dts .fm-dk .fm-i.fm-selr > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;}
   .fm-fin .k{flex:none;width:44px;font-size:var(--fs-sm);font-weight:700;color:var(--ink-2);}
   .fm-fin input,.fm-fin textarea{flex:1;min-width:0;width:100%;box-sizing:border-box;height:32px;border:1px solid var(--border-2);border-radius:var(--r-md);padding:0 9px;font:inherit;font-size:var(--fs-sm);color:var(--ink);background:#fff;}
   .fm-fin textarea{height:auto;min-height:66px;padding:7px 9px;line-height:1.5;resize:vertical;}
@@ -8261,6 +8267,7 @@
   #puDock .mt-imgrow.txt .qm-itbody .srow .k{width:56px;}
   #puDock .mt-imgrow.txt .qm-itbody .pu-f:first-child{margin-top:2px;}
   #puDock .qm-itbody .pu-dt{display:flex;align-items:center;gap:8px;margin-top:8px;} #puDock .qm-itbody .pu-dt .k{font-size:var(--fs-sm);color:var(--ink-2);font-weight:700;width:34px;flex:none;}
+  #puDock .qm-itbody .pu-dt .cl-dts{flex:1;}   /* 261106 추가 — 편집기 달력 · 시간 칸 */
   #puDock .qm-itbody .pu-dt input{flex:1;min-width:0;height:32px;border:1px solid var(--border-2);border-radius:var(--r-md);padding:0 8px;font:inherit;font-size:var(--fs-sm);color:var(--ink);background:#fff;}
   #puDock .qm-itbody .pu-mo{display:flex;align-items:center;gap:10px;margin-top:8px;}
   #puDock .qm-itbody .pu-mo .mt-imgthumb{margin:0;}
@@ -13990,7 +13997,7 @@
         <div class="fld sfold open acc-flush" id="cdMainAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">카운트다운<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
-            <div class="fm-fin" style="margin-top:0;"><span class="k">일시 <i class="st-help" data-tip="한국 시간 기준입니다. 방문자가 어느 나라에 있든 같은 순간에 끝납니다."></i></span><input type="datetime-local" id="cdTarget" onchange="cdTarget(this.value)"></div>
+            <div class="fm-fin" style="margin-top:0;"><span class="k">일시 <i class="st-help" data-tip="한국 시간 기준입니다. 방문자가 어느 나라에 있든 같은 순간에 끝납니다."></i></span><div class="cl-dts" id="cdTargetBox"></div></div>   <!-- 261106 수정 — 브라우저 기본 달력 → 편집기 달력 · 시간 목록 (cdTgtRender) -->
             <div class="srow" id="cdUnitLbl" style="margin:12px 0 6px;"><span class="k">표시</span></div>
             <div class="mt-seg" id="cdUnitSeg">
               <button type="button" class="mt-seg-b active" data-m="dhms" onclick="cdSeg('unit','cdUnitSeg','dhms')">일·시·분·초</button>
@@ -18787,7 +18794,9 @@
         +'<div class="pu-f"><input type="text" value="'+_mtAttr(it.ttl||(it.type==="text"?it.title:"")||'')+'" placeholder="제목 (두 줄까지)" maxlength="60" oninput="puItemSet(\'pop\','+i+',&#39;ttl&#39;,this.value)"></div>'):'';   /* 261015 추가 — 카드뉴스 모드: 라벨 · 제목 */
       var body='<div class="qm-itbody">'+newsF+txt
         +'<div class="sline"><span class="lbl">상시 노출</span><button type="button" class="sw'+(it.always?' on':'')+'" onclick="puItemSet(\''+kind+'\','+i+',&#39;always&#39;,!PU.'+kind+'.items['+i+'].always)"></button></div>'
-        +(it.always?'':'<div class="pu-dt"><span class="k">시작</span><input type="datetime-local" value="'+_mtAttr(it.from)+'" onchange="puItemSet(\''+kind+'\','+i+',&#39;from&#39;,this.value)"></div><div class="pu-dt"><span class="k">종료</span><input type="datetime-local" value="'+_mtAttr(it.to)+'" onchange="puItemSet(\''+kind+'\','+i+',&#39;to&#39;,this.value)"></div>')
+        +(it.always?'':(function(){ var pf=clDtParts(it.from), pt=clDtParts(it.to), a=kind+'|'+i+'|';   /* 261106 수정 — 브라우저 기본 달력 → 편집기 달력 · 시간 목록 (종료 날짜는 시작 날짜 앞을 막음) */
+          return '<div class="pu-dt"><span class="k">시작</span><div class="cl-dts">'+clDkDate(pf.d,'날짜','puDtPick',a+'from|d','',pt.d)+clDkTime(pf.t,'시간','puDtPick',a+'from|t')+'</div></div>'
+            +'<div class="pu-dt"><span class="k">종료</span><div class="cl-dts">'+clDkDate(pt.d,'날짜','puDtPick',a+'to|d',pf.d)+clDkTime(pt.t,'시간','puDtPick',a+'to|t')+'</div></div>'; })())
         +((isTxt||isNews)?'':'<div class="sline"><span class="lbl">모바일 이미지 따로 쓰기</span><button type="button" class="sw'+(it.moSplit?' on':'')+'" onclick="puItemSet(\''+kind+'\','+i+',&#39;moSplit&#39;,!PU.'+kind+'.items['+i+'].moSplit)"></button></div>')
         +(it.moSplit&&!isTxt?'<div class="pu-mo"><span class="mt-imgthumb'+(it.imgMo?'':' qm-empty')+'" title="보관함에서 모바일 이미지 고르기"'+(it.imgMo?' style="background-image:url(&quot;'+_mtAttr(it.imgMo)+'&quot;)"':'')+' onclick="puThumbPick(\''+kind+'\','+i+',true)">'+(it.imgMo?'':PU_IMG_PH)+'</span><span class="mtk-hint" style="margin:0;">모바일에서만 이 이미지를 씁니다.</span></div>':'')
         +((kind==='pop')?'<div class="srow"><span class="k">X 버튼 색</span><span class="sw-col"><input type="color" value="'+_mtAttr(it.xcol||'#000000')+'" data-cp-title="X 버튼 색" oninput="puItemCol(\''+kind+'\','+i+',&#39;xcol&#39;,this)"><span class="hex">'+_mtAttr((it.xcol||'#000000').toUpperCase())+'</span></span></div>':'')
@@ -18811,6 +18820,13 @@
     }
     if(libThumbMode && libThumbMode.puAdd===kind && add) add.classList.add('picking');
   }
+  /* 261106 추가 — 시작 · 종료 : 날짜 칸 + 시간 칸. 날짜만 고르면 시작은 00:00 · 종료는 23:59. 종료가 시작보다 앞이면 막는다. 값 형식은 그대로 YYYY-MM-DDTHH:MM */
+  function puDtPick(v,arg){ var a=String(arg).split('|'), kind=a[0], i=+a[1], k=a[2], part=a[3], it=PU[kind]&&PU[kind].items[i]; if(!it) return;
+    var p=clDtParts(it[k]); if(part==='d') p.d=v; else p.t=v; if(!p.d){ puListRender(kind); return; }
+    var nv=p.d+'T'+(p.t||(k==='to'?'23:59':'00:00')), o=(k==='to')?it.from:it.to;
+    if(o && ((k==='to' && nv<o) || (k==='from' && nv>o))){ clToast('종료는 시작보다 뒤여야 합니다.'); puListRender(kind); return; }
+    it[k]=nv; puListRender(kind); puChanged(); }
+  window.puDtPick=puDtPick;
   function puItemSet(kind,i,k,v){
     var it=PU[kind].items[i]; if(!it) return; it[k]=v;
     if(k==='from'||k==='to'||k==='title'||k==='body'||k==='btn'||k==='w'||k==='lbl'||k==='ttl'){ clearTimeout(puItemSet._t); puItemSet._t=setTimeout(puChanged,120); return; }
@@ -44177,6 +44193,7 @@ global.PolyFX = API;
     w.querySelectorAll('.fm-selpop button').forEach(function(b){ b.classList.toggle('on',b===el); });
     if(sp) sp.textContent=el.textContent; if(box) box.classList.remove('ph'); w.classList.remove('open');
     if(w.hasAttribute('data-fk')) fmDkPick(w,el.getAttribute('data-v')||'');   /* 261105 추가 — 설정창 시간 칸이면 값으로 */
+    else if(w.hasAttribute('data-cb')) clDkPick(w,el.getAttribute('data-v')||'');   /* 261106 추가 — 설정창 공통 시간 칸 */
   }
   document.addEventListener('click',function(){ fmSelClose(); });
   /* 261105 추가 — 단일 선택은 하나만 · 다중 선택 · 동의 체크는 켜고 끄기 (「내용 보기」 글자는 제외 · 블록추가 카드는 제외 · 다시 그리면 처음으로) */
@@ -44214,7 +44231,7 @@ global.PolyFX = API;
   }
   window.fmCalOpen=function(el,e){ if(e) e.stopPropagation(); var w=el.parentElement, was=w.classList.contains('open'); fmSelClose(); if(was) return; if(!w._v && w.getAttribute('data-v')) w._v=w.getAttribute('data-v'); var b=w._v?new Date(w._v):new Date(), df=w.getAttribute('data-df'); if(!w._v && df && new Date(df)>b) b=new Date(df); w._y=b.getFullYear();   /* 261105 수정 — 선택 기간이 나중이면 그 달부터 */ w._m=b.getMonth(); fmCalDraw(w); w.classList.add('open'); fmSelDir(w); };
   window.fmCalMove=function(btn,n){ var w=btn.closest('.fm-selw'); w._m+=n; if(w._m<0){ w._m=11; w._y--; } if(w._m>11){ w._m=0; w._y++; } fmCalDraw(w); };
-  window.fmCalPick=function(btn,v){ var w=btn.closest('.fm-selw'), box=w.querySelector('.fm-selr'), sp=box&&box.querySelector('span'); w._v=v; if(sp) sp.textContent=v; if(box) box.classList.remove('ph'); w.classList.remove('open'); if(w.hasAttribute('data-fk')) fmDkPick(w,v); };   /* 261105 수정 — 설정창 날짜 칸이면 값으로 */
+  window.fmCalPick=function(btn,v){ var w=btn.closest('.fm-selw'), box=w.querySelector('.fm-selr'), sp=box&&box.querySelector('span'); w._v=v; if(sp) sp.textContent=v; if(box) box.classList.remove('ph'); w.classList.remove('open'); if(w.hasAttribute('data-fk')) fmDkPick(w,v); else if(w.hasAttribute('data-cb')) clDkPick(w,v); };   /* 261105 수정 — 설정창 날짜 칸이면 값으로 · 261106 공통 날짜 칸 */
   function fmInnerHTML(c){
     var lay=c.layout||'plain', side='';
     if(lay==='img') side='<div class="fm-side fm-img'+(c.img?'':' empty')+'"'+(c.img?' style="background-image:url(&quot;'+_mtAttr(c.img)+'&quot;)"':'')+'></div>';
@@ -44520,6 +44537,17 @@ global.PolyFX = API;
     fmApply(fmCurBlk); fmFieldRender();
   }
   window.fmDkPick=fmDkPick;
+  /* 261106 추가 — 설정창 공통 날짜 · 시간 칸 : 브라우저 기본 달력(type=date · time · datetime-local) 대신 폼 날짜 설정과 같은 편집기 달력 · 시간 목록.
+     고르면 data-cb 함수(값, data-arg)를 부른다. 시간은 10분 간격 · 이미 저장된 다른 분 값은 목록에 끼워 그대로 보인다 */
+  function clDkDate(v,ph,cb,arg,min,max){ var a=' data-cb="'+cb+'" data-arg="'+_mtAttr(arg==null?'':String(arg))+'"'+(v?' data-v="'+_mtAttr(v)+'"':'')+(min?' data-df="'+_mtAttr(min)+'"':'')+(max?' data-dt="'+_mtAttr(max)+'"':'');
+    return '<div class="fm-selw fm-datew fm-dk"'+a+'><div class="fm-i fm-sel fm-selr'+(v?'':' ph')+'" role="button" aria-label="'+_mtAttr(ph)+'" onclick="if(window.fmCalOpen)fmCalOpen(this,event)"><span>'+_mtAttr(v||ph)+'</span>'+FM_I.cal+'</div><div class="fm-selpop fm-calpop" onclick="event.stopPropagation()"></div></div>'; }
+  function clDkTime(v,ph,cb,arg,clr){ var list=fmTimeList(10).slice(); if(v && list.indexOf(v)<0){ list.push(v); list.sort(); }
+    return '<div class="fm-selw fm-dk" data-cb="'+cb+'" data-arg="'+_mtAttr(arg==null?'':String(arg))+'"><div class="fm-i fm-sel fm-selr'+(v?'':' ph')+'" role="button" aria-label="'+_mtAttr(ph)+'" onclick="if(window.fmSelOpen)fmSelOpen(this,event)"><span>'+_mtAttr(v||ph)+'</span>'+FM_I.chev+'</div><div class="fm-selpop">'
+      +(clr?'<button type="button" tabindex="-1" data-v=""'+(v?'':' class="on"')+' onclick="if(window.fmSelPick)fmSelPick(this,event)">없음</button>':'')
+      +list.map(function(t){ return '<button type="button" tabindex="-1" data-v="'+t+'"'+(t===v?' class="on"':'')+' onclick="if(window.fmSelPick)fmSelPick(this,event)">'+t+'</button>'; }).join('')+'</div></div>'; }
+  function clDkPick(w,v){ var fn=window[w.getAttribute('data-cb')]; if(typeof fn==='function') fn(v, w.getAttribute('data-arg')||'', w); }
+  function clDtParts(v){ var m=/^(\d{4}-\d{2}-\d{2})(?:[T ](\d{2}:\d{2}))?/.exec(String(v||'')); return m?{d:m[1],t:m[2]||''}:{d:'',t:''}; }
+  window.clDkDate=clDkDate; window.clDkTime=clDkTime; window.clDkPick=clDkPick; window.clDtParts=clDtParts;
   function fmWdSet(i,v){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f) return; f.wd=v; fmApply(fmCurBlk); fmFieldRender(); }
   function fmWdTog(i,d){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f) return; var wd=(f.wd==null)?'0123456':String(f.wd), s=String(d);
     wd=(wd.indexOf(s)>=0)?wd.replace(s,''):(wd+s); if(!wd){ clToast('요일은 하나 이상 골라야 합니다.'); return; } fmWdSet(i,wd.split('').sort().join('')); }
@@ -45111,9 +45139,9 @@ global.PolyFX = API;
     list.innerHTML=evs.map(function(ev){
       var open=(ev.id===caOpenId), all=!!ev.all;
       var body='<div class="ca-ebody">'
-        +'<div class="fm-fin"><span class="k">기간</span><div class="dt"><input type="date" value="'+caEsc(ev.s)+'" onchange="caEvSet(\''+ev.id+'\',\'s\',this.value)"><input type="date" value="'+caEsc(ev.e||ev.s)+'" onchange="caEvSet(\''+ev.id+'\',\'e\',this.value)"></div></div>'
+        +'<div class="fm-fin"><span class="k">기간</span><div class="cl-dts dr">'+clDkDate(ev.s,'시작 날짜','caDkPick',ev.id+'|s')+clDkDate(ev.e||ev.s,'끝 날짜','caDkPick',ev.id+'|e',ev.s)+'</div></div>'   /* 261106 수정 — 브라우저 기본 달력 → 편집기 달력 (끝 날짜는 시작 앞을 막음) */
         +'<div class="sline"><span class="lbl">하루 종일</span><button type="button" class="sw'+(all?' on':'')+'" onclick="caEvSet(\''+ev.id+'\',\'all\','+(all?'false':'true')+')"></button></div>'
-        +(all?'':'<div class="fm-fin"><span class="k">시간</span><div class="dt"><input type="time" value="'+caEsc(ev.st||'')+'" onchange="caEvSet(\''+ev.id+'\',\'st\',this.value)"><input type="time" value="'+caEsc(ev.et||'')+'" onchange="caEvSet(\''+ev.id+'\',\'et\',this.value)"></div></div>')
+        +(all?'':'<div class="fm-fin"><span class="k">시간</span><div class="cl-dts even">'+clDkTime(ev.st||'','시작','caDkPick',ev.id+'|st')+clDkTime(ev.et||'','끝','caDkPick',ev.id+'|et',true)+'</div></div>')   /* 261106 수정 — 브라우저 기본 시계 → 편집기 시간 목록 (끝은 비울 수 있음) */
         +'<div class="fm-fin" style="align-items:flex-start;"><span class="k" style="padding-top:8px;">내용</span><textarea rows="2" placeholder="장소·메모 (일정을 누르면 보입니다)" spellcheck="false" oninput="caEvSet(\''+ev.id+'\',\'m\',this.value,true)">'+caEsc(ev.m||'')+'</textarea></div>'
         +'</div>';
       return '<div class="mt-imgrow'+(open?' open':'')+'" data-id="'+caEsc(ev.id)+'">'
@@ -45128,6 +45156,8 @@ global.PolyFX = API;
     var add=document.getElementById('caEvAdd'); if(add) add.disabled=(c.events.length>=CA_MAX);
   }
   function caEvFold(id){ caOpenId=(caOpenId===id)?null:id; caEvRender(); }
+  function caDkPick(v,arg){ var a=String(arg).split('|'); if(a[1]==='et' && v && caCurBlk){ var ev=caCfg(caCurBlk).events.filter(function(x){ return x.id===a[0]; })[0]; if(ev && ev.st && caMin(v)<=caMin(ev.st)){ clToast('끝 시간은 시작보다 뒤여야 합니다.'); caEvRender(); return; } } caEvSet(a[0],a[1],v); }   /* 261106 추가 — 편집기 달력 · 시간 목록에서 고른 값 */
+  window.caDkPick=caDkPick;
   var _caTypeT=null;
   function caEvSet(id,k,v,soft){
     if(!caCurBlk) return; var c=caCfg(caCurBlk), ev=c.events.filter(function(x){ return x.id===id; })[0]; if(!ev) return;
@@ -45664,6 +45694,10 @@ global.PolyFX = API;
   function cdSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
   function cdSeg(key,id,m){ cdSegSync(id,m); cdUpd(key,m); }
   function cdTarget(v){ if(!cdCurBlk || isNaN(cdT(v))) return; cdUpd('target',v); }
+  /* 261106 추가 — 일시 : 날짜 칸 + 시간 칸 (설정창 공통 편집기 달력 · 시간 목록). 값 형식은 그대로 YYYY-MM-DDTHH:MM */
+  function cdTgtRender(v){ var b=document.getElementById('cdTargetBox'); if(!b) return; var p=clDtParts(v); b.innerHTML=clDkDate(p.d,'날짜','cdTgtPick','d')+clDkTime(p.t,'시간','cdTgtPick','t'); }
+  function cdTgtPick(v,part){ if(!cdCurBlk) return; var p=clDtParts(cdCfg(cdCurBlk).target); if(part==='d') p.d=v; else p.t=v; if(p.d) cdTarget(p.d+'T'+(p.t||'00:00')); cdTgtRender(cdCfg(cdCurBlk).target); }
+  window.cdTgtPick=cdTgtPick;
   /* 스타일 바꾸기 — 문구 · 색 · 배경은 그대로, 숫자 크기(와 한 줄 띠의 여백)만 그 스타일의 기본값으로 */
   function cdPickStyle(e,k){
     if(e) e.stopPropagation(); var dd=document.getElementById('cdStDD'); if(dd) dd.classList.remove('open');
@@ -45752,7 +45786,7 @@ global.PolyFX = API;
   function cdFillBset(){
     if(!cdCurBlk) return; var c=cdCfg(cdCurBlk);
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
-    set('cdTarget',c.target); set('cdEndMsg',c.endMsg||''); set('cdEb',c.eb||''); set('cdDesc',c.desc||'');
+    cdTgtRender(c.target); set('cdEndMsg',c.endMsg||''); set('cdEb',c.eb||''); set('cdDesc',c.desc||'');
     var sd=document.getElementById('cdStDD'); if(sd){ var lb=sd.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=CD_STNM[c.st]||CD_STYLES[0][1]; sd.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-k')===c.st); }); }
     var fd=document.getElementById('cdFDD'); if(fd){ var fi=txNum(c.tf,9), fl=fd.querySelector('.sdd-btn .lbl'); if(fl) fl.textContent=(SM_FONTS[fi]||SM_FONTS[0]).n; fd.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', +b.getAttribute('data-i')===fi); }); }
     CD_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
