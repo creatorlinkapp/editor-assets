@@ -44297,8 +44297,20 @@ global.PolyFX = API;
   window.fmDupNameTab=fmDupNameTab;
   /* 보관함 → 캔버스: 이미지 자리(.fm-img)면 옆 이미지, 그 밖이면 블록 배경 (libApply 에서 호출) */
   /* 261105 추가 — 카드 없는 배치에서 배경 사진을 넣거나 빼면 글자색을 맞춘다 (fmLayout 과 같은 규칙 · 사진 위는 어둡게 40% + 밝은 글자) */
+  /* 261106 수정 — 배경 사진은 PC · 모바일이 함께 쓰는 값이라, 글자색 맞춤도 PC 값과 모바일 값(_mvOv) 각각에 따로 한다.
+     전 : 모바일 편집에서 사진을 넣으면 밝은 글자가 모바일에만 들어가 PC 는 사진 위 어두운 글자, 사진을 빼면 모바일에 흰 글자가 남아 흰 배경에 묻혔다 */
+  var FM_INK_K=['tc','lc','dc','ic','ibd','bc','bfg','bgDim','inkBak'];
   function fmBgInk(blk,had){
-    var c=fmCfg(blk), has=!!String(c.bgImg||'').trim(); if(c.layout==='card'||has===had) return false;
+    var c=fmCfg(blk), has=!!String(c.bgImg||'').trim(); if(has===had) return false;
+    var base=blk._mvBase, ov=blk._mvOv, P=base||c, ch=false;
+    var Pw=Object.assign({},P,{bgImg:c.bgImg}); if(fmBgInkOne(Pw,has)){ ch=true; FM_INK_K.forEach(function(k){ if(k in Pw) P[k]=Pw[k]; else delete P[k]; if(base){ if(k in Pw) c[k]=Pw[k]; else delete c[k]; } }); }   /* 모바일 편집 중이면 PC 기준값(_mvBase)과 cfg 를 같이 고쳐 모바일 전용으로 갈라지지 않게 */
+    if(ov && Object.keys(ov).length){ var M=Object.assign({},P,ov,{bgImg:c.bgImg}), m0=JSON.parse(JSON.stringify(M));
+      if(fmBgInkOne(M,has)){ ch=true; FM_INK_K.forEach(function(k){ if(JSON.stringify(M[k])!==JSON.stringify(m0[k])){ if(k in M) ov[k]=M[k]; else delete ov[k]; } }); } }
+    if(ch && blk===fmCurBlk) fmColSync();
+    return ch;
+  }
+  function fmBgInkOne(c,has){   /* 값 묶음 하나(PC 또는 모바일)에 글자색 맞춤 */
+    if(c.layout==='card') return false;
     var textLight=fmInk(c.tc||'#1c1f24')!=='#fff', ch=false, K=['tc','lc','dc','ic','ibd','bc','bfg'];
     if(has && !textLight){
       /* 사진 위에 바로 놓이는 글자(제목·항목·설명)만 밝게. 칸 색이 있는 입력칸(채움·박스)은 칸이 글자를 받쳐 주니 그대로 둔다 */
@@ -44315,13 +44327,12 @@ global.PolyFX = API;
       else { c.tc='#1c1f24'; c.lc='#5b6270'; c.dc='#9aa0a8'; if(c.is==='line' || !c.ib){ c.ic='#23272e'; c.ibd='#d5d9e0'; } }
       ch=true;
     }
-    if(!has) delete c.inkBak;
-    if(ch && blk===fmCurBlk) fmColSync();
+    if(!has && ('inkBak' in c)){ delete c.inkBak; ch=true; }
     return ch;
   }
   /* 색 · 크기 칸만 다시 채운다 (항목 목록은 그대로) */
   function fmColSync(){
-    if(!fmCurBlk) return; var c=fmCfg(fmCurBlk);
+    if(!fmCurBlk) return; var c=fmView(fmCurBlk);   /* 261106 수정 — 모바일 편집이면 모바일 값으로 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     FM_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
     FM_COL.forEach(function(r){ var v=c[r[1]]||((r[1]==='ib')?'#ffffff':(r[1]==='cbd'?'#e3e6eb':'#ffffff')); set(r[0],v); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(v); });
