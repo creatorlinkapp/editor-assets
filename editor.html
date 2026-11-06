@@ -13402,7 +13402,7 @@
               <div class="srow"><span class="k">라운딩</span><input class="rng" type="range" id="fmCr" min="0" max="32" step="1" value="6"><span class="v" id="fmCrV">6px</span></div>
             </div>
             <div id="fmImgRows">
-              <div class="srow" style="margin:12px 0 6px;"><span class="k">이미지 위치</span></div>
+              <div class="srow" id="fmImgSideRow" style="margin:12px 0 6px;"><span class="k">이미지 위치</span></div>
               <div class="mt-seg" id="fmImgSideSeg">
                 <button type="button" class="mt-seg-b active" data-m="left" onclick="fmSeg('imgSide','fmImgSideSeg','left')">왼쪽</button>
                 <button type="button" class="mt-seg-b" data-m="right" onclick="fmSeg('imgSide','fmImgSideSeg','right')">오른쪽</button>
@@ -44370,7 +44370,9 @@ global.PolyFX = API;
       var pt=document.getElementById('fmPrivTxt'); if(pt) pt.value=c.privTxt; clToast('동의 내용에 기본 문구를 넣었습니다. 사이트에 맞게 고쳐 주세요.'); } } }
   function fmLayout(m){
     m=(m==='card'||m==='img'||m==='info')?m:'plain';
-    if(!fmCurBlk) return; var c=fmCfg(fmCurBlk), prev=c.layout||'plain'; c.layout=m;
+    if(!fmCurBlk) return; var blk=fmCurBlk, mo=fmMo();
+    /* 261106 수정 — 모바일 편집 : 모바일 값으로 판단하고, 바뀐 값은 모바일 쪽(_mvOv)에만 넣는다. 끝나면 설정창을 모바일 값으로 다시 채운다(전 : PC 값으로 판단 · 설정창이 PC 값으로 돌아가 보임) */
+    var c=mo?Object.assign({},fmView(blk)):fmCfg(blk), c0=mo?JSON.stringify(c):'', prev=c.layout||'plain'; c.layout=m;
     /* 260929 수정 — 카드 ↔ 카드 없는 배치 전환 시 글자가 배경에 묻지 않게 (컨택트 블록 ctLayout 과 같은 규칙) */
     var dark=(fmInk(c.bg||'#ffffff')==='#fff'), hasImg=!!String(c.bgImg||'').trim(), textLight=fmInk(c.tc||'#1c1f24')!=='#fff';
     if(m==='card' && (!c.cb || String(c.cb).toLowerCase()===String(c.bg||'').toLowerCase())) c.cb=(dark||hasImg)?'#ffffff':'#f3f5f8';
@@ -44380,16 +44382,23 @@ global.PolyFX = API;
       if(prev==='card' && hasImg && txNum(c.bgDim,0)<30) c.bgDim=40;   /* 카드를 벗어나 사진 위로: 사진 밝기는 알 수 없으니 어둡게 40% 를 깔고 밝은 글자로 */
       if(dark || (hasImg && txNum(c.bgDim,0)>=30)){ c.tc='#ffffff'; c.lc='#e6e8eb'; c.dc='#c5c9cf'; c.ic='#ffffff'; c.ibd='#9aa0a8'; c.ib=''; if(c.bs==='outline' && fmInk(c.bc)==='#fff'){ c.bc='#ffffff'; c.bfg=''; } }
     }
+    if(mo){ var ov=blk._mvOv||(blk._mvOv={}), before=JSON.parse(c0); Object.keys(c).forEach(function(k){ if(JSON.stringify(c[k])!==JSON.stringify(before[k])) ov[k]=JSON.parse(JSON.stringify(c[k])); });
+      fmSegSync('fmLayoutSeg',m); if(typeof window.mvBsetTarget==='function') window.mvBsetTarget('mobile'); else { fmFillBset(); fmRowsSync(); } if(m==='img') fmMediaSync(); return; }
     fmSegSync('fmLayoutSeg',m); fmApply(fmCurBlk); fmFillBset(); fmRowsSync(); if(m==='img') fmMediaSync();
   }
   /* 레이아웃·입력칸 스타일에 따라 뜻이 없는 행은 숨긴다 */
+  /* 261106 추가 — 모바일 편집 : 설정창이 「모바일」 대상이면 모바일 값(_mvOv)을 합쳐 본다 (탭 블록 tkRows 와 같은 방식). 막 바꿔 아직 갈라 놓기 전 값(_mvBase 와 다른 값)은 그대로 둔다 */
+  function fmMo(){ return typeof window.mvTarget==='function' && window.mvTarget()==='mobile' && document.body.classList.contains('mview-on'); }
+  function fmView(blk){ var c=fmCfg(blk), ov=blk._mvOv; if(!fmMo() || !ov) return c; var base=blk._mvBase, v=Object.assign({},c);
+    Object.keys(ov).forEach(function(k){ if(base && (k in base) && JSON.stringify(c[k])!==JSON.stringify(base[k])) return; v[k]=ov[k]; }); return v; }
   function fmRowsSync(){
-    if(!fmCurBlk) return; var c=fmCfg(fmCurBlk);
+    if(!fmCurBlk) return; var c=fmView(fmCurBlk), mo=fmMo();
     function show(id,on){ var el=document.getElementById(id); if(el) el.style.display=on?'':'none'; }
-    show('fmCardRows',c.layout==='card'); show('fmImgRows',c.layout==='img'); show('fmInfoRows',c.layout==='info'); show('fmCwRow',c.layout!=='img'&&c.layout!=='info');
+    show('fmCardRows',c.layout==='card'); show('fmImgRows',c.layout==='img'); show('fmInfoRows',c.layout==='info'); show('fmCwRow',!mo && c.layout!=='img'&&c.layout!=='info');   /* 261106 수정 — 모바일은 화면 안쪽 폭(약 340px)이 폼 폭 최소값(360px)보다 좁아 폼 폭이 뜻이 없다 */
+    show('fmImgSideRow',!mo); show('fmImgSideSeg',!mo);   /* 261106 추가 — 모바일은 사진이 늘 위 · 이미지 위치는 PC 와 함께 쓰는 값이라 모바일 편집에서는 숨긴다 */
     show('fmPrivTxtRow',!!c.privacy);   /* 261105 추가 — 동의를 켰을 때만 동의 내용 칸 */
-    show('fmIbRow',c.is!=='line'); show('fmMwRow',c.layout==='info');
-    var mwh=document.getElementById('fmMwHint'); if(mwh){ mwh.textContent=(c.layout==='info')?'안내와 폼을 합친 전체 폭입니다.':'폼의 폭은 레이아웃 > 폼 폭에서 조절합니다.'; mwh.style.display=(c.layout==='img')?'none':''; }   /* 261105 추가 — 폭을 바꾸는 곳 안내 (이미지형은 폭 조절이 없어 안내도 없음) */   /* 261105 추가 — 밑줄형엔 칸 색이 쓰이지 않는다 · 최대 폭은 안내형(안내+폼 두 칸)에서만 화면이 바뀐다 (기본·카드는 폼 폭, 이미지형은 끝까지 참) */
+    show('fmIbRow',c.is!=='line'); show('fmMwRow',!mo && c.layout==='info');   /* 261106 수정 — 모바일은 안내와 폼이 위아래로 쌓여 최대 폭이 뜻이 없다 */
+    var mwh=document.getElementById('fmMwHint'); if(mwh){ mwh.textContent=(c.layout==='info')?'안내와 폼을 합친 전체 폭입니다.':'폼의 폭은 레이아웃 > 폼 폭에서 조절합니다.'; mwh.style.display=(mo || c.layout==='img')?'none':''; }   /* 261105 추가 — 폭을 바꾸는 곳 안내 (이미지형은 폭 조절이 없어 안내도 없음) */   /* 261105 추가 — 밑줄형엔 칸 색이 쓰이지 않는다 · 최대 폭은 안내형(안내+폼 두 칸)에서만 화면이 바뀐다 (기본·카드는 폼 폭, 이미지형은 끝까지 참) */
     var noT=!String(c.title||'').trim();   /* 261105 추가 — 제목이 없으면 제목 크기·색·구분선은 흐리게 + 안내 (안내형 배치의 부제는 제목 색을 써서 색은 둔다) */
     ['fmTsRow','fmRuleRow'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.toggle('off',noT); });
     var tcr=document.getElementById('fmTcRow'); if(tcr) tcr.classList.toggle('off',noT && c.layout!=='info');
@@ -59484,7 +59493,7 @@ global.PolyFX = API;
         bar.classList.toggle('split-on', hasText && split);
         if(sw) sw.classList.toggle('on', split);
         if(msg && MV_TARGET!=='mobile') msg.textContent='PC 값을 고치는 중 — 모바일에서 따로 바꾼 값이 없는 항목은 휴대폰에도 같이 바뀝니다.';   /* 261026 추가 */
-        else if(msg && type==='formblk') msg.textContent='모바일 전용 편집 — 색·크기·여백·레이아웃은 모바일에만, 항목·문구·제출 설정은 PC와 함께 바뀝니다.';   /* 261105 추가 — 폼은 항목·문구·제출 설정이 늘 PC 와 같다 */
+        else if(msg && type==='formblk') msg.textContent='모바일 전용 편집 — 색·크기·여백·레이아웃은 모바일에만, 항목·문구·배경 사진·제출 설정은 PC와 함께 바뀝니다.';   /* 261106 수정 — 배경 사진(흑백 포함)도 PC 와 함께 쓰는 값이라 안내에 넣는다 */   /* 261105 추가 — 폼은 항목·문구·제출 설정이 늘 PC 와 같다 */
         else if(msg) msg.textContent = (hasText && split)
           ? '모바일 전용 편집 — 문구·여백·효과 모두 모바일에만 반영됩니다.'
           : (hasText ? '모바일 전용 편집 — 여백·효과·옵션은 모바일에만, 문구는 PC 와 함께 바뀝니다.'
