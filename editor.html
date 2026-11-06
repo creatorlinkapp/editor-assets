@@ -13369,7 +13369,7 @@
             <div class="im-addrow">
               <button type="button" class="btn-sm" id="fmFieldAdd" onclick="fmFieldAddRow()" title="빈 항목을 목록 끝에 추가합니다"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button>
             </div>
-            <div class="mtk-hint">종류 배지나 화살표를 누르면 종류·설명글·예시글·선택지를 정합니다. ∗ 는 필수 항목이고, 손잡이를 끌어 순서를 바꿉니다. 설명글·예시글은 비워 두면 폼에서 빠집니다.</div>
+            <div class="mtk-hint">종류 배지나 화살표를 누르면 종류·설명글·예시글·선택지를 정합니다. ∗ 는 필수 항목이고, 손잡이를 끌어 순서를 바꿉니다. 설명글·예시글은 비워 두면 폼에서 빠집니다. 캔버스에서 글을 두 번 누르면 그 칸으로 바로 옵니다.</div>
           </div></div>
         </div>
 
@@ -44585,6 +44585,36 @@ global.PolyFX = API;
     f.dlName=fl.name; try{ f.dlUrl=URL.createObjectURL(fl); }catch(e){ f.dlUrl=''; } fmApply(fmCurBlk); fmFieldRender(); clToast('파일을 올렸습니다.'); }
   function fmDlDel(i){ if(!fmCurBlk) return; var f=fmCfg(fmCurBlk).fields[i]; if(!f) return; f.dlName=''; f.dlUrl=''; fmApply(fmCurBlk); fmFieldRender(); }
   window.fmDlUpload=fmDlUpload; window.fmDlDel=fmDlDel;
+  /* 261106 추가 — 캔버스의 폼 글을 두 번 누르면 블록 설정이 열리고 그 글의 칸으로 간다 (탭 블록 「탭 이름 두 번 누르기」와 같은 방식).
+     한 번 누르기는 그대로 블록 선택 · 입력 · 선택지 눌러 보기. 입력칸 · 펼친 목록 · 달력 안은 건드리지 않는다 */
+  function fmGoField(blk,find){
+    var g=blk.querySelector('.gear-fab'); if(fmCurBlk!==blk || !document.querySelector('#bset.show')){ if(g && typeof openBset==='function') openBset(g); }
+    setTimeout(function(){ var t=find(); if(!t || !t.el) return;
+      var acc=document.getElementById(t.acc); if(acc && !acc.classList.contains('open') && typeof smAcc==='function') smAcc(acc.querySelector('.fold-h'));
+      setTimeout(function(){ var el=(typeof t.el==='function')?t.el():t.el; if(!el) return; try{ el.scrollIntoView({block:'center',behavior:'smooth'}); }catch(x){} el.focus(); if(el.select) el.select(); },60); },180);
+  }
+  if(!window.CL_MVIEW) document.addEventListener('dblclick',function(e){
+    var t=e.target; if(!t || !t.closest) return; var blk=t.closest('#stage .blk[data-block="formblk"]'); if(!blk) return;
+    if(t.closest('input,textarea,.fm-selpop,.fm-calpop,.fm-selr,.fm-cap')) return;
+    var id=function(x){ return function(){ return document.getElementById(x); }; }, go=null;
+    if(t.closest('.fm-title')) go={acc:'fmHeadAcc', el:id('fmTitle')};
+    else if(t.closest('.fm-desc')) go={acc:'fmHeadAcc', el:id('fmDesc')};
+    else if(t.closest('.fm-btn')) go={acc:'fmBtnAcc', el:id('fmBtnT')};
+    else if(t.closest('.fm-priv')) go={acc:'fmSubmitAcc', el:id('fmPrivTxt')};
+    else if(t.closest('.fm-info .t')) go={acc:'fmLayoutAcc', el:id('fmInfoT')};
+    else if(t.closest('.fm-info .s')) go={acc:'fmLayoutAcc', el:id('fmInfoS')};
+    else if(t.closest('.fm-info .r')){ var rs=[].slice.call(blk.querySelectorAll('.fm-info .r')), ri=rs.indexOf(t.closest('.fm-info .r'));
+      /* 캔버스에는 빈 안내 항목이 빠져 있어 설정창 순서로 바꾼다 */
+      var rows=fmCfg(blk).info.rows, k=-1, n=-1; rows.some(function(r,j){ if(r && (String(r.k||'').trim()||String(r.v||'').trim())){ n++; if(n===ri){ k=j; return true; } } return false; });
+      var isV=!t.closest('.fm-info .r b'); go={acc:'fmLayoutAcc', el:function(){ var g2=document.querySelectorAll('#fmInfoRowsIn .grp')[k]; return g2 && g2.querySelector(isV?'textarea':'input'); }}; }
+    else { var f=t.closest('.fm-f'); if(f){ var fi=[].slice.call(blk.querySelectorAll('.fm-fields > .fm-f')).indexOf(f); if(fi<0) return;
+      var part=t.closest('.fm-o,.fm-opts')?'opts':(t.closest('.fm-d')?'desc':'name');
+      go={acc:'fmFieldAcc', el:function(){ if(fmOpenIdx!==fi){ fmOpenIdx=fi; fmFieldRender(); } var row=document.querySelector('#fmFieldList .mt-imgrow[data-i="'+fi+'"]'); if(!row) return null;
+        if(part==='opts') return row.querySelector('.fm-fbody textarea'); if(part==='desc') return row.querySelector('.fm-fbody .fm-fin input'); return row.querySelector('.mtk-field input'); }}; } }
+    if(!go) return;
+    e.preventDefault(); try{ var s=window.getSelection(); if(s) s.removeAllRanges(); }catch(x){}
+    fmGoField(blk,function(){ return go; });
+  });
   function fmFieldAddRow(){
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk); if(c.fields.length>=FM_MAX) return;
     c.fields.push(fmF('새 항목','text',{req:false})); fmOpenIdx=c.fields.length-1; fmFieldRender(); fmApply(fmCurBlk);
