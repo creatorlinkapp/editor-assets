@@ -4192,6 +4192,7 @@
   /* 블록추가 카드 — 실제 블록을 절반 크기로 (폼·캘린더 카드와 같은 방식) */
   #baGrid .ba-card[data-kind="ctblk"]{border-radius:var(--r-xl);}
   .fm-pv > .ct-wrap{width:200%;transform:scale(.5);transform-origin:0 0;background-size:cover;background-position:center;}
+  .fm-pv > .ct-wrap.ct-pvw{width:262.5%;transform:scale(.381);}   /* 261106 추가 — 지점 「지도 크게」 카드: 실제 페이지 폭(1440)으로 그린다. 정확한 폭 · 배율 · 높이는 fmCardFit 이 카드 폭에 맞춰 다시 정한다(이 값은 그 전 잠깐의 기본값) */
   .fm-pv > .ct-wrap.gray{background-blend-mode:luminosity;}
   /* 설정창 — 지점 목록 행(폼 항목 행과 같은 매너), 연락처 그룹 */
   #ctBrList .mt-imgrow,#ctFieldList .mt-imgrow,#ctInfoList .mt-imgrow{flex-wrap:wrap;padding:3px 4px;margin:0 -4px;}
@@ -8168,7 +8169,7 @@
   /* ══════ 260928 추가 — 팝업창 컴포넌트 (기존 편집기 사이트 설정 > 팝업/띠배너 이식) ══════
      · 팝업창: 스테이지 끝 sticky 층(.pu-layer) 위에 이미지 상자를 정렬(3×3)대로 띄운다. 여러 장이면 24px 씩 계단으로 겹친다
      · 상단 띠배너: .site 맨 앞(머리글 위)에 흐름으로 끼운다 — 게시 화면처럼 아래 내용을 밀어낸다. 여러 장이면 재생 간격마다 넘어간다 */
-  .pu-layer{position:sticky;top:0;height:0;z-index:58;pointer-events:none;}
+  .pu-layer{position:sticky;top:0;height:0;z-index:95;pointer-events:none;}   /* 261106 수정 — 58 → 95 : 블록 추가 줄(80) · 블록 테두리 · 톱니 · 태그(88~89) · 떠 있는 버튼(60)이 팝업 위로 올라오던 문제 (실제 사이트처럼 팝업이 맨 위) */
   .pu-layer[hidden]{display:none;}
   .pu-box{position:absolute;pointer-events:auto;background:#fff;border-radius:var(--pu-rad,0px);overflow:hidden;box-shadow:0 18px 48px rgba(20,24,32,.28),0 2px 8px rgba(20,24,32,.14);max-width:calc(100% - 48px);}
   .pu-box img{display:block;max-width:100%;max-height:calc(var(--pu-vh,800px) * .8);width:auto;height:auto;}
@@ -44273,7 +44274,7 @@ global.PolyFX = API;
   /* 카드 높이를 그린 폼 높이(절반 배율)에 맞춘다 — 목록을 그린 직후 호출 (글꼴이 늦게 오면 한 번 더) */
   function fmCardFit(host){
     var th=host.querySelectorAll('.ba-thumb.fm-live'); if(!th.length) return;
-    function fit(){ th.forEach(function(t){ var w=t.querySelector('.fm-pv > .fm-wrap,.fm-pv > .sn-wrap,.fm-pv > .ca-wrap,.fm-pv > .ct-wrap,.fm-pv > .bd-wrap,.fm-pv > .dv-wrap,.fm-pv > .cd-wrap,.fm-pv > .nm-wrap,.fm-pv > .qr-wrap,.fm-pv > .tk-wrap,.fm-pv > .lt-wrap');   /* 261023 추가 — 탭 카드도 그린 높이에 맞춘다 */   /* 261019 수정 — 구분선 · 카운트다운 카드 */   /* 261008 수정 — 게시판 카드 */ if(!w) return; var h=Math.round(w.offsetHeight*(w.closest('.ba-wide')?1:0.5));   /* 261019 수정 — 1열 구분선 카드는 축소 없이 그린다 */ if(h>24){ t.style.aspectRatio='auto'; t.style.height=h+'px'; }   /* 260929 수정 — 상담 신청 띠처럼 낮은 블록도 */ }); }
+    function fit(){ th.forEach(function(t){ var w=t.querySelector('.fm-pv > .fm-wrap,.fm-pv > .sn-wrap,.fm-pv > .ca-wrap,.fm-pv > .ct-wrap,.fm-pv > .bd-wrap,.fm-pv > .dv-wrap,.fm-pv > .cd-wrap,.fm-pv > .nm-wrap,.fm-pv > .qr-wrap,.fm-pv > .tk-wrap,.fm-pv > .lt-wrap');   /* 261023 추가 — 탭 카드도 그린 높이에 맞춘다 */   /* 261019 수정 — 구분선 · 카운트다운 카드 */   /* 261008 수정 — 게시판 카드 */ if(!w) return; var pk=0; if(w.classList.contains('ct-pvw') && t.offsetWidth){ pk=t.offsetWidth/1440; w.style.width='1440px'; w.style.transform='scale('+pk+')'; }   /* 261106 추가 — 지점 「지도 크게」 카드: 카드 폭이 몇이든 실제 페이지 폭(1440)으로 그려 카드 폭에 맞게 줄인다 */ var h=Math.round(w.offsetHeight*(w.closest('.ba-wide')?1:(pk||0.5)));   /* 261019 수정 — 1열 구분선 카드는 축소 없이 그린다 */ if(h>24){ t.style.aspectRatio='auto'; t.style.height=h+'px'; }   /* 260929 수정 — 상담 신청 띠처럼 낮은 블록도 */ }); }
     fit(); setTimeout(fit,400); if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ setTimeout(fit,0); });
   }
   function fmApply(blk){
@@ -49123,8 +49124,9 @@ global.PolyFX = API;
   function ctCardHTML(preset){
     var c=ctPresetCfg(preset), bm=String(c.bgImg||'').trim(), tmp={_ctCfg:c,_ctSel:0,_ctQ:null};
     c.map.live=false;
-    var st=ctStyleStr(c)+'background-color:'+(c.bg||'#fff')+';'+((bm&&!ctIsVid(bm))?('background-image:url("'+bm.replace(/"/g,'%22')+'");'):'');
-    return '<div class="fm-pv"><div class="ct-wrap'+((bm&&c.bgGray)?' gray':'')+'" data-ta="'+(c.ta||'left')+'" data-k="'+c.kind+'" data-pv0="'+(txNum(c.pv,72)===0?'1':'0')+'" style="'+st+'">'+(bm?'<i class="fm-pvdim" style="opacity:'+(Math.max(0,Math.min(90,txNum(c.bgDim,0)))/100)+'"></i>':'')+ctInnerHTML(c,tmp)+'</div></div>';
+    var st=ctStyleStr(c)+'background-color:'+(c.bg||'#fff')+';'+((bm&&!ctIsVid(bm))?('background-image:url(&quot;'+bm.replace(/"/g,'%22')+'&quot;);'):'');   /* 261106 수정 — style="…" 안의 큰따옴표가 속성을 끊어 배경 사진이 빠지던 문제 (CONTACT02 · 10 · 폼 카드와 같은 수정) */
+    var pvw=(c.kind==='branch' && c.layout==='mapl');   /* 261106 추가 — 지점 「지도 크게」: 절반 배율(카드 폭×2)로 그리면 오른쪽 좁은 칸의 검색 줄이 두 줄로 넘어가 → 실제 페이지 폭에 가깝게 그린다 */
+    return '<div class="fm-pv"><div class="ct-wrap'+((bm&&c.bgGray)?' gray':'')+(pvw?' ct-pvw':'')+'" data-ta="'+(c.ta||'left')+'" data-k="'+c.kind+'" data-pv0="'+(txNum(c.pv,72)===0?'1':'0')+'" style="'+st+'">'+(bm?'<i class="fm-pvdim" style="opacity:'+(Math.max(0,Math.min(90,txNum(c.bgDim,0)))/100)+'"></i>':'')+ctInnerHTML(c,tmp)+'</div></div>';
   }
   function baInsertCt(card){
     var stage=document.getElementById('stage');
