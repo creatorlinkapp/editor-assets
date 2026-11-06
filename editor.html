@@ -402,7 +402,7 @@
   .set-row .lbl{flex:1;display:flex;align-items:center;gap:6px;min-width:0;white-space:nowrap;}
   .help{width:15px;height:15px;border-radius:50%;flex:none;color:var(--ink-2s);}
   .help-ico{flex:none;position:relative;cursor:help;}   /* 261023 수정 — top:.5px 제거: 반 픽셀 밀림이 1px 테두리를 두 줄로 번지게 했다(아이콘은 정수 픽셀 격자로 다시 그림) */
-  #bset .lbl:has(> .help-ico),#bset .k:has(> .help-ico){display:inline-flex;align-items:center;gap:5px;}   /* 261026 추가 — 블록 설정창 물음표: 스타일 패널(.st-row .lbl)과 같이 글자 가운데 정렬 · 5px 간격 */
+  #bset .lbl:has(> .help-ico),#bset .k:has(> .help-ico),.bset .lbl:has(> .help-ico),.bset .k:has(> .help-ico){display:inline-flex;align-items:center;gap:5px;}   /* 261106 수정 — 블록 설정창(#bset)만 → 모든 설정창(.bset: 상단 메뉴 · 모바일 메뉴 · 푸터 · 컴포넌트 등). 상단 메뉴 「현재 페이지 겹치기」 물음표가 글자보다 2.5px 위에 떠 있었다 */   /* 261026 추가 — 블록 설정창 물음표: 스타일 패널(.st-row .lbl)과 같이 글자 가운데 정렬 · 5px 간격 */
   .set-row .chev{width:16px;height:16px;color:var(--ink-3);}
   .set-row .gear{width:17px;height:17px;color:#3B3F46;}
   .set-row.disabled .lbl{color:var(--ink-3);}
@@ -8885,6 +8885,7 @@
   html.mview .site > :is(.site-hd,.site-ft) > .bk-hid{display:none !important;}
   html.mview:not(.pview):not(.mv-preview) .site > :is(.site-hd.hd-off,.site-ft.ft-hid){opacity:.3;}   /* 모바일 편집 사본 — 숨긴 블록과 같은 30% */
   html.mview:is(.pview,.mv-preview) .site > .site-hd.hd-off{display:none !important;}   /* 미리보기(PC · 태블릿)에서는 빠진다 (푸터는 스냅샷에서 빈 값) */
+  #hdDock #hdStateWrap{margin-left:8px;margin-right:8px;}   /* 261106 추가 — 맨 위 묶음(기본/플로팅 탭 · 현재 페이지 겹치기 · 숨김 안내)을 아래 섹션 제목 선(왼쪽 글자 · 오른쪽 스위치)에 맞춘다 — 전엔 양쪽 8px 바깥 */
   #hdDock .hd-foot{grid-template-columns:repeat(3,calc(100% / 6));justify-content:center;}   /* 칸 폭은 블록설정 하단 바(6칸) 한 칸과 같게 · 바 가운데로 (블록과 같은 3~5번째 칸에 두면 좁은 설정창에서 오른쪽으로 치우쳐 보였다) */
   .hd-pk .hd-card.hd-arc{position:relative;}   /* 261106 추가 — 보관한 메뉴 카드: 오른쪽 위 지우기(×)는 롤오버 때만 */
   .hd-pk .hd-card.hd-arc .hd-arc-x{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(17,17,17,.62);color:#fff;font-size:14px;line-height:22px;text-align:center;opacity:0;transition:opacity .12s;z-index:2;}
@@ -16517,7 +16518,7 @@
       <button class="x" onclick="hdClose()" title="닫기" aria-label="닫기"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="bset-b">
-      <div class="tx-hint" id="hdOffHint" style="display:none;margin:0 0 14px;">숨긴 상태입니다. 게시 화면 · 미리보기에서 상단 메뉴가 빠집니다. 아래 「표시」나 캔버스의 「숨김 해제」로 다시 보입니다.</div>   <!-- 261106 수정 — 맨 위 「상단 메뉴 사용」 스위치 → 아래 바 「숨김」 버튼(기존 편집기 · 블록설정 하단 바와 같은 자리). 숨긴 동안만 이 안내 -->
+      <div class="tx-hint" id="hdOffHint" style="display:none;margin:0 8px 14px;">숨긴 상태입니다. 게시 화면 · 미리보기에서 상단 메뉴가 빠집니다. 아래 「표시」나 캔버스의 「숨김 해제」로 다시 보입니다.</div>   <!-- 261106 수정 — 맨 위 「상단 메뉴 사용」 스위치 → 아래 바 「숨김」 버튼(기존 편집기 · 블록설정 하단 바와 같은 자리). 숨긴 동안만 이 안내 -->
       <!-- 261026 수정 — 겹치기/플로팅 구조 단순화 (좌측 사이트 「메뉴 상태」 매너)
            · 「메뉴 동작」 스위치 둘 + 「편집 중인 모습」 3상태 + 「기본과 같게」 · 「글자색 자동 맞춤」 스위치 → 탭 [기본 | 플로팅 ◐] 하나와 「현재 페이지 겹치기」 한 줄
            · 플로팅 켜기/끄기는 탭 안 스위치 · 겹치기는 따로 꾸미는 상태가 아니라 기본 메뉴를 첫 블록 위에 겹치는 「페이지 옵션」(페이지마다)
@@ -17052,7 +17053,7 @@
       <button class="x" onclick="ftClose()" title="닫기" aria-label="닫기"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="bset-b">
-      <div class="tx-hint" id="ftOffHint" style="display:none;margin:0 0 14px;">숨긴 상태입니다. 게시 화면 · 미리보기에서 푸터가 빠집니다. 아래 「표시」나 캔버스의 「숨김 해제」로 다시 보입니다.<br>쇼핑몰은 사업자 정보·약관·개인정보처리방침 표시가 필수입니다.</div>   <!-- 261106 수정 — 맨 위 「푸터 사용」 스위치 → 아래 바 「숨김」 버튼(상단 메뉴 · 블록설정 하단 바와 같게). 숨긴 동안만 이 안내 -->
+      <div class="tx-hint" id="ftOffHint" style="display:none;margin:0 8px 14px;">숨긴 상태입니다. 게시 화면 · 미리보기에서 푸터가 빠집니다. 아래 「표시」나 캔버스의 「숨김 해제」로 다시 보입니다.<br>쇼핑몰은 사업자 정보·약관·개인정보처리방침 표시가 필수입니다.</div>   <!-- 261106 수정 — 맨 위 「푸터 사용」 스위치 → 아래 바 「숨김」 버튼(상단 메뉴 · 블록설정 하단 바와 같게). 숨긴 동안만 이 안내 -->
 
       <div class="fld sfold open" id="ftDesignAcc">
         <div class="fld-h fold-h" onclick="smAcc(this)">디자인<span class="fold-r"><button type="button" class="sw-reset off" id="ftRs" onclick="event.stopPropagation();ftReset()" title="색·글자 크기·여백·아이콘 크기를 기본값으로" aria-label="기본값으로 되돌리기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
