@@ -8872,6 +8872,18 @@
   .site-hd .logo .dot,.site[data-theme] .site-hd .logo .dot{color:var(--hd-logo);opacity:.4;}   /* 261023 수정 — 테마 규칙(.site[data-theme] .logo .dot = 옅은 회색 고정)이 더 세서 점만 로고 색을 따르지 않았다(어두운 바탕에서 로고는 사라지고 점만 남음) */
   .site-hd .logo img{display:block;max-height:var(--hd-lmax);width:auto;max-width:280px;object-fit:contain;}
   .site-hd.hd-nologo .logo{display:none;}
+  /* 261106 추가 — 상단 메뉴 사용 끔(.hd-off): 편집 화면에는 「상단 메뉴 꺼짐 · 켜기」 줄만(푸터 꺼짐 줄과 같은 모양), 게시 · 미리보기 · 모바일 사본(html.mview)에서는 아예 빠진다. 좌측 메뉴의 왼쪽 칸도 비운다 */
+  .site > .site-hd .hd-offbar{display:none;}
+  .site > .site-hd.hd-off{display:block !important;height:auto !important;min-height:0 !important;padding:0 !important;margin:0 !important;position:relative !important;top:auto !important;background:none !important;border:0 !important;box-shadow:none !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;transition:none !important;}
+  .site > .site-hd.hd-off > :not(.hd-offbar){display:none !important;}
+  .site > .site-hd.hd-off::before,.site > .site-hd.hd-off::after{display:none !important;}
+  .site > .site-hd.hd-off > .hd-offbar{height:48px;display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:0 40px;font-size:15px;color:#A6ACB5;}
+  .site > .site-hd.hd-off > .hd-offbar button{height:32px;padding:0 16px;border:1px solid #DDE1E6;border-radius:99px;background:#fff;color:#6B7178;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  .site > .site-hd.hd-off > .hd-offbar button:hover{border-color:var(--ed,#03C75A);color:var(--ed,#03C75A);}
+  .site.hd-off-site[data-hd-type="side"]{display:block;}
+  html.mview .site > .site-hd.hd-off{display:none !important;}
+  #hdDock .hd-foot{grid-template-columns:1fr;}
+  #hdDock.hd-dis > .bset-b > :not(.sline:first-child):not(#hdOffHint),#hdDock.hd-dis > .hd-foot{opacity:.42;pointer-events:none;}   /* 꺼져 있으면 「상단 메뉴 사용」 줄 · 안내만 또렷하게 (푸터 ft-dis 와 같게) */
   .site-hd .snav-ham,.site[data-theme] .site-hd .snav-ham{color:var(--hd-ac);}
   /* 메인메뉴 */
   .site-hd .site-nav{gap:var(--hd-gap);font-size:var(--hd-fs);letter-spacing:var(--hd-ls);font-family:var(--hd-font);font-weight:var(--hd-fw);font-style:var(--hd-fst);color:var(--hd-fg);}
@@ -16497,6 +16509,8 @@
       <button class="x" onclick="hdClose()" title="닫기" aria-label="닫기"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="bset-b">
+      <div class="sline" style="padding:0 0 14px;"><span class="lbl">상단 메뉴 사용</span><button type="button" class="sw on" id="hdOnSw" onclick="hdSwitch(HD.on===false)"></button></div>   <!-- 261106 추가 — 기존 편집기 상단 메뉴 「숨김」 대응 (푸터 사용과 같은 자리 · 같은 방식) -->
+      <div class="tx-hint" id="hdOffHint" style="display:none;margin:-6px 0 14px;">게시 화면 · 미리보기 · 모바일에서 상단 메뉴가 빠집니다. 설정은 그대로 남습니다.</div>
       <!-- 261026 수정 — 겹치기/플로팅 구조 단순화 (좌측 사이트 「메뉴 상태」 매너)
            · 「메뉴 동작」 스위치 둘 + 「편집 중인 모습」 3상태 + 「기본과 같게」 · 「글자색 자동 맞춤」 스위치 → 탭 [기본 | 플로팅 ◐] 하나와 「현재 페이지 겹치기」 한 줄
            · 플로팅 켜기/끄기는 탭 안 스위치 · 겹치기는 따로 꾸미는 상태가 아니라 기본 메뉴를 첫 블록 위에 겹치는 「페이지 옵션」(페이지마다)
@@ -16722,6 +16736,7 @@
             <div class="srow srow-dd"><span class="k">반복</span><div class="sdd" id="hdBgRepDD"><button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">반복 없음</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="sdd-menu"></div></div></div>
           </div>
           <div class="sline" style="margin-top:8px;"><span class="lbl">하단 구분선</span><span class="sw-col" style="flex:none;gap:10px;"><input type="color" id="hdBgLineCol" value="#E6E6E6" data-cp-title="구분선 색"><button type="button" class="sw" id="hdBgLineSw" onclick="hdSetBg('line',!hdBgCur().line)"></button></span></div>
+          <div class="srow" id="hdBgLineWRow" style="display:none;"><span class="k">두께</span><input class="rng" type="range" id="hdBgLineW" min="1" max="6" step="1" value="1"><span class="v" id="hdBgLineWV">1px</span></div>   <!-- 261106 추가 — 하단 구분선 두께 (기존 편집기와 같게) -->
           <div class="sline"><span class="lbl">그림자</span><button type="button" class="sw" id="hdBgShSw" onclick="hdSetBgSh('on',!hdBgCur().sh.on)"></button></div>
           <div id="hdBgShOpts" class="hd-sub" style="display:none;">
             <div class="srow"><span class="k">가로 위치</span><input class="rng" type="range" id="hdShX" min="-30" max="30" step="1" value="0"><span class="v" id="hdShXV">0px</span></div>
@@ -16733,6 +16748,9 @@
         </div></div>
       </div>
 
+    </div>
+    <div class="bset-foot hd-foot">   <!-- 261106 추가 — 블록설정 하단 바와 같은 자리 · 모양 (상단 메뉴는 코드만 · 숨김은 위 「상단 메뉴 사용」) -->
+      <button class="act" id="hdCodeBtn" onclick="hdCodeOpen()"><svg class="ico" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>코드</button>
     </div>
   </div>
 
@@ -22559,7 +22577,7 @@
   function bkCodeOpen(blk){
     blk=blk||document.querySelector('#stage .blk.sel');
     var m=document.getElementById('bkCode'); if(!blk || !m) return;
-    bkCode.blk=blk; bkCode.tab='';
+    bkCode.blk=blk; bkCode.tab=''; bkCode.hd=false;   /* 261106 추가 — hd: 상단 메뉴 코드(hdCodeOpen)로 열렸을 때 */
     bkCode.css=blk.getAttribute('data-css')||''; bkCode.js=blk.getAttribute('data-js')||'';
     try{ bkCode.full=bkCodeHtml(blk); }catch(e){ bkCode.full=blk.outerHTML; }
     bkCode.html=bkCode.full.replace(/(data:[a-z]+\/[a-z0-9.+-]+;base64,)[A-Za-z0-9+\/=]{120,}/gi,'$1…');   /* 박힌 그림 데이터는 보기에서만 줄인다(복사는 그대로) */
@@ -22573,10 +22591,10 @@
     bkCodeKeep(); bkCode.tab=t;
     [].forEach.call(document.querySelectorAll('#bkCodeSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===t); });
     ta.readOnly=(t==='html'); ta.value=(t==='html')?bkCode.html:(bkCode[t]||''); ta.scrollTop=0; ta.scrollLeft=0;
-    if(hint){ hint.textContent=err||BK_CODE_HINT[t]||''; hint.classList.toggle('err',!!err); }
+    if(hint){ hint.textContent=err||(bkCode.hd && typeof HD_CODE_HINT!=='undefined' && HD_CODE_HINT[t])||BK_CODE_HINT[t]||''; hint.classList.toggle('err',!!err); }   /* 261106 수정 — 상단 메뉴 코드면 그 안내 */
     if(t!=='html') setTimeout(function(){ try{ ta.focus(); }catch(e){} },0);
   }
-  function bkCodeClose(){ var m=document.getElementById('bkCode'); if(m) m.classList.remove('show'); bkCode.blk=null; bkCode.tab=''; }
+  function bkCodeClose(){ var m=document.getElementById('bkCode'); if(m) m.classList.remove('show'); bkCode.blk=null; bkCode.tab=''; bkCode.hd=false; }
   function bkCodeCopy(){
     bkCodeKeep();
     var t=(bkCode.tab==='html')?bkCode.full:(bkCode[bkCode.tab]||'');
@@ -22589,6 +22607,7 @@
     if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok,fb); else fb();
   }
   function bkCodeSave(){
+    if(bkCode.hd && typeof hdCodeSave==='function'){ hdCodeSave(); return; }   /* 261106 추가 — 상단 메뉴 코드는 HD.code 에 */
     var blk=bkCode.blk; if(!blk || !blk.isConnected){ bkCodeClose(); return; }
     bkCodeKeep();
     var css=bkCode.css.replace(/\s+$/,''), js=bkCode.js.replace(/\s+$/,''), err=null;
@@ -60061,10 +60080,11 @@ function hdDefault(){
     col:{base:{logo:'',fg:'',ac:'',fx:'',ufg:'',uac:''}, sticky:{logo:'',fg:'',ac:'',fx:'',ufg:'',uac:''}},
     bg:{base:hdBgDefault(''), sticky:hdBgDefault('auto',true)},   /* 261026 수정 — 플로팅 기본은 다시 하단 구분선(그림자 아님). 최상단에서는 플로팅 자체가 안 걸려(hdStuck) 선이 없고, 설정창 플로팅 탭 미리 보기도 최상단이면 선을 감춘다(아래 --hd-line) */
     pad:{top:22, bottom:22, side:true},
+    on:true, code:{css:'',js:''},   /* 261106 추가 — on: 상단 메뉴 사용(끄면 게시 · 미리보기 · 모바일에서 빠지고 설정은 남는다 · 푸터 사용과 같은 방식) · code: 상단 메뉴 코드(CSS · JS — 블록 코드 창을 같이 쓴다) */
     mo:moDefault()   /* 261027 추가 — 모바일 메뉴(상단 바 · 메뉴 바 · 펼침 메뉴) */
   };
 }
-function hdBgDefault(col,line){ return {col:col||'', alpha:col==='auto'?0.96:1, blur:col==='auto'?8:0, img:'', size:'cover', pos:'center center', rep:'no-repeat', line:!!line, lineCol:'#E6E6E6', sh:{on:false,x:0,y:2,blur:12,spread:0,col:'#000000',a:.08}}; }
+function hdBgDefault(col,line){ return {col:col||'', alpha:col==='auto'?0.96:1, blur:col==='auto'?8:0, img:'', size:'cover', pos:'center center', rep:'no-repeat', line:!!line, lineCol:'#E6E6E6', lineW:1, sh:{on:false,x:0,y:2,blur:12,spread:0,col:'#000000',a:.08}}; }
 var HD=hdDefault();
 var hdEditSt='base';              /* 설정창의 편집 대상 상태 (저장하지 않음) */
 var hdStuck=false, hdBound=false, hdPickCtx=null;
@@ -60173,6 +60193,8 @@ function hdNorm(o){
   if(!o.sticky.lk){ var L=!!o.sticky.link; o.sticky.lk={logo:L,nav:L,fx:L,util:L,bg:L,img:L}; }
   if(!o.overlap.pg) o.overlap.pg={}; delete o.overlap.off; if(o.overlap.clear==null) o.overlap.clear=true;
   if(!o.mo || !o.mo.dr || !o.mo.tab){ var mo=moDefault(); hdMerge(mo,o.mo||{}); o.mo=mo; }   /* 261027 추가 — 모바일 메뉴 값이 없던 저장값 */
+  if(o.on==null) o.on=true; if(!o.code) o.code={css:'',js:''};   /* 261106 추가 — 상단 메뉴 사용 · 코드가 없던 저장값 */
+  if(o.bg) ['base','sticky'].forEach(function(k){ if(o.bg[k] && o.bg[k].lineW==null) o.bg[k].lineW=1; });   /* 261106 추가 — 하단 구분선 두께가 없던 저장값은 1px */
   return o;
 }
 function hdLk(g){ return !!(HD.sticky.lk||{})[g]; }
@@ -60224,7 +60246,7 @@ function hdApply(hdEl){
   var solid=sb.col==='auto'?'var(--st-bg,#fff)':(sb.col?hdRGBA(sb.col,1):'var(--st-bg,#fff)'); sv('--hd-bg-solid',solid); sv('--hd-fxfg',solid);   /* fill 효과 위 글자색 = 헤더 바탕색 */
   sv('--hd-blur',(bg.blur||0)+'px'); hd.classList.toggle('hd-blur',(bg.blur||0)>0);
   sv('--hd-bgimg',bg.img?'url("'+bg.img.replace(/"/g,'%22')+'")':'none'); sv('--hd-bgsize',bg.size); sv('--hd-bgpos',bg.pos); sv('--hd-bgrep',bg.rep);
-  sv('--hd-line',(bg.line && !(st==='sticky' && !hdStuck))?('1px solid '+bg.lineCol):'none');   /* 261026 수정 — 하단 구분선은 스크롤이 시작된 뒤에만: 플로팅 탭 미리 보기라도 최상단(hdStuck=false)이면 감춘다(어두운 첫 화면 위 흰 줄 · 녹색 테두리 밖 한 줄 문제) */
+  sv('--hd-line',(bg.line && !(st==='sticky' && !hdStuck))?((bg.lineW||1)+'px solid '+bg.lineCol):'none');   /* 261106 수정 — 두께(lineW) */   /* 261026 수정 — 하단 구분선은 스크롤이 시작된 뒤에만: 플로팅 탭 미리 보기라도 최상단(hdStuck=false)이면 감춘다(어두운 첫 화면 위 흰 줄 · 녹색 테두리 밖 한 줄 문제) */
   sv('--hd-shadow',bg.sh.on?(bg.sh.x+'px '+bg.sh.y+'px '+bg.sh.blur+'px '+bg.sh.spread+'px '+hdRGBA(bg.sh.col,bg.sh.a)):'0 0 0 0 transparent');   /* 261006 수정 — none → 투명 그림자(롤오버 외곽선과 목록으로 합쳐 쓰므로) */
   /* 메뉴 글자·간격 */
   sv('--hd-fs',HD.nav.size+'px'); sv('--hd-ls',(HD.nav.ls/100)+'em'); sv('--hd-font',HD.nav.font>=0?hdFontCss(HD.nav.font):'inherit'); sv('--hd-fw',HD.nav.bold?'700':'400'); sv('--hd-fst',HD.nav.italic?'italic':'normal');
@@ -60252,7 +60274,13 @@ function hdApply(hdEl){
   var ut=hd.querySelector(':scope > .hd-util'); if(ut){ var uh=hdUtilHtml(HD.util); if(ut.getAttribute('data-hd-html')!==uh){ ut.innerHTML=uh; ut.setAttribute('data-hd-html',uh); } ut.setAttribute('data-us',String(HD.util.style)); }
   /* 상태 클래스 — 플로팅은 sticky, 겹치기는 아래 블록이 헤더 밑으로 흘러들게(높이만큼 음수 여백) */
   if(pv){ hd.classList.remove('hd-stick','hd-over','hd-stuck','hd-open','hd-mega-open','hd-editing'); if(hd.querySelector(':scope > .site-nav')) hdNavDecorIn(hd.querySelector(':scope > .site-nav'),HD.nav.fx); return; }   /* 261006 추가 — 미리보기는 여기까지 */
-  var stickOn=HD.sticky.on && HD.type!=='side', overOn=hdOverOn();   /* 261007 수정 — 갤러리 상세 페이지에서는 겹치지 않는다 */
+  var hdOn=(HD.on!==false);   /* 261106 추가 — 상단 메뉴 사용: 끄면 편집 화면에는 「상단 메뉴 꺼짐 · 켜기」 줄만, 게시 · 미리보기 · 모바일에서는 빠진다 */
+  hd.classList.toggle('hd-off',!hdOn); site.classList.toggle('hd-off-site',!hdOn);
+  var hob=hd.querySelector(':scope > .hd-offbar');
+  if(!hdOn && !hob){ hob=document.createElement('div'); hob.className='hd-offbar'; hob.innerHTML='<span>상단 메뉴 꺼짐</span><button type="button" onclick="event.stopPropagation();hdSwitch(true)">켜기</button>'; hd.appendChild(hob); }
+  else if(hdOn && hob) hob.remove();
+  hdCodeApply(hd);   /* 261106 추가 — 상단 메뉴 코드(CSS · JS) */
+  var stickOn=HD.sticky.on && HD.type!=='side' && hdOn, overOn=hdOverOn() && hdOn;   /* 261007 수정 — 갤러리 상세 페이지에서는 겹치지 않는다 */
   hd.classList.toggle('hd-stick',stickOn); hd.classList.toggle('hd-over',false); hd.classList.toggle('hd-stuck',stickOn && hdStuck);
   site.classList.toggle('hd-overlap',overOn);
   if(overOn){ hd.style.marginBottom='calc(-1 * '+hd.offsetHeight+'px)'; hd.style.zIndex='119'; if(!stickOn) hd.style.position='relative'; else hd.style.position=''; }
@@ -60572,7 +60600,8 @@ var HD_RNG=[
   ['hdSubFs',function(){return HD.sub;},'size','px'],['hdSubRad',function(){return HD.sub;},'rad','px'],
   ['hdBgBlur',function(){return hdBgCur();},'blur','px'],
   ['hdShX',function(){return hdBgCur().sh;},'x','px'],['hdShY',function(){return hdBgCur().sh;},'y','px'],['hdShB',function(){return hdBgCur().sh;},'blur','px'],['hdShS',function(){return hdBgCur().sh;},'spread','px'],
-  ['hdPadT',function(){return HD.pad;},'top','px'],['hdPadB',function(){return HD.pad;},'bottom','px']
+  ['hdPadT',function(){return HD.pad;},'top','px'],['hdPadB',function(){return HD.pad;},'bottom','px'],
+  ['hdBgLineW',function(){return hdBgCur();},'lineW','px']   /* 261106 추가 — 하단 구분선 두께 */
 ];
 /* 색 입력 — [id, 대상 객체(), 키, 자동 허용]. 자동(빈 값) 허용 항목은 hex 자리에 「자동」 */
 var HD_COL=[
@@ -60629,6 +60658,45 @@ function hdSetBgSh(k,v){ hdUnlink('bg'); hdBgCur().sh[k]=v; hdFill(); hdChanged(
 function hdSetPad(k,v){ HD.pad[k]=v; hdFill(); hdChanged(); }
 function hdColReset(g){ var lg={logo:'logo',nav:'nav',fx:'fx',util:'util',bg:'bg'}[g]; if(lg) hdUnlink(lg); var c=HD.col[hdEditSt]; if(g==='logo') c.logo=''; else if(g==='nav'){ c.fg=''; c.ac=''; } else if(g==='fx') c.fx=''; else if(g==='util'){ c.ufg=''; c.uac=''; } else if(g==='sub'){ HD.sub.fg=''; HD.sub.bg=''; HD.sub.lineCol=''; } else if(g==='subac') HD.sub.ac=''; else if(g==='bg'){ hdBgCur().col=(hdEditSt==='sticky'?'auto':''); hdBgCur().alpha=1; } hdFill(); hdChanged(); }
 function hdChanged(){ hdApply(); if(typeof mvKick==='function') try{ mvKick(0); }catch(e){} }
+/* 261106 추가 — 상단 메뉴 사용 (기존 편집기 상단 메뉴 「숨김」 대응 · 푸터 사용과 같은 방식). 꺼도 설정은 그대로 남는다 */
+function hdSwitch(on){
+  on=!!on; if((HD.on!==false)===on) return; HD.on=on; hdFill(); hdChanged();
+  if(!on && typeof clToast==='function') clToast('상단 메뉴를 껐습니다. 설정은 보관됩니다.',{label:'되돌리기',fn:function(){ HD.on=true; hdFill(); hdChanged(); }});
+}
+/* 261106 추가 — 상단 메뉴 코드 (기존 편집기 상단 메뉴 「코드」 대응). 블록 코드 창(#bkCode)을 같이 쓰고 값은 HD.code 에 둔다 → 모바일 · 미리보기 사본도 HD 와 함께 받아 입는다
+   · CSS: 상단 메뉴 안에만 (& = 상단 메뉴 자체) · JS: 값이 바뀌었을 때 한 번 (block = 상단 메뉴) */
+function hdCodeApply(hd){
+  var c=HD.code||{}, css=c.css||'', st=document.getElementById('hdCssUser'), out='';
+  if(css && typeof bkCssScope==='function'){ try{ out=bkCssScope(css,':is(#stage,.bk-site) .site > .site-hd'); }catch(e){ out=''; } }
+  if(out && !st){ st=document.createElement('style'); st.id='hdCssUser'; document.head.appendChild(st); }
+  if(st && st.textContent!==out) st.textContent=out;
+  var js=c.js||''; if(!hd || (hd._hdJs||'')===js) return; hd._hdJs=js;
+  if(js){ try{ (new Function('block',js)).call(hd,hd); }catch(e){ try{ console.warn('[상단 메뉴 JS]',e); }catch(_){} return e; } }
+}
+function hdCodeOpen(){
+  var hd=hdSiteHd(), m=document.getElementById('bkCode'); if(!hd || !m || typeof bkCodeTab!=='function') return;
+  var c=HD.code||(HD.code={css:'',js:''});
+  bkCode.blk=hd; bkCode.hd=true; bkCode.tab=''; bkCode.css=c.css||''; bkCode.js=c.js||'';
+  try{ var cl=hd.cloneNode(true); [].forEach.call(cl.querySelectorAll('.hd-gear,.hd-offbar,.tag-badge'),function(x){ x.remove(); }); cl.classList.remove('hd-editing','hd-open','hd-mega-open'); bkCode.full=bkHtmlPretty(cl.outerHTML.replace(/<!--[\s\S]*?-->/g,'')); }catch(e){ bkCode.full=hd.outerHTML; }
+  bkCode.html=bkCode.full.replace(/(data:[a-z]+\/[a-z0-9.+-]+;base64,)[A-Za-z0-9+\/=]{120,}/gi,'$1…');
+  document.getElementById('bkCodeKind').textContent='상단 메뉴';
+  m.classList.add('show');
+  bkCodeTab(bkCode.css?'css':(bkCode.js?'js':'html'));
+}
+var HD_CODE_HINT={
+  html:'읽기 전용입니다. 상단 메뉴 설정 값으로 그려집니다.',
+  css:'상단 메뉴에만 적용됩니다. 상단 메뉴 자체는 & 로 씁니다. 예) &{border-bottom:2px solid #111;}  .site-nav{letter-spacing:.1em;}',
+  js:'저장하면 한 번 실행됩니다. 상단 메뉴는 block 으로 씁니다. 예) block.querySelector(\'.logo\').title=\'홈으로\';'
+};
+function hdCodeSave(){
+  bkCodeKeep();
+  var css=bkCode.css.replace(/\s+$/,''), js=bkCode.js.replace(/\s+$/,'');
+  if(js){ try{ new Function('block',js); }catch(e){ bkCodeTab('js','JS 문법 오류: '+e.message); return; } }
+  HD.code={css:css,js:js};
+  var hd=hdSiteHd(), err=null; if(hd){ hd._hdJs=null; err=hdCodeApply(hd); }
+  bkCodeClose(); hdFill(); hdChanged();
+  if(typeof showToast==='function'){ if(err) showToast('JS 실행 오류: '+err.message,'warn'); else showToast('코드를 저장했습니다.'); }
+}
 function hdFillResets(){
   var c=hdColOf(hdEditSt), bg=hdBgCur();
   function r(id,off){ var el=document.getElementById(id); if(el) el.classList.toggle('off',!!off); }
@@ -60692,6 +60760,9 @@ function hdFill(){
   var bt=document.getElementById('hdBgTh'); if(bt){ bt.classList.toggle('has',!!bg.img); bt.classList.toggle('empty',!bg.img); bt.style.backgroundImage=bg.img?'url("'+bg.img.replace(/"/g,'%22')+'")':''; }
   hdShow('hdBgImgOpts',!!bg.img); hdDDSync('hdBgSizeDD',bg.size); hdDDSync('hdBgPosDD',bg.pos); hdDDSync('hdBgRepDD',bg.rep);
   hdSw('hdBgLineSw',bg.line); var blc=document.getElementById('hdBgLineCol'); if(blc) blc.style.display=bg.line?'':'none';
+  hdShow('hdBgLineWRow',!!bg.line);   /* 261106 추가 — 두께는 구분선을 켰을 때만 */
+  hdSw('hdOnSw',HD.on!==false); hdShow('hdOffHint',HD.on===false); d.classList.toggle('hd-dis',HD.on===false);   /* 261106 추가 — 상단 메뉴 사용 (끄면 나머지 설정은 흐리게 · 푸터와 같게) */
+  var hcb=document.getElementById('hdCodeBtn'); if(hcb) hcb.classList.toggle('has',!!(HD.code && (HD.code.css||HD.code.js)));   /* 261106 추가 — 코드가 있으면 점(블록 코드 버튼과 같게) */
   hdSw('hdBgShSw',bg.sh.on); hdShow('hdBgShOpts',bg.sh.on);
   hdSw('hdPadSideSw',HD.pad.side);
   /* 슬라이더·색 값 */
