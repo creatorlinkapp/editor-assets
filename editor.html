@@ -8872,23 +8872,24 @@
   .site-hd .logo .dot,.site[data-theme] .site-hd .logo .dot{color:var(--hd-logo);opacity:.4;}   /* 261023 수정 — 테마 규칙(.site[data-theme] .logo .dot = 옅은 회색 고정)이 더 세서 점만 로고 색을 따르지 않았다(어두운 바탕에서 로고는 사라지고 점만 남음) */
   .site-hd .logo img{display:block;max-height:var(--hd-lmax);width:auto;max-width:280px;object-fit:contain;}
   .site-hd.hd-nologo .logo{display:none;}
-  /* 261106 추가 — 상단 메뉴 사용 끔(.hd-off): 편집 화면에는 「상단 메뉴 꺼짐 · 켜기」 줄만(푸터 꺼짐 줄과 같은 모양), 게시 · 미리보기 · 모바일 사본(html.mview)에서는 아예 빠진다. 좌측 메뉴의 왼쪽 칸도 비운다 */
-  .site > .site-hd .hd-offbar{display:none;}
-  .site > .site-hd.hd-off{display:block !important;height:auto !important;min-height:0 !important;padding:0 !important;margin:0 !important;position:relative !important;top:auto !important;background:none !important;border:0 !important;box-shadow:none !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;transition:none !important;}
-  .site > .site-hd.hd-off > :not(.hd-offbar){display:none !important;}
-  .site > .site-hd.hd-off::before,.site > .site-hd.hd-off::after{display:none !important;}
-  .site > .site-hd.hd-off > .hd-offbar{height:48px;display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:0 40px;font-size:15px;color:#A6ACB5;}
-  .site > .site-hd.hd-off > .hd-offbar button{height:32px;padding:0 16px;border:1px solid #DDE1E6;border-radius:99px;background:#fff;color:#6B7178;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
-  .site > .site-hd.hd-off > .hd-offbar button:hover{border-color:var(--ed,#03C75A);color:var(--ed,#03C75A);}
-  .site.hd-off-site[data-hd-type="side"]{display:block;}
-  html.mview .site > .site-hd.hd-off{display:none !important;}
+  /* 261106 수정 — 상단 메뉴 · 푸터 숨김(.hd-off · .ft-hid)은 블록 숨김과 똑같이 (기존 편집기와 같은 동작):
+     편집 화면 = 크기 그대로 + 블록과 같은 덮개(.bk-hid: 빗금 막 + 가운데 「숨김 해제」) · 모바일 편집 사본 = 흐리게(30%) · 미리보기(PC · 태블릿) · 게시 = 빠짐 */
+  .site > :is(.site-hd,.site-ft) > .bk-hid{--bk-veil:rgba(246,247,250,.82);--bk-hatch:rgba(20,24,32,.05);--bk-pill:#23272E;--bk-pill-fg:#fff;position:absolute !important;inset:0;width:auto !important;z-index:120;cursor:pointer;
+    background:repeating-linear-gradient(-45deg,transparent 0 11px,var(--bk-hatch) 11px 22px),var(--bk-veil);}   /* 블록 덮개(.blk > .bk-hid)와 같은 값 · 상단 메뉴 안의 메뉴 · 버튼(z 100번대)보다 위, 톱니(121)보다 아래 */
+  .site > .site-ft > .bk-hid{z-index:5;}   /* 푸터 톱니(6) 아래 */
+  .site > :is(.site-hd,.site-ft) > .bk-hid.dk{--bk-veil:rgba(22,25,30,.82);--bk-hatch:rgba(255,255,255,.05);--bk-pill:#fff;--bk-pill-fg:#23272E;}
+  .site > :is(.site-hd,.site-ft) > .bk-hid button{position:absolute;left:50%;top:min(50%,240px);transform:translate(-50%,-50%);height:38px;padding:0 18px 0 14px;border:none;border-radius:var(--r-full);background:var(--bk-pill);color:var(--bk-pill-fg);
+    font-family:var(--font);font-size:13px;font-weight:600;line-height:1;letter-spacing:0;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;cursor:pointer;box-shadow:var(--shadow-bar);transition:background .12s,color .12s;}
+  .site > :is(.site-hd,.site-ft) > .bk-hid button:hover{background:var(--green);color:#fff;}
+  .site > :is(.site-hd,.site-ft) > .bk-hid button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;}
+  html.mview .site > :is(.site-hd,.site-ft) > .bk-hid{display:none !important;}
+  html.mview:not(.pview):not(.mv-preview) .site > :is(.site-hd.hd-off,.site-ft.ft-hid){opacity:.3;}   /* 모바일 편집 사본 — 숨긴 블록과 같은 30% */
+  html.mview:is(.pview,.mv-preview) .site > .site-hd.hd-off{display:none !important;}   /* 미리보기(PC · 태블릿)에서는 빠진다 (푸터는 스냅샷에서 빈 값) */
   #hdDock .hd-foot{grid-template-columns:repeat(3,calc(100% / 6));justify-content:center;}   /* 칸 폭은 블록설정 하단 바(6칸) 한 칸과 같게 · 바 가운데로 (블록과 같은 3~5번째 칸에 두면 좁은 설정창에서 오른쪽으로 치우쳐 보였다) */
   .hd-pk .hd-card.hd-arc{position:relative;}   /* 261106 추가 — 보관한 메뉴 카드: 오른쪽 위 지우기(×)는 롤오버 때만 */
   .hd-pk .hd-card.hd-arc .hd-arc-x{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(17,17,17,.62);color:#fff;font-size:14px;line-height:22px;text-align:center;opacity:0;transition:opacity .12s;z-index:2;}
   .hd-pk .hd-card.hd-arc:hover .hd-arc-x,.hd-pk .hd-card.hd-arc:focus-visible .hd-arc-x{opacity:1;}
-  .hd-pk .hd-card.hd-arc .hd-arc-x:hover{background:#111;}
-  #hdDock.hd-dis > .bset-b > :not(#hdOffHint),#hdDock.hd-dis > .hd-foot > :not(#hdHideBtn){opacity:.42;pointer-events:none;}   /* 숨긴 동안은 안내와 「표시」 버튼만 또렷하게 */
-  .site-hd .snav-ham,.site[data-theme] .site-hd .snav-ham{color:var(--hd-ac);}
+  .hd-pk .hd-card.hd-arc .hd-arc-x:hover{background:#111;}  .site-hd .snav-ham,.site[data-theme] .site-hd .snav-ham{color:var(--hd-ac);}
   /* 메인메뉴 */
   .site-hd .site-nav{gap:var(--hd-gap);font-size:var(--hd-fs);letter-spacing:var(--hd-ls);font-family:var(--hd-font);font-weight:var(--hd-fw);font-style:var(--hd-fst);color:var(--hd-fg);}
   .site[data-theme] .site-hd .site-nav{color:var(--hd-fg);}
@@ -10405,7 +10406,8 @@
   #stage .site-ft .ft-ed:hover{outline-color:color-mix(in srgb,var(--ed,#03C75A) 55%,transparent);}
   #stage .site-ft .ft-ed:focus{outline:1.5px solid var(--ed,#03C75A);}
   #stage .site-ft .ft-ed:empty::before{content:attr(data-ph);opacity:.45;}
-  html.mview .site-ft .ft-gear,html.mview .site-ft .ft-badge,html.mview .ft-offbar{display:none !important;}
+  html.mview .site-ft .ft-gear,html.mview .site-ft .ft-badge,html.mview:is(.pview,.mv-preview) .ft-offbar,html.mview .ft-offbar button{display:none !important;}   /* 261106 수정 — 숨김 줄은 모바일 편집 사본에서는 보인다(누르는 버튼 없이 · PC 설정창에서 숨김 해제), 미리보기에서만 빠진다 */
+  html.mob .site > .ft-offbar,html.mob .site > .site-hd.hd-off > .hd-offbar{height:40px;padding:0 16px;justify-content:center;font-size:13px;}   /* 261106 추가 — 모바일 편집 사본의 숨김 줄 */
   html.mview #stage .site-ft::after{display:none !important;}
   html.mview #stage .site-ft .ft-ed{outline:none !important;cursor:inherit;}
   /* 푸터가 있으면(또는 꺼짐 표시줄이 있으면) 맨 아래 + 버튼 자리로 비워 두던 여백은 필요 없다 */
@@ -16515,7 +16517,7 @@
       <button class="x" onclick="hdClose()" title="닫기" aria-label="닫기"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="bset-b">
-      <div class="tx-hint" id="hdOffHint" style="display:none;margin:0 0 14px;">숨긴 상태입니다. 게시 화면 · 미리보기 · 모바일에서 상단 메뉴가 빠지고, 설정은 그대로 남습니다. 아래 「표시」로 다시 보입니다.</div>   <!-- 261106 수정 — 맨 위 「상단 메뉴 사용」 스위치 → 아래 바 「숨김」 버튼(기존 편집기 · 블록설정 하단 바와 같은 자리). 숨긴 동안만 이 안내 -->
+      <div class="tx-hint" id="hdOffHint" style="display:none;margin:0 0 14px;">숨긴 상태입니다. 게시 화면 · 미리보기에서 상단 메뉴가 빠집니다. 아래 「표시」나 캔버스의 「숨김 해제」로 다시 보입니다.</div>   <!-- 261106 수정 — 맨 위 「상단 메뉴 사용」 스위치 → 아래 바 「숨김」 버튼(기존 편집기 · 블록설정 하단 바와 같은 자리). 숨긴 동안만 이 안내 -->
       <!-- 261026 수정 — 겹치기/플로팅 구조 단순화 (좌측 사이트 「메뉴 상태」 매너)
            · 「메뉴 동작」 스위치 둘 + 「편집 중인 모습」 3상태 + 「기본과 같게」 · 「글자색 자동 맞춤」 스위치 → 탭 [기본 | 플로팅 ◐] 하나와 「현재 페이지 겹치기」 한 줄
            · 플로팅 켜기/끄기는 탭 안 스위치 · 겹치기는 따로 꾸미는 상태가 아니라 기본 메뉴를 첫 블록 위에 겹치는 「페이지 옵션」(페이지마다)
@@ -17050,7 +17052,7 @@
       <button class="x" onclick="ftClose()" title="닫기" aria-label="닫기"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="bset-b">
-      <div class="tx-hint" id="ftOffHint" style="display:none;margin:0 0 14px;">숨긴 상태입니다. 게시 화면 · 미리보기 · 모바일에서 푸터가 빠지고, 내용은 그대로 남습니다. 아래 「표시」로 다시 보입니다.<br>쇼핑몰은 사업자 정보·약관·개인정보처리방침 표시가 필수입니다.</div>   <!-- 261106 수정 — 맨 위 「푸터 사용」 스위치 → 아래 바 「숨김」 버튼(상단 메뉴 · 블록설정 하단 바와 같게). 숨긴 동안만 이 안내 -->
+      <div class="tx-hint" id="ftOffHint" style="display:none;margin:0 0 14px;">숨긴 상태입니다. 게시 화면 · 미리보기에서 푸터가 빠집니다. 아래 「표시」나 캔버스의 「숨김 해제」로 다시 보입니다.<br>쇼핑몰은 사업자 정보·약관·개인정보처리방침 표시가 필수입니다.</div>   <!-- 261106 수정 — 맨 위 「푸터 사용」 스위치 → 아래 바 「숨김」 버튼(상단 메뉴 · 블록설정 하단 바와 같게). 숨긴 동안만 이 안내 -->
 
       <div class="fld sfold open" id="ftDesignAcc">
         <div class="fld-h fold-h" onclick="smAcc(this)">디자인<span class="fold-r"><button type="button" class="sw-reset off" id="ftRs" onclick="event.stopPropagation();ftReset()" title="색·글자 크기·여백·아이콘 크기를 기본값으로" aria-label="기본값으로 되돌리기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
@@ -59691,7 +59693,7 @@ global.PolyFX = API;
       var site=siteEl(); if(!site) return null; var known=pc?pvKnown:mvKnown;
       var s={t:'cl-mv-snap', hd:{}, blocks:[], sel:0, cfx:'', sfx:'', aos:'', preview:pc||(typeof mvW!=='undefined' && mvW!==375)};   /* 260906 추가 — 태블릿 폭 = 미리보기 전용 */
       var lg=site.querySelector('.site-hd .logo'), nv=site.querySelector('.site-hd .site-nav'), mb=document.getElementById('siteNavMob');
-      s.hd.logo=lg?lg.innerHTML:''; s.hd.nav=nv?nv.innerHTML:''; s.hd.mob=mb?mb.innerHTML:''; s.hd.cfg=(typeof HD!=='undefined')?JSON.stringify(HD):''; s.tm=(typeof tmSnap==='function')?tmSnap():''; s.ft=(typeof ftSnap==='function')?ftSnap():''; s.gd=(typeof gdSnap==='function')?gdSnap():'';   /* 261006 추가 — 상세 페이지 타이틀·하단 */   /* 261001 추가 — 탭메뉴 블록 · 푸터 */   /* 260930 추가 — 상단 메뉴 설정 */
+      s.hd.logo=lg?lg.innerHTML:''; s.hd.nav=nv?nv.innerHTML:''; s.hd.mob=mb?mb.innerHTML:''; s.hd.cfg=(typeof HD!=='undefined')?JSON.stringify(HD):''; s.tm=(typeof tmSnap==='function')?tmSnap():''; s.ft=(typeof ftSnap==='function')?ftSnap(s.preview):'';   /* 261106 수정 — 미리보기 여부: 숨긴 푸터를 모바일 편집 사본에는 「푸터 숨김」 줄로, 미리보기에는 빈 값으로 */ s.gd=(typeof gdSnap==='function')?gdSnap():'';   /* 261006 추가 — 상세 페이지 타이틀·하단 */   /* 261001 추가 — 탭메뉴 블록 · 푸터 */   /* 260930 추가 — 상단 메뉴 설정 */
       var host=mvHost()||site, kids=host.children, sig=[];   /* 260921 수정 — 지금 페이지의 블록 */
       var hd0=site.querySelector(':scope > .cl-tabmenu')||site.querySelector('.site-hd'), first0=(host===site)?(hd0&&hd0.nextElementSibling):host.firstElementChild;
       s.abTop=!!(first0 && first0.classList.contains('addbar'));
@@ -60289,10 +60291,10 @@ function hdApply(hdEl){
   var ut=hd.querySelector(':scope > .hd-util'); if(ut){ var uh=hdUtilHtml(HD.util); if(ut.getAttribute('data-hd-html')!==uh){ ut.innerHTML=uh; ut.setAttribute('data-hd-html',uh); } ut.setAttribute('data-us',String(HD.util.style)); }
   /* 상태 클래스 — 플로팅은 sticky, 겹치기는 아래 블록이 헤더 밑으로 흘러들게(높이만큼 음수 여백) */
   if(pv){ hd.classList.remove('hd-stick','hd-over','hd-stuck','hd-open','hd-mega-open','hd-editing'); if(hd.querySelector(':scope > .site-nav')) hdNavDecorIn(hd.querySelector(':scope > .site-nav'),HD.nav.fx); return; }   /* 261006 추가 — 미리보기는 여기까지 */
-  var hdOn=(HD.on!==false);   /* 261106 추가 — 상단 메뉴 사용: 끄면 편집 화면에는 「상단 메뉴 꺼짐 · 켜기」 줄만, 게시 · 미리보기 · 모바일에서는 빠진다 */
-  hd.classList.toggle('hd-off',!hdOn); site.classList.toggle('hd-off-site',!hdOn);
-  var hob=hd.querySelector(':scope > .hd-offbar');
-  if(!hdOn && !hob){ hob=document.createElement('div'); hob.className='hd-offbar'; hob.innerHTML='<span>상단 메뉴 숨김</span><button type="button" onclick="event.stopPropagation();hdSwitch(true)">표시</button>'; hd.appendChild(hob); }
+  var hdOn=(HD.on!==false);   /* 261106 수정 — 숨김: 블록 숨김과 똑같이 — 편집 화면에는 크기 그대로 덮개(빗금 막 + 「숨김 해제」), 모바일 편집 사본은 흐리게, 미리보기 · 게시에서는 빠진다. 숨긴 동안은 플로팅 · 겹치기 없이 제자리 */
+  hd.classList.toggle('hd-off',!hdOn);
+  var hob=hd.querySelector(':scope > .bk-hid');
+  if(!hdOn && !hob && !window.CL_MVIEW){ hob=document.createElement('div'); hob.className='bk-hid'+((typeof bkTone==='function' && bkTone(hd)==='dark')?' dk':''); hob.innerHTML='<button type="button" onclick="event.stopPropagation();hdSwitch(true)"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>숨김 해제</button>'; hd.appendChild(hob); }   /* 블록 덮개(BK_HID_HTML)와 같은 모양 */
   else if(hdOn && hob) hob.remove();
   hdCodeApply(hd);   /* 261106 추가 — 상단 메뉴 코드(CSS · JS) */
   var stickOn=HD.sticky.on && HD.type!=='side' && hdOn, overOn=hdOverOn() && hdOn;   /* 261007 수정 — 갤러리 상세 페이지에서는 겹치지 않는다 */
@@ -60676,7 +60678,7 @@ function hdChanged(){ hdApply(); if(typeof mvKick==='function') try{ mvKick(0); 
 /* 261106 추가 — 상단 메뉴 사용 (기존 편집기 상단 메뉴 「숨김」 대응 · 푸터 사용과 같은 방식). 꺼도 설정은 그대로 남는다 */
 function hdSwitch(on){
   on=!!on; if((HD.on!==false)===on) return; HD.on=on; hdFill(); hdChanged();
-  if(!on && typeof clToast==='function') clToast('상단 메뉴를 숨겼습니다. 설정은 그대로 남습니다.',{label:'되돌리기',fn:function(){ HD.on=true; hdFill(); hdChanged(); }});
+  if(typeof showToast==='function') showToast(on?'상단 메뉴를 다시 표시합니다.':'상단 메뉴를 숨겼습니다.');   /* 261106 수정 — 블록 숨김(bkHideSet)과 같은 알림 */
 }
 /* 261106 추가 — 상단 메뉴 코드 (기존 편집기 상단 메뉴 「코드」 대응). 블록 코드 창(#bkCode)을 같이 쓰고 값은 HD.code 에 둔다 → 모바일 · 미리보기 사본도 HD 와 함께 받아 입는다
    · CSS: 상단 메뉴 안에만 (& = 상단 메뉴 자체) · JS: 값이 바뀌었을 때 한 번 (block = 상단 메뉴) */
@@ -60692,7 +60694,7 @@ function hdCodeOpen(){
   var hd=hdSiteHd(), m=document.getElementById('bkCode'); if(!hd || !m || typeof bkCodeTab!=='function') return;
   var c=HD.code||(HD.code={css:'',js:''});
   bkCode.blk=hd; bkCode.hd=true; bkCode.tab=''; bkCode.css=c.css||''; bkCode.js=c.js||'';
-  try{ var cl=hd.cloneNode(true); [].forEach.call(cl.querySelectorAll('.hd-gear,.hd-offbar,.tag-badge'),function(x){ x.remove(); }); cl.classList.remove('hd-editing','hd-open','hd-mega-open'); bkCode.full=bkHtmlPretty(cl.outerHTML.replace(/<!--[\s\S]*?-->/g,'')); }catch(e){ bkCode.full=hd.outerHTML; }
+  try{ var cl=hd.cloneNode(true); [].forEach.call(cl.querySelectorAll('.hd-gear,.bk-hid,.tag-badge'),function(x){ x.remove(); }); cl.classList.remove('hd-editing','hd-open','hd-mega-open','hd-off'); bkCode.full=bkHtmlPretty(cl.outerHTML.replace(/<!--[\s\S]*?-->/g,'')); }catch(e){ bkCode.full=hd.outerHTML; }
   bkCode.html=bkCode.full.replace(/(data:[a-z]+\/[a-z0-9.+-]+;base64,)[A-Za-z0-9+\/=]{120,}/gi,'$1…');
   document.getElementById('bkCodeKind').textContent='상단 메뉴';
   m.classList.add('show');
@@ -60778,7 +60780,7 @@ function hdFill(){
   hdShow('hdBgLineWRow',!!bg.line);   /* 261106 추가 — 두께는 구분선을 켰을 때만 */
   var hdHid=(HD.on===false), hhb=document.getElementById('hdHideBtn');   /* 261106 추가 — 숨김 (숨기면 버튼은 「표시」 · 나머지 설정은 흐리게 — 블록설정 하단 바 bsetFootSync 와 같게) */
   if(hhb && hhb._hid!==hdHid && typeof BK_EYE_ON!=='undefined'){ hhb._hid=hdHid; hhb.innerHTML=(hdHid?BK_EYE_ON:BK_EYE_OFF)+(hdHid?'표시':'숨김'); hhb.classList.toggle('on',hdHid); }
-  hdShow('hdOffHint',hdHid); d.classList.toggle('hd-dis',hdHid);
+  hdShow('hdOffHint',hdHid);   /* 261106 수정 — 숨겨도 설정은 그대로 고칠 수 있다(블록과 같게) */
   var hcb=document.getElementById('hdCodeBtn'); if(hcb) hcb.classList.toggle('has',!!(HD.code && (HD.code.css||HD.code.js)));   /* 261106 추가 — 코드가 있으면 점(블록 코드 버튼과 같게) */
   hdSw('hdBgShSw',bg.sh.on); hdShow('hdBgShOpts',bg.sh.on);
   hdSw('hdPadSideSw',HD.pad.side);
@@ -62119,13 +62121,8 @@ function ftRender(){
   if(window.CL_MVIEW) return;
   var site=ftSite(); if(!site) return;
   var el=site.querySelector(':scope > .site-ft'), off=site.querySelector(':scope > .ft-offbar');
-  site.classList.toggle('ft-on',!!FT.on); site.classList.toggle('ft-off',!FT.on);
-  if(!FT.on){
-    if(el) el.remove();
-    if(!off){ off=document.createElement('div'); off.className='ft-offbar'; off.innerHTML='<span>푸터 숨김</span><button type="button" onclick="ftSwitch(true)">표시</button>'; }   /* 261106 수정 — 꺼짐 · 켜기 → 숨김 · 표시 (하단 바 「숨김」과 같은 말) */
-    if(site.lastElementChild!==off) site.appendChild(off);
-    return;
-  }
+  /* 261106 수정 — 숨김(FT.on=false)도 블록 숨김과 똑같이: 푸터를 그대로 그리고 덮개(빗금 막 + 「숨김 해제」)를 얹는다. 미리보기 · 게시에서는 빠진다(ftSnap) · 전: 푸터를 지우고 「푸터 꺼짐 · 켜기」 줄 */
+  site.classList.add('ft-on'); site.classList.remove('ft-off');
   if(off) off.remove();
   if(!el){ el=document.createElement('footer'); el.className='site-ft'; el._ftHtml=null; }
   var d=ftDesign(FT.design), css=ftStyle(ftVal(FT));
@@ -62133,6 +62130,9 @@ function ftRender(){
   if(el.getAttribute('style')!==css) el.setAttribute('style',css);
   var html=ftBody(FT,false); if(el._ftHtml!==html){ el.innerHTML=html; el._ftHtml=html; el._ftJs=null; }   /* 261106 수정 — 다시 그리면 코드 JS 도 다시 돌린다(_ftJs) */
   ftCodeSync(el);   /* 261106 추가 — 푸터 코드(CSS · JS) */
+  el.classList.toggle('ft-hid',!FT.on); var fv=el.querySelector(':scope > .bk-hid');   /* 261106 추가 — 숨김 덮개 (블록 덮개와 같은 모양 · innerHTML 을 다시 쓰면 함께 지워지므로 그릴 때마다 확인) */
+  if(!FT.on && !fv){ fv=document.createElement('div'); fv.className='bk-hid'+((typeof bkTone==='function' && bkTone(el)==='dark')?' dk':''); fv.innerHTML='<button type="button" onclick="event.stopPropagation();ftSwitch(true)"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>숨김 해제</button>'; el.appendChild(fv); }
+  else if(FT.on && fv) fv.remove();
   if(site.lastElementChild!==el) site.appendChild(el);
   el.classList.toggle('ft-editing',ftDockOn);
 }
@@ -62230,7 +62230,7 @@ function ftFill(){
   var dock=document.getElementById('ftDock'); if(!dock) return;
   var d=ftDesign(FT.design), v=ftVal(FT), P=d.parts;
   var sw=document.getElementById('ftOnSw'); if(sw) sw.classList.toggle('on',!!FT.on);
-  dock.classList.toggle('ft-dis',!FT.on); ftShow('ftOffHint',!FT.on);
+  dock.classList.remove('ft-dis'); ftShow('ftOffHint',!FT.on);   /* 261106 수정 — 숨겨도 설정은 그대로 고칠 수 있다(블록과 같게) */
   var fhb=document.getElementById('ftHideBtn'), fHid=!FT.on;   /* 261106 추가 — 하단 바 숨김 · 코드 점 (상단 메뉴 · 블록설정 하단 바와 같게) */
   if(fhb && fhb._hid!==fHid && typeof BK_EYE_ON!=='undefined'){ fhb._hid=fHid; fhb.innerHTML=(fHid?BK_EYE_ON:BK_EYE_OFF)+(fHid?'표시':'숨김'); fhb.classList.toggle('on',fHid); }
   var fcb=document.getElementById('ftCodeBtn'); if(fcb) fcb.classList.toggle('has',!!(FT.code && (FT.code.css||FT.code.js)));
@@ -62305,7 +62305,7 @@ function ftToggle(k){ FT[k]=(k==='sub')?(FT.sub===false):!FT[k]; ftChanged(); ft
 /* 푸터 사용 — 확인창 없이 바로 끄고 「되돌리기」. 내용은 보관되고, 캔버스 맨 아래 표시줄에서 다시 켠다 */
 function ftSwitch(on){
   on=!!on; if(FT.on===on) return; FT.on=on; ftChanged(); ftFill();
-  if(!on) clToast('푸터를 숨겼습니다. 내용은 그대로 남습니다.',{label:'되돌리기',fn:function(){ FT.on=true; ftChanged(); ftFill(); }});
+  if(typeof showToast==='function') showToast(on?'푸터를 다시 표시합니다.':'푸터를 숨겼습니다.');   /* 261106 수정 — 블록 숨김(bkHideSet)과 같은 알림 */
 }
 /* 261106 추가 — 푸터 코드 (상단 메뉴 코드와 같은 방식 · 블록 코드 창 #bkCode 를 같이 쓴다). 값은 FT.code.
    사본(모바일 · 미리보기)은 푸터 마크업만 받으므로 CSS 는 푸터 안 <style class="ft-css"> 로, JS 는 data-ft-js 로 싣는다 */
@@ -62379,18 +62379,20 @@ function ftClose(){
   var el=document.querySelector('#stage .site-ft.ft-editing'); if(el) el.classList.remove('ft-editing');
 }
 /* ── 모바일 미리보기(사본)와 맞추기 — 푸터는 .blk 가 아니라서 스냅샷에 마크업을 따로 싣는다. 꺼져 있으면 빈 문자열 ── */
-function ftSnap(){
-  var site=ftSite(), el=site&&site.querySelector(':scope > .site-ft'); if(!el) return '';
+function ftSnap(preview){
+  var site=ftSite(), el=site&&site.querySelector(':scope > .site-ft');
+  if(!el) return '';
+  if(preview && typeof FT!=='undefined' && FT.on===false) return '';   /* 261106 수정 — 숨긴 푸터: 미리보기에서는 빠지고, 모바일 편집 사본에는 흐리게(.ft-hid · 블록 숨김과 같게) */
   var c=el.cloneNode(true); c.classList.remove('ft-editing');
-  c.querySelectorAll('.ft-gear,.ft-badge').forEach(function(x){ x.remove(); });
+  c.querySelectorAll('.ft-gear,.ft-badge,.bk-hid').forEach(function(x){ x.remove(); });
   c.querySelectorAll('.ft-ed').forEach(function(x){ if(!x.textContent.trim()){ x.remove(); return; } x.removeAttribute('contenteditable'); x.removeAttribute('data-ph'); x.removeAttribute('spellcheck'); });
   return c.outerHTML;
 }
 var ftRemoteHtml=null;
 function ftApplyRemote(html,site){
   if(!site || html==null) return;
-  var el=site.querySelector(':scope > .site-ft');
-  site.classList.toggle('ft-on',!!html);
+  var el=site.querySelector(':scope > .site-ft')||site.querySelector(':scope > .ft-offbar');   /* 261106 수정 — 숨김 줄(.ft-offbar)도 같은 자리로 다룬다 */
+  site.classList.toggle('ft-on',!!html && html.indexOf('ft-offbar')<0);
   if(!html){ if(el) el.remove(); ftRemoteHtml=''; if(typeof moLayRender==='function') try{ moLayRender(); }catch(e){} return; }
   if(el && html===ftRemoteHtml){ if(site.lastElementChild!==el) site.appendChild(el); return; }
   var tmp=document.createElement('div'); tmp.innerHTML=html; var nu=tmp.firstElementChild; if(!nu) return;
