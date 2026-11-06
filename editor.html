@@ -6273,6 +6273,7 @@
     margin-top:0;  /* 261019 수정 — 위 여백은 고정 띠(.tb-band) */
     box-shadow:0 0 0 1px #E5E7EB,0 0 36px rgba(20,24,32,.17);}  /* 261021 수정 — 0 8px 28px(아래로 치우침) → 0 0 36px: 사방 고르게, 위쪽 여백까지 번지게(시안 기준 가장자리 약 9% · 30px 폭) · 좌우 여백 위에 놓인 캔버스처럼 테두리+그림자 · 261006 수정 — var(--border) → 편집기 색 고정: 사이트 테마가 --border 를 사이트 선 색(어두운 모드 #32363A)으로 덮어써 캔버스 둘레에 어두운 1px 띠가 생겼고, 그 띠 때문에 헤더·블록의 녹색 외곽선이 「1px 안쪽」으로 보였다 */
   html.ui-rail .stage{padding-bottom:48px;}
+  html.ui-rail.mview .stage{padding-bottom:0;}   /* 261106 추가 — 미리보기 창 · 모바일 편집 화면에서는 편집용 아래 여백이 푸터 밑 흰 띠로 보여 없앤다 (PC 편집 화면은 그대로) */
   html.ui-rail .stage{overflow-x:hidden;}
   html.ui-rail.mview .site{margin-top:0;min-height:100vh;box-shadow:none;width:auto;zoom:1;}
   html.ui-rail body.bset-open .stage{right:var(--bset-w);}
@@ -10351,6 +10352,9 @@
   .site-ft[data-ft-design="footer-06"] .ft-sns{margin-left:auto;}
   @container (max-width:767px){
     .site-ft{padding:calc(var(--ft-pt) * .72) 20px calc(var(--ft-pb) * .9);font-size:calc(var(--ft-fs) - 1px);}
+    /* 261106 추가 — 화면에 떠 있는 「화상 미팅 예약」 버튼(캘린더 블록)이 켜져 있으면, 맨 아래에서 푸터 글이 버튼에 가리지 않게 푸터 아래 안쪽 여백을 버튼만큼 늘린다 (늘어난 곳은 푸터 배경색) */
+    .site:has(~ .cal-fab-wrap:not([hidden])) .site-ft{padding-bottom:calc(var(--ft-pb) * .9 + 72px);}
+    .site:has(~ .cal-fab-wrap.up:not([hidden])) .site-ft{padding-bottom:calc(var(--ft-pb) * .9 + 140px);}   /* 버튼이 퀵메뉴 위로 올라간 배치 */
     .site-ft .ft-bot{flex-direction:column;align-items:flex-start;gap:12px;}
     .site-ft .ft-r{margin-left:0;align-items:flex-start;}
     .site-ft[data-ft-design="footer-01"] .ft-top,.site-ft[data-ft-design="footer-05"] .ft-top{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 20px;}
