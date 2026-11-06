@@ -22081,6 +22081,7 @@
         sel.parentNode.insertBefore(addbar, clone.nextSibling);
         if(typeof smCloneInit==='function') smCloneInit(sel, clone);
         if(clone.getAttribute('data-block')==='formblk' && typeof fmDupName==='function') fmDupName(clone);   /* 261105 추가 — 복제한 폼 이름에 (복사본) */
+        if(clone.getAttribute('data-block')==='tkblk' && typeof fmDupNameTab==='function') fmDupNameTab(clone);   /* 261106 추가 — 탭 블록 안 폼 이름에도 (복사본) */
         if(typeof bkCodeSync==='function') bkCodeSync();   /* 261013 추가 — 블록 코드(CSS · JS)도 복제본에 */
         if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
         if(typeof selectBlock==='function') selectBlock(clone);
@@ -44290,6 +44291,10 @@ global.PolyFX = API;
   /* 261105 추가 — 「복제」 버튼으로 만든 폼만 이름 뒤에 (복사본) : 폼 응답 목록에서 원본과 구분되게 (비워 둔 자동 이름은 fmAutoName 이 번호로 구분) */
   function fmDupName(clone){ var c=clone && clone._fmCfg; if(c && String(c.fname||'').trim()) c.fname=String(c.fname).trim()+' (복사본)'; }
   window.fmDupName=fmDupName;
+  /* 261106 추가 — 탭 블록을 복제하면 그 안의 폼 이름에도 (복사본) : 탭 안 블록은 탭 값(tabs[i].kids · top 의 c)으로 새로 만들어지므로 그 값을 고친다 */
+  function fmDupNameTab(clone){ var tc=clone && clone._tkCfg; if(!tc || !Array.isArray(tc.tabs)) return;
+    tc.tabs.forEach(function(t){ ((t&&t.kids)||[]).concat((t&&t.top)||[]).forEach(function(k){ if(k && k.k==='formblk' && k.c && String(k.c.fname||'').trim()) k.c.fname=String(k.c.fname).trim()+' (복사본)'; }); }); }
+  window.fmDupNameTab=fmDupNameTab;
   /* 보관함 → 캔버스: 이미지 자리(.fm-img)면 옆 이미지, 그 밖이면 블록 배경 (libApply 에서 호출) */
   /* 261105 추가 — 카드 없는 배치에서 배경 사진을 넣거나 빼면 글자색을 맞춘다 (fmLayout 과 같은 규칙 · 사진 위는 어둡게 40% + 밝은 글자) */
   function fmBgInk(blk,had){
