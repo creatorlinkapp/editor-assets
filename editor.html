@@ -3080,6 +3080,7 @@
   .fm-pv .fm-pvdim{position:absolute;inset:0;background:#000;pointer-events:none;}
   .fm-pv .fm-in{position:relative;}
   .fm-pv .fm-extra{display:none;}   /* 카드에서는 동의·보안문자 줄을 뺀다 (기존 편집기 썸네일과 같게) */
+  .fm-pv > .fm-wrap .fm-extra{display:block;}   /* 261106 추가 — 폼 블록 카드는 넣었을 때와 같게 보안문자 줄도 보인다 (컨택트 카드는 그대로) */
   /* 설정창 — 항목 행은 .mt-imgrow 공통 구조. 종류 배지(.fm-tb)는 보관함 선택 대상이 아니므로 .mt-imgthumb 를 쓰지 않는다 */
   #fmFieldList .mt-imgrow{flex-wrap:wrap;padding:3px 4px;margin:0 -4px;}
   #fmFieldList .mt-imgrow:hover,#fmFieldList .mt-imgrow:focus-within,#fmFieldList .mt-imgrow.open{background:var(--bg);}
@@ -44241,7 +44242,7 @@ global.PolyFX = API;
   /* 블록추가 카드 — 실제 폼을 절반 크기로. 배경은 래퍼에 직접(캔버스에서는 .blk 에 건다) */
   function fmCardHTML(preset){
     var c=fmPresetCfg(preset), bm=String(c.bgImg||'').trim(), vid=bm&&fmIsVid(bm);
-    var st=fmStyleStr(c)+'background-color:'+(c.bg||'#fff')+';'+((bm&&!vid)?('background-image:url("'+bm.replace(/"/g,'%22')+'");'):'');
+    var st=fmStyleStr(c)+'background-color:'+(c.bg||'#fff')+';'+((bm&&!vid)?('background-image:url(&quot;'+bm.replace(/"/g,'%22')+'&quot;);'):'');   /* 261106 수정 — style="…" 안에 큰따옴표가 그대로 들어가 속성이 끊기며 배경 사진이 빠지던 문제 (회사 정보 · 메시지 보내기 카드) */
     return '<div class="fm-pv"><div class="fm-wrap'+((bm&&c.bgGray)?' gray':'')+'" data-ta="'+(c.ta||'left')+'" data-is="'+(c.is||'box')+'" data-ba="'+(c.ba||'left')+'" data-bs="'+(c.bs||'fill')+'" style="'+st+'">'
       +(bm?'<i class="fm-pvdim" style="opacity:'+(Math.max(0,Math.min(90,txNum(c.bgDim,0)))/100)+'"></i>':'')+fmInnerHTML(c)+'</div></div>';
   }
