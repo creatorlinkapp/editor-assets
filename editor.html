@@ -5718,7 +5718,7 @@
   .lib-sec .lib-fd-add svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;}
   .lib-fd{margin:0 0 14px;border:1px solid var(--line);border-radius:var(--r-lg);overflow-x:hidden;overflow-y:auto;max-height:228px;}
   .lib-fd::-webkit-scrollbar{width:8px;} .lib-fd::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:var(--r-sm);border:2px solid #fff;}
-  .lib-fd-row{display:flex;align-items:center;gap:6px;min-height:38px;padding:0 6px 0 calc(10px + var(--lv,0) * 16px);border-bottom:1px solid var(--line);font-size:var(--fs-md);color:var(--ink);cursor:pointer;user-select:none;transition:background .1s;}
+  .lib-fd-row{display:flex;align-items:center;gap:6px;min-height:38px;padding:0 10px 0 calc(12px + var(--lv,0) * 16px);   /* 261106 수정 — 좌우 여백 대칭(약 12px) : 전 왼쪽 10 + 빈 화살표 자리 · 오른쪽 6 */border-bottom:1px solid var(--line);font-size:var(--fs-md);color:var(--ink);cursor:pointer;user-select:none;transition:background .1s;}
   .lib-fd-row:last-child{border-bottom:none;}
   .lib-fd-row:hover{background:#FBFCFD;}
   .lib-fd-row.on{background:var(--green-tint);color:var(--green-text);font-weight:700;}
@@ -5726,6 +5726,7 @@
   .lib-fd-row .cv{flex:none;width:14px;height:14px;display:flex;align-items:center;justify-content:center;color:var(--ink-2);margin-right:-2px;}
   .lib-fd-row .cv svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .16s;}
   .lib-fd-row.col .cv svg{transform:rotate(-90deg);}
+  .lib-fd:not(:has(.cv svg)) .lib-fd-row .cv{display:none;}   /* 261106 추가 — 하위 폴더가 하나도 없으면 빈 화살표 자리를 없애 아이콘을 왼쪽 여백에 맞춘다 (하위 폴더가 생기면 다시 자리를 둬 줄을 맞춘다) */
   .lib-fd-row .fi{flex:none;width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linejoin:round;color:var(--ink-2);}
   .lib-fd-row.on .fi{color:var(--green-text);}
   .lib-fd-row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -5739,6 +5740,7 @@
   .lib-fd-acts .pg-abtn.pin.on{color:var(--green-text);}
   .lib-fd-acts .pg-abtn.pin.on .ico{fill:currentColor;}
   .lib-fd-row:hover .n{display:none;}   /* 좁은 폭: 롤오버 땐 개수 자리를 도구에 내준다 */
+  .lib-fd-row:not(:hover) .lib-fd-acts:not(:has(.pg-abtn.pin.on)){display:none;}   /* 261106 추가 — 보이는 도구가 없을 땐 빈 묶음이 간격(6px)을 차지하지 않게 → 「전체」와 숫자 끝을 맞춘다 */
   .lib-fd-row.editing{cursor:default;padding-top:4px;padding-bottom:4px;background:#fff;}
   .lib-fd-row.editing .pg-nm-field input{height:30px;}
   .lib-fd-row.editing .pg-nm-ok{width:30px;height:30px;}
