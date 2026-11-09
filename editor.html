@@ -9363,7 +9363,9 @@
   :is(#hdDock,#moDock) .hd-col2 .sw-col{flex:none;gap:6px;}
   :is(#hdDock,#moDock) .hd-col2 .sw-col .hex{display:none;}   /* 두 색이 한 줄 — 칩만 보이고 값은 ↺(자동이면 흐림)로 읽는다 */
   :is(#hdDock,#moDock) .hd-col2 .sw-reset{margin-left:auto;}
-  #hdNavAcc .hd-sw4{margin-top:4px;}   /* 261109 추가 — 메인메뉴 「굵게 · 기울임」 줄이 위 「자간」에 붙어 있었다 → 다른 줄과 같은 10px 간격(안쪽 6px + 4px) */
+  #hdNavAcc .hd-sw4{margin-top:4px;}
+  #hdSubBoxRows > .srow:first-child{margin-top:10px;}   /* 261109 추가 — 서브메뉴 「강조 색」이 묶음(#hdSubBoxRows)의 첫 줄이라 줄 간격이 빠져 위 「색」 줄에 붙어 있었다(2px) → 다른 줄과 같은 10px */
+  #moDock .gt-h{font-weight:600;color:var(--ink-2);} html.ui-rail #moDock .gt-h{font-size:12.5px;}   /* 설정창 이름 글자(html.ui-rail .bset .srow .k = 12.5px)와 같은 크기 */   /* 261109 추가 — 모바일 메뉴 「표시 항목」 · 「노출 메뉴」 제목을 같은 묶음 제목(레이아웃 · 모양 · 정렬)과 같은 글자 모양으로 */   /* 261109 추가 — 메인메뉴 「굵게 · 기울임」 줄이 위 「자간」에 붙어 있었다 → 다른 줄과 같은 10px 간격(안쪽 6px + 4px) */
   :is(#hdDock,#moDock) .hd-col2 .cl{font-size:var(--fs-xs);color:var(--ink-3);font-weight:600;}
   :is(#hdDock,#moDock) .sw-col input[type=color].auto::-webkit-color-swatch{opacity:.35;}   /* 자동(비어 있음)은 칩 속만 흐리게 — 테두리는 그대로 */
   :is(#hdDock,#moDock) .hd-sw4{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px;}
@@ -16751,7 +16753,7 @@
             <div class="srow srow-dd"><span class="k">반복</span><div class="sdd" id="hdBgRepDD"><button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">반복 없음</span><svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="sdd-menu"></div></div></div>
           </div>
           <div class="sline" style="margin-top:8px;"><span class="lbl">하단 구분선</span><span class="sw-col" style="flex:none;gap:10px;"><input type="color" id="hdBgLineCol" value="#E6E6E6" data-cp-title="구분선 색"><button type="button" class="sw" id="hdBgLineSw" onclick="hdSetBg('line',!hdBgCur().line)"></button></span></div>
-          <div class="srow" id="hdBgLineWRow" style="display:none;"><span class="k">두께</span><input class="rng" type="range" id="hdBgLineW" min="1" max="6" step="1" value="1"><span class="v" id="hdBgLineWV">1px</span></div>   <!-- 261106 추가 — 하단 구분선 두께 (기존 편집기와 같게) -->
+          <div class="hd-sub" id="hdBgLineWRow" style="display:none;"><div class="srow"><span class="k">두께</span><input class="rng" type="range" id="hdBgLineW" min="1" max="6" step="1" value="1"><span class="v" id="hdBgLineWV">1px</span></div></div>   <!-- 261106 추가 — 하단 구분선 두께 (기존 편집기와 같게) · 261109 수정 — 그림자 · 이미지 세부 설정처럼 들여쓴 묶음(hd-sub)으로 -->
           <div class="sline"><span class="lbl">그림자</span><button type="button" class="sw" id="hdBgShSw" onclick="hdSetBgSh('on',!hdBgCur().sh.on)"></button></div>
           <div id="hdBgShOpts" class="hd-sub" style="display:none;">
             <div class="srow"><span class="k">가로 위치</span><input class="rng" type="range" id="hdShX" min="-30" max="30" step="1" value="0"><span class="v" id="hdShXV">0px</span></div>
@@ -60621,8 +60623,8 @@ function hdClose(){
 })();
 var HD_RNG=[
   ['hdSideW',function(){return HD;},'sideW','px'],
-  ['hdLogoMax',function(){return HD.logo;},'maxH','px'],['hdLogoFs',function(){return HD.logo;},'size','px'],['hdLogoLs',function(){return HD.logo;},'ls',''],
-  ['hdNavFs',function(){return HD.nav;},'size','px'],['hdNavLs',function(){return HD.nav;},'ls',''],['hdNavGap',function(){return HD.nav;},'gap','px'],['hdNavPx',function(){return HD.nav;},'px','px'],['hdNavPy',function(){return HD.nav;},'py','px'],['hdNavTop',function(){return HD.nav;},'top','px'],
+  ['hdLogoMax',function(){return HD.logo;},'maxH','px'],['hdLogoFs',function(){return HD.logo;},'size','px'],['hdLogoLs',function(){return HD.logo;},'ls','%'],
+  ['hdNavFs',function(){return HD.nav;},'size','px'],['hdNavLs',function(){return HD.nav;},'ls','%']   /* 261109 수정 — 자간 단위 표시 「%」(값 = 글자 크기의 1/100 · 기존 편집기와 같은 표기, 로고 자간도) */,['hdNavGap',function(){return HD.nav;},'gap','px'],['hdNavPx',function(){return HD.nav;},'px','px'],['hdNavPy',function(){return HD.nav;},'py','px'],['hdNavTop',function(){return HD.nav;},'top','px'],
   ['hdSubFs',function(){return HD.sub;},'size','px'],['hdSubRad',function(){return HD.sub;},'rad','px'],
   ['hdBgBlur',function(){return hdBgCur();},'blur','px'],
   ['hdShX',function(){return hdBgCur().sh;},'x','px'],['hdShY',function(){return hdBgCur().sh;},'y','px'],['hdShB',function(){return hdBgCur().sh;},'blur','px'],['hdShS',function(){return hdBgCur().sh;},'spread','px'],
