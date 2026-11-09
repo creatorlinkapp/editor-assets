@@ -16670,9 +16670,11 @@
           </div></div>
           <div class="srow" style="margin-top:14px;"><span class="k">메뉴 효과</span><div class="hd-pick"><span class="nm" id="hdFxNm">효과 없음</span><button type="button" class="btn-sm" onclick="hdPickOpen('fx')">바꾸기</button></div></div>
           <div class="srow" id="hdFxColRow"><span class="k">효과 색<button type="button" class="hd-lk" data-g="fx" onclick="event.stopPropagation();hdLkToggle('fx')" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.25 13.11l3.18-3.18a4.5 4.5 0 0 0-6.36-6.36L10.89 6.75"/><path d="M6.75 10.89l-3.18 3.18a4.5 4.5 0 0 0 6.36 6.36l3.18-3.18"/><path d="M9.3 14.7l5.4-5.4"/></svg></button></span><span class="sw-col"><input type="color" id="hdNavFx" value="#23272E" data-cp-title="효과 색"><span class="hex" id="hdNavFxV">자동</span><button type="button" class="sw-reset" id="hdNavFxR" title="활성 글자 색 따르기" onclick="hdColReset('fx')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
-          <div class="srow" style="margin-top:14px;"><span class="k">메뉴 사이 간격</span><input class="rng" type="range" id="hdNavGap" min="0" max="80" step="1" value="26"><span class="v" id="hdNavGapV">26px</span></div>
+          <div id="hdNavPadRows">   <!-- 261109 수정 — 「좌우 · 상하 여백」은 채움 효과의 상자 크기일 때만 뜻이 있다(그 밖엔 메뉴 사이 간격 · 상단 메뉴 여백과 같은 결과) → 채움 효과일 때만 보이고 적용 · 메뉴 효과 아래로 옮김 -->
           <div class="srow"><span class="k">좌우 여백</span><input class="rng" type="range" id="hdNavPx" min="0" max="30" step="1" value="0"><span class="v" id="hdNavPxV">0px</span></div>
           <div class="srow"><span class="k">상하 여백</span><input class="rng" type="range" id="hdNavPy" min="0" max="30" step="1" value="0"><span class="v" id="hdNavPyV">0px</span></div>
+          </div>
+          <div class="srow" style="margin-top:14px;"><span class="k">메뉴 사이 간격</span><input class="rng" type="range" id="hdNavGap" min="0" max="80" step="1" value="26"><span class="v" id="hdNavGapV">26px</span></div>
           <div class="srow" id="hdNavTopRow"><span class="k">메뉴 상단 간격</span><input class="rng" type="range" id="hdNavTop" min="0" max="60" step="1" value="16"><span class="v" id="hdNavTopV">16px</span></div>
         </div></div>
       </div>
@@ -60135,6 +60137,7 @@ var HD_FX=[['none','효과 없음','효과 없음'],
 var HD_FX_HORIZ={dot1:1,dot2:1,sq1:1,tri1:1,line3:1,mdot1:1,mdot2:1,msq1:1,msq2:1,mline:1};
 function hdVert(){ return HD.type==='side' || HD.type==='toggle'; }   /* 세로 목록 메뉴 — 좌측 · 토글(펼쳐진 목록) */
 function hdFxOk(k){ return !(hdVert() && HD_FX_HORIZ[k]); }
+function hdFxFill(){ return /^m?fill/.test(HD.nav.fx||''); }   /* 261109 추가 — 채움 효과(fill 01~04) — 메뉴 「좌우 · 상하 여백」은 이때만 보이고 적용 */
 function hdFxName(k){ for(var i=0;i<HD_FX.length;i++) if(HD_FX[i][0]===k) return HD_FX[i][2]||HD_FX[i][1]; return k; }
 /* 메뉴 디자인 프리셋 — 같은 설정 항목의 묶음. cat: top(상단) · side(좌측) · full(펼침) · toggle(토글) */
 var HD_DESIGNS=[
@@ -60286,7 +60289,7 @@ function hdApply(hdEl){
   sv('--hd-shadow',bg.sh.on?(bg.sh.x+'px '+bg.sh.y+'px '+bg.sh.blur+'px '+bg.sh.spread+'px '+hdRGBA(bg.sh.col,bg.sh.a)):'0 0 0 0 transparent');   /* 261006 수정 — none → 투명 그림자(롤오버 외곽선과 목록으로 합쳐 쓰므로) */
   /* 메뉴 글자·간격 */
   sv('--hd-fs',HD.nav.size+'px'); sv('--hd-ls',(HD.nav.ls/100)+'em'); sv('--hd-font',HD.nav.font>=0?hdFontCss(HD.nav.font):'inherit'); sv('--hd-fw',HD.nav.bold?'700':'400'); sv('--hd-fst',HD.nav.italic?'italic':'normal');
-  sv('--hd-gap',HD.nav.gap+'px'); sv('--hd-px',HD.nav.px+'px'); sv('--hd-py',HD.nav.py+'px'); sv('--hd-top',HD.nav.top+'px');
+  sv('--hd-gap',HD.nav.gap+'px'); sv('--hd-px',(hdFxFill()?HD.nav.px:0)+'px'); sv('--hd-py',(hdFxFill()?HD.nav.py:0)+'px');   /* 261109 수정 — 좌우 · 상하 여백은 채움 효과일 때만 적용(값은 남겨 둔다) */ sv('--hd-top',HD.nav.top+'px');
   sv('--hd-pt',HD.pad.top+'px'); sv('--hd-pb',HD.pad.bottom+'px');
   /* 서브메뉴 */
   sv('--hd-sub-fs',HD.sub.size+'px'); sv('--hd-sub-fg',HD.sub.fg); sv('--hd-sub-bg',HD.sub.bg?hdRGBA(HD.sub.bg,HD.sub.bga):''); sv('--hd-sub-rad',HD.sub.rad+'px'); sv('--hd-sub-line',HD.sub.lineCol);
@@ -60815,6 +60818,7 @@ function hdFill(){
   var noFx=(HD.type==='full'&&HD.fullMode==='always');   /* 항상 펼침은 메뉴 줄이 없어 롤오버 효과가 보일 곳이 없다 */
   var fxRow=document.getElementById('hdFxNm'); if(fxRow) fxRow.closest('.srow').style.display=noFx?'none':'';
   hdShow('hdFxColRow',HD.nav.fx!=='none' && !noFx);
+  hdShow('hdNavPadRows',hdFxFill() && !noFx);   /* 261109 추가 — 채움 효과일 때만 */
   /* 서브메뉴 */
   var subInline=(hdVert() || HD.type==='full');   /* 좌측·토글·펼침은 서브메뉴가 상자 없이 목록 안에 펼쳐진다 → 배경·모서리·테두리·그림자는 해당 없음 (260930 추가) */
   hdShow('hdSubBoxRows',!subInline); hdShow('hdSubBgCol',!subInline);
