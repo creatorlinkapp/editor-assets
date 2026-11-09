@@ -8869,6 +8869,7 @@
   .site-hd.hd-blur{isolation:isolate;}
   .site-hd > .hd-blurv{display:none;}
   .site-hd.hd-blur > .hd-blurv{display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;backdrop-filter:blur(var(--hd-blur));-webkit-backdrop-filter:blur(var(--hd-blur));}
+  html:not(.mview) #stage .site > .site-hd:is(:hover,.hd-editing) > .hd-blurv{inset:2.5px;}   /* 261109 추가 — 편집 화면의 초록 테두리(가장자리 안쪽 2.5px)가 흐림 막 아래에 깔려 함께 흐려져 번진 초록빛으로 보였다 → 테두리가 보이는 동안 막을 그만큼 안쪽으로 */
   .site-hd[data-hd-side="0"]{--hd-side:0px;}
   /* 로고 */
   .site-hd .logo{color:var(--hd-logo);font-size:var(--hd-lfs);letter-spacing:var(--hd-lls);font-family:var(--hd-lfont);font-weight:var(--hd-lfw);line-height:1.1;display:flex;align-items:center;flex:none;}
