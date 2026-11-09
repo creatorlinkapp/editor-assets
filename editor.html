@@ -16692,11 +16692,12 @@
           <div class="tx-hint" id="hdSubOffHint" style="display:none;margin:0 0 10px;">하위 메뉴를 만들거나 로그인 · 다국어 버튼을 켜면 쓸 수 있습니다.</div>   <!-- 261109 추가 — 드롭다운이 하나도 없을 때(라이브 「서브메뉴가 1개 이상 있을 경우 활성화」와 같은 뜻) -->
           <div class="srow" id="hdSubDesignRow" style="margin-top:0;"><span class="k">디자인</span><div class="hd-pick"><span class="nm" id="hdSubDesignNm">기본 · 서브 01</span><button type="button" class="btn-sm" onclick="hdPickOpen('sub')">바꾸기</button></div></div>   <!-- 261006 추가 — 기존 편집기 「서브메뉴 › 디자인 변경」 -->
           <div class="srow" id="hdSubFsRow" style="margin-top:14px;"><span class="k">크기</span><input class="rng" type="range" id="hdSubFs" min="10" max="20" step="1" value="13"><span class="v" id="hdSubFsV">13px</span></div>
-          <div class="srow"><span class="k">색</span><div class="hd-col2">
+          <div class="srow" id="hdSubColRow"><span class="k">색</span><div class="hd-col2">
             <span class="sw-col"><span class="cl">글자</span><input type="color" id="hdSubFg" value="#5A616B" data-cp-title="서브메뉴 글자 색"><span class="hex" id="hdSubFgV">자동</span></span>
             <span class="sw-col" id="hdSubBgCol"><span class="cl">배경</span><input type="color" id="hdSubBg" value="#FFFFFF" data-cp-alpha data-cp-title="서브메뉴 배경색"><span class="hex" id="hdSubBgV">자동</span></span>
             <button type="button" class="sw-reset" id="hdSubColR" title="사이트 색 따르기" onclick="hdColReset('sub')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
           </div></div>
+          <div class="tx-hint" id="hdSubFullHint" style="display:none;"></div>   <!-- 261109 추가 — 펼침 메뉴: 패널의 하위 메뉴는 메인메뉴 글자색을 따라 이 색이 쓰이지 않는다(로그인 · 다국어 드롭다운에만 쓰임) → hdFill 이 문구 · 표시를 정한다 -->
           <div id="hdSubBoxRows">
           <div class="srow"><span class="k">강조 색</span><span class="sw-col"><input type="color" id="hdSubAcCol" value="#23272E" data-cp-title="현재·롤오버 강조 색"><span class="hex" id="hdSubAcColV">자동</span><button type="button" class="sw-reset" id="hdSubAcR" title="사이트 색 따르기" onclick="hdColReset('subac')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>   <!-- 261006 추가 — 현재 페이지·롤오버 항목의 글자·채움·표식 색 -->
           <div class="srow" style="margin:14px 0 6px;"><span class="k">정렬</span></div>
@@ -16772,6 +16773,7 @@
           </div>
           <div class="sline" style="margin-top:8px;"><span class="lbl">하단 구분선</span><span class="sw-col" style="flex:none;gap:10px;"><input type="color" id="hdBgLineCol" value="#E6E6E6" data-cp-title="구분선 색"><button type="button" class="sw" id="hdBgLineSw" onclick="hdSetBg('line',!hdBgCur().line)"></button></span></div>
           <div class="hd-sub" id="hdBgLineWRow" style="display:none;"><div class="srow"><span class="k">두께</span><input class="rng" type="range" id="hdBgLineW" min="1" max="6" step="1" value="1"><span class="v" id="hdBgLineWV">1px</span></div></div>   <!-- 261106 추가 — 하단 구분선 두께 (기존 편집기와 같게) · 261109 수정 — 그림자 · 이미지 세부 설정처럼 들여쓴 묶음(hd-sub)으로 -->
+          <div class="tx-hint" id="hdBgLineHint" style="display:none;">플로팅 구분선은 스크롤해서 상단 메뉴가 고정되면 나타납니다.</div>   <!-- 261109 추가 — 플로팅 탭에서 구분선을 켤 때만(맨 위에선 일부러 감춘다) -->
           <div class="sline"><span class="lbl">그림자</span><button type="button" class="sw" id="hdBgShSw" onclick="hdSetBgSh('on',!hdBgCur().sh.on)"></button></div>
           <div id="hdBgShOpts" class="hd-sub" style="display:none;">
             <div class="srow"><span class="k">가로 위치</span><input class="rng" type="range" id="hdShX" min="-30" max="30" step="1" value="0"><span class="v" id="hdShXV">0px</span></div>
@@ -21350,11 +21352,12 @@
       return;
     }
     if(t.isConnected===false) return;   /* 261006 추가 — 누른 요소가 자기 onclick 에서 다시 그려져(모달 카드 목록 등) 문서에서 떨어진 경우: closest 가 null 이 되어 모달 안 클릭을 '밖'으로 오해하고 서브메뉴를 닫았다(모달이 위아래로 튀던 원인) */
-    if(!(t.closest && t.closest('.site-nav,#hdDock,#hdPickModal'))) navCloseAll();   /* 260930 수정 — 상단 메뉴 설정창을 만지는 동안은 펼쳐 둔 서브메뉴를 닫지 않는다 */
+    if(!(t.closest && t.closest('.site-nav,#hdDock,#hdPickModal,.rt-pop'))) navCloseAll();   /* 261109 수정 — 색 고르기 창(.rt-pop)도: 서브메뉴 색을 고르는 동안 캔버스의 서브메뉴가 닫혀 바뀐 색을 볼 수 없었다 */   /* 260930 수정 — 상단 메뉴 설정창을 만지는 동안은 펼쳐 둔 서브메뉴를 닫지 않는다 */
   });
   function navCloseAll(){
     document.querySelectorAll('.site-nav .nav-i.open').forEach(function(x){ x.classList.remove('open'); });
     document.querySelectorAll('.site-nav.has-open').forEach(function(x){ x.classList.remove('has-open'); });
+    if(typeof hdSubAcClear==='function') hdSubAcClear();   /* 261109 추가 — 강조 색 미리 보기 표시도 함께 지운다 */
   }
   /* 롤오버로 다른 메뉴에 들어가면 클릭으로 열어 둔 메뉴는 닫는다 (한 번에 하나만) */
   document.addEventListener('mouseover',function(e){
@@ -59721,7 +59724,7 @@ global.PolyFX = API;
       var site=siteEl(); if(!site) return null; var known=pc?pvKnown:mvKnown;
       var s={t:'cl-mv-snap', hd:{}, blocks:[], sel:0, cfx:'', sfx:'', aos:'', preview:pc||(typeof mvW!=='undefined' && mvW!==375)};   /* 260906 추가 — 태블릿 폭 = 미리보기 전용 */
       var lg=site.querySelector('.site-hd .logo'), nv=site.querySelector('.site-hd .site-nav'), mb=document.getElementById('siteNavMob');
-      s.hd.logo=lg?lg.innerHTML:''; s.hd.nav=nv?nv.innerHTML:''; s.hd.mob=mb?mb.innerHTML:''; s.hd.cfg=(typeof HD!=='undefined')?JSON.stringify(HD):''; s.tm=(typeof tmSnap==='function')?tmSnap():''; s.ft=(typeof ftSnap==='function')?ftSnap(s.preview):'';   /* 261106 수정 — 미리보기 여부: 숨긴 푸터를 모바일 편집 사본에는 「푸터 숨김」 줄로, 미리보기에는 빈 값으로 */ s.gd=(typeof gdSnap==='function')?gdSnap():'';   /* 261006 추가 — 상세 페이지 타이틀·하단 */   /* 261001 추가 — 탭메뉴 블록 · 푸터 */   /* 260930 추가 — 상단 메뉴 설정 */
+      s.hd.logo=lg?lg.innerHTML:''; s.hd.nav=nv?(function(){ var p=[].slice.call(nv.querySelectorAll('.hd-pvcur')); p.forEach(function(x){ x.classList.remove('cur'); }); var h=nv.innerHTML; p.forEach(function(x){ x.classList.add('cur'); }); return h; })():'';   /* 261109 수정 — 강조 색 미리 보기 표시(.hd-pvcur)는 사본으로 보내지 않는다 */  s.hd.mob=mb?mb.innerHTML:''; s.hd.cfg=(typeof HD!=='undefined')?JSON.stringify(HD):''; s.tm=(typeof tmSnap==='function')?tmSnap():''; s.ft=(typeof ftSnap==='function')?ftSnap(s.preview):'';   /* 261106 수정 — 미리보기 여부: 숨긴 푸터를 모바일 편집 사본에는 「푸터 숨김」 줄로, 미리보기에는 빈 값으로 */ s.gd=(typeof gdSnap==='function')?gdSnap():'';   /* 261006 추가 — 상세 페이지 타이틀·하단 */   /* 261001 추가 — 탭메뉴 블록 · 푸터 */   /* 260930 추가 — 상단 메뉴 설정 */
       var host=mvHost()||site, kids=host.children, sig=[];   /* 260921 수정 — 지금 페이지의 블록 */
       var hd0=site.querySelector(':scope > .cl-tabmenu')||site.querySelector('.site-hd'), first0=(host===site)?(hd0&&hd0.nextElementSibling):host.firstElementChild;
       s.abTop=!!(first0 && first0.classList.contains('addbar'));
@@ -60293,7 +60296,7 @@ function hdApply(hdEl){
   sv('--hd-blur',(bg.blur||0)+'px'); hd.classList.toggle('hd-blur',(bg.blur||0)>0);
   if((bg.blur||0)>0 && !hd.querySelector(':scope > .hd-blurv')){ var bv=document.createElement('i'); bv.className='hd-blurv'; bv.setAttribute('aria-hidden','true'); hd.appendChild(bv); }   /* 261109 추가 — 흐림 막(배경 이미지까지 흐림 · 기존 편집기와 같게) */
   sv('--hd-bgimg',bg.img?'url("'+bg.img.replace(/"/g,'%22')+'")':'none'); sv('--hd-bgsize',bg.size); sv('--hd-bgpos',bg.pos); sv('--hd-bgrep',bg.rep);
-  sv('--hd-line',(bg.line && !(st==='sticky' && !hdStuck))?((bg.lineW||1)+'px solid '+bg.lineCol):'none');   /* 261106 수정 — 두께(lineW) */   /* 261026 수정 — 하단 구분선은 스크롤이 시작된 뒤에만: 플로팅 탭 미리 보기라도 최상단(hdStuck=false)이면 감춘다(어두운 첫 화면 위 흰 줄 · 녹색 테두리 밖 한 줄 문제) */
+  sv('--hd-line',(bg.line && !(st==='sticky' && !hdStuck && !hdLinePv))?((bg.lineW||1)+'px solid '+bg.lineCol):'none');   /* 261106 수정 — 두께(lineW) */   /* 261026 수정 — 하단 구분선은 스크롤이 시작된 뒤에만: 플로팅 탭 미리 보기라도 최상단(hdStuck=false)이면 감춘다(어두운 첫 화면 위 흰 줄 · 녹색 테두리 밖 한 줄 문제) */
   sv('--hd-shadow',bg.sh.on?(bg.sh.x+'px '+bg.sh.y+'px '+bg.sh.blur+'px '+bg.sh.spread+'px '+hdRGBA(bg.sh.col,bg.sh.a)):'0 0 0 0 transparent');   /* 261006 수정 — none → 투명 그림자(롤오버 외곽선과 목록으로 합쳐 쓰므로) */
   /* 메뉴 글자·간격 */
   sv('--hd-fs',HD.nav.size+'px'); sv('--hd-ls',(HD.nav.ls/100)+'em'); sv('--hd-font',HD.nav.font>=0?hdFontCss(HD.nav.font):'inherit'); sv('--hd-fw',HD.nav.bold?'700':'400'); sv('--hd-fst',HD.nav.italic?'italic':'normal');
@@ -60675,7 +60678,7 @@ function hdSetOpen(){
 function hdClose(){
   var d=document.getElementById('hdDock'); if(!d) return; d.classList.remove('show');
   var hd=hdSiteHd(); if(hd){ hd.classList.remove('hd-editing','hd-mega-open'); if(HD.type==='toggle') hd.classList.remove('hd-open'); }
-  hdPickEnd(); hdSrchClose(); hdApply();
+  hdPickEnd(); hdSrchClose(); hdSubAcClear(); hdLinePv=false; hdApply();   /* 261109 추가 — 강조 색 · 플로팅 구분선 미리 보기 끄기 */
 }
 (function(){
   function boot(){
@@ -60706,8 +60709,8 @@ var HD_COL=[
 ];
 function hdBuild(){
   if(hdBound) return; hdBound=true;
-  HD_RNG.forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return; el.addEventListener('input',function(){ var v=parseFloat(el.value); smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[3]; if(/^hd(Bg|Sh)/.test(r[0])) hdUnlink('bg'); r[1]()[r[2]]=v; hdChanged(); if(/^hdSub/.test(r[0])) hdSubShow(); }); });
-  HD_COL.forEach(function(c){ var el=document.getElementById(c[0]); if(!el) return; el.addEventListener('input',function(){ if(c[5]) hdUnlink(c[5]); var o=c[1](); o[c[2]]=el.value.toUpperCase(); if(c[4]){ var a=parseFloat(el.getAttribute('data-alpha')); o[c[4]]=isNaN(a)?1:a; } el.classList.remove('auto'); var h=document.getElementById(c[0]+'V'); if(h) h.textContent=o[c[2]]; hdFillLinks(); hdFillResets(); hdChanged(); if(/^hdSub/.test(c[0])) hdSubShow(); }); });
+  HD_RNG.forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return; el.addEventListener('input',function(){ var v=parseFloat(el.value); smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[3]; if(/^hd(Bg|Sh)/.test(r[0])) hdUnlink('bg'); r[1]()[r[2]]=v; if(/^hdBgLine/.test(r[0])) hdLinePvSet(); hdChanged(); if(/^hdSub/.test(r[0])) hdSubShow(); }); });
+  HD_COL.forEach(function(c){ var el=document.getElementById(c[0]); if(!el) return; el.addEventListener('input',function(){ if(c[5]) hdUnlink(c[5]); var o=c[1](); o[c[2]]=el.value.toUpperCase(); if(c[4]){ var a=parseFloat(el.getAttribute('data-alpha')); o[c[4]]=isNaN(a)?1:a; } el.classList.remove('auto'); var h=document.getElementById(c[0]+'V'); if(h) h.textContent=o[c[2]]; hdFillLinks(); hdFillResets(); if(/^hdBgLine/.test(c[0])) hdLinePvSet(); hdChanged(); if(/^hdSub/.test(c[0])) (c[0]==='hdSubAcCol'?hdSubAcShow:hdSubShow)(); }); if(/^hdSub/.test(c[0])) el._onOpen=function(){ (c[0]==='hdSubAcCol'?hdSubAcShow:hdSubShow)(); }; if(/^hdBgLine/.test(c[0])) el._onOpen=function(){ hdLinePvSet(); hdApply(); }; });   /* 261109 추가 — 서브메뉴 색 견본을 누르는 순간 캔버스의 서브메뉴를 펼친다(색을 고르기 전부터 지금 모습을 보며 고른다) */
   /* 글꼴 풀다운(로고·메인메뉴) — 맨 위 「사이트 글꼴」(= 자동) */
   ['hdLogoFontDD','hdNavFontDD'].forEach(function(id){ var dd=document.getElementById(id), mn=dd&&dd.querySelector('.sdd-menu'); if(!mn) return;
     mn.innerHTML='<button type="button" data-i="-1" onclick="hdPickFont(event,\''+id+'\',-1)">사이트 글꼴</button>'+SM_FONTS.map(function(f,i){ return '<button type="button" data-i="'+i+'" style="font-family:'+f.f+','+f.fb+';" onclick="hdPickFont(event,\''+id+'\','+i+')">'+f.n+'</button>'; }).join(''); });
@@ -60734,7 +60737,7 @@ function hdSeg(id,m){ var seg=document.getElementById(id); if(seg) seg.querySele
 function hdSw(id,on){ var el=document.getElementById(id); if(el) el.classList.toggle('on',!!on); }
 function hdShow(id,on){ var el=document.getElementById(id); if(el) el.style.display=on?'':'none'; }
 /* 261026 수정 — 탭 [기본 | 플로팅]. 꺼진 플로팅 탭을 누르면 켜고 연다 · 탭 안 스위치로 켜고 끈다 · 겹치기는 페이지마다 */
-function hdState(st){ if(st==='sticky' && !HD.sticky.on){ HD.sticky.on=true; hdChanged(); } hdEditSt=(st==='sticky')?'sticky':'base'; hdFill(); hdApply(); }
+function hdState(st){ if(st==='sticky' && !HD.sticky.on){ HD.sticky.on=true; hdChanged(); } hdEditSt=(st==='sticky')?'sticky':'base'; hdLinePv=false; hdFill(); hdApply(); }
 function hdStickToggle(){ HD.sticky.on=!HD.sticky.on; hdEditSt=HD.sticky.on?'sticky':'base'; hdFill(); hdChanged(); }
 function hdOverSet(k,v){ if(k==='logo') HD.logo.img.overlap=v; else HD.overlap[k]=v; hdFill(); hdChanged(); }
 function hdOverLogoPick(){ hdPickLib('hdOverLogoTh',function(src){ HD.logo.img.overlap=src; hdFill(); hdChanged(); },'겹칠 때 로고 이미지'); }
@@ -60746,10 +60749,15 @@ function hdSetLogo(k,v){ HD.logo[k]=v; if(k!=='alt'&&k!=='text') hdFill(); hdCha
 function hdSetNav(k,v){ HD.nav[k]=v; hdFill(); hdChanged(); }
 function hdSetSub(k,v){ HD.sub[k]=v; hdFill(); hdChanged(); hdSubShow(); }
 function hdSetUtil(k,v){ HD.util[k]=v; hdFill(); hdChanged(); if(k==='lang' && typeof ssetSync==='function') ssetSync(); if(k==='srch'){ hdSubUnshow(); setTimeout(hdSrchOpen,30); } else if(k==='search'&&!v) hdSrchClose(); }   /* 260930 수정 — 검색창 방식을 고르면 바로 열어 보여 준다 */
-function hdSetBg(k,v){ hdUnlink('bg'); hdBgCur()[k]=v; hdFill(); hdChanged(); }
+function hdSetBg(k,v){ hdUnlink('bg'); hdBgCur()[k]=v; if(/^line/.test(k)) hdLinePvSet(); hdFill(); hdChanged(); }
+/* 261109 추가 — 플로팅 하단 구분선은 스크롤해서 고정된 뒤에만 그린다(맨 위 어두운 첫 화면 위 흰 줄 문제). 그래서 플로팅 탭에서 구분선을 켜고 · 두께 · 색을 바꿔도 캔버스에 안 보였다 →
+   플로팅 탭에서 구분선을 만지는 동안만 고정 전이라도 그려 보여 준다. 설정창 밖을 누르거나 · 탭을 바꾸거나 · 설정창을 닫으면 다시 감춘다 */
+var hdLinePv=false;
+function hdLinePvSet(){ if(hdEditSt==='sticky') hdLinePv=true; }
+document.addEventListener('click',function(e){ if(!hdLinePv) return; var t=e.target; if(t.closest && t.closest('#hdDock,.rt-pop')) return; hdLinePv=false; try{ hdApply(); }catch(x){} });
 function hdSetBgSh(k,v){ hdUnlink('bg'); hdBgCur().sh[k]=v; hdFill(); hdChanged(); }
 function hdSetPad(k,v){ HD.pad[k]=v; hdFill(); hdChanged(); }
-function hdColReset(g){ var lg={logo:'logo',nav:'nav',fx:'fx',util:'util',bg:'bg'}[g]; if(lg) hdUnlink(lg); var c=HD.col[hdEditSt]; if(g==='logo') c.logo=''; else if(g==='nav'){ c.fg=''; c.ac=''; } else if(g==='fx') c.fx=''; else if(g==='util'){ c.ufg=''; c.uac=''; } else if(g==='sub'){ HD.sub.fg=''; HD.sub.bg=''; HD.sub.lineCol=''; } else if(g==='subac') HD.sub.ac=''; else if(g==='bg'){ hdBgCur().col=(hdEditSt==='sticky'?'auto':''); hdBgCur().alpha=1; } hdFill(); hdChanged(); }
+function hdColReset(g){ var lg={logo:'logo',nav:'nav',fx:'fx',util:'util',bg:'bg'}[g]; if(lg) hdUnlink(lg); var c=HD.col[hdEditSt]; if(g==='logo') c.logo=''; else if(g==='nav'){ c.fg=''; c.ac=''; } else if(g==='fx') c.fx=''; else if(g==='util'){ c.ufg=''; c.uac=''; } else if(g==='sub'){ HD.sub.fg=''; HD.sub.bg=''; HD.sub.lineCol=''; } else if(g==='subac') HD.sub.ac=''; else if(g==='bg'){ hdBgCur().col=(hdEditSt==='sticky'?'auto':''); hdBgCur().alpha=1; } hdFill(); hdChanged(); if(g==='subac') hdSubAcShow(); else if(g==='sub') hdSubShow(); }   /* 261109 수정 — 서브메뉴 색을 되돌릴 때도 캔버스의 서브메뉴를 펼쳐 보인다 */
 function hdChanged(){ hdApply(); if(typeof mvKick==='function') try{ mvKick(0); }catch(e){} }
 /* 261106 추가 — 상단 메뉴 사용 (기존 편집기 상단 메뉴 「숨김」 대응 · 푸터 사용과 같은 방식). 꺼도 설정은 그대로 남는다 */
 function hdSwitch(on){
@@ -60843,6 +60851,7 @@ function hdFill(){
   /* 서브메뉴 */
   var subInline=(hdVert() || HD.type==='full');   /* 좌측·토글·펼침은 서브메뉴가 상자 없이 목록 안에 펼쳐진다 → 배경·모서리·테두리·그림자는 해당 없음 (260930 추가) */
   hdShow('hdSubBoxRows',!subInline); hdShow('hdSubBgCol',!subInline);
+  (function(){ var full=(HD.type==='full'), uDD=!!(HD.util.login||HD.util.lang); hdShow('hdSubColRow',!full||uDD); var fh=document.getElementById('hdSubFullHint'); if(fh){ fh.textContent=full?('펼침 메뉴의 하위 메뉴는 메인메뉴 글자색을 따릅니다.'+(uDD?' 이 색은 로그인 · 다국어 드롭다운에만 쓰입니다.':'')):''; fh.style.display=full?'':'none'; } })();   /* 261109 추가 — 펼침 메뉴는 패널의 하위 메뉴가 메인메뉴 글자색을 따라 서브 글자 색이 쓰이지 않는다(로그인 · 다국어 드롭다운에만) */
   hdShow('hdSubDesignRow',!subInline); var sfr=document.getElementById('hdSubFsRow'); if(sfr) sfr.style.marginTop=subInline?'0':'14px';   /* 261006 추가 — 서브메뉴 디자인 */
   var sd=hdSubOf(HD.sub.design||'sub01'), sdn=document.getElementById('hdSubDesignNm'); if(sdn) sdn.textContent=sd?(sd.sub+' · '+sd.nm):'직접 구성';
   hdSeg('hdSubAlignSeg',HD.sub.align||'left');
@@ -60857,7 +60866,7 @@ function hdFill(){
   var bt=document.getElementById('hdBgTh'); if(bt){ bt.classList.toggle('has',!!bg.img); bt.classList.toggle('empty',!bg.img); bt.style.backgroundImage=bg.img?'url("'+bg.img.replace(/"/g,'%22')+'")':''; }
   hdShow('hdBgImgOpts',!!bg.img); hdDDSync('hdBgSizeDD',bg.size); hdDDSync('hdBgPosDD',bg.pos); hdDDSync('hdBgRepDD',bg.rep);
   hdSw('hdBgLineSw',bg.line); var blc=document.getElementById('hdBgLineCol'); if(blc) blc.style.display=bg.line?'':'none';
-  hdShow('hdBgLineWRow',!!bg.line);   /* 261106 추가 — 두께는 구분선을 켰을 때만 */
+  hdShow('hdBgLineWRow',!!bg.line); hdShow('hdBgLineHint',hdEditSt==='sticky' && !!bg.line);   /* 261109 추가 — 플로팅 탭 구분선 안내 */   /* 261106 추가 — 두께는 구분선을 켰을 때만 */
   /* 261109 추가 — 흐림 효과: 불투명 배경 · 배경 이미지면 뒤가 비치지 않아 보이지 않는다 → 막고 안내 (투명 · 반투명 · 자동은 그대로) */
   hdBlurSync();
   /* 261109 추가 — 서브메뉴: 드롭다운이 하나도 없으면(하위 메뉴 없음 · 로그인 · 다국어 꺼짐) 설정이 할 일이 없다 → 막고 안내 */
@@ -61013,16 +61022,24 @@ function hdPickSub(id){ var d=hdSubOf(id); if(!d) return;
   HD.sub=fresh; hdPickRender(); hdFill(); hdChanged(); hdSubShow(); hdPickPlace(); }   /* 261006 수정 — 고르는 즉시 캔버스의 서브메뉴를 펼쳐 보이고, 모달은 그 아래로 */
 /* 서브메뉴 설정을 바꾸면 캔버스의 첫 서브메뉴를 펼쳐 둔다 — 바꾼 모습을 바로 본다(설정창을 만지는 동안은 닫히지 않는다 · 캔버스를 누르면 닫힌다) */
 function hdSubShow(){
-  var hd=hdSiteHd(); if(!hd || window.CL_MVIEW || hdVert() || HD.type==='full') return;
+  var hd=hdSiteHd(); if(!hd || window.CL_MVIEW || HD.type==='full') return;   /* 261109 수정 — 좌측 · 토글 메뉴도 펼친다(목록 안에 펼쳐지는 하위 메뉴 · 전엔 막아 두어 크기 · 색을 바꿔도 보이지 않았다) */
   var nav=hd.querySelector(':scope > .site-nav'); if(!nav) return;
   var it=nav.querySelector(':scope > .nav-i.open')||nav.querySelector(':scope > .nav-i.has-sub'); if(!it) return;
   if(hdSrchEl) hdSrchClose(true);   /* 261109 추가 — 설정창 미리보기는 한 번에 하나만: 서브메뉴를 펼치면 미리 열어 둔 검색창은 닫는다 */
   it.classList.add('open'); nav.classList.add('has-open'); hdSubGuard(it);
 }
+/* 261109 추가 — 강조 색은 「현재 페이지」 서브메뉴에만 쓰여(디자인에 따라 롤오버에도) 홈에서 편집하면 보이지 않았다 →
+   고르는 동안 펼친 서브메뉴의 첫 항목을 현재 페이지처럼 잠깐 표시한다(.hd-pvcur). 서브메뉴가 닫히면 지운다 · 사본으로 보내는 마크업에서는 뺀다(mvSnap) */
+function hdSubAcShow(){
+  hdSubShow(); var hd=hdSiteHd(); if(!hd || !hd.hasAttribute('data-hd-sub')) return;
+  var it=hd.querySelector(':scope > .site-nav > .nav-i.open'); if(!it || it.querySelector('.nav-dd .nav-sub-i.cur:not(.hd-pvcur)')) return;   /* 이미 현재 서브 페이지가 있으면 그대로 */
+  var f=it.querySelector('.nav-dd .nav-sub-i'); if(f && !f.classList.contains('cur')) f.classList.add('cur','hd-pvcur');
+}
+function hdSubAcClear(){ document.querySelectorAll('.nav-sub-i.hd-pvcur').forEach(function(x){ x.classList.remove('cur','hd-pvcur'); }); }
 /* 261109 추가 — 설정창에서 검색창 방식을 골라 검색창을 미리 열 때, 펼쳐 둔 서브메뉴는 닫는다(둘이 겹쳐 보이지 않게) */
 function hdSubUnshow(){
   var hd=hdSiteHd(), nav=hd&&hd.querySelector(':scope > .site-nav'); if(!nav) return;
-  nav.querySelectorAll(':scope > .nav-i.open').forEach(function(x){ x.classList.remove('open'); }); nav.classList.remove('has-open');
+  nav.querySelectorAll(':scope > .nav-i.open').forEach(function(x){ x.classList.remove('open'); }); nav.classList.remove('has-open'); hdSubAcClear();
 }
 /* 드롭다운이 헤더 폭 밖으로 나가면 안쪽으로 민다(가로 한 줄처럼 넓은 디자인 · 오른쪽 끝 메뉴). 말풍선 꼬리는 메뉴 가운데에 남는다 */
 function hdSubGuard(it){
