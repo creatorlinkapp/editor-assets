@@ -8858,7 +8858,7 @@
      · 상태(기본·플로팅·겹치기)는 한 세그먼트에서 고르고, 상태별 값(색·배경·로고)만 따로 가진다 ══════ */
   .site-hd{--hd-fg:var(--st-muted,#9096A0);--hd-ac:var(--st-fg,#23272E);--hd-fx:var(--st-fg,#23272E);--hd-logo:var(--st-fg,#23272E);
     --hd-ubtn:var(--st-muted,#9096A0);--hd-uac:var(--st-fg,#23272E);--hd-cart:#EE445F;--hd-bg:transparent;--hd-blur:0px;--hd-bgimg:none;--hd-bgsize:cover;--hd-bgpos:center center;--hd-bgrep:no-repeat;
-    --hd-line:none;--hd-shadow:none;--hd-gap:26px;--hd-px:0px;--hd-py:0px;--hd-top:16px;--hd-fs:14px;--hd-ls:0em;--hd-font:inherit;--hd-fw:400;--hd-fst:normal;
+    --hd-line:none;--hd-shadow:none;--hd-gap:26px;--hd-px:0px;--hd-py:0px;--hd-top:32px;--hd-fs:14px;--hd-ls:0em;--hd-font:inherit;--hd-fw:400;--hd-fst:normal;
     --hd-pt:22px;--hd-pb:22px;--hd-side:48px;--hd-lfs:24px;--hd-lls:.02em;--hd-lfont:inherit;--hd-lfw:800;--hd-lmax:34px;--hd-lgap:44px;
     --hd-sub-fs:13px;--hd-sub-fg:var(--st-muted,#5A616B);--hd-sub-bg:var(--st-bg,#fff);--hd-sub-rad:10px;--hd-sub-line:var(--st-line,var(--border,#E4E7EC));--hd-sub-sh:0 12px 34px rgba(20,24,32,.14);--hd-usz:1;
     display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;column-gap:var(--hd-lgap);row-gap:var(--hd-top);padding:var(--hd-pt) var(--hd-side) var(--hd-pb);position:relative;   /* 260930 수정 — 원래 .site-hd 의 space-between 을 끈다: 자리는 레이아웃 규칙(auto margin)이 정한다. 2·7·14처럼 auto margin 이 없는 배치가 벌어져 보이던 문제 */
@@ -9065,6 +9065,7 @@
   /* 레이아웃 15종 — 로고(L)·메뉴(N)·유틸(U) 자리. 두 줄 레이아웃은 줄바꿈 요소(.hd-br)로 줄을 가른다 */
   .site-hd .hd-br{display:none;width:100%;height:0;order:5;}
   .site-hd[data-hd-rows="2"] .hd-br{display:block;}
+  .site-hd[data-hd-rows="2"]{row-gap:calc(var(--hd-top) / 2);}   /* 261109 수정 — 줄바꿈 요소가 높이 0 인 한 줄이 되어 「로고 줄 ↔ 빈 줄 ↔ 메뉴 줄」로 줄 간격이 두 번 들어갔다(설정 16 → 실제 32) → 반씩 두 번 = 설정값 그대로 */
   .site-hd .logo{order:1;} .site-hd .site-nav{order:2;} .hd-util{order:3;} .site-hd .snav-ham{order:4;}
   .site-hd[data-hd-layout="1"] .hd-util{margin-left:auto;}
   .site-hd[data-hd-layout="3"] .site-nav{margin-left:auto;margin-right:auto;}
@@ -9209,7 +9210,7 @@
   .site-hd[data-hd-type="toggle"][data-hd-tog="left"] .logo{margin-left:auto;margin-right:auto;}
   /* 메뉴 효과 25종 — .nav-t 위에 그린다. 색은 --hd-fx */
   .site-hd .site-nav .nav-t::before,.site-hd .site-nav .nav-t::after{pointer-events:none;}
-  [data-hd-fx^="line"] .site-nav .nav-t::after{content:"";position:absolute;left:0;right:0;height:1.5px;background:var(--hd-fx);transform:scaleX(0);transition:transform .26s cubic-bezier(.4,0,.2,1),transform-origin 0s .26s;}
+  [data-hd-fx^="line"] .site-nav .nav-t::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--hd-fx);transform:scaleX(0);transition:transform .26s cubic-bezier(.4,0,.2,1),transform-origin 0s .26s;}
   [data-hd-fx="line1"] .site-nav .nav-t::after{bottom:-6px;transform-origin:right center;}
   [data-hd-fx="line1"] .site-nav .nav-i:hover .nav-t::after,[data-hd-fx="line1"] .site-nav .nav-i.cur .nav-t::after{transform:scaleX(1);transform-origin:left center;transition:transform .26s cubic-bezier(.4,0,.2,1);}
   [data-hd-fx="line2"] .site-nav .nav-t::after{bottom:-6px;transform-origin:center;}
@@ -9231,17 +9232,17 @@
   [data-hd-fx="tri1"] .site-nav .nav-i:hover .nav-t::before,[data-hd-fx="tri1"] .site-nav .nav-i.cur .nav-t::before,
   [data-hd-fx="dotl"] .site-nav .nav-i:hover .nav-t::before,[data-hd-fx="dotl"] .site-nav .nav-i.cur .nav-t::before{opacity:1;transform:none;}
   /* icon 07 대시 · icon 08 화살표 — 글자 앞에서 폭이 자라난다 */
-  [data-hd-fx="dash"] .site-nav .nav-t::before,[data-hd-fx="arrow"] .site-nav .nav-t::before{content:"";display:inline-block;width:0;height:1.5px;background:var(--hd-fx);vertical-align:middle;margin-right:0;transition:width .22s cubic-bezier(.4,0,.2,1),margin .22s cubic-bezier(.4,0,.2,1);overflow:hidden;}
+  [data-hd-fx="dash"] .site-nav .nav-t::before,[data-hd-fx="arrow"] .site-nav .nav-t::before{content:"";display:inline-block;width:0;height:2px;background:var(--hd-fx);vertical-align:middle;margin-right:0;transition:width .22s cubic-bezier(.4,0,.2,1),margin .22s cubic-bezier(.4,0,.2,1);overflow:hidden;}
   [data-hd-fx="arrow"] .site-nav .nav-t::before{content:"\2192";height:auto;width:auto;background:none;color:var(--hd-fx);font-weight:400;line-height:1;opacity:0;margin-right:-1em;transform:translateX(-4px);transition:opacity .2s,margin .22s cubic-bezier(.4,0,.2,1),transform .22s cubic-bezier(.4,0,.2,1);}
   [data-hd-fx="dash"] .site-nav .nav-i:hover .nav-t::before,[data-hd-fx="dash"] .site-nav .nav-i.cur .nav-t::before{width:14px;margin-right:6px;}
   [data-hd-fx="arrow"] .site-nav .nav-i:hover .nav-t::before,[data-hd-fx="arrow"] .site-nav .nav-i.cur .nav-t::before{opacity:1;margin-right:6px;transform:none;}
   /* 이동 표식(icon 03·04·06·12·13 · fill 04) — .hd-mk 하나가 롤오버 항목으로 미끄러져 간다 */
-  .site-hd .site-nav .hd-mk{position:absolute;display:none;background:var(--hd-fx);pointer-events:none;transition:left .28s cubic-bezier(.4,0,.2,1),top .28s cubic-bezier(.4,0,.2,1),width .28s cubic-bezier(.4,0,.2,1),height .28s cubic-bezier(.4,0,.2,1),opacity .2s;z-index:0;}
+  .site-hd .site-nav .hd-mk,.hd-card .fxv .site-nav .hd-mk{position:absolute;display:none;background:var(--hd-fx);pointer-events:none;transition:left .28s cubic-bezier(.4,0,.2,1),top .28s cubic-bezier(.4,0,.2,1),width .28s cubic-bezier(.4,0,.2,1),height .28s cubic-bezier(.4,0,.2,1),opacity .2s;z-index:0;}
   .site-hd .site-nav{position:relative;}
-  .site-hd .site-nav.hd-mk-on .hd-mk{display:block;}
+  .site-hd .site-nav.hd-mk-on .hd-mk,.hd-card .fxv .site-nav.hd-mk-on .hd-mk{display:block;}   /* 261109 수정 — 효과 고르기 카드에서도 이동 표식을 그린다(전엔 .site-hd 안에서만 걸려 카드의 표식이 투명한 채 메뉴 뒤에 놓여 안 보였다) */
   [data-hd-fx="mdot1"] .hd-mk,[data-hd-fx="mdot2"] .hd-mk{width:4px;height:4px;border-radius:50%;}
   [data-hd-fx="msq1"] .hd-mk,[data-hd-fx="msq2"] .hd-mk{width:4px;height:4px;}
-  [data-hd-fx="mline"] .hd-mk{height:1.5px;}
+  [data-hd-fx="mline"] .hd-mk{height:2px;}   /* 261109 수정 — 선 효과(line 01~04 · icon 06 · 07) 굵기 1.5 → 2px: 반쪽 굵기는 놓이는 위치에 따라 1px / 2px 로 그려져 윗줄(line 03)만 얇아 보였다 */
   [data-hd-fx="mfill"] .hd-mk{border-radius:3px;z-index:0;}
   [data-hd-fx="mfill"] .site-nav .nav-i{position:relative;z-index:1;}
   /* fill 01·02·03 — 항목 뒤에 면 */
@@ -9254,6 +9255,8 @@
   /* 261006 추가 — 위 규칙은 테마 규칙 `.site[data-theme] .site-hd .site-nav .nav-i.cur{color:var(--hd-ac)}`(특이성 5)에 져서 어두운 컬러 모드에선 흰 채움 위에 흰 글자가 됐다(「홈」이 빈 상자로 보임) → 같은 꼴로 한 번 더 */
   .site[data-theme] .site-hd[data-hd-fx^="fill"] .site-nav .nav-i:hover,.site[data-theme] .site-hd[data-hd-fx^="fill"] .site-nav .nav-i.cur,
   .site[data-theme] .site-hd[data-hd-fx="mfill"] .site-nav .nav-i:hover,.site[data-theme] .site-hd[data-hd-fx="mfill"] .site-nav .nav-i.cur{color:var(--hd-fxfg,var(--hd-ac));}
+  /* 261109 추가 — 따라오는 채움: 다른 메뉴에 마우스를 올리면 채움 상자는 그쪽으로 가는데, 현재 메뉴 글자가 흰색(채움 위 글자색)으로 남아 바탕에 묻혀 사라졌다 → 그동안 현재 메뉴는 활성 글자색 */
+  .site-hd[data-hd-fx="mfill"] .site-nav:has(> .nav-i:hover) > .nav-i.cur:not(:hover){color:var(--hd-ac);}
   /* fill 05 — 글자 뒤 띠가 왼쪽에서 자란다 */
   [data-hd-fx="band"] .site-nav .nav-t{z-index:0;}
   [data-hd-fx="band"] .site-nav .nav-t::before{content:"";position:absolute;left:-8px;top:50%;height:60%;width:0;transform:translateY(-50%);background:var(--hd-fx);opacity:.35;z-index:-1;transition:width .26s cubic-bezier(.4,0,.2,1);}
@@ -9372,7 +9375,7 @@
   :is(#hdDock,#moDock) .hd-col2 .sw-col .hex{display:none;}   /* 두 색이 한 줄 — 칩만 보이고 값은 ↺(자동이면 흐림)로 읽는다 */
   :is(#hdDock,#moDock) .hd-col2 .sw-reset{margin-left:auto;}
   #hdNavAcc .hd-sw4{margin-top:4px;}
-  #hdSubBoxRows > .srow:first-child{margin-top:10px;}   /* 261109 추가 — 서브메뉴 「강조 색」이 묶음(#hdSubBoxRows)의 첫 줄이라 줄 간격이 빠져 위 「색」 줄에 붙어 있었다(2px) → 다른 줄과 같은 10px */
+  #hdSubBoxRows > .srow:first-child,#hdNavPadRows > .srow:first-child{margin-top:10px;}   /* 261109 추가 — 메인메뉴 「좌우 여백」도 묶음(#hdNavPadRows) 첫 줄이라 같은 문제 */   /* 261109 추가 — 서브메뉴 「강조 색」이 묶음(#hdSubBoxRows)의 첫 줄이라 줄 간격이 빠져 위 「색」 줄에 붙어 있었다(2px) → 다른 줄과 같은 10px */
   #moDock .gt-h{font-weight:600;color:var(--ink-2);} html.ui-rail #moDock .gt-h{font-size:12.5px;}   /* 설정창 이름 글자(html.ui-rail .bset .srow .k = 12.5px)와 같은 크기 */   /* 261109 추가 — 모바일 메뉴 「표시 항목」 · 「노출 메뉴」 제목을 같은 묶음 제목(레이아웃 · 모양 · 정렬)과 같은 글자 모양으로 */   /* 261109 추가 — 메인메뉴 「굵게 · 기울임」 줄이 위 「자간」에 붙어 있었다 → 다른 줄과 같은 10px 간격(안쪽 6px + 4px) */
   :is(#hdDock,#moDock) .hd-col2 .cl{font-size:var(--fs-xs);color:var(--ink-3);font-weight:600;}
   :is(#hdDock,#moDock) .sw-col input[type=color].auto::-webkit-color-swatch{opacity:.35;}   /* 자동(비어 있음)은 칩 속만 흐리게 — 테두리는 그대로 */
@@ -9723,6 +9726,7 @@
   .hd-card .fxv .site-nav .nav-i{display:flex;align-items:center;cursor:default;position:relative;}
   .hd-card .fxv .site-nav .nav-i .nav-t{display:inline-flex;align-items:center;position:relative;white-space:nowrap;}
   .hd-card .fxv .site-nav .nav-i:hover,.hd-card .fxv .site-nav .nav-i.cur{color:var(--hd-ac);font-weight:700;}
+  .hd-card .fxv[data-hd-fx^="fill"] .site-nav .nav-i:is(:hover,.cur),.hd-card .fxv[data-hd-fx="mfill"] .site-nav .nav-i:hover,.hd-card .fxv[data-hd-fx="mfill"] .site-nav:not(:has(> .nav-i:hover)) > .nav-i.cur{color:var(--hd-fxfg);}   /* fill 04 는 채움 상자가 있는 항목만(올린 항목 · 없으면 현재 항목) */   /* 261109 추가 — 채움 효과 카드(fill 01~04): 위 규칙이 「채움 위 글자 = 바탕색」 규칙을 덮어 진한 채움 위에 진한 글자가 올라 안 보였다 → 실제 메뉴처럼 채움 위 글자는 흰색 */
   /* 유틸 스타일 카드 */
   .hd-card .uv{height:64px;display:flex;align-items:center;justify-content:center;padding:0 12px;}
   .hd-card .uv .hd-util .nav-dd{display:none !important;}   /* 261007 추가 — 견본 카드의 버튼은 실제 마크업이라 올리면 드롭다운(로그인/회원가입 · 한국어/English)이 카드 안에 잘린 채 떴다 → 견본에서는 열지 않는다 */
@@ -16675,7 +16679,7 @@
           <div class="srow"><span class="k">상하 여백</span><input class="rng" type="range" id="hdNavPy" min="0" max="30" step="1" value="0"><span class="v" id="hdNavPyV">0px</span></div>
           </div>
           <div class="srow" style="margin-top:14px;"><span class="k">메뉴 사이 간격</span><input class="rng" type="range" id="hdNavGap" min="0" max="80" step="1" value="26"><span class="v" id="hdNavGapV">26px</span></div>
-          <div class="srow" id="hdNavTopRow"><span class="k">메뉴 상단 간격</span><input class="rng" type="range" id="hdNavTop" min="0" max="60" step="1" value="16"><span class="v" id="hdNavTopV">16px</span></div>
+          <div class="srow" id="hdNavTopRow"><span class="k">메뉴 상단 간격</span><input class="rng" type="range" id="hdNavTop" min="0" max="80" step="1" value="32"><span class="v" id="hdNavTopV">32px</span></div>
         </div></div>
       </div>
 
@@ -60111,7 +60115,7 @@ function hdDefault(){
     type:'top', design:'top01', layout:1, tog:'left', sideW:240, sideAlign:'left', sideUtil:'top', togStyle:'drop', togIcon:'bars3', togFx:'none', togOpen:'morph', fullMode:'hover', fullStyle:'col',
     sticky:{on:true, lk:{logo:true, nav:true, fx:true, util:true, bg:false, img:true}}, overlap:{pg:{}, clear:true},   /* 261026 수정 — overlap.pg: 겹치기를 켠 페이지 id(기본값 꺼짐 · 좌측 사이트와 같게) · overlap.clear: 겹칠 때 배경 투명 · lk: 플로팅 항목별 연결(true = 기본 값을 따름) · overlap.off: 겹치기를 끈 페이지 id */   /* 261021 수정 — 기본값: 겹치기 켬 · 스크롤 따라오기(플로팅)도 켬(편집기 플로팅을 진짜 sticky 로 바꿔 흔들림이 없어짐) */
     logo:{on:true, type:'text', text:'Hector.', alt:'', maxH:34, font:-1, size:24, bold:true, ls:2, img:{base:'',sticky:'',overlap:''}},
-    nav:{font:-1, size:14, bold:false, italic:false, ls:0, fx:'line1', gap:26, px:0, py:0, top:16},
+    nav:{font:-1, size:14, bold:false, italic:false, ls:0, fx:'line1', gap:26, px:0, py:0, top:32},
     sub:{size:13, fg:'', bg:'', bga:1, rad:10, line:false, lineCol:'', shadow:true, design:'sub01', style:'plain', ac:'', align:'left'},   /* 261006 수정 — 서브메뉴 디자인(design·style) · 강조 색(ac) · 정렬(align) */
     util:{search:true, srch:'full', login:true, cart:true, lang:false, style:4, langStyle:7, size:'s', cartCol:'#EE445F'},
     col:{base:{logo:'',fg:'',ac:'',fx:'',ufg:'',uac:''}, sticky:{logo:'',fg:'',ac:'',fx:'',ufg:'',uac:''}},
@@ -60145,13 +60149,13 @@ var HD_DESIGNS=[
   {id:'top01',cat:'top',nm:'상단 01',sub:'미니멀',v:{type:'top',layout:1,nav:{fx:'line1'},util:{style:4}}},
   {id:'top02',cat:'top',nm:'상단 02',sub:'센터',v:{type:'top',layout:4,nav:{fx:'dot2',gap:34},util:{style:2}}},
   {id:'top03',cat:'top',nm:'상단 03',sub:'다크 바',v:{type:'top',layout:3,nav:{fx:'line2'},util:{style:4},col:{base:{logo:'#FFFFFF',fg:'#A7ADB8',ac:'#FFFFFF',fx:'#FFFFFF',ufg:'#A7ADB8',uac:'#FFFFFF'}},bg:{base:{col:'#111318',alpha:1}},pad:{top:18,bottom:18}}},
-  {id:'top04',cat:'top',nm:'상단 04',sub:'클래식 두 줄',v:{type:'top',layout:8,nav:{fx:'line4',top:18},util:{style:1},bg:{base:{line:true}}}},
+  {id:'top04',cat:'top',nm:'상단 04',sub:'클래식 두 줄',v:{type:'top',layout:8,nav:{fx:'line4',top:36},util:{style:1},bg:{base:{line:true}}}},
   {id:'top05',cat:'top',nm:'상단 05',sub:'에디토리얼',v:{type:'top',layout:10,logo:{font:1,size:30,bold:true,ls:1},nav:{fx:'ch1',ls:6,size:12},util:{style:2},bg:{base:{line:true}}}},
   {id:'top06',cat:'top',nm:'상단 06',sub:'라이트 그레이',v:{type:'top',layout:5,nav:{fx:'fill1',px:12,py:6,gap:6},util:{style:3},col:{base:{logo:'#23272E',fg:'#6B7178',ac:'#23272E',fx:'#23272E',ufg:'#6B7178',uac:'#23272E'}},bg:{base:{col:'#F4F5F8',alpha:1}}}},
   {id:'top07',cat:'top',nm:'상단 07',sub:'볼드',v:{type:'top',layout:9,logo:{font:3,size:34,bold:false,ls:4},nav:{fx:'fill1',bold:true,size:15},util:{style:8}}},
-  {id:'top08',cat:'top',nm:'상단 08',sub:'네이비',v:{type:'top',layout:12,nav:{fx:'dash',top:10},util:{style:7},col:{base:{logo:'#FFFFFF',fg:'#9CA2AD',ac:'#FFFFFF',fx:'#FFFFFF',ufg:'#9CA2AD',uac:'#FFFFFF'}},bg:{base:{col:'#1C2746',alpha:1}}}},
+  {id:'top08',cat:'top',nm:'상단 08',sub:'네이비',v:{type:'top',layout:12,nav:{fx:'dash',top:20},util:{style:7},col:{base:{logo:'#FFFFFF',fg:'#9CA2AD',ac:'#FFFFFF',fx:'#FFFFFF',ufg:'#9CA2AD',uac:'#FFFFFF'}},bg:{base:{col:'#1C2746',alpha:1}}}},
   {id:'top09',cat:'top',nm:'상단 09',sub:'브라켓',v:{type:'top',layout:1,logo:{font:4,size:20,bold:true,ls:0},nav:{fx:'brk1',font:4,size:13,ls:0},util:{style:9}}},
-  {id:'top10',cat:'top',nm:'상단 10',sub:'라인 톱',v:{type:'top',layout:13,nav:{fx:'line3',top:14},util:{style:10},bg:{base:{line:true}}}},
+  {id:'top10',cat:'top',nm:'상단 10',sub:'라인 톱',v:{type:'top',layout:13,nav:{fx:'line3',top:28},util:{style:10},bg:{base:{line:true}}}},
   {id:'top11',cat:'top',nm:'상단 11',sub:'무빙 필',v:{type:'top',layout:2,nav:{fx:'mfill',px:12,py:6,gap:4},util:{style:5}}},
   {id:'top12',cat:'top',nm:'상단 12',sub:'무빙 닷',v:{type:'top',layout:6,nav:{fx:'mdot2',gap:30},util:{style:6}}},
   {id:'side01',cat:'side',nm:'좌측 01',sub:'라이트',v:{type:'side',nav:{fx:'dotl',gap:14,size:14},util:{style:4},bg:{base:{line:true}}}},
@@ -60160,11 +60164,11 @@ var HD_DESIGNS=[
   {id:'side04',cat:'side',nm:'좌측 04',sub:'가운데 정렬',v:{type:'side',sideAlign:'center',nav:{fx:'line2',gap:16},util:{style:2},bg:{base:{line:true}}}},
   {id:'side05',cat:'side',nm:'좌측 05',sub:'버튼 아래',v:{type:'side',sideUtil:'bottom',nav:{fx:'dash',gap:14},util:{style:4},col:{base:{logo:'#23272E',fg:'#6B7178',ac:'#23272E',fx:'#23272E',ufg:'#6B7178',uac:'#23272E'}},bg:{base:{col:'#F4F5F8',alpha:1}}}},
   {id:'side06',cat:'side',nm:'좌측 06',sub:'세리프 · 가운데',v:{type:'side',sideAlign:'center',sideUtil:'bottom',logo:{font:1,size:28,ls:1},nav:{fx:'ch1',gap:18,ls:4,size:13},util:{style:1},bg:{base:{line:true}}}},
-  {id:'full01',cat:'full',nm:'펼침 01',sub:'메뉴 아래 열',v:{type:'full',fullStyle:'col',layout:8,nav:{fx:'none',gap:48,top:20},util:{style:4},bg:{base:{line:true}}}},
+  {id:'full01',cat:'full',nm:'펼침 01',sub:'메뉴 아래 열',v:{type:'full',fullStyle:'col',layout:8,nav:{fx:'none',gap:48,top:40},util:{style:4},bg:{base:{line:true}}}},
   {id:'full02',cat:'full',nm:'펼침 02',sub:'메뉴 아래 열 · 다크',v:{type:'full',fullStyle:'col',layout:3,nav:{fx:'line2',gap:40},util:{style:4},col:{base:{logo:'#FFFFFF',fg:'#A7ADB8',ac:'#FFFFFF',fx:'#FFFFFF',ufg:'#A7ADB8',uac:'#FFFFFF'}},bg:{base:{col:'#111318',alpha:1}}}},
   {id:'full03',cat:'full',nm:'펼침 03',sub:'제목 · 구분선',v:{type:'full',fullStyle:'head',layout:1,nav:{fx:'dot2',gap:34},util:{style:2},bg:{base:{line:true}}}},
   {id:'full04',cat:'full',nm:'펼침 04',sub:'가운데 모음',v:{type:'full',fullStyle:'grid',layout:10,logo:{font:1,size:30,ls:1},nav:{fx:'ch1',gap:44,ls:4,size:13,top:18},util:{style:1}}},
-  {id:'full05',cat:'full',nm:'펼침 05',sub:'라인 · 작은 제목',v:{type:'full',fullStyle:'line',layout:9,nav:{fx:'line4',gap:36,top:16},util:{style:8},col:{base:{logo:'#23272E',fg:'#6B7178',ac:'#23272E',fx:'#23272E',ufg:'#6B7178',uac:'#23272E'}},bg:{base:{col:'#F4F5F8',alpha:1}}}},
+  {id:'full05',cat:'full',nm:'펼침 05',sub:'라인 · 작은 제목',v:{type:'full',fullStyle:'line',layout:9,nav:{fx:'line4',gap:36,top:32},util:{style:8},col:{base:{logo:'#23272E',fg:'#6B7178',ac:'#23272E',fx:'#23272E',ufg:'#6B7178',uac:'#23272E'}},bg:{base:{col:'#F4F5F8',alpha:1}}}},
   {id:'full06',cat:'full',nm:'펼침 06',sub:'항상 펼침',v:{type:'full',fullStyle:'head',fullMode:'always',layout:8,nav:{fx:'none',gap:72,top:26},util:{style:4},bg:{base:{line:true}},pad:{top:26,bottom:22}}},
   {id:'tog01',cat:'toggle',nm:'토글 01',sub:'버튼 왼쪽',v:{type:'toggle',tog:'left',togIcon:'bars3',togFx:'spread',nav:{fx:'line4',gap:8,size:15},util:{style:4},bg:{base:{line:true}}}},
   {id:'tog02',cat:'toggle',nm:'토글 02',sub:'버튼 오른쪽',v:{type:'toggle',tog:'right',togIcon:'bars3',togFx:'slide',togOpen:'spin',nav:{fx:'line4',gap:8,size:15},util:{style:4}}},
@@ -60612,7 +60616,7 @@ function hdMarkTo(nav,item,fx,instant){
   mk.style.opacity='1';
   if(fx==='mdot1'||fx==='msq1'){ mk.style.left=(cx-2)+'px'; mk.style.top=(y-9)+'px'; mk.style.width='4px'; mk.style.height='4px'; }
   else if(fx==='mdot2'||fx==='msq2'){ mk.style.left=(cx-2)+'px'; mk.style.top=(y+h+5)+'px'; mk.style.width='4px'; mk.style.height='4px'; }
-  else if(fx==='mline'){ mk.style.left=(cx-9)+'px'; mk.style.top=(y+h+5)+'px'; mk.style.width='18px'; mk.style.height='1.5px'; }
+  else if(fx==='mline'){ mk.style.left=(cx-9)+'px'; mk.style.top=(y+h+5)+'px'; mk.style.width='18px'; mk.style.height='2px'; }
   else if(fx==='mfill'){ var ir=item.getBoundingClientRect(); mk.style.left=((ir.left-nr.left)/z-8)+'px'; mk.style.top=((ir.top-nr.top)/z-5)+'px'; mk.style.width=(ir.width/z+16)+'px'; mk.style.height=(ir.height/z+10)+'px'; }
   if(instant){ void mk.offsetWidth; mk.style.transition=''; }
 }
