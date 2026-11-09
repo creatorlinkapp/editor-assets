@@ -9030,6 +9030,8 @@
   .hd-srch-in.nudge{animation:hdSrchNudge .32s ease;}
   @keyframes hdSrchNudge{25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
   .site-hd.hd-srch-on .hd-util .u[data-u="search"]{color:var(--hd-uac);}
+  /* 261109 추가 — 「아래로 펼침」 검색창이 열린 채 메뉴에 마우스를 올리면 서브메뉴가 검색창 아래에 깔려 가운데가 가려졌다 → 펼친 메뉴는 검색창 위로(메뉴를 보려는 동작이 우선 · 검색창은 그대로 둬 입력한 글자는 남는다) */
+  .site-hd.hd-srch-on > .site-nav > .nav-i:is(:hover,.open){z-index:132;}
   /* 전체 화면 */
   .site > .hd-srch[data-m="full"]{position:absolute;left:0;right:0;z-index:125;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(14,16,20,.9);color:#fff;opacity:0;transition:opacity .28s ease,visibility 0s linear .28s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
   .site > .hd-srch[data-m="full"].show{opacity:1;transition:opacity .28s ease;}
@@ -60719,7 +60721,7 @@ function hdSet(k,v){ HD[k]=v; if(k==='layout') hdSeg('hdLayGrid',v); hdFill(); h
 function hdSetLogo(k,v){ HD.logo[k]=v; if(k!=='alt'&&k!=='text') hdFill(); hdChanged(); }
 function hdSetNav(k,v){ HD.nav[k]=v; hdFill(); hdChanged(); }
 function hdSetSub(k,v){ HD.sub[k]=v; hdFill(); hdChanged(); hdSubShow(); }
-function hdSetUtil(k,v){ HD.util[k]=v; hdFill(); hdChanged(); if(k==='lang' && typeof ssetSync==='function') ssetSync(); if(k==='srch') setTimeout(hdSrchOpen,30); else if(k==='search'&&!v) hdSrchClose(); }   /* 260930 수정 — 검색창 방식을 고르면 바로 열어 보여 준다 */
+function hdSetUtil(k,v){ HD.util[k]=v; hdFill(); hdChanged(); if(k==='lang' && typeof ssetSync==='function') ssetSync(); if(k==='srch'){ hdSubUnshow(); setTimeout(hdSrchOpen,30); } else if(k==='search'&&!v) hdSrchClose(); }   /* 260930 수정 — 검색창 방식을 고르면 바로 열어 보여 준다 */
 function hdSetBg(k,v){ hdUnlink('bg'); hdBgCur()[k]=v; hdFill(); hdChanged(); }
 function hdSetBgSh(k,v){ hdUnlink('bg'); hdBgCur().sh[k]=v; hdFill(); hdChanged(); }
 function hdSetPad(k,v){ HD.pad[k]=v; hdFill(); hdChanged(); }
@@ -60989,7 +60991,13 @@ function hdSubShow(){
   var hd=hdSiteHd(); if(!hd || window.CL_MVIEW || hdVert() || HD.type==='full') return;
   var nav=hd.querySelector(':scope > .site-nav'); if(!nav) return;
   var it=nav.querySelector(':scope > .nav-i.open')||nav.querySelector(':scope > .nav-i.has-sub'); if(!it) return;
+  if(hdSrchEl) hdSrchClose(true);   /* 261109 추가 — 설정창 미리보기는 한 번에 하나만: 서브메뉴를 펼치면 미리 열어 둔 검색창은 닫는다 */
   it.classList.add('open'); nav.classList.add('has-open'); hdSubGuard(it);
+}
+/* 261109 추가 — 설정창에서 검색창 방식을 골라 검색창을 미리 열 때, 펼쳐 둔 서브메뉴는 닫는다(둘이 겹쳐 보이지 않게) */
+function hdSubUnshow(){
+  var hd=hdSiteHd(), nav=hd&&hd.querySelector(':scope > .site-nav'); if(!nav) return;
+  nav.querySelectorAll(':scope > .nav-i.open').forEach(function(x){ x.classList.remove('open'); }); nav.classList.remove('has-open');
 }
 /* 드롭다운이 헤더 폭 밖으로 나가면 안쪽으로 민다(가로 한 줄처럼 넓은 디자인 · 오른쪽 끝 메뉴). 말풍선 꼬리는 메뉴 가운데에 남는다 */
 function hdSubGuard(it){
