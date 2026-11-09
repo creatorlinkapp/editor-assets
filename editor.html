@@ -16652,6 +16652,7 @@
             <div class="srow"><span class="k">자간</span><input class="rng" type="range" id="hdLogoLs" min="-5" max="30" step="1" value="2"><span class="v" id="hdLogoLsV">2</span></div>
             <div class="sline"><span class="lbl">굵게</span><button type="button" class="sw on" id="hdLogoBoldSw" onclick="hdSetLogo('bold',!HD.logo.bold)"></button></div>
             <div class="srow"><span class="k">색<button type="button" class="hd-lk" data-g="logo" onclick="event.stopPropagation();hdLkToggle('logo')" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.25 13.11l3.18-3.18a4.5 4.5 0 0 0-6.36-6.36L10.89 6.75"/><path d="M6.75 10.89l-3.18 3.18a4.5 4.5 0 0 0 6.36 6.36l3.18-3.18"/><path d="M9.3 14.7l5.4-5.4"/></svg></button></span><span class="sw-col"><input type="color" id="hdLogoCol" value="#23272E" data-cp-title="로고 색"><span class="hex" id="hdLogoColV">자동</span><button type="button" class="sw-reset" id="hdLogoColR" title="사이트 색 따르기" onclick="hdColReset('logo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
+            <div class="tx-hint hd-tone-hint" data-g="logo" style="display:none;">겹치기 · 투명 플로팅에서는 읽기 쉽도록 아래 배경 밝기에 맞춰 로고 색이 자동으로 바뀝니다.</div>   <!-- 261109 추가 — 자동 맞춤(hdAutoTone)이 고른 색을 바꾸고 있을 때만 보인다 -->
           </div>
         </div></div>
       </div>
@@ -16673,6 +16674,7 @@
             <span class="sw-col"><span class="cl">활성</span><input type="color" id="hdNavAc" value="#23272E" data-cp-title="현재·롤오버 글자 색"><span class="hex" id="hdNavAcV">자동</span></span>
             <button type="button" class="sw-reset" id="hdNavColR" title="사이트 색 따르기" onclick="hdColReset('nav')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
           </div></div>
+          <div class="tx-hint hd-tone-hint" data-g="nav" style="display:none;">겹치기 · 투명 플로팅에서는 읽기 쉽도록 아래 배경 밝기에 맞춰 글자색이 자동으로 바뀝니다.</div>   <!-- 261109 추가 — 자동 맞춤(hdAutoTone)이 고른 색을 바꾸고 있을 때만 보인다 -->
           <div class="srow" style="margin-top:14px;"><span class="k">메뉴 효과</span><div class="hd-pick"><span class="nm" id="hdFxNm">효과 없음</span><button type="button" class="btn-sm" onclick="hdPickOpen('fx')">바꾸기</button></div></div>
           <div class="srow" id="hdFxColRow"><span class="k">효과 색<button type="button" class="hd-lk" data-g="fx" onclick="event.stopPropagation();hdLkToggle('fx')" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.25 13.11l3.18-3.18a4.5 4.5 0 0 0-6.36-6.36L10.89 6.75"/><path d="M6.75 10.89l-3.18 3.18a4.5 4.5 0 0 0 6.36 6.36l3.18-3.18"/><path d="M9.3 14.7l5.4-5.4"/></svg></button></span><span class="sw-col"><input type="color" id="hdNavFx" value="#23272E" data-cp-title="효과 색"><span class="hex" id="hdNavFxV">자동</span><button type="button" class="sw-reset" id="hdNavFxR" title="활성 글자 색 따르기" onclick="hdColReset('fx')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
           <div id="hdNavPadRows">   <!-- 261109 수정 — 「좌우 · 상하 여백」은 채움 효과의 상자 크기일 때만 뜻이 있다(그 밖엔 메뉴 사이 간격 · 상단 메뉴 여백과 같은 결과) → 채움 효과일 때만 보이고 적용 · 메뉴 효과 아래로 옮김 -->
@@ -16741,6 +16743,7 @@
               <span class="sw-col"><span class="cl">활성</span><input type="color" id="hdUAc" value="#23272E" data-cp-title="롤오버 버튼 색"><span class="hex" id="hdUAcV">자동</span></span>
               <button type="button" class="sw-reset" id="hdUColR" title="메뉴 글자 색 따르기" onclick="hdColReset('util')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
             </div></div>
+            <div class="tx-hint hd-tone-hint" data-g="util" style="display:none;">겹치기 · 투명 플로팅에서는 읽기 쉽도록 아래 배경 밝기에 맞춰 버튼 색이 자동으로 바뀝니다.</div>   <!-- 261109 추가 — 자동 맞춤(hdAutoTone)이 고른 색을 바꾸고 있을 때만 보인다(설정과 캔버스 색이 달라 버그처럼 보였다) -->
             <div class="srow" id="hdCartColRow"><span class="k">장바구니 숫자</span><span class="sw-col"><input type="color" id="hdUCartCol" value="#EE445F" data-cp-title="장바구니 개수 색"><span class="hex" id="hdUCartColV">#EE445F</span></span></div>
           </div>
         </div></div>
@@ -60483,14 +60486,26 @@ function hdToneRead(hd,rc,n){   /* rc: 잴 영역(화면 좌표) — 헤더 전�
   }
   return cnt?(dark*2>=cnt?'dark':'light'):null;
 }
+/* 261109 추가 — 자동 맞춤이 「직접 고른 색」을 다른 색으로 바꾸고 있으면 그 색 줄 아래에 안내를 띄운다. 설정은 빨강인데 캔버스는 흰색이라 동작하지 않는 버그처럼 보였다.
+   「자동」으로 둔 색은 원래 바뀌는 색이라 안내하지 않는다 */
+function hdToneHint(PP,col){
+  var on={};
+  if(PP&&col){
+    var ch=function(v,p){ return !!v && String(v).toLowerCase()!==String(p||'').toLowerCase(); };
+    on.logo=ch(col.logo,PP.logo['--hd-logo']);
+    on.nav=ch(col.fg,PP.nav['--hd-fg'])||ch(col.ac,PP.nav['--hd-ac'])||ch(col.fx,PP.nav['--hd-fx']);
+    on.util=ch(col.ufg,PP.util['--hd-ubtn'])||ch(col.uac,PP.util['--hd-uac']);
+  }
+  document.querySelectorAll('.hd-tone-hint').forEach(function(e){ e.style.display=on[e.getAttribute('data-g')]?'':'none'; });
+}
 function hdToneKick(){ if(hdToneRaf) return; hdToneRaf=requestAnimationFrame(function(){ hdToneRaf=0; hdAutoTone(); }); }
 function hdAutoTone(){
   var hd=hdSiteHd(); if(!hd) return; var st=hdRenderState();
   hdToneOn=(st==='overlap'||st==='sticky') && hdBgTrans(hdBgOf(st)) && !hdMob();   /* 261026 수정 — 스위치 없이 늘(투명 배경일 때만) */
-  if(!hdToneOn){ hd.removeAttribute('data-hd-tone'); hdToneClearParts(hd); return; }
+  if(!hdToneOn){ hd.removeAttribute('data-hd-tone'); hdToneClearParts(hd); hdToneHint(null); return; }
   /* 260930 수정 — 로고·메뉴·버튼을 따로 잰다: 헤더 전체 다수결만 쓰면 로고 쪽만 흰 여백인 구간에서 흰 로고가 사라졌다 */
   var parts=[['logo',hd.querySelector(':scope > .logo'),['--hd-logo']],['nav',hd.querySelector(':scope > .site-nav'),['--hd-fg','--hd-ac','--hd-fx']],['tog',hd.querySelector(':scope > .hd-tog'),['--hd-fg','--hd-ac','--hd-fx']],['util',hd.querySelector(':scope > .hd-util'),['--hd-ubtn','--hd-uac']]];
-  var tone=hdToneRead(hd,null,9); if(!tone) return;
+  var tone=hdToneRead(hd,null,9); if(!tone){ hdToneHint(null); return; }
   var sig=st+':'+tone, pt={};
   parts.forEach(function(q){ var el=q[1]; if(!el||!el.offsetWidth) return; var r=el.getBoundingClientRect(); pt[q[0]]=hdToneRead(hd,{left:r.left,top:r.top,width:r.width,height:r.height},q[0]==='nav'?5:3)||tone; sig+=','+pt[q[0]]; });
   var same=(hd.getAttribute('data-hd-tone')===sig);   /* 261028 수정 — 같은 톤이어도 아래 패널 색은 칠한다(검색창은 열 때 새로 생긴다) */
@@ -60508,6 +60523,7 @@ function hdAutoTone(){
     var F='var(--st-fg,#23272E)', M='var(--st-muted,#9096A0)';
     return {'--hd-logo':src.logo||F,'--hd-fg':src.fg||M,'--hd-ac':src.ac||F,'--hd-fx':src.fx||src.ac||F,'--hd-ubtn':src.ufg||src.fg||M,'--hd-uac':src.uac||src.ac||F};
   }
+  hdToneHint({logo:pal(pt.logo||tone),nav:pal(pt.nav||tone),util:pal(pt.util||tone)},col);   /* 261109 추가 — 고른 색을 바꾸고 있는 묶음만 설정창에 안내 */
   if(!same){ var P=pal(tone); Object.keys(P).forEach(function(k){ hd.style.setProperty(k,P[k]); });
   parts.forEach(function(q){ var el=q[1]; if(!el) return; var t=pt[q[0]], Q=(t&&t!==tone)?pal(t):null; q[2].forEach(function(k){ if(Q) el.style.setProperty(k,Q[k]); else el.style.removeProperty(k); }); }); }
   /* 261028 추가 — 제 바탕(--hd-bg-solid)을 칠하는 패널(펼침 패널 · 검색창)은 아래 내용이 아니라 그 바탕 밝기로 글자색을 정한다.
