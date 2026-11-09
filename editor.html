@@ -9084,6 +9084,7 @@
   .site-hd:is([data-hd-type="top"],[data-hd-type="full"]) > .site-nav{flex:1 1 0;max-width:max-content;flex-wrap:wrap;row-gap:10px;}
   .site-hd:is([data-hd-layout="3"],[data-hd-layout="13"]) > .site-nav{justify-content:center;}
   .site-hd:is([data-hd-layout="5"],[data-hd-layout="10"],[data-hd-layout="12"],[data-hd-layout="15"]) > .site-nav{justify-content:flex-end;}
+  .site-hd.hd-navwrap > :is(.logo,.site-nav,.hd-util){align-self:flex-start;}   /* 메뉴가 두 줄일 때 — 로고 · 버튼을 메뉴 첫 줄 높이에 맞춘다(위쪽 여백은 hdNavWrapSync 가 잰다) */
   /* 상태 — 플로팅(스크롤 뒤 상단 고정) · 겹치기(첫 블록 위에 겹침) */
   .site > .site-hd.hd-stick{position:sticky;top:0;z-index:120;}
   /* PC 편집기의 zoom·패널 이동 중에도 헤더는 사이트의 가로 배치를 그대로 따른다. 세로 고정량만 동기화한다. */
@@ -60327,9 +60328,42 @@ function hdApply(hdEl){
   var dt=document.getElementById('hdDockT'); if(dt) dt.textContent=HD_TYPE_NM[HD.type]||'상단 메뉴';
   hd.removeAttribute('data-hd-tone'); hdAutoTone();   /* 위에서 색 변수를 새로 칠했으니 자동 맞춤을 다시 얹는다 */
   hdNavDecor();
+  hdNavWrapWatch(hd);   /* 261109 추가 — 메뉴가 두 줄이 되면 로고 · 버튼을 메뉴 첫 줄 높이에 맞춘다 */
   hdMegaBuild();
   if(typeof ftRender==='function') try{ ftRender(); }catch(x){}   /* 261001 추가 — 푸터의 로고는 상단 메뉴의 로고 글자를 따른다 */
   try{ moApply(); }catch(x){ console.warn('[mo]',x); }   /* 261027 추가 — 모바일 사본: 상단 바 · 메뉴 바 · 펼침 메뉴 */
+}
+/* 261109 추가 — 메뉴가 넘쳐 두 줄이 되면 같은 줄의 로고 · 버튼을 메뉴 「첫 줄」 높이 가운데에 맞춘다.
+   그냥 두면 두 줄 메뉴 전체의 가운데로 내려가 첫 줄과도 둘째 줄과도 어긋나 보인다. 메뉴가 한 줄이면 아무것도 하지 않는다(평소 배치 그대로) */
+function hdNavWrapSync(hd){
+  if(!hd||!hd.isConnected) return;
+  var nav=hd.querySelector(':scope > .site-nav'), sibs=[hd.querySelector(':scope > .logo'),hd.querySelector(':scope > .hd-util')];
+  var was=hd.classList.contains('hd-navwrap');
+  hd.classList.remove('hd-navwrap'); [nav].concat(sibs).forEach(function(e){ if(e) e.style.removeProperty('margin-top'); });
+  var t=hd.getAttribute('data-hd-type');
+  if(!nav||(t!=='top'&&t!=='full')||!nav.getClientRects().length) return;
+  var its=[].filter.call(nav.children,function(c){ return c.classList.contains('nav-i')&&c.getClientRects().length; });
+  if(its.length<2) return;
+  var rs=its.map(function(c){ return c.getBoundingClientRect(); }), top0=Math.min.apply(null,rs.map(function(r){ return r.top; }));
+  var l1=0, wrap=false; rs.forEach(function(r){ if(r.top<top0+2) l1=Math.max(l1,r.height); });
+  rs.forEach(function(r){ if(r.top>=top0+l1/2) wrap=true; });
+  if(!wrap) return;
+  var nr=nav.getBoundingClientRect(), hr=hd.getBoundingClientRect(), cw=parseFloat(getComputedStyle(hd).width)||hr.width, k=hr.width?cw/hr.width:1;   /* 편집 화면은 사이트를 축소(zoom)해 보이므로 화면 px → CSS px */
+  var row=sibs.filter(function(e){ if(!e||!e.getClientRects().length) return false; var r=e.getBoundingClientRect(); return r.top<nr.bottom-1&&nr.top<r.bottom-1; });   /* 메뉴와 같은 줄에 있는 것만 */
+  var line=l1+(top0-nr.top);
+  var R=Math.max.apply(null,[line].concat(row.map(function(e){ return e.getBoundingClientRect().height; })));
+  hd.classList.add('hd-navwrap');
+  nav.style.marginTop=((R-line)/2*k)+'px';
+  row.forEach(function(e){ e.style.marginTop=((R-e.getBoundingClientRect().height)/2*k)+'px'; });
+  sibs.forEach(function(e){ if(e&&row.indexOf(e)<0) e.style.removeProperty('margin-top'); });
+}
+function hdNavWrapWatch(hd){
+  if(!hd) return;
+  hdNavWrapSync(hd);
+  if(hd.__nwro||!window.ResizeObserver) return;
+  var q=0, ro=new ResizeObserver(function(){ if(q) return; q=setTimeout(function(){ q=0; hdNavWrapSync(hd); },0); });   /* 메뉴 · 로고 · 버튼 크기가 바뀌면(폭 · 글꼴 · 로고 이미지) 다시 잰다 */
+  hd.__nwro=ro; ro.observe(hd);
+  [':scope > .site-nav',':scope > .logo',':scope > .hd-util'].forEach(function(s){ var e=hd.querySelector(s); if(e) ro.observe(e); });
 }
 /* 겹치기 상태에서 헤더 높이가 바뀌면(레이아웃·여백) 음수 여백을 다시 잰다 */
 (function(){ if(!window.ResizeObserver) return; function boot(){ var hd=hdSiteHd(); if(!hd) return; new ResizeObserver(function(){ if(hd.parentNode&&hd.parentNode.classList.contains('hd-overlap')) hd.style.marginBottom='calc(-1 * '+hd.offsetHeight+'px)'; }).observe(hd); } if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else setTimeout(boot,0); })();
