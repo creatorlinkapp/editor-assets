@@ -9210,6 +9210,12 @@
   .site-hd[data-hd-type="toggle"] .site-nav .nav-dd-in{opacity:1;transform:none;box-shadow:none;border:none;background:transparent;padding:0;}
   .site-hd[data-hd-type="toggle"] .hd-util{margin-left:auto;}
   .site-hd[data-hd-type="toggle"][data-hd-tog="left"] .logo{margin-left:auto;margin-right:auto;}
+  /* 261110 추가 — 버튼 왼쪽 토글: 로고를 정확히 가운데로. 로고 양옆 · 오른쪽 버튼 묶음에 모두 자동 여백이 걸려 남는 폭이 3등분되어 로고가 1/3 지점에 섰다
+     → 「햄버거 | 로고 | 버튼」 3칸(양끝 같은 폭)으로 나눈다. 모바일 사본은 모바일 상단 바 규칙을 따르므로 제외 */
+  html:not(.mob) .site-hd[data-hd-type="toggle"][data-hd-tog="left"]{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;}
+  html:not(.mob) .site-hd[data-hd-type="toggle"][data-hd-tog="left"] > .hd-tog{grid-column:1;grid-row:1;justify-self:start;}
+  html:not(.mob) .site-hd[data-hd-type="toggle"][data-hd-tog="left"] > .logo{grid-column:2;grid-row:1;margin-left:0;margin-right:0;}
+  html:not(.mob) .site-hd[data-hd-type="toggle"][data-hd-tog="left"] > .hd-util{grid-column:3;grid-row:1;justify-self:end;margin-left:0;}
   /* 메뉴 효과 25종 — .nav-t 위에 그린다. 색은 --hd-fx */
   .site-hd .site-nav .nav-t::before,.site-hd .site-nav .nav-t::after{pointer-events:none;}
   [data-hd-fx^="line"] .site-nav .nav-t::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--hd-fx);transform:scaleX(0);transition:transform .26s cubic-bezier(.4,0,.2,1),transform-origin 0s .26s;}
