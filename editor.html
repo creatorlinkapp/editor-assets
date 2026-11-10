@@ -61379,7 +61379,7 @@ function hdMarkTo(nav,item,fx,instant){
   var mk=nav.querySelector(':scope > .hd-mk'); if(!mk) return;
   if(!item){ mk.style.opacity='0'; return; }
   var t=item.querySelector('.nav-t')||item, nr=nav.getBoundingClientRect(), r=t.getBoundingClientRect(), z=(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-zoom'))||1);
-  if(nav.closest('.hd-card')) z=1;
+  if(nav.closest('.hd-card')) z=(nav.offsetWidth && nr.width)?nr.width/nav.offsetWidth:1;   /* 261110 수정 — 카드는 사이트 줌 대신 카드 축소 비율(디자인 카드의 헤더 사본은 줄여 그린다 · 효과 카드는 1) */
   var x=(r.left-nr.left)/z, y=(r.top-nr.top)/z, w=r.width/z, h=r.height/z, cx=x+w/2;
   if(instant){ mk.style.transition='none'; }
   mk.style.opacity='1';
@@ -61695,7 +61695,7 @@ function hdPickRender(){
   /* 261006 수정 — 서브메뉴는 기본/추가 탭 없이 한 목록 */
   tabs.innerHTML=th; tabs.style.display=th?'':'none';
   grid.className='hd-pk-grid'+(ctx.kind==='mo'?' c4':'')+(ctx.kind==='design'?((ctx.tab==='side'||ctx.tab==='toggle')?' c3':' c2'):'');   /* 261006 수정 — 상단·펼침(실제 축소본)은 2열, 좌측·토글(도식)은 3열 */
-  var liveFill=function(){ grid.querySelectorAll('.hdv[data-hdv]').forEach(function(h){ var d=null, id=h.getAttribute('data-hdv'); HD_DESIGNS.forEach(function(x){ if(x.id===id) d=x; }); var el=d?hdDesignLive(d):null; if(el){ h.innerHTML=''; h.appendChild(el); if(d.cat==='full'){ var c=el.querySelector('.site-hd'); h.classList.add('full'); try{ hdMegaLayout(c); }catch(e){} } } }); };   /* 261028 수정 — 펼침 카드: 붙인 뒤 「메뉴 아래」 열 자리를 잰다 */
+  var liveFill=function(){ grid.querySelectorAll('.hdv[data-hdv]').forEach(function(h){ var d=null, id=h.getAttribute('data-hdv'); HD_DESIGNS.forEach(function(x){ if(x.id===id) d=x; }); var el=d?hdDesignLive(d):null; if(el){ h.innerHTML=''; h.appendChild(el); el.querySelectorAll('.site-nav.hd-mk-on').forEach(function(nv){ try{ hdMarkTo(nv,nv.querySelector(':scope > .nav-i.cur'),d.v.nav&&d.v.nav.fx,true); }catch(e){} });   /* 261110 추가 — 따라오는 표식은 화면에 붙인 뒤 다시 잰다(붙기 전엔 크기가 0이라 로고 옆에 작은 막대로 남았다) */ if(d.cat==='full'){ var c=el.querySelector('.site-hd'); h.classList.add('full'); try{ hdMegaLayout(c); }catch(e){} } } }); };   /* 261028 수정 — 펼침 카드: 붙인 뒤 「메뉴 아래」 열 자리를 잰다 */
   var h='';
   if(ctx.kind==='mo'){
     MO_DR.filter(function(d){ return d.cat===ctx.tab; }).forEach(function(d){ h+='<button type="button" class="hd-card'+(HD.mo.dr.design===d.id?' on':'')+'" onclick="moPickDesign(\''+d.id+'\')">'+moCardHtml(d)+'<span class="cap">'+d.sub+'<small>'+d.nm+'</small></span></button>'; });
@@ -61720,7 +61720,7 @@ function hdPickRender(){
     h+='<div class="tx-hint" style="grid-column:1/-1;margin:0;">항목에 마우스를 올리면 롤오버 모습이 보입니다. 색·모서리·테두리·그림자·정렬은 고른 뒤 이어서 바꿀 수 있습니다.</div>';
   }
   grid.innerHTML=h; if(ctx.kind==='design') liveFill();
-  if(ctx.kind==='design' && ctx.tab==='lib') grid.querySelectorAll('.hdv[data-hda]').forEach(function(hv){ var a=hdArchOf(hv.getAttribute('data-hda')); if(!a) return; var el=hdDesignLive({id:a.id,cat:a.v.type||'top',v:hdArchLook(a)}); if(el){ hv.innerHTML=''; hv.appendChild(el); if(a.v.type==='full'){ var c=el.querySelector('.site-hd'); hv.classList.add('full'); try{ hdMegaLayout(c); }catch(e){} } } });   /* 261106 추가 — 보관한 상단 · 펼침 메뉴도 실제 헤더 축소본 */
+  if(ctx.kind==='design' && ctx.tab==='lib') grid.querySelectorAll('.hdv[data-hda]').forEach(function(hv){ var a=hdArchOf(hv.getAttribute('data-hda')); if(!a) return; var el=hdDesignLive({id:a.id,cat:a.v.type||'top',v:hdArchLook(a)}); if(el){ hv.innerHTML=''; hv.appendChild(el); var lk=hdArchLook(a); el.querySelectorAll('.site-nav.hd-mk-on').forEach(function(nv){ try{ hdMarkTo(nv,nv.querySelector(':scope > .nav-i.cur'),lk.nav&&lk.nav.fx,true); }catch(e){} });   /* 261110 추가 — 보관함 카드도 붙인 뒤 표식을 다시 잰다 */ if(a.v.type==='full'){ var c=el.querySelector('.site-hd'); hv.classList.add('full'); try{ hdMegaLayout(c); }catch(e){} } } });   /* 261106 추가 — 보관한 상단 · 펼침 메뉴도 실제 헤더 축소본 */
   if(ctx.kind==='fx'){ grid.querySelectorAll('.fxv .site-nav').forEach(function(nav){ var fx=nav.parentNode.getAttribute('data-hd-fx'); hdNavDecorIn(nav,fx); }); }
 }
 function hdFxCardIn(card){ var nav=card.querySelector('.site-nav.hd-mk-on'); if(nav){ var fx=nav.parentNode.getAttribute('data-hd-fx'); hdMarkTo(nav,nav.querySelector('.nav-i.cur'),fx,true); } }
