@@ -8938,6 +8938,7 @@
   /* 261109 수정 — 흐림을 기존 편집기와 같은 구조로: 상단 메뉴 배경(색 · 이미지) 위 · 내용 아래에 「흐림 막」(.hd-blurv)을 깔아, 막 아래의 배경 이미지와 뒤 페이지를 함께 흐린다.
      전엔 상단 메뉴 자신에 backdrop-filter 를 걸어 뒤 페이지만 흐려지고 배경 이미지는 그대로 선명했다. isolation — 막(z-index:-1)이 상단 메뉴 배경 위 · 내용 아래에 오도록 */
   .site-hd.hd-blur{isolation:isolate;}
+  .site-hd.hd-notr,.site-hd.hd-notr *,.site-hd.hd-notr *::before,.site-hd.hd-notr *::after{transition:none!important;}   /* 261110 추가 — 디자인을 바꾸는 순간만(hdNoTr) */
   .site-hd > .hd-blurv{display:none;}
   .site-hd.hd-blur > .hd-blurv{display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;backdrop-filter:blur(var(--hd-blur));-webkit-backdrop-filter:blur(var(--hd-blur));}
   html:not(.mview) #stage .site > .site-hd:is(:hover,.hd-editing) > .hd-blurv{inset:2.5px;}   /* 261109 추가 — 편집 화면의 초록 테두리(가장자리 안쪽 2.5px)가 흐림 막 아래에 깔려 함께 흐려져 번진 초록빛으로 보였다 → 테두리가 보이는 동안 막을 그만큼 안쪽으로 */
@@ -61755,7 +61756,12 @@ function hdDesignThumb(d){
     return '<span class="dvw full" style="'+st+'"><span class="dv" data-l="'+(v.layout||8)+'" style="'+st+'height:auto;padding:12px 18px;">'+L+N+Uw+(HD_LAYOUT_ROWS[v.layout||8]===2?'<span class="B"></span>':'')+'</span><span class="mg '+fs+'" style="background:'+panelBg+';">'+cols+'</span></span>'; }
   return '<span class="dv" data-l="'+(v.layout||1)+'" style="'+st+'">'+L+N+Uw+(HD_LAYOUT_ROWS[v.layout||1]===2?'<span class="B"></span>':'')+'</span>';
 }
+/* 261110 추가 — 디자인을 통째로 바꿀 때는 상단 메뉴의 전환 효과(여백 · 배경 · 그림자 0.2초 — 플로팅으로 바뀔 때용)를 잠깐 끈다.
+   전엔 라인 톱 → 브라켓처럼 여백이 다른 디자인으로 바꾸면 메뉴가 옆으로 미끄러지는 모션이 보였다 */
+var hdNoTrT=0;
+function hdNoTr(){ var h=hdSiteHd(); if(!h) return; h.classList.add('hd-notr'); clearTimeout(hdNoTrT); hdNoTrT=setTimeout(function(){ var x=hdSiteHd(); if(x){ void x.offsetWidth; x.classList.remove('hd-notr'); } },80); }
 function hdPickDesign(id){ var d=null; HD_DESIGNS.forEach(function(x){ if(x.id===id) d=x; }); if(!d) return;
+  hdNoTr();
   /* 프리셋 = 기본값 위에 프리셋 값 — 색·배경·효과·레이아웃이 함께 바뀐다. 로고 글·유틸 표시 여부·서브메뉴·여백 같은 「내용」은 그대로 둔다 */
   var keep={logo:{on:HD.logo.on,type:HD.logo.type,text:HD.logo.text,alt:HD.logo.alt,img:HD.logo.img}, util:{search:HD.util.search,srch:HD.util.srch,login:HD.util.login,cart:HD.util.cart,lang:HD.util.lang,langStyle:HD.util.langStyle,size:HD.util.size,cartCol:HD.util.cartCol}, sub:HD.sub, sticky:HD.sticky, overlap:HD.overlap, sideW:HD.sideW, mo:HD.mo};   /* 261027 수정 — 모바일 메뉴는 PC 메뉴 디자인과 따로 */
   var fresh=hdDefault(); hdMerge(fresh,keep); hdMerge(fresh,JSON.parse(JSON.stringify(d.v))); fresh.design=id;
@@ -61830,7 +61836,7 @@ function hdPickFx(k){ HD.nav.fx=k; hdPickCtx&&hdPickRender(); hdFill(); hdChange
 function hdPickUtil(k,v){ HD.util[k]=v; hdPickCtx&&hdPickRender(); hdFill(); hdChanged(); hdPickPlace(); }
 function hdPickClose(keep){
   var m=document.getElementById('hdPickModal'); if(m) m.classList.remove('show');
-  if(!keep && hdPickCtx){ try{ HD=JSON.parse(hdPickCtx.before); }catch(e){} hdFill(); hdChanged(); }
+  if(!keep && hdPickCtx){ try{ HD=JSON.parse(hdPickCtx.before); }catch(e){} hdNoTr(); hdFill(); hdChanged(); }
   if(keep && hdPickCtx && hdPickCtx.kind==='sub') hdSubShow();   /* 261006 추가 — 서브메뉴 디자인을 고르면 캔버스의 서브메뉴를 펼쳐 보여 준다 */
   var wasMo=!!(hdPickCtx && hdPickCtx.kind==='mo');
   hdPickCtx=null;
@@ -61856,7 +61862,7 @@ function hdArchive(){
 function hdPickArch(id){
   var a=hdArchOf(id); if(!a || !hdPickCtx) return;
   var fresh=hdDefault(); hdMerge(fresh,JSON.parse(JSON.stringify(a.v))); hdMerge(fresh,hdArchKeep()); hdNorm(fresh);
-  HD=fresh; hdPickCtx.arc=id; hdEditSt='base'; hdPickRender(); hdFill(); hdChanged(); hdPickPlace();
+  HD=fresh; hdPickCtx.arc=id; hdEditSt='base'; hdNoTr(); hdPickRender(); hdFill(); hdChanged(); hdPickPlace();
 }
 function hdArchDel(id){
   var list=hdArchList(), i=-1; list.forEach(function(a,k){ if(a.id===id) i=k; }); if(i<0) return;
