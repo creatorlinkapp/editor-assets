@@ -17253,7 +17253,7 @@
   function ssetLangBind(){ var l=document.querySelector('#siteList .sst-langs'); if(l && typeof clBindSortable==='function') clBindSortable(l,'.sst-lang.mv','.g',ssetLangMove); }
   function ssetLangChanged(){ ssetSync(); if(typeof hdApply==='function') try{ hdApply(); }catch(e){} ssetKick(); }
   function ssetHdLang(){
-    if(typeof hdSetOpen!=='function') return; hdSetOpen();
+    if(typeof hdSetOpen!=='function') return; hdSetOpen('pc');   /* 261110 수정 — 다국어는 PC 메뉴 설정에서만 고른다(휴대폰 편집 중이어도 PC 설정창으로) */
     setTimeout(function(){ var a=document.getElementById('hdUtilAcc'); if(a && !a.classList.contains('open')){ var h=a.querySelector('.fold-h'); if(h && typeof smAcc==='function') smAcc(h); } },60);   /* 「검색 · 로그인 · 장바구니 · 다국어」를 펼쳐서 */
   }
   function ssetNocopy(){ SSET.nocopy=!SSET.nocopy; ssetSync(); ssetKick(); }
@@ -60670,7 +60670,8 @@ document.addEventListener('click',function(e){
   var hd=hdSiteHd(); if(hd && hd.classList.contains('hd-open') && !(e.target.closest && e.target.closest('.site-hd .site-nav,#hdDock,#hdPickModal,.rt-lm,#panelLib'))) hd.classList.remove('hd-open');   /* 설정창·모달·보관함 클릭은 닫지 않는다 */
 });
 /* ── 설정창 ── */
-function hdSetOpen(){
+function hdSetOpen(only){
+  if(only!=='pc' && !window.CL_MVIEW && document.body.classList.contains('mview-on') && typeof moSetOpen==='function'){ moSetOpen(); return; }   /* 261110 추가 — 휴대폰 편집 중 캔버스 메뉴 톱니 = 모바일 메뉴 설정창(블록 설정창처럼 편집 모드를 따라간다 · 전엔 PC 설정창이 열려 휴대폰 화면엔 바뀌는 게 없었다) */
   if(window.CL_MVIEW){ if(hdMob() && !document.documentElement.classList.contains('mv-preview')) try{ clHost().postMessage({t:'cl-mo-open'},'*'); }catch(e){} return; }   /* 261027 수정 — 모바일 사본의 헤더 톱니 = 모바일 메뉴 설정창 */
   hdBuild();
   if(typeof closeBset==='function') closeBset();
@@ -61518,6 +61519,8 @@ function moClose(){ var d=document.getElementById('moDock'); if(!d || !d.classLi
     var mo=new MutationObserver(function(){ if(!me.classList.contains('show')) return; if(document.querySelector('.bset.show:not(#moDock):not(.inline)')) moClose(); });
     document.querySelectorAll('.bset').forEach(function(p){ if(p!==me) mo.observe(p,{attributes:true,attributeFilter:['class']}); });
     new MutationObserver(function(){ if(!document.body.classList.contains('mview-on')) moClose(); }).observe(document.body,{attributes:true,attributeFilter:['class']});   /* 모바일 편집을 닫으면 함께 닫는다 */
+    var mvWas=document.body.classList.contains('mview-on');
+    new MutationObserver(function(){ var on=document.body.classList.contains('mview-on'); if(on===mvWas) return; mvWas=on; var h=document.getElementById('hdDock'); if(on && h && h.classList.contains('show')) moSetOpen(); }).observe(document.body,{attributes:true,attributeFilter:['class']});   /* 261110 추가 — PC 메뉴 설정창을 연 채 휴대폰 편집으로 바꾸면 모바일 메뉴 설정창으로 바꿔 연다(전엔 PC 설정창이 그대로 남았다) */
     /* 261104 추가 — 설정창이 열린 채 메뉴를 추가 · 숨김 · 삭제 · 이름 변경하면 미리보기만 바뀌고 「노출 메뉴」 칩 · 「카드 이미지」 칸은 예전 목록으로 남았다 → 메뉴 목록이 바뀌면 다시 채운다 */
     var nm=document.getElementById('siteNavMob'), nmT=null;
     if(nm) new MutationObserver(function(){ if(!me.classList.contains('show')) return; clearTimeout(nmT); nmT=setTimeout(moFill,60); }).observe(nm,{childList:true,subtree:true,characterData:true});
