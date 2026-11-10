@@ -7280,7 +7280,7 @@
         <div class="snav-mob" id="siteNavMob"></div>
       </div>
       <!-- 260917 수정 — 첫 블록: 히어로 → 배경 이미지 텍스트 블록 (높이 350 유지 = 위아래 여백 154 + 한 줄(20px × 2.1)). 스크롤 효과는 이 블록만 끔 · 260928 수정 — 공통 스크롤 효과 요소별(data-aos 없음) -->
-      <div class="blk" data-block="cred" data-tpl="cred" style="padding-top:154px;padding-bottom:154px;background-color:#000000;" onclick="selectBlock(this)">
+      <div class="blk rt-bgimg" data-block="cred" data-tpl="cred" data-bgimg="https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/tpl/cred-bg.jpg" data-bgdim="45" style="padding-top:154px;padding-bottom:154px;--rt-dim:.45;background-image:url(&quot;https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/tpl/cred-bg.jpg&quot;);" onclick="selectBlock(this)">
         <span class="tag-badge">텍스트</span>
         <button class="gear-fab" onclick="event.stopPropagation();openBset(this)"><svg class="ico" viewBox="0 0 19 19"><path d="M17.16 8.16l1.41-1.51c-0.2-0.65-0.48-1.28-0.84-1.9 -0.35-0.61-0.77-1.17-1.23-1.67l-2.02 0.46c-0.7-0.58-1.48-1.03-2.32-1.34l-0.61-1.97C10.9 0.08 10.21 0 9.5 0 8.79 0 8.1 0.08 7.44 0.22L6.83 2.2h0C5.98 2.51 5.19 2.97 4.51 3.54L2.5 3.08c-0.46 0.5-0.87 1.06-1.23 1.67S0.64 6 0.44 6.65l1.4 1.52c-0.16 0.89-0.15 1.8 0 2.68l-1.41 1.51c0.2 0.65 0.48 1.28 0.84 1.9s0.77 1.17 1.23 1.67l2.02-0.46c0.7 0.58 1.48 1.03 2.32 1.34l0.61 1.97v0C8.1 18.92 8.79 19 9.5 19c0.71 0 1.4-0.08 2.06-0.22l0.61-1.97c0.85-0.31 1.63-0.77 2.32-1.34l2.01 0.46c0.46-0.5 0.87-1.06 1.23-1.67 0.35-0.61 0.63-1.25 0.84-1.9l-1.4-1.52C17.31 9.94 17.31 9.04 17.16 8.16zM9.5 15.5c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6S12.81 15.5 9.5 15.5z"></path></svg></button>
         <div class="cred" style="color:#ffffff;font-size:20px;text-align:center;max-width:1180px;margin-left:auto;margin-right:auto;"><p><span style="font-size:18px;">He</span> <span style="font-size:11px;">_________________________________</span> <span style="font-size:18px;">ctor.</span></p></div>
@@ -28182,7 +28182,7 @@
   var IM_PRESETS={
     wide:   function(){ return {cfg:{cols:1, wrap:false, px:0, pt:0, pb:0, hover:'none', items:imPreItems(['sample/gallery_41_1.jpg'],2.4,'free')}, mob:{px:0}}; },   /* 전체 폭 한 장 · 위아래 여백 없음 · 261012 수정 — 「좌우 폭 제한」 끔(wrap:false · .im-full): 좌우 여백 0 만으로는 콘텐츠 최대 폭 1180 에 막혀 양옆에 배경이 남았다 */
     pair:   function(){ return {cfg:{cols:2, gx:24, gy:24, items:imPreItems(['sample/gallery_51_12.jpg','sample/gallery_51_15.jpg'],4/5,'4:5')}}; },   /* 세로 사진 두 장 */
-    tile:   function(){ return {cfg:{cols:4, gx:8, gy:8, items:imPreItems([1,2,3,4,5,6,7,8].map(function(n){ return 'sample/product_calm_'+n+'.jpg'; }),1,'1:1')}, mob:{cols:2}}; },   /* 정사각 타일 · 촘촘하게 · 261110 수정 — 견본 사진을 차분한 톤의 제품 사진(Unsplash · gallery-sample/sample/product_calm_1~8.jpg)으로 */
+    tile:   function(){ return {cfg:{cols:4, gx:8, gy:8, items:imPreItems([1,2,3,4,5,6,7,8].map(function(n){ return 'sample/gallery_39_'+n+'.jpg'; }),1,'1:1')}, mob:{cols:2}}; },   /* 정사각 타일 · 촘촘하게 */
     caption:function(){ return {cfg:{cols:3, gx:32, gy:40, cap:true, items:imPreItems(['sample/beige_bl_01.jpg','sample/beige_bl_02.jpg','sample/beige_bl_05.jpg'],3/2,'3:2',[
                 '<p><strong>공간의 결</strong></p><p>사진 아래에 짧은 설명을 적어 보세요.</p>',
                 '<p><strong>빛과 그림자</strong></p><p>글은 눌러서 바로 고칠 수 있습니다.</p>',
