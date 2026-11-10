@@ -9309,6 +9309,7 @@
   html.mview:not(.mv-preview):not(.pview) .site > .site-hd{border-radius:18px 18px 0 0;}
   @media (min-width:700px){ html.mview:not(.mv-preview):not(.pview) .site > .site-hd{border-radius:var(--r-xl) var(--r-xl) 0 0;} }
   html.mview .site > .site-hd{background-color:var(--hd-bg);background-image:var(--hd-bgimg);box-shadow:var(--hd-shadow);border-bottom:var(--hd-line);}   /* 모바일 사본의 고정 헤더도 설정한 배경을 쓴다 (투명이면 hdApply 가 사이트 배경색으로) */
+  html.mview:not(.mob) .site[data-hd-type="side"] > .site-hd{border-bottom:none;}   /* 261110 추가 — 미리보기 창의 좌측 메뉴는 편집 화면처럼 오른쪽 선만(위 규칙이 아래 선까지 그었다) · 모바일은 가로 바라 아래 선 그대로 */
   html.mob .site[data-hd-type="side"]{display:block;} html.mob .site[data-hd-type="side"] > .site-hd{height:auto;flex-direction:row;padding:16px 18px;border-right:none;}
   html.mob .site-hd{--hd-side:18px;}
   @media (max-width:640px){ .hd-util{display:none;} }
@@ -21025,6 +21026,7 @@
     }
     if(typeof pgxCur!=='undefined' && pgxCur) pgxNavMark(true);   /* 261001 추가 — 지금 열려 있는 페이지의 메뉴에 현재 표시 */
     if(typeof hdNavDecor==='function') try{ hdNavDecor(); }catch(x){}   /* 260930 추가 — 상단 메뉴 효과(글자 나눔·이동 표식)를 다시 입힌다 */
+    if(typeof hdMegaBuild==='function') try{ hdMegaBuild(); }catch(x){}   /* 261110 추가 — 펼침 메뉴 패널도 다시 만든다(메뉴 이름 · 하위 메뉴를 바꿔도 패널은 예전 그대로였다) */
   }
   /* ══════════════════════════════════════════════════════════════════
      260920 추가 — 화면전환 테스트용 임시 서브페이지 (접두어 pgx)
@@ -59327,7 +59329,10 @@ global.PolyFX = API;
         if(nv && hd.nav!==rxHd.nav) nv.innerHTML=hd.nav||'';
         if(mb && hd.mob!==rxHd.mob) mb.innerHTML=hd.mob||'';
         if(hd.cfg && hd.cfg!==rxHd.cfg && typeof hdApplyRemote==='function') hdApplyRemote(hd.cfg);   /* 260930 추가 — 상단 메뉴 설정 */
-        else if(hd.mob!==rxHd.mob && typeof moApply==='function') try{ moApply(); }catch(x){}   /* 261027 추가 — 메뉴 목록만 바뀌었을 때 모바일 메뉴 다시 그리기 */
+        else {
+          if(hd.nav!==rxHd.nav && typeof hdMegaBuild==='function') try{ hdMegaBuild(); }catch(x){}   /* 261110 추가 — 메뉴 목록만 바뀌었을 때 펼침 메뉴 패널도 다시(미리보기 창 패널이 예전 메뉴 그대로였다) */
+          if(hd.mob!==rxHd.mob && typeof moApply==='function') try{ moApply(); }catch(x){}   /* 261027 추가 — 메뉴 목록만 바뀌었을 때 모바일 메뉴 다시 그리기 */
+        }
         if(typeof moEdit==='function') try{ moEdit(d.moEd); }catch(x){}
         rxHd=hd;
         if(typeof tmApplyRemote==='function') tmApplyRemote(d.tm, site);   /* 261001 추가 — 탭메뉴 블록(헤더 바로 아래) */
