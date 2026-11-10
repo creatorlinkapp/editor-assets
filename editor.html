@@ -16832,6 +16832,8 @@
           <div class="tx-hint" id="moLogoHint" style="display:none;">버튼이 많아 로고가 상단 바에 맞게 줄어 보입니다.</div>   <!-- 261104 추가 — 사본의 moFit 이 로고를 줄였을 때만(cl-mo-fit) -->
           <div class="gt-h">표시 항목</div>
           <div class="gt-chips" id="moBarChips"></div>
+          <div class="srow" style="margin:14px 0 6px;"><span class="k">버튼 크기</span></div>   <!-- 261110 추가 — 버튼 크기(메뉴 · 검색 · 로그인 · 장바구니 공통) — 메뉴 칩 안에 있어 메뉴 크기로 읽혔다 · PC 「버튼 크기」와 같은 구성 · moChips 가 채운다 -->
+          <div class="mt-seg" id="moIszSeg" style="margin-bottom:0;"></div>
           <div class="srow" id="moColRow" style="margin-top:14px;"><span class="k">색<button type="button" class="hd-lk" id="moLk" onclick="event.stopPropagation();moLkToggle()" title="PC 메뉴 색 따르기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.25 13.11l3.18-3.18a4.5 4.5 0 0 0-6.36-6.36L10.89 6.75"/><path d="M6.75 10.89l-3.18 3.18a4.5 4.5 0 0 0 6.36 6.36l3.18-3.18"/><path d="M9.3 14.7l5.4-5.4"/></svg></button></span><div class="hd-col2">
             <span class="sw-col"><span class="cl">버튼</span><input type="color" value="#23272E" data-p="col.fg" data-cp-title="로고 · 버튼 색"></span>
             <span class="sw-col"><span class="cl">배경</span><input type="color" value="#FFFFFF" data-p="col.bg" data-cp-title="상단 바 배경색"></span>
@@ -61585,8 +61587,7 @@ function moPan(g,k){
   if(g==='bar' && k==='menu'){
     var nm=''; MO_ICO.forEach(function(x){ if(x[0]===M.ico) nm=x[1]; });
     return '<div class="srow srow-dd"><span class="k">아이콘</span><div class="sdd"><button type="button" class="sdd-btn" onclick="smDDToggle(event,this)"><span class="lbl">'+nm+'</span>'+CVD+'</button><div class="sdd-menu">'
-      +MO_ICO.map(function(x){ return '<button type="button" class="'+(x[0]===M.ico?'on':'')+'" onclick="moDD(event,\'ico\',\''+x[0]+'\')">'+x[1]+'</button>'; }).join('')+'</div></div></div>'
-      +'<div class="srow"><span class="k">크기</span>'+seg('isz',[['s','작게'],['m','중간'],['l','크게']])+'</div>';
+      +MO_ICO.map(function(x){ return '<button type="button" class="'+(x[0]===M.ico?'on':'')+'" onclick="moDD(event,\'ico\',\''+x[0]+'\')">'+x[1]+'</button>'; }).join('')+'</div></div></div>';   /* 261110 수정 — 「크기」는 아이콘 공통이라 칩 아래 「아이콘 크기」 줄로 옮겼다(#moIszRow) */
   }
   if(g==='dr' && k==='sub') return (moDrOf(M.dr.design).s.ls==='drill'?'':'<div class="srow"><span class="k">펼침</span>'+seg('dr.sub',[['tap','눌러서'],['open','늘 펼침']])+'</div>')+rng('dr.subSize','크기',11,20,'px');   /* 261104 수정 — 단계형은 늘 다음 화면으로 넘어가므로 펼침 방식을 숨긴다 */
   if(g==='dr' && k==='banner'){ var b=M.dr.bn, img=b.img||'';
@@ -61630,6 +61631,7 @@ function moChips(){
   var M=HD.mo, el;
   if((el=document.getElementById('moBarChips'))){ var h=moChip('bar','menu','메뉴',{on:moMenuOn(),has:true,fix:!M.tab.on,tip:M.tab.on?'':'메뉴 바를 켜면 끌 수 있습니다'});
     MO_UTIL.forEach(function(x){ var na=!HD.util[x[0]]; h+=moChip('bar',x[0],x[1],{on:!na && !!M.show[x[0]],na:na,tip:na?'PC 상단 메뉴에서 켜면 고를 수 있습니다':''}); }); el.innerHTML=h; }
+  if((el=document.getElementById('moIszSeg'))){ var iv=M.isz||'m'; el.innerHTML=[['s','작게'],['m','중간'],['l','크게']].map(function(x){ return '<button type="button" class="mt-seg-b'+(iv===x[0]?' active':'')+'" data-m="'+x[0]+'" onclick="moSet(\'isz\',\''+x[0]+'\')">'+x[1]+'</button>'; }).join(''); }   /* 261110 추가 — 버튼 크기(메뉴 · 검색 · 로그인 · 장바구니 공통) */
   if((el=document.getElementById('moTabChips'))){ var t=''; (typeof PAGES!=='undefined'?PAGES:[]).filter(function(n){ return !n.hidden; }).forEach(function(n){ t+=moChip('tab',n.id,hdEsc(n.name),{on:!M.tab.hide[n.id]}); }); el.innerHTML=t; }
   if((el=document.getElementById('moDrChips'))){ var D=moDrOf(M.dr.design).s, S=M.dr.show, noIc=(D.ip==='none');
     var noSub=moNoSub();   /* 261104 추가 — 타일 · 이미지 카드는 서브메뉴를 그리지 않으므로 칩을 흐리게 */
