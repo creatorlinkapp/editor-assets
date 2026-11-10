@@ -86,7 +86,7 @@
 <script>
   /* 260918 추가 — 편집기에 박혀 있던 이미지(카드 썸네일·기본 템플릿 사진·카드 뒷면 등)를 editor-assets/img 로 빼고 주소로 참조한다.
      @main 은 jsDelivr 캐시(최대 7일)가 길어, 이미지를 바꿀 때는 덮어쓰지 말고 새 이름으로 올려 이 파일의 참조를 바꿀 것 */
-  var ED_IMG='https://creatorlinkapp.github.io/editor-assets/img/';   /* 261110 수정 — jsDelivr(GitHub 50MB 한도) 초과로 새 파일이 403 → GitHub Pages 로 이전 */
+  var ED_IMG='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/';
 
   /* 260918 추가 — 종속 행: data-dep="스위치 id" 를 단 행은 그 스위치가 꺼지면 숨는다 (베젤 두께 · 확대 글자 크기 등).
      스위치 버튼의 class 변화를 관찰하므로 블록마다 따로 손볼 것이 없다 */
@@ -866,13 +866,13 @@
   .blk.sm-blk{padding:0;overflow:hidden;}
   /* 풀블리드 블록(커서번짐·3D배경·스트립갤러리): 콘텐츠가 블록을 꽉 채워
      기본 inset 아웃라인이 가려지므로 롤오버 경계 라인을 오버레이로 표시 */
-  .blk.sm-blk::before,.blk.sq-blk::before,.blk.rb-blk::before,.blk.mt-blk::before,.blk.sg-blk::before,.blk.fl-blk::before,.blk.pt-blk::before,.blk.tw-blk::before,.blk.rs-blk::before,.blk.cr-blk::before,.blk.b2-blk::before,.blk.dg-blk::before,.blk.ss-blk::before,.blk.ig-blk::before,.blk.wc-blk::before,.blk.hg-blk::before,.blk.gs-blk::before,.blk.sk-blk::before,.blk.ir-blk::before,.blk.hz-blk::before,.blk.tg-blk::before{
+  .blk.sm-blk::before,.blk.mt-blk::before,.blk.sg-blk::before,.blk.fl-blk::before,.blk.pt-blk::before,.blk.tw-blk::before,.blk.rs-blk::before,.blk.cr-blk::before,.blk.b2-blk::before,.blk.dg-blk::before,.blk.ss-blk::before,.blk.ig-blk::before,.blk.wc-blk::before,.blk.hg-blk::before,.blk.gs-blk::before,.blk.sk-blk::before,.blk.ir-blk::before,.blk.hz-blk::before,.blk.tg-blk::before{
     content:"";position:absolute;inset:0;z-index:55;pointer-events:none;
     box-shadow:inset 0 0 0 2px var(--green);opacity:0;transition:opacity .12s;}
-  .blk.sm-blk:hover::before,.blk.sq-blk:hover::before,.blk.rb-blk:hover::before,.blk.mt-blk:hover::before,.blk.sg-blk:hover::before,.blk.fl-blk:hover::before,.blk.pt-blk:hover::before,.blk.tw-blk:hover::before,.blk.rs-blk:hover::before,.blk.cr-blk:hover::before,.blk.b2-blk:hover::before,.blk.dg-blk:hover::before,.blk.ss-blk:hover::before,.blk.ig-blk:hover::before,.blk.wc-blk:hover::before,.blk.hg-blk:hover::before,.blk.gs-blk:hover::before,.blk.sk-blk:hover::before,.blk.ir-blk:hover::before,.blk.hz-blk:hover::before,.blk.tg-blk:hover::before{opacity:1;}
+  .blk.sm-blk:hover::before,.blk.mt-blk:hover::before,.blk.sg-blk:hover::before,.blk.fl-blk:hover::before,.blk.pt-blk:hover::before,.blk.tw-blk:hover::before,.blk.rs-blk:hover::before,.blk.cr-blk:hover::before,.blk.b2-blk:hover::before,.blk.dg-blk:hover::before,.blk.ss-blk:hover::before,.blk.ig-blk:hover::before,.blk.wc-blk:hover::before,.blk.hg-blk:hover::before,.blk.gs-blk:hover::before,.blk.sk-blk:hover::before,.blk.ir-blk:hover::before,.blk.hz-blk:hover::before,.blk.tg-blk:hover::before{opacity:1;}
   /* 260825 수정 — 터치: 선택 상태에서 풀블리드 블록 경계선 표시 */
   @media (hover:none){
-    .blk.sel.sm-blk::before,.blk.sel.sq-blk::before,.blk.sel.rb-blk::before,.blk.sel.mt-blk::before,.blk.sel.sg-blk::before,.blk.sel.fl-blk::before,.blk.sel.pt-blk::before,.blk.sel.tw-blk::before,.blk.sel.rs-blk::before,.blk.sel.cr-blk::before,.blk.sel.b2-blk::before,.blk.sel.dg-blk::before,.blk.sel.ss-blk::before,.blk.sel.ig-blk::before,.blk.sel.wc-blk::before,.blk.sel.hg-blk::before,.blk.sel.gs-blk::before,.blk.sel.sk-blk::before,.blk.sel.ir-blk::before,.blk.sel.hz-blk::before,.blk.sel.tg-blk::before{opacity:1;}
+    .blk.sel.sm-blk::before,.blk.sel.mt-blk::before,.blk.sel.sg-blk::before,.blk.sel.fl-blk::before,.blk.sel.pt-blk::before,.blk.sel.tw-blk::before,.blk.sel.rs-blk::before,.blk.sel.cr-blk::before,.blk.sel.b2-blk::before,.blk.sel.dg-blk::before,.blk.sel.ss-blk::before,.blk.sel.ig-blk::before,.blk.sel.wc-blk::before,.blk.sel.hg-blk::before,.blk.sel.gs-blk::before,.blk.sel.sk-blk::before,.blk.sel.ir-blk::before,.blk.sel.hz-blk::before,.blk.sel.tg-blk::before{opacity:1;}
   }
   .sm-wrap{position:relative;width:100%;height:360px;overflow:hidden;background:#cfd3d6;}
   .sm-wrap canvas{display:block;width:100%;height:100%;}
@@ -5196,77 +5196,6 @@
   .gs-wrap.gs-nogauge .gs-ticker{display:none;}
   /* 261008 추가 — 가로 스크롤 갤러리 블록 (GALLERY18 · 좌측 사이트 gallery61 = pGallery04 이식)
      같은 크기 카드가 가로로 이어지고(보이는 개수 2.3) 끌기·휠로 자유롭게 흐른다. 롤오버하면 어두운 막과 가운데 캡션이 뜬다 */
-  /* ══════ 261109 추가 — 스퀴즈 캐러셀 블록 (SLIDE10 · 슬라이드쇼 카테고리 · stripe.com 「What's happening」 참조)
-     · 머리글(제목 · 부제) + 오른쪽 화살표 둘 / 가운데 무대(.sq-stage): 열린 카드 하나가 넓고(기본 65%) 다음 카드들은 16 · 8 · 4% → 8px 띠로 점점 좁아진다. 지난 카드는 왼쪽 밖으로 밀려난다
-     · 다음으로 넘기면 자리(left) · 폭(width)이 함께 미끄러진다(.55s). 사진은 열린 카드 폭(--sq-aw)으로 고정해 두고 가운데를 맞춰, 띠에서는 가운데 조각만 보이고 넘어갈 때 사진이 늘어나지 않는다
-     · 아래 글(.sq-foot): 제목(굵게) + 설명(보조색) 한 문단 · 오른쪽 버튼. 카드가 바뀌면 .12s 페이드아웃 → 글 교체 → 페이드인 (stripe 의 item-details opacity .12s)
-     · 머리글 · 설명 · 버튼 · 화살표는 설정창 「표시 항목」에서 켜고 끈다 (sq-nohead · sq-nocap · sq-nobtn · sq-nonav) ══════ */
-  /* ══════ 261109 추가 — 리본 통계 블록 (IMAGE21 · 이미지 / 영상 카테고리 · stripe.com 개발자 섹션의 「API requests per day」 수치 + 물결 리본 참조)
-     · 어두운 바탕에 가는 선 수십 가닥이 리본처럼 비틀리며 흐르고(canvas · rbDraw), 아래에 그라데이션 숫자 + 라벨(최대 4개). 숫자는 화면에 들어오면 0 → 값으로 센다(카운트업 · 끌 수 있음)
-     · 리본 · 숫자 · 카운트업은 설정창 「표시 항목」에서 켜고 끈다 (rb-norib · rb-nostat) ══════ */
-  /* 261109 수정 — 블록 높이 고정형: 캔버스가 블록 전체(여백 포함)를 배경처럼 덮고, 숫자 줄은 그 위에 아래 정렬. 블록 높이 = 「블록 높이」(최소 높이) · 리본은 「리본 크기 · 세로 위치」로만 커지고 움직인다 */
-  .blk.rb-blk{padding:0;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:var(--rb-h,470px);box-sizing:border-box;}
-  .rb-cv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;pointer-events:none;}
-  .rb-wrap{position:relative;z-index:1;box-sizing:border-box;width:100%;max-width:1180px;margin:0 auto;padding:0 var(--rb-px,48px);}
-  .rb-stats{position:relative;display:grid;grid-template-columns:repeat(var(--rb-n,3),minmax(0,1fr));gap:24px 40px;padding:0 4px;}
-  .rb-wrap.rb-center .rb-stats{text-align:center;} .rb-wrap.rb-center .rb-num{justify-content:center;}
-  .rb-num{display:flex;font-size:calc(48px * var(--rb-ns,1));font-weight:300;line-height:1.1;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap;}
-  .rb-num span{background:var(--g,linear-gradient(68deg,#533AFD 0%,#FF8C6C 30%,#DA4BFE 80%));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;padding-right:.06em;}
-  .rb-lab{margin-top:14px;font-size:calc(16px * var(--rb-ls,1));line-height:1.45;color:var(--rb-lc,#FFFFFF);opacity:.92;word-break:keep-all;}
-  .blk.rb-blk.rb-norib .rb-cv{display:none;}
-  .rb-wrap.rb-nostat .rb-stats{display:none;}
-  @media (max-width:640px){
-    .rb-wrap{--rb-px:20px;}
-    .blk.rb-blk{min-height:calc(var(--rb-h,470px) * .6);}
-    .rb-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 16px;}
-    .rb-num{font-size:calc(34px * var(--rb-ns,1));}
-    .rb-lab{font-size:calc(14px * var(--rb-ls,1));margin-top:8px;}
-  }
-  /* 설정창 — 숫자 항목 줄: 손잡이 · 숫자 · 라벨 · 색 4칸 · 휴지통 */
-  .rb-rows .rb-row{display:flex;align-items:center;gap:6px;padding:8px 0;border-bottom:1px solid var(--border,#E4E7EC);}
-  .rb-rows .rb-row:first-child{border-top:1px solid var(--border,#E4E7EC);}
-  .rb-rows .rb-row .mt-imgdrag{flex:none;}
-  .rb-rows .rb-row .rb-f{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;}
-  .rb-rows .rb-row .rb-f input{width:100%;box-sizing:border-box;height:32px;border:1px solid var(--border-2,#D9DDE3);border-radius:8px;padding:0 10px;font-size:13px;background:var(--bg,#fff);color:var(--ink,#23272E);}
-  .rb-rows .rb-row .rb-f input:focus{outline:none;border-color:var(--green,#03C75A);box-shadow:0 0 0 3px var(--green-soft,rgba(3,199,90,.15));}
-  /* 261109 수정 — 숫자 색은 항목 줄의 색 점이 아니라 「색」 패널에서(숫자 n · 시작 → 끝 두 피커) */
-  .rb-numcols .srow .sw-col + .sw-col{margin-left:10px;}
-  .rb-numcols .srow .sw-col .hex{display:none;}   /* 피커 둘이 한 줄이라 hex 글자는 뺀다(값은 피커 제목에) */
-  .blk.sq-blk{padding:0;position:relative;}
-  .sq-wrap{box-sizing:border-box;max-width:1180px;margin:0 auto;padding:0 var(--sq-px,48px);color:var(--sq-fg,#0A2540);--sq-ac:#635BFF;--sq-mt:#425466;}
-  .sq-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:26px;}
-  .sq-ht{min-width:0;}
-  .sq-h1{font-size:calc(28px * var(--sq-hs,1));font-weight:500;line-height:1.25;letter-spacing:-.01em;word-break:keep-all;}
-  .sq-h2{font-size:calc(28px * var(--sq-hs,1));font-weight:400;line-height:1.25;letter-spacing:-.01em;color:var(--sq-mt);word-break:keep-all;}
-  .sq-nav{display:flex;gap:8px;flex:none;margin-left:auto;}
-  .sq-nav button{width:40px;height:40px;padding:0;border:none;border-radius:4px;background:color-mix(in srgb,var(--sq-ac) 12%,var(--sq-bg,#fff));color:var(--sq-ac);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s;}
-  .sq-nav button:hover{background:color-mix(in srgb,var(--sq-ac) 22%,var(--sq-bg,#fff));}
-  .sq-nav button svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-  .sq-stage{position:relative;overflow:hidden;height:var(--sq-h,460px);touch-action:pan-y;user-select:none;-webkit-user-select:none;}
-  .sq-item{position:absolute;top:0;height:100%;left:var(--x,0px);width:var(--w,100px);border-radius:var(--sq-r,8px);overflow:hidden;background:#E6E9EF;cursor:pointer;transition:left .7s cubic-bezier(.33,0,.1,1),width .7s cubic-bezier(.33,0,.1,1);}   /* 261109 수정 — 더 길고(0.7s) 끝이 길게 잦아드는 이징(stripe 의 스프링 감쇠에 가깝게) */
-  .sq-item.sq-act{cursor:default;} .sq-item.sq-act.sq-link{cursor:pointer;}
-  .sq-stage.sq-now .sq-item,.sq-item.sq-jump{transition:none;}   /* 처음 그릴 때 · 크기 바뀔 때 · 왼쪽 밖 ↔ 맨 오른쪽 띠로 건너뛸 때는 미끄러지지 않는다 */
-  .sq-item img,.sq-item video{position:absolute;top:0;left:50%;height:100%;width:var(--sq-aw,800px);max-width:none;transform:translateX(-50%);object-fit:cover;display:block;pointer-events:none;color:transparent;}
-  .sq-foot{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;margin-top:28px;transition:opacity .12s;}
-  .sq-foot.sq-fade{opacity:0;}
-  .sq-cap{font-size:calc(17px * var(--sq-cs,1));line-height:1.5;letter-spacing:-.005em;max-width:800px;min-height:1.5em;word-break:keep-all;overflow-wrap:anywhere;}
-  .sq-ct{font-weight:500;color:var(--sq-fg,#0A2540);} .sq-cd{color:var(--sq-mt);} .sq-ct + .sq-cd::before{content:" ";}
-  .sq-btn{flex:none;display:inline-flex;align-items:center;gap:6px;height:48px;padding:0 24px;box-sizing:border-box;border:1px solid color-mix(in srgb,var(--sq-fg,#0A2540) 16%,transparent);border-radius:6px;background:var(--sq-bg,#fff);color:var(--sq-ac);font-size:15px;font-weight:500;line-height:1;text-decoration:none;cursor:pointer;white-space:nowrap;box-shadow:0 1px 2px rgba(10,37,64,.06);transition:box-shadow .2s,border-color .2s;}
-  .sq-btn:hover{box-shadow:0 4px 12px rgba(10,37,64,.12);border-color:color-mix(in srgb,var(--sq-fg,#0A2540) 28%,transparent);}
-  .sq-btn svg{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
-  .sq-wrap.sq-nohead .sq-ht{display:none;} .sq-wrap.sq-nonav .sq-nav{display:none;} .sq-wrap.sq-nohead.sq-nonav .sq-head{display:none;}
-  .sq-wrap.sq-nocap .sq-cap{display:none;} .sq-wrap.sq-nobtn .sq-btn{display:none;} .sq-wrap.sq-nocap.sq-nobtn .sq-foot{display:none;}
-  .sq-wrap.sq-nocap .sq-foot{justify-content:flex-end;}
-  html.mview .sq-item{cursor:pointer;}
-  @media (max-width:640px){
-    .sq-wrap{--sq-px:20px;}
-    .sq-head{margin-bottom:18px;align-items:center;}
-    .sq-h1,.sq-h2{font-size:calc(21px * var(--sq-hs,1));}
-    .sq-nav button{width:36px;height:36px;}
-    .sq-foot{flex-direction:column;gap:14px;margin-top:18px;}
-    .sq-cap{font-size:calc(15px * var(--sq-cs,1));}
-    .sq-btn{height:42px;padding:0 18px;font-size:14px;}
-  }
   .blk.hz-blk{padding:0;overflow:hidden;position:relative;}
   .hz-wrap{position:relative;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;}
   .hz-wrap.hz-drag{cursor:grabbing;}
@@ -6422,7 +6351,7 @@
   /* 261013 추가 — PC 미리보기 창(html.pview): 게시 화면처럼 블록 편집 크롬을 모두 뺀다 — 롤오버 외곽선(::after · 풀블리드 ::before) · 톱니 · 배지 · + 버튼 · 손가락 커서.
      모바일 사본(html.mob)은 블록을 눌러 PC 에서 고르는 편집 통로라 그대로 둔다 */
   html.pview #stage .blk{cursor:auto;box-shadow:none !important;}
-  html.pview #stage .blk::after,html.pview #stage .blk:is(.b2-blk,.cr-blk,.dg-blk,.fl-blk,.gs-blk,.hg-blk,.hz-blk,.ig-blk,.ir-blk,.mt-blk,.pt-blk,.rs-blk,.sc-blk,.sg-blk,.rb-blk,.sk-blk,.sm-blk,.sq-blk,.sr-blk,.ss-blk,.tg-blk,.tw-blk,.vc-blk,.wc-blk)::before{opacity:0 !important;}   /* 261013 수정 — ::before 는 풀블리드 블록의 외곽선 오버레이만. 모든 .blk::before 를 끄면 배경 이미지 블록의 「어둡게」 층(.rt-bgimg::before)까지 사라져 롤오버 때 사진이 밝아진다 */
+  html.pview #stage .blk::after,html.pview #stage .blk:is(.b2-blk,.cr-blk,.dg-blk,.fl-blk,.gs-blk,.hg-blk,.hz-blk,.ig-blk,.ir-blk,.mt-blk,.pt-blk,.rs-blk,.sc-blk,.sg-blk,.sk-blk,.sm-blk,.sr-blk,.ss-blk,.tg-blk,.tw-blk,.vc-blk,.wc-blk)::before{opacity:0 !important;}   /* 261013 수정 — ::before 는 풀블리드 블록의 외곽선 오버레이만. 모든 .blk::before 를 끄면 배경 이미지 블록의 「어둡게」 층(.rt-bgimg::before)까지 사라져 롤오버 때 사진이 밝아진다 */
   html.pview #stage .blk .gear-fab,html.pview #stage .blk .tag-badge,html.pview #stage .addbar,html.pview #stage .site-hd .hd-gear,html.pview #stage .site-hd::after{display:none !important;}
   html.pview #stage .site > .site-hd:hover{box-shadow:none !important;}
   html.pview #stage .cred,html.pview #stage .cred:hover,html.pview #stage .ft-ed,html.pview #stage .ft-ed:hover,html.pview #stage .tm-ln:hover{outline-color:transparent !important;cursor:inherit !important;}   /* 글 영역(텍스트 · 타이틀 · 탭메뉴 · 푸터)의 점선 롤오버도 없이 */  /* 260904 수정 — 외곽선 오버레이(::after, 88)보다 위: 배지 위로 흰 헤일로 선이 겹쳐 보이던 문제 */
@@ -7351,7 +7280,7 @@
         <div class="snav-mob" id="siteNavMob"></div>
       </div>
       <!-- 260917 수정 — 첫 블록: 히어로 → 배경 이미지 텍스트 블록 (높이 350 유지 = 위아래 여백 154 + 한 줄(20px × 2.1)). 스크롤 효과는 이 블록만 끔 · 260928 수정 — 공통 스크롤 효과 요소별(data-aos 없음) -->
-      <div class="blk" data-block="cred" data-tpl="cred" style="padding-top:154px;padding-bottom:154px;background-color:#000000;" onclick="selectBlock(this)">
+      <div class="blk rt-bgimg" data-block="cred" data-tpl="cred" data-bgimg="https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/tpl/cred-bg.jpg" data-bgdim="45" style="padding-top:154px;padding-bottom:154px;--rt-dim:.45;background-image:url(&quot;https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/tpl/cred-bg.jpg&quot;);" onclick="selectBlock(this)">
         <span class="tag-badge">텍스트</span>
         <button class="gear-fab" onclick="event.stopPropagation();openBset(this)"><svg class="ico" viewBox="0 0 19 19"><path d="M17.16 8.16l1.41-1.51c-0.2-0.65-0.48-1.28-0.84-1.9 -0.35-0.61-0.77-1.17-1.23-1.67l-2.02 0.46c-0.7-0.58-1.48-1.03-2.32-1.34l-0.61-1.97C10.9 0.08 10.21 0 9.5 0 8.79 0 8.1 0.08 7.44 0.22L6.83 2.2h0C5.98 2.51 5.19 2.97 4.51 3.54L2.5 3.08c-0.46 0.5-0.87 1.06-1.23 1.67S0.64 6 0.44 6.65l1.4 1.52c-0.16 0.89-0.15 1.8 0 2.68l-1.41 1.51c0.2 0.65 0.48 1.28 0.84 1.9s0.77 1.17 1.23 1.67l2.02-0.46c0.7 0.58 1.48 1.03 2.32 1.34l0.61 1.97v0C8.1 18.92 8.79 19 9.5 19c0.71 0 1.4-0.08 2.06-0.22l0.61-1.97c0.85-0.31 1.63-0.77 2.32-1.34l2.01 0.46c0.46-0.5 0.87-1.06 1.23-1.67 0.35-0.61 0.63-1.25 0.84-1.9l-1.4-1.52C17.31 9.94 17.31 9.04 17.16 8.16zM9.5 15.5c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6S12.81 15.5 9.5 15.5z"></path></svg></button>
         <div class="cred" style="color:#ffffff;font-size:20px;text-align:center;max-width:1180px;margin-left:auto;margin-right:auto;"><p><span style="font-size:18px;">He</span> <span style="font-size:11px;">_________________________________</span> <span style="font-size:18px;">ctor.</span></p></div>
@@ -7594,7 +7523,7 @@
   .rt-cp-grid{display:block;padding:0;font-size:0;line-height:0;}
   .rt-cp-grid span{display:inline-block;width:14.2857%;height:auto;aspect-ratio:1;cursor:pointer;vertical-align:top;position:relative;box-sizing:border-box;}  /* 260905 수정 — 정방형 칩 */
   .rt-cp-grid span:hover{outline:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.85),inset 0 0 0 3px rgba(0,0,0,.25);z-index:1;}
-  .rt-cp-grid span.rainbow{background:url("https://creatorlinkapp.github.io/editor-assets/img/rt-rainbow.png") center/100% 100% no-repeat;}  /* 창작자링크 colpick.png 원본 */
+  .rt-cp-grid span.rainbow{background:url("https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/rt-rainbow.png") center/100% 100% no-repeat;}  /* 창작자링크 colpick.png 원본 */
   .rt-cp-grid span.rainbow.on{box-shadow:inset 0 0 0 2px var(--blue-help);}
   .rt-cp-grid span.reset{background:transparent;color:#000;display:inline-flex;align-items:center;justify-content:center;}
   .rt-cp-grid span.reset svg{width:24px;height:24px;fill:#000;}
@@ -15541,141 +15470,6 @@
           </div></div>
         </div>
       </div>
-      <!-- 261109 추가 — 리본 통계 블록 설정 (IMAGE21 · stripe.com 수치 + 물결 리본) -->
-      <div id="bsetRb" style="display:none;" data-acc-init="1">
-        <div class="fld sfold open acc-flush" id="rbItemAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">숫자 <span class="n" id="rbItemCount"></span><span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
-            <div class="rb-rows" id="rbItemList"></div>
-            <div class="im-addrow"><button type="button" class="btn-sm" id="rbItemAdd" onclick="rbItemAddRow()"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button></div>
-            <div class="mtk-hint">숫자 칸에 500M+ · 10K+ · 99.99% 처럼 적으면 숫자 부분만 세어 올라갑니다. 색 점은 숫자의 그라데이션입니다.</div>
-          </div></div>
-        </div>
-        <div class="fld sfold open" id="rbShowAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">표시 항목<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
-            <div class="sline"><span class="lbl">리본</span><button type="button" class="sw on" id="rbRibSw" onclick="rbSw(this,'rib')"></button></div>
-            <div class="sline"><span class="lbl">숫자</span><button type="button" class="sw on" id="rbStatSw" onclick="rbSw(this,'stat')"></button></div>
-            <div class="sline"><span class="lbl">카운트업</span><button type="button" class="sw on" id="rbCountSw" onclick="rbSw(this,'count')"></button></div>
-            <div class="mtk-hint">카운트업은 블록이 화면에 들어올 때 0에서 값까지 셉니다.</div>
-          </div></div>
-        </div>
-        <div class="fld sfold" id="rbRibAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">리본<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">리본 크기</span><input class="rng" type="range" id="rbScale" min="50" max="250" step="5" value="100"><span class="v" id="rbScaleV">100%</span></div>
-            <div class="srow"><span class="k">세로 위치</span><input class="rng" type="range" id="rbShift" min="-60" max="60" step="2" value="0"><span class="v" id="rbShiftV">0%</span></div>
-            <div class="srow"><span class="k">선 수</span><input class="rng" type="range" id="rbLines" min="8" max="160" step="1" value="35"><span class="v" id="rbLinesV">35</span></div>
-            <div class="srow"><span class="k">선 두께</span><input class="rng" type="range" id="rbLw" min="1" max="3" step="0.1" value="3"><span class="v" id="rbLwV">3px</span></div>
-            <div class="srow"><span class="k">물결 크기</span><input class="rng" type="range" id="rbAmp" min="20" max="200" step="5" value="45"><span class="v" id="rbAmpV">45%</span></div>
-            <div class="srow"><span class="k">트위스트</span><input class="rng" type="range" id="rbTw" min="0" max="200" step="5" value="100"><span class="v" id="rbTwV">100%</span></div>
-            <div class="srow"><span class="k">원근</span><input class="rng" type="range" id="rbTwist" min="30" max="200" step="5" value="30"><span class="v" id="rbTwistV">30%</span></div>
-            <div class="srow"><span class="k">속도</span><input class="rng" type="range" id="rbSpeed" min="0" max="200" step="5" value="200"><span class="v" id="rbSpeedV">200%</span></div>
-            <div class="mtk-hint">리본은 블록 전체를 배경처럼 채웁니다 — 블록 높이는 「크기 · 여백」에서, 리본은 크기 · 세로 위치로만 키우고 옮깁니다(블록 밖은 잘립니다). 트위스트는 길이 방향으로 꼬이는 정도(0 = 평평한 천), 원근은 먼 끝이 얼마나 멀리 모이는지. 속도 0이면 멈춘 그림입니다.</div>
-          </div></div>
-        </div>
-        <div class="fld sfold" id="rbTxtAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">글<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">숫자 크기</span><input class="rng" type="range" id="rbNs" min="50" max="200" step="5" value="100"><span class="v" id="rbNsV">100%</span></div>
-            <div class="srow"><span class="k">라벨 크기</span><input class="rng" type="range" id="rbLs" min="60" max="160" step="5" value="100"><span class="v" id="rbLsV">100%</span></div>
-            <div class="srow" style="margin:14px 0 6px;"><span class="k">정렬</span></div>
-            <div class="mt-seg" id="rbAlignSeg" style="margin-bottom:0;">
-              <button type="button" class="mt-seg-b active" data-m="left" onclick="rbUpd('align','left');rbFillBset()">왼쪽</button>
-              <button type="button" class="mt-seg-b" data-m="center" onclick="rbUpd('align','center');rbFillBset()">가운데</button>
-            </div>
-          </div></div>
-        </div>
-        <div class="fld sfold" id="rbColAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">색<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">배경색</span><span class="sw-col"><input type="color" id="rbBg" value="#0d1738"><span class="hex" id="rbBgV">#0D1738</span></span></div>
-            <div class="srow"><span class="k">리본 색 1</span><span class="sw-col"><input type="color" id="rbC1" value="#f7da64" data-cp-title="리본 색 1 (왼쪽)"><span class="hex" id="rbC1V">#F7DA64</span></span></div>
-            <div class="srow"><span class="k">리본 색 2</span><span class="sw-col"><input type="color" id="rbC2" value="#b8312f" data-cp-title="리본 색 2 (가운데)"><span class="hex" id="rbC2V">#B8312F</span></span></div>
-            <div class="srow"><span class="k">리본 색 3</span><span class="sw-col"><input type="color" id="rbC3" value="#533afd" data-cp-title="리본 색 3 (오른쪽)"><span class="hex" id="rbC3V">#533AFD</span></span></div>
-            <div class="srow"><span class="k">라벨 글자색</span><span class="sw-col"><input type="color" id="rbLc" value="#ffffff"><span class="hex" id="rbLcV">#FFFFFF</span></span></div>
-            <div class="srow" style="margin:14px 0 4px;"><span class="k">숫자 색</span><span class="tx-hint" style="margin:0;">시작 → 끝 그라데이션</span></div>
-            <div class="rb-numcols" id="rbNumCols"></div>
-          </div></div>
-        </div>
-        <div class="fld sfold" id="rbBoxAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">크기 · 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">블록 높이</span><input class="rng" type="range" id="rbH" min="160" max="900" step="10" value="470"><span class="v" id="rbHV">470px</span></div>
-            <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="rbPt" min="0" max="200" step="2" value="74"><span class="v" id="rbPtV">74px</span></div>
-            <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="rbPb" min="0" max="200" step="2" value="72"><span class="v" id="rbPbV">72px</span></div>
-          </div></div>
-        </div>
-      </div>
-      <!-- 261109 추가 — 스퀴즈 캐러셀 블록 설정 (SLIDE10 · stripe.com 「What's happening」) -->
-      <div id="bsetSq" style="display:none;" data-acc-init="1">
-        <div class="fld sfold open acc-flush" id="sqItemAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">항목 <span class="n" id="sqItemCount"></span><span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
-            <div class="rs-box" data-rs="sq">
-            <div class="mt-imglist" id="sqItemList"></div>
-            <div class="im-addrow">
-              <input type="file" id="sqListUp" accept="image/*,video/*" multiple style="display:none;" onchange="blkListUpload(this,'sq')">
-              <button type="button" class="ghost" onclick="blkListUrlAdd('sq')" title="파일 주소(URL)로 목록 끝에 추가합니다">URL</button>
-              <button type="button" class="ghost" onclick="document.getElementById('sqListUp').click()" title="내 컴퓨터의 파일을 보관함과 이 목록에 함께 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
-              <button type="button" class="btn-sm" id="sqItemAdd" onclick="blkListPick('sq',this)" title="보관함에서 골라 목록 끝에 추가합니다"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button>
-            </div>
-            </div>
-            <div class="mtk-hint">항목마다 제목 · 설명 · 버튼 글 · 링크를 넣습니다. 열린 카드의 글이 아래에 나옵니다.</div>
-          </div></div>
-        </div>
-        <div class="fld sfold open" id="sqShowAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">표시 항목<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
-            <div class="sline"><span class="lbl">머리글</span><button type="button" class="sw on" id="sqHeadSw" onclick="sqSw(this,'head')"></button></div>
-            <div id="sqHeadWrap">
-              <div class="vc-caps" style="margin:4px 0 10px;">
-                <input type="text" id="sqH1" placeholder="제목" spellcheck="false" autocomplete="off">
-                <input type="text" id="sqH2" placeholder="부제" spellcheck="false" autocomplete="off">
-              </div>
-              <div class="srow"><span class="k">머리글 크기</span><input class="rng" type="range" id="sqHs" min="60" max="160" step="5" value="100"><span class="v" id="sqHsV">100%</span></div>
-            </div>
-            <div class="sline"><span class="lbl">설명</span><button type="button" class="sw on" id="sqCapSw" onclick="sqSw(this,'cap')"></button></div>
-            <div id="sqCapWrap"><div class="srow"><span class="k">글 크기</span><input class="rng" type="range" id="sqCs" min="60" max="160" step="5" value="100"><span class="v" id="sqCsV">100%</span></div></div>
-            <div class="sline"><span class="lbl">버튼</span><button type="button" class="sw on" id="sqBtnSw" onclick="sqSw(this,'btn')"></button></div>
-            <div class="sline"><span class="lbl">화살표</span><button type="button" class="sw on" id="sqNavSw" onclick="sqSw(this,'nav')"></button></div>
-            <div class="mtk-hint">제목 · 설명 · 버튼 글은 항목마다 다릅니다(위 「항목」). 화살표를 끄면 카드를 눌러 넘깁니다.</div>
-          </div></div>
-        </div>
-        <div class="fld sfold" id="sqCardAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">카드<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">열린 카드 폭</span><input class="rng" type="range" id="sqAct" min="40" max="85" step="1" value="65"><span class="v" id="sqActV">65%</span></div>
-            <div class="srow"><span class="k">비율(세로/가로)</span><input class="rng" type="range" id="sqAr" min="30" max="120" step="1" value="58"><span class="v" id="sqArV">58%</span></div>
-            <div class="srow"><span class="k">간격</span><input class="rng" type="range" id="sqGap" min="0" max="40" step="1" value="16"><span class="v" id="sqGapV">16px</span></div>
-            <div class="srow"><span class="k">모서리</span><input class="rng" type="range" id="sqRadius" min="0" max="40" step="1" value="8"><span class="v" id="sqRadiusV">8px</span></div>
-            <div class="mtk-hint">열린 카드 다음 카드들은 16 · 8 · 4% → 가는 띠로 점점 좁아지고, 지난 카드는 왼쪽 밖으로 밀려납니다.</div>
-          </div></div>
-        </div>
-        <div class="fld sfold" id="sqMoveAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">움직임<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">자동 넘김</span><input class="rng" type="range" id="sqAuto" min="0" max="10" step="1" value="0"><span class="v" id="sqAutoV">0s</span></div>
-            <div class="mtk-hint">화살표 · 카드 클릭 · 옆으로 끌기로 넘깁니다. 자동 넘김은 마우스를 올리면 멈춥니다.</div>
-          </div></div>
-        </div>
-        <div class="fld sfold" id="sqColAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">색<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">강조색</span><span class="sw-col"><input type="color" id="sqAc" value="#635bff" data-cp-title="강조색 (화살표 · 버튼 글)"><span class="hex" id="sqAcV">#635BFF</span></span></div>
-            <div class="srow"><span class="k">글자색</span><span class="sw-col"><input type="color" id="sqFg" value="#0a2540"><span class="hex" id="sqFgV">#0A2540</span></span></div>
-            <div class="srow"><span class="k">보조 글자색</span><span class="sw-col"><input type="color" id="sqMt" value="#425466"><span class="hex" id="sqMtV">#425466</span></span></div>
-            <div class="srow"><span class="k">배경색</span><span class="sw-col"><input type="color" id="sqBg" value="#ffffff"><span class="hex" id="sqBgV">#FFFFFF</span></span></div>
-          </div></div>
-        </div>
-        <div class="fld sfold" id="sqBoxAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-          <div class="acc-body"><div class="acc-in">
-            <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="sqPt" min="0" max="200" step="2" value="72"><span class="v" id="sqPtV">72px</span></div>
-            <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="sqPb" min="0" max="200" step="2" value="72"><span class="v" id="sqPbV">72px</span></div>
-          </div></div>
-        </div>
-      </div>
       <!-- 261008 추가 — 가로 스크롤 갤러리 블록 설정 (GALLERY18 · 좌측 사이트 gallery61) -->
       <div id="bsetHz" style="display:none;" data-acc-init="1">   <!-- 261008 수정 — 항목 · 갤러리 타입을 함께 펼쳐 둔다 -->
         <div class="fld sfold open acc-flush" id="hzItemAcc">
@@ -16757,7 +16551,7 @@
            · 글자색 자동 맞춤은 스위치 없이 늘 — 배경이 투명할 때(겹치기 · 플로팅)만 아래 내용 밝기에 맞춰 흰 글자/기본 글자 -->
       <div id="hdStateWrap">
         <!-- 261026 수정 — 도움말 도식: 편집기 PC 미리보기 창을 헤드리스로 띄워 25fps 프레임 단위로 캡처(스크롤만 움직임) → mp4(694×410) + 첫 컷 jpg · 겹치기는 정지컷 -->
-<template id="hdStateTip"><div class="hdtip"><div class="hdtip-c"><video src="https://creatorlinkapp.github.io/editor-assets/img/help/hd-floating-off.mp4" poster="https://creatorlinkapp.github.io/editor-assets/img/help/hd-floating-off.jpg" autoplay loop muted playsinline width="174" height="103"></video><b>기본</b><span>스크롤 시 메뉴가 화면 밖으로 사라집니다.</span></div><div class="hdtip-c"><video src="https://creatorlinkapp.github.io/editor-assets/img/help/hd-floating-on.mp4" poster="https://creatorlinkapp.github.io/editor-assets/img/help/hd-floating-on.jpg" autoplay loop muted playsinline width="174" height="103"></video><b>플로팅</b><span>스크롤하면 화면 위에 고정됩니다. 글자색 · 배경을 기본과 다르게 정할 수 있습니다.</span></div></div></template><template id="hdOverTip"><div class="hdtip"><div class="hdtip-c"><img src="https://creatorlinkapp.github.io/editor-assets/img/help/hd-overlap-off.jpg" alt="" width="174" height="103"><b>기본</b><span>메뉴가 블록 위에 따로 놓여 겹치지 않습니다.</span></div><div class="hdtip-c"><img src="https://creatorlinkapp.github.io/editor-assets/img/help/hd-overlap-on.jpg" alt="" width="174" height="103"><b>현재 페이지 겹치기</b><span>이 페이지에서 메뉴가 첫 블록 위에 겹칩니다. 배경이 투명하면 블록이 메뉴 배경이 되고, 글자색은 자동으로 맞춰집니다.</span></div></div></template>   <!-- 261026 추가 — 기본/플로팅 도움말 도식 (? 롤오버 · pgtip 의 data-tip-tpl) -->
+<template id="hdStateTip"><div class="hdtip"><div class="hdtip-c"><video src="https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/help/hd-floating-off.mp4" poster="https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/help/hd-floating-off.jpg" autoplay loop muted playsinline width="174" height="103"></video><b>기본</b><span>스크롤 시 메뉴가 화면 밖으로 사라집니다.</span></div><div class="hdtip-c"><video src="https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/help/hd-floating-on.mp4" poster="https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/help/hd-floating-on.jpg" autoplay loop muted playsinline width="174" height="103"></video><b>플로팅</b><span>스크롤하면 화면 위에 고정됩니다. 글자색 · 배경을 기본과 다르게 정할 수 있습니다.</span></div></div></template><template id="hdOverTip"><div class="hdtip"><div class="hdtip-c"><img src="https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/help/hd-overlap-off.jpg" alt="" width="174" height="103"><b>기본</b><span>메뉴가 블록 위에 따로 놓여 겹치지 않습니다.</span></div><div class="hdtip-c"><img src="https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/img/help/hd-overlap-on.jpg" alt="" width="174" height="103"><b>현재 페이지 겹치기</b><span>이 페이지에서 메뉴가 첫 블록 위에 겹칩니다. 배경이 투명하면 블록이 메뉴 배경이 되고, 글자색은 자동으로 맞춰집니다.</span></div></div></template>   <!-- 261026 추가 — 기본/플로팅 도움말 도식 (? 롤오버 · pgtip 의 data-tip-tpl) -->
         <div class="hd-state-row"><div class="mt-seg hd-state" id="hdStateSeg">
           <button type="button" class="mt-seg-b active" data-m="base" onclick="hdState('base')">기본</button>
           <button type="button" class="mt-seg-b" data-m="sticky" onclick="hdState('sticky')">플로팅<span class="sw mini" id="hdStickSw" onclick="event.stopPropagation();hdStickToggle()" title="플로팅 켜기/끄기"></span></button>
@@ -20398,8 +20192,7 @@
     if(blk.getAttribute('data-block')==='infgal') return {el:blk,kind:'igadd'};
     if(blk.getAttribute('data-block')==='wheelcar') return {el:blk,kind:'wcadd'};   /* 260916 추가 — 휠 캐러셀: 목록에 추가 */
     if(blk.getAttribute('data-block')==='gaugeslider') return {el:blk,kind:'gsadd'};
-    if(blk.getAttribute('data-block')==='hscrollgal') return {el:blk,kind:'hzadd'};
-    if(blk.getAttribute('data-block')==='sqcar') return {el:blk,kind:'sqadd'};   /* 261109 추가 — 스퀴즈 캐러셀: 목록에 추가 */   /* 261008 추가 — 가로 스크롤 갤러리: 목록에 추가 */
+    if(blk.getAttribute('data-block')==='hscrollgal') return {el:blk,kind:'hzadd'};   /* 261008 추가 — 가로 스크롤 갤러리: 목록에 추가 */
     if(blk.getAttribute('data-block')==='tiltgal') return {el:blk,kind:'tgadd'};   /* 261008 추가 — 틸트 갤러리: 목록에 추가 */
     if(blk.getAttribute('data-block')==='beforeafter') return {el:blk,kind:'bcrep'};
     if(blk.getAttribute('data-block')==='imgring'){ var irc=el.closest('.ir-item'); return irc?{el:irc,kind:'irrep'}:{el:blk,kind:'iradd'}; }   /* 260923 추가 — 3D 이미지 링: 이미지 위면 그 이미지 교체, 빈 곳이면 목록에 추가 */
@@ -20423,7 +20216,7 @@
     if(libDropCur && (!tg || libDropCur.el!==tg.el)) libDropClear();
     if(!tg||libDropCur) return;
     var mark=(tg.kind==='img')?(tg.el.parentNode||tg.el):tg.el;
-    mark.classList.add((tg.kind==='bg'||tg.kind==='imadd'||tg.kind==='dgadd'||tg.kind==='ggadd'||tg.kind==='ssadd'||tg.kind==='igadd'||tg.kind==='wcadd'||tg.kind==='hgadd'||tg.kind==='gsadd'||tg.kind==='hzadd'||tg.kind==='sqadd'||tg.kind==='tgadd'||tg.kind==='skadd'||tg.kind==='bcrep'||tg.kind==='ckrep'||tg.kind==='scadd'||tg.kind==='fmimg'||tg.kind==='iradd')?'lib-over-bg':(tg.kind==='b2page'?'lib-over-b2':'lib-over-img')); libDropCur={el:tg.el,kind:tg.kind,mark:mark};
+    mark.classList.add((tg.kind==='bg'||tg.kind==='imadd'||tg.kind==='dgadd'||tg.kind==='ggadd'||tg.kind==='ssadd'||tg.kind==='igadd'||tg.kind==='wcadd'||tg.kind==='hgadd'||tg.kind==='gsadd'||tg.kind==='hzadd'||tg.kind==='tgadd'||tg.kind==='skadd'||tg.kind==='bcrep'||tg.kind==='ckrep'||tg.kind==='scadd'||tg.kind==='fmimg'||tg.kind==='iradd')?'lib-over-bg':(tg.kind==='b2page'?'lib-over-b2':'lib-over-img')); libDropCur={el:tg.el,kind:tg.kind,mark:mark};
   }
   function libDropClear(){ if(libDropCur){ libDropCur.mark.classList.remove('lib-over-bg','lib-over-img','lib-over-b2'); libDropCur=null; } }
 
@@ -20454,11 +20247,6 @@
       if(kind!=='img' && kind!=='vid'){ clToast('나선형 갤러리 2에는 이미지·동영상만 넣을 수 있습니다.'); return; }
       if(typeof selectBlock==='function') try{ selectBlock(blk); }catch(x){}
       hgLibDrop(blk, kind==='vid'?(typeof libVidMark==='function'?libVidMark(p.src,true):p.src+'#video'):p.src); return;
-    }
-    if(tg.kind==='sqadd'){   /* 261109 추가 — 스퀴즈 캐러셀 목록에 추가 */
-      if(kind!=='img' && kind!=='vid'){ clToast('이 블록에는 이미지·동영상만 넣을 수 있습니다.'); return; }
-      if(typeof selectBlock==='function') try{ selectBlock(blk); }catch(x){}
-      sqLibDrop(blk, kind==='vid'?(typeof libVidMark==='function'?libVidMark(p.src,true):p.src+'#video'):p.src); return;
     }
     if(tg.kind==='hzadd'||tg.kind==='tgadd'){   /* 261008 추가 — 가로 스크롤 갤러리 · 틸트 갤러리 목록에 추가 · 261015 카드 슬라이드 */
       if(kind!=='img' && kind!=='vid'){ clToast('이 갤러리에는 이미지·동영상만 넣을 수 있습니다.'); return; }
@@ -22299,9 +22087,7 @@
     if(card.getAttribute('data-kind')==='wheelcar'){ baInsertWheel(card); return; }   /* 260916 추가 — 휠 캐러셀 */
     if(card.getAttribute('data-kind')==='helixgal'){ baInsertHelix(card); return; }   /* 260916 추가 — 헬릭스 갤러리 */
     if(card.getAttribute('data-kind')==='gaugeslider'){ baInsertGauge(card); return; }   /* 260922 추가 — 게이지 슬라이더 */
-    if(card.getAttribute('data-kind')==='hscrollgal'){ baInsertHz(card); return; }
-    if(card.getAttribute('data-kind')==='sqcar'){ baInsertSq(card); return; }
-    if(card.getAttribute('data-kind')==='rbstat'){ baInsertRb(card); return; }   /* 261109 추가 — 리본 통계(IMAGE21) */   /* 261109 추가 — 스퀴즈 캐러셀(SLIDE10) */   /* 261008 추가 — 가로 스크롤 갤러리 */
+    if(card.getAttribute('data-kind')==='hscrollgal'){ baInsertHz(card); return; }   /* 261008 추가 — 가로 스크롤 갤러리 */
     if(card.getAttribute('data-kind')==='tiltgal'){ baInsertTg(card); return; }   /* 261008 추가 — 틸트 갤러리 */
     if(card.getAttribute('data-kind')==='stackgal'){ baInsertStack(card); return; }   /* 260923 추가 — 스택 갤러리 */
     var stage=document.getElementById('stage');
@@ -23856,9 +23642,7 @@
     if(clone && clone.getAttribute('data-block')==='wheelcar'){ if(typeof wcCloneInit==='function') wcCloneInit(src,clone); return; }   /* 260916 추가 */
     if(clone && clone.getAttribute('data-block')==='helixgal'){ if(typeof hgCloneInit==='function') hgCloneInit(src,clone); return; }   /* 260916 추가 */
     if(clone && clone.getAttribute('data-block')==='gaugeslider'){ if(typeof gsCloneInit==='function') gsCloneInit(src,clone); return; }   /* 260922 추가 */
-    if(clone && clone.getAttribute('data-block')==='hscrollgal'){ if(typeof hzCloneInit==='function') hzCloneInit(src,clone); return; }
-    if(clone && clone.getAttribute('data-block')==='rbstat'){ if(typeof rbCloneInit==='function') rbCloneInit(src,clone); return; }   /* 261109 추가 */
-    if(clone && clone.getAttribute('data-block')==='sqcar'){ if(typeof sqCloneInit==='function') sqCloneInit(src,clone); return; }   /* 261109 추가 */   /* 261008 추가 */
+    if(clone && clone.getAttribute('data-block')==='hscrollgal'){ if(typeof hzCloneInit==='function') hzCloneInit(src,clone); return; }   /* 261008 추가 */
     if(clone && clone.getAttribute('data-block')==='tiltgal'){ if(typeof tgCloneInit==='function') tgCloneInit(src,clone); return; }   /* 261008 추가 */
     if(clone && clone.getAttribute('data-block')==='stackgal'){ if(typeof skCloneInit==='function') skCloneInit(src,clone); return; }   /* 260923 추가 */
     if(clone && clone.getAttribute('data-block')==='cred'){ if(typeof rtCloneInit==='function') rtCloneInit(src,clone); return; }
@@ -24076,8 +23860,6 @@
   var BA_BC_THUMB=ED_IMG+'ba/image03.jpg';   /* 260930 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙). 예전 SVG 그림은 없앴다 */
   var BA_CK_THUMB=ED_IMG+'ba/image04.jpg';   /* 260930 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙). 예전 SVG 그림은 없앴다 */
   var BA_IR_THUMB=ED_IMG+'ba/image05.jpg';   /* 260930 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙). 예전 SVG 그림은 없앴다 */
-  var BA_SQ_THUMB=ED_IMG+'ba/slide10.jpg';   /* 261109 추가 — 스퀴즈 캐러셀(SLIDE10) 정지컷 (12~ 규칙: 영상 없이 정지컷만) · 261110 수정 — 카드 목록보다 뒤에 선언돼 img 가 undefined(빈 카드) → 목록 앞으로 옮김 */
-  var BA_RB_THUMB=ED_IMG+'ba/image21.jpg';   /* 261109 추가 — 리본 통계(IMAGE21) 정지컷 · 261110 수정 — 위와 같은 이유로 목록 앞으로 */
   var BA_CARDS_IMAGE=[
     {no:2, kind:'imggrid', label:'IMAGE02', ar:'736/181', img:BA_IMG2_THUMB},   /* 260919 추가 — 이미지 블록(IMAGE02) · 나열형/슬라이드형 이미지. 미리보기 영상은 아직 없다 */
     /* 261012 추가 — IMAGE02 기본형의 프리셋(같은 imggrid 블록 · 시작값만 다르다 · IM_PRESETS). 기본형 묶음을 앞에, 효과형(IMAGE01 · 04)을 뒤에 둔다 */
@@ -24104,7 +23886,6 @@
     {no:23, kind:'cred',    preset:'vtext',   label:'VIDEO03', ar:'800/268', img:BA_PRE_THUMB.vtext},
     {no:24, kind:'cred',    preset:'bgvid',   label:'VIDEO04', ar:'800/250', img:BA_PRE_THUMB.bgvid},
     {no:25, kind:'imggrid', preset:'shorts3', label:'VIDEO05', ar:'800/461', img:BA_PRE_THUMB.shorts3},
-    {no:21, kind:'rbstat', label:'IMAGE21', ar:'800/273', img:BA_RB_THUMB},   /* 261109 추가 — 리본 통계 (stripe.com 개발자 섹션 수치 + 물결 리본 · canvas) */
     {no:1, kind:'moto3d', label:'IMAGE01', tag:'3D', ar:'920/320', img:BA_MOTO_THUMB, vid:'ba/image01-6'}   /* 260918 재녹화 — 제목 글꼴 Arial Black (윈도우 크롬은 Arial 굵기 800 을 Arial Black 으로 그린다) */,
     {no:4, kind:'crumple', label:'IMAGE04', tag:'3D', ar:'552/300', img:BA_CK_THUMB, vid:'ba/image04'}   /* 261014 수정 — WebGL 구김이라 3D 표식 */   /* 260930 추가 — 롤오버 미리보기 영상(종이 물결 + 다음·이전 넘김) */   /* 260923 추가 — 구김 이미지 (thetriadicballetai.com 참조) */
   ];
@@ -24132,7 +23913,6 @@
     {no:7, kind:'imggrid', preset:'photo1',   label:'SLIDE07', ar:'800/573', img:BA_PRE_THUMB.photo1},
     {no:8, kind:'imggrid', preset:'multi4',   label:'SLIDE08', ar:'800/283', img:BA_PRE_THUMB.multi4},
     {no:9, kind:'imggrid', preset:'logoflow', label:'SLIDE09', ar:'800/100', img:BA_PRE_THUMB.logoflow},
-    {no:10, kind:'sqcar', label:'SLIDE10', ar:'800/413', img:BA_SQ_THUMB},   /* 261109 추가 — 스퀴즈 캐러셀 (stripe.com 「What's happening」 참조 · 열린 카드 + 좁아지는 띠 · 머리글 · 아래 글 · 버튼) */
     {no:1, kind:'stripgal', label:'SLIDE01', tag:'3D', ar:'552/230', img:BA_STRIP_THUMB, vid:'ba/slide01-4'}   /* 261014 — 갤러리 카테고리에도 같은 카드가 들어간다(BA_CARDS_GALLERY 뒤 cross-listing · 261027 → 히어로 섹션 BA_CARDS_HERO) */   /* 260918 재녹화 — 드래그 스와이프 앞으로 4칸(1→5), 뒤로 3칸(5→2) */,
     {no:2, kind:'cardring', label:'SLIDE02', tag:'3D', ar:'552/274', img:BA_RING_THUMB, vid:'ba/slide02-4'}   /* 260918 재녹화 — 느린 드래그 + 관성, 원본 25fps 그대로(30fps 변환 시 프레임 중복으로 끊겨 보였다) */,
     {no:3, kind:'bookflip2', label:'SLIDE03', tag:'3D', ar:'552/304', img:BA_BOOK2_THUMB, vid:'ba/slide03-2'}   /* 260921 재녹화 — 펼친 뒤 질감이 툭 바뀌던 것 수정 · 더 천천히 */
@@ -24167,9 +23947,9 @@
      8. 261023 추가 — 자르기 위치: 화면 맨 위(y=0)부터 자르면 편집기 상단 툴바 경계선(y=44)이 회색 띠로 찍힌다. 경계선 아래에서, 멈춘 상태의 블록 묶음이 위아래 가운데 오게 y 를 잡는다(위쪽 여백은 잘라내도 된다).
      규칙: 움직이는(동적인) 블록의 카드는 롤오버 미리보기 영상(vid)을 달고, 썸네일(img)은 그 영상의 첫 컷으로 만든다. 정지 캡처 썸네일은 영상을 만들기 전 임시로만 쓴다.
      스크립트: editor-assets\_src\rec\ (harness.js · rec_image03/04/05.js · rec_content01.js) — 메모리에도 같은 규칙을 적어 두었다. */
-  /* 260917 추가 — 편집기 정적 자산(블록 미리보기 영상 등). 공개 저장소 creatorlinkapp/editor-assets 를 GitHub Pages 로 받는다.
-     (261110 jsDelivr 에서 이전 — 저장소가 jsDelivr GitHub 한도 50MB 를 넘어 새 파일이 403. Pages 는 푸시 후 1~2분 뒤 반영, 캐시 10분) */
-  var BA_ASSET_BASE='https://creatorlinkapp.github.io/editor-assets/';   /* 261110 수정 — jsDelivr → GitHub Pages(캐시 10분, 푸시 후 1~2분 배포) */   /* 260918 수정 — 이미지(ED_IMG)와 같은 규칙으로 @main: 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다 */
+  /* 260917 추가 — 편집기 정적 자산(블록 미리보기 영상 등). 공개 저장소 creatorlinkapp/editor-assets 를 jsDelivr 로 받는다.
+     @main 은 캐시(최대 12시간·7일)가 길어 갱신이 늦으므로, 파일을 바꾼 뒤에는 커밋 SHA 로 고정할 것 (fonts 와 같은 방식) */
+  var BA_ASSET_BASE='https://cdn.jsdelivr.net/gh/creatorlinkapp/editor-assets@main/';   /* 260918 수정 — 이미지(ED_IMG)와 같은 규칙으로 @main: 영상을 바꿀 때는 새 이름으로 올리고 참조만 바꾼다 */
   /* 261007 추가 — 그리드 갤러리(GALLERY12–17) 카드 썸네일 (인라인 SVG · 디자인마다 격자 모양과 올린 칸 하나) */
   function baGridThumb(o){
     var ff="Pretendard,Noto Sans KR,Apple SD Gothic Neo,Malgun Gothic,sans-serif", W=552, H=300;
@@ -24459,10 +24239,10 @@
   /* 261014 추가 — 카드 grp(위 탭 거르기). 키 = kind 또는 kind/preset. 갤러리·게시판·컨택트는 카드 목록이 이미 grp/tag 를 갖고 있어 여기 없다 */
   var BA_GRP={
     content:{ bookflip2:'3D', stackcard:'스크롤', beforeafter:'' },
-    slide:{ stripgal:'3D', cardring:'3D', bookflip2:'3D', scene1:'와이드', scene2:'와이드', scene3:'와이드', photo1:'기본', multi4:'기본', logoflow:'기본', sqcar:'기본' },   /* 261109 추가 — 스퀴즈 캐러셀 */
+    slide:{ stripgal:'3D', cardring:'3D', bookflip2:'3D', scene1:'와이드', scene2:'와이드', scene3:'와이드', photo1:'기본', multi4:'기본', logoflow:'기본' },
     form:{ basic:'문의', gray:'문의', message:'문의', info:'정보 수집', personal:'정보 수집', company:'정보 수집', customer:'정보 수집', meeting:'신청', order:'신청', survey:'신청' },
     text:{ cred:'기본', smeartext:'모션', polytext:'모션', typetext:'모션', arctext:'모션', risetext:'모션', scrollread:'모션', idxlist:'목록', faqacc:'목록', qnaacc:'목록' },
-    image:{ rbstat:'이미지', imggrid:'이미지', 'imggrid/video':'동영상', 'imggrid/yt1':'동영상', 'imggrid/yt2':'동영상', 'imggrid/shorts3':'동영상', 'cred/vtext':'동영상', 'cred/bgvid':'동영상', 'imggrid/logo5':'로고', 'imggrid/logo5d':'로고' },   /* 261028 삭제 — moto3d · crumple 은 히어로 섹션(grp 를 옮길 때 직접 준다) */
+    image:{ imggrid:'이미지', 'imggrid/video':'동영상', 'imggrid/yt1':'동영상', 'imggrid/yt2':'동영상', 'imggrid/shorts3':'동영상', 'cred/vtext':'동영상', 'cred/bgvid':'동영상', 'imggrid/logo5':'로고', 'imggrid/logo5d':'로고' },   /* 261028 삭제 — moto3d · crumple 은 히어로 섹션(grp 를 옮길 때 직접 준다) */
     button:{ invert:'채움', fill:'채움', wipe:'채움', bgrow:'채움', highlight:'채움', fade:'채움',
              line:'선', cline:'선', bracket:'선', ring:'선', dot:'선', round:'선', circle:'채움',
              roll:'글자', scramble:'글자', swap:'글자', hswap:'글자', flip:'글자', tshadow:'글자',
@@ -24679,8 +24459,6 @@
   /* ── 블록설정 패널 전환 ── */
   var smCurBlk=null, smBound=false;
   var SM_KIND={/* 261014 수정 — 갤러리 이름은 블록추가 카드 배지(유형 · 이름)와 같은 말로 */ gridgal:'그리드 갤러리', hero:'이미지', gal:'이미지', slideshow:'이미지', intro:'텍스트', cred:'텍스트', smeartext:'커서 번짐 텍스트', moto3d:'3D 배경 이미지', imggrid:'이미지', stripgallery:'3D 스트립 갤러리', floatgal:'떠다님 갤러리', polytext:'3D 텍스트', typetext:'타이핑 텍스트', risetext:'글자 올라오기', fxbutton:'버튼', cardring:'3D 카드 회전', bookflip2:'책자 넘김', spiralgal:'나선 갤러리', depthgal:'깊이 갤러리', scrollslider:'스크롤 슬라이더', vcgal:'세로 스크롤 갤러리', infgal:'곡면 갤러리', wheelcar:'세로 롤링 갤러리', helixgal:'나선 계단 갤러리', gaugeslider:'눈금 슬라이더', hscrollgal:'가로 스크롤 갤러리', tiltgal:'기울임 갤러리', stackgal:'겹침 갤러리', arctext:'곡선 흐르는 텍스트', idxlist:'인덱스 리스트', faqacc:'FAQ 아코디언', qnaacc:'QnA 아코디언', scrollread:'스크롤 문장 등장', beforeafter:'이전·이후 비교', crumple:'구김 이미지', imgring:'링 갤러리', stackcard:'스택 카드', formblk:'폼', calblk:'캘린더', bdblk:'게시판', ctblk:'컨택트', dvblk:'구분선', cdblk:'카운트다운', nmblk:'숫자 카운터', qrblk:'QR 코드'};   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 추가 — 구분선 */
-  SM_KIND.sqcar='슬라이드쇼';
-  SM_KIND.rbstat='리본 통계';   /* 261109 추가 — 리본 통계(IMAGE21) */   /* 261109 추가 — 스퀴즈 캐러셀(SLIDE10) */
   SM_KIND.snblk='소셜';   /* 261022 추가 — 소셜 블록 */
   SM_KIND.tkblk='탭';   /* 261023 추가 — 탭 블록 */
   SM_KIND.ltblk='최근게시물';   /* 261023 추가 — 최근게시물 블록 */
@@ -24708,8 +24486,6 @@
     var isHg=(kindAttr==='helixgal');   /* 260916 추가 — 헬릭스 갤러리 */
     var isGs=(kindAttr==='gaugeslider');   /* 260922 추가 — 게이지 슬라이더 */
     var isHz=(kindAttr==='hscrollgal');   /* 261008 추가 — 가로 스크롤 갤러리 */
-    var isSq=(kindAttr==='sqcar');
-    var isRb=(kindAttr==='rbstat');   /* 261109 추가 — 리본 통계(IMAGE21) */   /* 261109 추가 — 스퀴즈 캐러셀(SLIDE10) */
     var isTg=(kindAttr==='tiltgal');   /* 261008 추가 — 틸트 갤러리 */
     var isSk=(kindAttr==='stackgal');   /* 260923 추가 — 스택 갤러리 */
     var isAx=(kindAttr==='arctext');
@@ -24734,7 +24510,7 @@
     var isCd=(kindAttr==='cdblk');   /* 261019 추가 — 카운트다운 블록(COUNTDOWN01~09) */
     var isRt=(kindAttr==='cred');   /* 260905 추가 — 이력 텍스트 블록 */
     var d=document.getElementById('bsetDefault'), s=document.getElementById('bsetSmear'), m=document.getElementById('bsetMoto'), g=document.getElementById('bsetStrip'), fl=document.getElementById('bsetFloat'), pt=document.getElementById('bsetPoly'), tw=document.getElementById('bsetType'), cr=document.getElementById('bsetRing'), hx=document.getElementById('bsetSpiral'), ax=document.getElementById('bsetArc'), ix=document.getElementById('bsetIdx');
-    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isSq||isRb||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt||isBd||isDv||isCd||isNm||isQr||isCn||isSn||isTk||isLt)?'none':'';   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 수정 — 구분선 */
+    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isTg||isFq||isQn||isSk||isSr||isBc||isCk||isSc||isIr||isFm||isCa||isCt||isBd||isDv||isCd||isNm||isQr||isCn||isSn||isTk||isLt)?'none':'';   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 수정 — 구분선 */
     var rsp=document.getElementById('bsetRise'); if(rsp) rsp.style.display=isRs?'':'none';
     var fqp=document.getElementById('bsetFaq'); if(fqp) fqp.style.display=isFq?'':'none';   /* 260923 추가 */
     var qnp=document.getElementById('bsetQna'); if(qnp) qnp.style.display=isQn?'':'none';   /* 260923 추가 — QnA 아코디언 */
@@ -24764,9 +24540,7 @@
     var wcp=document.getElementById('bsetWheel'); if(wcp) wcp.style.display=isWc?'':'none';   /* 260916 추가 */
     var hgp=document.getElementById('bsetHelix'); if(hgp) hgp.style.display=isHg?'':'none';   /* 260916 추가 */
     var gsp=document.getElementById('bsetGauge'); if(gsp) gsp.style.display=isGs?'':'none';   /* 260922 추가 */
-    var hzp=document.getElementById('bsetHz'); if(hzp) hzp.style.display=isHz?'':'none';
-    var sqp=document.getElementById('bsetSq'); if(sqp) sqp.style.display=isSq?'':'none';
-    var rbp=document.getElementById('bsetRb'); if(rbp) rbp.style.display=isRb?'':'none';   /* 261109 추가 */   /* 261109 추가 */   /* 261008 추가 */
+    var hzp=document.getElementById('bsetHz'); if(hzp) hzp.style.display=isHz?'':'none';   /* 261008 추가 */
     var tgp=document.getElementById('bsetTg'); if(tgp) tgp.style.display=isTg?'':'none';   /* 261008 추가 */
     var skp=document.getElementById('bsetStack'); if(skp) skp.style.display=isSk?'':'none';   /* 260923 추가 */
     var ssp=document.getElementById('bsetSlider'); if(ssp) ssp.style.display=isSs?'':'none';
@@ -24806,9 +24580,7 @@
     wcCurBlk=isWc?blk:null;   /* 260916 추가 */
     hgCurBlk=isHg?blk:null;   /* 260916 추가 */
     gsCurBlk=isGs?blk:null;   /* 260922 추가 */
-    hzCurBlk=isHz?blk:null;
-    sqCurBlk=isSq?blk:null;
-    rbCurBlk=isRb?blk:null;   /* 261109 추가 */   /* 261109 추가 */   /* 261008 추가 */
+    hzCurBlk=isHz?blk:null;   /* 261008 추가 */
     tgCurBlk=isTg?blk:null;   /* 261008 추가 */
     skCurBlk=isSk?blk:null;   /* 260923 추가 */
     ssCurBlk=isSs?blk:null;
@@ -24860,9 +24632,7 @@
     if(isWc){ wcBuildBset(); wcFillBset(); }   /* 260916 추가 */
     if(isHg){ hgBuildBset(); hgFillBset(); }   /* 260916 추가 */
     if(isGs){ gsBuildBset(); gsFillBset(); }   /* 260922 추가 */
-    if(isHz){ hzBuildBset(); hzFillBset(); }
-    if(isSq){ sqBuildBset(); sqFillBset(); }
-    if(isRb){ rbBuildBset(); rbFillBset(); }   /* 261109 추가 */   /* 261109 추가 */   /* 261008 추가 */
+    if(isHz){ hzBuildBset(); hzFillBset(); }   /* 261008 추가 */
     if(isTg){ tgBuildBset(); tgFillBset(); }   /* 261008 추가 */
     if(isSk){ skBuildBset(); skFillBset(); }   /* 260923 추가 */
     if(isSs){ ssBuildBset(); ssFillBset(); }
@@ -26403,7 +26173,6 @@
     ig:{video:false,max:function(){return IG_MAX;},cur:function(){return igCurBlk;},cfg:function(b){return igCfg(b);},len:function(c){return (c.imgs||[]).length;},push:function(c,a){ if(!Array.isArray(c.imgs)) c.imgs=[]; c.imgs.push(a.src); c.imgMode='direct'; },render:function(){ igImgRender(); igImgSegSync(); },apply:function(b){ igApply(b); }},   /* 260916 추가 */
     wc:{video:true,max:function(){return WC_MAX;},cur:function(){return wcCurBlk;},cfg:function(b){return wcCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push({src:a.src,t:a.cap||''}); },render:function(){ wcItemRender(); },apply:function(b){ wcApply(b); }},   /* 260916 추가 — 휠 캐러셀 */
     gs:{video:true,max:function(){return GS_MAX;},cur:function(){return gsCurBlk;},cfg:function(b){return gsCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push({src:a.src,t:a.cap||'',m:''}); },render:function(){ gsItemRender(); },apply:function(b){ gsApply(b); }},   /* 260922 추가 — 게이지 슬라이더 */
-    sq:{video:true,max:function(){return SQ_MAX;},cur:function(){return sqCurBlk;},cfg:function(b){return sqCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push({src:a.src,t:a.cap||'',m:'',bt:'',url:''}); },render:function(){ sqItemRender(); },apply:function(b){ sqApply(b); }},   /* 261109 추가 — 스퀴즈 캐러셀 */
     hz:{video:true,max:function(){return HZ_MAX;},cur:function(){return hzCurBlk;},cfg:function(b){return hzCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push({src:a.src,t:a.cap||'',m:''}); },render:function(){ hzItemRender(); },apply:function(b){ hzApply(b); }},   /* 261008 추가 — 가로 스크롤 갤러리 */
     tg:{video:true,max:function(){return TG_MAX;},cur:function(){return tgCurBlk;},cfg:function(b){return tgCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push({src:a.src,t:a.cap||'',m:''}); },render:function(){ tgItemRender(); },apply:function(b){ tgApply(b); }},   /* 261008 추가 — 틸트 갤러리 */
     sc:{video:true,max:function(){return SC_MAX;},cur:function(){return scCurBlk;},cfg:function(b){return scCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push(scItemNew(a.src)); },render:function(){ scItemRender(); },apply:function(b){ scApply(b); }},   /* 260923 추가 — 스택 카드 */
@@ -26417,7 +26186,7 @@
   };
   /* 260919 추가 — 목록 블록의 「추가」: 빈 행을 만들던 것 → 이미지 블록과 같은 보관함 추가 모드. 보관함에서 누를 때마다 목록 끝에 들어가고, 버튼을 다시 누르면 끝난다.
      블록별 차이는 업로드와 같은 BLK_UP(max·cfg·push·render·apply)을 그대로 쓴다. 주소 직접 입력은 추가된 행의 입력칸에서 */
-  var BLK_PICK_LIST={gg:'ggImgList',sg:'sgImgList',mt:'mtImgList',fl:'flImgList',cr:'crItemList',dg:'dgImgList',ig:'igImgList',wc:'wcItemList',hg:'hgItemList',ss:'ssImgList',vc:'vcItemList',hx:'hxImgList',gs:'gsItemList',hz:'hzItemList',sq:'sqItemList',tg:'tgItemList',sk:'skItemList',sc:'scItemList',ck:'ckItemList',ir:'irImgList'};   /* 260922 수정 — 게이지 슬라이더 */
+  var BLK_PICK_LIST={gg:'ggImgList',sg:'sgImgList',mt:'mtImgList',fl:'flImgList',cr:'crItemList',dg:'dgImgList',ig:'igImgList',wc:'wcItemList',hg:'hgItemList',ss:'ssImgList',vc:'vcItemList',hx:'hxImgList',gs:'gsItemList',hz:'hzItemList',tg:'tgItemList',sk:'skItemList',sc:'scItemList',ck:'ckItemList',ir:'irImgList'};   /* 260922 수정 — 게이지 슬라이더 */
   function blkListPick(key,btn){
     var d=BLK_UP[key]; if(!d) return; var blk=d.cur(); if(!blk) return;
     if(libThumbMode && libThumbMode.addKey===key){ libThumbEnd(false); clToast('이미지 선택을 끝냈습니다.'); return; }
@@ -26551,7 +26320,7 @@
       openRow(o.parentElement,null);
     });
     /* ── 뷰 전환 ── 썸네일 뷰(격자)를 쓸 수 있는 목록 = 항목의 정체가 사진인 갤러리들(엔진 키 → 목록 id 는 BLK_PICK_LIST). 폼·퀵메뉴·게시판·스택 카드 등 글이 본체인 목록은 넣지 않는다 */
-    var GRID_KEYS=['hx','dg','ig','wc','hg','ss','sk','ir','hz','sq','tg','gs','sg','cr','fl','mt','ck','vc'];   /* 261015 추가 — 세로 스크롤 갤러리(vc · 정보 칸 4개 + 링크는 둘째 줄 이후 전체 폭) */   /* 261014 — 나선 + A 11종 + 스트립(sg · 제목·부제만 → data-nourl) + 카드 회전(cr · .mtk-field) + 떠다님(fl · .fl-*) + 3D 스트립(mt) · 구김(ck · 주소만 → data-urlonly) */
+    var GRID_KEYS=['hx','dg','ig','wc','hg','ss','sk','ir','hz','tg','gs','sg','cr','fl','mt','ck','vc'];   /* 261015 추가 — 세로 스크롤 갤러리(vc · 정보 칸 4개 + 링크는 둘째 줄 이후 전체 폭) */   /* 261014 — 나선 + A 11종 + 스트립(sg · 제목·부제만 → data-nourl) + 카드 회전(cr · .mtk-field) + 떠다님(fl · .fl-*) + 3D 스트립(mt) · 구김(ck · 주소만 → data-urlonly) */
     var GRID_NOURL={sg:1}, GRID_URLONLY={mt:1};   /* 261028 수정 — 구김(ck)은 사진별 링크가 생겨 패널을 연다(썸네일 뷰 클릭 = 링크 · 리스트 뷰 줄 = 썸네일 + 링크 + 휴지통) */
     var ICO_GRID='<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>';
     var ICO_LIST='<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
@@ -26625,7 +26394,6 @@
     sg:function(blk,i){ if(typeof sgGo==='function') sgGo(blk,i); },
     ck:function(blk,i){ if(typeof ckGo==='function') ckGo(blk,i); },
     tg:function(blk,i){ var S=blk._tg; if(!S||S.anim||!S.n) return; S.center=Math.max(0,Math.min(S.n-1,i)); if(typeof tgPlace==='function') tgPlace(blk); },
-    sq:function(blk,i){ if(typeof sqGo==='function') sqGo(blk,i); },   /* 261109 추가 — 스퀴즈 캐러셀 */
     hz:function(blk,i){ var S=blk._hz; if(!S) return; var st=S.step||0; S.target=Math.max(0,Math.min(S.max||0,i*st)); if(typeof hzKick==='function') hzKick(blk); },
     vc:function(blk,i){ var S=blk._vc; if(!S) return; var mx=(typeof vcMaxP==='function')?vcMaxP(blk):0; S.loc=Math.max(0,Math.min(mx,i)); S.done=false; if(typeof vcSideSet==='function') vcSideSet(blk,S.loc,true); },
     fl:function(blk,i){ var S=blk._fl, c=flCfg(blk); if(!S||!S.items) return; var it=null; for(var k=0;k<S.items.length;k++){ if(flItemIdx(c,S.items[k])===i){ it=S.items[k]; break; } } if(it && typeof flExpand==='function'){ if(S.expanded && S.expanded!==it && typeof flCollapse==='function') flCollapse(blk); flExpand(blk,it); } },
@@ -26648,7 +26416,7 @@
     document.addEventListener('click',function(e){ var t=e.target; if(!(t&&t.closest)) return; var row=t.closest('#bset .rs-box .mt-imgrow,#bset .rs-box .sg-imgrow,#bset .rs-box .fl-imgrow'); if(!row || !t.closest('.mt-imgthumb,.sg-imgthumb,.fl-imgthumb')) return; var list=row.parentElement; if(list.classList.contains('mt-grid')) return; rsPick(list,row,e); var key=blkListKeyOf(list); if(key) blkListGoto(key,+row.getAttribute('data-i')); },true);
   })();
   /* 260919 추가 — 목록 블록의 「URL」: 예전 「추가」 동작(빈 줄을 만들고 주소 칸에 포커스)을 그대로 쓴다. 줄마다 URL 입력칸이 있어 모달이 필요 없다 */
-  var BLK_URL_FN={gg:'ggImgAddRow',mt:'mtImgAddRow',fl:'flImgAddRow',cr:'crItemAddRow',dg:'dgImgAddRow',ig:'igImgAddRow',wc:'wcItemAddRow',hg:'hgItemAddRow',ss:'ssImgAddRow',vc:'vcItemAddRow',hx:'hxImgAddRow',gs:'gsItemAddRow',hz:'hzItemAddRow',sq:'sqItemAddRow',tg:'tgItemAddRow',sk:'skItemAddRow',sc:'scItemAddRow',ck:'ckItemAddRow',ir:'irImgAddRow'};   /* 260922 수정 — 게이지 슬라이더 */
+  var BLK_URL_FN={gg:'ggImgAddRow',mt:'mtImgAddRow',fl:'flImgAddRow',cr:'crItemAddRow',dg:'dgImgAddRow',ig:'igImgAddRow',wc:'wcItemAddRow',hg:'hgItemAddRow',ss:'ssImgAddRow',vc:'vcItemAddRow',hx:'hxImgAddRow',gs:'gsItemAddRow',hz:'hzItemAddRow',tg:'tgItemAddRow',sk:'skItemAddRow',sc:'scItemAddRow',ck:'ckItemAddRow',ir:'irImgAddRow'};   /* 260922 수정 — 게이지 슬라이더 */
   function blkUrlProbe(u,vidOk,put){   /* 확장자로 이미지/동영상을 가르고, 없으면 이미지 → 동영상 순으로 불러 확인한다 */
     var isV=/\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(u)||/#video$/i.test(u);
     if(isV){ if(!vidOk){ clToast('이 블록에는 이미지만 넣을 수 있습니다.'); return; } put(u); return; }
@@ -28417,7 +28185,7 @@
   var IM_PRESETS={
     wide:   function(){ return {cfg:{cols:1, wrap:false, px:0, pt:0, pb:0, hover:'none', items:imPreItems(['sample/gallery_41_1.jpg'],2.4,'free')}, mob:{px:0}}; },   /* 전체 폭 한 장 · 위아래 여백 없음 · 261012 수정 — 「좌우 폭 제한」 끔(wrap:false · .im-full): 좌우 여백 0 만으로는 콘텐츠 최대 폭 1180 에 막혀 양옆에 배경이 남았다 */
     pair:   function(){ return {cfg:{cols:2, gx:24, gy:24, items:imPreItems(['sample/gallery_51_12.jpg','sample/gallery_51_15.jpg'],4/5,'4:5')}}; },   /* 세로 사진 두 장 */
-    tile:   function(){ return {cfg:{cols:4, gx:8, gy:8, items:imPreItems([1,2,3,4,5,6,7,8].map(function(n){ return 'sample/product_calm_'+n+'.jpg'; }),1,'1:1')}, mob:{cols:2}}; },   /* 정사각 타일 · 촘촘하게 · 261110 수정 — 견본 사진을 차분한 톤의 제품 사진(Unsplash · gallery-sample/sample/product_calm_1~8.jpg)으로 */
+    tile:   function(){ return {cfg:{cols:4, gx:8, gy:8, items:imPreItems([1,2,3,4,5,6,7,8].map(function(n){ return 'sample/gallery_39_'+n+'.jpg'; }),1,'1:1')}, mob:{cols:2}}; },   /* 정사각 타일 · 촘촘하게 */
     caption:function(){ return {cfg:{cols:3, gx:32, gy:40, cap:true, items:imPreItems(['sample/beige_bl_01.jpg','sample/beige_bl_02.jpg','sample/beige_bl_05.jpg'],3/2,'3:2',[
                 '<p><strong>공간의 결</strong></p><p>사진 아래에 짧은 설명을 적어 보세요.</p>',
                 '<p><strong>빛과 그림자</strong></p><p>글은 눌러서 바로 고칠 수 있습니다.</p>',
@@ -31861,508 +31629,6 @@
   }
   window.hzCfg=hzCfg; window.hzApply=hzApply; window.hzStop=hzStop; window.hzInit=hzInit; window.hzBlockHTML=hzBlockHTML; window.hzCloneInit=hzCloneInit; window.hzUpd=hzUpd;
   window.hzSw=hzSw; window.hzSrcInput=hzSrcInput; window.hzCapInput=hzCapInput; window.hzItemAddRow=hzItemAddRow; window.hzItemDel=hzItemDel;
-
-
-  /* ══════════════════════════════════════════════════════════════════
-     261109 추가 — 스퀴즈 캐러셀 블록 (SLIDE10 · 슬라이드쇼 카테고리 · stripe.com 「What's happening」 참조)
-     · 블록추가 > 슬라이드쇼 카테고리 카드 → 블록 삽입. 항목 = 사진/영상 + 제목 + 설명 + 버튼 글 + 링크 (설정창 목록 · 보관함 드롭 · 업로드 · URL)
-     · 배치(sqLayout): 열린 카드 폭 = 무대 폭 × act%(기본 65) · 다음 카드 = 16 · 8 · 4% → 8px 띠 · 간격 gap · 지난 카드 = 열린 폭 그대로 왼쪽 밖(−(aw+gap)×k). 높이 = 열린 폭 × ar%
-       폭 640 아래(모바일 사본): 열린 카드 80% · 다음 12% → 6px 띠 · 간격 10
-     · 전환: left · width CSS 전환(.55s) — 사진은 열린 폭(--sq-aw)으로 고정해 띠에선 가운데 조각만 보인다. 아래 글은 .12s 페이드아웃 → 교체 → 페이드인
-     · 넘기기: 화살표 · 닫힌 카드 클릭 · 옆으로 끌기(40px) · 자동 넘김(초 · 마우스 올리면 멈춤). 열린 카드에 링크가 있으면 미리보기 · 모바일 사본에서 누르면 연다(편집 화면에선 열지 않는다)
-     · PC·모바일 사본 공유값: items · 머리글 글 · 켜고 끄기(MV_SHARE) ══ */
-  var SQ_DEF={ items:[], head:true, h1:'새로운 소식', h2:'최근 업데이트를 확인하세요.', cap:true, btn:true, nav:true,
-               act:65, ar:58, gap:16, radius:8, auto:0, hs:100, cs:100,
-               ac:'#635BFF', fg:'#0A2540', mt:'#425466', bg:'#FFFFFF', pt:72, pb:72 };
-  var SQ_MAX=12, SQ_MIN=2;
-  /* 261109 수정 — 견본 8장: 문구에 맞는 Unsplash 사진(id · unsById 로 1600×1000 자르기). 8장이면 열린 카드 + 띠 4개 + 왼쪽 밖 1개를 채우고도 남아 끝없이 돈다 */
-  var SQ_SAMPLE=[['1545242640-7c9e9cc07d23','스튜디오 신규 촬영 공간을 열었습니다.','자연광이 드는 2층 공간에서 가족 · 프로필 촬영을 진행합니다. 예약은 홈페이지에서 바로 할 수 있습니다.','공간 보기'],
-                 ['1788309836722-178be447341e','가을 가족사진 패키지 안내.','11월 한 달간 가족 촬영에 원본 전체 파일을 함께 드립니다. 주말 예약은 서둘러 주세요.','패키지 보기'],
-                 ['1573496359142-b8d87734a5a2','프로필 · 증명사진 당일 보정 서비스.','촬영 후 30분 안에 보정본을 전달합니다. 이력서 · 명함 · SNS 프로필에 맞는 비율로 함께 드립니다.','자세히 보기'],
-                 ['1519741497674-611481863552','웨딩 · 커플 스냅 포트폴리오 업데이트.','올해 진행한 스냅 촬영 중 커플이 공개를 허락한 사진을 모았습니다.','포트폴리오 보기'],
-                 ['1611930022073-b7a4ba5fcccd','기업 · 제품 촬영 문의를 받습니다.','브랜드 룩북 · 제품 상세 · 임직원 프로필까지 한 번에 진행합니다. 견적은 하루 안에 드립니다.','문의하기'],
-                 ['1780329928812-67cfbdc1d979','아기 50일 · 100일 촬영 예약을 받습니다.','아이의 컨디션에 맞춰 쉬어 가며 찍습니다. 수유실 · 대기 공간이 함께 있습니다.','예약하기'],
-                 ['1636540661852-5fbbbffd2c2f','스튜디오 조명 장비를 새로 들였습니다.','대형 소프트박스와 연속광을 추가해 제품 · 인물 촬영의 톤이 한결 고르게 나옵니다.','장비 보기'],
-                 ['1541807084-5c52b6b3adef','스튜디오 소식을 메일로 받아 보세요.','새 패키지 · 할인 · 전시 소식을 한 달에 한 번 보내 드립니다.','구독하기']];
-  var sqCurBlk=null, sqBound=false;
-  function sqNum(v,d){ var n=parseFloat(v); return isFinite(n)?n:d; }
-  function sqClamp(v,a,b){ return Math.min(b,Math.max(a,v)); }
-  function sqIsVid(u){ u=String(u||'').trim(); return /\.(mp4|webm|ogv|ogg|mov|m4v)(\?|#|$)/i.test(u) || /^data:video\//i.test(u) || /#video$/i.test(u); }
-  function sqCfg(blk){
-    if(!blk._sqCfg){
-      blk._sqCfg=JSON.parse(JSON.stringify(SQ_DEF));
-      SQ_SAMPLE.forEach(function(r){ blk._sqCfg.items.push({src:(typeof unsById==='function')?unsById(r[0],1600,1000):('https://images.unsplash.com/photo-'+r[0]+'?q=80&w=1600&h=1000&auto=format&fit=crop'), t:r[1], m:r[2], bt:r[3], url:''}); });
-    }
-    var c=blk._sqCfg; if(!Array.isArray(c.items)) c.items=[];
-    return c;
-  }
-  var SQ_I_PREV='<svg viewBox="0 0 16 16"><path d="M10.5 3.5L6 8l4.5 4.5"/></svg>', SQ_I_NEXT='<svg viewBox="0 0 16 16"><path d="M5.5 3.5L10 8l-4.5 4.5"/></svg>', SQ_I_GO='<svg viewBox="0 0 10 10"><path d="M3 1.5L6.5 5 3 8.5"/></svg>';
-  function sqBlockHTML(){
-    return '<span class="tag-badge">슬라이드쇼</span>'+SM_GEAR
-      +'<div class="sq-wrap">'
-      +'<div class="sq-head"><div class="sq-ht"><div class="sq-h1"></div><div class="sq-h2"></div></div><div class="sq-nav"><button type="button" class="sq-prev" aria-label="이전">'+SQ_I_PREV+'</button><button type="button" class="sq-next" aria-label="다음">'+SQ_I_NEXT+'</button></div></div>'
-      +'<div class="sq-stage"></div>'
-      +'<div class="sq-foot"><div class="sq-cap"><span class="sq-ct"></span><span class="sq-cd"></span></div><a class="sq-btn"><span class="sq-bt"></span>'+SQ_I_GO+'</a></div>'
-      +'</div>';
-  }
-  function sqSig(c){ return (c.items||[]).map(function(it){ return String((it&&it.src)||''); }).join('~'); }
-  function sqBuild(blk){
-    var S=blk._sq, c=sqCfg(blk); if(!S) return;
-    S.stage.innerHTML=c.items.map(function(it,i){
-      var u=String((it&&it.src)||'').trim(), m='';
-      if(u) m=sqIsVid(u)?('<video src="'+_mtAttr(u.replace(/#video$/i,''))+'" muted loop playsinline preload="metadata"></video>')
-                        :('<img src="'+_mtAttr(u)+'" alt="'+_mtAttr((it&&it.t)||'')+'" draggable="false">');
-      return '<div class="sq-item" data-i="'+i+'">'+m+'</div>';
-    }).join('');
-    S.items=[].slice.call(S.stage.children);
-    S.sig=sqSig(c);
-    if(S.i>=S.items.length) S.i=Math.max(0,S.items.length-1);
-  }
-  function sqLayout(blk,instant){
-    var S=blk._sq, c=sqCfg(blk); if(!S||!S.items) return;
-    var W=S.stage.clientWidth||1000, mob=(W<640), n=S.items.length;
-    var act=sqClamp(sqNum(c.act,65),30,90)/100; if(mob) act=0.8;
-    var gap=mob?10:Math.max(0,sqNum(c.gap,16)), aw=Math.round(W*act), tail=mob?[0.12]:[0.16,0.08,0.04], thin=mob?6:8;
-    var H=Math.round(aw*sqClamp(sqNum(c.ar,58),20,160)/100);
-    S.stage.style.setProperty('--sq-h',H+'px'); S.stage.style.setProperty('--sq-aw',aw+'px');
-    if(instant) S.stage.classList.add('sq-now');
-    /* 261109 수정 — 끝없이 돈다 + 왼쪽으로 밀림(stripe 매너): 자리 k 는 열린 카드 기준 부호 있는 순환 거리(−n/2 < k ≤ n/2). k>0 은 오른쪽 띠(16 · 8 · 4% → 가는 띠), k<0 은 지난 카드 — 열린 카드 왼쪽에 열린 폭 그대로 쌓이고,
-       바로 앞 카드(k=−1)의 오른쪽 끝 sl px 만 화면 안에 남는다(stripe 의 왼쪽 가장자리 조각). 그래서 3 · 4번째 띠를 눌러도 그 사이 카드들이 전부 왼쪽으로 밀려 나간다.
-       가장 먼 왼쪽 ↔ 가장 먼 오른쪽으로 순환해 건너뛰는 카드(둘 다 화면 밖)는 그 순간만 전환 없이 옮긴다(.sq-jump) */
-    var sl=mob?8:16, x0=sl+gap, half=Math.floor(n/2);
-    var xs=[], ws=[], x=x0;
-    for(var k=0;k<2*n;k++){ var w=(k===0)?aw:((k-1<tail.length)?Math.round(W*tail[k-1]):thin); ws.push(w); xs.push(x); x+=w+gap; }   /* 2n 까지: 순환으로 건너오는 카드의 출발 자리(가상 자리)까지 계산 */
-    function posL(k){ return sl-aw-(aw+gap)*(-k-1); }   /* k<0 자리 */
-    /* 방향: 눌린(목표) 카드의 이전 자리 delta 만큼 모든 카드가 같은 방향으로 움직인다(stripe · 오른쪽 띠를 누르면 전부 왼쪽으로, 이전 버튼이면 전부 오른쪽으로).
-       새 자리 kn = 이전 자리 − delta. 창(−(n−1−half) … half) 밖으로 나가는 카드만 반대편으로 순환(jump) — 이전 자리 ± n 의 가상 자리에서 출발시켜 줄이 끊기지 않게 */
-    var tgt=S.items[S.i], delta=(tgt && tgt._k!=null && !instant)?tgt._k:null, lo=-(n-1-half);
-    S.items.forEach(function(el,i){
-      var pk=el._k, k, vk=null;
-      if(delta==null || pk==null){ k=((i-S.i)%n+n)%n; if(k>half) k-=n; }
-      else { k=pk-delta; if(k>half){ k-=n; vk=pk-n; } else if(k<lo){ k+=n; vk=pk+n; } }
-      var w, left;
-      if(k<0){ w=aw; left=posL(k); } else { w=ws[k]; left=xs[k]; }
-      if(vk!=null && !instant){
-        var vx=(vk>=0)?xs[Math.min(vk,xs.length-1)]:posL(vk), vw=(vk>=0)?ws[Math.min(vk,ws.length-1)]:aw;
-        el.classList.add('sq-jump'); el.style.setProperty('--x',vx+'px'); el.style.setProperty('--w',vw+'px'); el._tx=left; el._tw=w;
-      } else { el.style.setProperty('--x',left+'px'); el.style.setProperty('--w',w+'px'); }
-      el._k=k;
-      el.classList.toggle('sq-act',k===0);
-      var it=c.items[i]||{}; el.classList.toggle('sq-link',k===0 && !!String(it.url||'').trim());
-    });
-    var jumped=S.items.filter(function(el){ return el.classList.contains('sq-jump'); });
-    if(jumped.length){ void S.stage.offsetWidth; jumped.forEach(function(el){ el.classList.remove('sq-jump'); el.style.setProperty('--x',el._tx+'px'); el.style.setProperty('--w',el._tw+'px'); }); }
-    if(instant){ void S.stage.offsetWidth; S.stage.classList.remove('sq-now'); }
-    S.W=W;
-    /* 영상: 열린 카드만 재생 */
-    S.items.forEach(function(el,i){ var v=el.querySelector('video'); if(!v) return; if(i===S.i && S.vis){ try{ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }catch(e){} } else if(!v.paused){ try{ v.pause(); }catch(e){} } });
-  }
-  function sqCaptionSet(blk){
-    var S=blk._sq, c=sqCfg(blk); if(!S) return;
-    var it=c.items[S.i]||{}, ct=S.foot.querySelector('.sq-ct'), cd=S.foot.querySelector('.sq-cd'), bt=S.foot.querySelector('.sq-bt'), a=S.foot.querySelector('.sq-btn');
-    if(ct) ct.textContent=String(it.t||''); if(cd) cd.textContent=String(it.m||''); if(bt) bt.textContent=String(it.bt||'').trim()||'자세히 보기';
-    var url=String(it.url||'').trim();
-    if(a){ if(url){ a.setAttribute('href',url); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); } else { a.removeAttribute('href'); a.removeAttribute('target'); } }
-    S.foot.classList.toggle('sq-empty',!(it.t||it.m));
-  }
-  function sqCaption(blk,fade){
-    var S=blk._sq; if(!S) return;
-    if(!fade){ sqCaptionSet(blk); return; }
-    clearTimeout(S.capT); S.foot.classList.add('sq-fade');
-    S.capT=setTimeout(function(){ if(!S.alive) return; sqCaptionSet(blk); S.foot.classList.remove('sq-fade'); },130);
-  }
-  function sqGo(blk,i,src){
-    var S=blk._sq; if(!S||!S.items.length) return;
-    var n=S.items.length; i=((i%n)+n)%n;
-    if(i===S.i) return;
-    S.i=i; sqLayout(blk,false); sqCaption(blk,true); sqAutoArm(blk);
-  }
-  function sqApply(blk){
-    var S=blk._sq, c=sqCfg(blk), wrap=blk.querySelector('.sq-wrap'); if(!wrap||!S) return;
-    blk.style.background=c.bg||'#FFFFFF'; blk.classList.toggle('own-bg',!!c.bg);
-    blk.style.paddingTop=sqNum(c.pt,72)+'px'; blk.style.paddingBottom=sqNum(c.pb,72)+'px';
-    wrap.style.setProperty('--sq-ac',c.ac||'#635BFF'); wrap.style.setProperty('--sq-fg',c.fg||'#0A2540'); wrap.style.setProperty('--sq-mt',c.mt||'#425466'); wrap.style.setProperty('--sq-bg',c.bg||'#FFFFFF');
-    wrap.style.setProperty('--sq-hs',sqNum(c.hs,100)/100); wrap.style.setProperty('--sq-cs',sqNum(c.cs,100)/100); wrap.style.setProperty('--sq-r',sqNum(c.radius,8)+'px');
-    wrap.classList.toggle('sq-nohead',c.head===false); wrap.classList.toggle('sq-nocap',c.cap===false); wrap.classList.toggle('sq-nobtn',c.btn===false); wrap.classList.toggle('sq-nonav',c.nav===false);
-    var h1=wrap.querySelector('.sq-h1'), h2=wrap.querySelector('.sq-h2'); if(h1) h1.textContent=String(c.h1||''); if(h2) h2.textContent=String(c.h2||'');
-    var rebuilt=false; if(sqSig(c)!==S.sig){ sqBuild(blk); rebuilt=true; }
-    sqLayout(blk,rebuilt||!S.laid); S.laid=true; sqCaption(blk,false); sqAutoArm(blk);
-  }
-  function sqAutoArm(blk){
-    var S=blk._sq; if(!S) return;
-    if(S.autoT){ clearTimeout(S.autoT); S.autoT=0; }
-    var c=sqCfg(blk), sec=sqNum(c.auto,0); if(!(sec>0)||!S.alive) return;
-    S.autoT=setTimeout(function(){ S.autoT=0; if(!S.alive) return; if(S.vis && !S.hover && !document.hidden) sqGo(blk,S.i+1); else sqAutoArm(blk); }, sec*1000);
-  }
-  function sqLinkOk(){ return !!(window.CL_MVIEW || document.documentElement.classList.contains('pview') || document.documentElement.classList.contains('mview')); }
-  function sqInit(blk){
-    sqStop(blk);
-    var wrap=blk.querySelector('.sq-wrap'); if(!wrap) return;
-    var S=blk._sq={alive:true, wrap:wrap, stage:wrap.querySelector('.sq-stage'), foot:wrap.querySelector('.sq-foot'), items:[], sig:null, i:0, W:0, vis:true, autoT:0, capT:0, laid:false};
-    sqApply(blk);
-    wrap.querySelector('.sq-prev').addEventListener('click',function(e){ e.stopPropagation(); sqGo(blk,S.i-1); });
-    wrap.querySelector('.sq-next').addEventListener('click',function(e){ e.stopPropagation(); sqGo(blk,S.i+1); });
-    var a=wrap.querySelector('.sq-btn'); if(a) a.addEventListener('click',function(e){ if(!a.getAttribute('href') || !sqLinkOk()) e.preventDefault(); e.stopPropagation(); });
-    var down=null;
-    S.stage.addEventListener('pointerdown',function(e){ if(e.button!==0) return; down={x:e.clientX,y:e.clientY,id:e.pointerId,moved:false,el:e.target.closest('.sq-item')}; });
-    S.stage.addEventListener('pointermove',function(e){ if(!down||e.pointerId!==down.id||down.moved) return; var dx=e.clientX-down.x, dy=e.clientY-down.y; if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ down.moved=true; sqGo(blk,S.i+(dx<0?1:-1)); } });
-    function up(e){
-      if(!down||(e&&e.pointerId!==down.id)) return; var d=down; down=null;
-      if(d.moved||!d.el||e.type!=='pointerup') return;
-      var i=+d.el.getAttribute('data-i');
-      if(i!==S.i){ sqGo(blk,i); return; }
-      var it=sqCfg(blk).items[i]||{}, url=String(it.url||'').trim(); if(url && sqLinkOk()) try{ window.open(url,'_blank','noopener'); }catch(x){}
-    }
-    S.stage.addEventListener('pointerup',up); S.stage.addEventListener('pointercancel',up);
-    wrap.addEventListener('pointerenter',function(){ S.hover=true; }); wrap.addEventListener('pointerleave',function(){ S.hover=false; });
-    if(window.IntersectionObserver){ try{ S.io=new IntersectionObserver(function(es){ es.forEach(function(en){ S.vis=en.isIntersecting; }); sqLayout(blk,true); }); S.io.observe(S.stage); }catch(e){} }
-    if(window.ResizeObserver){ try{ S.ro=new ResizeObserver(function(){ if(S.alive && (S.stage.clientWidth||0)!==S.W) sqLayout(blk,true); }); S.ro.observe(S.stage); }catch(e){} }
-  }
-  function sqStop(blk){
-    var S=blk&&blk._sq; if(!S) return;
-    S.alive=false; if(S.autoT) clearTimeout(S.autoT); if(S.capT) clearTimeout(S.capT);
-    if(S.io){ try{ S.io.disconnect(); }catch(e){} } if(S.ro){ try{ S.ro.disconnect(); }catch(e){} }
-    (S.items||[]).forEach(function(el){ var v=el.querySelector('video'); if(v) try{ v.pause(); }catch(e){} });
-    blk._sq=null;
-  }
-  function sqCloneInit(src,clone){
-    if(!clone || clone.getAttribute('data-block')!=='sqcar') return;
-    sqStop(clone);
-    try{ clone._sqCfg=JSON.parse(JSON.stringify(sqCfg(src))); }catch(e){ clone._sqCfg=null; }
-    clone.innerHTML=sqBlockHTML();
-    sqInit(clone);
-  }
-  function baInsertSq(card){ galInsert('sq-blk','sqcar',sqBlockHTML,sqInit); }
-  /* ── 블록설정 ── */
-  function sqUpd(key,val){ if(!sqCurBlk) return; sqCfg(sqCurBlk)[key]=val; sqApply(sqCurBlk); }
-  function sqOn(id,ev,fn){ var el=document.getElementById(id); if(el) el.addEventListener(ev,function(){ fn(el); }); }
-  function sqSw(btn,key){ btn.classList.toggle('on'); sqUpd(key, btn.classList.contains('on')); sqShowSync(); }
-  function sqShowSync(){ if(!sqCurBlk) return; var c=sqCfg(sqCurBlk); var hw=document.getElementById('sqHeadWrap'), cw=document.getElementById('sqCapWrap'); if(hw) hw.style.display=(c.head===false)?'none':''; if(cw) cw.style.display=(c.cap===false)?'none':''; }
-  var SQ_RNG=[['sqAct','act','%'],['sqAr','ar','%'],['sqGap','gap','px'],['sqRadius','radius','px'],['sqAuto','auto','s'],['sqHs','hs','%'],['sqCs','cs','%'],['sqPt','pt','px'],['sqPb','pb','px']];
-  var SQ_COLS=[['sqAc','ac'],['sqFg','fg'],['sqMt','mt'],['sqBg','bg']];
-  var SQ_SWS=[['sqHeadSw','head'],['sqCapSw','cap'],['sqBtnSw','btn'],['sqNavSw','nav']];
-  function sqBuildBset(){
-    if(sqBound) return; sqBound=true;
-    SQ_RNG.forEach(function(r){ sqOn(r[0],'input',function(el){ var v=parseFloat(el.value); smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[2]; sqUpd(r[1],v); }); });
-    SQ_COLS.forEach(function(r){ sqOn(r[0],'input',function(el){ var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(el.value); sqUpd(r[1],el.value); }); });
-    sqOn('sqH1','input',function(el){ sqUpd('h1',el.value); }); sqOn('sqH2','input',function(el){ sqUpd('h2',el.value); });
-  }
-  function sqFillBset(){
-    if(!sqCurBlk) return;
-    var c=sqCfg(sqCurBlk);
-    function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
-    function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
-    sqItemRender();
-    SQ_RNG.forEach(function(r){ var v=sqNum(c[r[1]],SQ_DEF[r[1]]); set(r[0],v); txt(r[0]+'V',v+r[2]); });
-    SQ_COLS.forEach(function(r){ var v=String(c[r[1]]||SQ_DEF[r[1]]).toLowerCase(); set(r[0],v); txt(r[0]+'V',smHex(v)); });
-    SQ_SWS.forEach(function(r){ var b=document.getElementById(r[0]); if(b) b.classList.toggle('on', c[r[1]]!==false); });
-    set('sqH1',c.h1||''); set('sqH2',c.h2||'');
-    sqShowSync();
-  }
-  function sqItemRender(){
-    if(!sqCurBlk) return;
-    var c=sqCfg(sqCurBlk), list=document.getElementById('sqItemList'); if(!list) return;
-    var dis=(c.items.length<=SQ_MIN);
-    list.innerHTML=c.items.map(function(it,i){
-      var u=String((it&&it.src)||''), isV=sqIsVid(u);
-      var bg=(u&&!isV)?(' style="background-image:url(&quot;'+_mtAttr(u)+'&quot;)"'):'';
-      var vd=isV?'<span class="vd" title="동영상"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>':'';
-      return '<div class="mt-imgrow" data-i="'+i+'">'
-        +'<span class="mt-imgdrag" title="드래그하여 순서 변경"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></span>'
-        +'<span class="mt-imgthumb'+(isV?' has-vid':'')+'"'+bg+'>'+((typeof gvThumbInner==='function')?gvThumbInner(u):vd)+'</span>'
-        +'<div class="vc-caps">'
-        +'<input type="text" value="'+_mtAttr(u)+'" placeholder="https:// … 이미지·동영상 URL" spellcheck="false" autocomplete="off" autocapitalize="off" oninput="sqSrcInput('+i+',this.value)">'
-        +'<input type="text" value="'+_mtAttr((it&&it.t)||'')+'" placeholder="제목" spellcheck="false" autocomplete="off" oninput="sqCapInput('+i+',&#39;t&#39;,this.value)">'
-        +'<input type="text" value="'+_mtAttr((it&&it.m)||'')+'" placeholder="설명" spellcheck="false" autocomplete="off" oninput="sqCapInput('+i+',&#39;m&#39;,this.value)">'
-        +'<input type="text" value="'+_mtAttr((it&&it.bt)||'')+'" placeholder="버튼 글 (비우면 「자세히 보기」)" spellcheck="false" autocomplete="off" oninput="sqCapInput('+i+',&#39;bt&#39;,this.value)">'
-        +'<input type="text" value="'+_mtAttr((it&&it.url)||'')+'" placeholder="링크 (버튼 · 열린 카드를 눌렀을 때 갈 주소)" spellcheck="false" autocomplete="off" autocapitalize="off" oninput="sqCapInput('+i+',&#39;url&#39;,this.value)">'
-        +'</div>'
-        +'<button type="button" class="mt-imgdel" onclick="sqItemDel('+i+')" title="삭제" aria-label="삭제"'+(dis?' disabled':'')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg></button>'
-        +'</div>';
-    }).join('');
-    var cnt=document.getElementById('sqItemCount'); if(cnt) cnt.textContent=c.items.length+'/'+SQ_MAX;
-    var add=document.getElementById('sqItemAdd'); if(add) add.disabled=(c.items.length>=SQ_MAX);
-    if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',sqItemReorder);
-  }
-  var _sqTypeTimer=null;
-  function sqSrcInput(i,v){
-    if(!sqCurBlk) return; var c=sqCfg(sqCurBlk); if(!c.items[i]) return;
-    c.items[i].src=v; galThumbSync('sq',i,v);
-    clearTimeout(_sqTypeTimer); _sqTypeTimer=setTimeout(function(){ if(sqCurBlk) sqApply(sqCurBlk); },400);
-  }
-  function sqCapInput(i,key,v){
-    if(!sqCurBlk) return; var c=sqCfg(sqCurBlk); if(!c.items[i]) return;
-    c.items[i][key]=v; var S=sqCurBlk._sq; if(S && S.i===i){ sqCaption(sqCurBlk,false); sqLayout(sqCurBlk,true); }
-  }
-  function sqItemAddRow(){
-    if(!sqCurBlk) return; var c=sqCfg(sqCurBlk);
-    if(c.items.length>=SQ_MAX) return;
-    c.items.push({src:'',t:'',m:'',bt:'',url:''}); sqItemRender(); sqApply(sqCurBlk);
-    var rows=document.querySelectorAll('#sqItemList .mt-imgrow'), last=rows[rows.length-1]; if(last){ var inp=last.querySelector('input'); if(inp) inp.focus(); }
-  }
-  function sqItemDel(i){
-    if(!sqCurBlk) return; var c=sqCfg(sqCurBlk);
-    if(c.items.length<=SQ_MIN) return;
-    c.items.splice(i,1); var S=sqCurBlk._sq; if(S && S.i>=c.items.length) S.i=c.items.length-1; sqItemRender(); sqApply(sqCurBlk);
-  }
-  function sqItemReorder(from,to){
-    if(!sqCurBlk||from==null||to==null||from===to) return;
-    var c=sqCfg(sqCurBlk); var m=c.items.splice(from,1)[0]; c.items.splice(to,0,m);
-    var S=sqCurBlk._sq; if(S){ if(S.i===from) S.i=to; else if(from<S.i && to>=S.i) S.i--; else if(from>S.i && to<=S.i) S.i++; }
-    sqItemRender(); sqApply(sqCurBlk);
-  }
-  function sqLibDrop(blk,src){
-    var c=sqCfg(blk);
-    if(c.items.length>=SQ_MAX){ clToast('최대 '+SQ_MAX+'개까지 넣을 수 있습니다.'); return false; }
-    c.items.push({src:src,t:'',m:'',bt:'',url:''}); sqApply(blk); if(sqCurBlk===blk) sqItemRender();
-    clToast('항목을 추가했습니다. ('+c.items.length+'/'+SQ_MAX+')'); return true;
-  }
-  window.sqCfg=sqCfg; window.sqApply=sqApply; window.sqStop=sqStop; window.sqInit=sqInit; window.sqBlockHTML=sqBlockHTML; window.sqCloneInit=sqCloneInit; window.sqUpd=sqUpd; window.sqGo=sqGo;
-  window.sqSw=sqSw; window.sqSrcInput=sqSrcInput; window.sqCapInput=sqCapInput; window.sqItemAddRow=sqItemAddRow; window.sqItemDel=sqItemDel; window.sqLibDrop=sqLibDrop; window.baInsertSq=baInsertSq;
-
-
-  /* ══════════════════════════════════════════════════════════════════
-     261109 추가 — 리본 통계 블록 (IMAGE21 · 이미지 / 영상 카테고리 · stripe.com 개발자 섹션 「500M+ API requests per day」 참조)
-     · 리본(canvas · rbDraw): 가는 선 N 가닥. 선 k 의 자리 u=k/(N-1). y = 중심선(큰 물결 + 작은 물결) + (2u−1) × 띠 반폭 × 비틀림(cos) — 비틀림이 0 을 지나는 자리에서 가닥이 모였다 뒤집혀 리본이 꼬인 것처럼 보인다
-       색은 가로 그라데이션(색1 → 색2 → 색3), 가운데 가닥이 진하고 바깥 가닥은 옅다. 시간(ph)이 흐르며 물결 · 비틀림 자리가 천천히 움직인다(속도 0 = 정지). 화면 밖 · 탭 숨김이면 멈춘다
-     · 숫자: 그라데이션 글자(-webkit-background-clip:text) + 라벨. 카운트업은 화면에 들어올 때 한 번, 숫자 부분(소수점 포함)만 0 → 값, 접두 · 접미(M+ · K+ · %)는 그대로
-     · PC·모바일 사본 공유값: items · 켜고 끄기 ══ */
-  var RB_DEF={ items:[], rib:true, stat:true, count:true, h:470, lines:35, lw:3, amp:45, twist:30, tw:100, scale:100, shift:0, speed:200, mt:216, ns:100, ls:100, align:'left',
-               bg:'#0D1738', c1:'#F7DA64', c2:'#B8312F', c3:'#533AFD', lc:'#FFFFFF', pt:74, pb:72 };   /* 261109 수정 — 리본 색 1 · 2 기본값(노랑 → 빨강 → 보라) */   /* 261109 수정 — 기본값: 에릭이 맞춘 값(높이 470 · 선 35 · 두께 3 · 물결 45 · 원근 30 · 속도 200 · 겹침 216 · 상단 74) */
-  var RB_MAX=4, RB_MIN=1, RB_GS={orange:['#FF8C6C','#DA4BFE'],purple:['#DA4BFE','#7A73FF'],blue:['#9B8CFF','#4FB2FF'],white:['#FFFFFF','#FFFFFF']};   /* 예전 프리셋 이름(g) → 시작 · 끝 색 */
-  function rbNumG(it){ if(!it.ga||!it.gb){ var g=RB_GS[it.g]||RB_GS.orange; it.ga=it.ga||g[0]; it.gb=it.gb||g[1]; } return [it.ga,it.gb]; }
-  var rbCurBlk=null, rbBound=false;
-  function rbNum(v,d){ var n=parseFloat(v); return isFinite(n)?n:d; }
-  function rbCfg(blk){
-    if(!blk._rbCfg){
-      blk._rbCfg=JSON.parse(JSON.stringify(RB_DEF));
-      blk._rbCfg.items=[{n:'500M+',l:'하루 API 요청',ga:'#FF8C6C',gb:'#DA4BFE'},{n:'10K+',l:'초당 API 요청',ga:'#DA4BFE',gb:'#7A73FF'},{n:'150K+',l:'분당 거래',ga:'#9B8CFF',gb:'#4FB2FF'}];
-    }
-    var c=blk._rbCfg; if(!Array.isArray(c.items)) c.items=[];
-    return c;
-  }
-  function rbBlockHTML(){
-    return '<span class="tag-badge">이미지</span>'+SM_GEAR+'<canvas class="rb-cv"></canvas><div class="rb-wrap"><div class="rb-stats"></div></div>';
-  }
-  function rbHex(h){ var m=/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(String(h||'').trim()); return m?[parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)]:[255,255,255]; }
-  /* ── 261109 수정 — WebGL 3D 리본 (stripe.com 과 같은 방식) ──
-     · 장면: 가는 선 N 가닥이 길이 방향(u)으로 나란히 놓인 천(sheet) 하나. 카메라(원점 · 원근 투영) 앞에 비스듬히 둔다 — 가까운 끝(P0 · 오른쪽)은 넓게 펼쳐지고 먼 끝(P1 · 왼쪽)은 한 점으로 모인다
-     · 천은 시간(uT)에 따라 깊이(z) · 세로(y)로 물결친다(sin 세 개의 합 · 폭 방향 위상차 → 주름). 색은 먼 끝 색1 → 색2 → 가까운 끝 색3, 천 가장자리 가닥은 옅게, 멀수록 옅게
-     · 선은 WebGL 1px 선을 세로로 ±1px 어긋나게 세 번 겹쳐 그려 두께 · 번짐을 만든다(「선 두께」 1 이면 한 번). 블렌딩은 프리멀티플라이드(밝은 바탕에서도 깨지지 않게)
-     · WebGL 이 없거나 컨텍스트를 잃으면 2D canvas(rbDraw2d)로 그린다 */
-  var RB_VS='attribute vec3 aP;uniform float uT,uAmp,uPersp,uTw,uW,uDV,uScale,uShift;uniform vec2 uRes;varying float vU,vV,vD,vS,vSp,vW;varying vec2 vRes;'
-    +'vec3 sheet(float u,float v){float w=1.0-v*2.0;vec3 P0=vec3(1.95,0.2,-1.7);vec3 P1=vec3(-1.62-5.4*uPersp,0.3,-1.7-6.4*uPersp);'
-    +'vec3 P=mix(P0,P1,u);float th=uTw*(0.95*sin(u*3.4-uT*0.35+0.8)+1.4*u);float hw=0.5*(1.0-0.4*u);P.y+=w*hw*cos(th);P.z+=w*hw*0.9*sin(th);'   /* 트위스트: 폭 방향을 길이축 둘레로 돌린다(각도는 자리 · 시간에 따라) — 90° 근처에서 가닥이 모였다 다시 펼쳐지는 꼬임 */
-    +'float wv=sin(u*5.2-uT*0.9+w*1.4)*0.42+sin(u*9.0+uT*0.6+w*2.6)*0.16+sin(w*3.1+uT*0.45+u*2.2)*0.2;'
-    +'float k=1.0-0.75*u;P.z+=wv*uAmp*1.1*k;P.y+=wv*uAmp*0.6*k;return P;}'
-    +'vec4 proj(vec3 P){float f=1.0/tan(0.37);float z=-P.z;return vec4((P.x*f*uRes.y/uRes.x)*uScale,(P.y*f*uScale+uShift*z),z,z);}'   /* 리본 크기(uScale) · 세로 위치(uShift · 클립 공간) — 캔버스 높이와 따로 */
-    +'void main(){float u=aP.x,v=aP.y;vec4 c=proj(sheet(u,v));vec4 c2=proj(sheet(u+0.004,v));vec4 cv=proj(sheet(u,v+uDV));'
-    +'vec2 px=c.xy/c.w*0.5*uRes;vec2 px2=c2.xy/c2.w*0.5*uRes;vec2 pxv=cv.xy/cv.w*0.5*uRes;'
-    +'vec2 t=normalize(px2-px+vec2(1e-4,0.0));vec2 n=vec2(-t.y,t.x);'
-    +'vec2 off=n*aP.z*uW;c.xy+=off/uRes*2.0*c.w;'
-    +'gl_Position=c;vU=u;vV=v;vD=c.w;vS=aP.z;vSp=length(pxv-px);vW=uW;vRes=uRes;}';   /* uW · uRes 는 프래그먼트와 정밀도(highp/mediump)가 달라 링크가 안 되므로 varying 으로 넘긴다 */
-  var RB_FS='precision mediump float;uniform vec3 uC1,uC2,uC3;uniform float uA;varying float vU,vV,vD,vS,vSp,vW;varying vec2 vRes;'
-    +'void main(){vec3 col=vU<0.5?mix(uC3,uC2,vU*2.0):mix(uC2,uC1,(vU-0.5)*2.0);'
-    +'float e=1.0-abs(vV*2.0-1.0);float a=uA*(0.4+0.6*pow(e,0.6))*clamp(1.5-vD*0.08,0.3,1.0);'
-    +'a*=smoothstep(0.0,0.14,vU)*smoothstep(1.0,0.82,vU);'
-    +'vec2 q=gl_FragCoord.xy/vRes;a*=smoothstep(0.0,0.1,q.x)*smoothstep(1.0,0.9,q.x)*smoothstep(0.0,0.1,q.y)*smoothstep(1.0,0.9,q.y);'
-    +'float d=abs(vS)*vW;a*=1.0-smoothstep(vW-1.0,vW,d);'   /* 선 가장자리 1px 안티에일리어싱 */
-    +'a*=clamp(vSp/(vW*2.6),0.0,1.0);'   /* 이웃 선과의 간격이 선 두께보다 좁아지면(먼 끝) 옅게 — 겹침 · 모아레 방지 */
-    +'gl_FragColor=vec4(col*a,a);}';
-  function rbGlInit(blk){
-    var S=blk._rb; if(!S) return false;
-    var gl=null; try{ gl=S.cv.getContext('webgl',{alpha:true,antialias:true,premultipliedAlpha:true})||S.cv.getContext('experimental-webgl'); }catch(e){}
-    if(!gl) return false;
-    function sh(t,src){ var o=gl.createShader(t); gl.shaderSource(o,src); gl.compileShader(o); if(!gl.getShaderParameter(o,gl.COMPILE_STATUS)){ console.warn('[rb]',gl.getShaderInfoLog(o)); return null; } return o; }
-    var vs=sh(gl.VERTEX_SHADER,RB_VS), fs=sh(gl.FRAGMENT_SHADER,RB_FS); if(!vs||!fs) return false;
-    var pg=gl.createProgram(); gl.attachShader(pg,vs); gl.attachShader(pg,fs); gl.linkProgram(pg); if(!gl.getProgramParameter(pg,gl.LINK_STATUS)) return false;
-    S.gl=gl; S.pg=pg; S.loc={aP:gl.getAttribLocation(pg,'aP')};
-    ['uT','uAmp','uPersp','uTw','uW','uDV','uScale','uShift','uRes','uC1','uC2','uC3','uA'].forEach(function(k){ S.loc[k]=gl.getUniformLocation(pg,k); });
-    S.vbo=gl.createBuffer(); S.geoKey='';
-    gl.enable(gl.BLEND); gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA); gl.disable(gl.DEPTH_TEST);
-    S.cv.addEventListener('webglcontextlost',function(e){ e.preventDefault(); S.gl=null;
-      setTimeout(function(){ if(!S.alive||S.gl) return;   /* 1.5초 안에 돌아오지 않으면 새 canvas 로 바꿔 2D 로 그린다(한 번 WebGL 을 쓴 canvas 는 2D 컨텍스트를 못 만든다) */
-        var nc=document.createElement('canvas'); nc.className=S.cv.className; S.cv.parentNode.replaceChild(nc,S.cv); S.cv=nc; try{ S.ctx=nc.getContext('2d'); }catch(x){} if(S.ro){ try{ S.ro.observe(nc); }catch(x){} } rbSize(blk); rbDraw(blk); rbKick(blk); },1500); },false);
-    S.cv.addEventListener('webglcontextrestored',function(){ rbGlInit(blk); rbDraw(blk); },false);
-    return true;
-  }
-  /* 선 하나 = 길이 방향 K 점 × 양옆 2 꼭짓점의 triangle strip(폭은 버텍스 셰이더가 화면 px 로 벌린다) — 1px GL 선 대신 안티에일리어싱 되는 띠 */
-  function rbGeo(S,N){
-    var K=160, key=N+'x'+K; if(S.geoKey===key) return;
-    var vs=new Float32Array(N*K*2*3), p=0;
-    for(var i=0;i<N;i++){ var v=N>1?i/(N-1):0.5; for(var j=0;j<K;j++){ var u=j/(K-1); vs[p++]=u; vs[p++]=v; vs[p++]=-1; vs[p++]=u; vs[p++]=v; vs[p++]=1; } }
-    var gl=S.gl; gl.bindBuffer(gl.ARRAY_BUFFER,S.vbo); gl.bufferData(gl.ARRAY_BUFFER,vs,gl.STATIC_DRAW);
-    S.geoKey=key; S.K=K; S.N=N;
-  }
-  function rbDrawGL(blk){
-    var S=blk._rb, c=rbCfg(blk), gl=S.gl; if(!gl||!S.cw) return;
-    var N=Math.max(2,Math.min(200,Math.round(rbNum(c.lines,48))));
-    rbGeo(S,N);
-    gl.viewport(0,0,S.cw,S.ch); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.useProgram(S.pg);
-    gl.bindBuffer(gl.ARRAY_BUFFER,S.vbo); gl.enableVertexAttribArray(S.loc.aP); gl.vertexAttribPointer(S.loc.aP,3,gl.FLOAT,false,0,0);
-    var c1=rbHex(c.c1||'#F7DA64'), c2=rbHex(c.c2||'#B8312F'), c3=rbHex(c.c3||'#533AFD');
-    gl.uniform3f(S.loc.uC1,c1[0]/255,c1[1]/255,c1[2]/255); gl.uniform3f(S.loc.uC2,c2[0]/255,c2[1]/255,c2[2]/255); gl.uniform3f(S.loc.uC3,c3[0]/255,c3[1]/255,c3[2]/255);
-    gl.uniform1f(S.loc.uT,S.ph); gl.uniform1f(S.loc.uAmp,rbNum(c.amp,100)/100); gl.uniform1f(S.loc.uPersp,rbNum(c.twist,100)/100); gl.uniform1f(S.loc.uTw,rbNum(c.tw,100)/100); gl.uniform1f(S.loc.uScale,rbNum(c.scale,100)/100); gl.uniform1f(S.loc.uShift,-rbNum(c.shift,0)/100*2);
-    gl.uniform2f(S.loc.uRes,S.cw,S.ch); gl.uniform1f(S.loc.uDV,1/Math.max(1,N-1));
-    var lw=Math.max(0.6,rbNum(c.lw,1.6))*S.dpr; gl.uniform1f(S.loc.uW,lw*0.5+1.0);   /* 반폭 + 1px 페더 */
-    gl.uniform1f(S.loc.uA,1.0);
-    for(var i=0;i<S.N;i++) gl.drawArrays(gl.TRIANGLE_STRIP,i*S.K*2,S.K*2);
-  }
-  function rbDraw(blk){ var S=blk._rb; if(!S) return; if(S.gl) rbDrawGL(blk); else if(S.ctx) rbDraw2d(blk); }
-  function rbDraw2d(blk){
-    var S=blk._rb, c=rbCfg(blk); if(!S||!S.ctx||!S.cw) return;
-    var ctx=S.ctx, W=S.cw, H=S.ch, N=Math.max(2,Math.round(rbNum(c.lines,48))), amp=rbNum(c.amp,100)/100, tw=rbNum(c.twist,100)/100, ph=S.ph;
-    ctx.clearRect(0,0,W,H);
-    if(!S.grad || S.gradKey!==(c.c1+c.c2+c.c3+W)){ var g=ctx.createLinearGradient(0,0,W,0); g.addColorStop(0,c.c1||'#F7DA64'); g.addColorStop(0.5,c.c2||'#B8312F'); g.addColorStop(1,c.c3||'#533AFD'); S.grad=g; S.gradKey=c.c1+c.c2+c.c3+W; }
-    ctx.strokeStyle=S.grad; ctx.lineWidth=rbNum(c.lw,1.2)*S.dpr; ctx.lineCap='round';
-    var sc=rbNum(c.scale,100)/100, shy=rbNum(c.shift,0)/100*H; ctx.save(); ctx.translate(W/2,H/2+shy); ctx.scale(sc,sc); ctx.translate(-W/2,-H/2);   /* 리본 크기 · 세로 위치 */
-    var step=Math.max(4,Math.round(W/160)), half=H*0.30*amp, cy=H*0.36;
-    for(var k=0;k<N;k++){
-      var u=k/(N-1), v=2*u-1;
-      ctx.globalAlpha=0.28+0.62*Math.pow(1-Math.abs(v),1.4);
-      ctx.beginPath();
-      for(var x=-step;x<=W+step;x+=step){
-        var nx=x/W;
-        var center=cy + Math.sin(nx*2.0+ph)*H*0.13*amp + Math.sin(nx*4.6-ph*0.7+1.3)*H*0.05*amp + v*Math.sin(nx*1.3+ph*0.4)*H*0.04*amp;
-        var twist=(tw>0)?Math.cos(nx*2.6*tw+ph*0.5+0.9):1;   /* 리본 비틀림 — 0 을 지나는 자리(기본 가로 1/3 쯤)에서 가닥이 모인다 */
-        var y=center + v*half*twist*(0.55+0.45*nx);   /* 오른쪽으로 갈수록 띠가 넓어진다(참조 이미지 매너) */
-        if(x<0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-      }
-      ctx.stroke();
-    }
-    ctx.globalAlpha=1; ctx.restore();
-    /* 양 끝 페이드 — 리본이 화면 밖으로 이어지는 느낌 */
-    if(!S.mask || S.maskKey!==W){ var mg=ctx.createLinearGradient(0,0,W,0); mg.addColorStop(0,'rgba(0,0,0,0)'); mg.addColorStop(0.08,'rgba(0,0,0,1)'); mg.addColorStop(0.94,'rgba(0,0,0,1)'); mg.addColorStop(1,'rgba(0,0,0,0)'); S.mask=mg; S.maskKey=W; }
-    ctx.globalCompositeOperation='destination-in'; ctx.fillStyle=S.mask; ctx.fillRect(0,0,W,H); ctx.globalCompositeOperation='source-over';
-  }
-  function rbTick(blk){
-    var S=blk._rb; if(!S||!S.alive) return;
-    S.raf=0; if(!blk.isConnected){ rbStop(blk); return; }
-    var c=rbCfg(blk), sp=rbNum(c.speed,60)/100, now=performance.now(), dt=S.last?Math.min(0.05,(now-S.last)/1000):0; S.last=now;
-    if(S.vis && !document.hidden && sp>0 && !S.reduce){ S.ph+=dt*0.35*sp; rbDraw(blk); S.raf=requestAnimationFrame(function(){ rbTick(blk); }); }
-    else { S.last=0; }
-  }
-  function rbKick(blk){ var S=blk._rb; if(!S||!S.alive||S.raf) return; S.last=0; S.raf=requestAnimationFrame(function(){ rbTick(blk); }); }
-  function rbSize(blk){
-    var S=blk._rb; if(!S) return;
-    var r=S.cv.getBoundingClientRect(), z=(S.cv.offsetWidth?(r.width/S.cv.offsetWidth):1)||1;   /* .site 의 zoom 보정: 레이아웃 px 로 */
-    var w=Math.round(r.width/z), h=Math.round(r.height/z); if(!w||!h) return;
-    var dpr=Math.min(2,window.devicePixelRatio||1); S.dpr=dpr;
-    if(S.cv.width!==Math.round(w*dpr)||S.cv.height!==Math.round(h*dpr)){ S.cv.width=Math.round(w*dpr); S.cv.height=Math.round(h*dpr); S.cw=S.cv.width; S.ch=S.cv.height; S.grad=null; S.mask=null; }
-  }
-  /* 숫자 글: 숫자 부분(1,234.5)만 떼어 접두 · 접미와 나눈다 */
-  function rbSplit(s){ s=String(s==null?'':s); var m=/^(.*?)(\d[\d,]*(?:\.\d+)?)(.*)$/.exec(s); if(!m) return null; var raw=m[2], dec=(raw.split('.')[1]||'').length; return {pre:m[1], num:parseFloat(raw.replace(/,/g,''))||0, dec:dec, comma:raw.indexOf(',')>=0, suf:m[3]}; }
-  function rbFmt(n,sp){ var s=n.toFixed(sp.dec); if(sp.comma){ var a=s.split('.'); a[0]=a[0].replace(/\B(?=(\d{3})+(?!\d))/g,','); s=a.join('.'); } return sp.pre+s+sp.suf; }
-  function rbStats(blk){
-    var S=blk._rb, c=rbCfg(blk); if(!S) return;
-    var h=c.items.map(function(it,i){ var g=rbNumG(it); return '<div class="rb-st"><div class="rb-num" data-i="'+i+'" style="--g:linear-gradient(68deg,'+_mtAttr(g[0])+' 0%,'+_mtAttr(g[1])+' 100%)"><span>'+_mtAttr(it.n||'')+'</span></div><div class="rb-lab">'+_mtAttr(it.l||'')+'</div></div>'; }).join('');
-    if(S.stats._h!==h){ S.stats.innerHTML=h; S.stats._h=h; S.counted=false; }
-    S.wrap.style.setProperty('--rb-n',String(Math.max(1,c.items.length)));
-    if(c.count!==false && S.vis && !S.counted && !S.reduce) rbCount(blk); else if(c.count===false) S.stats.querySelectorAll('.rb-num span').forEach(function(sp,i){ sp.textContent=String((c.items[i]||{}).n||''); });
-  }
-  function rbCount(blk){
-    var S=blk._rb, c=rbCfg(blk); if(!S) return; S.counted=true;
-    var t0=performance.now(), D=1400;
-    var sps=[].slice.call(S.stats.querySelectorAll('.rb-num span')).map(function(sp,i){ var it=c.items[i]||{}; return {el:sp, sp:rbSplit(it.n), full:String(it.n||'')}; });
-    (function frame(now){
-      if(!S.alive) return; var p=Math.min(1,(now-t0)/D), e=1-Math.pow(1-p,3);
-      sps.forEach(function(o){ if(!o.sp){ o.el.textContent=o.full; return; } o.el.textContent=rbFmt(o.sp.num*e,o.sp); });
-      if(p<1) requestAnimationFrame(frame); else sps.forEach(function(o){ o.el.textContent=o.full; });
-    })(t0);
-  }
-  function rbApply(blk){
-    var S=blk._rb, c=rbCfg(blk), wrap=blk.querySelector('.rb-wrap'); if(!wrap||!S) return;
-    blk.style.background=c.bg||'#0D1738'; blk.classList.toggle('own-bg',!!c.bg);
-    blk.style.paddingTop=rbNum(c.pt,24)+'px'; blk.style.paddingBottom=rbNum(c.pb,72)+'px';
-    blk.style.setProperty('--rb-h',rbNum(c.h,470)+'px'); blk.classList.toggle('rb-norib',c.rib===false); wrap.style.setProperty('--rb-ns',rbNum(c.ns,100)/100); wrap.style.setProperty('--rb-ls',rbNum(c.ls,100)/100); wrap.style.setProperty('--rb-lc',c.lc||'#FFFFFF');
-    wrap.classList.toggle('rb-nostat',c.stat===false); wrap.classList.toggle('rb-center',c.align==='center');
-    rbStats(blk);
-    if(c.rib!==false){ rbSize(blk); rbDraw(blk); rbKick(blk); }
-  }
-  function rbInit(blk){
-    rbStop(blk);
-    var wrap=blk.querySelector('.rb-wrap'); if(!wrap) return;
-    var cv=blk.querySelector('.rb-cv'); if(!cv){ cv=document.createElement('canvas'); cv.className='rb-cv'; blk.insertBefore(cv,wrap); }   /* 예전 마크업(wrap 안 canvas) 보정 */
-    var S=blk._rb={alive:true, wrap:wrap, cv:cv, ctx:null, gl:null, stats:wrap.querySelector('.rb-stats'), ph:Math.random()*6.28, vis:true, raf:0, last:0, cw:0, ch:0, dpr:1, counted:false,
-                   reduce:!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)};
-    if(!rbGlInit(blk)){ try{ S.ctx=cv.getContext('2d'); }catch(e){} }   /* WebGL 이 없으면 2D 로 */
-    rbApply(blk);
-    if(window.IntersectionObserver){ try{ S.io=new IntersectionObserver(function(es){ es.forEach(function(en){ S.vis=en.isIntersecting; }); if(S.vis){ rbKick(blk); if(!S.counted && rbCfg(blk).count!==false && !S.reduce) rbCount(blk); } }); S.io.observe(wrap); }catch(e){} }
-    if(window.ResizeObserver){ try{ S.ro=new ResizeObserver(function(){ if(!S.alive) return; rbSize(blk); rbDraw(blk); }); S.ro.observe(cv); }catch(e){} }
-    document.addEventListener('visibilitychange',S.visFn=function(){ if(!document.hidden) rbKick(blk); });
-  }
-  function rbStop(blk){
-    var S=blk&&blk._rb; if(!S) return;
-    S.alive=false; if(S.raf) cancelAnimationFrame(S.raf);
-    if(S.io){ try{ S.io.disconnect(); }catch(e){} } if(S.ro){ try{ S.ro.disconnect(); }catch(e){} }
-    if(S.visFn) document.removeEventListener('visibilitychange',S.visFn);
-    if(S.gl){ try{ var ext=S.gl.getExtension('WEBGL_lose_context'); if(ext) ext.loseContext(); }catch(e){} }
-    blk._rb=null;
-  }
-  function rbCloneInit(src,clone){
-    if(!clone || clone.getAttribute('data-block')!=='rbstat') return;
-    rbStop(clone);
-    try{ clone._rbCfg=JSON.parse(JSON.stringify(rbCfg(src))); }catch(e){ clone._rbCfg=null; }
-    clone.innerHTML=rbBlockHTML();
-    rbInit(clone);
-  }
-  function baInsertRb(card){ galInsert('rb-blk','rbstat',rbBlockHTML,rbInit); }
-  /* ── 블록설정 ── */
-  function rbUpd(key,val){ if(!rbCurBlk) return; rbCfg(rbCurBlk)[key]=val; rbApply(rbCurBlk); }
-  function rbOn(id,ev,fn){ var el=document.getElementById(id); if(el) el.addEventListener(ev,function(){ fn(el); }); }
-  function rbSw(btn,key){ btn.classList.toggle('on'); rbUpd(key, btn.classList.contains('on')); }
-  var RB_RNG=[['rbH','h','px'],['rbScale','scale','%'],['rbShift','shift','%'],['rbLines','lines',''],['rbLw','lw','px'],['rbAmp','amp','%'],['rbTw','tw','%'],['rbTwist','twist','%'],['rbSpeed','speed','%'],['rbNs','ns','%'],['rbLs','ls','%'],['rbPt','pt','px'],['rbPb','pb','px']];
-  var RB_COLS=[['rbBg','bg'],['rbC1','c1'],['rbC2','c2'],['rbC3','c3'],['rbLc','lc']];
-  var RB_SWS=[['rbRibSw','rib'],['rbStatSw','stat'],['rbCountSw','count']];
-  function rbBuildBset(){
-    if(rbBound) return; rbBound=true;
-    RB_RNG.forEach(function(r){ rbOn(r[0],'input',function(el){ var v=parseFloat(el.value); smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[2]; rbUpd(r[1],v); }); });
-    RB_COLS.forEach(function(r){ rbOn(r[0],'input',function(el){ var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(el.value); rbUpd(r[1],el.value); }); });
-  }
-  function rbFillBset(){
-    if(!rbCurBlk) return;
-    var c=rbCfg(rbCurBlk);
-    function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
-    function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
-    rbItemRender();
-    RB_RNG.forEach(function(r){ var v=rbNum(c[r[1]],RB_DEF[r[1]]); set(r[0],v); txt(r[0]+'V',v+r[2]); });
-    RB_COLS.forEach(function(r){ var v=String(c[r[1]]||RB_DEF[r[1]]).toLowerCase(); set(r[0],v); txt(r[0]+'V',smHex(v)); });
-    RB_SWS.forEach(function(r){ var b=document.getElementById(r[0]); if(b) b.classList.toggle('on', c[r[1]]!==false); });
-    var seg=document.getElementById('rbAlignSeg'); if(seg) seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(c.align||'left')); });
-  }
-  function rbItemRender(){
-    if(!rbCurBlk) return;
-    var c=rbCfg(rbCurBlk), list=document.getElementById('rbItemList'); if(!list) return;
-    var dis=(c.items.length<=RB_MIN);
-    list.innerHTML=c.items.map(function(it,i){
-      return '<div class="rb-row mt-imgrow" data-i="'+i+'">'
-        +'<span class="mt-imgdrag" title="드래그하여 순서 변경"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></span>'
-        +'<div class="rb-f"><input type="text" value="'+_mtAttr(it.n||'')+'" placeholder="숫자 (500M+)" spellcheck="false" autocomplete="off" oninput="rbCapInput('+i+',&#39;n&#39;,this.value)">'
-        +'<input type="text" value="'+_mtAttr(it.l||'')+'" placeholder="라벨" spellcheck="false" autocomplete="off" oninput="rbCapInput('+i+',&#39;l&#39;,this.value)"></div>'
-        +'<button type="button" class="mt-imgdel" onclick="rbItemDel('+i+')" title="삭제" aria-label="삭제"'+(dis?' disabled':'')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg></button>'
-        +'</div>';
-    }).join('');
-    var cnt=document.getElementById('rbItemCount'); if(cnt) cnt.textContent=c.items.length+'/'+RB_MAX;
-    var add=document.getElementById('rbItemAdd'); if(add) add.disabled=(c.items.length>=RB_MAX);
-    if(typeof clBindSortable==='function') clBindSortable(list,'.rb-row','.mt-imgdrag',rbItemReorder);
-    rbNumColsRender();
-  }
-  /* 「색」 패널 — 숫자마다 시작 · 끝 피커 (공통 피커 · 항목 수만큼) */
-  function rbNumColsRender(){
-    if(!rbCurBlk) return; var c=rbCfg(rbCurBlk), host=document.getElementById('rbNumCols'); if(!host) return;
-    host.innerHTML=c.items.map(function(it,i){ var g=rbNumG(it);
-      return '<div class="srow"><span class="k">숫자 '+(i+1)+'</span>'
-        +'<span class="sw-col"><input type="color" value="'+_mtAttr(String(g[0]).toLowerCase())+'" data-cp-title="숫자 '+(i+1)+' 시작 색" oninput="rbNumCol('+i+',&#39;ga&#39;,this)"><span class="hex">'+smHex(g[0])+'</span></span>'
-        +'<span class="sw-col"><input type="color" value="'+_mtAttr(String(g[1]).toLowerCase())+'" data-cp-title="숫자 '+(i+1)+' 끝 색" oninput="rbNumCol('+i+',&#39;gb&#39;,this)"><span class="hex">'+smHex(g[1])+'</span></span></div>'; }).join('');
-  }
-  function rbNumCol(i,key,el){ if(!rbCurBlk) return; var c=rbCfg(rbCurBlk); if(!c.items[i]) return; c.items[i][key]=el.value; var hx=el.nextElementSibling; if(hx) hx.textContent=smHex(el.value); var S=rbCurBlk._rb; if(S) S.counted=true; rbStats(rbCurBlk); }
-  function rbCapInput(i,key,v){ if(!rbCurBlk) return; var c=rbCfg(rbCurBlk); if(!c.items[i]) return; c.items[i][key]=v; var S=rbCurBlk._rb; if(S) S.counted=true; rbStats(rbCurBlk); }   /* 치는 동안은 세지 않고 값 그대로 */
-  function rbItemAddRow(){ if(!rbCurBlk) return; var c=rbCfg(rbCurBlk); if(c.items.length>=RB_MAX) return; var pg=[RB_GS.orange,RB_GS.purple,RB_GS.blue][c.items.length%3]; c.items.push({n:'99%',l:'라벨',ga:pg[0],gb:pg[1]}); rbItemRender(); rbApply(rbCurBlk); var rows=document.querySelectorAll('#rbItemList .rb-row'), last=rows[rows.length-1]; if(last){ var inp=last.querySelector('input'); if(inp){ inp.focus(); inp.select(); } } }
-  function rbItemDel(i){ if(!rbCurBlk) return; var c=rbCfg(rbCurBlk); if(c.items.length<=RB_MIN) return; c.items.splice(i,1); rbItemRender(); rbApply(rbCurBlk); }
-  function rbItemReorder(from,to){ if(!rbCurBlk||from==null||to==null||from===to) return; var c=rbCfg(rbCurBlk); var m=c.items.splice(from,1)[0]; c.items.splice(to,0,m); rbItemRender(); rbApply(rbCurBlk); }
-  window.rbCfg=rbCfg; window.rbApply=rbApply; window.rbStop=rbStop; window.rbInit=rbInit; window.rbBlockHTML=rbBlockHTML; window.rbCloneInit=rbCloneInit; window.rbUpd=rbUpd; window.rbSw=rbSw; window.rbFillBset=rbFillBset;
-  window.rbCapInput=rbCapInput; window.rbNumCol=rbNumCol; window.rbItemAddRow=rbItemAddRow; window.rbItemDel=rbItemDel; window.rbItemRender=rbItemRender; window.baInsertRb=baInsertRb;
 
 
   /* ══════════════════════════════════════════════════════════════════
@@ -58759,7 +58025,7 @@ global.PolyFX = API;
   /* ── 260905 추가 — 블록설정창 항목 썸네일 클릭 → 보관함에서 이미지 고르기 (3D 카드 회전 · 모토 · 파인월 · 인덱스 등 .mt-imgrow 목록 공통) ── */
   var libThumbMode=null;
   /* 260921 추가 — 이미지·동영상을 모두 받는 목록(썸네일 클릭 교체 · 보관함 클릭 · 끌어 놓기 공통). 전엔 곳곳에 따로 적혀 휠 캐러셀이 클릭 교체에서 빠져 있었다 */
-  var LIB_VID_LISTS=/^(flImgList|hxImgList|sgImgList|vcItemList|wcItemList|hgItemList|gsItemList|hzItemList|sqItemList|tgItemList|skItemList|scItemList|ckItemList|dgImgList|ssImgList|siteBg|imThumbs|cnItemList|cnMediaList|bcImgList)$/;   /* 260922 수정 — 게이지 슬라이더 */
+  var LIB_VID_LISTS=/^(flImgList|hxImgList|sgImgList|vcItemList|wcItemList|hgItemList|gsItemList|hzItemList|tgItemList|skItemList|scItemList|ckItemList|dgImgList|ssImgList|siteBg|imThumbs|cnItemList|cnMediaList|bcImgList)$/;   /* 260922 수정 — 게이지 슬라이더 */
   function libThumbPick(thumb,applyFn){
     var row=thumb.closest('.mt-imgrow,.sg-imgrow,.fl-imgrow'), list=row&&row.parentElement; if(!row||!list) return;   /* 260905 수정 — 플로팅 3D 갤러리 포함 */
     if(thumb.classList.contains('picking')){ libThumbEnd(false); clToast('이미지 선택을 끝냈습니다.'); return; }   /* 260907 추가 — 다시 누르면 선택 모드 해제 */
@@ -59760,9 +59026,7 @@ global.PolyFX = API;
       wheelcar    :{cfg:'_wcCfg', apply:function(b){ wcApply(b); }},   /* 260916 추가 */
       helixgal    :{cfg:'_hgCfg', apply:function(b){ hgApply(b); }},   /* 260916 추가 */
       gaugeslider :{cfg:'_gsCfg', apply:function(b){ gsApply(b); }},   /* 260922 추가 */
-      hscrollgal  :{cfg:'_hzCfg', apply:function(b){ hzApply(b); }},
-      sqcar       :{cfg:'_sqCfg', apply:function(b){ sqApply(b); }},
-      rbstat      :{cfg:'_rbCfg', apply:function(b){ rbApply(b); }},   /* 261109 추가 — 리본 통계 */   /* 261109 추가 — 스퀴즈 캐러셀 */   /* 261008 추가 */
+      hscrollgal  :{cfg:'_hzCfg', apply:function(b){ hzApply(b); }},   /* 261008 추가 */
       tiltgal     :{cfg:'_tgCfg', apply:function(b){ tgApply(b); }},   /* 261008 추가 */
       stackgal    :{cfg:'_skCfg', apply:function(b){ skApply(b); }}   /* 260923 추가 */
     };
@@ -60048,9 +59312,7 @@ global.PolyFX = API;
         try{ if(typeof wcStop==='function') wcStop(el); }catch(x){}
         try{ if(typeof hgStop==='function') hgStop(el); }catch(x){}
         try{ if(typeof gsStop==='function') gsStop(el); }catch(x){}   /* 260922 추가 */
-        try{ if(typeof hzStop==='function') hzStop(el); }catch(x){}
-        try{ if(typeof sqStop==='function') sqStop(el); }catch(x){}
-        try{ if(typeof rbStop==='function') rbStop(el); }catch(x){}   /* 261109 추가 */   /* 261109 추가 */   /* 261008 추가 */
+        try{ if(typeof hzStop==='function') hzStop(el); }catch(x){}   /* 261008 추가 */
         try{ if(typeof tgStop==='function') tgStop(el); }catch(x){}   /* 261008 추가 */
         try{ if(typeof skStop==='function') skStop(el); }catch(x){}   /* 260923 추가 */
         try{ if(typeof irStop==='function') irStop(el); }catch(x){}   /* 260923 추가 — 3D 이미지 링 */
@@ -60272,9 +59534,7 @@ global.PolyFX = API;
       wheelcar    :{items:1, gt:1, posts:1},   /* 260916 추가 */
       helixgal    :{items:1, gt:1, posts:1},   /* 260916 추가 */
       gaugeslider :{items:1, gt:1, posts:1},   /* 260922 추가 — 항목(이미지·동영상·제목·정보)은 PC·모바일이 함께 쓴다 */
-      hscrollgal  :{items:1, gt:1, posts:1},
-      sqcar       :{items:1, h1:1, h2:1, head:1, cap:1, btn:1, nav:1},
-      rbstat      :{items:1, rib:1, stat:1, count:1},   /* 261109 추가 — 숫자 항목 · 켜고 끄기는 PC·모바일 공유 */   /* 261109 추가 — 항목 · 머리글 · 켜고 끄기는 PC·모바일 공유, 크기 · 색 · 여백은 기기별 */   /* 261008 추가 — 항목(이미지·동영상·제목·설명)은 PC·모바일이 함께 쓴다 */
+      hscrollgal  :{items:1, gt:1, posts:1},   /* 261008 추가 — 항목(이미지·동영상·제목·설명)은 PC·모바일이 함께 쓴다 */
       tiltgal     :{items:1, gt:1, posts:1},   /* 261008 추가 */
       stackgal    :{items:1, gt:1, posts:1},   /* 260923 추가 */
       stackcard   :{items:1},   /* 260923 추가 — 스택 카드 · 카드 목록(이미지·문구·링크)은 PC·모바일이 함께 쓴다. 쌓임·모양·색·여백은 기기별 */
@@ -60375,7 +59635,7 @@ global.PolyFX = API;
     }
     function mvDefaultCfg(blk,def){
       /* xxCfg(blk) 가 기본값을 만들어 준다 */
-      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_sqCfg:'sqCfg',_rbCfg:'rbCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_cnCfg:'cnCfg',_snCfg:'snCfg',_tkCfg:'tkCfg',_ltCfg:'ltCfg'}[def.cfg];   /* 260922 수정 */
+      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_cnCfg:'cnCfg',_snCfg:'snCfg',_tkCfg:'tkCfg',_ltCfg:'ltCfg'}[def.cfg];   /* 260922 수정 */
       try{ return window[fn](blk); }catch(x){ return {}; }
     }
     /* 헤더 세그먼트·초기화 버튼 상태 */
@@ -60423,7 +59683,7 @@ global.PolyFX = API;
     /* Apply 가로채기 — 모든 설정 변경은 xxApply 로 모이므로 여기서 한 번만 갈라 놓으면 된다 */
     Object.keys(MV_TYPES).forEach(function(type){
       var def=MV_TYPES[type];
-      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_sqCfg:'sqApply',_rbCfg:'rbApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_cnCfg:'cnApply',_snCfg:'snApply',_tkCfg:'tkApply',_ltCfg:'ltApply'}[def.cfg];   /* 260922 수정 */
+      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_cnCfg:'cnApply',_snCfg:'snApply',_tkCfg:'tkApply',_ltCfg:'ltApply'}[def.cfg];   /* 260922 수정 */
       var orig=window[name]; if(typeof orig!=='function') return;
       var wrapped=function(blk){
         if(blk && MV_TARGET==='mobile' && blk===mvTargetBlk && blk._mvBase) mvReconcile(blk);
