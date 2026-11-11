@@ -9010,6 +9010,8 @@
   .hd-util .lang.pill{border:1px solid currentColor;padding:3px 9px;border-radius:99px;}
   .hd-util .lang:is(.box,.pill){padding-top:3.5px;padding-bottom:3.5px;}
   .hd-util .lang:is(.box,.pill) > .lt{display:block;text-box:trim-both cap alphabetic;}   /* 261111 추가 — 줄 높이 1배라 대문자(KO)가 줄 안에서 위로 치우쳐 위 여백이 붙어 보였다(축소된 캔버스에서 더 심함) → 글자를 대문자 높이로 잘라 화살표와 함께 가운데 정렬(글꼴 · 버튼 크기와 상관없이) · 전체 높이는 그대로 */
+  .hd-util .lang > .ln{display:flex;flex-direction:column;justify-content:flex-end;height:.72em;}
+  .hd-util .lang > .ln > span{display:block;white-space:nowrap;text-box:trim-end text alphabetic;}   /* 261111 추가 — 메뉴 글꼴마다 줄 높이가 달라 「한국어」가 국기 · 화살표보다 떠 보였다(캔버스에서 더 심함) → 글자 기준선을 높이 .72em 상자 바닥에 붙여, 글자 잉크 중심(기준선 위 약 .36em)이 버튼 가운데에 오게 한다 */
   .hd-util .lang.circ{border:1px solid currentColor;width:calc(26px * var(--hd-usz));height:calc(26px * var(--hd-usz));border-radius:50%;justify-content:center;font-size:calc(10px * var(--hd-usz));letter-spacing:0;}
   .hd-util .flag{display:inline-block;width:calc(16px * var(--hd-usz));height:calc(16px * var(--hd-usz));border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);position:relative;overflow:hidden;flex:none;}
   .hd-util .flag::before{content:"";position:absolute;left:25%;top:25%;width:50%;height:50%;border-radius:50%;background:linear-gradient(160deg,#CD2E3A 50%,#0047A0 50%);}
@@ -60457,8 +60459,9 @@ function hdUtilHtml(u){
     /* 261023 수정 — 버튼 글자 · 국기는 사이트 설정 「다국어」의 기본 언어(첫 줄)를 따른다. 국기 그림은 한국만 있어 다른 언어는 국기 자리에 언어 코드 */
     var bl=(typeof SSET!=='undefined' && SSET.lang && SSET.lang[0] && typeof ssetLang==='function')?ssetLang(SSET.lang[0]):['ko','KO','한국어'], BK=bl[1], BN=bl[2];
     var FL=function(r){ return bl[0]==='ko'?'<span class="flag'+(r?' rect':'')+'"></span>':'<span class="flag xx'+(r?' rect':'')+'">'+BK+'</span>'; };
-    if(l===1) li=BK+HD_I.cv; else if(l===2) li=BN+HD_I.cv; else if(l===3){ lc+=' box'; li='<span class="lt">'+BK+'</span>'+HD_I.cv; } else if(l===4){ lc+=' pill'; li='<span class="lt">'+BK+'</span>'+HD_I.cv; }   /* 261111 수정 — 테두리 안 글자를 대문자 높이로 잘라 가운데에 둔다(.lt) */
-    else if(l===5) li=HD_I.globe; else if(l===6) li=HD_I.globe+BK; else if(l===7) li=FL(0)+BN+HD_I.cv; else if(l===8) li=FL(1)+BN+HD_I.cv;
+    var LN='<span class="ln"><span>'+BN+'</span></span>';   /* 261111 추가 — 언어 이름(한국어 등)은 기준선을 버튼 가운데에 고정해 국기 · 화살표와 높이를 맞춘다(.ln) */
+    if(l===1) li=BK+HD_I.cv; else if(l===2) li=LN+HD_I.cv; else if(l===3){ lc+=' box'; li='<span class="lt">'+BK+'</span>'+HD_I.cv; } else if(l===4){ lc+=' pill'; li='<span class="lt">'+BK+'</span>'+HD_I.cv; }   /* 261111 수정 — 테두리 안 글자를 대문자 높이로 잘라 가운데에 둔다(.lt) */
+    else if(l===5) li=HD_I.globe; else if(l===6) li=HD_I.globe+BK; else if(l===7) li=FL(0)+LN+HD_I.cv; else if(l===8) li=FL(1)+LN+HD_I.cv;
     else if(l===9) li=FL(0); else if(l===10){ lc+=' circ'; li=BK; } else li=FL(1);
     out.push('<span class="'+lc+'" data-u="lang">'+li+'<div class="nav-dd"><div class="nav-dd-in">'+((typeof ssetLangNames==='function')?ssetLangNames():['한국어','English']).map(function(n){ return '<span class="nav-sub-i">'+n+'</span>'; }).join('')+'</div></div></span>');   /* 261023 수정 — 언어 목록은 사이트 설정 「다국어」를 따른다 */
   }
