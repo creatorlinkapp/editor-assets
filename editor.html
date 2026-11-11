@@ -9115,7 +9115,7 @@
   .site[data-hd-type="side"] > .site-hd[data-hd-side="0"]{padding-left:14px;padding-right:14px;}
   .site[data-hd-type="side"] > .site-hd{padding-left:clamp(14px,var(--hd-side),32px);padding-right:clamp(14px,var(--hd-side),32px);}   /* 261111 추가 — 좌측 메뉴 좌우 여백도 슬라이더를 따른다(폭이 좁아 14 ~ 32px · 기본 48 → 32 로 예전과 같음) */
   .site[data-hd-type="side"] > .site-hd .hd-br{display:none;}
-  .site[data-hd-type="side"] > .site-hd .logo,.site[data-hd-type="side"] > .site-hd .site-nav,.site[data-hd-type="side"] > .site-hd .hd-util{margin:0!important;}
+  html:not(.mob) .site[data-hd-type="side"] > .site-hd .logo,html:not(.mob) .site[data-hd-type="side"] > .site-hd .site-nav,html:not(.mob) .site[data-hd-type="side"] > .site-hd .hd-util{margin:0!important;}   /* 261111 수정 — PC 좌측 메뉴만: 휴대폰 상단 바에서도 걸려 레이아웃의 margin-left:auto 를 지워, 버튼(장바구니 등)이 로고 옆에 붙었다 */
   .site[data-hd-type="side"] > .site-hd .site-nav{flex-direction:column;align-items:flex-start;order:3;}
   .site[data-hd-type="side"] > .site-hd .hd-util{order:2;flex-wrap:wrap;}
   .site[data-hd-type="side"] > .site-hd .site-nav .nav-dd{left:0;transform:none;top:auto;position:static;padding-top:6px;visibility:visible;pointer-events:auto;display:none;}
@@ -9447,7 +9447,7 @@
     html.mob .site-hd[data-mo].mo-on > .logo img{max-height:var(--mo-lmax,31px);max-width:200px;}
     /* 261104 추가 — 상단 바 자리 맞춤(moFit) : 가운데 자리가 없으면 메뉴 버튼과 기능 버튼 사이 가운데로 · 그래도 좁으면 로고 폭을 줄인다 */
     html.mob .site-hd[data-mo="c"].mo-on.mo-cflow > .logo{position:static;transform:none;order:2;margin-left:auto;margin-right:auto;}
-    html.mob .site-hd[data-mo="c"].mo-on.mo-cflow > .mo-util{margin-left:0;}
+    html.mob .site-hd[data-mo="c"].mo-on.mo-cflow > .mo-util{margin-left:0;margin-right:0;}
     html.mob .site-hd[data-mo].mo-on.mo-lgfit > .logo{white-space:nowrap;}   /* 크기는 moFit 이 --mo-lfs · --mo-lmax 로 줄인다(자르지 않음) */
     html.mob .site-hd[data-mo].mo-on > .mo-util{display:flex!important;align-items:center;gap:calc(14px * var(--mo-isc,1));--hd-usz:var(--mo-isc,1);}
     html.mob .site-hd[data-mo].mo-on > .mo-util .u:not(.mo-dd) .nav-dd{display:none!important;}   /* 261104 수정 — 마우스 올림이 없는 휴대폰이라 목록을 숨겨 두기만 해 다국어 · 로그인 버튼을 눌러도 아무 일이 없었다 → 누르면 열고(.mo-dd) 다시 누르거나 바깥을 누르면 닫는다 */
@@ -9459,10 +9459,10 @@
     html.mob .site-hd[data-mo].mo-on > .snav-ham .o{display:inline-flex;align-items:center;gap:6px;}
     html.mob .site-hd[data-mo].mo-on.mo-open > .snav-ham .o{display:none;} html.mob .site-hd[data-mo].mo-on.mo-open > .snav-ham .c{display:inline-flex;}
     html.mob .site-hd[data-mo].mo-on.mo-noham > .snav-ham{display:none!important;}
-    html.mob .site-hd[data-mo="l"].mo-on > .logo{order:1;} html.mob .site-hd[data-mo="l"].mo-on > .mo-util{order:2;margin-left:auto;} html.mob .site-hd[data-mo="l"].mo-on > .snav-ham{order:3;margin-left:0;}
+    html.mob .site-hd[data-mo="l"].mo-on > .logo{order:1;margin-left:0;margin-right:0;}   /* 261111 수정 — PC 레이아웃의 로고 여백(가운데 · 오른쪽 정렬용 auto)이 새어 들어오지 않게 */ html.mob .site-hd[data-mo="l"].mo-on > .mo-util{order:2;margin-left:auto;margin-right:0;} html.mob .site-hd[data-mo="l"].mo-on > .snav-ham{order:3;margin-left:0;}
     html.mob .site-hd[data-mo="l"].mo-on.mo-noutil > .snav-ham,html.mob .site-hd[data-mo="l"].mo-on.mo-noutil.mo-noham > .mo-util{margin-left:auto;}
-    html.mob .site-hd[data-mo="c"].mo-on > .snav-ham{order:1;margin-left:0;} html.mob .site-hd[data-mo="c"].mo-on > .logo{position:absolute;left:50%;top:calc(var(--mo-h,60px) / 2);transform:translate(-50%,-50%);} html.mob .site-hd[data-mo="c"].mo-on > .mo-util{order:3;margin-left:auto;}
-    html.mob .site-hd[data-mo="r"].mo-on > .snav-ham{order:1;margin-left:0;} html.mob .site-hd[data-mo="r"].mo-on > .mo-util{order:2;margin-left:0;}   /* 261027 수정 — 공통 규칙의 margin-left:auto 가 남아 로고의 auto 와 빈자리를 반씩 나눠 가져 기능 버튼이 가운데로 떴다 → 메뉴 버튼 옆에 붙인다(레이아웃 그림대로 · 간격은 헤더 gap 그대로 = 왼쪽 정렬 레이아웃과 같음) */ html.mob .site-hd[data-mo="r"].mo-on > .logo{order:3;margin-left:auto;}
+    html.mob .site-hd[data-mo="c"].mo-on > .snav-ham{order:1;margin-left:0;} html.mob .site-hd[data-mo="c"].mo-on > .logo{position:absolute;left:50%;top:calc(var(--mo-h,60px) / 2);transform:translate(-50%,-50%);} html.mob .site-hd[data-mo="c"].mo-on > .mo-util{order:3;margin-left:auto;margin-right:0;}   /* 261111 수정 — PC 레이아웃의 margin-right:auto 가 새어 버튼이 가운데(로고 밑)로 들어가 겹쳤다 */
+    html.mob .site-hd[data-mo="r"].mo-on > .snav-ham{order:1;margin-left:0;} html.mob .site-hd[data-mo="r"].mo-on > .mo-util{order:2;margin-left:0;margin-right:0;}   /* 261027 수정 — 공통 규칙의 margin-left:auto 가 남아 로고의 auto 와 빈자리를 반씩 나눠 가져 기능 버튼이 가운데로 떴다 → 메뉴 버튼 옆에 붙인다(레이아웃 그림대로 · 간격은 헤더 gap 그대로 = 왼쪽 정렬 레이아웃과 같음) */ html.mob .site-hd[data-mo="r"].mo-on > .logo{order:3;margin-left:auto;margin-right:0;}   /* 261111 수정 — PC 레이아웃의 margin-right:auto 가 새어 로고가 오른쪽 끝에 못 붙고 가운데쯤 떴다 */
     /* 메뉴 바(= 좌측 「중단 메뉴」) — 헤더 안 두 번째 줄. 상단 고정을 끄면 스크롤이 시작되면(hd-stuck) 감춘다 */
     html.mob .site-hd[data-mo].mo-on > .mo-tab{display:flex;order:9;flex:0 0 calc(100% + var(--mo-side,18px) * 2);margin:0 calc(var(--mo-side,18px) * -1);overflow-x:auto;scrollbar-width:none;
       background:var(--mo-tbg,var(--hd-bg-solid,#fff));border-top:1px solid var(--mo-tline,color-mix(in srgb,var(--hd-fg,#9096A0) 22%,transparent));border-bottom:1px solid var(--mo-tline,color-mix(in srgb,var(--hd-fg,#9096A0) 22%,transparent));
