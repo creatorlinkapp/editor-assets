@@ -10080,7 +10080,7 @@
   .gd-title .gd-t-bg{display:none;position:absolute;inset:0;background:var(--gd-img,none) center/cover no-repeat;}
   .gd-title[data-bg="img"] .gd-t-bg{display:block;}
   .gd-title .gd-t-bg::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,var(--gd-dim));}
-  .gd-title .gd-t-in{position:relative;z-index:1;box-sizing:border-box;max-width:1240px;margin:0 auto;min-height:var(--gd-mh);padding:var(--gd-pt) 40px var(--gd-pb);display:flex;flex-direction:column;}
+  .gd-title .gd-t-in{position:relative;z-index:1;box-sizing:border-box;max-width:1240px;margin:0 auto;min-height:var(--gd-mh);padding:var(--gd-pt) var(--gd-px,40px) var(--gd-pb);display:flex;flex-direction:column;}   /* 261111 수정 — 좌우 40px 고정 → 설정창 「좌우」(--gd-px) */
   .gd-title .gd-t-bar{display:flex;align-items:center;gap:8px;min-height:38px;}
   .gd-title .gd-t-bar .sp{flex:1;}
   .gd-title .gd-nav{display:inline-flex;align-items:center;gap:8px;}
@@ -10121,7 +10121,7 @@
   .gd-title[data-lay="bottom"] .gd-t-txt{margin:auto 0 0;padding:30px 0 0;}
   .gd-title[data-lay="box"] .gd-t-in{padding-left:0;padding-right:0;align-items:center;}
   .gd-title[data-lay="box"] .gd-t-txt{--gd-fg:#222428;--gd-sub:#7B818B;margin:auto 0;min-width:300px;max-width:76%;box-sizing:border-box;padding:38px 64px;background:#fff;}
-  .gd-title[data-lay="box"] .gd-t-bar{align-self:stretch;margin:56px 40px 0;padding:0 14px;min-height:44px;background:#fff;color:#222428;}
+  .gd-title[data-lay="box"] .gd-t-bar{align-self:stretch;margin:56px var(--gd-px,40px) 0;padding:0 14px;min-height:44px;background:#fff;color:#222428;}
   .gd-title[data-lay="vline"] .gd-t-h::after{content:"";display:block;width:1px;height:28px;margin:22px auto 20px;background:currentColor;opacity:.35;} .gd-title[data-lay="vline"] .gd-t-s{margin-top:0;}
   .gd-title[data-lay="bold"]{--gd-hfs:26px;--gd-hfw:700;}
   .gd-title[data-gd-d="pt05"] .gd-t-txt{padding-top:8px;} .gd-title[data-gd-d="pt05"]{--gd-hfs:24px;}
@@ -16966,6 +16966,7 @@
         <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
           <div class="srow" style="margin-top:0;"><span class="k">상단</span><input class="rng" type="range" id="gdPt" min="0" max="240" step="2" value="60"><span class="v" id="gdPtV">60px</span></div>
           <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="gdPb" min="0" max="240" step="2" value="60"><span class="v" id="gdPbV">60px</span></div>
+          <div class="srow"><span class="k">좌우</span><input class="rng" type="range" id="gdPx" min="0" max="200" step="2" value="40"><span class="v" id="gdPxV">40px</span></div>   <!-- 261111 추가 — 좌우 여백(블록 · 상단 메뉴 「좌우」와 같은 슬라이더 · 휴대폰은 20px 고정) -->
         </div></div>
       </div>
       <div class="fld sfold open" id="gdItemAcc" data-gd-sec="foot">
@@ -63531,7 +63532,7 @@ function gdTitleImg(X){
 /* 타이틀 — X: {ad,c,i,n} · D: 디자인 · pv: 고르기 카드용(톱니·편집 없음) */
 function gdTitleParts(X,D,pv){
   var det=X.c.gt.det, img=gdTitleImg(X);   /* 261013 수정 — 이 글의 타이틀 이미지: 직접 고른 것 → 썸네일(연동) */
-  var st='--gd-pt:'+((det.pt==null||pv)?D.pt:det.pt)+'px;--gd-pb:'+((det.pb==null||pv)?D.pb:det.pb)+'px;'+(D.mh?'--gd-mh:'+D.mh+'px;':'');
+  var st='--gd-pt:'+((det.pt==null||pv)?D.pt:det.pt)+'px;--gd-pb:'+((det.pb==null||pv)?D.pb:det.pb)+'px;'+((det.px==null||pv)?'':'--gd-px:'+det.px+'px;')+(D.mh?'--gd-mh:'+D.mh+'px;':'');   /* 261111 추가 — 좌우(px · 없으면 CSS 기본 40) */
   if(D.bg==='img'){ st+='--gd-dim:'+(Math.max(0,Math.min(90,+det.dim||0))/100)+';'; if(img && !gtVid(img)) st+='--gd-img:'+gtUrl(img)+';'; }
   else if(det.bg && !pv){ st+='--gd-bg:'+det.bg+';';   /* 261007 수정 — 직접 고른 배경색: 그 명도에 맞춰 글자색을 고른다(어두우면 흰 글자) */
     if(typeof stIsDark==='function' && /^#[0-9a-f]{6}$/i.test(det.bg)) st+=stIsDark(det.bg)?'--gd-fg:#fff;--gd-sub:rgba(255,255,255,.72);':'--gd-fg:#222428;--gd-sub:#7B818B;'; }
@@ -63739,7 +63740,7 @@ function gdDet(){ var X=gdCtx(); return X?X.c.gt.det:null; }
 function gdSetV(k,v){ var X=gdCtx(); if(!X) return; X.c.gt.det[k]=v; gdRender(); }
 function gdBuild(){
   if(gdBound) return; gdBound=true;
-  [['gdDim','dim','%'],['gdPt','pt','px'],['gdPb','pb','px']].forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return; el.addEventListener('input',function(){ var x=parseFloat(el.value); if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=x+r[2]; gdSetV(r[1],x); }); });
+  [['gdDim','dim','%'],['gdPt','pt','px'],['gdPb','pb','px'],['gdPx','px','px']].forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return; el.addEventListener('input',function(){ var x=parseFloat(el.value); if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=x+r[2]; gdSetV(r[1],x); }); });
   var bg=document.getElementById('gdBg'); if(bg) bg.addEventListener('input',function(){ gdSetV('bg',bg.value.toUpperCase()); bg.classList.remove('auto'); var h=document.getElementById('gdBgV'); if(h) h.textContent=bg.value.toUpperCase(); var r=document.getElementById('gdBgR'); if(r) r.classList.remove('off'); });
 }
 function gdShow(id,on){ var el=document.getElementById(id); if(el) el.style.display=on?'':'none'; }
@@ -63751,7 +63752,7 @@ function gdFill(){
   gdShow('gdImgRow',isImg); gdShow('gdImgHint',isImg); gdShow('gdDimRow',isImg); gdShow('gdBgRow',!isImg);   /* 261013 수정 — 이미지 디자인이면 배경 이미지 줄은 늘(기본 썸네일) */
   var th=document.getElementById('gdBgTh'); if(th){ var ti=gdTitleImg(X), has=!!ti && !gtVid(ti), ovr=!!gdTimg(X); th.classList.toggle('has',has); th.classList.toggle('empty',!has); th.classList.toggle('ovr',ovr); th.style.backgroundImage=has?'url("'+String(ti).replace(/"/g,'%22')+'")':''; th.title=ovr?'직접 고른 이미지 — × 로 썸네일로 되돌립니다':'보관함에서 이미지를 고르면 이 글의 타이틀 배경이 됩니다'; }
   function rng(id,v,u){ var el=document.getElementById(id); if(!el || document.activeElement===el) return; el.value=v; if(typeof smRng==='function') smRng(el); var o=document.getElementById(id+'V'); if(o) o.textContent=v+u; }
-  rng('gdDim',+det.dim||0,'%'); rng('gdPt',(det.pt==null)?D.pt:det.pt,'px'); rng('gdPb',(det.pb==null)?D.pb:det.pb,'px');
+  rng('gdDim',+det.dim||0,'%'); rng('gdPt',(det.pt==null)?D.pt:det.pt,'px'); rng('gdPb',(det.pb==null)?D.pb:det.pb,'px'); rng('gdPx',(det.px==null)?40:det.px,'px');
   var bg=document.getElementById('gdBg'), bv=document.getElementById('gdBgV'), br=document.getElementById('gdBgR');
   var bg0=(D.bg==='d')?'#333333':'#ffffff'; if(D.bg!=='d'){ try{ var sb=String(getComputedStyle(gdSite()).getPropertyValue('--st-bg')||'').trim(); if(/^#[0-9a-f]{6}$/i.test(sb)) bg0=sb; }catch(x){} }   /* 261007 추가 — 기본 = 컬러 모드의 배경색 */
   if(bg){ bg.value=/^#[0-9a-f]{6}$/i.test(det.bg||'')?det.bg:bg0; bg.classList.toggle('auto',!det.bg); } if(bv) bv.textContent=det.bg?det.bg.toUpperCase():'기본'; if(br) br.classList.toggle('off',!det.bg);
