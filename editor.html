@@ -9305,7 +9305,8 @@
      맨 위 겹(::after)에 그려 헤더 배경 · 흐림 위에 놓는다. 토글 패널이 펼쳐져 있으면 편집 표시선처럼 헤더 + 패널을 한 덩어리로 감싼다 */
   /* 261006 수정 — 선을 ::after 가 아니라 헤더 자신의 box-shadow 로(블록과 같은 방식). 캔버스 배율(0.88)에서 헤더 배경은 소수 px 가장자리에 그려지는데
      absolute 로 띄운 ::after 는 정수 px 로 맞춰져 바깥 1px 띠가 배경색만 남아 「선이 1px 안쪽」으로 보였다. 헤더 고유 그림자(--hd-shadow)는 뒤에 이어 붙인다 */
-  html:not(.mview) #stage .site > .site-hd:hover,html:not(.mview) #stage .site > .site-hd.hd-editing{box-shadow:inset 0 0 0 1.5px var(--ed,#03C75A),inset 0 0 0 2.5px var(--ed-halo,transparent),var(--hd-shadow,0 0 0 0 transparent);}
+  html:not(.mview) #stage .site > .site-hd:hover,html:not(.mview) #stage .site > .site-hd.hd-editing{box-shadow:inset 0 0 0 2.5px var(--ed-halo,transparent),var(--hd-shadow,0 0 0 0 transparent);outline:1.5px solid var(--ed,#03C75A);outline-offset:-1.5px;}   /* 261111 수정 — 초록 테두리를 안쪽 그림자 → 가장자리 선(outline)으로: 안쪽 그림자는 구분선(좌측 메뉴 오른쪽 · 상단 메뉴 하단) 안쪽에 그려져 「초록 · 회색 · 옆 블록 초록」 세 줄로 보였다 → 구분선 위에 덮어 블록끼리처럼 두 줄로 */
+  html.pview #stage .site > .site-hd:hover{outline:none !important;}
   html:not(.mview) #stage .site > .site-hd:not(.hd-editing)[data-hd-type="toggle"].hd-open:hover{box-shadow:var(--hd-shadow,0 0 0 0 transparent);}   /* 토글 펼침 중엔 아래 ::after 규칙이 헤더+패널을 한 덩어리로 감싼다 */
   html:not(.mview) #stage .site > .site-hd:not(.hd-editing)[data-hd-type="toggle"].hd-open:hover::after{box-shadow:inset 0 1.5px 0 var(--ed,#03C75A),inset 1.5px 0 0 var(--ed,#03C75A),inset -1.5px 0 0 var(--ed,#03C75A);}
   html:not(.mview) #stage .site > .site-hd:not(.hd-editing)[data-hd-type="toggle"].hd-open:hover .site-nav{box-shadow:inset 1.5px 0 0 var(--ed,#03C75A),inset -1.5px 0 0 var(--ed,#03C75A),inset 0 -1.5px 0 var(--ed,#03C75A),0 18px 40px rgba(20,24,32,.10);}
