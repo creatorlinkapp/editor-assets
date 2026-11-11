@@ -7496,6 +7496,7 @@
   .rt-pop.show{display:block;animation:pop .14s ease;}
   .rt-pop::-webkit-scrollbar{width:6px;} .rt-pop::-webkit-scrollbar-thumb{background:#DADDE3;border-radius:var(--r-sm);}
   .rt-pop .hd{font-size:var(--fs-sm);font-weight:700;color:var(--ink-2);padding:5px 11px 3px;}
+  .rt-pop button .rt-bv{margin-left:auto;font-size:var(--fs-xs);color:var(--ink-3);}   /* 261111 추가 — 「기본」 옆 지금 블록 기본값 */
   .rt-pop button{display:flex;align-items:center;gap:10px;width:100%;min-height:34px;padding:0 11px;border:none;border-radius:var(--r-md);background:transparent;color:var(--ui-fg);font-family:inherit;font-size:var(--fs-lg);font-weight:600;cursor:pointer;text-align:left;white-space:nowrap;line-height:1.5;}
   .rt-pop button:hover{background:var(--green-tint);color:var(--green-text);}
   .rt-pop button.on{background:var(--green-soft);color:var(--green-text);box-shadow:inset 0 0 0 1px var(--green-line);}
@@ -11286,7 +11287,7 @@
             <button type="button" class="mt-seg-b active" data-m="center" onclick="rtAlign('center')">가운데</button>
             <button type="button" class="mt-seg-b" data-m="right" onclick="rtAlign('right')">오른쪽</button>
           </div>
-          <div class="srow"><span class="k">크기</span><input class="rng" type="range" id="rtSize" min="11" max="28" step="0.5" value="14.5"><span class="v" id="rtSizeV">14.5px</span></div>
+          <div class="srow"><span class="k">크기</span><input class="rng" type="range" id="rtSize" min="11" max="48" step="0.5" value="14.5"><span class="v" id="rtSizeV">14.5px</span></div>
           <div class="srow"><span class="k">줄 간격</span><input class="rng" type="range" id="rtLh" min="1.2" max="3.2" step="0.05" value="2.1"><span class="v" id="rtLhV">2.10</span></div>
           <div class="srow"><span class="k">자간</span><input class="rng" type="range" id="rtLs" min="-0.05" max="0.3" step="0.01" value="0"><span class="v" id="rtLsV">0.00em</span></div>
           <div class="srow"><span class="k">글자색</span><span class="sw-col"><input type="color" id="rtColor" value="#3c424b"><span class="hex" id="rtColorV">#3C424B</span><button type="button" class="sw-reset" id="rtColorR" onclick="rtReset('color')" title="테마 기본색으로 되돌리기" aria-label="기본으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
@@ -56941,7 +56942,25 @@ global.PolyFX = API;
      · 결과는 모두 .cred innerHTML 에 남으므로 기존 rtCfg.html 저장·모바일 동기화 경로를 그대로 탄다
      ══════════════════════════════════════════════════════════════════ */
   /* 260905 수정 — 창작자링크와 같은 눈금: 자간 -2~10(px) · 행간 0~10 (1 ~ 2.5, 0.15 간격) */
-  var RT_LS=[-2,-1,0,1,2,3,4,5,6,7,8,9,10], RT_LH=[1,1.15,1.3,1.45,1.6,1.75,1.9,2.05,2.2,2.35,2.5];
+  var RT_LS=[-0.05,-0.02,0,0.02,0.05,0.1,0.15,0.2,0.3], RT_LH=[1,1.15,1.3,1.45,1.6,1.75,1.9,2.05,2.2,2.35,2.5];   /* 261111 수정 — 자간 -2~10px → em(설정창 「기본 글자 > 자간」과 같은 단위 · 눈금) */
+  /* 261111 추가 — 툴바 목록 맨 위 「기본」: 고른 글자에 따로 넣은 값을 지워 블록 기본값(설정창 「기본 글자」)을 따르게 한다. 옆에 지금 기본값을 보여 준다 */
+  function rtBaseVals(){ var b=rtEditBlk?rtBody(rtEditBlk):null; if(!b) return {}; var cs=getComputedStyle(b), fs=parseFloat(cs.fontSize)||14;
+    return {size:Math.round(fs*2)/2, lh:(cs.lineHeight==='normal')?'':(Math.round(parseFloat(cs.lineHeight)/fs*100)/100), ls:(cs.letterSpacing==='normal')?0:(Math.round(parseFloat(cs.letterSpacing)/fs*100)/100)}; }
+  function rtSelClear(props){
+    if(!rtEditBlk) return; rtRestoreSel();
+    var sel=window.getSelection(), b=rtBody(rtEditBlk); if(!sel||!sel.rangeCount||!b) return;
+    var r=sel.getRangeAt(0), els=[];
+    var a=r.commonAncestorContainer; a=(a.nodeType===1)?a:a.parentElement;
+    for(var p=a; p && p!==b && b.contains(p); p=p.parentElement) els.push(p);   /* 고른 글자를 감싼 바깥 요소들 */
+    [].slice.call(b.querySelectorAll('[style],font[size]')).forEach(function(el){ try{ if(r.intersectsNode(el)) els.push(el); }catch(e){} });   /* 고른 범위 안의 요소들 */
+    els.forEach(function(el){
+      if(el.tagName==='FONT'){ if(props.indexOf('fontSize')>=0) el.removeAttribute('size'); return; }
+      props.forEach(function(k){ el.style[k]=''; });
+      if(el.getAttribute('style')==='') el.removeAttribute('style');
+      if(el.tagName==='SPAN' && !el.attributes.length && el.parentNode){ while(el.firstChild) el.parentNode.insertBefore(el.firstChild,el); el.parentNode.removeChild(el); }
+    });
+    rtSync(); rtTbState();
+  }
   var rtPlusOpen=false, rtLibMode=null, rtPlusAnchor=null, rtTblPick={r:0,c:0}, rtMediaCur=null;
 
   /* ── 공통 ── */
@@ -57077,7 +57096,7 @@ global.PolyFX = API;
   }
   function rtLetterSpacing(v){
     if(!rtEditBlk) return; rtRestoreSel();
-    if(rtWrapInline({letterSpacing:(v===''||v==null)?'':(v+'px')})){ rtSync(); rtTbState(); }
+    if(rtWrapInline({letterSpacing:(v===''||v==null)?'':(v+'em')})){ rtSync(); rtTbState(); }   /* 261111 수정 — px → em */
   }
 
   /* ── 툴바 확장: 삽입(+) 메뉴 바인딩 · 풀다운 상태 ── */
@@ -57107,8 +57126,10 @@ global.PolyFX = API;
       wb=bk.style.wordBreak||'';
     }
     if(el){
-      var cs=getComputedStyle(el), lsp=(cs.letterSpacing==='normal')?0:Math.round(parseFloat(cs.letterSpacing));
-      if(RT_LS.indexOf(lsp)>=0 && lsp!==0) sv2=String(lsp);
+      /* 261111 수정 — 자간 단위 px → em: 고른 글자에 따로 넣은 자간이 있을 때만 그 값(em)에 표시, 없으면 「기본」 */
+      var lse=el.closest?el.closest('[style*="letter-spacing"]'):null;
+      if(lse && rtBody(rtEditBlk).contains(lse)){ var cs=getComputedStyle(lse), lem=(cs.letterSpacing==='normal')?0:Math.round(parseFloat(cs.letterSpacing)/(parseFloat(cs.fontSize)||14)*100)/100;
+        RT_LS.forEach(function(x){ if(Math.abs(x-lem)<0.006) sv2=String(x); }); }
       if(!wb){ var wbe=el.closest?el.closest('[style*="word-break"]'):null; if(wbe && rtBody(rtEditBlk).contains(wbe)) wb=wbe.style.wordBreak||''; }
     }
     rtTbCur.style=sv; rtTbCur.lh=lv; rtTbCur.ls=sv2; rtTbCur.wrap=wb||'';
@@ -57181,12 +57202,12 @@ global.PolyFX = API;
     } else if(k==='font'){
       h=rtPopItem('','<span class="fontn">기본 글꼴</span>',c.font==='')+SM_FONTS.map(function(f,i){ return rtPopItem(String(i),'<span class="fontn" style="font-family:'+f.f.replace(/"/g,'&quot;')+','+f.fb+'">'+f.n+'</span>',c.font===String(i)); }).join('');
     } else if(k==='size'){
-      h=RT_SIZES.map(function(n){ return rtPopItem(String(n),String(n),c.size===String(n)); }).join('');
+      var bv0=rtBaseVals(); h=rtPopItem('','기본 <span class="rt-bv">'+(bv0.size!=null?bv0.size:'')+'</span>',false)+RT_SIZES.map(function(n){ return rtPopItem(String(n),String(n),c.size===String(n)); }).join('');   /* 261111 수정 — 맨 위 「기본(블록 값)」 */
     } else if(k==='color'){ rtCpRender(pop); return;
     } else if(k==='ls'){
-      h=RT_LS.map(function(n){ var v=String(n); return rtPopItem(v,String(n),c.ls===v); }).join('');
+      var bv1=rtBaseVals(); h=rtPopItem('','기본 <span class="rt-bv">'+(bv1.ls!=null?bv1.ls.toFixed(2)+'em':'')+'</span>',c.ls==='')+RT_LS.map(function(n){ var v=String(n); return rtPopItem(v,n.toFixed(2)+'em',c.ls===v); }).join('');   /* 261111 수정 — em 표기 + 맨 위 「기본」 */
     } else if(k==='lh'){
-      h=RT_LH.map(function(n,i){ var v=String(i); return rtPopItem(v,String(i),c.lh===v); }).join('');
+      var bv2=rtBaseVals(); h=rtPopItem('','기본 <span class="rt-bv">'+(bv2.lh!==''&&bv2.lh!=null?bv2.lh.toFixed(2):'')+'</span>',c.lh==='')+RT_LH.map(function(n,i){ var v=String(i); return rtPopItem(v,n.toFixed(2),c.lh===v); }).join('');   /* 261111 수정 — 번호(0~10) → 실제 배수(설정창 「줄 간격」과 같은 표기) + 맨 위 「기본」 */
     } else if(k==='align'){
       h=RT_ALIGN.map(function(a){ return rtPopItem(a[0],a[2]+a[1],c.align===a[0]); }).join('');
     } else if(k==='wrap'){
@@ -57204,9 +57225,9 @@ global.PolyFX = API;
   function rtPopPick(k,v){
     if(k==='style'){ rtStyleApply(v); }
     else if(k==='font'){ rtFontFamily(v); }
-    else if(k==='size'){ rtFontSize(parseFloat(v)); }
-    else if(k==='ls'){ rtLetterSpacing(parseFloat(v)); }
-    else if(k==='lh'){ rtLineHeight(String(RT_LH[+v])); }
+    else if(k==='size'){ if(v==='') rtSelClear(['fontSize']); else rtFontSize(parseFloat(v)); }   /* 261111 수정 — 「기본」 = 따로 넣은 값 지우기 */
+    else if(k==='ls'){ if(v==='') rtSelClear(['letterSpacing']); else rtLetterSpacing(parseFloat(v)); }
+    else if(k==='lh'){ if(v==='') rtLineHeight(''); else rtLineHeight(String(RT_LH[+v])); }
     else if(k==='align'){ rtCmd({left:'justifyLeft',center:'justifyCenter',right:'justifyRight',full:'justifyFull'}[v]); }
     else if(k==='wrap'){ rtWordBreak(v); }
     else if(k==='indent'){ rtCmd(v); }
