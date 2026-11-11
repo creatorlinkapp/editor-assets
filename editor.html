@@ -9100,7 +9100,10 @@
   /* PC 편집기의 zoom·패널 이동 중에도 헤더는 사이트의 가로 배치를 그대로 따른다. 세로 고정량만 동기화한다. */
   /* 261021 수정 — 편집기에서도 진짜 sticky: 예전엔 relative + 스크롤 때마다 JS 가 top 을 넣어(--pc-header-offset) 고정을 흉내 냈는데, 스크롤은 브라우저가 먼저 그리고 JS 값은 한 박자 늦게 들어와 스크롤할 때마다 헤더가 따라 내려갔다 돌아오며 흔들렸다.
      sticky 는 스크롤과 같은 프레임에 브라우저가 직접 고정한다. 편집 화면 위 여백(--canvas-top)만큼 위에서 멈추면 그 여백 안에 헤더가 떠 보이므로 top 은 여백만큼 위로(음수) */
-  html.ui-rail:not(.mview):not(.pview) #stage > .site > .site-hd.hd-stick{position:sticky;top:calc(var(--canvas-top,0px) * -1 / var(--site-zoom,1));}   /* 사이트가 zoom 으로 축소돼 있으므로 화면 px 을 배율로 나눈다 */
+  html.ui-rail:not(.mview):not(.pview) #stage > .site > .site-hd.hd-stick{position:sticky;top:calc(var(--canvas-top,0px) * -1 / var(--site-zoom,1));}
+  /* 261111 추가 — 좌측 메뉴도 같은 보정: 편집 화면 위 여백(20px)만큼 위로 붙이고(전엔 20px 아래에서 멈춰 그 틈으로 블록이 지나갔다),
+     높이는 보이는 편집 화면 높이 ÷ 배율(전엔 100vh 라 축소된 화면에서 짧게 끝났다). 처음엔 위 여백만큼 아래가 화면 밖이라 아래 안쪽 여백을 그만큼 더한다 */
+  html.ui-rail:not(.mview):not(.pview) #stage > .site[data-hd-type="side"] > .site-hd{top:calc(var(--canvas-top,0px) * -1 / var(--site-zoom,1));height:calc((100vh - var(--band-h,0px)) / var(--site-zoom,1));padding-bottom:calc(var(--hd-pb) + 16px + var(--canvas-top,0px) / var(--site-zoom,1));}   /* 사이트가 zoom 으로 축소돼 있으므로 화면 px 을 배율로 나눈다 */
   .site > .site-hd.hd-over{position:absolute;left:0;right:0;top:0;z-index:119;}
   .site.hd-overlap{position:relative;}
   .site > .site-hd.hd-over.hd-stick{position:sticky;}
