@@ -8954,6 +8954,7 @@
   :is(.site[data-theme] .site-hd,.site-hd,.hd-sbv)[data-hd-sub="lbar"] .nav-dd-in .nav-sub-i:hover,:is(.site[data-theme] .site-hd,.site-hd,.hd-sbv)[data-hd-sub="lbar"] .nav-dd-in .nav-sub-i.cur{background:color-mix(in srgb,var(--hd-sub-ac) 6%,transparent);color:var(--hd-sub-ac);box-shadow:inset 2px 0 0 var(--hd-sub-ac);}
   /* 상단 강조선 */
   :is(.site[data-theme] .site-hd,.site-hd,.hd-sbv)[data-hd-sub="topline"][data-hd-sub] .nav-dd-in{border-top:2px solid var(--hd-sub-ac);border-top-left-radius:0;border-top-right-radius:0;}   /* [data-hd-sub] 한 번 더 = 「테두리 끔」 규칙보다 앞서게 */
+  :is(.site[data-theme] .site-hd,.site-hd,.hd-sbv)[data-hd-sub="topline"][data-hd-sub] .nav-dd-in{border-top-width:0;padding-top:8px;background-image:linear-gradient(var(--hd-sub-ac),var(--hd-sub-ac));background-origin:border-box;background-size:100% 2px;background-position:0 0;background-repeat:no-repeat;}   /* 261111 추가 — 강조선을 테두리 대신 배경 띠로 그린다: 축소된 캔버스에서 테두리 2px 가 1px 로 내려 그려져 카드보다 얇아 보였다(빠진 테두리 2px 만큼 위 여백을 더해 높이 그대로) */
   :is(.site[data-theme] .site-hd,.site-hd,.hd-sbv)[data-hd-sub="topline"] .nav-dd-in .nav-sub-i:hover{background:none;color:var(--hd-sub-ac);}
   /* 말풍선 — 상자 위에 메뉴를 가리키는 꼬리 */
   :is(.site[data-theme] .site-hd,.site-hd,.hd-sbv)[data-hd-sub="caret"] .nav-dd-in{position:relative;}
