@@ -9672,6 +9672,7 @@
   .hd-pk > .dm-close{position:absolute;}
   .hd-pk .hd-pk-grid,#hdPickModal.hd-pk-low .hd-pk-grid{flex:1 1 auto;min-height:0;max-height:none;grid-auto-rows:max-content;align-content:start;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#BFC6D1 transparent;}
   .hd-pk .hd-pk-grid + .tx-hint{margin-top:12px;}
+  .hd-pk .hd-pk-lon{border:0;background:none;padding:0;font:inherit;color:var(--green-text);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;}   /* 261111 추가 — 안내 속 「다국어 켜기」(폼 「모두 켜기」와 같은 글자 버튼) */
   .hd-pk .hd-card{border:1px solid var(--border-2);border-radius:var(--r-lg,10px);background:#fff;cursor:pointer;overflow:hidden;transition:border-color .12s,box-shadow .12s;text-align:left;padding:0;font:inherit;}
   .hd-card:hover{border-color:#C8CDD4;box-shadow:0 6px 18px rgba(20,24,32,.08);}
   .hd-card.on{border-color:var(--green);box-shadow:0 0 0 1px var(--green);}
@@ -60339,7 +60340,7 @@ function hdApply(hdEl){
   }
   /* 유틸 */
   sv('--hd-usz',{s:1,m:1.2,l:1.45}[HD.util.size]||1);
-  var ut=hd.querySelector(':scope > .hd-util'); if(ut){ var uh=hdUtilHtml(HD.util); if(ut.getAttribute('data-hd-html')!==uh){ ut.innerHTML=uh; ut.setAttribute('data-hd-html',uh); } ut.setAttribute('data-us',String(HD.util.style)); }
+  var ut=hd.querySelector(':scope > .hd-util'); if(ut){ var uh=hdUtilHtml(hdLangPv()?Object.assign({},HD.util,{lang:true}):HD.util);   /* 261111 수정 — 다국어가 꺼져 있어도 「다국어」 스타일을 고르는 동안은 캔버스에 잠깐 보여 준다(값은 그대로 · 사본은 HD 로 그려 영향 없음) */ if(ut.getAttribute('data-hd-html')!==uh){ ut.innerHTML=uh; ut.setAttribute('data-hd-html',uh); } ut.setAttribute('data-us',String(HD.util.style)); }
   /* 상태 클래스 — 플로팅은 sticky, 겹치기는 아래 블록이 헤더 밑으로 흘러들게(높이만큼 음수 여백) */
   if(pv){ hd.classList.remove('hd-stick','hd-over','hd-stuck','hd-open','hd-mega-open','hd-editing'); if(hd.querySelector(':scope > .site-nav')) hdNavDecorIn(hd.querySelector(':scope > .site-nav'),HD.nav.fx); return; }   /* 261006 추가 — 미리보기는 여기까지 */
   var hdOn=(HD.on!==false);   /* 261106 수정 — 숨김: 블록 숨김과 똑같이 — 편집 화면에는 크기 그대로 덮개(빗금 막 + 「숨김 해제」), 모바일 편집 사본은 흐리게, 미리보기 · 게시에서는 빠진다. 숨긴 동안은 플로팅 · 겹치기 없이 제자리 */
@@ -60954,7 +60955,10 @@ function hdPickOpen(kind){
   m.classList.toggle('hd-pk-clear',kind==='sub');   /* 261006 추가 — 서브메뉴 고르기는 스크림 없이 */
   m.classList.add('show'); hdPickRender(); hdPickPlace(true);
 }
-function hdPickTab(tab){ hdPickCtx.tab=tab; hdPickRender(); var g=document.getElementById('hdPickGrid'); if(g) g.scrollTop=0; }   /* 261006 수정 — 탭을 바꾸면 목록을 맨 위로 */
+function hdPickTab(tab){ hdPickCtx.tab=tab; hdPickRender(); var g=document.getElementById('hdPickGrid'); if(g) g.scrollTop=0; if(hdPickCtx.kind==='util') hdApply(); }   /* 261111 추가 — 다국어 탭을 오가면 캔버스 미리보기(hdLangPv)도 켜고 끈다 */
+/* 261111 추가 — 다국어가 꺼진 채 「다국어」 스타일을 고르는 중인가 · 그 자리에서 다국어 켜기 */
+function hdLangPv(){ return !!(hdPickCtx && hdPickCtx.kind==='util' && hdPickCtx.tab==='l' && !HD.util.lang); }
+function hdPickLangOn(){ hdSetUtil('lang',true); hdPickRender(); hdPickPlace(); }   /* 261006 수정 — 탭을 바꾸면 목록을 맨 위로 */
 function hdPickRender(){
   var ctx=hdPickCtx, tabs=document.getElementById('hdPickTabs'), grid=document.getElementById('hdPickGrid'); if(!ctx) return;
   var th='';
@@ -60982,8 +60986,8 @@ function hdPickRender(){
     h+='<div class="tx-hint" style="grid-column:1/-1;margin:0;">카드 위에 마우스를 올려 효과를 확인하세요. 색은 「효과 색」에서 바꿉니다.'+(hdVert()?' 세로 메뉴에 맞지 않는 효과(항목 위·아래 점·네모·윗줄, 따라오는 표식)는 뺐습니다.':'')+'</div>';
   } else if(ctx.kind==='util'){
     if(ctx.tab==='u'){ for(var i=1;i<=10;i++) h+='<button type="button" class="hd-card'+(HD.util.style===i?' on':'')+'" onclick="hdPickUtil(\'style\','+i+')"><span class="uv"><span class="hd-util" data-us="'+i+'">'+hdUtilHtml({search:true,login:true,cart:true,lang:false,style:i})+'</span></span><span class="cap">스타일 '+i+'<small>'+HD_US_NM[i]+'</small></span></button>'; }
-    else { for(var j=1;j<=11;j++) h+='<button type="button" class="hd-card'+(HD.util.langStyle===j?' on':'')+'" onclick="hdPickUtil(\'langStyle\','+j+')"><span class="uv"><span class="hd-util">'+hdUtilHtml({search:false,login:false,cart:false,lang:true,langStyle:j})+'</span></span><span class="cap">스타일 '+j+'<small>'+HD_LS_NM[j]+'</small></span></button>'; }
-  }
+    else { if(!HD.util.lang) h+='<div class="tx-hint hd-pk-lhint" style="grid-column:1/-1;margin:0 0 2px;">다국어가 꺼져 있어 지금은 미리보기로만 보입니다. <button type="button" class="hd-pk-lon" onclick="hdPickLangOn()">다국어 켜기</button></div>';   /* 261111 추가 — 꺼진 채 고르면 창을 닫을 때 사라진다는 안내 + 그 자리에서 켜기(카드가 길어 맨 위에 둔다) */
+      for(var j=1;j<=11;j++) h+='<button type="button" class="hd-card'+(HD.util.langStyle===j?' on':'')+'" onclick="hdPickUtil(\'langStyle\','+j+')"><span class="uv"><span class="hd-util">'+hdUtilHtml({search:false,login:false,cart:false,lang:true,langStyle:j})+'</span></span><span class="cap">스타일 '+j+'<small>'+HD_LS_NM[j]+'</small></span></button>'; }  }
   else if(ctx.kind==='sub'){   /* 261006 추가 — 서브메뉴 디자인: 카드의 미니 드롭다운은 실제 CSS 를 그대로 탄다(항목에 마우스를 올리면 롤오버 모습) */
     HD_SUBS.forEach(function(d){ h+='<button type="button" class="hd-card'+((HD.sub.design||'sub01')===d.id?' on':'')+'" onclick="hdPickSub(\''+d.id+'\')">'+hdSubThumb(d)+'<span class="cap">'+d.sub+'<small>'+d.nm+'</small></span></button>'; });
     h+='<div class="tx-hint" style="grid-column:1/-1;margin:0;">항목에 마우스를 올리면 롤오버 모습이 보입니다. 색·모서리·테두리·그림자·정렬은 고른 뒤 이어서 바꿀 수 있습니다.</div>';
@@ -61106,8 +61110,9 @@ function hdPickClose(keep){
   var m=document.getElementById('hdPickModal'); if(m) m.classList.remove('show');
   if(!keep && hdPickCtx){ try{ HD=JSON.parse(hdPickCtx.before); }catch(e){} hdNoTr(); hdFill(); hdChanged(); }
   if(keep && hdPickCtx && hdPickCtx.kind==='sub') hdSubShow();   /* 261006 추가 — 서브메뉴 디자인을 고르면 캔버스의 서브메뉴를 펼쳐 보여 준다 */
-  var wasMo=!!(hdPickCtx && hdPickCtx.kind==='mo');
+  var wasMo=!!(hdPickCtx && hdPickCtx.kind==='mo'), wasLp=hdLangPv();
   hdPickCtx=null;
+  if(wasLp) hdApply();   /* 261111 추가 — 창을 닫으면 잠깐 보여 준 다국어 버튼을 거둔다 */
   if(wasMo){ document.documentElement.classList.remove('mo-pk'); if(m) m.style.paddingRight=''; }   /* 261104 추가 — moPkSide 되돌림 */
   if(wasMo){ moFill(); moEdKick(); }   /* 261027 추가 — 모바일 펼침 메뉴: 설정창 값 · 사본의 펼침 상태 */
 }
