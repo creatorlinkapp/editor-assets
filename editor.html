@@ -17583,7 +17583,11 @@
   function bpxMode(c,k){ var m=c && c[k+'Mode']; if(m==='base'||m==='none'||m==='custom') return m; var v=c?c[k]:null; if(v==null||v===''||+v===48) return 'base'; if(+v===0) return 'none'; return 'custom'; }
   function bpxCss(c,k,def){ var m=bpxMode(c,k); if(m==='base') return 'var(--site-px,48px)'; if(m==='none') return '0px'; var v=parseFloat(c[k]); return (isFinite(v)?v:def)+'px'; }
   function bpxMo(){ return typeof window.mvTarget==='function' && window.mvTarget()==='mobile'; }
-  function bpxEff(p,blk){ var c=window[p+'Cfg'](blk), ov=blk._mvOv; if(!bpxMo() || !ov) return c; var m={}; Object.keys(c).forEach(function(k){ m[k]=c[k]; }); Object.keys(ov).forEach(function(k){ m[k]=ov[k]; }); return m; }   /* 모바일 대상이면 PC 값 + 모바일 값 */
+  function bpxEff(p,blk){ var c=window[p+'Cfg'](blk), ov=blk._mvOv; if(!bpxMo()) return c; var m={}; Object.keys(c).forEach(function(k){ m[k]=c[k]; }); if(ov) Object.keys(ov).forEach(function(k){ m[k]=ov[k]; }); var bk=bpxMoKey(blk.getAttribute('data-block'),c,ov); if(bk) m[bk+'Mode']='base'; return m; }   /* 모바일 대상이면 PC 값 + 모바일 값 (PC 「직접」은 넘기지 않음) */
+  /* 261112 추가 — PC 에서 「직접」으로 넣은 좌우 값은 휴대폰으로 넘기지 않는다(휴대폰에서 따로 고르기 전까지 「기본」 = 사이트 휴대폰 값).
+     PC 직접 200 이 휴대폰 375px 에도 그대로 들어가 글이 들어갈 자리가 없었다. 「없음」(화면 끝까지)은 그대로 넘긴다. 이미지 · 상단 메뉴 · 상세 타이틀과 같은 규칙 */
+  var BPX_MO={cred:'px',imggrid:'px',gridgal:'px',bookflip2:'px',idxlist:'padx',faqacc:'padx',qnaacc:'padx',scrollread:'padx',beforeafter:'padx',bdblk:'padx',calblk:'padx',ctblk:'padx',formblk:'padx',stackcard:'padx',risetext:'padx',typetext:'padx',vcgal:'padx'};
+  function bpxMoKey(type,cfg,ov){ var k=BPX_MO[type]; if(!k || !cfg) return null; ov=ov||{}; if((k+'Mode') in ov || (k in ov)) return null; return bpxMode(cfg,k)==='custom'?k:null; }
   function bpxSet(p,k,m){ var blk=window[p+'CurBlk']; if(!blk) return;
     if(m==='custom' && bpxMode(bpxEff(p,blk),k)!=='custom') bpxUpd(p,k, SITE_LAYOUT[bpxMo()?'mo':'pc']);   /* 직접으로 바꿀 때는 지금 보이는 사이트 값에서 시작 */
     bpxUpd(p,k+'Mode',m); bpxSync(p,k,bpxEff(p,blk)); }
@@ -17594,7 +17598,7 @@
     if(h) h.style.display=on?'':'none'; }
   function bpxSync(p,k,c){ var m=bpxMode(c,k), id=p+k.charAt(0).toUpperCase()+k.slice(1);
     rtSegSync(id+'Seg',m); var r=document.getElementById(id+'Row'); if(r) r.style.display=(m==='custom')?'':'none'; bpxBaseHint(id,m==='base');
-    var sl=document.getElementById(id); if(sl){ var v=parseFloat(c[k]); if(!isFinite(v)) v=48; sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(id+'V'); if(o) o.textContent=v+'px'; }
+    var sl=document.getElementById(id); if(sl){ if(!sl.hasAttribute('data-max')) sl.setAttribute('data-max',sl.max); sl.max=bpxMo()?Math.min(60,+sl.getAttribute('data-max')):sl.getAttribute('data-max');   /* 휴대폰 대상이면 직접 슬라이더 0 ~ 60(스타일 > 레이아웃 휴대폰과 같은 범위) */ var v=parseFloat(c[k]); if(!isFinite(v)) v=48; sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(id+'V'); if(o) o.textContent=v+'px'; }
     /* 디자인 구조(화면 끝까지 채우는 배치 · 탭 안 블록)가 좌우를 0 으로 고정하면 3칸을 눌러도 화면이 그대로 → 흐림 + 안내 */
     var sg=document.getElementById(id+'Seg'), srow=sg && sg.closest('.srow'), blk=window[p+'CurBlk'], fixed=false, inn=blk && BPX_IN[p] && blk.querySelector(BPX_IN[p]);
     if(inn && sl && sl.hasAttribute('data-bpx')){ var old=blk.style.getPropertyValue('--bpx'); blk.style.setProperty('--bpx','7px'); fixed=(parseFloat(getComputedStyle(inn).paddingLeft)||0)!==7; if(old) blk.style.setProperty('--bpx',old); else blk.style.removeProperty('--bpx'); }
@@ -56500,8 +56504,8 @@ global.PolyFX = API;
   /* 261112 추가 — 좌우 여백 3칸. 예전 값은 읽을 때 옮긴다: 비었거나 48 → 기본 · 0 → 없음 · 그 밖 → 직접 */
   function rtPxMode(c){ if(c.pxMode==='base'||c.pxMode==='none'||c.pxMode==='custom') return c.pxMode; if(c.px==null || +c.px===48) return 'base'; if(+c.px===0) return 'none'; return 'custom'; }
   function rtPxSet(m){ if(!rtCurBlk) return; var c=rtCfg(rtCurBlk);
-    if(m==='custom' && rtPxMode(c)!=='custom'){ var cur=parseFloat(getComputedStyle(rtCurBlk).paddingLeft)||48; var z=(rtCurBlk.getBoundingClientRect().width/(rtCurBlk.offsetWidth||1))||1; c.px=Math.round(cur/(z>0?1:1)); }   /* 직접으로 바꿀 때는 지금 보이는 값에서 시작 */
-    rtUpd('pxMode',m); rtFillBset(); }
+    if(m==='custom' && bpxMode(bpxEff('rt',rtCurBlk),'px')!=='custom') c.px=SITE_LAYOUT[bpxMo()?'mo':'pc'];   /* 261112 수정 — 직접으로 바꿀 때는 지금 보이는 사이트 값에서 시작(휴대폰 대상이면 휴대폰 값 · 전: PC 화면 여백을 읽어 휴대폰에서도 PC 값으로 시작) */
+    rtUpd('pxMode',m); bpxSync('rt','px',bpxEff('rt',rtCurBlk)); }   /* 261112 수정 — 설정창은 PC/모바일 대상에 맞는 값으로(전: rtFillBset 이 PC 값으로 채워 휴대폰 대상에서 3칸이 PC 값으로 보였다) */
   function rtHMode(m){ rtUpd('hMode',m); rtFillBset(); }   /* 260920 추가 — 블록 높이 방식 */
   function rtAlign(a){ rtSegSync('rtAlignSeg',a); rtUpd('align',a); }
   function rtSw(btn,key){ btn.classList.toggle('on'); rtUpd(key, btn.classList.contains('on')); if(key==='bgGray') rtBgSync(); }   /* 260920 수정 — 흑백은 썸네일에도 바로 */
@@ -56561,7 +56565,7 @@ global.PolyFX = API;
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     var vals={gap:(c.gap==null?48:c.gap), size:e.size, lh:e.lh, ls:(c.ls||0), width:(c.width==null?1180:c.width), pt:e.pt, pb:e.pb, px:e.px,
               labelW:(c.labelW==null?340:c.labelW), splitGap:(c.splitGap==null?24:c.splitGap), bgDim:(c.bgDim==null?40:c.bgDim), minH:(c.minH==null?600:c.minH)};
-    var pxm0=rtPxMode(c); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none'; bpxBaseHint('rtPx',pxm0==='base');   /* 261112 추가 — 좌우 3칸 */
+    var pxm0=rtPxMode(c); (function(){ var s=document.getElementById('rtPx'); if(s){ if(!s.hasAttribute('data-max')) s.setAttribute('data-max',s.max); s.max=bpxMo()?Math.min(60,+s.getAttribute('data-max')):s.getAttribute('data-max'); } })(); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none'; bpxBaseHint('rtPx',pxm0==='base');   /* 261112 추가 — 좌우 3칸 */
     var hm=(c.hMode==='screen'||c.hMode==='px')?c.hMode:'auto'; rtSegSync('rtHSeg',hm); var mhr=document.getElementById('rtMinHRow'); if(mhr) mhr.style.display=(hm==='px')?'':'none';   /* 260920 추가 — 높이 */
     rtBgSync();   /* 260920 수정 — 배경 소재 상자(썸네일 · 삭제 · 어둡게 행) 표시 맞춤 */
     var lay=c.layout||'single';
@@ -59670,6 +59674,7 @@ global.PolyFX = API;
             if(typeof SITE_STYLE!=='undefined'){ SITE_STYLE.bg=ss.bg||'none'; SITE_STYLE.theme=ss.theme||SITE_STYLE.theme; SITE_STYLE.style=ss.style||'default'; }
           }catch(x){}
           rxSiteStyle=d.site;
+          if(typeof moFit==='function') setTimeout(function(){ try{ moFit(); }catch(x){} },0);   /* 261112 추가 — 사이트 좌우 여백(휴대폰)이 바뀌면 상단 바 자리 맞춤을 다시: 값을 올려도 로고를 줄이지 않아 버튼이 아랫줄로 떨어졌다 */
         }
         /* 260923 추가 — 화상 미팅 예약 버튼 */
         if(d.cal!=null && d.cal!==rxCal){
@@ -59848,8 +59853,8 @@ global.PolyFX = API;
       return el; }
     function mvMerged(blk,def){
       var cfg=blk[def.cfg]; if(!cfg) return null;
-      var ov=blk._mvOv; if(!ov) return cfg;
-      var m=mvClone(cfg); Object.keys(ov).forEach(function(k){ m[k]=mvClone(ov[k]); }); return m;
+      var ov=blk._mvOv; if(!ov){ var bk0=(typeof bpxMoKey==='function')?bpxMoKey(blk.getAttribute('data-block'),cfg,null):null; if(!bk0) return cfg; var m0=mvClone(cfg); m0[bk0+'Mode']='base'; return m0; }   /* 261112 수정 */
+      var m=mvClone(cfg); Object.keys(ov).forEach(function(k){ m[k]=mvClone(ov[k]); }); var bk=(typeof bpxMoKey==='function')?bpxMoKey(blk.getAttribute('data-block'),cfg,ov):null; if(bk) m[bk+'Mode']='base'; return m;   /* 261112 수정 — PC 좌우 「직접」은 휴대폰으로 넘기지 않음(bpxMoKey) */
     }
     /* 모바일 대상 편집 중: cfg 에 새로 쓰인 값을 내용/기기별로 갈라 놓는다 */
     function mvReconcile(blk){
@@ -59877,9 +59882,11 @@ global.PolyFX = API;
       var cfg=blk[def.cfg]||mvDefaultCfg(blk,def);   /* 아직 기본값이면 xxCfg 가 만들어 준다 */
       var base=mvClone(cfg), ov=blk._mvOv||{};
       Object.keys(ov).forEach(function(k){ cfg[k]=mvClone(ov[k]); });
+      var bk=(typeof bpxMoKey==='function')?bpxMoKey(blk.getAttribute('data-block'),base,ov):null; if(bk) cfg[bk+'Mode']='base';   /* 261112 추가 — PC 좌우 「직접」은 휴대폰 설정창에 넘기지 않음(끝나면 되돌린다) */
       blk._mvBase=base; mvTargetBlk=blk;
       try{ fill(); } finally {
         Object.keys(ov).forEach(function(k){ if(k in base) cfg[k]=mvClone(base[k]); else delete cfg[k]; });
+        if(bk){ var bmk=bk+'Mode'; if(bmk in base) cfg[bmk]=mvClone(base[bmk]); else delete cfg[bmk]; }
       }
       mvDevSync(blk);
     }
