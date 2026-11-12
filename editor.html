@@ -17594,6 +17594,11 @@
     /* 디자인 구조(화면 끝까지 채우는 배치 · 탭 안 블록)가 좌우를 0 으로 고정하면 3칸을 눌러도 화면이 그대로 → 흐림 + 안내 */
     var sg=document.getElementById(id+'Seg'), srow=sg && sg.closest('.srow'), blk=window[p+'CurBlk'], fixed=false, inn=blk && BPX_IN[p] && blk.querySelector(BPX_IN[p]);
     if(inn && sl && sl.hasAttribute('data-bpx')){ var old=blk.style.getPropertyValue('--bpx'); blk.style.setProperty('--bpx','7px'); fixed=(parseFloat(getComputedStyle(inn).paddingLeft)||0)!==7; if(old) blk.style.setProperty('--bpx',old); else blk.style.removeProperty('--bpx'); }
+    /* 이미지 · 그리드 갤러리의 「좌우 폭 제한」(최대 폭 1180 · 1140px) — 휴대폰 화면은 최대 폭보다 늘 좁아 켜든 끄든 같다 → 휴대폰 대상일 때 흐림 + 안내 */
+    if(p==='im' || p==='gg'){ var ws=document.getElementById(p+'WrapSw'), wl=ws && ws.closest('.sline');
+      if(wl){ var wm=bpxMo() && !document.body.classList.contains('tk-kid-sel'); wl.classList.toggle('off',wm); var wh=document.getElementById(p+'WrapMo');
+        if(!wh && wm){ wh=document.createElement('div'); wh.className='tx-hint'; wh.id=p+'WrapMo'; wh.style.marginTop='6px'; wh.textContent='휴대폰 화면은 최대 폭보다 좁아 적용되지 않습니다.'; wl.insertAdjacentElement('afterend',wh); }
+        if(wh) wh.style.display=wm?'':'none'; } }
     /* 폼 · 컨택트의 폼 카드형은 카드가 가운데 고정 폭이라 PC 에서는 좌우를 바꿔도 내용이 그대로(휴대폰에서는 적용) → PC 대상일 때 안내만(막지는 않는다) */
     var card=false;
     if(!fixed && inn && BPX_CARD[p] && !bpxMo()){ var old2=blk.style.getPropertyValue('--bpx'); var lf=function(){ var br=blk.getBoundingClientRect(), mn=1e9; inn.querySelectorAll('*').forEach(function(e){ if(e.children.length) return; var q=e.getBoundingClientRect(); if(q.width>2 && q.height>2) mn=Math.min(mn,q.left-br.left); }); return mn; };
