@@ -10606,9 +10606,9 @@
      · 좁은 화면 규칙은 @container — 편집 캔버스는 1440 폭을 zoom 으로 줄여 보이므로 창 폭(@media)이 아니라 .site 폭을 따른다.
      ══════════════════════════════════════════════════════════════════ */
   .site-ft{--ft-bg:#1E2227;--ft-fg:#8A909A;--ft-hd:#EAECEF;--ft-ac:#4FE08D;--ft-ln:rgba(255,255,255,.09);--ft-pt:56px;--ft-pb:34px;--ft-fs:14px;--ft-isz:18px;
-    position:relative;background:var(--ft-bg);color:var(--ft-fg);font-size:var(--ft-fs);line-height:1.7;padding:var(--ft-pt) 40px var(--ft-pb);box-shadow:inset 0 1px 0 var(--ft-ln);word-break:keep-all;text-align:left;}   /* 위 구분선은 테두리가 아니라 안쪽 그림자 — 테두리로 두면 롤오버 외곽선(안쪽 기준) 위로 1px 이 삐져나온다 */
+    position:relative;background:var(--ft-bg);color:var(--ft-fg);font-size:var(--ft-fs);line-height:1.7;padding:var(--ft-pt) var(--site-px,48px) var(--ft-pb);box-shadow:inset 0 1px 0 var(--ft-ln);word-break:keep-all;text-align:left;}   /* 261112 수정 — 좌우 40 고정 → 사이트 좌우 여백(스타일 > 레이아웃) */   /* 위 구분선은 테두리가 아니라 안쪽 그림자 — 테두리로 두면 롤오버 외곽선(안쪽 기준) 위로 1px 이 삐져나온다 */
   .site > .site-ft,.site > .ft-offbar{position:sticky;top:9999px;}   /* 내용이 짧은 페이지에서도 페이지 맨 아래에 붙는다(컨테이너 밖으로는 못 나가므로 긴 페이지에서는 제자리) */
-  .site-ft .ft-in{max-width:1160px;margin:0 auto;}
+  .site-ft .ft-in{max-width:1180px;margin:0 auto;}   /* 261112 수정 — 1160 → 1180(블록 최대 폭과 시작선 맞춤) */
   .site-ft a{color:inherit;text-decoration:none;cursor:pointer;transition:color .12s;}
   .site-ft a:hover{color:var(--ft-ac);}
   .site-ft .ft-logo{font-size:1.72em;font-weight:800;letter-spacing:-.02em;line-height:1.25;color:var(--ft-hd);}
@@ -10660,7 +10660,7 @@
   .site-ft[data-ft-design="footer-06"] .ft-in{display:flex;flex-wrap:wrap;align-items:center;gap:10px 28px;}
   .site-ft[data-ft-design="footer-06"] .ft-sns{margin-left:auto;}
   @container (max-width:767px){
-    .site-ft{padding:calc(var(--ft-pt) * .72) 20px calc(var(--ft-pb) * .9);font-size:calc(var(--ft-fs) - 1px);}
+    .site-ft{padding:calc(var(--ft-pt) * .72) var(--site-px,20px) calc(var(--ft-pb) * .9);   /* 261112 수정 — 좌우 20 고정 → 사이트 값 */font-size:calc(var(--ft-fs) - 1px);}
     /* 261106 추가 — 화면에 떠 있는 「화상 미팅 예약」 버튼(캘린더 블록)이 켜져 있으면, 맨 아래에서 푸터 글이 버튼에 가리지 않게 푸터 아래 안쪽 여백을 버튼만큼 늘린다 (늘어난 곳은 푸터 배경색) */
     .site:has(~ .cal-fab-wrap:not([hidden])) .site-ft{padding-bottom:calc(var(--ft-pb) * .9 + 72px);}
     .site:has(~ .cal-fab-wrap.up:not([hidden])) .site-ft{padding-bottom:calc(var(--ft-pb) * .9 + 140px);}   /* 버튼이 퀵메뉴 위로 올라간 배치 */
@@ -17735,6 +17735,7 @@
         <div class="acc-body"><div class="acc-in">
           <div class="srow" style="margin-top:0;"><span class="k">상</span><input class="rng" type="range" id="ftPt" min="0" max="200" step="1" value="56"><span class="v" id="ftPtV">56px</span></div>
           <div class="srow"><span class="k">하</span><input class="rng" type="range" id="ftPb" min="0" max="200" step="1" value="34"><span class="v" id="ftPbV">34px</span></div>
+          <div class="tx-hint" style="margin-top:10px;">좌우 여백은 스타일 &gt; 레이아웃 값을 따릅니다.</div>   <!-- 261112 추가 — 푸터 좌우는 사이트 값(--site-px) -->
         </div></div>
       </div>
     </div>
