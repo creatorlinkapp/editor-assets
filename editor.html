@@ -18184,8 +18184,10 @@
   function stMoClose(){ if(!stMoAuto) return; stMoAuto=false; if(document.body.classList.contains('mview-on') && typeof window.mvSetMode==='function') window.mvSetMode('pc'); }
   /* 261112 추가 — PC 좌우 여백 슬라이더를 움직이는 동안 PC 편집 화면에 사이트 값 자리(양쪽 세로 점선).
      넓은 화면에서는 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 값이 어디에 적용되는지 보이게(블록 내용이 그 안쪽에 있는 건 화면 그대로 보인다 · 블록마다 상자를 그리던 것은 화면이 어지러워 뺐다). 손을 떼면 1초 뒤 사라진다 */
-  var stPxGuideT=null, stPxGuideI=null, stPxHeld=false, stPxGuideW='pc';
-  function stPxGuideOff(){ clearInterval(stPxGuideI); stPxGuideI=null; ['stPxGuideLay','stPxGuideMoLay'].forEach(function(id){ var l=document.getElementById(id); if(l) l.remove(); }); }
+  var stPxGuideT=null, stPxGuideI=null, stPxHeld=false, stPxGuideW='pc', stPxGuideSig='';
+  /* 화면 틀이 움직이는 중(휴대폰 화면이 열리고 닫히는 0.5초 남짓)에는 선을 그리지 않는다 — 0.1초씩 늦게 따라가 선이 흔들려 보였다. 틀 자리가 두 번 연속 같을 때만 그린다 */
+  function stPxGuideStill(sig){ if(sig===stPxGuideSig) return true; stPxGuideSig=sig; return false; }
+  function stPxGuideOff(){ clearInterval(stPxGuideI); stPxGuideI=null; stPxGuideSig=''; ['stPxGuideLay','stPxGuideMoLay'].forEach(function(id){ var l=document.getElementById(id); if(l) l.remove(); }); }
   function stPxGuide(on,w){
     if(w) stPxGuideW=w;
     if(!on){ stPxHeld=false; clearTimeout(stPxGuideT); stPxGuideT=setTimeout(stPxGuideOff,1000); return; }
@@ -18198,7 +18200,7 @@
       if(lay) lay.remove();
       var mf=document.querySelector('#mframe iframe');
       if(!mf || !document.body.classList.contains('mview-on')){ if(ml) ml.innerHTML=''; return; }
-      var q=mf.getBoundingClientRect(); if(q.width<2 || q.height<2){ if(ml) ml.innerHTML=''; return; }
+      var q=mf.getBoundingClientRect(); if(q.width<2 || q.height<2 || !stPxGuideStill('m'+Math.round(q.left)+','+Math.round(q.top)+','+Math.round(q.width))){ if(ml) ml.innerHTML=''; return; }
       if(!ml){ ml=document.createElement('div'); ml.id='stPxGuideMoLay'; ml.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:240;'; document.body.appendChild(ml); }   /* 휴대폰 화면 틀(230) 위 · 편집기 팝업(260~) 아래 */
       ml.innerHTML='';
       var s=q.width/(mf.clientWidth||q.width), mp=(+SITE_LAYOUT.mo||0)*s;   /* 틀이 줄어 보이면(태블릿 등) 그 비율대로 */
@@ -18210,6 +18212,7 @@
     if(!lay){ lay=document.createElement('div'); lay.id='stPxGuideLay'; lay.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:140;'; document.body.appendChild(lay); }   /* 261112 수정 — 60 → 140: 상단 메뉴(120) · 펼침 메뉴(130)가 선을 덮었다. 편집기 팝업(260~)보다는 아래 */
     lay.innerHTML='';
     var sr=st.getBoundingClientRect(), wr=site.getBoundingClientRect(), z=parseFloat(getComputedStyle(site).zoom)||1;
+    if(!stPxGuideStill('p'+Math.round(sr.left)+','+Math.round(sr.width)+','+Math.round(wr.left)+','+Math.round(wr.width))) return;
     var top=Math.max(sr.top,wr.top), bot=Math.min(sr.bottom,wr.bottom); if(bot<=top) return;
     var px=(+SITE_LAYOUT.pc||0)*z, C='var(--green,#03C75A)';   /* 편집기 「조절 중인 영역」 표시와 같은 초록(텍스트 블록 rt-showarea) · 선택 테두리(실선)와 구분되게 점선 */
     function el(css){ var d=document.createElement('div'); d.style.cssText='position:fixed;box-sizing:border-box;'+css; lay.appendChild(d); return d; }
