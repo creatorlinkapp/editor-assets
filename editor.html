@@ -17583,11 +17583,20 @@
   function bpxMode(c,k){ var m=c && c[k+'Mode']; if(m==='base'||m==='none'||m==='custom') return m; var v=c?c[k]:null; if(v==null||v===''||+v===48) return 'base'; if(+v===0) return 'none'; return 'custom'; }
   function bpxCss(c,k,def){ var m=bpxMode(c,k); if(m==='base') return 'var(--site-px,48px)'; if(m==='none') return '0px'; var v=parseFloat(c[k]); return (isFinite(v)?v:def)+'px'; }
   function bpxMo(){ return typeof window.mvTarget==='function' && window.mvTarget()==='mobile'; }
-  function bpxEff(p,blk){ var c=window[p+'Cfg'](blk), ov=blk._mvOv; if(!bpxMo()) return c; var m={}; Object.keys(c).forEach(function(k){ m[k]=c[k]; }); if(ov) Object.keys(ov).forEach(function(k){ m[k]=ov[k]; }); var bk=bpxMoKey(blk.getAttribute('data-block'),c,ov); if(bk) m[bk+'Mode']='base'; return m; }   /* 모바일 대상이면 PC 값 + 모바일 값 (PC 「직접」은 넘기지 않음) */
+  function bpxEff(p,blk){ var c=window[p+'Cfg'](blk), ov=blk._mvOv; if(!bpxMo()) return c; var m={}; Object.keys(c).forEach(function(k){ m[k]=c[k]; }); if(ov) Object.keys(ov).forEach(function(k){ m[k]=ov[k]; }); var bk=bpxMoKey(blk.getAttribute('data-block'),c,ov); if(bk) m[bk.k+'Mode']=bk.m; return m; }   /* 모바일 대상이면 PC 값 + 모바일 값 (휴대폰은 기본 · 없음만) */
   /* 261112 추가 — PC 에서 「직접」으로 넣은 좌우 값은 휴대폰으로 넘기지 않는다(휴대폰에서 따로 고르기 전까지 「기본」 = 사이트 휴대폰 값).
      PC 직접 200 이 휴대폰 375px 에도 그대로 들어가 글이 들어갈 자리가 없었다. 「없음」(화면 끝까지)은 그대로 넘긴다. 이미지 · 상단 메뉴 · 상세 타이틀과 같은 규칙 */
   var BPX_MO={cred:'px',imggrid:'px',gridgal:'px',bookflip2:'px',idxlist:'padx',faqacc:'padx',qnaacc:'padx',scrollread:'padx',beforeafter:'padx',bdblk:'padx',calblk:'padx',ctblk:'padx',formblk:'padx',stackcard:'padx',risetext:'padx',typetext:'padx',vcgal:'padx'};
-  function bpxMoKey(type,cfg,ov){ var k=BPX_MO[type]; if(!k || !cfg) return null; ov=ov||{}; if((k+'Mode') in ov || (k in ov)) return null; return bpxMode(cfg,k)==='custom'?k:null; }
+  /* 261112 수정 — 휴대폰 좌우는 「기본 · 없음」 2칸만(「직접」을 눌러도 사이트 값 20 에서 시작해 화면이 그대로라 고장처럼 보였다 · 375px 화면에서 블록마다 다르게 줄 일이 거의 없음).
+     휴대폰에서 쓰는 모드를 정해 돌려준다: 모바일 값이 있으면 그 값으로, 없으면 PC 값으로 판단하고 「직접」은 「기본」으로. 디자인이 정한 휴대폰 0 은 「없음」으로 유지 */
+  function bpxMoKey(type,cfg,ov){ var k=BPX_MO[type]; if(!k || !cfg) return null; ov=ov||{}; var mk=k+'Mode', md;
+    if(mk in ov){ var o={}; o[k]=(k in ov)?ov[k]:cfg[k]; o[mk]=ov[mk]; md=bpxMode(o,k); }
+    else if(k in ov){ var o2={}; o2[k]=ov[k]; md=bpxMode(o2,k); }
+    else md=bpxMode(cfg,k);
+    return {k:k, m:(md==='custom')?'base':md}; }
+  /* 휴대폰 대상이면 3칸에서 「직접」을 숨기고 안내를 휴대폰 값으로 */
+  function bpxMoSeg(id){ var sg=document.getElementById(id+'Seg'); if(!sg) return; var mo=bpxMo(), cb=sg.querySelector('[data-m="custom"]'); if(cb) cb.style.display=mo?'none':'';
+    var h=document.getElementById(id+'Base'); if(h) h.textContent=mo?'기본은 스타일 > 레이아웃의 휴대폰 좌우 여백을 따릅니다.':'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다.'; }
   function bpxSet(p,k,m){ var blk=window[p+'CurBlk']; if(!blk) return;
     if(m==='custom' && bpxMode(bpxEff(p,blk),k)!=='custom') bpxUpd(p,k, SITE_LAYOUT[bpxMo()?'mo':'pc']);   /* 직접으로 바꿀 때는 지금 보이는 사이트 값에서 시작 */
     bpxUpd(p,k+'Mode',m); bpxSync(p,k,bpxEff(p,blk)); }
@@ -17597,7 +17606,7 @@
     if(!h){ h=document.createElement('div'); h.className='tx-hint'; h.id=id+'Base'; h.style.marginTop='6px'; h.textContent='기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다.'; r.insertAdjacentElement('afterend',h); }
     if(h) h.style.display=on?'':'none'; }
   function bpxSync(p,k,c){ var m=bpxMode(c,k), id=p+k.charAt(0).toUpperCase()+k.slice(1);
-    rtSegSync(id+'Seg',m); var r=document.getElementById(id+'Row'); if(r) r.style.display=(m==='custom')?'':'none'; bpxBaseHint(id,m==='base');
+    rtSegSync(id+'Seg',m); var r=document.getElementById(id+'Row'); if(r) r.style.display=(m==='custom')?'':'none'; bpxBaseHint(id,m==='base'); bpxMoSeg(id);
     var sl=document.getElementById(id); if(sl){ if(!sl.hasAttribute('data-max')) sl.setAttribute('data-max',sl.max); sl.max=bpxMo()?Math.min(60,+sl.getAttribute('data-max')):sl.getAttribute('data-max');   /* 휴대폰 대상이면 직접 슬라이더 0 ~ 60(스타일 > 레이아웃 휴대폰과 같은 범위) */ var v=parseFloat(c[k]); if(!isFinite(v)) v=48; sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(id+'V'); if(o) o.textContent=v+'px'; }
     /* 디자인 구조(화면 끝까지 채우는 배치 · 탭 안 블록)가 좌우를 0 으로 고정하면 3칸을 눌러도 화면이 그대로 → 흐림 + 안내 */
     var sg=document.getElementById(id+'Seg'), srow=sg && sg.closest('.srow'), blk=window[p+'CurBlk'], fixed=false, inn=blk && BPX_IN[p] && blk.querySelector(BPX_IN[p]);
@@ -56565,7 +56574,7 @@ global.PolyFX = API;
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     var vals={gap:(c.gap==null?48:c.gap), size:e.size, lh:e.lh, ls:(c.ls||0), width:(c.width==null?1180:c.width), pt:e.pt, pb:e.pb, px:e.px,
               labelW:(c.labelW==null?340:c.labelW), splitGap:(c.splitGap==null?24:c.splitGap), bgDim:(c.bgDim==null?40:c.bgDim), minH:(c.minH==null?600:c.minH)};
-    var pxm0=rtPxMode(c); (function(){ var s=document.getElementById('rtPx'); if(s){ if(!s.hasAttribute('data-max')) s.setAttribute('data-max',s.max); s.max=bpxMo()?Math.min(60,+s.getAttribute('data-max')):s.getAttribute('data-max'); } })(); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none'; bpxBaseHint('rtPx',pxm0==='base');   /* 261112 추가 — 좌우 3칸 */
+    var pxm0=rtPxMode(c); (function(){ var s=document.getElementById('rtPx'); if(s){ if(!s.hasAttribute('data-max')) s.setAttribute('data-max',s.max); s.max=bpxMo()?Math.min(60,+s.getAttribute('data-max')):s.getAttribute('data-max'); } })(); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none'; bpxBaseHint('rtPx',pxm0==='base'); bpxMoSeg('rtPx');   /* 261112 추가 — 좌우 3칸 */
     var hm=(c.hMode==='screen'||c.hMode==='px')?c.hMode:'auto'; rtSegSync('rtHSeg',hm); var mhr=document.getElementById('rtMinHRow'); if(mhr) mhr.style.display=(hm==='px')?'':'none';   /* 260920 추가 — 높이 */
     rtBgSync();   /* 260920 수정 — 배경 소재 상자(썸네일 · 삭제 · 어둡게 행) 표시 맞춤 */
     var lay=c.layout||'single';
@@ -59853,8 +59862,8 @@ global.PolyFX = API;
       return el; }
     function mvMerged(blk,def){
       var cfg=blk[def.cfg]; if(!cfg) return null;
-      var ov=blk._mvOv; if(!ov){ var bk0=(typeof bpxMoKey==='function')?bpxMoKey(blk.getAttribute('data-block'),cfg,null):null; if(!bk0) return cfg; var m0=mvClone(cfg); m0[bk0+'Mode']='base'; return m0; }   /* 261112 수정 */
-      var m=mvClone(cfg); Object.keys(ov).forEach(function(k){ m[k]=mvClone(ov[k]); }); var bk=(typeof bpxMoKey==='function')?bpxMoKey(blk.getAttribute('data-block'),cfg,ov):null; if(bk) m[bk+'Mode']='base'; return m;   /* 261112 수정 — PC 좌우 「직접」은 휴대폰으로 넘기지 않음(bpxMoKey) */
+      var ov=blk._mvOv; if(!ov){ var bk0=(typeof bpxMoKey==='function')?bpxMoKey(blk.getAttribute('data-block'),cfg,null):null; if(!bk0) return cfg; var m0=mvClone(cfg); m0[bk0.k+'Mode']=bk0.m; return m0; }   /* 261112 수정 */
+      var m=mvClone(cfg); Object.keys(ov).forEach(function(k){ m[k]=mvClone(ov[k]); }); var bk=(typeof bpxMoKey==='function')?bpxMoKey(blk.getAttribute('data-block'),cfg,ov):null; if(bk) m[bk.k+'Mode']=bk.m; return m;   /* 261112 수정 — 휴대폰 좌우는 기본 · 없음만(bpxMoKey) */
     }
     /* 모바일 대상 편집 중: cfg 에 새로 쓰인 값을 내용/기기별로 갈라 놓는다 */
     function mvReconcile(blk){
@@ -59882,11 +59891,11 @@ global.PolyFX = API;
       var cfg=blk[def.cfg]||mvDefaultCfg(blk,def);   /* 아직 기본값이면 xxCfg 가 만들어 준다 */
       var base=mvClone(cfg), ov=blk._mvOv||{};
       Object.keys(ov).forEach(function(k){ cfg[k]=mvClone(ov[k]); });
-      var bk=(typeof bpxMoKey==='function')?bpxMoKey(blk.getAttribute('data-block'),base,ov):null; if(bk) cfg[bk+'Mode']='base';   /* 261112 추가 — PC 좌우 「직접」은 휴대폰 설정창에 넘기지 않음(끝나면 되돌린다) */
+      var bk=(typeof bpxMoKey==='function')?bpxMoKey(blk.getAttribute('data-block'),base,ov):null; if(bk) cfg[bk.k+'Mode']=bk.m;   /* 261112 추가 — 휴대폰 설정창 좌우는 기본 · 없음만(끝나면 되돌린다) */
       blk._mvBase=base; mvTargetBlk=blk;
       try{ fill(); } finally {
         Object.keys(ov).forEach(function(k){ if(k in base) cfg[k]=mvClone(base[k]); else delete cfg[k]; });
-        if(bk){ var bmk=bk+'Mode'; if(bmk in base) cfg[bmk]=mvClone(base[bmk]); else delete cfg[bmk]; }
+        if(bk){ var bmk=bk.k+'Mode'; if(bmk in base) cfg[bmk]=mvClone(base[bmk]); else delete cfg[bmk]; }
       }
       mvDevSync(blk);
     }
