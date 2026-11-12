@@ -475,6 +475,8 @@
 
   /* 블록 편집 래퍼 */
   .blk{position:relative;padding:56px 48px;transition:box-shadow .12s;cursor:pointer;}
+  .site{--site-px:var(--site-px-pc,48px);}   /* 261112 추가 — 사이트 공통 좌우 여백(스타일 > 레이아웃). 좌우 「기본」인 블록 · 메뉴 · 타이틀이 쓴다 */
+  html.mob .site{--site-px:var(--site-px-mo,20px);}
   .blk:hover{box-shadow:inset 0 0 0 2px var(--green);}
   .blk .gear-fab{position:absolute;top:var(--gear-top,14px);right:18px;   /* 260917 수정 — 블록이 화면에 걸쳐 있으면 JS 가 --gear-top 을 보이는 영역 안으로 옮긴다 */width:39px;height:39px;border-radius:50%;background:var(--green);
     color:#fff;border:none;display:none;align-items:center;justify-content:center;z-index:6;
@@ -7202,6 +7204,14 @@
           </div>
         </div>
       </div>
+      <!-- 261112 추가 — 레이아웃: 사이트 공통 좌우 여백(PC · 휴대폰). 블록 · 상단 메뉴 · 상세 타이틀의 좌우 「기본」이 이 값을 따른다(--site-px) -->
+      <div class="st-sec" id="stLayoutSec">
+        <div class="st-sec-h">레이아웃 <span>모든 블록에 적용</span></div>
+        <div class="srow"><span class="k">좌우 여백</span></div>
+        <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="0" max="200" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
+        <div class="srow"><span class="k">휴대폰</span><input class="rng" type="range" id="stPxMo" min="0" max="60" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
+        <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">블록 · 상단 메뉴 · 상세 타이틀의 좌우 여백이 「기본」이면 이 값을 따릅니다. 블록마다 「없음 · 직접」으로 따로 정할 수 있습니다.</div>
+      </div>
       <div class="st-sec">
         <div class="st-sec-h">배경 <span>사이트 전체</span></div>
         <!-- 260906 수정 — 배경 종류를 한 줄 세그먼트로(없음·패턴·이미지·동영상). 패턴을 고르면 아래 4칩, 이미지·동영상은 보관함에서 고른다 -->
@@ -9330,7 +9340,7 @@
   html.mview .site > .site-hd{background-color:var(--hd-bg);background-image:var(--hd-bgimg);box-shadow:var(--hd-shadow);border-bottom:var(--hd-line);}   /* 모바일 사본의 고정 헤더도 설정한 배경을 쓴다 (투명이면 hdApply 가 사이트 배경색으로) */
   html.mview:not(.mob) .site[data-hd-type="side"] > .site-hd{border-bottom:none;}   /* 261110 추가 — 미리보기 창의 좌측 메뉴는 편집 화면처럼 오른쪽 선만(위 규칙이 아래 선까지 그었다) · 모바일은 가로 바라 아래 선 그대로 */
   html.mob .site[data-hd-type="side"]{display:block;} html.mob .site[data-hd-type="side"] > .site-hd{height:auto;flex-direction:row;padding:16px 18px;border-right:none;}
-  html.mob .site-hd{--hd-side:18px;}
+  html.mob .site-hd{--hd-side:var(--site-px,18px);}   /* 261112 수정 — 휴대폰 메뉴 좌우도 사이트 휴대폰 값(스타일 > 레이아웃)을 따른다 */
   @media (max-width:640px){ .hd-util{display:none;} }
   /* ── 설정창(#hdDock) ── */
   /* 261026 수정 — 상태 영역 단순화: 탭 [기본 | 플로팅 ◐] + 현재 페이지 겹치기 + 항목별 연결(🔗) */
@@ -9433,8 +9443,8 @@
   .site-hd > .mo-sp,.site-hd > .mo-util,.site-hd > .mo-tab{display:none;}
   .snav-ham .c{display:none;}
   @media all{   /* 261104 수정 — 640px 이하 조건 → 상단 바의 .mo-on(휴대폰은 늘 · 태블릿 641~1024px 은 PC 메뉴가 한 줄에 안 들어갈 때만 · moApply) */
-    html.mob .site > .site-hd[data-mo].mo-on{flex-wrap:wrap;column-gap:14px;row-gap:0;padding:0 var(--mo-side,18px);z-index:121;align-items:center;}   /* 261111 수정 — 세로 가운데를 직접 정한다: 좌측 메뉴의 align-items:flex-start(세로 메뉴용)가 새어 로고 · 버튼이 바 위쪽에 붙고 장바구니 배지가 잘렸다 */
-    html.mob .site[data-hd-type="side"] > .site-hd[data-mo].mo-on{padding:0 var(--mo-side,18px);}
+    html.mob .site > .site-hd[data-mo].mo-on{flex-wrap:wrap;column-gap:14px;row-gap:0;padding:0 var(--mo-side,var(--site-px,18px));z-index:121;align-items:center;}   /* 261111 수정 — 세로 가운데를 직접 정한다: 좌측 메뉴의 align-items:flex-start(세로 메뉴용)가 새어 로고 · 버튼이 바 위쪽에 붙고 장바구니 배지가 잘렸다 */
+    html.mob .site[data-hd-type="side"] > .site-hd[data-mo].mo-on{padding:0 var(--mo-side,var(--site-px,18px));}
     html.mob .site > .site-hd[data-mo].mo-on:not(.hd-stick){position:relative;}
     /* 261104 추가 — 모바일 검색창 : 전체 화면은 PC 크기(40px)라 안내 글자가 잘렸고 키보드 안내(Enter · Esc)는 휴대폰에 맞지 않았다 / 펼치기는 13px 이라 아이폰에서 누르면 화면이 확대됐다(16px 미만) */
     html.mob .site:has(> .site-hd.mo-on) > .hd-srch[data-m="full"] .hd-srch-in{width:calc(100% - 48px);font-size:22px;gap:12px;padding-bottom:12px;}
@@ -9465,13 +9475,13 @@
     html.mob .site-hd[data-mo="c"].mo-on > .snav-ham{order:1;margin-left:0;} html.mob .site-hd[data-mo="c"].mo-on > .logo{position:absolute;left:50%;top:calc(var(--mo-h,60px) / 2);transform:translate(-50%,-50%);} html.mob .site-hd[data-mo="c"].mo-on > .mo-util{order:3;margin-left:auto;margin-right:0;}   /* 261111 수정 — PC 레이아웃의 margin-right:auto 가 새어 버튼이 가운데(로고 밑)로 들어가 겹쳤다 */
     html.mob .site-hd[data-mo="r"].mo-on > .snav-ham{order:1;margin-left:0;} html.mob .site-hd[data-mo="r"].mo-on > .mo-util{order:2;margin-left:0;margin-right:0;}   /* 261027 수정 — 공통 규칙의 margin-left:auto 가 남아 로고의 auto 와 빈자리를 반씩 나눠 가져 기능 버튼이 가운데로 떴다 → 메뉴 버튼 옆에 붙인다(레이아웃 그림대로 · 간격은 헤더 gap 그대로 = 왼쪽 정렬 레이아웃과 같음) */ html.mob .site-hd[data-mo="r"].mo-on > .logo{order:3;margin-left:auto;margin-right:0;}   /* 261111 수정 — PC 레이아웃의 margin-right:auto 가 새어 로고가 오른쪽 끝에 못 붙고 가운데쯤 떴다 */
     /* 메뉴 바(= 좌측 「중단 메뉴」) — 헤더 안 두 번째 줄. 상단 고정을 끄면 스크롤이 시작되면(hd-stuck) 감춘다 */
-    html.mob .site-hd[data-mo].mo-on > .mo-tab{display:flex;order:9;flex:0 0 calc(100% + var(--mo-side,18px) * 2);margin:0 calc(var(--mo-side,18px) * -1);overflow-x:auto;scrollbar-width:none;
+    html.mob .site-hd[data-mo].mo-on > .mo-tab{display:flex;order:9;flex:0 0 calc(100% + var(--mo-side,var(--site-px,18px)) * 2);margin:0 calc(var(--mo-side,var(--site-px,18px)) * -1);overflow-x:auto;scrollbar-width:none;
       background:var(--mo-tbg,var(--hd-bg-solid,#fff));border-top:1px solid var(--mo-tline,color-mix(in srgb,var(--hd-fg,#9096A0) 22%,transparent));border-bottom:1px solid var(--mo-tline,color-mix(in srgb,var(--hd-fg,#9096A0) 22%,transparent));
       font-family:var(--mo-tfont,inherit);font-size:var(--mo-tfs,14px);font-weight:var(--mo-tfw,400);}
     html.mob .site-hd[data-mo].mo-on > .mo-tab[data-al="center"] .t:first-of-type{margin-left:auto;} html.mob .site-hd[data-mo].mo-on > .mo-tab[data-al="center"] .t:last-of-type{margin-right:auto;}   /* 261104 수정 — first/last-child → of-type (화살표 버튼이 양 끝에 들어와도) */   /* 가운데 — justify-content:center 는 넘칠 때 앞쪽이 잘린다 */
     html.mob .site-hd[data-mo].mo-on > .mo-tab::-webkit-scrollbar{display:none;}
     html.mob .site-hd[data-mo].mo-on > .mo-tab .t{flex:0 0 calc(100% / var(--mo-tcols,4));min-width:0;padding:12px 8px;text-align:var(--mo-tal,center);color:var(--mo-tfg,var(--hd-fg,#9096A0));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;box-sizing:border-box;}
-    html.mob .site-hd[data-mo].mo-on > .mo-tab[data-al="left"] .t{padding-left:var(--mo-side,18px);}
+    html.mob .site-hd[data-mo].mo-on > .mo-tab[data-al="left"] .t{padding-left:var(--mo-side,var(--site-px,18px));}
     html.mob .site-hd[data-mo].mo-on > .mo-tab .t.cur{color:var(--mo-tac,var(--hd-ac,#23272E));box-shadow:inset 0 -2px 0 var(--mo-tac,var(--hd-ac,#23272E));font-weight:700;}
     html.mob .site-hd.hd-stuck[data-mo].mo-on > .mo-tab[data-stick="0"]{display:none;}
     /* 261104 추가 — 메뉴 바 모양 '격자' : 한 줄에 가로 개수만큼, 넘치면 다음 줄. 칸 테두리 = 선 색, 칸 바탕 = 배경 색, 현재 메뉴 = 활성 색 + 옅은 바탕 (좌측 사이트 중단 메뉴 스타일 2 · 3) */
@@ -10203,7 +10213,8 @@
   .gd-foot .gd-more[data-ms="text"] .gd-m-i:hover .t,.gd-foot .gd-more[data-ms="rows"] .gd-m-i:hover .t{opacity:.6;}
   .gd-foot .gd-empty{margin-top:22px;padding:24px;border:1px dashed var(--gd-ln2);border-radius:3px;font-size:13px;line-height:1.6;color:var(--gd-m2);text-align:center;}
   @media (max-width:640px){
-    .gd-title .gd-t-in{padding-left:20px;padding-right:20px;min-height:calc(var(--gd-mh) * .62);}
+    .gd-title .gd-t-in{padding-left:var(--site-px,20px);padding-right:var(--site-px,20px);min-height:calc(var(--gd-mh) * .62);}   /* 261112 수정 — 휴대폰 좌우 20 고정 → 사이트 휴대폰 값(스타일 > 레이아웃) */
+    .gd-title[data-pxm="none"] .gd-t-in{padding-left:0;padding-right:0;}
     .gd-title{--gd-hfs:22px;} .gd-title[data-lay="bold"]{--gd-hfs:20px;}
     .gd-title[data-lay="box"] .gd-t-txt{min-width:0;max-width:86%;padding:26px 28px;} .gd-title[data-lay="box"] .gd-t-bar{margin:36px 20px 0;}
     .gd-foot .gd-f-in{padding:6px 20px 60px;} .gd-foot .gd-more{--gd-mc:2 !important;} .gd-foot .gd-more[data-ms="rows"] .gd-m-i .th{width:72px;} .gd-foot .gd-pn-i .k{display:none;}   /* 261013 수정 — 좁은 화면은 열 수와 상관없이 2열(가로 스크롤은 2장씩) */
@@ -11308,7 +11319,12 @@
             <div class="srow" id="rtMinHRow" style="display:none;"><span class="k">최소 높이</span><input class="rng" type="range" id="rtMinH" min="200" max="1200" step="10" value="600"><span class="v" id="rtMinHV">600px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="rtPt" min="0" max="200" step="2" value="56"><span class="v" id="rtPtV">56px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="rtPb" min="0" max="200" step="2" value="56"><span class="v" id="rtPbV">56px</span></div>
-            <div class="srow"><span class="k">좌우</span><input class="rng" type="range" id="rtPx" min="0" max="200" step="2" value="48"><span class="v" id="rtPxV">48px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="rtPxSeg" style="flex:1;min-width:0;margin:0;">
+              <button type="button" class="mt-seg-b active" data-m="base" onclick="rtPxSet('base')">기본</button>
+              <button type="button" class="mt-seg-b" data-m="none" onclick="rtPxSet('none')">없음</button>
+              <button type="button" class="mt-seg-b" data-m="custom" onclick="rtPxSet('custom')">직접</button>
+            </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="rtPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="rtPx" min="0" max="200" step="2" value="48"><span class="v" id="rtPxV">48px</span></div>
             <div class="tx-hint" style="margin-top:10px;">상단·하단은 이 블록과 위아래 블록 사이의 여백, 좌우는 글이 놓이는 안쪽 여백입니다. 높이를 정하면 글은 세로 가운데에 놓이고, 글이 더 길면 블록이 늘어납니다.</div>
           </div></div>
         </div>
@@ -16780,7 +16796,12 @@
         <div class="acc-body"><div class="acc-in">
           <div class="srow" style="margin-top:0;"><span class="k">상</span><input class="rng" type="range" id="hdPadT" min="0" max="80" step="1" value="22"><span class="v" id="hdPadTV">22px</span></div>
           <div class="srow"><span class="k">하</span><input class="rng" type="range" id="hdPadB" min="0" max="80" step="1" value="22"><span class="v" id="hdPadBV">22px</span></div>
-          <div class="srow"><span class="k">좌우</span><input class="rng" type="range" id="hdPadX" min="0" max="200" step="2" value="48"><span class="v" id="hdPadXV">48px</span></div>   <!-- 261111 수정 — 켬(48) · 끔(0) 스위치 → 블록 「좌우」와 같은 슬라이더 -->
+          <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="hdPadXSeg" style="flex:1;min-width:0;margin:0;">
+            <button type="button" class="mt-seg-b active" data-m="base" onclick="hdPadXSet('base')">기본</button>
+            <button type="button" class="mt-seg-b" data-m="none" onclick="hdPadXSet('none')">없음</button>
+            <button type="button" class="mt-seg-b" data-m="custom" onclick="hdPadXSet('custom')">직접</button>
+          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접(블록과 같은 3칸) -->
+          <div class="srow" id="hdPadXRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="hdPadX" min="0" max="200" step="2" value="48"><span class="v" id="hdPadXV">48px</span></div>
           <div class="tx-hint" id="hdPadXHint">좌우를 0으로 하면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.</div>
         </div></div>
       </div>
@@ -16969,7 +16990,12 @@
         <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
           <div class="srow" style="margin-top:0;"><span class="k">상단</span><input class="rng" type="range" id="gdPt" min="0" max="240" step="2" value="60"><span class="v" id="gdPtV">60px</span></div>
           <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="gdPb" min="0" max="240" step="2" value="60"><span class="v" id="gdPbV">60px</span></div>
-          <div class="srow"><span class="k">좌우</span><input class="rng" type="range" id="gdPx" min="0" max="200" step="2" value="40"><span class="v" id="gdPxV">40px</span></div>   <!-- 261111 추가 — 좌우 여백(블록 · 상단 메뉴 「좌우」와 같은 슬라이더 · 휴대폰은 20px 고정) -->
+          <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="gdPxSeg" style="flex:1;min-width:0;margin:0;">
+            <button type="button" class="mt-seg-b active" data-m="base" onclick="gdPxSet('base')">기본</button>
+            <button type="button" class="mt-seg-b" data-m="none" onclick="gdPxSet('none')">없음</button>
+            <button type="button" class="mt-seg-b" data-m="custom" onclick="gdPxSet('custom')">직접</button>
+          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접(블록 · 상단 메뉴와 같은 3칸) -->
+          <div class="srow" id="gdPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="gdPx" min="0" max="200" step="2" value="48"><span class="v" id="gdPxV">48px</span></div>
         </div></div>
       </div>
       <div class="fld sfold open" id="gdItemAcc" data-gd-sec="foot">
@@ -17492,6 +17518,34 @@
     if(typeof mvSync==='function') try{ mvSync(); }catch(e){}
   }
   function stTypoSet(k,v){ SITE_TYPO[k]=v; stTypoApply(); }
+  /* 261112 추가 — 사이트 공통 좌우 여백. .site 에 --site-px-pc · --site-px-mo 를 두고, CSS 가 PC/휴대폰에 맞춰 --site-px 로 고른다(사본은 mvSnap 이 변수째 넘긴다) */
+  var SITE_LAYOUT={pc:48,mo:20};
+  function stLayoutApply(){
+    var site=stSite(); if(!site) return;
+    site.style.setProperty('--site-px-pc',(+SITE_LAYOUT.pc||0)+'px'); site.style.setProperty('--site-px-mo',(+SITE_LAYOUT.mo||0)+'px');
+    stLayoutSync();
+    if(typeof hdApply==='function') try{ hdApply(); }catch(e){}
+    sitePxRefresh();
+    if(typeof mvKick==='function') try{ mvKick(0); }catch(e){}   /* 휴대폰 화면에도 바로 */
+  }
+  /* 261112 추가 — 지금 화면의 블록 중 좌우를 직접 그리는 블록(텍스트 등)에 좌우 규칙을 다시 입힌다.
+     한 번도 설정을 열지 않은 블록은 처음 넣은 48px 이 글자로 박혀 있어 사이트 값을 따르지 않았다 */
+  function sitePxRefresh(){
+    var site=stSite(); if(!site) return;
+    [].slice.call(site.querySelectorAll('.blk[data-block="cred"]')).forEach(function(b){
+      /* 좌우만 다시 입힌다(블록 전체를 다시 그리지 않는다). 설정을 연 적 없는 블록은 박혀 있는 값으로 판단: 비었거나 48 → 기본 · 0 → 없음 · 그 밖 → 그대로 */
+      var m, c=b._rtCfg;
+      if(c && typeof rtPxMode==='function') m=rtPxMode(c);
+      else { var v=b.style.paddingLeft; m=(!v||v==='48px'||/site-px/.test(v))?'base':(v==='0px'?'none':''); }
+      if(m==='base') b.style.paddingLeft=b.style.paddingRight='var(--site-px,48px)';
+      else if(m==='none') b.style.paddingLeft=b.style.paddingRight='0px';
+    });
+  }
+  function stLayoutSync(){
+    [['stPxPc','pc'],['stPxMo','mo']].forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return;
+      if(!el._bound){ el._bound=true; el.addEventListener('input',function(){ SITE_LAYOUT[r[1]]=parseFloat(el.value)||0; stLayoutApply(); }); }
+      if(document.activeElement!==el){ el.value=SITE_LAYOUT[r[1]]; } if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=SITE_LAYOUT[r[1]]+'px'; });
+  }
   function stTypoReset(){ SITE_TYPO={hfont:-1,bfont:-1,fs:14.5,lh:'normal'}; stTypoApply(); clToast('서체 세부 값을 프리셋 기본으로 되돌렸습니다.'); }
   function stTypoSync(){
     var t=SITE_TYPO;
@@ -17511,6 +17565,8 @@
     });
     var fs=document.getElementById('stFs'); if(fs && !fs._bound){ fs._bound=true; fs.addEventListener('input',function(){ SITE_TYPO.fs=parseFloat(fs.value); stTypoApply(); }); }
     stTypoSync();
+    stLayoutSync();   /* 261112 추가 — 레이아웃(좌우 여백) 슬라이더 연결 */
+    setTimeout(function(){ try{ sitePxRefresh(); }catch(e){} },0);   /* 첫 화면 블록도 */
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',stTypoBuild); else setTimeout(stTypoBuild,0);
   function stSite(){ return document.querySelector('#stage .site'); }
@@ -21291,6 +21347,7 @@
     if(typeof rtFillLater==='function') rtFillLater(); if(typeof rtBgVidKick==='function') rtBgVidKick(site);
     if(typeof bindBlockHoverAddbars==='function') try{ bindBlockHoverAddbars(); }catch(x){}
     if(typeof bkCodeSync==='function') try{ bkCodeSync(); }catch(x){}   /* 261013 추가 — 이 페이지 블록의 코드(CSS · JS) */
+    if(typeof sitePxRefresh==='function') try{ sitePxRefresh(); }catch(x){}   /* 261112 추가 — 처음 여는 페이지의 블록도 좌우 「기본」이면 사이트 값을 따르게 */
     try{ window.dispatchEvent(new Event('resize')); }catch(x){}   /* 감춰 둔 블록 엔진이 돌아온 폭을 다시 재도록 */
   }
   /* 내비의 현재 표시 — 임시 페이지에 있는 동안만 그 서브메뉴를 켠다 (PAGES 의 cur 는 건드리지 않는다) */
@@ -56154,7 +56211,7 @@ global.PolyFX = API;
     if(hm==='screen' && typeof rtFillVar==='function') rtFillVar();
     blk.style.paddingTop=(c.pt==null)?'':(c.pt+'px');
     blk.style.paddingBottom=(c.pb==null)?'':(c.pb+'px');
-    blk.style.paddingLeft=blk.style.paddingRight=(c.px==null)?'':(c.px+'px');
+    var pxm=rtPxMode(c); blk.style.paddingLeft=blk.style.paddingRight=(pxm==='base')?'var(--site-px,48px)':(pxm==='none'?'0px':(c.px+'px'));   /* 261112 수정 — 좌우: 기본 = 사이트 값(스타일 > 레이아웃) · 없음 = 0 · 직접 = c.px */
     blk.style.background=c.bg||''; blk.classList.toggle('own-bg',!!c.bg);
     /* 260917 추가 — 배경 이미지 + 어둡게 덮개(::before, --rt-dim) */
     /* 260920 수정 — 배경 소재가 동영상 주소면 <video class="rt-bgvid"> 층으로, 아니면 기존처럼 background-image 로. 덮개(어둡게)는 둘 다 같은 ::before */
@@ -56190,7 +56247,7 @@ global.PolyFX = API;
       color:c.color||(cs?rtHex(cs.color):'')||'#3C424B',
       pt:(c.pt==null)?parseFloat(bs.paddingTop):c.pt,
       pb:(c.pb==null)?parseFloat(bs.paddingBottom):c.pb,
-      px:(c.px==null)?parseFloat(bs.paddingLeft):c.px,
+      px:(rtPxMode(c)==='custom')?c.px:parseFloat(bs.paddingLeft),   /* 261112 수정 — 직접이 아니면 지금 보이는 값 */
       bg:c.bg||rtHex(bs.backgroundColor)||'#FFFFFF'
     };
   }
@@ -56333,6 +56390,11 @@ global.PolyFX = API;
     var cc=document.getElementById('rtCstCur'); if(cc){ var arr=cur.split(','); cc.textContent=(arr.length>1)?(arr.length+'열'+(arr.every(function(x){ return x==='1'; })?'':' · '+arr.join(':'))):''; }
   }
   function rtLayout(m){ m=(/^(split|stack)$/.test(m))?m:'single'; rtSegSync('rtLayoutSeg',m); if(rtEditBlk && rtEditBlk===rtCurBlk) rtEditEnd(); rtUpd('layout',m); rtFillBset(); }
+  /* 261112 추가 — 좌우 여백 3칸. 예전 값은 읽을 때 옮긴다: 비었거나 48 → 기본 · 0 → 없음 · 그 밖 → 직접 */
+  function rtPxMode(c){ if(c.pxMode==='base'||c.pxMode==='none'||c.pxMode==='custom') return c.pxMode; if(c.px==null || +c.px===48) return 'base'; if(+c.px===0) return 'none'; return 'custom'; }
+  function rtPxSet(m){ if(!rtCurBlk) return; var c=rtCfg(rtCurBlk);
+    if(m==='custom' && rtPxMode(c)!=='custom'){ var cur=parseFloat(getComputedStyle(rtCurBlk).paddingLeft)||48; var z=(rtCurBlk.getBoundingClientRect().width/(rtCurBlk.offsetWidth||1))||1; c.px=Math.round(cur/(z>0?1:1)); }   /* 직접으로 바꿀 때는 지금 보이는 값에서 시작 */
+    rtUpd('pxMode',m); rtFillBset(); }
   function rtHMode(m){ rtUpd('hMode',m); rtFillBset(); }   /* 260920 추가 — 블록 높이 방식 */
   function rtAlign(a){ rtSegSync('rtAlignSeg',a); rtUpd('align',a); }
   function rtSw(btn,key){ btn.classList.toggle('on'); rtUpd(key, btn.classList.contains('on')); if(key==='bgGray') rtBgSync(); }   /* 260920 수정 — 흑백은 썸네일에도 바로 */
@@ -56392,6 +56454,7 @@ global.PolyFX = API;
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     var vals={gap:(c.gap==null?48:c.gap), size:e.size, lh:e.lh, ls:(c.ls||0), width:(c.width==null?1180:c.width), pt:e.pt, pb:e.pb, px:e.px,
               labelW:(c.labelW==null?340:c.labelW), splitGap:(c.splitGap==null?24:c.splitGap), bgDim:(c.bgDim==null?40:c.bgDim), minH:(c.minH==null?600:c.minH)};
+    var pxm0=rtPxMode(c); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none';   /* 261112 추가 — 좌우 3칸 */
     var hm=(c.hMode==='screen'||c.hMode==='px')?c.hMode:'auto'; rtSegSync('rtHSeg',hm); var mhr=document.getElementById('rtMinHRow'); if(mhr) mhr.style.display=(hm==='px')?'':'none';   /* 260920 추가 — 높이 */
     rtBgSync();   /* 260920 수정 — 배경 소재 상자(썸네일 · 삭제 · 어둡게 행) 표시 맞춤 */
     var lay=c.layout||'single';
@@ -59494,7 +59557,7 @@ global.PolyFX = API;
             [['data-theme',ss.theme],['data-style',ss.style],['data-bg',ss.bg],['data-tone',ss.tone],['data-hfont',ss.hfont],['data-bfont',ss.bfont],['data-fs',ss.fs],['data-lh',ss.lh]].forEach(function(a){
               if(a[1]) site.setAttribute(a[0],a[1]); else site.removeAttribute(a[0]);
             });
-            ['--st-bg','--st-fg','--st-muted','--st-muted2','--st-line','--st-hfont','--st-bfont','--st-fscale','--st-lhscale'].forEach(function(k){
+            ['--st-bg','--st-fg','--st-muted','--st-muted2','--st-line','--st-hfont','--st-bfont','--st-fscale','--st-lhscale','--site-px-pc','--site-px-mo'].forEach(function(k){
               var v=ss.vars&&ss.vars[k]; if(v) site.style.setProperty(k,v); else site.style.removeProperty(k);
             });
             if(typeof SITE_STYLE!=='undefined'){ SITE_STYLE.bg=ss.bg||'none'; SITE_STYLE.theme=ss.theme||SITE_STYLE.theme; SITE_STYLE.style=ss.style||'default'; }
@@ -59857,7 +59920,7 @@ global.PolyFX = API;
          적용되므로, 그 값을 그대로 실어 보낸다. 사본은 같은 속성을 자기 .site 에 덮어쓴다. */
       try{
         var stv={};
-        ['--st-bg','--st-fg','--st-muted','--st-muted2','--st-line','--st-hfont','--st-bfont','--st-fscale','--st-lhscale'].forEach(function(k){ var v=site.style.getPropertyValue(k); if(v) stv[k]=v; });
+        ['--st-bg','--st-fg','--st-muted','--st-muted2','--st-line','--st-hfont','--st-bfont','--st-fscale','--st-lhscale','--site-px-pc','--site-px-mo'].forEach(function(k){ var v=site.style.getPropertyValue(k); if(v) stv[k]=v; });
         s.site=JSON.stringify({
           theme:site.getAttribute('data-theme')||'', style:site.getAttribute('data-style')||'',
           bg:site.getAttribute('data-bg')||'', tone:site.getAttribute('data-tone')||'', vars:stv,
@@ -60373,7 +60436,7 @@ function hdApply(hdEl){
   var alwaysFull=(HD.type==='full'&&HD.fullMode==='always');   /* 항상 펼침: 메뉴 줄이 없으니 로고 왼쪽·버튼 오른쪽 한 줄로 고정 */
   hd.setAttribute('data-hd-layout',alwaysFull?'1':(isTop&&HD.type!=='toggle'?String(HD.layout):'0'));
   hd.setAttribute('data-hd-rows',(isTop&&HD.type!=='toggle'&&!alwaysFull)?String(HD_LAYOUT_ROWS[HD.layout]||1):'1');
-  hd.setAttribute('data-hd-fx',hdFxOk(HD.nav.fx)?(HD.nav.fx||'none'):'none'); hd.setAttribute('data-hd-tog',HD.tog||'left'); hd.setAttribute('data-hd-full',(HD.fullMode==='always'&&HD.fullStyle==='col')?'head':(HD.fullStyle||'col')); hd.setAttribute('data-hd-salign',HD.sideAlign||'left'); hd.setAttribute('data-hd-sutil',HD.sideUtil||'top'); hd.setAttribute('data-hd-tstyle',HD.togStyle||'drop'); hd.setAttribute('data-hd-ticon',HD.togIcon||'bars3'); hd.setAttribute('data-hd-tfx',HD.togFx||'none'); hd.setAttribute('data-hd-topen',HD.togOpen||'morph');   /* 항상 펼침에서는 메뉴 줄이 없어 「메뉴 아래」 정렬을 쓸 수 없다 → 제목·구분선로 */ hd.setAttribute('data-hd-full-mode',HD.fullMode||'hover'); hd.setAttribute('data-hd-side',hdPadX()>0?'1':'0'); hd.setAttribute('data-hd-st',st);
+  hd.setAttribute('data-hd-fx',hdFxOk(HD.nav.fx)?(HD.nav.fx||'none'):'none'); hd.setAttribute('data-hd-tog',HD.tog||'left'); hd.setAttribute('data-hd-full',(HD.fullMode==='always'&&HD.fullStyle==='col')?'head':(HD.fullStyle||'col')); hd.setAttribute('data-hd-salign',HD.sideAlign||'left'); hd.setAttribute('data-hd-sutil',HD.sideUtil||'top'); hd.setAttribute('data-hd-tstyle',HD.togStyle||'drop'); hd.setAttribute('data-hd-ticon',HD.togIcon||'bars3'); hd.setAttribute('data-hd-tfx',HD.togFx||'none'); hd.setAttribute('data-hd-topen',HD.togOpen||'morph');   /* 항상 펼침에서는 메뉴 줄이 없어 「메뉴 아래」 정렬을 쓸 수 없다 → 제목·구분선로 */ hd.setAttribute('data-hd-full-mode',HD.fullMode||'hover'); hd.setAttribute('data-hd-side',hdPadXMode()==='none'?'0':'1');   /* 261112 수정 — 3칸 */ hd.setAttribute('data-hd-st',st);
   site.style.setProperty('--hd-w',HD.sideW+'px');
   function sv(k,v){ if(v==null||v==='') s.removeProperty(k); else s.setProperty(k,v); }
   /* 색 — 비어 있으면 CSS 기본(테마 변수)으로 */
@@ -60391,7 +60454,7 @@ function hdApply(hdEl){
   /* 메뉴 글자·간격 */
   sv('--hd-fs',HD.nav.size+'px'); sv('--hd-ls',(HD.nav.ls/100)+'em'); sv('--hd-font',HD.nav.font>=0?hdFontCss(HD.nav.font):'inherit'); sv('--hd-fw',HD.nav.bold?'700':'400'); sv('--hd-fst',HD.nav.italic?'italic':'normal');
   sv('--hd-gap',HD.nav.gap+'px'); sv('--hd-px',(hdFxFill()?HD.nav.px:0)+'px'); sv('--hd-py',(hdFxFill()?HD.nav.py:0)+'px');   /* 261109 수정 — 좌우 · 상하 여백은 채움 효과일 때만 적용(값은 남겨 둔다) */ sv('--hd-top',HD.nav.top+'px');
-  sv('--hd-pt',HD.pad.top+'px'); sv('--hd-pb',HD.pad.bottom+'px'); sv('--hd-sidex',hdPadX()+'px');   /* 261111 추가 — 좌우 여백 슬라이더(모바일은 CSS 의 18px 고정이 이긴다) */
+  sv('--hd-pt',HD.pad.top+'px'); sv('--hd-pb',HD.pad.bottom+'px'); sv('--hd-sidex',hdPadXCss());   /* 261111 추가 — 좌우 여백 슬라이더(모바일은 CSS 의 18px 고정이 이긴다) */
   /* 서브메뉴 */
   sv('--hd-sub-fs',HD.sub.size+'px'); sv('--hd-sub-fg',HD.sub.fg); sv('--hd-sub-bg',HD.sub.bg?hdRGBA(HD.sub.bg,HD.sub.bga):''); sv('--hd-sub-rad',HD.sub.rad+'px'); sv('--hd-sub-line',HD.sub.lineCol);
   hd.classList.toggle('hd-sub-noline',!HD.sub.line); hd.classList.toggle('hd-sub-nosh',!HD.sub.shadow);
@@ -60851,10 +60914,15 @@ function hdSetBgSh(k,v){ hdUnlink('bg'); hdBgCur().sh[k]=v; hdFill(); hdChanged(
 function hdSetPad(k,v){ HD.pad[k]=v; hdFill(); hdChanged(); }
 /* 261111 추가 — 상단 메뉴 좌우 여백(px). 예전 켬/끔(side) 값은 켬 48 · 끔 0 으로 읽는다 */
 function hdPadX(){ var p=HD.pad||(HD.pad={}); if(p.x==null || isNaN(+p.x)) p.x=(p.side===false)?0:48; p.side=(+p.x>0); return +p.x; }
+/* 261112 추가 — 좌우 3칸(기본 · 없음 · 직접). 예전 값: 48 → 기본 · 0 → 없음 · 그 밖 → 직접 */
+function hdPadXMode(){ var p=HD.pad||(HD.pad={}); if(p.xMode==='base'||p.xMode==='none'||p.xMode==='custom') return p.xMode; var x=hdPadX(); return (x===48)?'base':(x===0?'none':'custom'); }
+function hdPadXCss(){ var m=hdPadXMode(); return (m==='base')?'var(--site-px,48px)':(m==='none'?'0px':(hdPadX()+'px')); }
+function hdPadXSet(m){ HD.pad.xMode=m; if(m==='custom' && (!(+HD.pad.x>0))) HD.pad.x=48; hdFill(); hdChanged(); }
 /* 좌측 메뉴는 폭이 좁아 좌우 여백을 14 ~ 32px 로만 쓴다(CSS clamp) → 슬라이더도 그 범위로 · 안내 */
 function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getElementById('hdPadXV'), h=document.getElementById('hdPadXHint'); if(!el) return; var sd=(HD.type==='side'), x=hdPadX();
   el.min=sd?14:0; el.max=sd?32:200; var v=sd?Math.max(14,Math.min(32,x)):x; el.value=v; smRng(el); if(o) o.textContent=v+'px';
-  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 좌우 여백을 14 ~ 32px 사이로 씁니다.':'좌우를 0으로 하면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.'; }
+  var md=hdPadXMode(); [].forEach.call(document.querySelectorAll('#hdPadXSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===md); }); var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(md==='custom')?'':'none';   /* 261112 추가 — 3칸 */
+  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 좌우 여백을 14 ~ 32px 사이로 씁니다.':'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다. 「없음」이면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.'; }
 function hdColReset(g){ var lg={logo:'logo',nav:'nav',fx:'fx',util:'util',bg:'bg'}[g]; if(lg) hdUnlink(lg); var c=HD.col[hdEditSt]; if(g==='logo') c.logo=''; else if(g==='nav'){ c.fg=''; c.ac=''; } else if(g==='fx') c.fx=''; else if(g==='util'){ c.ufg=''; c.uac=''; } else if(g==='sub'){ HD.sub.fg=''; HD.sub.bg=''; HD.sub.lineCol=''; } else if(g==='subac') HD.sub.ac=''; else if(g==='bg'){ hdBgCur().col=(hdEditSt==='sticky'?'auto':''); hdBgCur().alpha=1; } hdFill(); hdChanged(); if(g==='subac') hdSubAcShow(); else if(g==='sub') hdSubShow(); }   /* 261109 수정 — 서브메뉴 색을 되돌릴 때도 캔버스의 서브메뉴를 펼쳐 보인다 */
 function hdChanged(){ hdApply(); if(typeof mvKick==='function') try{ mvKick(0); }catch(e){} }
 /* 261106 추가 — 상단 메뉴 사용 (기존 편집기 상단 메뉴 「숨김」 대응 · 푸터 사용과 같은 방식). 꺼도 설정은 그대로 남는다 */
@@ -63593,7 +63661,7 @@ function gdTitleImg(X){
 /* 타이틀 — X: {ad,c,i,n} · D: 디자인 · pv: 고르기 카드용(톱니·편집 없음) */
 function gdTitleParts(X,D,pv){
   var det=X.c.gt.det, img=gdTitleImg(X);   /* 261013 수정 — 이 글의 타이틀 이미지: 직접 고른 것 → 썸네일(연동) */
-  var st='--gd-pt:'+((det.pt==null||pv)?D.pt:det.pt)+'px;--gd-pb:'+((det.pb==null||pv)?D.pb:det.pb)+'px;'+((det.px==null||pv)?'':'--gd-px:'+det.px+'px;')+(D.mh?'--gd-mh:'+D.mh+'px;':'');   /* 261111 추가 — 좌우(px · 없으면 CSS 기본 40) */
+  var st='--gd-pt:'+((det.pt==null||pv)?D.pt:det.pt)+'px;--gd-pb:'+((det.pb==null||pv)?D.pb:det.pb)+'px;'+(pv?'':'--gd-px:'+gdPxCss(det)+';')+(D.mh?'--gd-mh:'+D.mh+'px;':'');   /* 261112 수정 — 좌우 3칸(기본 = 사이트 값 · 없음 · 직접) · 고르기 카드는 CSS 기본 40 */
   if(D.bg==='img'){ st+='--gd-dim:'+(Math.max(0,Math.min(90,+det.dim||0))/100)+';'; if(img && !gtVid(img)) st+='--gd-img:'+gtUrl(img)+';'; }
   else if(det.bg && !pv){ st+='--gd-bg:'+det.bg+';';   /* 261007 수정 — 직접 고른 배경색: 그 명도에 맞춰 글자색을 고른다(어두우면 흰 글자) */
     if(typeof stIsDark==='function' && /^#[0-9a-f]{6}$/i.test(det.bg)) st+=stIsDark(det.bg)?'--gd-fg:#fff;--gd-sub:rgba(255,255,255,.72);':'--gd-fg:#222428;--gd-sub:#7B818B;'; }
@@ -63612,7 +63680,7 @@ function gdTitleParts(X,D,pv){
     +(D.sub2?'<div class="gd-t-s'+cr+(dh||pv?'':' rt-ph')+'" data-gd-ed="s" data-ph="텍스트를 입력해 주세요.">'+dh+'</div>':'')+'</div>';
   var html=(pv?'':'<span class="gd-badge">상세 페이지 타이틀</span><button type="button" class="gd-gear" title="상세 페이지 타이틀 설정" aria-label="상세 페이지 타이틀 설정">'+gdGear()+'</button>')
     +'<div class="gd-t-bg"></div><div class="gd-t-in">'+(D.lay==='box'?txt+bar:bar+txt)+'</div>';
-  return {style:st, html:html, attrs:{'data-gd-d':D.id,'data-bg':D.bg,'data-btn':D.btn,'data-al':D.al||'c','data-lay':D.lay||'','data-bar':D.bar?'1':''}};
+  return {style:st, html:html, attrs:{'data-gd-d':D.id,'data-bg':D.bg,'data-btn':D.btn,'data-al':D.al||'c','data-lay':D.lay||'','data-bar':D.bar?'1':'','data-pxm':pv?'':gdPxMode(det)}};   /* 261112 추가 — data-pxm: 휴대폰에서 「없음」이면 0 */
 }
 /* 261007 추가 — 서식 입힌 글 다루기. gdTxt: HTML → 일반 글(줄바꿈은 빈칸) · gdRich: 저장해 둔 HTML 이 지금의 일반 글과 같은 글이면 그 HTML, 아니면 일반 글 */
 function gdTxt(html){ var d=document.createElement('div'); d.innerHTML=String(html||'').replace(/<br\s*\/?>/gi,' ').replace(/<\/(p|div|h[1-6]|li|blockquote)>/gi,' '); return d.textContent.replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim(); }
@@ -63799,6 +63867,10 @@ document.addEventListener('keydown',function(e){
 var gdBound=false, gdOpenAt='', gdLibOpened=false;
 function gdDet(){ var X=gdCtx(); return X?X.c.gt.det:null; }
 function gdSetV(k,v){ var X=gdCtx(); if(!X) return; X.c.gt.det[k]=v; gdRender(); }
+/* 261112 추가 — 좌우 3칸. 예전 값: 비었거나 48 → 기본 · 0 → 없음 · 그 밖 → 직접 */
+function gdPxMode(det){ if(det.pxMode==='base'||det.pxMode==='none'||det.pxMode==='custom') return det.pxMode; if(det.px==null || +det.px===48) return 'base'; if(+det.px===0) return 'none'; return 'custom'; }
+function gdPxCss(det){ var m=gdPxMode(det); return (m==='base')?'var(--site-px,48px)':(m==='none'?'0px':(det.px+'px')); }
+function gdPxSet(m){ var X=gdCtx(); if(!X) return; var det=X.c.gt.det; det.pxMode=m; if(m==='custom' && !(+det.px>0)) det.px=48; gdRender(); gdFill(); }
 function gdBuild(){
   if(gdBound) return; gdBound=true;
   [['gdDim','dim','%'],['gdPt','pt','px'],['gdPb','pb','px'],['gdPx','px','px']].forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return; el.addEventListener('input',function(){ var x=parseFloat(el.value); if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=x+r[2]; gdSetV(r[1],x); }); });
@@ -63813,7 +63885,7 @@ function gdFill(){
   gdShow('gdImgRow',isImg); gdShow('gdImgHint',isImg); gdShow('gdDimRow',isImg); gdShow('gdBgRow',!isImg);   /* 261013 수정 — 이미지 디자인이면 배경 이미지 줄은 늘(기본 썸네일) */
   var th=document.getElementById('gdBgTh'); if(th){ var ti=gdTitleImg(X), has=!!ti && !gtVid(ti), ovr=!!gdTimg(X); th.classList.toggle('has',has); th.classList.toggle('empty',!has); th.classList.toggle('ovr',ovr); th.style.backgroundImage=has?'url("'+String(ti).replace(/"/g,'%22')+'")':''; th.title=ovr?'직접 고른 이미지 — × 로 썸네일로 되돌립니다':'보관함에서 이미지를 고르면 이 글의 타이틀 배경이 됩니다'; }
   function rng(id,v,u){ var el=document.getElementById(id); if(!el || document.activeElement===el) return; el.value=v; if(typeof smRng==='function') smRng(el); var o=document.getElementById(id+'V'); if(o) o.textContent=v+u; }
-  rng('gdDim',+det.dim||0,'%'); rng('gdPt',(det.pt==null)?D.pt:det.pt,'px'); rng('gdPb',(det.pb==null)?D.pb:det.pb,'px'); rng('gdPx',(det.px==null)?40:det.px,'px');
+  rng('gdDim',+det.dim||0,'%'); rng('gdPt',(det.pt==null)?D.pt:det.pt,'px'); rng('gdPb',(det.pb==null)?D.pb:det.pb,'px'); rng('gdPx',(det.px==null)?48:det.px,'px'); (function(){ var gm=gdPxMode(det); [].forEach.call(document.querySelectorAll('#gdPxSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===gm); }); gdShow('gdPxRow',gm==='custom'); })();   /* 261112 추가 — 좌우 3칸 */
   var bg=document.getElementById('gdBg'), bv=document.getElementById('gdBgV'), br=document.getElementById('gdBgR');
   var bg0=(D.bg==='d')?'#333333':'#ffffff'; if(D.bg!=='d'){ try{ var sb=String(getComputedStyle(gdSite()).getPropertyValue('--st-bg')||'').trim(); if(/^#[0-9a-f]{6}$/i.test(sb)) bg0=sb; }catch(x){} }   /* 261007 추가 — 기본 = 컬러 모드의 배경색 */
   if(bg){ bg.value=/^#[0-9a-f]{6}$/i.test(det.bg||'')?det.bg:bg0; bg.classList.toggle('auto',!det.bg); } if(bv) bv.textContent=det.bg?det.bg.toUpperCase():'기본'; if(br) br.classList.toggle('off',!det.bg);
