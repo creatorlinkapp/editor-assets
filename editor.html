@@ -18169,7 +18169,7 @@
     [['stPxPc','pc'],['stPxMo','mo']].forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return;
       if(!el._bound){ el._bound=true; el.addEventListener('input',function(){ SITE_LAYOUT[r[1]]=parseFloat(el.value)||0; stLayoutApply(); });
         if(r[1]==='mo'){ el.addEventListener('pointerdown',stMoOpen); el.addEventListener('keydown',function(e){ if(/^(Arrow|Page|Home|End)/.test(e.key)) stMoOpen(); }); }
-        else { el.addEventListener('pointerdown',function(){ stMoClose(); stPxGuide(true); }); el.addEventListener('keydown',function(e){ if(/^(Arrow|Page|Home|End)/.test(e.key)) stMoClose(); }); el.addEventListener('input',function(){ stPxGuide(true); }); el.addEventListener('pointerup',function(){ stPxGuide(false); }); el.addEventListener('keyup',function(){ stPxGuide(false); }); } }
+        else { el.addEventListener('pointerdown',function(){ stMoClose(); stPxHeld=true; window.addEventListener('pointerup',function f(){ window.removeEventListener('pointerup',f); stPxGuide(false); }); stPxGuide(true); }); el.addEventListener('keydown',function(e){ if(/^(Arrow|Page|Home|End)/.test(e.key)) stMoClose(); }); el.addEventListener('input',function(){ stPxGuide(true); }); el.addEventListener('pointerup',function(){ stPxGuide(false); }); el.addEventListener('keyup',function(){ stPxGuide(false); }); } }
       if(document.activeElement!==el){ el.value=SITE_LAYOUT[r[1]]; } if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=SITE_LAYOUT[r[1]]+'px'; });
   }
   /* 261112 추가 — 휴대폰 좌우 여백 슬라이더를 잡으면 휴대폰 화면을 연다(닫혀 있으면 값을 바꿔도 PC 화면에는 아무 변화가 없어 고장처럼 보였다). 좁은 창은 상단 휴대폰 버튼과 같은 기준(900px)으로 안내만 */
@@ -18182,12 +18182,16 @@
   function stMoClose(){ if(!stMoAuto) return; stMoAuto=false; if(document.body.classList.contains('mview-on') && typeof window.mvSetMode==='function') window.mvSetMode('pc'); }
   /* 261112 추가 — PC 좌우 여백 슬라이더를 움직이는 동안 PC 편집 화면에 사이트 값 자리(양쪽 세로 점선).
      넓은 화면에서는 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 값이 어디에 적용되는지 보이게(블록 내용이 그 안쪽에 있는 건 화면 그대로 보인다 · 블록마다 상자를 그리던 것은 화면이 어지러워 뺐다). 손을 떼면 1초 뒤 사라진다 */
-  var stPxGuideT=null;
+  var stPxGuideT=null, stPxGuideI=null, stPxHeld=false;
+  function stPxGuideOff(){ clearInterval(stPxGuideI); stPxGuideI=null; var l=document.getElementById('stPxGuideLay'); if(l) l.remove(); }
   function stPxGuide(on){
+    if(!on){ stPxHeld=false; clearTimeout(stPxGuideT); stPxGuideT=setTimeout(stPxGuideOff,1000); return; }
+    clearTimeout(stPxGuideT); if(!stPxHeld) stPxGuideT=setTimeout(stPxGuideOff,1500);   /* 잡고 있는 동안은 계속 · 키보드는 1.5초 */
+    stPxGuideDraw(); if(!stPxGuideI) stPxGuideI=setInterval(stPxGuideDraw,100);   /* 261112 추가 — 보이는 동안 자리를 다시 계산(휴대폰 화면이 닫히며 PC 화면이 넓어지는 동안 선이 예전 자리에 남았다) */
+  }
+  function stPxGuideDraw(){
     var lay=document.getElementById('stPxGuideLay');
-    if(!on){ clearTimeout(stPxGuideT); stPxGuideT=setTimeout(function(){ var l=document.getElementById('stPxGuideLay'); if(l) l.remove(); },1000); return; }
-    clearTimeout(stPxGuideT); stPxGuideT=setTimeout(function(){ var l=document.getElementById('stPxGuideLay'); if(l) l.remove(); },1500);   /* 키보드 · 놓친 pointerup 대비 */
-    var st=document.getElementById('stage'), site=stSite(); if(!st || !site || document.body.classList.contains('pview')) return;
+    var st=document.getElementById('stage'), site=stSite(); if(!st || !site || document.body.classList.contains('pview')){ if(lay) lay.innerHTML=''; return; }
     if(!lay){ lay=document.createElement('div'); lay.id='stPxGuideLay'; lay.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:60;'; document.body.appendChild(lay); }
     lay.innerHTML='';
     var sr=st.getBoundingClientRect(), wr=site.getBoundingClientRect(), z=parseFloat(getComputedStyle(site).zoom)||1;
