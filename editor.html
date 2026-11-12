@@ -18167,9 +18167,13 @@
   ['bc','bd','ca','ct','fm','sc','rs','tw','vc'].forEach(function(p){ BPX_RNG[p+'Padx']=[p,'padx']; });
   function stLayoutSync(){
     [['stPxPc','pc'],['stPxMo','mo']].forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return;
-      if(!el._bound){ el._bound=true; el.addEventListener('input',function(){ SITE_LAYOUT[r[1]]=parseFloat(el.value)||0; stLayoutApply(); }); }
+      if(!el._bound){ el._bound=true; el.addEventListener('input',function(){ SITE_LAYOUT[r[1]]=parseFloat(el.value)||0; stLayoutApply(); });
+        if(r[1]==='mo'){ el.addEventListener('pointerdown',stMoOpen); el.addEventListener('keydown',function(e){ if(/^(Arrow|Page|Home|End)/.test(e.key)) stMoOpen(); }); } }
       if(document.activeElement!==el){ el.value=SITE_LAYOUT[r[1]]; } if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=SITE_LAYOUT[r[1]]+'px'; });
   }
+  /* 261112 추가 — 휴대폰 좌우 여백 슬라이더를 잡으면 휴대폰 화면을 연다(닫혀 있으면 값을 바꿔도 PC 화면에는 아무 변화가 없어 고장처럼 보였다). 좁은 창은 상단 휴대폰 버튼과 같은 기준(900px)으로 안내만 */
+  function stMoOpen(){ if(document.body.classList.contains('mview-on') || typeof window.mvSetMode!=='function') return;
+    if(window.innerWidth>900) window.mvSetMode('mobile'); else if(typeof clToast==='function') clToast('넓은 화면에서 휴대폰 화면으로 확인할 수 있습니다.'); }
   function stTypoReset(){ SITE_TYPO={hfont:-1,bfont:-1,fs:14.5,lh:'normal'}; stTypoApply(); clToast('서체 세부 값을 프리셋 기본으로 되돌렸습니다.'); }
   function stTypoSync(){
     var t=SITE_TYPO;
