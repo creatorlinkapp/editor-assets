@@ -18192,13 +18192,13 @@
   function stPxGuideDraw(){
     var lay=document.getElementById('stPxGuideLay');
     var st=document.getElementById('stage'), site=stSite(); if(!st || !site || document.body.classList.contains('pview')){ if(lay) lay.innerHTML=''; return; }
-    if(!lay){ lay=document.createElement('div'); lay.id='stPxGuideLay'; lay.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:60;'; document.body.appendChild(lay); }
+    if(!lay){ lay=document.createElement('div'); lay.id='stPxGuideLay'; lay.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:140;'; document.body.appendChild(lay); }   /* 261112 수정 — 60 → 140: 상단 메뉴(120) · 펼침 메뉴(130)가 선을 덮었다. 편집기 팝업(260~)보다는 아래 */
     lay.innerHTML='';
     var sr=st.getBoundingClientRect(), wr=site.getBoundingClientRect(), z=parseFloat(getComputedStyle(site).zoom)||1;
     var top=Math.max(sr.top,wr.top), bot=Math.min(sr.bottom,wr.bottom); if(bot<=top) return;
     var px=(+SITE_LAYOUT.pc||0)*z, C='var(--green,#03C75A)';   /* 편집기 「조절 중인 영역」 표시와 같은 초록(텍스트 블록 rt-showarea) · 선택 테두리(실선)와 구분되게 점선 */
     function el(css){ var d=document.createElement('div'); d.style.cssText='position:fixed;box-sizing:border-box;'+css; lay.appendChild(d); return d; }
-    [wr.left+px, wr.right-px].forEach(function(x){ el('left:'+x+'px;top:'+top+'px;height:'+(bot-top)+'px;width:0;border-left:1px dashed '+C+';'); });
+    [wr.left+px, wr.right-px].forEach(function(x){ if(x<sr.left || x>sr.right) return; el('left:'+x+'px;top:'+top+'px;height:'+(bot-top)+'px;width:0;border-left:1px dashed '+C+';'); });
   }
   function stTypoReset(){ SITE_TYPO={hfont:-1,bfont:-1,fs:14.5,lh:'normal'}; stTypoApply(); clToast('서체 세부 값을 프리셋 기본으로 되돌렸습니다.'); }
   function stTypoSync(){
