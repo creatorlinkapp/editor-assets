@@ -8876,7 +8876,7 @@
     --hd-sub-fs:13px;--hd-sub-fg:var(--st-muted,#5A616B);--hd-sub-bg:var(--st-bg,#fff);--hd-sub-rad:10px;--hd-sub-line:var(--st-line,var(--border,#E4E7EC));--hd-sub-sh:0 12px 34px rgba(20,24,32,.14);--hd-usz:1;
     display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;column-gap:var(--hd-lgap);row-gap:var(--hd-top);padding:var(--hd-pt) var(--hd-side) var(--hd-pb);position:relative;   /* 260930 수정 — 원래 .site-hd 의 space-between 을 끈다: 자리는 레이아웃 규칙(auto margin)이 정한다. 2·7·14처럼 auto margin 이 없는 배치가 벌어져 보이던 문제 */
     background-color:var(--hd-bg);background-image:var(--hd-bgimg);background-size:var(--hd-bgsize);background-position:var(--hd-bgpos);background-repeat:var(--hd-bgrep);
-    border-bottom:var(--hd-line);box-shadow:var(--hd-shadow);transition:background-color .2s ease,box-shadow .2s ease,padding .2s ease;}
+    border-bottom:var(--hd-line);box-shadow:var(--hd-shadow);transition:background-color .2s ease,box-shadow .2s ease,padding-top .2s ease,padding-bottom .2s ease;}   /* 261112 수정 — 좌우(padding-left · right)는 효과 없이 바로: 스타일 > 레이아웃 좌우 여백을 바꿀 때 메뉴만 0.2초 늦게 따라와 블록과 시작선이 어긋나 보였다 */
   /* 261109 수정 — 흐림을 기존 편집기와 같은 구조로: 상단 메뉴 배경(색 · 이미지) 위 · 내용 아래에 「흐림 막」(.hd-blurv)을 깔아, 막 아래의 배경 이미지와 뒤 페이지를 함께 흐린다.
      전엔 상단 메뉴 자신에 backdrop-filter 를 걸어 뒤 페이지만 흐려지고 배경 이미지는 그대로 선명했다. isolation — 막(z-index:-1)이 상단 메뉴 배경 위 · 내용 아래에 오도록 */
   .site-hd.hd-blur{isolation:isolate;}
@@ -9453,7 +9453,7 @@
     html.mob .site:has(> .site-hd.mo-on) > .hd-srch[data-m="full"] .hd-srch-hint{display:none;}
     html.mob .site:has(> .site-hd.mo-on) > .hd-srch[data-m="full"] .hd-srch-close{top:12px;right:12px;}
     html.mob .site-hd[data-mo].mo-on > .hd-srch[data-m="expand"]{font-size:16px;}
-    html.mob .site-hd[data-mo].mo-on > .mo-sp{display:block;order:0;flex:none;width:0;height:var(--mo-h,60px);}
+    html.mob .site-hd[data-mo].mo-on > .mo-sp{display:block;order:0;flex:none;width:0;height:var(--mo-h,60px);margin-right:-14px;}   /* 261112 수정 — 폭 0 받침도 칸이라 뒤에 간격(14px)이 하나 더 붙어 로고 · 메뉴 버튼이 블록보다 14px 안쪽에서 시작했다 → 그 간격을 지운다(column-gap 14px 과 같은 값) */
     html.mob .site-hd[data-mo].mo-on > :is(.site-nav,.hd-util:not(.mo-util),.hd-br,.hd-mega,.snav-mob,.hd-tog){display:none!important;}
     html.mob .site-hd[data-mo].mo-on > .logo{font-size:var(--mo-lfs,22px);}
     html.mob .site-hd[data-mo].mo-on > .logo img{max-height:var(--mo-lmax,31px);max-width:200px;}
@@ -61666,12 +61666,12 @@ function moFit(hd){
   var floor=Math.max(14,Math.round(base*0.6));   /* 로고는 설정 크기의 60%(최소 14px)까지만 줄이고, 그래도 모자라면 버튼을 아이콘으로 */
   function fit(last){
     var uw=w(ut), hw=w(hm), lw=lg.getBoundingClientRect().width;
-    /* 맨 앞의 높이 받침(.mo-sp · 폭 0)도 칸이라 그 뒤에 간격 하나가 더 생긴다 → 칸 수 = 받침 · 로고 · (버튼) · (메뉴) */
+    /* 261112 수정 — 맨 앞 높이 받침(.mo-sp)의 뒤 간격은 CSS 에서 지웠다 → 칸 사이 간격 = 로고 · (버튼) · (메뉴) 사이만 */
     if(hd.getAttribute('data-mo')==='c'){ var side=Math.max(gap+hw,uw), room=Math.floor(inner-2*side-2*gap-2);
       if(lw<=room) return true;                                  /* 그대로 가운데 */
       if(room>=lw*0.8 && shrink(room,floor)) return true;        /* 조금만 줄이면 가운데에 들어간다 → 가운데 유지 */
       hd.classList.add('mo-cflow'); }                            /* 가운데 자리가 너무 좁다 → 두 버튼 사이 가운데로 */
-    var avail=Math.floor(inner-uw-hw-(1+(uw?1:0)+(hw?1:0))*gap-2);
+    var avail=Math.floor(inner-uw-hw-((uw?1:0)+(hw?1:0))*gap-2);
     if(lw<=avail) return true;
     return shrink(avail,last?10:floor);
   }
