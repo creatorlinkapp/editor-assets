@@ -17599,7 +17599,9 @@
     var h=document.getElementById(id+'Base'); if(h) h.textContent=mo?'기본은 스타일 > 레이아웃의 휴대폰 좌우 여백을 따릅니다.':'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다.'; }
   function bpxSet(p,k,m){ var blk=window[p+'CurBlk']; if(!blk) return;
     if(m==='custom' && bpxMode(bpxEff(p,blk),k)!=='custom') bpxUpd(p,k, SITE_LAYOUT[bpxMo()?'mo':'pc']);   /* 직접으로 바꿀 때는 지금 보이는 사이트 값에서 시작 */
-    bpxUpd(p,k+'Mode',m); bpxSync(p,k,bpxEff(p,blk)); }
+    bpxMoOv(blk,k,m); bpxUpd(p,k+'Mode',m); bpxSync(p,k,bpxEff(p,blk)); if(bpxMo() && typeof mvKick==='function') mvKick(0); }
+  /* 261112 추가 — 휴대폰 대상이면 고른 모드를 모바일 값에 바로 적는다. PC 와 같은 값(예: PC 「기본」)을 고르면 바뀐 게 없다고 보고 넘어가 휴대폰 「없음」이 그대로 남았다 */
+  function bpxMoOv(blk,k,m){ if(!bpxMo() || !blk) return; var ov=blk._mvOv||(blk._mvOv={}); ov[k+'Mode']=m; }
   function bpxUpd(p,k,v){ if(typeof window[p+'Upd']==='function') window[p+'Upd'](k,v); else if(typeof BGP!=='undefined' && BGP[p]) bpUpd(p,k,v); }   /* 숫자 카운터 · QR 은 공용 bpUpd */
   /* 261112 추가 — 「기본」일 때만 3칸 밑에 「기본은 스타일 > 레이아웃 …」 한 줄(블록에서 사이트 값을 어디서 바꾸는지 알려 준다). id = 3칸 앞부분(imPx 등) */
   function bpxBaseHint(id,on){ var r=document.getElementById(id+'Row')||document.getElementById(id+'Seg'); if(!r) return; var h=document.getElementById(id+'Base');
@@ -56514,7 +56516,7 @@ global.PolyFX = API;
   function rtPxMode(c){ if(c.pxMode==='base'||c.pxMode==='none'||c.pxMode==='custom') return c.pxMode; if(c.px==null || +c.px===48) return 'base'; if(+c.px===0) return 'none'; return 'custom'; }
   function rtPxSet(m){ if(!rtCurBlk) return; var c=rtCfg(rtCurBlk);
     if(m==='custom' && bpxMode(bpxEff('rt',rtCurBlk),'px')!=='custom') c.px=SITE_LAYOUT[bpxMo()?'mo':'pc'];   /* 261112 수정 — 직접으로 바꿀 때는 지금 보이는 사이트 값에서 시작(휴대폰 대상이면 휴대폰 값 · 전: PC 화면 여백을 읽어 휴대폰에서도 PC 값으로 시작) */
-    rtUpd('pxMode',m); bpxSync('rt','px',bpxEff('rt',rtCurBlk)); }   /* 261112 수정 — 설정창은 PC/모바일 대상에 맞는 값으로(전: rtFillBset 이 PC 값으로 채워 휴대폰 대상에서 3칸이 PC 값으로 보였다) */
+    bpxMoOv(rtCurBlk,'px',m); rtUpd('pxMode',m); bpxSync('rt','px',bpxEff('rt',rtCurBlk)); if(bpxMo() && typeof mvKick==='function') mvKick(0); }   /* 261112 수정 — 설정창은 PC/모바일 대상에 맞는 값으로(전: rtFillBset 이 PC 값으로 채워 휴대폰 대상에서 3칸이 PC 값으로 보였다) */
   function rtHMode(m){ rtUpd('hMode',m); rtFillBset(); }   /* 260920 추가 — 블록 높이 방식 */
   function rtAlign(a){ rtSegSync('rtAlignSeg',a); rtUpd('align',a); }
   function rtSw(btn,key){ btn.classList.toggle('on'); rtUpd(key, btn.classList.contains('on')); if(key==='bgGray') rtBgSync(); }   /* 260920 수정 — 흑백은 썸네일에도 바로 */
