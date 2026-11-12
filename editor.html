@@ -18187,7 +18187,7 @@
     lay.innerHTML='';
     var sr=st.getBoundingClientRect(), wr=site.getBoundingClientRect(), z=parseFloat(getComputedStyle(site).zoom)||1;
     var top=Math.max(sr.top,wr.top), bot=Math.min(sr.bottom,wr.bottom); if(bot<=top) return;
-    var px=(+SITE_LAYOUT.pc||0)*z, C='#FF4D6A';
+    var px=(+SITE_LAYOUT.pc||0)*z, C='var(--green,#03C75A)';   /* 편집기 「조절 중인 영역」 표시와 같은 초록(텍스트 블록 rt-showarea) · 선택 테두리(실선)와 구분되게 점선 */
     function el(css){ var d=document.createElement('div'); d.style.cssText='position:fixed;box-sizing:border-box;'+css; lay.appendChild(d); return d; }
     [wr.left+px, wr.right-px].forEach(function(x){ el('left:'+x+'px;top:'+top+'px;height:'+(bot-top)+'px;width:0;border-left:1px dashed '+C+';'); });
   }
