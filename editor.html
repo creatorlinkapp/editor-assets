@@ -476,6 +476,7 @@
   /* 블록 편집 래퍼 */
   .blk{position:relative;padding:56px 48px;transition:box-shadow .12s;cursor:pointer;}
   .site{--site-px:var(--site-px-pc,48px);}   /* 261112 추가 — 사이트 공통 좌우 여백(스타일 > 레이아웃). 좌우 「기본」인 블록 · 메뉴 · 타이틀이 쓴다 */
+  .blk{--bpx:initial;}   /* 261112 추가 — 블록 좌우 3칸(--bpx) : 바깥 블록의 값이 안에 든 블록(탭 안 등)으로 이어지지 않게 */
   html.mob .site{--site-px:var(--site-px-mo,20px);}
   .blk:hover{box-shadow:inset 0 0 0 2px var(--green);}
   .blk .gear-fab{position:absolute;top:var(--gear-top,14px);right:18px;   /* 260917 수정 — 블록이 화면에 걸쳐 있으면 JS 가 --gear-top 을 보이는 영역 안으로 옮긴다 */width:39px;height:39px;border-radius:50%;background:var(--green);
@@ -1711,7 +1712,7 @@
   .blk.tw-blk{padding:0;overflow:hidden;}
   .tw-wrap{position:relative;width:100%;height:420px;overflow:hidden;display:flex;
     background:radial-gradient(120% 82% at 50% 26%,#2b2b31,#111112 72%);}
-  .tw-inner{position:relative;z-index:2;width:100%;margin:0 auto;padding:26px 22px;
+  .tw-inner{position:relative;z-index:2;width:100%;margin:0 auto;padding:26px var(--bpx,var(--site-px,48px));
     display:flex;flex-direction:column;}
   .tw-wrap.va-t .tw-inner{justify-content:flex-start;}
   .tw-wrap.va-c .tw-inner{justify-content:center;}
@@ -1767,7 +1768,7 @@
   /* ── 260916 추가 — 글자 올라오기 텍스트 블록 (RISE TEXT) ── */
   .blk.rs-blk{padding:0;overflow:hidden;}
   .rs-wrap{position:relative;width:100%;height:360px;overflow:hidden;display:flex;background:#000;}
-  .rs-inner{position:relative;z-index:2;width:100%;margin:0 auto;padding:26px 22px;box-sizing:border-box;
+  .rs-inner{position:relative;z-index:2;width:100%;margin:0 auto;padding:26px var(--bpx,var(--site-px,48px));box-sizing:border-box;
     display:flex;flex-direction:column;}
   .rs-wrap.va-t .rs-inner{justify-content:flex-start;}
   .rs-wrap.va-c .rs-inner{justify-content:center;}
@@ -1797,7 +1798,7 @@
        미리보기 자리(.bt-hv:hover — 설정창 효과 타일 · 블록추가 카드)
      ══════════════════════════════════════════════════════════════════ */
   .blk.bt-blk{padding:0;overflow:hidden;}
-  .bt-wrap{display:flex;align-items:center;justify-content:center;width:100%;box-sizing:border-box;padding:60px 22px;background:#000;}
+  .bt-wrap{display:flex;align-items:center;justify-content:center;width:100%;box-sizing:border-box;padding:60px var(--bpx,var(--site-px,48px));background:#000;}
   .bt-wrap.al-l{justify-content:flex-start;} .bt-wrap.al-r{justify-content:flex-end;}
   .bt-hold{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:var(--btgap,16px);max-width:100%;}   /* 스크롤 등장 효과는 이 상자에 건다 (버튼 자체의 transform 은 자석 효과가 쓴다). 260921 수정 — 버튼 여러 개를 담는 flex 상자 */
   .bt-hold.dir-col{flex-direction:column;align-items:center;}
@@ -2312,7 +2313,7 @@
   .bc-wrap{position:relative;width:100%;background:#f7f8fa;container-type:inline-size;
     --bcf:'CreatorlinkSansKR',sans-serif;--bcpt:#2fb383;--bctc:#16181d;--bcbc:#5c6470;--bcts:44px;--bcr:28px;--bcar:4/3;--bcp:50%;}
   .bc-in{display:grid;grid-template-columns:minmax(0,43fr) minmax(0,54fr);gap:0 min(96px,7cqw);align-items:center;
-    max-width:var(--bcmw,1140px);margin:0 auto;box-sizing:border-box;padding:var(--bcpv,110px) min(var(--bcpx,48px),5cqw);}
+    max-width:var(--bcmw,1140px);margin:0 auto;box-sizing:border-box;padding:var(--bcpv,110px) var(--bpx,var(--site-px,48px));}
   .bc-wrap.tx-r .bc-in{grid-template-columns:minmax(0,54fr) minmax(0,43fr);}
   .bc-wrap.tx-r .bc-txt{order:2;}
   .bc-wrap.notxt .bc-in{grid-template-columns:minmax(0,1fr);}
@@ -2358,7 +2359,7 @@
   .bc-lb.b{left:20px;} .bc-lb.a{right:20px;}
   .bc-lb:empty,.bc-wrap.nolb .bc-lb{display:none;}
   @container (max-width:760px){
-    .bc-in,.bc-wrap.tx-r .bc-in{grid-template-columns:minmax(0,1fr);gap:40px;padding:var(--bcpvm,72px) 20px;}
+    .bc-in,.bc-wrap.tx-r .bc-in{grid-template-columns:minmax(0,1fr);gap:40px;padding:var(--bcpvm,72px) var(--bpx,var(--site-px,48px));}
     .bc-wrap.tx-r .bc-txt{order:0;}
     .bc-p{font-size:15.5px;}
     .bc-act{margin-top:32px;}
@@ -2484,7 +2485,7 @@
   .sc-wrap{position:relative;width:100%;background:#fff;container-type:inline-size;
     --scf:'CreatorlinkSansKR',sans-serif;--scpt:#2f4a66;--scbt:#fff;--sccd:#ebf0f5;--sctc:#131a22;--scbc:#4d5866;
     --scts:40px;--scr:10px;--sch:460px;--schm:560px;}
-  .sc-in{max-width:var(--scmw,1140px);margin:0 auto;box-sizing:border-box;padding:var(--scpv,120px) min(48px,5cqw);}
+  .sc-in{max-width:var(--scmw,1140px);margin:0 auto;box-sizing:border-box;padding:var(--scpv,120px) var(--bpx,var(--site-px,48px));}
   .sc-stack{display:flex;flex-direction:column;}
   .sc-card{position:sticky;height:var(--sch);flex:none;}
   .sc-face{position:relative;height:100%;border-radius:var(--scr);background:var(--sccd);overflow:hidden;
@@ -2506,7 +2507,7 @@
   .sc-media img,.sc-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;-webkit-user-drag:none;}
   .sc-card.lib-over-img .sc-face{outline:2px dashed var(--green);outline-offset:-6px;}
   @container (max-width:760px){
-    .sc-in{padding:var(--scpvm,80px) 16px;}
+    .sc-in{padding:var(--scpvm,80px) var(--bpx,var(--site-px,48px));}
     .sc-card{height:var(--schm);}
     .sc-face{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,44fr) minmax(0,56fr);}
     .sc-card .sc-media,.sc-card.m-l .sc-media{order:-1;}
@@ -2530,7 +2531,7 @@
     --fmf:'CreatorlinkSansKR',sans-serif;--fmtc:#1c1f24;--fmlc:#5b6270;--fmdc:#9aa0a8;--fmic:#23272e;
     --fmib:#ffffff;--fmbd:#d5d9e0;--fmr:4px;--fmac:#23272e;--fmab:#ffffff;--fmbr:4px;
     --fmcb:#ffffff;--fmcbd:transparent;--fmcr:6px;--fmcw:560px;--fmts:24px;--fmls:13.5px;--fmpv:80px;--fmmw:1140px;}
-  .fm-in{position:relative;max-width:var(--fmmw);margin:0 auto;padding:var(--fmpv) min(48px,5cqw);box-sizing:border-box;}
+  .fm-in{position:relative;max-width:var(--fmmw);margin:0 auto;padding:var(--fmpv) var(--bpx,var(--site-px,48px));box-sizing:border-box;}
   .fm-in[data-layout="img"],.fm-in[data-layout="info"]{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:min(72px,6cqw);align-items:stretch;}
   .fm-in[data-layout="img"]{padding:0;max-width:none;gap:0;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);}
   .fm-in[data-layout="img"] .fm-body{padding:var(--fmpv) min(72px,6cqw);display:flex;align-items:center;}
@@ -2656,7 +2657,7 @@
   .fm-pv{position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;}
   /* ══ 261023 추가 — 최근게시물 블록 (ltblk · LATEST01~10) — 사이트 게시판의 최근 글. 목록(게시판 1~3개를 칸으로) · 카드 · 리스트(사진 옆 글) ══ */
   .lt-wrap{position:relative;container-type:inline-size;font-family:var(--ltf);color:var(--lttc);}
-  .lt-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box;}
+  .lt-in{max-width:1180px;margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));box-sizing:border-box;}
   .lt-wrap a{color:inherit;text-decoration:none;}
   .lt-post{cursor:pointer;}
   .lt-ttl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -2715,7 +2716,7 @@
   .lt-rows > .lt-row:first-child,.lt-wrap[data-rc="2"] .lt-rows > .lt-row:nth-child(2){border-top:1px solid var(--ltln);}
   /* 좁은 화면(모바일) — 목록 칸은 위아래로 · 카드는 최대 2열 · 리스트는 1열 */
   @container (max-width:640px){
-    .lt-in{padding-left:20px;padding-right:20px;}
+    .lt-in{padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));}
     .lt-cols{grid-template-columns:1fr;gap:36px;}
     .lt-grid{grid-template-columns:repeat(var(--ltcm),minmax(0,1fr));gap:24px 12px;}
     .lt-rows{grid-template-columns:1fr;}
@@ -2770,7 +2771,7 @@
   /* ══ 261023 추가 — 탭 블록 (tkblk · TAB01~08) — 좌측 사이트 탭 카테고리 tab1~8 을 한 블록 + 디자인 8 로. 탭을 누르면 그 탭의 내용(텍스트 편집기 영역)이 보인다 ══ */
   :where(.tk-wrap) .cred{font-size:inherit;line-height:inherit;color:inherit;text-align:inherit;}   /* .cred 공통값(14.5px · 가운데 · 회색)은 받지 않는다 — :where 로 낮춰 아래 규칙이 이긴다 */
   .tk-wrap{position:relative;container-type:inline-size;color:var(--tktc);}
-  .tk-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box;}
+  .tk-in{max-width:1180px;margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));box-sizing:border-box;}
   .tk-bar{position:relative;display:flex;align-items:center;width:var(--tkbw);margin:0 auto;}
   .tk-wrap[data-al="left"] .tk-bar{margin-left:0;}
   .tk-wrap[data-al="right"] .tk-bar{margin-right:0;}
@@ -2946,7 +2947,7 @@
   }
   /* 좁은 화면(모바일) — 한 줄에 최대 4칸, 넘치면 밀어서 넘긴다. 탭 높이는 손가락으로 누르기 좋게 40px 아래로 줄이지 않는다 */
   @container (max-width:560px){
-    .tk-in{padding-left:20px;padding-right:20px;}
+    .tk-in{padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));}
     .tk-bar{width:100%;}
     .tk-tab{flex-basis:calc((100% - var(--g) * (var(--tkcolsm) - 1)) / var(--tkcolsm));height:max(40px,calc(var(--tkh) * .82));padding:0 8px;font-size:clamp(min(var(--tkfs),12px),calc(var(--tkfs) * .9),16px);}   /* 261030 수정 — 모바일 탭 글자는 0.9배로 줄이되 최대 16px (칸이 좁아 크면 이름이 잘림) · 12px 아래로는 줄이지 않음 (설정값이 12px보다 작으면 설정값) */
     .tk-wrap[data-pos="left"] .tk-tab{padding:0 8px;}
@@ -2994,7 +2995,7 @@
   .tk-mini[data-ds="seg"] i:first-child{background:var(--surface);box-shadow:0 1px 2px rgba(20,24,32,.15);}
   /* ══ 261022 추가 — 소셜 블록 (snblk · SOCIAL01~15) — 아이콘 · 배너 · 이미지 피드. 좌측 사이트 소셜 36장을 세 종류로 묶었다 ══ */
   .sn-wrap{position:relative;container-type:inline-size;font-family:var(--snf);color:var(--sntc);}
-  .sn-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box;}
+  .sn-in{max-width:1180px;margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));box-sizing:border-box;}
   /* 아이콘 — 모양(없음 · 원 · 둥근 사각 · 외곽선) × 색(브랜드 색 · 단색). --c = 아이콘(또는 판) 색 · --ink = 판 위 아이콘 색 */
   .sn-ics{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--sngap);}
   .sn-wrap[data-st="icon"][data-al="left"] .sn-ics{justify-content:flex-start;}
@@ -3054,7 +3055,7 @@
   .sn-hint{padding:18px 16px;border:1.5px dashed color-mix(in srgb,var(--sntc) 28%,transparent);border-radius:10px;text-align:center;font:500 13px/1.5 'CreatorlinkSansKR',sans-serif;color:color-mix(in srgb,var(--sntc) 60%,transparent);}   /* 261022 추가 — 편집 화면 전용 안내 */
   html.pview #stage .sn-hint,html.pview #stage .sn-ph{display:none;}   /* 261022 추가 — 미리보기에서는 안내 · 피드 빈 칸을 감춘다 */
   @container (max-width:480px){
-    .sn-in{padding-left:20px;padding-right:20px;}
+    .sn-in{padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));}
     .sn-bn:is([data-lay="row"],[data-lay="rowr"]){flex-direction:column;align-items:flex-start;gap:20px;text-align:left;}   /* 좁은 화면: 글 왼쪽 · 오른쪽 모두 글 위 · 아이콘 아래 */
     .sn-bn:is([data-lay="row"],[data-lay="rowr"]) .sn-ics{justify-content:flex-start;}
     .sn-grid{grid-template-columns:repeat(var(--sncolsm),minmax(0,1fr));}
@@ -3182,7 +3183,7 @@
   /* ══ 261019 추가 — 숫자 카운터 블록 (nmblk) ══ */
   .blk.nm-blk,.blk.qr-blk{padding:0;}
   .nm-wrap{position:relative;container-type:inline-size;font-family:var(--nmf);color:var(--nmtc);}
-  .nm-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;}
+  .nm-in{max-width:1180px;margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));}
   .nm-head{margin-bottom:40px;text-align:center;}
   .nm-wrap[data-al="left"] .nm-head{text-align:left;}
   .nm-eb{margin:0;font-size:22px;font-weight:600;line-height:1.4;}
@@ -3227,7 +3228,7 @@
   .nm-row .s-in{width:100%;min-width:0;box-sizing:border-box;}
   /* ══ 261019 추가 — QR 코드 블록 (qrblk) ══ */
   .qr-wrap{position:relative;container-type:inline-size;font-family:var(--qrf);color:var(--qrtc);}
-  .qr-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;display:flex;justify-content:center;}
+  .qr-in{max-width:1180px;margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));display:flex;justify-content:center;}
   .qr-wrap[data-al="left"] .qr-in{justify-content:flex-start;}
   .qr-box{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;}
   .qr-wrap[data-al="left"] .qr-box{align-items:flex-start;text-align:left;}
@@ -3251,7 +3252,7 @@
   #baGrid .ba-card:is([data-kind="nmblk"],[data-kind="qrblk"]){border-radius:var(--r-xl);}
   /* ══ 261022 추가 — 컨텐츠 블록 (cnblk · CONTENT04~) — 좌측 사이트 컨텐츠 카테고리를 한 블록 + 배치 6 + 시작값으로 ══ */
   .cn-wrap{position:relative;container-type:inline-size;font-family:var(--cnbf);color:var(--cnsc);--cnitc2:var(--cnitc,var(--cntc));}
-  .cn-in{max-width:var(--cncw,1140px);margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:content-box;}
+  .cn-in{max-width:var(--cncw,1140px);margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));box-sizing:content-box;}
   .cn-wrap p{margin:0;}
   .cn-hl{font-weight:700;color:var(--cnhl,inherit);font-style:inherit;}
   .cn-ph{display:block;width:100%;aspect-ratio:4/3;background:#E9ECF0;}
@@ -3434,7 +3435,7 @@
   @container (max-width:480px){
     .cn-grid,.cn-cols{grid-template-columns:minmax(0,1fr);}
     .cn-wrap[data-shape="rect"][data-mpos="side"] .cn-it{flex-direction:column;} .cn-wrap[data-shape="rect"][data-mpos="side"] .cn-m{width:100%;}
-    .cn-in{padding-left:20px;padding-right:20px;}
+    .cn-in{padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));}
   }
   #bset #cnItemRows .mt-imgrow{align-items:center;}
   #bset #cnItemRows .mt-imgdrag,#bset #cnItemRows .mt-imgthumb,#bset #cnItemRows .mt-imgdel{margin-top:0;}
@@ -3457,7 +3458,7 @@
   #stage .blk[data-block="cnblk"]:not(.sel):not(.rt-editing) .cn-wrap :is(.cn-eb,.cn-tt,.cn-sub,.cn-ds,.cn-li-t,.cn-li-d,.cn-it-t,.cn-it-s,.cn-it-d,.cn-cap-t,.cn-cap-s,.cn-lines,.cn-bw):has(> .cred.rt-ph){display:none;}
   #bset #cnShow .gt-pan > .gt-chips{grid-template-columns:repeat(3,minmax(0,1fr));}
   .cd-wrap{position:relative;container-type:inline-size;font-family:var(--cdf);color:var(--cdtc);}
-  .cd-in{max-width:1180px;margin:0 auto;padding-left:40px;padding-right:40px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .cd-in{max-width:1180px;margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));display:flex;flex-direction:column;align-items:center;text-align:center;}
   .cd-wrap[data-al="left"] .cd-in{align-items:flex-start;text-align:left;}
   .cd-wrap [data-u]{font-variant-numeric:tabular-nums;}
   /* 261019 추가 — 숫자 칸 폭 고정: 고정폭 숫자(tabular-nums)가 없는 글꼴(Playfair 이탤릭 등)은 1·4·7 의 폭이 달라 1초마다 칸이 줄었다 늘었다 하며 세로선·이웃 칸이 좌우로 흔들렸다. 글자 수 × 넉넉한 숫자 폭으로 상자를 잡고 가운데 맞춘다 */
@@ -3531,7 +3532,7 @@
   .fm-pv > .cd-wrap{width:200%;transform:scale(.5);transform-origin:0 0;}
   #baGrid .ba-card[data-kind="cdblk"]{border-radius:var(--r-xl);}
   .dv-wrap{position:relative;}
-  .dv-in{max-width:1180px;margin:0 auto;padding:0 40px;display:flex;justify-content:center;}
+  .dv-in{max-width:1180px;margin:0 auto;padding:0 var(--bpx,var(--site-px,48px));display:flex;justify-content:center;}
   .dv-grp{display:flex;flex-direction:column;min-width:0;}
   .dv-row{display:flex;align-items:center;gap:var(--dvg,14px);width:100%;}
   .dv-seg{flex:1 1 0;min-width:0;display:block;}
@@ -3551,7 +3552,7 @@
   .ca-wrap{position:relative;container-type:inline-size;font-family:var(--caf);color:var(--catc);
     --caf:'CreatorlinkSansKR',sans-serif;--caac:#03c75a;--catc:#23272e;--casc:#7b818b;--caln:#e6e8ec;--cacb:#ffffff;--cahd:#ffffff;
     --cared:#e5484d;--cablue:#3b82f6;--cach:118px;--caev:22px;--capv:64px;--camw:1140px;--car:8px;--cahh:44px;}
-  .ca-in{max-width:var(--camw);margin:0 auto;padding:var(--capv) min(48px,5cqw);box-sizing:border-box;}
+  .ca-in{max-width:var(--camw);margin:0 auto;padding:var(--capv) var(--bpx,var(--site-px,48px));box-sizing:border-box;}
   .ca-box{background:var(--cacb);border-radius:var(--car);}
   .ca-hd{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:0 0 18px;}
   .ca-hd .r{display:flex;justify-content:flex-end;}
@@ -3643,7 +3644,7 @@
   .bd-wrap{position:relative;container-type:inline-size;font-family:var(--bdf);color:var(--bdtc);font-size:var(--bdfs);line-height:1.5;
     --bdf:'CreatorlinkSansKR',sans-serif;--bdac:#1c1f24;--bdon:#ffffff;--bdpt:#ff5a3c;--bdtc:#1c1f24;--bdsc:#8a9099;--bdln:#e6e8ec;
     --bdfs:14px;--bdrh:56px;--bdpv:80px;--bdmw:1140px;--bdr:8px;--bdcols:70px 100px minmax(0,1fr) 120px 110px 70px;}
-  .bd-in{max-width:var(--bdmw);margin:0 auto;padding:var(--bdpv) min(48px,5cqw);box-sizing:border-box;}
+  .bd-in{max-width:var(--bdmw);margin:0 auto;padding:var(--bdpv) var(--bpx,var(--site-px,48px));box-sizing:border-box;}
   .bd-wrap button{font-family:inherit;}
   .bd-wrap svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   /* 상단 — 분류 탭(왼쪽) · 검색·글쓰기(오른쪽) */
@@ -4065,7 +4066,7 @@
   .ct-wrap{position:relative;container-type:inline-size;font-family:var(--ctf);color:var(--ctic);
     --ctf:'CreatorlinkSansKR',sans-serif;--cttc:#1c1f24;--ctlc:#5b6270;--ctdc:#9aa0a8;--ctic:#23272e;--ctac:#23272e;--ctab:#ffffff;
     --ctln:#e6e8ec;--ctcb:#ffffff;--ctpv:72px;--ctmw:1140px;--ctts:22px;--ctr:6px;--ctmh:420px;}
-  .ct-in{position:relative;max-width:var(--ctmw);margin:0 auto;padding:var(--ctpv) min(48px,5cqw);box-sizing:border-box;}
+  .ct-in{position:relative;max-width:var(--ctmw);margin:0 auto;padding:var(--ctpv) var(--bpx,var(--site-px,48px));box-sizing:border-box;}
   .ct-in[data-l="map-l"],.ct-in[data-l="map-r"],.ct-in[data-l="map-form"],.ct-in[data-l="info-l"],.ct-in[data-l="info-r"],.ct-in[data-l="hero"]{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:min(64px,6cqw);align-items:start;}
   .ct-in[data-l="map-l"]{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);}
   .ct-in[data-l="map-r"]{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);}
@@ -6610,7 +6611,7 @@
   @media (hover:none){ .blk.sel.vc-blk::before{opacity:1;} }
 
   .vc-wrap{position:relative;background:#0D1117;color:#E8EAED;}
-  .vc-in{max-width:1280px;margin:0 auto;padding:0 32px;display:grid;gap:48px;align-items:start;}
+  .vc-in{max-width:1280px;margin:0 auto;padding:0 var(--bpx,var(--site-px,48px));display:grid;gap:48px;align-items:start;}
   .vc-in.side-right{grid-template-columns:minmax(0,1fr) var(--vc-sw,340px);}
   .vc-in.side-left{grid-template-columns:var(--vc-sw,340px) minmax(0,1fr);}
   .vc-in.side-left .vc-side{order:-1;}
@@ -6691,7 +6692,7 @@
   .vc-iinfo .vc-meta{margin-top:16px;}
 
   @media (max-width:900px){
-    .vc-in,.vc-in.side-right,.vc-in.side-left,.vc-in.side-off{grid-template-columns:minmax(0,1fr);gap:0;padding:0 20px;}
+    .vc-in,.vc-in.side-right,.vc-in.side-left,.vc-in.side-off{grid-template-columns:minmax(0,1fr);gap:0;padding:0 var(--bpx,var(--site-px,48px));}
     .vc-in .vc-side{display:none;}
     .vc-bounds{display:none;}
     .vc-in.info-on .vc-iinfo{display:block;}
@@ -11932,6 +11933,8 @@
             <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="twHt" min="200" max="900" step="10" value="420"><span class="v" id="twHtV">420px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="twPt" min="0" max="160" step="2" value="0"><span class="v" id="twPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="twPb" min="0" max="160" step="2" value="0"><span class="v" id="twPbV">0px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="twPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('tw','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('tw','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('tw','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="twPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="twPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="twPadxV">48px</span></div>
           </div></div>
         </div>
       
@@ -12019,6 +12022,8 @@
             <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="rsHt" min="160" max="900" step="10" value="360"><span class="v" id="rsHtV">360px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="rsPt" min="0" max="160" step="2" value="0"><span class="v" id="rsPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="rsPb" min="0" max="160" step="2" value="0"><span class="v" id="rsPbV">0px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="rsPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('rs','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('rs','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('rs','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="rsPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="rsPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="rsPadxV">48px</span></div>
           </div></div>
         </div>
 
@@ -12095,6 +12100,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="btPt" min="0" max="240" step="2" value="60"><span class="v" id="btPtV">60px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="btPb" min="0" max="240" step="2" value="60"><span class="v" id="btPbV">60px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="btPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('bt','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('bt','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('bt','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="btPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="btPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="btPadxV">48px</span></div>
           </div></div>
         </div>
 
@@ -12351,7 +12358,8 @@
             <div class="sgrp">
               <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="ixMaxw" min="600" max="1800" step="20" value="1240"><span class="v" id="ixMaxwV">1240px</span></div>
               <div class="srow"><span class="k">위아래 여백</span><input class="rng" type="range" id="ixPv" min="0" max="200" step="4" value="56"><span class="v" id="ixPvV">56px</span></div>
-              <div class="srow"><span class="k">좌우 여백</span><input class="rng" type="range" id="ixPadx" min="0" max="120" step="2" value="16"><span class="v" id="ixPadxV">16px</span></div>
+              <div class="srow"><span class="k">좌우 여백</span><div class="mt-seg" id="ixPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('ix','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('ix','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('ix','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+              <div class="srow" id="ixPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="ixPadx" min="0" max="120" step="2" value="16"><span class="v" id="ixPadxV">16px</span></div>
             </div>
             <div class="sline" style="margin-top:10px;"><span class="lbl">한 줄씩 나타나기</span><button class="sw on" id="ixRvSw" onclick="ixSw(this,'reveal')"></button></div>
             <div class="tx-hint"><b>행 안쪽 여백</b>은 롤오버 배경·왼쪽 막대가 번호와 겹치지 않도록 잡아 두는 자리입니다. 구분선은 이 자리까지 이어집니다.</div>
@@ -12494,7 +12502,8 @@
             <div class="sgrp">
               <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="fqMaxw" min="600" max="1800" step="20" value="1440"><span class="v" id="fqMaxwV">1440px</span></div>
               <div class="srow"><span class="k">위아래 여백</span><input class="rng" type="range" id="fqPv" min="0" max="200" step="4" value="56"><span class="v" id="fqPvV">56px</span></div>
-              <div class="srow"><span class="k">좌우 여백</span><input class="rng" type="range" id="fqPadx" min="0" max="120" step="2" value="48"><span class="v" id="fqPadxV">48px</span></div>
+              <div class="srow"><span class="k">좌우 여백</span><div class="mt-seg" id="fqPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('fq','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('fq','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('fq','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+              <div class="srow" id="fqPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="fqPadx" min="0" max="120" step="2" value="48"><span class="v" id="fqPadxV">48px</span></div>
             </div>
             <div class="sline" style="margin-top:10px;"><span class="lbl">한 줄씩 나타나기</span><button class="sw on" id="fqRvSw" onclick="fqSw(this,'reveal')"></button></div>
           </div></div>
@@ -12637,7 +12646,8 @@
             <div class="sgrp">
               <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="qnMaxw" min="600" max="1800" step="20" value="1440"><span class="v" id="qnMaxwV">1440px</span></div>
               <div class="srow"><span class="k">위아래 여백</span><input class="rng" type="range" id="qnPv" min="0" max="240" step="4" value="112"><span class="v" id="qnPvV">112px</span></div>
-              <div class="srow"><span class="k">좌우 여백</span><input class="rng" type="range" id="qnPadx" min="0" max="120" step="2" value="48"><span class="v" id="qnPadxV">48px</span></div>
+              <div class="srow"><span class="k">좌우 여백</span><div class="mt-seg" id="qnPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('qn','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('qn','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('qn','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+              <div class="srow" id="qnPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="qnPadx" min="0" max="120" step="2" value="48"><span class="v" id="qnPadxV">48px</span></div>
             </div>
             <div class="sline" style="margin-top:10px;"><span class="lbl">한 줄씩 나타나기</span><button class="sw on" id="qnRvSw" onclick="qnSw(this,'reveal')"></button></div>
           </div></div>
@@ -12715,7 +12725,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow" style="margin-bottom:6px;"><span class="k">가로</span></div>
             <div class="mt-seg" id="srAlignSeg"><button type="button" class="mt-seg-b active" data-m="left" onclick="srAlign('left')">왼쪽</button><button type="button" class="mt-seg-b" data-m="center" onclick="srAlign('center')">가운데</button></div>
-            <div class="srow"><span class="k">좌우 여백</span><input class="rng" type="range" id="srPadx" min="0" max="200" step="2" value="76"><span class="v" id="srPadxV">76px</span></div>
+            <div class="srow"><span class="k">좌우 여백</span><div class="mt-seg" id="srPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('sr','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('sr','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('sr','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="srPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="srPadx" min="0" max="200" step="2" value="76"><span class="v" id="srPadxV">76px</span></div>
           </div></div>
         </div>
         <div class="fld sfold" id="srBoxAcc">
@@ -12810,6 +12821,9 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="bcPv" min="0" max="220" step="2" value="110"><span class="v" id="bcPvV">110px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="bcMw" min="720" max="1600" step="10" value="1140"><span class="v" id="bcMwV">1140px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="bcPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('bc','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('bc','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('bc','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="bcPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="bcPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="bcPadxV">48px</span></div>
+            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
           </div></div>
         </div>
 
@@ -13129,6 +13143,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="ltPt" min="0" max="240" step="2" value="72"><span class="v" id="ltPtV">72px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="ltPb" min="0" max="240" step="2" value="72"><span class="v" id="ltPbV">72px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="ltPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('lt','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('lt','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('lt','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="ltPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="ltPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="ltPadxV">48px</span></div>
           </div></div>
         </div>
       </div>
@@ -13266,6 +13282,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="tkPt" min="0" max="240" step="2" value="80"><span class="v" id="tkPtV">80px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="tkPb" min="0" max="240" step="2" value="80"><span class="v" id="tkPbV">80px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="tkPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('tk','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('tk','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('tk','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="tkPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="tkPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="tkPadxV">48px</span></div>
           </div></div>
         </div>
       </div>
@@ -13373,6 +13391,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="snPt" min="0" max="240" step="2" value="64"><span class="v" id="snPtV">64px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="snPb" min="0" max="240" step="2" value="64"><span class="v" id="snPbV">64px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="snPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('sn','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('sn','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('sn','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="snPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="snPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="snPadxV">48px</span></div>
           </div></div>
         </div>
       </div>
@@ -13450,6 +13470,9 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="scPv" min="0" max="240" step="2" value="120"><span class="v" id="scPvV">120px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="scMw" min="720" max="1600" step="10" value="1140"><span class="v" id="scMwV">1140px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="scPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('sc','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('sc','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('sc','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="scPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="scPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="scPadxV">48px</span></div>
+            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
           </div></div>
         </div>
 
@@ -13633,6 +13656,9 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="fmPv" min="0" max="200" step="4" value="80"><span class="v" id="fmPvV">80px</span></div>
             <div class="srow" id="fmMwRow"><span class="k">최대 폭</span><input class="rng" type="range" id="fmMw" min="720" max="1600" step="10" value="1140"><span class="v" id="fmMwV">1140px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="fmPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('fm','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('fm','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('fm','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="fmPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="fmPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="fmPadxV">48px</span></div>
+            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
             <div class="mtk-hint" id="fmMwHint"></div>
           </div></div>
         </div>
@@ -13724,6 +13750,9 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="caPv" min="0" max="200" step="4" value="64"><span class="v" id="caPvV">64px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="caMw" min="720" max="1600" step="10" value="1140"><span class="v" id="caMwV">1140px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="caPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('ca','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('ca','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('ca','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="caPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="caPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="caPadxV">48px</span></div>
+            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
             <div class="srow"><span class="k">라운딩</span><input class="rng" type="range" id="caR" min="0" max="20" step="1" value="8"><span class="v" id="caRV">8px</span></div>
           </div></div>
         </div>
@@ -13807,6 +13836,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="nmPt" min="0" max="240" step="2" value="100"><span class="v" id="nmPtV">100px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="nmPb" min="0" max="240" step="2" value="100"><span class="v" id="nmPbV">100px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="nmPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('nm','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('nm','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('nm','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="nmPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="nmPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="nmPadxV">48px</span></div>
           </div></div>
         </div>
 
@@ -13885,6 +13916,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="qrPt" min="0" max="240" step="2" value="100"><span class="v" id="qrPtV">100px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="qrPb" min="0" max="240" step="2" value="100"><span class="v" id="qrPbV">100px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="qrPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('qr','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('qr','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('qr','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="qrPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="qrPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="qrPadxV">48px</span></div>
           </div></div>
         </div>
 
@@ -14071,6 +14104,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="cnPt" min="0" max="300" step="2" value="100"><span class="v" id="cnPtV">100px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="cnPb" min="0" max="300" step="2" value="100"><span class="v" id="cnPbV">100px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="cnPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('cn','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('cn','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('cn','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="cnPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="cnPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="cnPadxV">48px</span></div>
           </div></div>
         </div>
 
@@ -14160,6 +14195,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="cdPt" min="0" max="240" step="2" value="120"><span class="v" id="cdPtV">120px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="cdPb" min="0" max="240" step="2" value="120"><span class="v" id="cdPbV">120px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="cdPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('cd','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('cd','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('cd','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="cdPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="cdPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="cdPadxV">48px</span></div>
           </div></div>
         </div>
 
@@ -14217,6 +14254,8 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="dvPt" min="0" max="200" step="2" value="40"><span class="v" id="dvPtV">40px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="dvPb" min="0" max="200" step="2" value="40"><span class="v" id="dvPbV">40px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="dvPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('dv','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('dv','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('dv','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="dvPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="dvPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="dvPadxV">48px</span></div>
           </div></div>
         </div>
 
@@ -14301,6 +14340,9 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="bdPv" min="0" max="200" step="4" value="80"><span class="v" id="bdPvV">80px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="bdMw" min="720" max="1600" step="10" value="1140"><span class="v" id="bdMwV">1140px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="bdPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('bd','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('bd','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('bd','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="bdPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="bdPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="bdPadxV">48px</span></div>
+            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
             <div class="srow" id="bdRhRow"><span class="k">행 높이</span><input class="rng" type="range" id="bdRh" min="40" max="80" step="2" value="56"><span class="v" id="bdRhV">56px</span></div>
             <div class="srow"><span class="k">라운딩</span><input class="rng" type="range" id="bdR" min="0" max="20" step="1" value="8"><span class="v" id="bdRV">8px</span></div>
           </div></div>
@@ -14542,6 +14584,9 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="ctPv" min="0" max="200" step="4" value="72"><span class="v" id="ctPvV">72px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="ctMw" min="720" max="1600" step="10" value="1140"><span class="v" id="ctMwV">1140px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="ctPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('ct','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('ct','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('ct','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="ctPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="ctPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="ctPadxV">48px</span></div>
+            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
             <div class="srow" id="ctRRow"><span class="k">라운딩 <svg class="help-ico pg-tip" data-tip="카드 · 지도 · 지점 상자가 있는 레이아웃에서 적용됩니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><input class="rng" type="range" id="ctR"min="0" max="24" step="1" value="6"><span class="v" id="ctRV">6px</span></div>
           </div></div>
         </div>
@@ -14918,7 +14963,9 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="b2Pt" min="0" max="200" step="2" value="64"><span class="v" id="b2PtV">64px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="b2Pb" min="0" max="200" step="2" value="64"><span class="v" id="b2PbV">64px</span></div>
-            <div class="srow"><span class="k">좌우</span><input class="rng" type="range" id="b2Px" min="0" max="160" step="2" value="24"><span class="v" id="b2PxV">24px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="b2PxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('b2','px','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('b2','px','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('b2','px','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="b2PxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="b2Px" min="0" max="160" step="2" value="24"><span class="v" id="b2PxV">24px</span></div>
+            <div class="tx-hint" id="b2PxHint" style="display:none;margin-top:6px;">화살표가 바깥에 있으면 좌우 여백은 화살표 자리(72px)보다 좁아지지 않습니다.</div>   <!-- 261112 추가 — 바깥 화살표(b2-navout) 때 72px 아래 값은 화면에 안 보인다 -->
           </div></div>
         </div>
 
@@ -15088,7 +15135,8 @@
             <div class="sline"><span class="lbl">좌우 폭 제한</span><button type="button" class="sw on" id="ggWrapSw" onclick="ggSw(this,'wrap')" aria-label="좌우 폭 제한"></button></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="ggPt" min="0" max="200" step="2" value="40"><span class="v" id="ggPtV">40px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="ggPb" min="0" max="200" step="2" value="40"><span class="v" id="ggPbV">40px</span></div>
-            <div class="srow"><span class="k">좌우</span><input class="rng" type="range" id="ggPx" min="0" max="200" step="1" value="0"><span class="v" id="ggPxV">0px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="ggPxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('gg','px','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('gg','px','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('gg','px','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="ggPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="ggPx" min="0" max="200" step="1" value="0"><span class="v" id="ggPxV">0px</span></div>
             <div class="tx-hint tk-out-hint" style="margin-top:10px;">좌우 폭 제한을 끄면 최대 폭(1140px) 없이 화면 폭에 맞춰 넓어집니다.</div>
             <div class="tx-hint tk-in-hint" style="margin-top:10px;">탭 안에서는 탭 줄 폭이 기준이고, 좌우 값만큼 양옆이 좁아집니다.</div>   <!-- 261103 추가 — 탭 안 블록일 때만 (좌우 폭 제한은 숨김) -->
           </div></div>
@@ -15199,7 +15247,8 @@
             <div class="sline"><span class="lbl">좌우 폭 제한</span><button type="button" class="sw on" id="imWrapSw" onclick="imSw(this,'wrap')"></button></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="imPt" min="0" max="200" step="2" value="56"><span class="v" id="imPtV">56px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="imPb" min="0" max="200" step="2" value="56"><span class="v" id="imPbV">56px</span></div>
-            <div class="srow"><span class="k">좌우</span><input class="rng" type="range" id="imPx" min="0" max="200" step="2" value="48"><span class="v" id="imPxV">48px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="imPxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('im','px','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('im','px','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('im','px','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="imPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="imPx" min="0" max="200" step="2" value="48"><span class="v" id="imPxV">48px</span></div>
             <div class="tx-hint tk-out-hint" style="margin-top:10px;">좌우 폭 제한을 끄면 최대 폭(1180px) 없이 넓어지고, 좌우 값이 화면 가장자리와의 여백이 됩니다.</div>
             <div class="tx-hint tk-in-hint" style="margin-top:10px;">탭 안에서는 탭 줄 폭이 기준이고, 좌우 값만큼 양옆이 좁아집니다.</div>   <!-- 261103 추가 — 탭 안 블록일 때만 (좌우 폭 제한은 숨김) -->
           </div></div>
@@ -16045,6 +16094,8 @@
             <div class="srow"><span class="k">강조색</span><span class="sw-col"><input type="color" id="vcAcc" value="#c8f14b"><span class="hex" id="vcAccV">#C8F14B</span></span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="vcPt" min="0" max="400" step="10" value="0"><span class="v" id="vcPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="vcPb" min="0" max="400" step="10" value="0"><span class="v" id="vcPbV">0px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="vcPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('vc','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('vc','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('vc','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow" id="vcPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="vcPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="vcPadxV">48px</span></div>
           </div></div>
         </div>
 
@@ -16874,6 +16925,7 @@
           </div>
           <div class="srow" style="margin-top:14px;"><span class="k">로고 크기</span><input class="rng" type="range" min="14" max="48" step="1" value="22" data-p="logo" data-u="px"><span class="v">22px</span></div>
           <div class="srow"><span class="k">높이</span><input class="rng" type="range" min="44" max="96" step="1" value="60" data-p="h" data-u="px"><span class="v">60px</span></div>
+          <div class="tx-hint">좌우 여백은 스타일 &gt; 레이아웃의 휴대폰 값을 따릅니다.</div>   <!-- 261112 추가 — 모바일 상단 바는 좌우 설정 없이 사이트 휴대폰 값(--site-px)을 따른다 -->
           <div class="tx-hint" id="moLogoHint" style="display:none;">버튼이 많아 로고가 상단 바에 맞게 줄어 보입니다.</div>   <!-- 261104 추가 — 사본의 moFit 이 로고를 줄였을 때만(cl-mo-fit) -->
           <div class="gt-h">표시 항목</div>
           <div class="gt-chips" id="moBarChips"></div>
@@ -17541,6 +17593,34 @@
       else if(m==='none') b.style.paddingLeft=b.style.paddingRight='0px';
     });
   }
+  /* 261112 추가 — 블록 좌우 3칸 공용(이미지 · 그리드 갤러리 · 책자 넘김 · FAQ · QnA · 인덱스 리스트 · 스크롤 문장). p = 블록 접두(ix 등) · k = 좌우 값 키(px / padx) · 모드는 k+'Mode'
+     예전 값은 읽을 때 옮긴다: 비었거나 48 → 기본 · 0 → 없음 · 그 밖 → 직접 */
+  function bpxMode(c,k){ var m=c && c[k+'Mode']; if(m==='base'||m==='none'||m==='custom') return m; var v=c?c[k]:null; if(v==null||v===''||+v===48) return 'base'; if(+v===0) return 'none'; return 'custom'; }
+  function bpxCss(c,k,def){ var m=bpxMode(c,k); if(m==='base') return 'var(--site-px,48px)'; if(m==='none') return '0px'; var v=parseFloat(c[k]); return (isFinite(v)?v:def)+'px'; }
+  function bpxMo(){ return typeof window.mvTarget==='function' && window.mvTarget()==='mobile'; }
+  function bpxEff(p,blk){ var c=window[p+'Cfg'](blk), ov=blk._mvOv; if(!bpxMo() || !ov) return c; var m={}; Object.keys(c).forEach(function(k){ m[k]=c[k]; }); Object.keys(ov).forEach(function(k){ m[k]=ov[k]; }); return m; }   /* 모바일 대상이면 PC 값 + 모바일 값 */
+  function bpxSet(p,k,m){ var blk=window[p+'CurBlk']; if(!blk) return;
+    if(m==='custom' && bpxMode(bpxEff(p,blk),k)!=='custom') bpxUpd(p,k, SITE_LAYOUT[bpxMo()?'mo':'pc']);   /* 직접으로 바꿀 때는 지금 보이는 사이트 값에서 시작 */
+    bpxUpd(p,k+'Mode',m); bpxSync(p,k,bpxEff(p,blk)); }
+  function bpxUpd(p,k,v){ if(typeof window[p+'Upd']==='function') window[p+'Upd'](k,v); else if(typeof BGP!=='undefined' && BGP[p]) bpUpd(p,k,v); }   /* 숫자 카운터 · QR 은 공용 bpUpd */
+  function bpxSync(p,k,c){ var m=bpxMode(c,k), id=p+k.charAt(0).toUpperCase()+k.slice(1);
+    rtSegSync(id+'Seg',m); var r=document.getElementById(id+'Row'); if(r) r.style.display=(m==='custom')?'':'none';
+    var sl=document.getElementById(id); if(sl){ var v=parseFloat(c[k]); if(!isFinite(v)) v=48; sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(id+'V'); if(o) o.textContent=v+'px'; }
+    /* 디자인 구조(화면 끝까지 채우는 배치 · 탭 안 블록)가 좌우를 0 으로 고정하면 3칸을 눌러도 화면이 그대로 → 흐림 + 안내 */
+    var sg=document.getElementById(id+'Seg'), srow=sg && sg.closest('.srow'), blk=window[p+'CurBlk'], fixed=false, inn=blk && BPX_IN[p] && blk.querySelector(BPX_IN[p]);
+    if(inn && sl && sl.hasAttribute('data-bpx')){ var old=blk.style.getPropertyValue('--bpx'); blk.style.setProperty('--bpx','7px'); fixed=(parseFloat(getComputedStyle(inn).paddingLeft)||0)!==7; if(old) blk.style.setProperty('--bpx',old); else blk.style.removeProperty('--bpx'); }
+    if(srow){ srow.classList.toggle('off',fixed); if(fixed && r) r.style.display='none';
+      var h=document.getElementById(id+'Fix'); if(!h && fixed){ h=document.createElement('div'); h.className='tx-hint'; h.id=id+'Fix'; h.style.marginTop='6px'; (r||srow).insertAdjacentElement('afterend',h); }
+      if(h){ h.textContent=(blk && blk.closest('.tk-kids'))?'탭 안에서는 탭 블록의 좌우 여백을 따릅니다.':'이 디자인은 좌우 끝까지 채우는 배치라 좌우 여백을 쓰지 않습니다.'; h.style.display=fixed?'':'none'; } } }
+  var BPX_IN={bt:'.bt-wrap',cd:'.cd-in',cn:'.cn-in',dv:'.dv-in',lt:'.lt-in',nm:'.nm-in',qr:'.qr-in',sn:'.sn-in',tk:'.tk-in',bc:'.bc-in',bd:'.bd-in',ca:'.ca-in',ct:'.ct-in',fm:'.fm-in',sc:'.sc-in',rs:'.rs-inner',tw:'.tw-inner',vc:'.vc-in'};
+  /* 좌우 설정이 없던 블록(글 · 버튼형 9 · 최대 폭 9) — 안쪽 상자의 좌우를 CSS 변수 --bpx 로 받는다. 기본이면 지우고(= 사이트 값), 없음 · 직접이면 블록에 적는다 */
+  function bpxVar(blk,c){ if(!blk || !blk.style) return; if(bpxMode(c,'padx')==='base') blk.style.removeProperty('--bpx'); else blk.style.setProperty('--bpx',bpxCss(c,'padx',48)); }
+  /* 직접 슬라이더를 움직이면 「직접」으로 고정 — 예전 값에서 옮긴 직접 블록이 48 · 0 을 지나갈 때 기본 · 없음으로 바뀌지 않게(슬라이더 자체 처리보다 먼저) */
+  var BPX_RNG={rtPx:['rt','px'],ixPadx:['ix','padx'],fqPadx:['fq','padx'],qnPadx:['qn','padx'],srPadx:['sr','padx'],b2Px:['b2','px'],ggPx:['gg','px'],imPx:['im','px']};
+  document.addEventListener('input',function(e){ var r=e.target && BPX_RNG[e.target.id]; if(!r) return; var blk=window[r[0]+'CurBlk']; if(!blk) return;
+    if(bpxEff(r[0],blk)[r[1]+'Mode']!=='custom') bpxUpd(r[0],r[1]+'Mode','custom');
+    if(e.target.hasAttribute('data-bpx')){ var v=parseFloat(e.target.value); if(typeof smRng==='function') smRng(e.target); var o=document.getElementById(e.target.id+'V'); if(o) o.textContent=v+'px'; bpxUpd(r[0],r[1],v); } },true);   /* 새로 붙인 좌우 슬라이더(data-bpx)는 값도 여기서 넣는다 */
+  ['bt','cd','cn','dv','lt','nm','qr','sn','tk','bc','bd','ca','ct','fm','sc','rs','tw','vc'].forEach(function(p){ BPX_RNG[p+'Padx']=[p,'padx']; });
   function stLayoutSync(){
     [['stPxPc','pc'],['stPxMo','mo']].forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return;
       if(!el._bound){ el._bound=true; el.addEventListener('input',function(){ SITE_LAYOUT[r[1]]=parseFloat(el.value)||0; stLayoutApply(); }); }
@@ -27940,7 +28020,7 @@
       var h=(rich && gdTxt(rich)===gdTxt(gtEsc(plain)))?rich:gtEsc(plain).replace(/\n/g,'<br>');
       if(!edI && el.innerHTML!==h) el.innerHTML=h;
       var empty=!plain.trim(); el.classList.toggle('rt-ph',empty && !edI); el.style.display=(empty && window.CL_MVIEW)?'none':''; });
-    wrap.classList.toggle('gg-full',c.wrap===false); sv('--gg-px',px?px+'px':'');
+    wrap.classList.toggle('gg-full',c.wrap===false); sv('--gg-px',bpxCss(c,'px',0));   /* 261112 수정 — 좌우 3칸 */
     wrap.style.setProperty('--gg-cols',String(Math.max(1,Math.min(6,Math.round(ggNum(c.cols,4))))));
     wrap.style.setProperty('--gg-ar',String(Math.max(.1,Math.min(4,ggNum(c.ar,1.3)))));
     wrap.style.setProperty('--gg-gx',gx+'px'); wrap.style.setProperty('--gg-gy',gy+'px');
@@ -28162,6 +28242,7 @@
     if(!ggCurBlk) return;
     var c=ggCfg(ggCurBlk), S=ggSkin(c), over=(S.cap==='over'||S.cap==='up') && c.layout!=='list';   /* 261008 수정 — 올라오는 글(up) · 리스트 배치 */
     ggImgRender();
+    bpxSync('gg','px',c);   /* 261112 추가 — 좌우 3칸 */
     GG_RNG.forEach(function(r){ var el=document.getElementById(r[0]), d=(r[1]==='overA')?S.ovA:((r[1] in S.lay)?S.lay[r[1]]:GG_DEF[r[1]]), v=ggNum(c[r[1]],d); if(v==null) v=100; if(el){ el.value=v; smRng(el); } var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[2]; });
     ggColFill();
     var lab=document.querySelector('#ggSkin .sdd-btn .lbl'); if(lab) lab.textContent=S.nm;
@@ -28511,7 +28592,7 @@
     }
     wrap.classList.toggle('im-full',c.wrap===false);
     var v=wrap.style;
-    v.setProperty('--im-px',imNum(c.px,48)+'px');
+    v.setProperty('--im-px',bpxCss(c,'px',48));   /* 261112 수정 — 좌우 3칸 */
     v.setProperty('--im-cols',Math.max(1,Math.round(imNum(c.cols,3))));
     v.setProperty('--im-gx',imNum(c.gx,30)+'px'); v.setProperty('--im-gy',imNum(c.gy,30)+'px');
     wrap.setAttribute('data-hv',String(c.hover||'none'));   /* 260919 추가 — 롤오버 효과 */
@@ -28868,6 +28949,7 @@
   function imBgColorClear(){ imUpd('bg',''); imBgSync(); }
   function imFillBset(){
     if(!imCurBlk) return; var c=imPanelCfg();
+    bpxSync('im','px',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     IM_RNG.forEach(function(r){ var v=imNum(c[r[1]],IM_DEF[r[1]]); set(r[0],v); txt(r[0]+'V',v+r[2]); });
@@ -33153,6 +33235,7 @@
   }
 
   function vcApply(blk){
+    bpxVar(blk,vcCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     var c=vcCfg(blk);
     var wrap=blk.querySelector('.vc-wrap'), inn=blk.querySelector('.vc-in'); if(!wrap||!inn) return;
     wrap.style.background=c.bg;
@@ -34006,6 +34089,7 @@
   function vcFillBset(){
     if(!vcCurBlk) return;
     var c=vcCfg(vcCurBlk);
+    bpxSync('vc','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=(v==null?'':v); if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     VC_RNG.forEach(function(r){ var v=vcNum(c[r[1]],0); set(r[0],v); txt(r[0]+'V',v+r[2]); });
@@ -38625,6 +38709,7 @@ global.PolyFX = API;
 
   /* ── 블록에 설정 반영 ── */
   function twApply(blk, replay){
+    bpxVar(blk,twCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=twCfg(blk), wrap=blk.querySelector('.tw-wrap'); if(!wrap) return;
     var inner=wrap.querySelector('.tw-inner'),
@@ -39073,6 +39158,7 @@ global.PolyFX = API;
   function twFillBset(){
     if(!twCurBlk) return;
     var c=twCfg(twCurBlk);
+    bpxSync('tw','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     set('twMain',c.main); ptGrow(document.getElementById('twMain'));
@@ -39136,6 +39222,7 @@ global.PolyFX = API;
   }
 
   function rsApply(blk, replay){
+    bpxVar(blk,rsCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=rsCfg(blk), wrap=blk.querySelector('.rs-wrap'); if(!wrap) return;
     var inner=wrap.querySelector('.rs-inner'), p=wrap.querySelector('.rs-txt'); if(!p) return;
@@ -39428,6 +39515,7 @@ global.PolyFX = API;
   function rsFillBset(){
     if(!rsCurBlk) return;
     var c=rsCfg(rsCurBlk);
+    bpxSync('rs','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     set('rsText',c.text); rsEditClose(); rsEditRender();
     var dd=document.getElementById('rsFDD');
@@ -39578,6 +39666,7 @@ global.PolyFX = API;
     if(t2) t2.textContent=(fx==='flip'||fx==='swap'||fx==='hswap')?label:'';   /* 260921 수정 — 교체·가로 교체도 복사본 글자를 쓴다 */
   }
   function btApply(blk){
+    bpxVar(blk,btCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=btCfg(blk), wrap=blk.querySelector('.bt-wrap'), hold=blk.querySelector('.bt-hold'); if(!wrap||!hold) return;
     var al=({left:'l',center:'c',right:'r'}[c.align]||'c');
@@ -39915,6 +40004,7 @@ global.PolyFX = API;
   function btFillBset(){
     if(!btCurBlk) return;
     var c=btCfg(btCurBlk);
+    bpxSync('bt','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     btItemsRender();   /* 260921 수정 — 버튼 목록 */
     var dd=document.getElementById('btFDD');
@@ -40773,8 +40863,8 @@ global.PolyFX = API;
     var inn=wrap.querySelector('.ix-in');
     if(inn){
       inn.style.maxWidth=c.full?'none':(txNum(c.maxw,1240)+'px');
-      inn.style.paddingLeft=txNum(c.padx,16)+'px';
-      inn.style.paddingRight=txNum(c.padx,16)+'px';
+      inn.style.paddingLeft=bpxCss(c,'padx',16);   /* 261112 수정 — 좌우 3칸(기본 = 사이트 값 · 없음 · 직접) */
+      inn.style.paddingRight=bpxCss(c,'padx',16);
       inn.style.paddingTop=txNum(c.pv,56)+'px';
       inn.style.paddingBottom=txNum(c.pv,56)+'px';
     }
@@ -41000,6 +41090,7 @@ global.PolyFX = API;
   function ixFillBset(){
     if(!ixCurBlk) return;
     var c=ixCfg(ixCurBlk);
+    bpxSync('ix','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=(v==null?'':v); if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     set('ixCnt',c.cnt); txt('ixCntV',String(txNum(c.cnt,5)));
@@ -41162,8 +41253,8 @@ global.PolyFX = API;
     var inn=wrap.querySelector('.fq-in');
     if(inn){
       inn.style.maxWidth=c.full?'none':(txNum(c.maxw,1440)+'px');
-      inn.style.paddingLeft=txNum(c.padx,48)+'px';
-      inn.style.paddingRight=txNum(c.padx,48)+'px';
+      inn.style.paddingLeft=bpxCss(c,'padx',48);   /* 261112 수정 — 좌우 3칸(기본 = 사이트 값 · 없음 · 직접) */
+      inn.style.paddingRight=bpxCss(c,'padx',48);
       inn.style.paddingTop=txNum(c.pv,56)+'px';
       inn.style.paddingBottom=txNum(c.pv,56)+'px';
     }
@@ -41368,6 +41459,7 @@ global.PolyFX = API;
   function fqFillBset(){
     if(!fqCurBlk) return;
     var c=fqCfg(fqCurBlk);
+    bpxSync('fq','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=(v==null?'':v); if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     set('fqCnt',c.cnt); txt('fqCntV',String(txNum(c.cnt,5)));   /* 260929 수정 — 기본 5 */
@@ -41527,8 +41619,8 @@ global.PolyFX = API;
     var inn=wrap.querySelector('.qn-in');
     if(inn){
       inn.style.maxWidth=c.full?'none':(txNum(c.maxw,1440)+'px');
-      inn.style.paddingLeft=txNum(c.padx,48)+'px';
-      inn.style.paddingRight=txNum(c.padx,48)+'px';
+      inn.style.paddingLeft=bpxCss(c,'padx',48);   /* 261112 수정 — 좌우 3칸(기본 = 사이트 값 · 없음 · 직접) */
+      inn.style.paddingRight=bpxCss(c,'padx',48);
       inn.style.paddingTop=txNum(c.pv,112)+'px';
       inn.style.paddingBottom=txNum(c.pv,112)+'px';
     }
@@ -41739,6 +41831,7 @@ global.PolyFX = API;
   function qnFillBset(){
     if(!qnCurBlk) return;
     var c=qnCfg(qnCurBlk);
+    bpxSync('qn','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=(v==null?'':v); if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     set('qnCnt',c.cnt); txt('qnCntV',String(txNum(c.cnt,4)));
@@ -41826,7 +41919,7 @@ global.PolyFX = API;
     s.setProperty('--srls', (txNum(c.ls,-3)/100)+'em');
     s.setProperty('--srlh', String(txNum(c.lh,112)/100));
     s.setProperty('--srtw', txNum(c.tw,820)+'px');
-    s.setProperty('--srpx', txNum(c.padx,76)+'px');
+    s.setProperty('--srpx', bpxCss(c,'padx',76));   /* 261112 수정 — 좌우 3칸 */
     s.setProperty('--srpt', c.point||'#ffb100');
     s.setProperty('--srtc', c.tc||'#ffffff');
     s.setProperty('--srdc', c.dc||'#2a2a28');
@@ -42053,6 +42146,7 @@ global.PolyFX = API;
   function srFillBset(){
     if(!srCurBlk) return;
     var c=srCfg(srCurBlk);
+    bpxSync('sr','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     set('srText',c.text); srEditClose(); srEditRender();
     var dd=document.getElementById('srFDD');
@@ -42190,6 +42284,7 @@ global.PolyFX = API;
   }
 
   function bcApply(blk){
+    bpxVar(blk,bcCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=bcCfg(blk), wrap=blk.querySelector('.bc-wrap'); if(!wrap) return;
     blk.style.paddingTop='0'; blk.style.paddingBottom='0'; blk.style.paddingLeft='0'; blk.style.paddingRight='0';
@@ -42440,6 +42535,7 @@ global.PolyFX = API;
   function bcFillBset(){
     if(!bcCurBlk) return;
     var c=bcCfg(bcCurBlk);
+    bpxSync('bc','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     bcImgRender(); bcBtnRender();
     BC_TXT.forEach(function(r){ set(r[0],c[r[1]]||''); var el=document.getElementById(r[0]); if(el&&el.tagName==='TEXTAREA') setTimeout(function(){ ptGrow(el); },0); });
@@ -43653,6 +43749,7 @@ global.PolyFX = API;
   }
   function snBlockHTML(){ return '<span class="tag-badge">소셜</span>'+SM_GEAR+'<div class="sn-wrap"></div>'; }
   function snApply(blk){
+    bpxVar(blk,snCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     if(blk.classList.contains('rt-editing') && typeof rtEditEnd==='function' && typeof rtEditBlk!=='undefined' && rtEditBlk===blk) rtEditEnd();   /* 글 편집 중에 설정을 바꾸면 편집을 끝내고(저장) 다시 그린다 */
     var c=snCfg(blk), wrap=blk.querySelector('.sn-wrap'); if(!wrap) return;
@@ -43858,6 +43955,7 @@ global.PolyFX = API;
   }
   function snFillBset(){
     var blk=snCurBlk; if(!blk) return; var c=snCfg(blk);
+    bpxSync('sn','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng') && typeof smRng==='function') smRng(el); } }
     snRows();   /* 소개 위치의 최댓값을 먼저 맞춘다 */
     SN_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
@@ -43954,6 +44052,7 @@ global.PolyFX = API;
   }
 
   function scApply(blk){
+    bpxVar(blk,scCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=scCfg(blk), wrap=blk.querySelector('.sc-wrap'); if(!wrap) return;
     blk.style.paddingTop='0'; blk.style.paddingBottom='0'; blk.style.paddingLeft='0'; blk.style.paddingRight='0';
@@ -44202,6 +44301,7 @@ global.PolyFX = API;
   function scFillBset(){
     if(!scCurBlk) return;
     var c=scCfg(scCurBlk);
+    bpxSync('sc','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     scItemRender();
     var dd=document.getElementById('scFDD');
@@ -44431,6 +44531,7 @@ global.PolyFX = API;
     fit(); setTimeout(fit,400); if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ setTimeout(fit,0); });
   }
   function fmApply(blk){
+    bpxVar(blk,fmCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=fmCfg(blk), wrap=blk.querySelector('.fm-wrap'); if(!wrap) return;
     blk.style.padding='0';
@@ -44941,6 +45042,7 @@ global.PolyFX = API;
   }
   function fmFillBset(){
     if(!fmCurBlk) return; var c=fmCfg(fmCurBlk);
+    bpxSync('fm','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     fmOpenIdx=-1; fmFieldRender(); fmInfoRender(); fmMailSync(); if(typeof clSmsSync==='function') clSmsSync('fm'); fmMediaSync();
     set('fmTitle',c.title||''); set('fmDesc',c.desc||''); set('fmBtnT',c.btnT||''); set('fmDone',c.done||'');
@@ -45160,6 +45262,7 @@ global.PolyFX = API;
   }
   function caBlockHTML(){ return '<span class="tag-badge">캘린더</span>'+SM_GEAR+'<div class="ca-wrap"></div>'; }
   function caApply(blk){
+    bpxVar(blk,caCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=caCfg(blk), wrap=blk.querySelector('.ca-wrap'); if(!wrap) return;
     caState(blk,c);
@@ -45375,6 +45478,7 @@ global.PolyFX = API;
   }
   function caFillBset(){
     if(!caCurBlk) return; var c=caCfg(caCurBlk);
+    bpxSync('ca','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     caOpenId=null; caEvRender(); caSyncSync();
     set('caGId',c.gid||''); set('caGKey',c.gkey||'');
@@ -45535,6 +45639,7 @@ global.PolyFX = API;
   }
   function dvBlockHTML(){ return '<span class="tag-badge">구분선</span>'+SM_GEAR+'<div class="dv-wrap"></div>'; }
   function dvApply(blk){
+    bpxVar(blk,dvCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=dvCfg(blk), wrap=blk.querySelector('.dv-wrap'); if(!wrap) return;
     blk.style.padding='0'; blk.style.background=c.bgOn?(c.bg||'#ffffff'):''; blk.classList.toggle('own-bg',!!c.bgOn);
@@ -45642,6 +45747,7 @@ global.PolyFX = API;
   }
   function dvFillBset(){
     if(!dvCurBlk) return; var c=dvCfg(dvCurBlk);
+    bpxSync('dv','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     function dd(id,v,nm){ var d=document.getElementById(id); if(!d) return; dvDDLabel(id,v); d.setAttribute('title',nm); d.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-k')===v); }); }
     dd('dvLineDD',c.line,(DV_LINES.filter(function(p){ return p[0]===c.line; })[0]||DV_LINES[0])[1]);
@@ -45757,6 +45863,7 @@ global.PolyFX = API;
   function cdStyleStr(c){ return '--cdf:'+smStack(txNum(c.tf,9))+';--cdtc:'+(c.tc||'#fff')+';--cdsc:'+(c.sc||'#aab1bc')+';--cdac:'+(c.ac||'#7cf0c2')+';--cdfs:'+txNum(c.fs,110)+'px;'; }
   function cdBlockHTML(){ return '<span class="tag-badge">카운트다운</span>'+SM_GEAR+'<div class="cd-wrap"></div>'; }
   function cdApply(blk){
+    bpxVar(blk,cdCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=cdCfg(blk), wrap=blk.querySelector('.cd-wrap'); if(!wrap) return;
     var p=cdParts(c); blk._cdEnd=p.end;
@@ -45939,6 +46046,7 @@ global.PolyFX = API;
   }
   function cdFillBset(){
     if(!cdCurBlk) return; var c=cdCfg(cdCurBlk);
+    bpxSync('cd','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     cdTgtRender(c.target); set('cdEndMsg',c.endMsg||''); set('cdEb',c.eb||''); set('cdDesc',c.desc||'');
     var sd=document.getElementById('cdStDD'); if(sd){ var lb=sd.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=CD_STNM[c.st]||CD_STYLES[0][1]; sd.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-k')===c.st); }); }
@@ -46013,6 +46121,7 @@ global.PolyFX = API;
     }
   }
   function nmApply(blk){
+    bpxVar(blk,nmCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=nmCfg(blk), wrap=blk.querySelector('.nm-wrap'); if(!wrap) return;
     blk.style.padding='0';
@@ -46196,6 +46305,7 @@ global.PolyFX = API;
   function qrStyleStr(c){ return '--qrf:'+smStack(txNum(c.tf,5))+';--qrtc:'+(c.tc||'#1d1f24')+';--qrsc:'+(c.sc||'#7b818b')+';--qrqb:'+(c.qb||'#fff')+';'; }
   function qrBlockHTML(){ return '<span class="tag-badge">QR 코드</span>'+SM_GEAR+'<div class="qr-wrap"></div>'; }
   function qrApply(blk){
+    bpxVar(blk,qrCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=qrCfg(blk), wrap=blk.querySelector('.qr-wrap'); if(!wrap) return;
     blk.style.padding='0';
@@ -46235,7 +46345,7 @@ global.PolyFX = API;
   function baInsertNm(card){ baInsertKind(card,'nmblk','nm-blk',nmBlockHTML(),'_nmCfg',nmPresetCfg(card.getAttribute('data-preset')||'row'),function(b){ nmApply(b); nmArm(b); }); }   /* 넣을 때 한 번 올라가는 모습을 보인다 */
   function baInsertQr(card){ baInsertKind(card,'qrblk','qr-blk',qrBlockHTML(),'_qrCfg',qrPresetCfg(card.getAttribute('data-preset')||'card'),qrInit); }
   /* 설정창 공통 조각 — 접두어(nm · qr)로 블록을 고른다 */
-  var BGP={ nm:{cur:function(){ return nmCurBlk; }, cfg:nmCfg, apply:nmApply}, qr:{cur:function(){ return qrCurBlk; }, cfg:qrCfg, apply:qrApply} };
+  var BGP={ nm:{cur:function(){ return nmCurBlk; }, cfg:nmCfg, apply:function(b){ nmApply(b); }}, qr:{cur:function(){ return qrCurBlk; }, cfg:qrCfg, apply:function(b){ qrApply(b); }} };   /* 261112 수정 — 함수를 직접 붙잡아 모바일 가로채기(PC · 모바일 나누기)를 건너뛰어, 모바일에서 고친 값이 PC 화면에도 그려졌다 → 부를 때 찾는다 */
   function bpUpd(px,key,val){ var B=BGP[px], blk=B.cur(); if(!blk) return; B.cfg(blk)[key]=val; B.apply(blk); bpRows(px); if(typeof markDirty==='function') markDirty(); }
   function bpSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
   function bpSeg(px,key,id,m){ bpSegSync(id,m); bpUpd(px,key,m); }
@@ -46336,6 +46446,7 @@ global.PolyFX = API;
   }
   function nmFillBset(){
     if(!nmCurBlk) return; var c=nmCfg(nmCurBlk);
+    bpxSync('nm','padx',c);   /* 261112 추가 — 좌우 3칸 */
     nmItemsRender(); bpFill('nm',c,NM_STNM,NM_RNG,NM_COL);
     var set=function(id,v){ var el=document.getElementById(id); if(el) el.value=v; }; set('nmEb',c.eb||''); set('nmDesc',c.desc||'');
     var cs=document.getElementById('nmCommaSw'); if(cs) cs.classList.toggle('on',c.comma!==false);
@@ -46364,6 +46475,7 @@ global.PolyFX = API;
   function qrUrl(v){ var blk=qrCurBlk; if(!blk) return; qrCfg(blk).url=v; clearTimeout(_qrT); _qrT=setTimeout(function(){ if(blk.isConnected){ qrApply(blk); bpRows('qr'); if(typeof markDirty==='function') markDirty(); } },200); }
   function qrFillBset(){
     if(!qrCurBlk) return; var c=qrCfg(qrCurBlk);
+    bpxSync('qr','padx',c);   /* 261112 추가 — 좌우 3칸 */
     bpFill('qr',c,QR_STNM,QR_RNG,QR_COL);
     var set=function(id,v){ var el=document.getElementById(id); if(el) el.value=v; }; set('qrUrlIn',c.url||''); set('qrEb',c.eb||''); set('qrDesc',c.desc||''); set('qrCap',c.cap||'');
     bpSegSync('qrDotSeg',c.dot||'sq'); bpRows('qr');
@@ -46704,6 +46816,7 @@ global.PolyFX = API;
   }
   function cnBlockHTML(){ return '<span class="tag-badge">컨텐츠</span>'+SM_GEAR+'<div class="cn-wrap"></div>'; }
   function cnApply(blk){
+    bpxVar(blk,cnCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     /* 글 편집 중에 설정이 바뀌면 편집을 마치고(지금 글을 저장) 다시 그린다 — rtEditEnd 가 rtApply → cnApply 를 다시 부른다 */
     if(typeof rtEditBlk!=='undefined' && rtEditBlk===blk && typeof rtEditEnd==='function'){ rtEditEnd(); return; }
@@ -47203,6 +47316,7 @@ global.PolyFX = API;
   }
   function cnFillBset(){
     var blk=cnCurBlk; if(!blk) return; var c=cnCfg(blk);
+    bpxSync('cn','padx',c);   /* 261112 추가 — 좌우 3칸 */
     if(cnGS._blk!==blk){ cnGS._blk=blk; cnGS.cnM=null; cnGS.cnI=-1; }   /* 261023 추가 — 다른 블록을 고르면 썸네일 선택을 비운다 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     var ld=document.getElementById('cnLayDD'); if(ld){ var lb=ld.querySelector('.sdd-btn .lbl'); if(lb) lb.textContent=CN_LAYNM[c.lay]||'좌우'; ld.querySelectorAll('.sdd-menu button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-k')===c.lay); }); }
@@ -47355,6 +47469,7 @@ global.PolyFX = API;
   function tkAttrs(w,c){ w.setAttribute('data-ds',c.ds||'under'); w.setAttribute('data-pos',c.pos==='left'?'left':'top'); w.setAttribute('data-wrap',c.wrap==='multi'?'multi':'line'); w.setAttribute('data-al',c.al||'center'); w.setAttribute('data-cal',tkCal(c)); w.setAttribute('data-ars',TK_ARS[c.ars]?c.ars:'chev'); }
   function tkBlockHTML(){ return '<span class="tag-badge">탭</span>'+SM_GEAR+'<div class="tk-wrap"></div>'; }
   function tkApply(blk){
+    bpxVar(blk,tkCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     if(blk.classList.contains('rt-editing') && typeof rtEditEnd==='function' && typeof rtEditBlk!=='undefined' && rtEditBlk===blk) rtEditEnd();   /* 글 편집 중에 설정을 바꾸면 편집을 끝내고(저장) 다시 그린다 */
     var c=tkCfg(blk), wrap=blk.querySelector('.tk-wrap'); if(!wrap) return;
@@ -47926,6 +48041,7 @@ global.PolyFX = API;
   }
   function tkFillBset(){
     var blk=tkCurBlk; if(!blk) return; var c=tkCfg(blk);
+    bpxSync('tk','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng') && typeof smRng==='function') smRng(el); } }
     TK_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
     TK_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
@@ -48377,6 +48493,7 @@ global.PolyFX = API;
   }
   function bdBlockHTML(){ return '<span class="tag-badge">게시판</span>'+SM_GEAR+'<div class="bd-wrap"></div>'; }
   function bdApply(blk,force){
+    bpxVar(blk,bdCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=bdCfg(blk), wrap=blk.querySelector('.bd-wrap'); if(!wrap) return;
     blk.style.padding='0'; blk.style.background=c.bg||'#ffffff'; blk.classList.toggle('own-bg',!!c.bg);
@@ -48672,6 +48789,7 @@ global.PolyFX = API;
   }
   function bdFillBset(){
     if(!bdCurBlk) return; var c=bdCfg(bdCurBlk);
+    bpxSync('bd','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     BD_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
     BD_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
@@ -48803,6 +48921,7 @@ global.PolyFX = API;
   function ltAttrs(w,c){ w.setAttribute('data-lay',c.lay||'list'); w.setAttribute('data-hd',c.hd||'none'); w.setAttribute('data-th',c.th==='left'?'left':'right'); w.setAttribute('data-rc',+c.rc===2?'2':'1'); }
   function ltBlockHTML(){ return '<span class="tag-badge">최근게시물</span>'+SM_GEAR+'<div class="lt-wrap"></div>'; }
   function ltApply(blk){
+    bpxVar(blk,ltCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=ltCfg(blk), wrap=blk.querySelector('.lt-wrap'); if(!wrap) return;
     if(!window.CL_MVIEW && typeof bdBoardPack==='function'){ var bs={}; c.boards.forEach(function(k){ var P=bdBoardPack(k); if(P) bs[k]=P; }); c._Bs=bs; }   /* 모바일 사본이 게시판 이름 · 견본을 알 수 있게 */
@@ -48949,6 +49068,7 @@ global.PolyFX = API;
   }
   function ltFillBset(){
     var blk=ltCurBlk; if(!blk) return; var c=ltCfg(blk);
+    bpxSync('lt','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng') && typeof smRng==='function') smRng(el); } }
     LT_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
     LT_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
@@ -49208,6 +49328,7 @@ global.PolyFX = API;
   }
   function ctBlockHTML(){ return '<span class="tag-badge">컨택트</span>'+SM_GEAR+'<div class="ct-wrap"></div>'; }
   function ctApply(blk){
+    bpxVar(blk,ctCfg(blk));   /* 261112 추가 — 좌우 3칸 */
     if(!blk) return;
     var c=ctCfg(blk), wrap=blk.querySelector('.ct-wrap'); if(!wrap) return;
     blk.style.padding='0';
@@ -49709,6 +49830,7 @@ global.PolyFX = API;
   }
   function ctFillBset(){
     if(!ctCurBlk) return; var c=ctCfg(ctCurBlk);
+    bpxSync('ct','padx',c);   /* 261112 추가 — 좌우 3칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     ctOpenIdx=-1; ctOpenBr=-1; ctOpenInfo=-1;
     ctKindSync(); ctAccSync(ctFillBset._kind!==c.kind); ctFillBset._kind=c.kind; ctFieldRender(); ctInfoRender(); ctBrRender(); ctMailSync(); if(typeof clSmsSync==='function') clSmsSync('ct'); ctBgSync();
@@ -50512,7 +50634,7 @@ global.PolyFX = API;
     if(!blk) return;
     var c=b2Cfg(blk), wrap=blk.querySelector('.b2-wrap'); if(!wrap) return;
     var book=wrap.querySelector('.b2-book'), stage=wrap.querySelector('.b2-stage');
-    wrap.style.setProperty('--b2pt',txNum(c.pt,64)+'px'); wrap.style.setProperty('--b2px',txNum(c.px,24)+'px'); wrap.style.setProperty('--b2pb',txNum(c.pb,64)+'px');
+    wrap.style.setProperty('--b2pt',txNum(c.pt,64)+'px'); wrap.style.setProperty('--b2px',bpxCss(c,'px',24));   /* 261112 수정 — 좌우 3칸 */  wrap.style.setProperty('--b2pb',txNum(c.pb,64)+'px');
     wrap.classList.toggle('b2-navout',!!c.nav && (c.navPos||'out')!=='in');
     wrap.style.background=c.bg||'#efede8';
     wrap.classList.toggle('b2-center',!!c.center);
@@ -51086,7 +51208,9 @@ global.PolyFX = API;
   /* ── 블록설정 바인딩 ── */
   function b2Upd(key,val){ if(!b2CurBlk) return; b2Cfg(b2CurBlk)[key]=val; b2Apply(b2CurBlk); }
   function b2On(id,ev,fn){ var el=document.getElementById(id); if(el) el.addEventListener(ev,function(){ fn(el); }); }
-  function b2Sw(btn,key){ btn.classList.toggle('on'); b2Upd(key, btn.classList.contains('on')); if(key==='nav') b2EndHintSync(); }
+  function b2Sw(btn,key){ btn.classList.toggle('on'); b2Upd(key, btn.classList.contains('on')); if(key==='nav') { b2EndHintSync(); b2PxHintSync(); } }
+  /* 261112 추가 — 바깥 화살표(b2-navout)면 좌우 여백이 72px 아래로 줄지 않아 안내 */
+  function b2PxHintSync(){ var h=document.getElementById('b2PxHint'); if(!h || !b2CurBlk) return; var w=b2CurBlk.querySelector('.b2-wrap'), mo=(typeof window.mvTarget==='function' && window.mvTarget()==='mobile'); h.style.display=(w && w.classList.contains('b2-navout') && !w.classList.contains('b2-solo') && !mo)?'':'none'; }
   /* '처음으로' 토글은 좌우 화살표가 꺼져 있을 때만 활성 */
   function b2EndHintSync(){
     if(!b2CurBlk) return; var c=b2Cfg(b2CurBlk), line=document.getElementById('b2EndHintLine');
@@ -51098,7 +51222,7 @@ global.PolyFX = API;
     seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===m); });
   }
   function b2Ratio(m){ if(!b2CurBlk) return; b2Cfg(b2CurBlk).ratio=B2_RATIO[m]?m:'a4'; b2SegSync('b2RatioSeg',b2Cfg(b2CurBlk).ratio); b2Apply(b2CurBlk); b2PosSync(); }
-  function b2NavPos(m){ if(!b2CurBlk) return; b2Cfg(b2CurBlk).navPos=(m==='in')?'in':'out'; b2SegSync('b2NavPosSeg',b2Cfg(b2CurBlk).navPos); b2Apply(b2CurBlk); }
+  function b2NavPos(m){ if(!b2CurBlk) return; b2Cfg(b2CurBlk).navPos=(m==='in')?'in':'out'; b2SegSync('b2NavPosSeg',b2Cfg(b2CurBlk).navPos); b2Apply(b2CurBlk); b2PxHintSync(); }
   function b2NumPos(m){ if(!b2CurBlk) return; b2Cfg(b2CurBlk).numPos=(m==='center')?'center':'outer'; b2SegSync('b2NumPosSeg',b2Cfg(b2CurBlk).numPos); b2Apply(b2CurBlk); }
   function b2PickFont(e,i){
     if(e) e.stopPropagation();
@@ -51331,6 +51455,8 @@ global.PolyFX = API;
   function b2FillBset(){
     if(!b2CurBlk) return;
     var c=b2Cfg(b2CurBlk);
+    bpxSync('b2','px',c);   /* 261112 추가 — 좌우 3칸 */
+    b2PxHintSync();   /* 261112 추가 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=(v==null?'':v); if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     set('b2N',b2N(c)); txt('b2NV',b2N(c));
@@ -59778,7 +59904,7 @@ global.PolyFX = API;
     }
     function mvDefaultCfg(blk,def){
       /* xxCfg(blk) 가 기본값을 만들어 준다 */
-      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_cnCfg:'cnCfg',_snCfg:'snCfg',_tkCfg:'tkCfg',_ltCfg:'ltCfg'}[def.cfg];   /* 260922 수정 */
+      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_cnCfg:'cnCfg',_snCfg:'snCfg',_tkCfg:'tkCfg',_ltCfg:'ltCfg',_cdCfg:'cdCfg',_nmCfg:'nmCfg',_qrCfg:'qrCfg',_dvCfg:'dvCfg',_bdCfg:'bdCfg'}[def.cfg];   /* 260922 수정 */
       try{ return window[fn](blk); }catch(x){ return {}; }
     }
     /* 헤더 세그먼트·초기화 버튼 상태 */
@@ -59826,7 +59952,7 @@ global.PolyFX = API;
     /* Apply 가로채기 — 모든 설정 변경은 xxApply 로 모이므로 여기서 한 번만 갈라 놓으면 된다 */
     Object.keys(MV_TYPES).forEach(function(type){
       var def=MV_TYPES[type];
-      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_cnCfg:'cnApply',_snCfg:'snApply',_tkCfg:'tkApply',_ltCfg:'ltApply'}[def.cfg];   /* 260922 수정 */
+      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_cnCfg:'cnApply',_snCfg:'snApply',_tkCfg:'tkApply',_ltCfg:'ltApply',_cdCfg:'cdApply',_nmCfg:'nmApply',_qrCfg:'qrApply',_dvCfg:'dvApply',_bdCfg:'bdApply'}[def.cfg];   /* 261112 수정 — 카운트다운 · 숫자 카운터 · QR · 구분선 · 게시판이 빠져 모바일에서 고친 값이 PC 화면에도 그려졌다 */   /* 260922 수정 */
       var orig=window[name]; if(typeof orig!=='function') return;
       var wrapped=function(blk){
         if(blk && MV_TARGET==='mobile' && blk===mvTargetBlk && blk._mvBase) mvReconcile(blk);
