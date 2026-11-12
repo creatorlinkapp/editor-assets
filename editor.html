@@ -7437,7 +7437,7 @@
         <div class="srow"><span class="k">좌우 여백</span></div>
         <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="0" max="200" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
         <div class="srow"><span class="k">휴대폰</span><input class="rng" type="range" id="stPxMo" min="0" max="60" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
-        <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">블록 · 상단 메뉴 · 상세 타이틀의 좌우 여백이 「기본」이면 이 값을 따릅니다. 블록마다 「없음 · 직접」으로 따로 정할 수 있습니다.</div>
+        <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">화면 끝과 내용 사이의 최소 여백입니다. 최대 폭이 있는 블록은 넓은 화면에서 그 폭 안에 가운데 놓입니다.</div>   <!-- 261112 수정 — 넓은 화면에서 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 실제 의미로 · PC 슬라이더를 움직이는 동안 안내선(stPxGuide) -->
       </div>
       <div class="st-sec">
         <div class="st-sec-h">배경 <span>사이트 전체</span></div>
@@ -18168,12 +18168,29 @@
   function stLayoutSync(){
     [['stPxPc','pc'],['stPxMo','mo']].forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return;
       if(!el._bound){ el._bound=true; el.addEventListener('input',function(){ SITE_LAYOUT[r[1]]=parseFloat(el.value)||0; stLayoutApply(); });
-        if(r[1]==='mo'){ el.addEventListener('pointerdown',stMoOpen); el.addEventListener('keydown',function(e){ if(/^(Arrow|Page|Home|End)/.test(e.key)) stMoOpen(); }); } }
+        if(r[1]==='mo'){ el.addEventListener('pointerdown',stMoOpen); el.addEventListener('keydown',function(e){ if(/^(Arrow|Page|Home|End)/.test(e.key)) stMoOpen(); }); }
+        else { el.addEventListener('pointerdown',function(){ stPxGuide(true); }); el.addEventListener('input',function(){ stPxGuide(true); }); el.addEventListener('pointerup',function(){ stPxGuide(false); }); el.addEventListener('keyup',function(){ stPxGuide(false); }); } }
       if(document.activeElement!==el){ el.value=SITE_LAYOUT[r[1]]; } if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=SITE_LAYOUT[r[1]]+'px'; });
   }
   /* 261112 추가 — 휴대폰 좌우 여백 슬라이더를 잡으면 휴대폰 화면을 연다(닫혀 있으면 값을 바꿔도 PC 화면에는 아무 변화가 없어 고장처럼 보였다). 좁은 창은 상단 휴대폰 버튼과 같은 기준(900px)으로 안내만 */
   function stMoOpen(){ if(document.body.classList.contains('mview-on') || typeof window.mvSetMode!=='function') return;
     if(window.innerWidth>900) window.mvSetMode('mobile'); else if(typeof clToast==='function') clToast('넓은 화면에서 휴대폰 화면으로 확인할 수 있습니다.'); }
+  /* 261112 추가 — PC 좌우 여백 슬라이더를 움직이는 동안 PC 편집 화면에 사이트 값 자리(양쪽 세로 점선).
+     넓은 화면에서는 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 값이 어디에 적용되는지 보이게(블록 내용이 그 안쪽에 있는 건 화면 그대로 보인다 · 블록마다 상자를 그리던 것은 화면이 어지러워 뺐다). 손을 떼면 1초 뒤 사라진다 */
+  var stPxGuideT=null;
+  function stPxGuide(on){
+    var lay=document.getElementById('stPxGuideLay');
+    if(!on){ clearTimeout(stPxGuideT); stPxGuideT=setTimeout(function(){ var l=document.getElementById('stPxGuideLay'); if(l) l.remove(); },1000); return; }
+    clearTimeout(stPxGuideT); stPxGuideT=setTimeout(function(){ var l=document.getElementById('stPxGuideLay'); if(l) l.remove(); },1500);   /* 키보드 · 놓친 pointerup 대비 */
+    var st=document.getElementById('stage'), site=stSite(); if(!st || !site || document.body.classList.contains('pview')) return;
+    if(!lay){ lay=document.createElement('div'); lay.id='stPxGuideLay'; lay.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:60;'; document.body.appendChild(lay); }
+    lay.innerHTML='';
+    var sr=st.getBoundingClientRect(), wr=site.getBoundingClientRect(), z=parseFloat(getComputedStyle(site).zoom)||1;
+    var top=Math.max(sr.top,wr.top), bot=Math.min(sr.bottom,wr.bottom); if(bot<=top) return;
+    var px=(+SITE_LAYOUT.pc||0)*z, C='#FF4D6A';
+    function el(css){ var d=document.createElement('div'); d.style.cssText='position:fixed;box-sizing:border-box;'+css; lay.appendChild(d); return d; }
+    [wr.left+px, wr.right-px].forEach(function(x){ el('left:'+x+'px;top:'+top+'px;height:'+(bot-top)+'px;width:0;border-left:1px dashed '+C+';'); });
+  }
   function stTypoReset(){ SITE_TYPO={hfont:-1,bfont:-1,fs:14.5,lh:'normal'}; stTypoApply(); clToast('서체 세부 값을 프리셋 기본으로 되돌렸습니다.'); }
   function stTypoSync(){
     var t=SITE_TYPO;
