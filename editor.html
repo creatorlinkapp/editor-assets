@@ -17588,8 +17588,12 @@
     if(m==='custom' && bpxMode(bpxEff(p,blk),k)!=='custom') bpxUpd(p,k, SITE_LAYOUT[bpxMo()?'mo':'pc']);   /* 직접으로 바꿀 때는 지금 보이는 사이트 값에서 시작 */
     bpxUpd(p,k+'Mode',m); bpxSync(p,k,bpxEff(p,blk)); }
   function bpxUpd(p,k,v){ if(typeof window[p+'Upd']==='function') window[p+'Upd'](k,v); else if(typeof BGP!=='undefined' && BGP[p]) bpUpd(p,k,v); }   /* 숫자 카운터 · QR 은 공용 bpUpd */
+  /* 261112 추가 — 「기본」일 때만 3칸 밑에 「기본은 스타일 > 레이아웃 …」 한 줄(블록에서 사이트 값을 어디서 바꾸는지 알려 준다). id = 3칸 앞부분(imPx 등) */
+  function bpxBaseHint(id,on){ var r=document.getElementById(id+'Row')||document.getElementById(id+'Seg'); if(!r) return; var h=document.getElementById(id+'Base');
+    if(!h){ h=document.createElement('div'); h.className='tx-hint'; h.id=id+'Base'; h.style.marginTop='6px'; h.textContent='기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다.'; r.insertAdjacentElement('afterend',h); }
+    if(h) h.style.display=on?'':'none'; }
   function bpxSync(p,k,c){ var m=bpxMode(c,k), id=p+k.charAt(0).toUpperCase()+k.slice(1);
-    rtSegSync(id+'Seg',m); var r=document.getElementById(id+'Row'); if(r) r.style.display=(m==='custom')?'':'none';
+    rtSegSync(id+'Seg',m); var r=document.getElementById(id+'Row'); if(r) r.style.display=(m==='custom')?'':'none'; bpxBaseHint(id,m==='base');
     var sl=document.getElementById(id); if(sl){ var v=parseFloat(c[k]); if(!isFinite(v)) v=48; sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(id+'V'); if(o) o.textContent=v+'px'; }
     /* 디자인 구조(화면 끝까지 채우는 배치 · 탭 안 블록)가 좌우를 0 으로 고정하면 3칸을 눌러도 화면이 그대로 → 흐림 + 안내 */
     var sg=document.getElementById(id+'Seg'), srow=sg && sg.closest('.srow'), blk=window[p+'CurBlk'], fixed=false, inn=blk && BPX_IN[p] && blk.querySelector(BPX_IN[p]);
@@ -17598,14 +17602,14 @@
     if(p==='im' || p==='gg'){ var ws=document.getElementById(p+'WrapSw'), wl=ws && ws.closest('.sline');
       if(wl){ var wm=bpxMo() && !document.body.classList.contains('tk-kid-sel'); wl.classList.toggle('off',wm); var wh=document.getElementById(p+'WrapMo');
         if(!wh && wm){ wh=document.createElement('div'); wh.className='tx-hint'; wh.id=p+'WrapMo'; wh.style.marginTop='6px'; wh.textContent='휴대폰 화면은 최대 폭보다 좁아 적용되지 않습니다.'; wl.insertAdjacentElement('afterend',wh); }
-        if(wh) wh.style.display=wm?'':'none'; } }
+        if(wh) wh.style.display=wm?'':'none'; var oh=wl.parentNode.querySelector('.tk-out-hint'); if(oh) oh.style.display=wm?'none':''; } }   /* 「좌우 폭 제한을 끄면 …」 설명도 휴대폰에서는 숨김 */
     /* 폼 · 컨택트의 폼 카드형은 카드가 가운데 고정 폭이라 PC 에서는 좌우를 바꿔도 내용이 그대로(휴대폰에서는 적용) → PC 대상일 때 안내만(막지는 않는다) */
     var card=false;
     if(!fixed && inn && BPX_CARD[p] && !bpxMo()){ var old2=blk.style.getPropertyValue('--bpx'); var lf=function(){ var br=blk.getBoundingClientRect(), mn=1e9; inn.querySelectorAll('*').forEach(function(e){ if(e.children.length) return; var q=e.getBoundingClientRect(); if(q.width>2 && q.height>2) mn=Math.min(mn,q.left-br.left); }); return mn; };
       blk.style.setProperty('--bpx','8px'); var l1=lf(); blk.style.setProperty('--bpx','200px'); var l2=lf(); if(old2) blk.style.setProperty('--bpx',old2); else blk.style.removeProperty('--bpx'); card=(l1<1e9) && Math.abs(l2-l1)<3; }
     if(srow){ srow.classList.toggle('off',fixed); if(fixed && r) r.style.display='none';
-      var h=document.getElementById(id+'Fix'); if(!h && (fixed||card)){ h=document.createElement('div'); h.className='tx-hint'; h.id=id+'Fix'; h.style.marginTop='6px'; (r||srow).insertAdjacentElement('afterend',h); }
-      if(h){ h.textContent=(blk && blk.closest('.tk-kids'))?'탭 안에서는 탭 블록의 좌우 여백을 따릅니다.':(fixed?'이 디자인은 좌우 끝까지 채우는 배치라 좌우 여백을 쓰지 않습니다.':'폼이 가운데 고정 폭이라 PC에서는 좌우 여백이 거의 보이지 않습니다. 휴대폰에서는 적용됩니다.'); h.style.display=(fixed||card)?'':'none'; } } }
+      var h=document.getElementById(id+'Fix'); if(!h && (fixed||card)){ h=document.createElement('div'); h.className='tx-hint'; h.id=id+'Fix'; h.style.marginTop='6px'; (document.getElementById(id+'Base')||r||srow).insertAdjacentElement('afterend',h); }
+      if(h){ h.textContent=(blk && blk.closest('.tk-kids'))?'탭 안에서는 탭 블록의 좌우 여백을 따릅니다.':(fixed?'이 디자인은 좌우 끝까지 채우는 배치라 좌우 여백을 쓰지 않습니다.':'폼이 가운데 고정 폭이라 PC에서는 좌우 여백이 거의 보이지 않습니다. 휴대폰에서는 적용됩니다.'); h.style.display=(fixed||card)?'':'none'; } if(fixed) bpxBaseHint(id,false); } }
   var BPX_IN={bc:'.bc-in',bd:'.bd-in',ca:'.ca-in',ct:'.ct-in',fm:'.fm-in',sc:'.sc-in',rs:'.rs-inner',tw:'.tw-inner',vc:'.vc-in'}, BPX_CARD={fm:1,ct:1};
   /* 좌우 설정이 없던 최대 폭 블록 9개 — 안쪽 상자의 좌우를 CSS 변수 --bpx 로 받는다. 기본이면 지우고(= 사이트 값), 없음 · 직접이면 블록에 적는다.
      원래 좌우가 고정이던 글 · 버튼형 9개(버튼 · 카운트다운 · 컨텐츠 · 구분선 · 최근게시물 · 숫자 카운터 · QR · 소셜 · 탭)는 3칸 없이 CSS 에서 사이트 값만 따른다 */
@@ -56557,7 +56561,7 @@ global.PolyFX = API;
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     var vals={gap:(c.gap==null?48:c.gap), size:e.size, lh:e.lh, ls:(c.ls||0), width:(c.width==null?1180:c.width), pt:e.pt, pb:e.pb, px:e.px,
               labelW:(c.labelW==null?340:c.labelW), splitGap:(c.splitGap==null?24:c.splitGap), bgDim:(c.bgDim==null?40:c.bgDim), minH:(c.minH==null?600:c.minH)};
-    var pxm0=rtPxMode(c); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none';   /* 261112 추가 — 좌우 3칸 */
+    var pxm0=rtPxMode(c); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none'; bpxBaseHint('rtPx',pxm0==='base');   /* 261112 추가 — 좌우 3칸 */
     var hm=(c.hMode==='screen'||c.hMode==='px')?c.hMode:'auto'; rtSegSync('rtHSeg',hm); var mhr=document.getElementById('rtMinHRow'); if(mhr) mhr.style.display=(hm==='px')?'':'none';   /* 260920 추가 — 높이 */
     rtBgSync();   /* 260920 수정 — 배경 소재 상자(썸네일 · 삭제 · 어둡게 행) 표시 맞춤 */
     var lay=c.layout||'single';
@@ -63988,7 +63992,7 @@ function gdFill(){
   gdShow('gdImgRow',isImg); gdShow('gdImgHint',isImg); gdShow('gdDimRow',isImg); gdShow('gdBgRow',!isImg);   /* 261013 수정 — 이미지 디자인이면 배경 이미지 줄은 늘(기본 썸네일) */
   var th=document.getElementById('gdBgTh'); if(th){ var ti=gdTitleImg(X), has=!!ti && !gtVid(ti), ovr=!!gdTimg(X); th.classList.toggle('has',has); th.classList.toggle('empty',!has); th.classList.toggle('ovr',ovr); th.style.backgroundImage=has?'url("'+String(ti).replace(/"/g,'%22')+'")':''; th.title=ovr?'직접 고른 이미지 — × 로 썸네일로 되돌립니다':'보관함에서 이미지를 고르면 이 글의 타이틀 배경이 됩니다'; }
   function rng(id,v,u){ var el=document.getElementById(id); if(!el || document.activeElement===el) return; el.value=v; if(typeof smRng==='function') smRng(el); var o=document.getElementById(id+'V'); if(o) o.textContent=v+u; }
-  rng('gdDim',+det.dim||0,'%'); rng('gdPt',(det.pt==null)?D.pt:det.pt,'px'); rng('gdPb',(det.pb==null)?D.pb:det.pb,'px'); rng('gdPx',(det.px==null)?48:det.px,'px'); (function(){ var gm=gdPxMode(det); [].forEach.call(document.querySelectorAll('#gdPxSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===gm); }); gdShow('gdPxRow',gm==='custom'); })();   /* 261112 추가 — 좌우 3칸 */
+  rng('gdDim',+det.dim||0,'%'); rng('gdPt',(det.pt==null)?D.pt:det.pt,'px'); rng('gdPb',(det.pb==null)?D.pb:det.pb,'px'); rng('gdPx',(det.px==null)?48:det.px,'px'); (function(){ var gm=gdPxMode(det); [].forEach.call(document.querySelectorAll('#gdPxSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===gm); }); gdShow('gdPxRow',gm==='custom'); bpxBaseHint('gdPx',gm==='base'); })();   /* 261112 추가 — 좌우 3칸 */
   var bg=document.getElementById('gdBg'), bv=document.getElementById('gdBgV'), br=document.getElementById('gdBgR');
   var bg0=(D.bg==='d')?'#333333':'#ffffff'; if(D.bg!=='d'){ try{ var sb=String(getComputedStyle(gdSite()).getPropertyValue('--st-bg')||'').trim(); if(/^#[0-9a-f]{6}$/i.test(sb)) bg0=sb; }catch(x){} }   /* 261007 추가 — 기본 = 컬러 모드의 배경색 */
   if(bg){ bg.value=/^#[0-9a-f]{6}$/i.test(det.bg||'')?det.bg:bg0; bg.classList.toggle('auto',!det.bg); } if(bv) bv.textContent=det.bg?det.bg.toUpperCase():'기본'; if(br) br.classList.toggle('off',!det.bg);
