@@ -58113,7 +58113,7 @@ global.PolyFX = API;
     if(wrap){
       wrap.style.setProperty('--rt-lw',(c.labelW==null?340:c.labelW)+'px');   /* 변수로 두어 좁은 화면(모바일)에서는 CSS 가 한 열로 접는다 */
       wrap.style.setProperty('--rt-lg',(c.splitGap==null?24:c.splitGap)+'px');
-      wrap.style.maxWidth=(c.width==null||c.width>=1400)?'':(c.width+'px');
+      wrap.style.maxWidth=(c.width==null)?'':(c.width>=1400?'none':(c.width+'px'));   /* 261112 수정 — 「전체」는 폭 제한 없음(전: 값을 지워 CSS 기본 .two 1180 으로 돌아가 라벨 배치에서 「전체」가 1180 에 막혔다) */
     }
     var cols=Math.max(1,Math.min(4,Math.round(c.cols||1)));
     if(cw){   /* 260915 수정 — 열 수·간격·구분선은 열 묶음에 */
