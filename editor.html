@@ -18417,9 +18417,10 @@
      opt.px: 'site' = 좌우는 늘 사이트 값 · 'own' = 좌우는 늘 블록 값(c.px) · 없으면 pw 를 따름 / opt.fullPx: 가로 100% 확장일 때 좌우(이미지형 0)
      opt.mwKey · opt.pxKey: 블록 cfg 의 폭 · 좌우 키 이름(기본 mw · px) */
   var PW_REG={   /* 블록 접두 → {mw: 기본 폭, px: 기본 좌우, opt, row: 「이 블록만 직접」 안으로 옮길 최대 폭 슬라이더 id, kind: data-block, redraw: 사이트 값 바뀔 때 다시 그릴 함수} */
-    vl:{mw:1280, px:48,  opt:{px:'site', padIn:true}, row:'vlMw', box:'.vl-in', kind:'valuelist', guide:true},   /* CONTENT02 이미지 전환 목록(.vl-in 안쪽 좌우 = 사이트 값) */
-    wl:{mw:1600, px:48,  opt:{px:'site', padIn:true}, row:'wlMw', box:'.wl-in', kind:'worklist', guide:true},    /* CONTENT01 마우스 따라오는 이미지 목록(좌우 64 → 사이트 값) */
-    nx:{mw:1760, px:100, opt:{px:'own',  padIn:true, cap:'6cqw'}, row:'nxMw', box:'.nx-in', kind:'stickstat', guide:true, redraw:function(b){ nxApply(b); }},   /* TEXT01 고정 타이틀 숫자(좌우 100 유지 · 안쪽 min(값, 6cqw) · 타이틀 고정 위치 다시 계산) */
+    /* 261113 수정 — 「가로 100%」는 사진형(이미지 · 그리드 갤러리 · 이전·이후 · 영상 카드)에만. 글 · 목록 블록은 noFull(이미 가로 100%로 저장된 블록만 버튼이 보이고 모양 그대로) */
+    vl:{mw:1280, px:48, noFull:true,  opt:{px:'site', padIn:true}, row:'vlMw', box:'.vl-in', kind:'valuelist', guide:true},   /* CONTENT02 이미지 전환 목록(.vl-in 안쪽 좌우 = 사이트 값) */
+    wl:{mw:1600, px:48, noFull:true,  opt:{px:'site', padIn:true}, row:'wlMw', box:'.wl-in', kind:'worklist', guide:true},    /* CONTENT01 마우스 따라오는 이미지 목록(좌우 64 → 사이트 값) */
+    nx:{mw:1760, px:100, noFull:true, opt:{px:'own',  padIn:true, cap:'6cqw'}, row:'nxMw', box:'.nx-in', kind:'stickstat', guide:true, redraw:function(b){ nxApply(b); }},   /* TEXT01 고정 타이틀 숫자(좌우 100 유지 · 안쪽 min(값, 6cqw) · 타이틀 고정 위치 다시 계산) */
     /* 261113 추가 — 기존 블록 2차 시범(게시판 · 텍스트 · 이미지). at = 본문 폭 칸을 놓을 자리(그 줄 앞 = 좌우 칸 바로 위) · bpx = 좌우 3칸 id · hintAfter = 안내 한 줄을 놓을 자리(좌우 칸 밑)
        legacy = 본문 폭을 고른 적 없는 저장 블록의 모드 · seen = 지금 보이는 내용 폭 · mkRow = 최대 폭 슬라이더가 없던 블록에 새로 만들 줄 · guide = 슬라이더를 움직이는 동안 블록 위 안내선 */
     bd:{mw:1140, px:48, rel:true, opt:{padIn:true, rel:true, pxCss:'var(--bpx,var(--site-px,48px))'}, row:'bdMw', box:'.bd-in', kind:'bdblk', bpx:'bdPadx', hintAfter:'bdPadxRow', guide:true, noFull:true,
@@ -18440,9 +18441,9 @@
     ca:pwBpxReg('ca','calblk','.ca-in',1140,{noFull:true}),       /* 캘린더 CALENDAR01~06 */
     ct:Object.assign(pwBpxReg('ct','ctblk','.ct-in',1140,{noFull:true}),{fix0:function(c){ return !!(c && c.kind==='strip'); }}),   /* 띠 디자인(CONTACT11~14): 상자 좌우 0 · 띠 안쪽에 따로 여백 */        /* 컨택트 CONTACT01~18 */
     /* 인덱스 리스트 TEXT06 · FAQ TEXT08 · QnA TEXT10 — 폭은 c.maxw · 「화면 전체 폭으로」 스위치(c.full) = 가로 100% */
-    ix:pwBpxReg('ix','idxlist','.ix-in',1240,{full:true}),
-    fq:pwBpxReg('fq','faqacc','.fq-in',1440,{full:true}),
-    qn:pwBpxReg('qn','qnaacc','.qn-in',1440,{full:true}),
+    ix:pwBpxReg('ix','idxlist','.ix-in',1240,{full:true, noFull:true}),
+    fq:pwBpxReg('fq','faqacc','.fq-in',1440,{full:true, noFull:true}),
+    qn:pwBpxReg('qn','qnaacc','.qn-in',1440,{full:true, noFull:true}),
     /* 261113 추가 — A-2 그리드 갤러리 GALLERY12~24: 「좌우 폭 제한」 스위치 → 본문 폭 3칸(끔 = 가로 100%). 디자인 좌우가 0(없음)이라 디자인 좌우(c.pwP0)를 기준으로 맞춘다(사이트 좌우 기준이면 모든 디자인이 선보다 넓어졌다) */
     gg:{mw:1140, px:48, rel:true, p0:true, edge:true, opt:{padIn:true, rel:true}, row:'ggMw', mkRow:{min:720, max:1600, step:10}, at:'ggPxSeg', box:'.gg-wrap', kind:'gridgal', bpx:'ggPx', hintAfter:'ggPxRow', guide:true,
         legacy:function(c){ return (c.wrap===false)?'full':'own'; }, onSet:function(c,m){ c.wrap=(m!=='full'); },
