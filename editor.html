@@ -3226,7 +3226,7 @@
   .tk-mini[data-ds="seg"] i:first-child{background:var(--surface);box-shadow:0 1px 2px rgba(20,24,32,.15);}
   /* ══ 261022 추가 — 소셜 블록 (snblk · SOCIAL01~15) — 아이콘 · 배너 · 이미지 피드. 좌측 사이트 소셜 36장을 세 종류로 묶었다 ══ */
   .sn-wrap{position:relative;container-type:inline-size;font-family:var(--snf);color:var(--sntc);}
-  .sn-in{max-width:1180px;margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));box-sizing:border-box;}
+  .sn-in{max-width:calc(var(--site-pw, calc(1180px - 2 * var(--bpx,var(--site-px,48px)))) + 2 * var(--bpx,var(--site-px,48px)));margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));box-sizing:border-box;}   /* 261113 수정 — D 그룹(소셜 · QR · 카운트다운 · 구분선): 설정 칸 없이 「사이트 폭 지정」만 따른다(내용 폭 = 본문 폭 · 지정 안 하면 1180 그대로). 내용이 가운데 작게 놓여 칸을 둬도 화면이 거의 안 바뀌어 칸은 두지 않음 · 버튼은 감싸는 폭이 없어 해당 없음 */
   /* 아이콘 — 모양(없음 · 원 · 둥근 사각 · 외곽선) × 색(브랜드 색 · 단색). --c = 아이콘(또는 판) 색 · --ink = 판 위 아이콘 색 */
   .sn-ics{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--sngap);}
   .sn-wrap[data-st="icon"][data-al="left"] .sn-ics{justify-content:flex-start;}
@@ -3462,7 +3462,7 @@
   .nm-row .s-in{width:100%;min-width:0;box-sizing:border-box;}
   /* ══ 261019 추가 — QR 코드 블록 (qrblk) ══ */
   .qr-wrap{position:relative;container-type:inline-size;font-family:var(--qrf);color:var(--qrtc);}
-  .qr-in{max-width:1180px;margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));display:flex;justify-content:center;}
+  .qr-in{max-width:calc(var(--site-pw, calc(1180px - 2 * var(--bpx,var(--site-px,48px)))) + 2 * var(--bpx,var(--site-px,48px)));margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));display:flex;justify-content:center;}
   .qr-wrap[data-al="left"] .qr-in{justify-content:flex-start;}
   .qr-box{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;}
   .qr-wrap[data-al="left"] .qr-box{align-items:flex-start;text-align:left;}
@@ -3692,7 +3692,7 @@
   #stage .blk[data-block="cnblk"]:not(.sel):not(.rt-editing) .cn-wrap :is(.cn-eb,.cn-tt,.cn-sub,.cn-ds,.cn-li-t,.cn-li-d,.cn-it-t,.cn-it-s,.cn-it-d,.cn-cap-t,.cn-cap-s,.cn-lines,.cn-bw):has(> .cred.rt-ph){display:none;}
   #bset #cnShow .gt-pan > .gt-chips{grid-template-columns:repeat(3,minmax(0,1fr));}
   .cd-wrap{position:relative;container-type:inline-size;font-family:var(--cdf);color:var(--cdtc);}
-  .cd-in{max-width:1180px;margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .cd-in{max-width:calc(var(--site-pw, calc(1180px - 2 * var(--bpx,var(--site-px,48px)))) + 2 * var(--bpx,var(--site-px,48px)));margin:0 auto;padding-left:var(--bpx,var(--site-px,48px));padding-right:var(--bpx,var(--site-px,48px));display:flex;flex-direction:column;align-items:center;text-align:center;}
   .cd-wrap[data-al="left"] .cd-in{align-items:flex-start;text-align:left;}
   .cd-wrap [data-u]{font-variant-numeric:tabular-nums;}
   /* 261019 추가 — 숫자 칸 폭 고정: 고정폭 숫자(tabular-nums)가 없는 글꼴(Playfair 이탤릭 등)은 1·4·7 의 폭이 달라 1초마다 칸이 줄었다 늘었다 하며 세로선·이웃 칸이 좌우로 흔들렸다. 글자 수 × 넉넉한 숫자 폭으로 상자를 잡고 가운데 맞춘다 */
@@ -3766,7 +3766,7 @@
   .fm-pv > .cd-wrap{width:200%;transform:scale(.5);transform-origin:0 0;}
   #baGrid .ba-card[data-kind="cdblk"]{border-radius:var(--r-xl);}
   .dv-wrap{position:relative;}
-  .dv-in{max-width:1180px;margin:0 auto;padding:0 var(--bpx,var(--site-px,48px));display:flex;justify-content:center;}
+  .dv-in{max-width:calc(var(--site-pw, calc(1180px - 2 * var(--bpx,var(--site-px,48px)))) + 2 * var(--bpx,var(--site-px,48px)));margin:0 auto;padding:0 var(--bpx,var(--site-px,48px));display:flex;justify-content:center;}
   .dv-grp{display:flex;flex-direction:column;min-width:0;}
   .dv-row{display:flex;align-items:center;gap:var(--dvg,14px);width:100%;}
   .dv-seg{flex:1 1 0;min-width:0;display:block;}
