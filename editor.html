@@ -18401,8 +18401,12 @@
         ps.addEventListener('pointerdown',function(){ stMoClose(); stPxHeld=true; window.addEventListener('pointerup',function f(){ window.removeEventListener('pointerup',f); stPxGuide(false); }); stPxGuide(true,'pw'); });
         ps.addEventListener('pointerup',function(){ stPxGuide(false); }); ps.addEventListener('keyup',function(){ stPxGuide(false); }); }
       if(document.activeElement!==ps) ps.value=pv; if(typeof smRng==='function') smRng(ps); var pvv=document.getElementById('stPwV'); if(pvv) pvv.textContent=pv+'px'; }
-    var pn=document.getElementById('stPwNote'); if(pn) pn.textContent=on?'본문 폭을 따르는 블록이 이 폭 안에 맞춰집니다. 블록마다 본문 폭 「직접」으로 따로 정할 수 있습니다.':'블록마다 디자인에 정해진 폭으로 들어갑니다. 「사이트 폭 지정」을 고르면 블록이 한 폭으로 맞춰집니다.';
+    var pn=document.getElementById('stPwNote'); if(pn) pn.textContent=on?('본문 폭을 따르는 블록이 이 폭 안에 맞춰집니다. 블록마다 본문 폭 「직접」으로 따로 정할 수 있습니다.'+stPwVisNote()):'블록마다 디자인에 정해진 폭으로 들어갑니다. 「사이트 폭 지정」을 고르면 블록이 한 폭으로 맞춰집니다.';
   }
+  /* 261113 추가 — 편집 화면에서 블록이 쓸 수 있는 내용 폭(좌측 메뉴면 메뉴를 뺀 자리 − 좌우 여백). 사이트 폭이 이보다 넓으면 편집 화면에서는 변화가 안 보여 고장처럼 보였다 */
+  function stBlkArea(){ var site=stSite(); if(!site) return 0; var z=parseFloat(getComputedStyle(site).zoom)||1, b=site.querySelector(':scope > .blk'); var w=b?b.getBoundingClientRect().width:site.getBoundingClientRect().width; return Math.round(w/z); }
+  function stPwVisNote(){ var site=stSite(), pw=+SITE_LAYOUT.pw; if(!site || !(pw>0)) return ''; var vis=stBlkArea()-2*(+SITE_LAYOUT.pc||48); if(!(vis>0) || pw<=vis) return '';
+    var side=(site.getAttribute('data-hd-type')==='side'); return ' 지금 편집 화면은 '+(side?'좌측 메뉴를 뺀 ':'')+'블록 자리가 '+vis+'px라 그보다 넓은 값은 넓은 화면(미리보기)에서만 차이가 보입니다.'; }
   /* 261113 추가 — 본문 폭 2칸: 블록 기본 ↔ 사이트 폭 지정(마지막 값에서 다시 시작) */
   function stPwSet(m){ SITE_LAYOUT.pw=(m==='site')?(+SITE_LAYOUT.pwLast||1180):0; stLayoutApply(); if(m==='site'){ stPxHeld=false; stPxGuide(true,'pw'); stPxGuide(false); } }
 
@@ -18556,8 +18560,9 @@
       else { b='좌우 '+P+'px(따로 정함)'; if(inv) tail=' 좌우는 화면이 본문 폭보다 좁을 때만 보입니다.'; else if(real!=null) b+=' → 실제 내용 '+real+'px'; } }
     if(!mo && m==='site' && !on) tail+=' 사이트 폭을 지정하면 그 폭을 따릅니다.';
     /* 261113 추가 — 편집 화면보다 넓은 폭: 편집 화면에서는 화면 폭만큼만 보여 미리보기와 달라 보였다 */
-    (function(){ if(mo || m==='full') return; var st0=(typeof stSite==='function')?stSite():null; if(!st0) return; var cvw=Math.round(st0.getBoundingClientRect().width/(parseFloat(getComputedStyle(st0).zoom)||1)); var val=(m==='own')?((typeof real!=='undefined' && real!=null)?real:mw):((m==='site' && on)?N:0);
-      if(cvw>0 && val>cvw-2*S0) tail+=' 편집 화면('+cvw+'px)보다 넓어 여기서는 화면 폭만큼만 보입니다. 넓은 화면에서는 '+val+'px입니다.'; })();
+    (function(){ if(mo || m==='full') return; var st0=(typeof stSite==='function')?stSite():null; if(!st0) return; var cvw=Math.round(blk.getBoundingClientRect().width/(parseFloat(getComputedStyle(st0).zoom)||1));   /* 블록이 놓인 자리(좌측 메뉴면 메뉴를 뺀 폭) */ var val=(m==='own')?((typeof real!=='undefined' && real!=null)?real:mw):((m==='site' && on)?N:0);
+      var pe=(p==='rt')?blk:(r.box?blk.querySelector(r.box):null), Pa=pe?(parseFloat(getComputedStyle(pe).paddingLeft)||0):S0, room=cvw-2*Pa;   /* 실제 좌우(디자인 좌우 0 · 16 등)를 뺀 자리 */
+      if(cvw>0 && val>room+1) tail+=' 편집 화면의 블록 자리('+Math.round(room)+'px)보다 넓어 여기서는 그 폭만큼만 보입니다. 넓은 화면에서는 '+val+'px입니다.'; })();
     h.textContent=a+(b?' · '+b:'')+'.'+tail; }
 
   function pwSync(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var box=pwBox(p); if(!box) return;
@@ -63855,7 +63860,7 @@ function hdAlignWrapNote(){ try{
   var old=hd.style.getPropertyValue('--hd-sidex'); hd.style.setProperty('--hd-sidex','var(--site-px,48px)'); var b=rows(); if(old) hd.style.setProperty('--hd-sidex',old); else hd.style.removeProperty('--hd-sidex');
   return (b<a)?' 메뉴가 많아 두 줄이 됐습니다. 「화면 끝」으로 바꾸면 한 줄로 들어갑니다.':''; }catch(e){ return ''; } }
 function hdColReset(g){ var lg={logo:'logo',nav:'nav',fx:'fx',util:'util',bg:'bg'}[g]; if(lg) hdUnlink(lg); var c=HD.col[hdEditSt]; if(g==='logo') c.logo=''; else if(g==='nav'){ c.fg=''; c.ac=''; } else if(g==='fx') c.fx=''; else if(g==='util'){ c.ufg=''; c.uac=''; } else if(g==='sub'){ HD.sub.fg=''; HD.sub.bg=''; HD.sub.lineCol=''; } else if(g==='subac') HD.sub.ac=''; else if(g==='bg'){ hdBgCur().col=(hdEditSt==='sticky'?'auto':''); hdBgCur().alpha=1; } hdFill(); hdChanged(); if(g==='subac') hdSubAcShow(); else if(g==='sub') hdSubShow(); }   /* 261109 수정 — 서브메뉴 색을 되돌릴 때도 캔버스의 서브메뉴를 펼쳐 보인다 */
-function hdChanged(){ hdApply(); if(typeof mvKick==='function') try{ mvKick(0); }catch(e){} }
+function hdChanged(){ hdApply(); if(typeof stLayoutSync==='function') try{ stLayoutSync(); }catch(e){} if(typeof mvKick==='function') try{ mvKick(0); }catch(e){} }
 /* 261106 추가 — 상단 메뉴 사용 (기존 편집기 상단 메뉴 「숨김」 대응 · 푸터 사용과 같은 방식). 꺼도 설정은 그대로 남는다 */
 function hdSwitch(on){
   on=!!on; if((HD.on!==false)===on) return; HD.on=on; hdFill(); hdChanged();
