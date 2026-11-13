@@ -18389,9 +18389,9 @@
      opt.px: 'site' = 좌우는 늘 사이트 값 · 'own' = 좌우는 늘 블록 값(c.px) · 없으면 pw 를 따름 / opt.fullPx: 가로 100% 확장일 때 좌우(이미지형 0)
      opt.mwKey · opt.pxKey: 블록 cfg 의 폭 · 좌우 키 이름(기본 mw · px) */
   var PW_REG={   /* 블록 접두 → {mw: 기본 폭, px: 기본 좌우, opt, row: 「이 블록만 직접」 안으로 옮길 최대 폭 슬라이더 id, kind: data-block, redraw: 사이트 값 바뀔 때 다시 그릴 함수} */
-    vl:{mw:1280, px:48,  opt:{px:'site'}, row:'vlMw', kind:'valuelist'},   /* CONTENT02 이미지 전환 목록 */
-    wl:{mw:1600, px:48,  opt:{px:'site'}, row:'wlMw', kind:'worklist'},    /* CONTENT01 마우스 따라오는 이미지 목록(좌우 64 → 사이트 값) */
-    nx:{mw:1760, px:100, opt:{px:'own'},  row:'nxMw', kind:'stickstat', redraw:function(b){ nxApply(b); }}   /* TEXT01 고정 타이틀 숫자(좌우 100 유지 · 타이틀 고정 위치 다시 계산) */
+    vl:{mw:1280, px:48,  opt:{px:'site', padIn:true, cap:'5cqw'}, row:'vlMw', kind:'valuelist'},   /* CONTENT02 이미지 전환 목록(.vl-in 안쪽 좌우 min(값, 5cqw)) */
+    wl:{mw:1600, px:48,  opt:{px:'site', padIn:true, cap:'5cqw'}, row:'wlMw', kind:'worklist'},    /* CONTENT01 마우스 따라오는 이미지 목록(좌우 64 → 사이트 값 · 안쪽 min(값, 5cqw)) */
+    nx:{mw:1760, px:100, opt:{px:'own',  padIn:true, cap:'6cqw'}, row:'nxMw', kind:'stickstat', redraw:function(b){ nxApply(b); }}   /* TEXT01 고정 타이틀 숫자(좌우 100 유지 · 안쪽 min(값, 6cqw) · 타이틀 고정 위치 다시 계산) */
   };
   function pwMode(c){ var m=c && c.pw; return (m==='site'||m==='own'||m==='full')?m:'own'; }
   function pwCss(c,defMw,defPx,opt){ opt=opt||{}; c=c||{};
@@ -18400,7 +18400,11 @@
     var site='var(--site-px,'+defPx+'px)';
     var px=(opt.px==='site')?site:(opt.px==='own')?(oPx+'px'):(m==='own'?oPx+'px':site);
     if(m==='full') return {mw:'none', px:(opt.fullPx!=null)?(opt.fullPx+'px'):px};
-    if(m==='site') return {mw:'var(--site-pw,'+defMw+'px)', px:px};
+    if(m==='site'){
+      /* 261113 수정 — 본문 폭 = 내용이 놓이는 폭. 바깥 상자 안쪽에 좌우 여백이 있는 블록(opt.padIn)은 상자 폭 = 본문 폭 + 좌우 여백 × 2 (전: 상자 폭 = 본문 폭이라 내용이 선보다 여백만큼 안쪽에서 시작)
+         사이트 「블록 기본」이면 --site-pw 가 없어 (defMw − 여백×2) + 여백×2 = defMw 그대로 */
+      if(opt.padIn){ var P=opt.cap?('min('+px+', '+opt.cap+')'):px; return {mw:'calc(var(--site-pw, calc('+defMw+'px - 2 * '+P+')) + 2 * '+P+')', px:px}; }
+      return {mw:'var(--site-pw,'+defMw+'px)', px:px}; }
     return {mw:oMw+'px', px:px}; }
   function pwApply(el,c,defMw,defPx,opt){ if(!el || !el.style) return; var v=pwCss(c,defMw,defPx,opt); el.style.setProperty('--pw-mw',v.mw); el.style.setProperty('--pw-px',v.px); }
   /* 블록 추가로 넣는 블록만 본문 폭 따름 */
@@ -45895,7 +45899,7 @@ global.PolyFX = API;
     s.setProperty('--vlpv', pv+'px');
     s.setProperty('--vlpvm', Math.round(pv*0.65)+'px');
     s.setProperty('--vlmw', txNum(c.mw,1280)+'px');
-    pwApply(wrap,c,1280,48,{px:'site'});   /* 261113 추가 — 본문 폭(폭 = pw · 좌우 = 사이트 좌우 여백) */
+    pwApply(wrap,c,1280,48,PW_REG.vl.opt);   /* 261113 추가 — 본문 폭(폭 = pw · 좌우 = 사이트 좌우 여백) */
     s.setProperty('--vlnw', Math.round(txNum(c.hs,24)*2.7)+'px');   /* 번호 칸 = 번호 글자 크기에 맞춰 */
     wrap.setAttribute('data-side', c.side==='right'?'right':'left');
     wrap.setAttribute('data-row-line', c.rowLine===false?'0':'1');
@@ -46252,7 +46256,7 @@ global.PolyFX = API;
     s.setProperty('--wlpv', pv+'px');
     s.setProperty('--wlpvm', Math.round(pv*0.65)+'px');
     s.setProperty('--wlmw', txNum(c.mw,1600)+'px');
-    pwApply(wrap,c,1600,48,{px:'site'});   /* 261113 추가 — 본문 폭(폭 = pw · 좌우 = 사이트 좌우 여백, 전: 64 고정) */
+    pwApply(wrap,c,1600,48,PW_REG.wl.opt);   /* 261113 추가 — 본문 폭(폭 = pw · 좌우 = 사이트 좌우 여백, 전: 64 고정) */
     wrap.setAttribute('data-img', c.img===false?'0':'1');
     wrap.setAttribute('data-cat', c.cat===false?'0':'1');
     wrap.setAttribute('data-line', c.line===false?'0':'1');
@@ -46629,7 +46633,7 @@ global.PolyFX = API;
     s.setProperty('--nxptm', Math.round(pt*0.6)+'px'); s.setProperty('--nxpbm', Math.round(pb*0.6)+'px');
     s.setProperty('--nxpx', txNum(c.px,100)+'px');
     s.setProperty('--nxmw', txNum(c.mw,1760)+'px');
-    pwApply(wrap,c,1760,100,{px:'own'});   /* 261113 추가 — 본문 폭(폭만 pw · 좌우는 블록 값 100 유지) */
+    pwApply(wrap,c,1760,100,PW_REG.nx.opt);   /* 261113 추가 — 본문 폭(폭만 pw · 좌우는 블록 값 100 유지) */
     wrap.setAttribute('data-stick', c.stick===false?'0':'1');
     wrap.setAttribute('data-pos', c.pos==='bottom'?'bottom':'top');
     wrap.setAttribute('data-desc', c.desc===false?'0':'1');
