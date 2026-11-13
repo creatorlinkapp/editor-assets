@@ -475,7 +475,7 @@
 
   /* 블록 편집 래퍼 */
   .blk{position:relative;padding:56px 48px;transition:box-shadow .12s;cursor:pointer;}
-  .site{--site-px:var(--site-px-pc,48px);}   /* 261112 추가 — 사이트 공통 좌우 여백(스타일 > 레이아웃). 좌우 「기본」인 블록 · 메뉴 · 타이틀이 쓴다 */
+  .site{--site-px:var(--site-px-pc,48px);}   /* 261112 추가 — 사이트 공통 좌우 여백(스타일 > 폭 · 여백). 좌우 「기본」인 블록 · 메뉴 · 타이틀이 쓴다 */
   .blk{--bpx:initial;}   /* 261112 추가 — 블록 좌우 3칸(--bpx) : 바깥 블록의 값이 안에 든 블록(탭 안 등)으로 이어지지 않게 */
   html.mob .site{--site-px:var(--site-px-mo,20px);}
   .blk:hover{box-shadow:inset 0 0 0 2px var(--green);}
@@ -7512,7 +7512,7 @@
       </div>
       <!-- 261112 추가 — 레이아웃: 사이트 공통 좌우 여백(PC · 휴대폰). 블록 · 상단 메뉴 · 상세 타이틀의 좌우 「기본」이 이 값을 따른다(--site-px) -->
       <div class="st-sec" id="stLayoutSec">
-        <div class="st-sec-h">레이아웃 <span>좌우 기본인 블록 · 메뉴 · 푸터에 적용</span></div>   <!-- 261112 수정 — 「모든 블록에 적용」은 실제와 달랐다(블록마다 없음 · 직접이면 그 값) -->
+        <div class="st-sec-h">폭 · 여백 <span>「기본」인 블록 · 메뉴 · 푸터에 적용</span></div>   <!-- 261112 수정 — 「모든 블록에 적용」은 실제와 달랐다(블록마다 없음 · 직접이면 그 값) -->
         <!-- 261113 추가 — 본문 폭: 블록 기본(블록마다 디자인 폭 · 지금 화면 그대로) / 사이트 폭 지정(본문 폭 따름 블록이 이 폭에 맞춰짐) -->
         <div class="srow"><span class="k">본문 폭</span><div class="mt-seg" id="stPwSeg" style="flex:1;min-width:0;margin:0;">
           <button type="button" class="mt-seg-b active" data-m="block" onclick="stPwSet('block')">블록 기본</button>
@@ -9188,7 +9188,7 @@
     --hd-sub-fs:13px;--hd-sub-fg:var(--st-muted,#5A616B);--hd-sub-bg:var(--st-bg,#fff);--hd-sub-rad:10px;--hd-sub-line:var(--st-line,var(--border,#E4E7EC));--hd-sub-sh:0 12px 34px rgba(20,24,32,.14);--hd-usz:1;
     display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;column-gap:var(--hd-lgap);row-gap:var(--hd-top);padding:var(--hd-pt) var(--hd-side) var(--hd-pb);position:relative;   /* 260930 수정 — 원래 .site-hd 의 space-between 을 끈다: 자리는 레이아웃 규칙(auto margin)이 정한다. 2·7·14처럼 auto margin 이 없는 배치가 벌어져 보이던 문제 */
     background-color:var(--hd-bg);background-image:var(--hd-bgimg);background-size:var(--hd-bgsize);background-position:var(--hd-bgpos);background-repeat:var(--hd-bgrep);
-    border-bottom:var(--hd-line);box-shadow:var(--hd-shadow);transition:background-color .2s ease,box-shadow .2s ease,padding-top .2s ease,padding-bottom .2s ease;}   /* 261112 수정 — 좌우(padding-left · right)는 효과 없이 바로: 스타일 > 레이아웃 좌우 여백을 바꿀 때 메뉴만 0.2초 늦게 따라와 블록과 시작선이 어긋나 보였다 */
+    border-bottom:var(--hd-line);box-shadow:var(--hd-shadow);transition:background-color .2s ease,box-shadow .2s ease,padding-top .2s ease,padding-bottom .2s ease;}   /* 261112 수정 — 좌우(padding-left · right)는 효과 없이 바로: 스타일 > 폭 · 여백 좌우 여백을 바꿀 때 메뉴만 0.2초 늦게 따라와 블록과 시작선이 어긋나 보였다 */
   /* 261109 수정 — 흐림을 기존 편집기와 같은 구조로: 상단 메뉴 배경(색 · 이미지) 위 · 내용 아래에 「흐림 막」(.hd-blurv)을 깔아, 막 아래의 배경 이미지와 뒤 페이지를 함께 흐린다.
      전엔 상단 메뉴 자신에 backdrop-filter 를 걸어 뒤 페이지만 흐려지고 배경 이미지는 그대로 선명했다. isolation — 막(z-index:-1)이 상단 메뉴 배경 위 · 내용 아래에 오도록 */
   .site-hd.hd-blur{isolation:isolate;}
@@ -9653,7 +9653,7 @@
   html.mview .site > .site-hd{background-color:var(--hd-bg);background-image:var(--hd-bgimg);box-shadow:var(--hd-shadow);border-bottom:var(--hd-line);}   /* 모바일 사본의 고정 헤더도 설정한 배경을 쓴다 (투명이면 hdApply 가 사이트 배경색으로) */
   html.mview:not(.mob) .site[data-hd-type="side"] > .site-hd{border-bottom:none;}   /* 261110 추가 — 미리보기 창의 좌측 메뉴는 편집 화면처럼 오른쪽 선만(위 규칙이 아래 선까지 그었다) · 모바일은 가로 바라 아래 선 그대로 */
   html.mob .site[data-hd-type="side"]{display:block;} html.mob .site[data-hd-type="side"] > .site-hd{height:auto;flex-direction:row;padding:16px 18px;border-right:none;}
-  html.mob .site-hd{--hd-side:var(--site-px,18px);}   /* 261112 수정 — 휴대폰 메뉴 좌우도 사이트 휴대폰 값(스타일 > 레이아웃)을 따른다 */
+  html.mob .site-hd{--hd-side:var(--site-px,18px);}   /* 261112 수정 — 휴대폰 메뉴 좌우도 사이트 휴대폰 값(스타일 > 폭 · 여백)을 따른다 */
   @media (max-width:640px){ .hd-util{display:none;} }
   /* ── 설정창(#hdDock) ── */
   /* 261026 수정 — 상태 영역 단순화: 탭 [기본 | 플로팅 ◐] + 현재 페이지 겹치기 + 항목별 연결(🔗) */
@@ -10526,7 +10526,7 @@
   .gd-foot .gd-more[data-ms="text"] .gd-m-i:hover .t,.gd-foot .gd-more[data-ms="rows"] .gd-m-i:hover .t{opacity:.6;}
   .gd-foot .gd-empty{margin-top:22px;padding:24px;border:1px dashed var(--gd-ln2);border-radius:3px;font-size:13px;line-height:1.6;color:var(--gd-m2);text-align:center;}
   @media (max-width:640px){
-    .gd-title .gd-t-in{padding-left:var(--site-px,20px);padding-right:var(--site-px,20px);min-height:calc(var(--gd-mh) * .62);}   /* 261112 수정 — 휴대폰 좌우 20 고정 → 사이트 휴대폰 값(스타일 > 레이아웃) */
+    .gd-title .gd-t-in{padding-left:var(--site-px,20px);padding-right:var(--site-px,20px);min-height:calc(var(--gd-mh) * .62);}   /* 261112 수정 — 휴대폰 좌우 20 고정 → 사이트 휴대폰 값(스타일 > 폭 · 여백) */
     .gd-title[data-pxm="none"] .gd-t-in{padding-left:0;padding-right:0;}
     .gd-title{--gd-hfs:22px;} .gd-title[data-lay="bold"]{--gd-hfs:20px;}
     .gd-title[data-lay="box"] .gd-t-txt{min-width:0;max-width:86%;padding:26px 28px;} .gd-title[data-lay="box"] .gd-t-bar{margin:36px 20px 0;}
@@ -10692,7 +10692,7 @@
      · 좁은 화면 규칙은 @container — 편집 캔버스는 1440 폭을 zoom 으로 줄여 보이므로 창 폭(@media)이 아니라 .site 폭을 따른다.
      ══════════════════════════════════════════════════════════════════ */
   .site-ft{--ft-bg:#1E2227;--ft-fg:#8A909A;--ft-hd:#EAECEF;--ft-ac:#4FE08D;--ft-ln:rgba(255,255,255,.09);--ft-pt:56px;--ft-pb:34px;--ft-fs:14px;--ft-isz:18px;
-    position:relative;background:var(--ft-bg);color:var(--ft-fg);font-size:var(--ft-fs);line-height:1.7;padding:var(--ft-pt) var(--site-px,48px) var(--ft-pb);box-shadow:inset 0 1px 0 var(--ft-ln);word-break:keep-all;text-align:left;}   /* 261112 수정 — 좌우 40 고정 → 사이트 좌우 여백(스타일 > 레이아웃) */   /* 위 구분선은 테두리가 아니라 안쪽 그림자 — 테두리로 두면 롤오버 외곽선(안쪽 기준) 위로 1px 이 삐져나온다 */
+    position:relative;background:var(--ft-bg);color:var(--ft-fg);font-size:var(--ft-fs);line-height:1.7;padding:var(--ft-pt) var(--site-px,48px) var(--ft-pb);box-shadow:inset 0 1px 0 var(--ft-ln);word-break:keep-all;text-align:left;}   /* 261112 수정 — 좌우 40 고정 → 사이트 좌우 여백(스타일 > 폭 · 여백) */   /* 위 구분선은 테두리가 아니라 안쪽 그림자 — 테두리로 두면 롤오버 외곽선(안쪽 기준) 위로 1px 이 삐져나온다 */
   .site > .site-ft,.site > .ft-offbar{position:sticky;top:9999px;}   /* 내용이 짧은 페이지에서도 페이지 맨 아래에 붙는다(컨테이너 밖으로는 못 나가므로 긴 페이지에서는 제자리) */
   .site-ft .ft-in{max-width:var(--site-pw,1180px);margin:0 auto;}   /* 261112 수정 — 1160 → 1180(블록 최대 폭과 시작선 맞춤) · 261113 수정 — 「사이트 폭 지정」이면 본문 폭 */
   .site-ft a{color:inherit;text-decoration:none;cursor:pointer;transition:color .12s;}
@@ -11636,7 +11636,7 @@
               <button type="button" class="mt-seg-b active" data-m="base" onclick="rtPxSet('base')">기본</button>
               <button type="button" class="mt-seg-b" data-m="none" onclick="rtPxSet('none')">없음</button>
               <button type="button" class="mt-seg-b" data-m="custom" onclick="rtPxSet('custom')">직접</button>
-            </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="rtPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="rtPx" min="0" max="200" step="2" value="48"><span class="v" id="rtPxV">48px</span></div>
             <div class="tx-hint" style="margin-top:10px;">상단·하단은 이 블록과 위아래 블록 사이의 여백, 좌우는 글이 놓이는 안쪽 여백입니다. 높이를 정하면 글은 세로 가운데에 놓이고, 글이 더 길면 블록이 늘어납니다.</div>
           </div></div>
@@ -12245,7 +12245,7 @@
             <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="twHt" min="200" max="900" step="10" value="420"><span class="v" id="twHtV">420px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="twPt" min="0" max="160" step="2" value="0"><span class="v" id="twPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="twPb" min="0" max="160" step="2" value="0"><span class="v" id="twPbV">0px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="twPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('tw','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('tw','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('tw','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="twPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('tw','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('tw','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('tw','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="twPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="twPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="twPadxV">48px</span></div>
           </div></div>
         </div>
@@ -12334,7 +12334,7 @@
             <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="rsHt" min="160" max="900" step="10" value="360"><span class="v" id="rsHtV">360px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="rsPt" min="0" max="160" step="2" value="0"><span class="v" id="rsPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="rsPb" min="0" max="160" step="2" value="0"><span class="v" id="rsPbV">0px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="rsPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('rs','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('rs','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('rs','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="rsPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('rs','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('rs','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('rs','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="rsPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="rsPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="rsPadxV">48px</span></div>
           </div></div>
         </div>
@@ -12665,12 +12665,6 @@
             <div class="srow"><span class="k">행 안쪽 여백</span><input class="rng" type="range" id="ixRx" min="0" max="60" step="2" value="24"><span class="v" id="ixRxV">24px</span></div>
             <div class="srow"><span class="k">구분선 두께</span><input class="rng" type="range" id="ixLw" min="0" max="4" step="0.5" value="1"><span class="v" id="ixLwV">1.0px</span></div>
             <div class="sline" style="display:none;"><span class="lbl">화면 전체 폭으로</span><button class="sw" id="ixFullSw" onclick="ixSw(this,'full')"></button></div>
-            <div class="sgrp">
-              <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="ixMaxw" min="600" max="1800" step="20" value="1240"><span class="v" id="ixMaxwV">1240px</span></div>
-              <div class="srow"><span class="k">위아래 여백</span><input class="rng" type="range" id="ixPv" min="0" max="200" step="4" value="56"><span class="v" id="ixPvV">56px</span></div>
-              <div class="srow"><span class="k">좌우 여백</span><div class="mt-seg" id="ixPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('ix','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('ix','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('ix','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
-              <div class="srow" id="ixPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="ixPadx" min="0" max="120" step="2" value="16"><span class="v" id="ixPadxV">16px</span></div>
-            </div>
             <div class="sline" style="margin-top:10px;"><span class="lbl">한 줄씩 나타나기</span><button class="sw on" id="ixRvSw" onclick="ixSw(this,'reveal')"></button></div>
             <div class="tx-hint"><b>행 안쪽 여백</b>은 롤오버 배경·왼쪽 막대가 번호와 겹치지 않도록 잡아 두는 자리입니다. 구분선은 이 자리까지 이어집니다.</div>
           </div></div>
@@ -12681,6 +12675,11 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="ixPt" min="0" max="200" step="2" value="0"><span class="v" id="ixPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="ixPb" min="0" max="200" step="2" value="0"><span class="v" id="ixPbV">0px</span></div>
+            <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="ixMaxw" min="600" max="1800" step="20" value="1240"><span class="v" id="ixMaxwV">1240px</span></div>
+            <div class="srow"><span class="k">안쪽 위아래</span><input class="rng" type="range" id="ixPv" min="0" max="200" step="4" value="56"><span class="v" id="ixPvV">56px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="ixPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('ix','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('ix','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('ix','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
+            <div class="srow" id="ixPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="ixPadx" min="0" max="120" step="2" value="16"><span class="v" id="ixPadxV">16px</span></div>
+            <!-- 261113 수정 — 최대 폭 · 위아래 · 좌우를 「레이아웃」에서 「여백」으로(다른 블록과 같은 자리 · 「위아래 여백」 → 「안쪽 위아래」: 상단 · 하단(블록 바깥)과 구분) -->
           </div></div>
         </div>
 
@@ -12809,12 +12808,6 @@
             <div class="srow"><span class="k">제목 아래</span><input class="rng" type="range" id="fqHg" min="0" max="200" step="2" value="72"><span class="v" id="fqHgV">72px</span></div>
             <div class="srow"><span class="k">구분선 두께</span><input class="rng" type="range" id="fqLw" min="0" max="4" step="0.5" value="1"><span class="v" id="fqLwV">1.0px</span></div>
             <div class="sline" style="display:none;"><span class="lbl">화면 전체 폭으로</span><button class="sw" id="fqFullSw" onclick="fqSw(this,'full')"></button></div>
-            <div class="sgrp">
-              <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="fqMaxw" min="600" max="1800" step="20" value="1440"><span class="v" id="fqMaxwV">1440px</span></div>
-              <div class="srow"><span class="k">위아래 여백</span><input class="rng" type="range" id="fqPv" min="0" max="200" step="4" value="56"><span class="v" id="fqPvV">56px</span></div>
-              <div class="srow"><span class="k">좌우 여백</span><div class="mt-seg" id="fqPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('fq','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('fq','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('fq','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
-              <div class="srow" id="fqPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="fqPadx" min="0" max="120" step="2" value="48"><span class="v" id="fqPadxV">48px</span></div>
-            </div>
             <div class="sline" style="margin-top:10px;"><span class="lbl">한 줄씩 나타나기</span><button class="sw on" id="fqRvSw" onclick="fqSw(this,'reveal')"></button></div>
           </div></div>
         </div>
@@ -12824,6 +12817,11 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="fqPt" min="0" max="200" step="2" value="0"><span class="v" id="fqPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="fqPb" min="0" max="200" step="2" value="0"><span class="v" id="fqPbV">0px</span></div>
+            <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="fqMaxw" min="600" max="1800" step="20" value="1440"><span class="v" id="fqMaxwV">1440px</span></div>
+            <div class="srow"><span class="k">안쪽 위아래</span><input class="rng" type="range" id="fqPv" min="0" max="200" step="4" value="56"><span class="v" id="fqPvV">56px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="fqPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('fq','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('fq','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('fq','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
+            <div class="srow" id="fqPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="fqPadx" min="0" max="120" step="2" value="48"><span class="v" id="fqPadxV">48px</span></div>
+            <!-- 261113 수정 — 최대 폭 · 위아래 · 좌우를 「레이아웃」에서 「여백」으로(다른 블록과 같은 자리 · 「위아래 여백」 → 「안쪽 위아래」: 상단 · 하단(블록 바깥)과 구분) -->
           </div></div>
         </div>
 
@@ -12953,12 +12951,6 @@
             <div class="srow"><span class="k">행 높이</span><input class="rng" type="range" id="qnPy" min="8" max="80" step="1" value="36"><span class="v" id="qnPyV">36px</span></div>
             <div class="srow"><span class="k">구분선 두께</span><input class="rng" type="range" id="qnLw" min="0" max="4" step="0.5" value="1"><span class="v" id="qnLwV">1.0px</span></div>
             <div class="sline" style="display:none;"><span class="lbl">화면 전체 폭으로</span><button class="sw" id="qnFullSw" onclick="qnSw(this,'full')"></button></div>
-            <div class="sgrp">
-              <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="qnMaxw" min="600" max="1800" step="20" value="1440"><span class="v" id="qnMaxwV">1440px</span></div>
-              <div class="srow"><span class="k">위아래 여백</span><input class="rng" type="range" id="qnPv" min="0" max="240" step="4" value="112"><span class="v" id="qnPvV">112px</span></div>
-              <div class="srow"><span class="k">좌우 여백</span><div class="mt-seg" id="qnPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('qn','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('qn','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('qn','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
-              <div class="srow" id="qnPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="qnPadx" min="0" max="120" step="2" value="48"><span class="v" id="qnPadxV">48px</span></div>
-            </div>
             <div class="sline" style="margin-top:10px;"><span class="lbl">한 줄씩 나타나기</span><button class="sw on" id="qnRvSw" onclick="qnSw(this,'reveal')"></button></div>
           </div></div>
         </div>
@@ -12968,6 +12960,11 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="qnPt" min="0" max="200" step="2" value="0"><span class="v" id="qnPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="qnPb" min="0" max="200" step="2" value="0"><span class="v" id="qnPbV">0px</span></div>
+            <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="qnMaxw" min="600" max="1800" step="20" value="1440"><span class="v" id="qnMaxwV">1440px</span></div>
+            <div class="srow"><span class="k">안쪽 위아래</span><input class="rng" type="range" id="qnPv" min="0" max="240" step="4" value="112"><span class="v" id="qnPvV">112px</span></div>
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="qnPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('qn','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('qn','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('qn','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
+            <div class="srow" id="qnPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="qnPadx" min="0" max="120" step="2" value="48"><span class="v" id="qnPadxV">48px</span></div>
+            <!-- 261113 수정 — 최대 폭 · 위아래 · 좌우를 「레이아웃」에서 「여백」으로(다른 블록과 같은 자리 · 「위아래 여백」 → 「안쪽 위아래」: 상단 · 하단(블록 바깥)과 구분) -->
           </div></div>
         </div>
 
@@ -13035,7 +13032,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow" style="margin-bottom:6px;"><span class="k">가로</span></div>
             <div class="mt-seg" id="srAlignSeg"><button type="button" class="mt-seg-b active" data-m="left" onclick="srAlign('left')">왼쪽</button><button type="button" class="mt-seg-b" data-m="center" onclick="srAlign('center')">가운데</button></div>
-            <div class="srow"><span class="k">좌우 여백</span><div class="mt-seg" id="srPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('sr','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('sr','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('sr','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우 여백</span><div class="mt-seg" id="srPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('sr','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('sr','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('sr','padx','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="srPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="srPadx" min="0" max="200" step="2" value="76"><span class="v" id="srPadxV">76px</span></div>
           </div></div>
         </div>
@@ -13131,7 +13128,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="bcPv" min="0" max="220" step="2" value="110"><span class="v" id="bcPvV">110px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="bcMw" min="720" max="1600" step="10" value="1140"><span class="v" id="bcMwV">1140px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="bcPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('bc','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('bc','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('bc','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="bcPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('bc','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('bc','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('bc','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="bcPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="bcPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="bcPadxV">48px</span></div>
             <div class="tx-hint bpx-in-note" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
           </div></div>
@@ -13453,7 +13450,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="ltPt" min="0" max="240" step="2" value="72"><span class="v" id="ltPtV">72px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="ltPb" min="0" max="240" step="2" value="72"><span class="v" id="ltPbV">72px</span></div>
-            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 스타일 &gt; 레이아웃 값을 따릅니다.</div>   <!-- 261112 추가 — 좌우는 사이트 값 고정(3칸 없음) -->
+            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 스타일 &gt; 폭 · 여백 값을 따릅니다.</div>   <!-- 261112 추가 — 좌우는 사이트 값 고정(3칸 없음) -->
           </div></div>
         </div>
       </div>
@@ -13591,7 +13588,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="tkPt" min="0" max="240" step="2" value="80"><span class="v" id="tkPtV">80px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="tkPb" min="0" max="240" step="2" value="80"><span class="v" id="tkPbV">80px</span></div>
-            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 스타일 &gt; 레이아웃 값을 따릅니다.</div>   <!-- 261112 추가 — 좌우는 사이트 값 고정(3칸 없음) -->
+            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 스타일 &gt; 폭 · 여백 값을 따릅니다.</div>   <!-- 261112 추가 — 좌우는 사이트 값 고정(3칸 없음) -->
           </div></div>
         </div>
       </div>
@@ -13776,7 +13773,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="scPv" min="0" max="240" step="2" value="120"><span class="v" id="scPvV">120px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="scMw" min="720" max="1600" step="10" value="1140"><span class="v" id="scMwV">1140px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="scPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('sc','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('sc','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('sc','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="scPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('sc','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('sc','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('sc','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="scPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="scPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="scPadxV">48px</span></div>
             <div class="tx-hint bpx-in-note" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
           </div></div>
@@ -14235,7 +14232,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="fmPv" min="0" max="200" step="4" value="80"><span class="v" id="fmPvV">80px</span></div>
             <div class="srow" id="fmMwRow"><span class="k">최대 폭</span><input class="rng" type="range" id="fmMw" min="720" max="1600" step="10" value="1140"><span class="v" id="fmMwV">1140px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="fmPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('fm','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('fm','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('fm','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="fmPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('fm','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('fm','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('fm','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="fmPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="fmPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="fmPadxV">48px</span></div>
             <div class="tx-hint bpx-in-note" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
             <div class="mtk-hint" id="fmMwHint"></div>
@@ -14329,7 +14326,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="caPv" min="0" max="200" step="4" value="64"><span class="v" id="caPvV">64px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="caMw" min="720" max="1600" step="10" value="1140"><span class="v" id="caMwV">1140px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="caPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('ca','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('ca','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('ca','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="caPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('ca','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('ca','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('ca','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="caPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="caPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="caPadxV">48px</span></div>
             <div class="tx-hint bpx-in-note" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
             <div class="srow"><span class="k">라운딩</span><input class="rng" type="range" id="caR" min="0" max="20" step="1" value="8"><span class="v" id="caRV">8px</span></div>
@@ -14415,7 +14412,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="nmPt" min="0" max="240" step="2" value="100"><span class="v" id="nmPtV">100px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="nmPb" min="0" max="240" step="2" value="100"><span class="v" id="nmPbV">100px</span></div>
-            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 스타일 &gt; 레이아웃 값을 따릅니다.</div>   <!-- 261112 추가 — 좌우는 사이트 값 고정(3칸 없음) -->
+            <div class="tx-hint" style="margin-top:6px;">좌우 여백은 스타일 &gt; 폭 · 여백 값을 따릅니다.</div>   <!-- 261112 추가 — 좌우는 사이트 값 고정(3칸 없음) -->
           </div></div>
         </div>
 
@@ -14910,7 +14907,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="bdPv" min="0" max="200" step="4" value="80"><span class="v" id="bdPvV">80px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="bdMw" min="720" max="1600" step="10" value="1140"><span class="v" id="bdMwV">1140px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="bdPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('bd','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('bd','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('bd','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="bdPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('bd','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('bd','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('bd','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="bdPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="bdPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="bdPadxV">48px</span></div>
             <div class="tx-hint bpx-in-note" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
             <div class="srow" id="bdRhRow"><span class="k">행 높이</span><input class="rng" type="range" id="bdRh" min="40" max="80" step="2" value="56"><span class="v" id="bdRhV">56px</span></div>
@@ -15154,7 +15151,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="ctPv" min="0" max="200" step="4" value="72"><span class="v" id="ctPvV">72px</span></div>
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="ctMw" min="720" max="1600" step="10" value="1140"><span class="v" id="ctMwV">1140px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="ctPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('ct','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('ct','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('ct','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="ctPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('ct','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('ct','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('ct','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="ctPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="ctPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="ctPadxV">48px</span></div>
             <div class="tx-hint bpx-in-note" style="margin-top:6px;">좌우 여백은 최대 폭 상자 안쪽에 들어갑니다.</div>
             <div class="srow" id="ctRRow"><span class="k">라운딩 <svg class="help-ico pg-tip" data-tip="카드 · 지도 · 지점 상자가 있는 레이아웃에서 적용됩니다." viewBox="0 0 14 14" width="14" height="14" fill="var(--ink-2s)"><path fill-rule="evenodd" d="M7 0a7 7 0 1 1 0 14a7 7 0 1 1 0-14zm0 1a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M5.2 5.4a1.8 1.8 0 1 1 2.6 1.6c-.55.28-.8.62-.8 1.2v.4" fill="none" stroke="var(--ink-2s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="10.45" r=".8"/></svg></span><input class="rng" type="range" id="ctR"min="0" max="24" step="1" value="6"><span class="v" id="ctRV">6px</span></div>
@@ -15533,7 +15530,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="b2Pt" min="0" max="200" step="2" value="64"><span class="v" id="b2PtV">64px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="b2Pb" min="0" max="200" step="2" value="64"><span class="v" id="b2PbV">64px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="b2PxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('b2','px','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('b2','px','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('b2','px','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="b2PxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('b2','px','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('b2','px','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('b2','px','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="b2PxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="b2Px" min="0" max="160" step="2" value="24"><span class="v" id="b2PxV">24px</span></div>
             <div class="tx-hint" id="b2PxHint" style="display:none;margin-top:6px;">화살표가 바깥에 있으면 좌우 여백은 화살표 자리(72px)보다 좁아지지 않습니다.</div>   <!-- 261112 추가 — 바깥 화살표(b2-navout) 때 72px 아래 값은 화면에 안 보인다 -->
           </div></div>
@@ -15705,7 +15702,7 @@
             <div class="sline"><span class="lbl">좌우 폭 제한</span><button type="button" class="sw on" id="ggWrapSw" onclick="ggSw(this,'wrap')" aria-label="좌우 폭 제한"></button></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="ggPt" min="0" max="200" step="2" value="40"><span class="v" id="ggPtV">40px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="ggPb" min="0" max="200" step="2" value="40"><span class="v" id="ggPbV">40px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="ggPxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('gg','px','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('gg','px','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('gg','px','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="ggPxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('gg','px','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('gg','px','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('gg','px','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="ggPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="ggPx" min="0" max="200" step="1" value="0"><span class="v" id="ggPxV">0px</span></div>
             <div class="tx-hint tk-out-hint" style="margin-top:10px;">좌우 폭 제한을 끄면 최대 폭(1140px) 없이 화면 폭에 맞춰 넓어집니다.</div>
             <div class="tx-hint tk-in-hint" style="margin-top:10px;">탭 안에서는 탭 줄 폭이 기준이고, 좌우 값만큼 양옆이 좁아집니다.</div>   <!-- 261103 추가 — 탭 안 블록일 때만 (좌우 폭 제한은 숨김) -->
@@ -15817,7 +15814,7 @@
             <div class="sline" style="display:none;"><span class="lbl">좌우 폭 제한</span><button type="button" class="sw on" id="imWrapSw" onclick="imSw(this,'wrap')"></button></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="imPt" min="0" max="200" step="2" value="56"><span class="v" id="imPtV">56px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="imPb" min="0" max="200" step="2" value="56"><span class="v" id="imPbV">56px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="imPxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('im','px','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('im','px','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('im','px','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="imPxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('im','px','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('im','px','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('im','px','custom')">직접</button></div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="imPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="imPx" min="0" max="200" step="2" value="48"><span class="v" id="imPxV">48px</span></div>
             <div class="tx-hint tk-out-hint" style="margin-top:10px;display:none;">좌우 폭 제한을 끄면 최대 폭(1180px) 없이 넓어지고, 좌우 값이 화면 가장자리와의 여백이 됩니다.</div>
             <div class="tx-hint tk-in-hint" style="margin-top:10px;">탭 안에서는 탭 줄 폭이 기준이고, 좌우 값만큼 양옆이 좁아집니다.</div>   <!-- 261103 추가 — 탭 안 블록일 때만 (좌우 폭 제한은 숨김) -->
@@ -16799,7 +16796,7 @@
             <div class="srow"><span class="k">강조색</span><span class="sw-col"><input type="color" id="vcAcc" value="#c8f14b"><span class="hex" id="vcAccV">#C8F14B</span></span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="vcPt" min="0" max="400" step="10" value="0"><span class="v" id="vcPtV">0px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="vcPb" min="0" max="400" step="10" value="0"><span class="v" id="vcPbV">0px</span></div>
-            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="vcPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('vc','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('vc','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('vc','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 레이아웃 값) · 없음 · 직접 -->
+            <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="vcPadxSeg" style="flex:1;min-width:0;margin:0;"><button type="button" class="mt-seg-b active" data-m="base" onclick="bpxSet('vc','padx','base')">기본</button><button type="button" class="mt-seg-b" data-m="none" onclick="bpxSet('vc','padx','none')">없음</button><button type="button" class="mt-seg-b" data-m="custom" onclick="bpxSet('vc','padx','custom')">직접</button></div></div>   <!-- 261112 추가 — 좌우: 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="vcPadxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="vcPadx" data-bpx="1" min="0" max="200" step="2" value="48"><span class="v" id="vcPadxV">48px</span></div>
           </div></div>
         </div>
@@ -17555,14 +17552,14 @@
           <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="hdPadXSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="base" onclick="hdPadXSet('base')">기본</button>
             <button type="button" class="mt-seg-b" data-m="custom" onclick="hdPadXSet('custom')">직접</button>
-          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 직접 · 261113 수정 — 「없음」 삭제(로고 · 버튼이 화면 끝에 붙기만 하고 쓰는 디자인 0 · 필요하면 직접 0) -->
+          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 직접 · 261113 수정 — 「없음」 삭제(로고 · 버튼이 화면 끝에 붙기만 하고 쓰는 디자인 0 · 필요하면 직접 0) -->
           <div class="srow" id="hdPadXRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="hdPadX" min="0" max="200" step="2" value="48"><span class="v" id="hdPadXV">48px</span></div>
-          <!-- 261113 추가 — 스타일 > 레이아웃 「사이트 폭 지정」일 때만: 좌우 「기본」의 기준(본문 폭에 맞춤 / 화면 끝). 기본은 본문 폭 → 로고 · 버튼이 블록 내용 선에 맞춰진다 -->
+          <!-- 261113 추가 — 스타일 > 폭 · 여백 「사이트 폭 지정」일 때만: 좌우 「기본」의 기준(본문 폭에 맞춤 / 화면 끝). 기본은 본문 폭 → 로고 · 버튼이 블록 내용 선에 맞춰진다 -->
           <div class="srow" id="hdAlignRow" style="display:none;"><span class="k">맞춤</span><div class="mt-seg" id="hdAlignSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="content" onclick="hdAlignSet('content')">본문 폭</button>
             <button type="button" class="mt-seg-b" data-m="edge" onclick="hdAlignSet('edge')">화면 끝</button>
           </div></div>
-          <div class="tx-hint" id="hdPadXHint">기본은 스타일 &gt; 레이아웃의 좌우 여백을 따릅니다. 배경은 늘 화면 끝까지 칠해집니다.</div>
+          <div class="tx-hint" id="hdPadXHint">기본은 스타일 &gt; 폭 · 여백의 좌우 여백을 따릅니다. 배경은 늘 화면 끝까지 칠해집니다.</div>
         </div></div>
       </div>
       <div class="fld sfold" id="hdBgAcc">
@@ -17634,7 +17631,7 @@
           </div>
           <div class="srow" style="margin-top:14px;"><span class="k">로고 크기</span><input class="rng" type="range" min="14" max="48" step="1" value="22" data-p="logo" data-u="px"><span class="v">22px</span></div>
           <div class="srow"><span class="k">높이</span><input class="rng" type="range" min="44" max="96" step="1" value="60" data-p="h" data-u="px"><span class="v">60px</span></div>
-          <div class="tx-hint">좌우 여백은 스타일 &gt; 레이아웃의 휴대폰 값을 따릅니다.</div>   <!-- 261112 추가 — 모바일 상단 바는 좌우 설정 없이 사이트 휴대폰 값(--site-px)을 따른다 -->
+          <div class="tx-hint">좌우 여백은 스타일 &gt; 폭 · 여백의 휴대폰 값을 따릅니다.</div>   <!-- 261112 추가 — 모바일 상단 바는 좌우 설정 없이 사이트 휴대폰 값(--site-px)을 따른다 -->
           <div class="tx-hint" id="moLogoHint" style="display:none;">버튼이 많아 로고가 상단 바에 맞게 줄어 보입니다.</div>   <!-- 261104 추가 — 사본의 moFit 이 로고를 줄였을 때만(cl-mo-fit) -->
           <div class="gt-h">표시 항목</div>
           <div class="gt-chips" id="moBarChips"></div>
@@ -17754,7 +17751,7 @@
           <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="gdPxSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="base" onclick="gdPxSet('base')">기본</button>
             <button type="button" class="mt-seg-b" data-m="custom" onclick="gdPxSet('custom')">직접</button>
-          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 직접 · 261113 수정 — 「없음」 삭제(제목이 화면 끝에 붙기만 하고 쓰는 디자인 0 · 필요하면 직접 0) -->
+          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 직접 · 261113 수정 — 「없음」 삭제(제목이 화면 끝에 붙기만 하고 쓰는 디자인 0 · 필요하면 직접 0) -->
           <div class="srow" id="gdPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="gdPx" min="0" max="200" step="2" value="48"><span class="v" id="gdPxV">48px</span></div>
         </div></div>
       </div>
@@ -17929,7 +17926,7 @@
         <div class="acc-body"><div class="acc-in">
           <div class="srow" style="margin-top:0;"><span class="k">상</span><input class="rng" type="range" id="ftPt" min="0" max="200" step="1" value="56"><span class="v" id="ftPtV">56px</span></div>
           <div class="srow"><span class="k">하</span><input class="rng" type="range" id="ftPb" min="0" max="200" step="1" value="34"><span class="v" id="ftPbV">34px</span></div>
-          <div class="tx-hint" style="margin-top:10px;">좌우 여백은 스타일 &gt; 레이아웃 값을 따릅니다.</div>   <!-- 261112 추가 — 푸터 좌우는 사이트 값(--site-px) -->
+          <div class="tx-hint" style="margin-top:10px;">좌우 여백은 스타일 &gt; 폭 · 여백 값을 따릅니다.</div>   <!-- 261112 추가 — 푸터 좌우는 사이트 값(--site-px) -->
         </div></div>
       </div>
     </div>
@@ -18324,24 +18321,24 @@
   /* 휴대폰 대상이면 3칸에서 「직접」을 숨기고 안내를 휴대폰 값으로 */
   /* 261113 추가 — 게시판 · 텍스트는 좌우 「없음」을 뺀다(표 · 글이 화면 끝에 붙어 쓸 곳이 없고, 본문 폭 「가로 100%」와 헷갈림 · 0 이 필요하면 「직접」 0).
      이미 「없음」으로 저장된 블록은 모양 그대로 두고 그 블록에서만 보여 준다. 휴대폰은 「기본」 하나만 남으면 칸을 숨기고 안내 한 줄(본문 폭 안내)로 */
-  var BPX_NO_NONE={bdPadx:1, rtPx:1};
+  var BPX_NO_NONE={bdPadx:1, rtPx:1, ixPadx:1, fqPadx:1, qnPadx:1};   /* 261113 추가 — 인덱스 리스트 · FAQ · QnA 도 글 목록이라 같은 이유 */
   function bpxMoSeg(id){ var sg=document.getElementById(id+'Seg'); if(!sg) return; var mo=bpxMo(), cb=sg.querySelector('[data-m="custom"]'); if(cb) cb.style.display=(mo && !cb.classList.contains('active'))?'none':'';
     if(BPX_NO_NONE[id]){ var nb=sg.querySelector('[data-m="none"]'); if(nb) nb.style.display=nb.classList.contains('active')?'':'none';
       var vis=[].filter.call(sg.querySelectorAll('.mt-seg-b'),function(b){ return b.style.display!=='none'; }).length, sr=sg.closest('.srow'); if(sr) sr.style.display=(vis<2)?'none':''; }   /* 디자인이 휴대폰 값을 정해 둔 블록(15 등)은 「직접 15」로 그대로 보여 준다 */
-    var h=document.getElementById(id+'Base'); if(h) h.textContent=mo?'기본은 스타일 > 레이아웃의 휴대폰 좌우 여백을 따릅니다.':'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다.'; }
+    var h=document.getElementById(id+'Base'); if(h) h.textContent=mo?'기본은 스타일 > 폭 · 여백의 휴대폰 좌우 여백을 따릅니다.':'기본은 스타일 > 폭 · 여백의 좌우 여백을 따릅니다.'; }
   function bpxSet(p,k,m){ var blk=window[p+'CurBlk']; if(!blk) return;
     if(m==='custom' && bpxMode(bpxEff(p,blk),k)!=='custom') bpxUpd(p,k, SITE_LAYOUT[bpxMo()?'mo':'pc']);   /* 직접으로 바꿀 때는 지금 보이는 사이트 값에서 시작 */
     bpxMoOv(blk,k,m); bpxUpd(p,k+'Mode',m); bpxSync(p,k,bpxEff(p,blk)); var pid=p+k.charAt(0).toUpperCase()+k.slice(1); if(typeof PW_BPX!=="undefined" && PW_BPX[pid]){ pwHint(PW_BPX[pid]); pwGuide(PW_BPX[pid]); }   /* 261113 추가 */ if(bpxMo() && typeof mvKick==='function') mvKick(0); }
   /* 261112 추가 — 휴대폰 대상이면 고른 모드를 모바일 값에 바로 적는다. PC 와 같은 값(예: PC 「기본」)을 고르면 바뀐 게 없다고 보고 넘어가 휴대폰 「없음」이 그대로 남았다 */
   function bpxMoOv(blk,k,m){ if(!bpxMo() || !blk) return; var ov=blk._mvOv||(blk._mvOv={}); ov[k+'Mode']=m; }
   function bpxUpd(p,k,v){ if(typeof window[p+'Upd']==='function') window[p+'Upd'](k,v); else if(typeof BGP!=='undefined' && BGP[p]) bpUpd(p,k,v); }   /* 숫자 카운터 · QR 은 공용 bpUpd */
-  /* 261112 추가 — 「기본」일 때만 3칸 밑에 「기본은 스타일 > 레이아웃 …」 한 줄(블록에서 사이트 값을 어디서 바꾸는지 알려 준다). id = 3칸 앞부분(imPx 등) */
+  /* 261112 추가 — 「기본」일 때만 3칸 밑에 「기본은 스타일 > 폭 · 여백 …」 한 줄(블록에서 사이트 값을 어디서 바꾸는지 알려 준다). id = 3칸 앞부분(imPx 등) */
   function bpxBaseHint(id,on){ if(typeof PW_BPX!=="undefined" && PW_BPX[id] && document.getElementById(PW_BPX[id]+"PwBox")) on=false;   /* 261113 추가 — 본문 폭 블록은 안내 한 줄로 합침 */ var r=document.getElementById(id+'Row')||document.getElementById(id+'Seg'); if(!r) return; var h=document.getElementById(id+'Base');
-    if(!h){ h=document.createElement('div'); h.className='tx-hint'; h.id=id+'Base'; h.style.marginTop='6px'; h.textContent='기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다.'; r.insertAdjacentElement('afterend',h); }
+    if(!h){ h=document.createElement('div'); h.className='tx-hint'; h.id=id+'Base'; h.style.marginTop='6px'; h.textContent='기본은 스타일 > 폭 · 여백의 좌우 여백을 따릅니다.'; r.insertAdjacentElement('afterend',h); }
     if(h) h.style.display=on?'':'none'; }
   function bpxSync(p,k,c){ var m=bpxMode(c,k), id=p+k.charAt(0).toUpperCase()+k.slice(1);
     rtSegSync(id+'Seg',m); var r=document.getElementById(id+'Row'); if(r) r.style.display=(m==='custom')?'':'none'; bpxBaseHint(id,m==='base'); bpxMoSeg(id);
-    var sl=document.getElementById(id); if(sl){ if(!sl.hasAttribute('data-max')) sl.setAttribute('data-max',sl.max); sl.max=bpxMo()?Math.min(40,+sl.getAttribute('data-max')):sl.getAttribute('data-max');   /* 휴대폰 대상이면 직접 슬라이더 0 ~ 60(스타일 > 레이아웃 휴대폰과 같은 범위) */ var v=parseFloat(c[k]); if(!isFinite(v)) v=48; sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(id+'V'); if(o) o.textContent=v+'px'; }
+    var sl=document.getElementById(id); if(sl){ if(!sl.hasAttribute('data-max')) sl.setAttribute('data-max',sl.max); sl.max=bpxMo()?Math.min(40,+sl.getAttribute('data-max')):sl.getAttribute('data-max');   /* 휴대폰 대상이면 직접 슬라이더 0 ~ 60(스타일 > 폭 · 여백 휴대폰과 같은 범위) */ var v=parseFloat(c[k]); if(!isFinite(v)) v=48; sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(id+'V'); if(o) o.textContent=v+'px'; }
     /* 디자인 구조(화면 끝까지 채우는 배치 · 탭 안 블록)가 좌우를 0 으로 고정하면 3칸을 눌러도 화면이 그대로 → 흐림 + 안내 */
     var sg=document.getElementById(id+'Seg'), srow=sg && sg.closest('.srow'), blk=window[p+'CurBlk'], fixed=false, inn=blk && BPX_IN[p] && blk.querySelector(BPX_IN[p]);
     if(inn && sl && sl.hasAttribute('data-bpx')){ var old=blk.style.getPropertyValue('--bpx'); blk.style.setProperty('--bpx','7px'); fixed=(parseFloat(getComputedStyle(inn).paddingLeft)||0)!==7; if(old) blk.style.setProperty('--bpx',old); else blk.style.removeProperty('--bpx'); }
@@ -18477,7 +18474,7 @@
     if(r.ownMax && sl){ sl.max=r.ownMax; }   /* 텍스트: 예전 「전체」(1400)는 「가로 100%」 칸으로 → 직접은 1380 까지 */
     box=document.createElement('div'); box.id=p+'PwBox'; box.className='pw-box'; box.style.margin='10px 0 12px';
     box.innerHTML='<div class="srow" id="'+p+'PwSegRow"><span class="k">본문 폭</span><div class="mt-seg" id="'+p+'PwSeg" style="flex:1;min-width:0;margin:0;">'
-      +'<button type="button" class="mt-seg-b" data-m="site" onclick="pwSet(\''+p+'\',\'site\')">기본</button>'   /* 261113 수정 — 「사이트」 → 「기본」(좌우 3칸 「기본」과 같은 뜻: 스타일 > 레이아웃 값) */
+      +'<button type="button" class="mt-seg-b" data-m="site" onclick="pwSet(\''+p+'\',\'site\')">기본</button>'   /* 261113 수정 — 「사이트」 → 「기본」(좌우 3칸 「기본」과 같은 뜻: 스타일 > 폭 · 여백 값) */
       +'<button type="button" class="mt-seg-b" data-m="own" onclick="pwSet(\''+p+'\',\'own\')">직접</button>'
       +'<button type="button" class="mt-seg-b" data-m="full" onclick="pwSet(\''+p+'\',\'full\')">가로 100%</button></div></div>'
       +'<div id="'+p+'PwOwnRows"></div>';
@@ -18491,13 +18488,13 @@
     if(r.kind && blk.getAttribute('data-block')!==r.kind){ h.style.display='none'; return; } h.style.display='';
     var c=window[p+'Cfg'](blk), m=pwMode(c,r), on=(+SITE_LAYOUT.pw>0), mo=(typeof bpxMo==='function' && bpxMo()), mw=+c[(r.opt&&r.opt.mwKey)||'mw']||r.mw;
     var a=mo?'휴대폰 화면은 본문 폭보다 좁아 본문 폭은 적용되지 않습니다.'
-      :(m==='site')?(on?('본문 폭은 스타일 > 레이아웃 값 '+SITE_LAYOUT.pw+'px를 따릅니다.'):('지금은 블록 기본 폭 '+(r.def?r.def(c):r.mw)+'px입니다. 스타일 > 레이아웃에서 「사이트 폭 지정」을 고르면 그 폭을 따릅니다.'))
-      :(m==='own')?('이 블록만 '+mw+'px입니다. 스타일 > 레이아웃 본문 폭을 바꿔도 그대로입니다.')
+      :(m==='site')?(on?('본문 폭은 스타일 > 폭 · 여백 값 '+SITE_LAYOUT.pw+'px를 따릅니다.'):('지금은 블록 기본 폭 '+(r.def?r.def(c):r.mw)+'px입니다. 스타일 > 폭 · 여백에서 「사이트 폭 지정」을 고르면 그 폭을 따릅니다.'))
+      :(m==='own')?('이 블록만 '+mw+'px입니다. 스타일 > 폭 · 여백 본문 폭을 바꿔도 그대로입니다.')
       :'본문 폭 없이 화면 폭만큼 넓어집니다.';
     var b='';
     var sg=r.bpx && document.getElementById(r.bpx+'Seg'), fixed=sg && sg.closest('.srow') && sg.closest('.srow').classList.contains('off');   /* 디자인이 좌우를 고정하면 그 안내가 따로 나온다 */
     if(r.pxm && sg && !fixed){ var x=r.pxm(blk), pv=mo?SITE_LAYOUT.mo:SITE_LAYOUT.pc;
-      if(x==='base') b=(m==='full' && !mo)?('좌우는 스타일 > 레이아웃 좌우 여백 '+pv+'px만큼 띄웁니다. '+((typeof BPX_NO_NONE!=='undefined' && BPX_NO_NONE[r.bpx])?'화면 끝까지 붙이려면 좌우 「직접」을 0으로 내리세요.':'화면 끝까지 붙이려면 좌우 「없음」을 고르세요.')):('좌우는 스타일 > 레이아웃의 '+(mo?'휴대폰 ':'')+'좌우 여백 '+pv+'px를 따릅니다.');
+      if(x==='base') b=(m==='full' && !mo)?('좌우는 스타일 > 폭 · 여백 좌우 여백 '+pv+'px만큼 띄웁니다. '+((typeof BPX_NO_NONE!=='undefined' && BPX_NO_NONE[r.bpx])?'화면 끝까지 붙이려면 좌우 「직접」을 0으로 내리세요.':'화면 끝까지 붙이려면 좌우 「없음」을 고르세요.')):('좌우는 스타일 > 폭 · 여백의 '+(mo?'휴대폰 ':'')+'좌우 여백 '+pv+'px를 따릅니다.');
       else if(x==='none') b=(m==='full' || mo)?'좌우 여백 없이 화면 끝까지 붙습니다.':'좌우 여백은 화면이 본문 폭보다 좁을 때 보입니다.';
       else b=(m==='full')?'화면 끝에서 좌우 값만큼 띄웁니다.':((r.opt && r.opt.padIn && m==='own' && !c.pwc)?'':'좌우 여백은 화면이 본문 폭보다 좁을 때 보입니다.'); }
     h.textContent=a+(b?' '+b:''); }
@@ -18529,7 +18526,7 @@
   function pwReset(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw'; c[mk]=r.def?r.def(c):r.mw; c.pwOwnSet=true; delete c.pwc;
     window[p+'Apply'](blk); if(r.opt && r.opt.padIn && pwMode(c,r)==='own'){ var el=blk.querySelector(r.box), cs=el && getComputedStyle(el); if(cs){ c[mk]=Math.round(r.mw-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0)); c.pwc=1; window[p+'Apply'](blk); } }   /* 화면이 좁아 상자가 줄어 있어도 기본 폭 기준으로 */
     pwSync(p); if(typeof window[p+'FillBset']==='function') try{ window[p+'FillBset'](); }catch(e){} pwGuide(p); }
-  /* 261113 추가 — 본문 폭 · 좌우 슬라이더를 움직이는 동안 그 블록의 내용 자리(양쪽 초록 점선). 손을 떼면 1초 뒤 사라진다(스타일 > 레이아웃 안내선과 같은 모양) */
+  /* 261113 추가 — 본문 폭 · 좌우 슬라이더를 움직이는 동안 그 블록의 내용 자리(양쪽 초록 점선). 손을 떼면 1초 뒤 사라진다(스타일 > 폭 · 여백 안내선과 같은 모양) */
   var pwGuideT=null;
   function pwGuide(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !r.guide || !blk || (typeof bpxMo==='function' && bpxMo()) || document.body.classList.contains('pview')) return;
     requestAnimationFrame(function(){ var el=blk.querySelector(r.box), st=document.getElementById('stage'), site=stSite(); if(!el || !st || !site) return;
@@ -29365,7 +29362,7 @@
                capPos:'below', capAt:'center center', capDim:0, fx:'slide',
                show:false };   /* 261012 추가 — show: 슬라이드쇼 카테고리 카드로 넣은 블록(SLIDE04~09). 엔진은 같은 imggrid 지만 배지 · 설정창 이름을 「슬라이드쇼」로 보여 준다(IM_SHOW_NAME) · 복제 · 모바일 사본에도 cfg 로 따라간다 */
   var IM_SHOW_NAME='슬라이드쇼';   /* 261012 추가 — 텍스트 위치(below 사진 아래 / over 사진 위) · 사진 위일 때 자리(가로 세로) · 어둡게(%) · 슬라이드형 전환 효과(slide 밀기 / fade 페이드) */
-  var IM_MOB={ cols:1, pxMode:'base' };   /* 261112 수정 — 모바일 좌우 20px 고정 → 「기본」(스타일 > 레이아웃 휴대폰 값). 20 이 박혀 있어 사이트 값을 바꿔도 휴대폰 이미지 블록만 그대로였다 */
+  var IM_MOB={ cols:1, pxMode:'base' };   /* 261112 수정 — 모바일 좌우 20px 고정 → 「기본」(스타일 > 폭 · 여백 휴대폰 값). 20 이 박혀 있어 사이트 값을 바꿔도 휴대폰 이미지 블록만 그대로였다 */
   var IM_MAX=30, IM_MIN=1, IM_SLOW=5;
   /* 261012 추가 — 이미지 블록(IMAGE02) 프리셋: 블록추가 > 이미지 / 영상의 기본형 카드(IMAGE05~10). 블록은 같은 imggrid 하나이고 시작값만 다르다 — 넣은 뒤에는 IMAGE02 와 같은 설정창에서 모두 바꿀 수 있다.
      값은 IM_DEF 에 덮는 것만 적는다 · items 는 함수가 만든다 · mob = 모바일 덧값(IM_MOB 에 덮음)
@@ -58991,7 +58988,7 @@ global.PolyFX = API;
     if(hm==='screen' && typeof rtFillVar==='function') rtFillVar();
     blk.style.paddingTop=(c.pt==null)?'':(c.pt+'px');
     blk.style.paddingBottom=(c.pb==null)?'':(c.pb+'px');
-    var pxm=rtPxMode(c); blk.style.paddingLeft=blk.style.paddingRight=(pxm==='base')?'var(--site-px,48px)':(pxm==='none'?'0px':(c.px+'px'));   /* 261112 수정 — 좌우: 기본 = 사이트 값(스타일 > 레이아웃) · 없음 = 0 · 직접 = c.px */
+    var pxm=rtPxMode(c); blk.style.paddingLeft=blk.style.paddingRight=(pxm==='base')?'var(--site-px,48px)':(pxm==='none'?'0px':(c.px+'px'));   /* 261112 수정 — 좌우: 기본 = 사이트 값(스타일 > 폭 · 여백) · 없음 = 0 · 직접 = c.px */
     blk.style.background=c.bg||''; blk.classList.toggle('own-bg',!!c.bg);
     /* 260917 추가 — 배경 이미지 + 어둡게 덮개(::before, --rt-dim) */
     /* 260920 수정 — 배경 소재가 동영상 주소면 <video class="rt-bgvid"> 층으로, 아니면 기존처럼 background-image 로. 덮개(어둡게)는 둘 다 같은 ::before */
@@ -63718,7 +63715,7 @@ function hdPadX(){ var p=HD.pad||(HD.pad={}); if(p.x==null || isNaN(+p.x)) p.x=(
 function hdPadXMode(){ var p=HD.pad||(HD.pad={}); if(p.xMode==='none'){ p.xMode='custom'; p.x=0; } if(p.xMode==='base'||p.xMode==='custom') return p.xMode; var x=hdPadX(); return (x===48)?'base':'custom'; }
 function hdPadXCss(){ var m=hdPadXMode(); if(m==='base' && HD.type!=='side' && hdAlignOn()) return 'max(var(--site-px,48px), calc((100% - var(--site-pw)) / 2))';   /* 261113 추가 — 본문 폭에 맞춤: 넓은 화면은 블록 내용 선 · 좁은 화면은 사이트 좌우 여백 */
   return (m==='base')?((HD.type==='side')?'32px':'var(--site-px,48px)'):(m==='none'?'0px':(hdPadX()+'px')); }
-/* 261113 추가 — 상단 메뉴 「맞춤」: 스타일 > 레이아웃 「사이트 폭 지정」이고 좌우 「기본」일 때 본문 폭(기본) / 화면 끝 */
+/* 261113 추가 — 상단 메뉴 「맞춤」: 스타일 > 폭 · 여백 「사이트 폭 지정」이고 좌우 「기본」일 때 본문 폭(기본) / 화면 끝 */
 function hdAlignOn(){ return (typeof SITE_LAYOUT!=='undefined' && +SITE_LAYOUT.pw>0) && !(HD.pad && HD.pad.align==='edge'); }
 function hdAlignSet(v){ (HD.pad||(HD.pad={})).align=(v==='edge')?'edge':'content'; hdFill(); hdChanged(); hdPadXSide(); }   /* 그린 뒤 안내(두 줄 알림)를 다시 */   /* 261112 수정 — 좌측 메뉴의 기본은 32px 고정(240px 세로 칸이라 사이트 좌우 여백을 따르면 로고 · 메뉴 자리가 값마다 줄었다 늘었다 했다) */
 function hdPadXSet(m){ HD.pad.xMode=(m==='custom')?'custom':'base'; if(m==='custom' && !(+HD.pad.x>=0 && HD.pad.x!=='')) HD.pad.x=48; hdFill(); hdChanged(); }
@@ -63728,7 +63725,7 @@ function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getE
   var md=hdPadXMode(); [].forEach.call(document.querySelectorAll('#hdPadXSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===md); }); var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(md==='custom')?'':'none';   /* 261112 추가 — 3칸 */
   var arw=document.getElementById('hdAlignRow'), aon=(!sd && md==='base' && +SITE_LAYOUT.pw>0); if(arw) arw.style.display=aon?'':'none';   /* 261113 추가 — 맞춤(사이트 폭 지정 · 좌우 기본일 때만) */
   if(aon){ var av=(HD.pad && HD.pad.align==='edge')?'edge':'content'; [].forEach.call(document.querySelectorAll('#hdAlignSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===av); }); }
-  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':aon?((HD.pad && HD.pad.align==='edge')?'로고와 버튼이 화면 끝에서 스타일 > 레이아웃 좌우 여백만큼 떨어집니다.':'로고와 버튼이 스타일 > 레이아웃 본문 폭 선에 맞춰집니다. 화면이 본문 폭보다 좁으면 좌우 여백을 따릅니다.'+hdAlignWrapNote()):((+SITE_LAYOUT.pw>0 && md!=='base')?'좌우가 「직접」이라 본문 폭에 맞추지 않습니다. 본문 폭 선에 맞추려면 좌우를 「기본」으로 바꾸세요.':'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다. 배경은 늘 화면 끝까지 칠해집니다.'); }   /* 261113 추가 — 사이트 폭 지정인데 좌우 직접 · 없음이면 왜 안 맞는지 안내 */
+  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':aon?((HD.pad && HD.pad.align==='edge')?'로고와 버튼이 화면 끝에서 스타일 > 폭 · 여백 좌우 여백만큼 떨어집니다.':'로고와 버튼이 스타일 > 폭 · 여백 본문 폭 선에 맞춰집니다. 화면이 본문 폭보다 좁으면 좌우 여백을 따릅니다.'+hdAlignWrapNote()):((+SITE_LAYOUT.pw>0 && md!=='base')?'좌우가 「직접」이라 본문 폭에 맞추지 않습니다. 본문 폭 선에 맞추려면 좌우를 「기본」으로 바꾸세요.':'기본은 스타일 > 폭 · 여백의 좌우 여백을 따릅니다. 배경은 늘 화면 끝까지 칠해집니다.'); }   /* 261113 추가 — 사이트 폭 지정인데 좌우 직접 · 없음이면 왜 안 맞는지 안내 */
 /* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
 function hdAlignWrapNote(){ try{
   var hd=document.querySelector('#stage .site > .site-hd'), nv=hd && hd.querySelector('.site-nav'); if(!nv || HD_LAYOUT_ROWS[HD.layout]>1) return '';
