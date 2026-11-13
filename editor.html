@@ -7515,7 +7515,7 @@
       </div>
       <!-- 261112 추가 — 레이아웃: 사이트 공통 좌우 여백(PC · 휴대폰). 블록 · 상단 메뉴 · 상세 타이틀의 좌우 「기본」이 이 값을 따른다(--site-px) -->
       <div class="st-sec" id="stLayoutSec">
-        <div class="st-sec-h">폭 · 여백 <span>「기본」인 블록 · 메뉴 · 푸터에 적용</span></div>   <!-- 261112 수정 — 「모든 블록에 적용」은 실제와 달랐다(블록마다 없음 · 직접이면 그 값) -->
+        <div class="st-sec-h">폭 · 여백 <span>사이트 전체 공통</span></div>   <!-- 261112 수정 — 「모든 블록에 적용」은 실제와 달랐다(블록마다 없음 · 직접이면 그 값) -->
         <!-- 261113 추가 — 본문 폭: 블록 기본(블록마다 디자인 폭 · 지금 화면 그대로) / 사이트 폭 지정(본문 폭 따름 블록이 이 폭에 맞춰짐) -->
         <div class="srow"><span class="k">본문 폭</span><div class="mt-seg" id="stPwSeg" style="flex:1;min-width:0;margin:0;">
           <button type="button" class="mt-seg-b active" data-m="block" onclick="stPwSet('block')">디자인 폭</button>
@@ -7526,7 +7526,7 @@
         <div class="srow"><span class="k">좌우 여백</span></div>
         <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="16" max="120" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
         <div class="srow"><span class="k">모바일</span><input class="rng" type="range" id="stPxMo" min="12" max="40" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
-        <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">화면 끝과 내용 사이의 최소 여백입니다. 최대 폭이나 좌우 폭 제한이 켜진 블록은 넓은 화면에서 그 폭 안에 가운데 놓입니다.</div>   <!-- 261112 수정 — 넓은 화면에서 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 실제 의미로 · PC 슬라이더를 움직이는 동안 안내선(stPxGuide) -->
+        <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">화면 끝과 내용 사이 여백입니다. 넓은 화면에서는 본문 폭이 먼저라, 좁은 화면과 가로 100% 블록에서 보입니다.</div>   <!-- 261112 수정 — 넓은 화면에서 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 실제 의미로 · PC 슬라이더를 움직이는 동안 안내선(stPxGuide) -->
       </div>
       <div class="st-sec">
         <div class="st-sec-h">배경 <span>사이트 전체</span></div>
@@ -18401,7 +18401,7 @@
         ps.addEventListener('pointerdown',function(){ stMoClose(); stPxHeld=true; window.addEventListener('pointerup',function f(){ window.removeEventListener('pointerup',f); stPxGuide(false); }); stPxGuide(true,'pw'); });
         ps.addEventListener('pointerup',function(){ stPxGuide(false); }); ps.addEventListener('keyup',function(){ stPxGuide(false); }); }
       if(document.activeElement!==ps) ps.value=pv; if(typeof smRng==='function') smRng(ps); var pvv=document.getElementById('stPwV'); if(pvv) pvv.textContent=pv+'px'; }
-    var pn=document.getElementById('stPwNote'); if(pn) pn.textContent=on?('본문 폭을 따르는 블록이 이 폭 안에 맞춰집니다. 블록마다 본문 폭 「직접」으로 따로 정할 수 있습니다.'+stPwVisNote()):'블록마다 디자인에 정해진 폭으로 들어갑니다. 「사이트 폭 지정」을 고르면 블록이 한 폭으로 맞춰집니다.';
+    var pn=document.getElementById('stPwNote'); if(pn) pn.textContent=on?('본문 폭 「기본」인 블록이 이 폭에 맞춰집니다. 블록에서 「직접」으로 따로 정할 수 있습니다.'+stPwVisNote()):'블록마다 디자인에 정해진 폭으로 들어갑니다. 「사이트 폭 지정」을 고르면 블록이 한 폭으로 맞춰집니다.';
   }
   /* 261113 추가 — 편집 화면에서 블록이 쓸 수 있는 내용 폭(좌측 메뉴면 메뉴를 뺀 자리 − 좌우 여백). 사이트 폭이 이보다 넓으면 편집 화면에서는 변화가 안 보여 고장처럼 보였다 */
   function stBlkArea(){ var site=stSite(); if(!site) return 0; var z=parseFloat(getComputedStyle(site).zoom)||1, b=site.querySelector(':scope > .blk'); var w=b?b.getBoundingClientRect().width:site.getBoundingClientRect().width; return Math.round(w/z); }
