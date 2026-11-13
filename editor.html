@@ -18568,6 +18568,8 @@
       rs.title='디자인 폭('+Math.round(d1)+'px)으로'; }
     [].forEach.call(box.querySelectorAll('#'+p+'PwSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===m); if(r.noFull && b.getAttribute('data-m')==='full') b.style.display=(m==='full')?'':'none'; });
     var rows=document.getElementById(p+'PwOwnRows'); if(rows) rows.style.display=(!own || m==='own')?'':'none';
+    /* 261113 추가 — 직접 슬라이더 최소값: 디자인 폭이 더 좁으면(예: CALENDAR04 480) 그 폭까지 낮춘다(전: 최소 720 이라 한 번 만지면 원래 폭으로 못 돌아감) · 일반 디자인은 원래 최소값 그대로 */
+    (function(){ var sx=document.getElementById(r.row); if(!sx || !own) return; if(!sx.hasAttribute('data-min0')) sx.setAttribute('data-min0',sx.min); var m0=+sx.getAttribute('data-min0')||0, mk2=(r.opt&&r.opt.mwKey)||'mw', d2=(r.def?r.def(c):r.mw), Q2=(r.rel && c.pwP0!=null)?pwP0Num(c,+SITE_LAYOUT.pc||48):(+SITE_LAYOUT.pc||48), dc=(r.opt && r.opt.padIn && r.rel)?(d2-2*Q2):d2, cur=+c[mk2]||dc, lo=Math.min(m0, Math.floor(Math.min(dc,cur)/10)*10); if(lo>0 && +sx.min!==lo){ sx.min=lo; if(document.activeElement!==sx){ sx.value=cur; if(typeof smRng==='function') smRng(sx); } } })();
     if(r.mkRow){ var sl=document.getElementById(r.row), v=+c[(r.opt&&r.opt.mwKey)||'mw']||r.mw; if(sl && document.activeElement!==sl){ sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(r.row+'V'); if(o) o.textContent=v+'px'; } }
     var fx=!!(own && r.fixed && r.fixed(blk)); box.classList.toggle('off',(own && mo) || fx); box._fx=fx;   /* 261113 추가 — 끝까지 채우는 디자인 */
     if(own && r.p0 && c.pwP0==null) c.pwP0=bpxCss(c,'px',0);
