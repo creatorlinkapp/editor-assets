@@ -7520,8 +7520,8 @@
         <div class="srow" id="stPwRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="stPw" min="960" max="1440" step="20" value="1180"><span class="v" id="stPwV">1180px</span></div>
         <div class="st-note" id="stPwNote" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin:2px 0 10px;">블록 기본: 블록마다 정해진 폭으로 들어갑니다.</div>
         <div class="srow"><span class="k">좌우 여백</span></div>
-        <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="0" max="120" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
-        <div class="srow"><span class="k">모바일</span><input class="rng" type="range" id="stPxMo" min="0" max="40" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
+        <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="16" max="120" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
+        <div class="srow"><span class="k">모바일</span><input class="rng" type="range" id="stPxMo" min="12" max="40" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
         <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">화면 끝과 내용 사이의 최소 여백입니다. 최대 폭이나 좌우 폭 제한이 켜진 블록은 넓은 화면에서 그 폭 안에 가운데 놓입니다.</div>   <!-- 261112 수정 — 넓은 화면에서 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 실제 의미로 · PC 슬라이더를 움직이는 동안 안내선(stPxGuide) -->
       </div>
       <div class="st-sec">
@@ -18279,7 +18279,8 @@
   var SITE_LAYOUT={pc:48,mo:20,pw:0,pwLast:1180};   /* 261113 추가 — pw: 본문 폭(0 = 블록 기본 · 숫자 = 사이트 폭 지정) · pwLast: 마지막으로 정한 폭(다시 켤 때 시작값) */
   function stLayoutApply(){
     var site=stSite(); if(!site) return;
-    site.style.setProperty('--site-px-pc',(+SITE_LAYOUT.pc||0)+'px'); site.style.setProperty('--site-px-mo',(+SITE_LAYOUT.mo||0)+'px');
+    var pc0=parseFloat(SITE_LAYOUT.pc), mo0=parseFloat(SITE_LAYOUT.mo); SITE_LAYOUT.pc=Math.max(16,Math.min(120,isFinite(pc0)?pc0:48)); SITE_LAYOUT.mo=Math.max(12,Math.min(40,isFinite(mo0)?mo0:20));   /* 261113 추가 — 범위(PC 16 ~ 120 · 모바일 12 ~ 40) 밖 값이 들어오지 않게. 0 이면 글이 화면 끝에 붙는다(끝까지 붙이기는 블록의 「없음」 · 「가로 100%」로) */
+    site.style.setProperty('--site-px-pc',SITE_LAYOUT.pc+'px'); site.style.setProperty('--site-px-mo',SITE_LAYOUT.mo+'px');
     if(+SITE_LAYOUT.pw>0) site.style.setProperty('--site-pw',(+SITE_LAYOUT.pw)+'px'); else site.style.removeProperty('--site-pw');   /* 261113 추가 — 본문 폭: 블록 기본이면 변수를 지워 블록마다 기본 폭(pwCss 의 대체값)으로 */
     stLayoutSync();
     if(typeof hdApply==='function') try{ hdApply(); }catch(e){}
