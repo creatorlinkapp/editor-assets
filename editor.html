@@ -10693,7 +10693,7 @@
   .site-ft{--ft-bg:#1E2227;--ft-fg:#8A909A;--ft-hd:#EAECEF;--ft-ac:#4FE08D;--ft-ln:rgba(255,255,255,.09);--ft-pt:56px;--ft-pb:34px;--ft-fs:14px;--ft-isz:18px;
     position:relative;background:var(--ft-bg);color:var(--ft-fg);font-size:var(--ft-fs);line-height:1.7;padding:var(--ft-pt) var(--site-px,48px) var(--ft-pb);box-shadow:inset 0 1px 0 var(--ft-ln);word-break:keep-all;text-align:left;}   /* 261112 수정 — 좌우 40 고정 → 사이트 좌우 여백(스타일 > 레이아웃) */   /* 위 구분선은 테두리가 아니라 안쪽 그림자 — 테두리로 두면 롤오버 외곽선(안쪽 기준) 위로 1px 이 삐져나온다 */
   .site > .site-ft,.site > .ft-offbar{position:sticky;top:9999px;}   /* 내용이 짧은 페이지에서도 페이지 맨 아래에 붙는다(컨테이너 밖으로는 못 나가므로 긴 페이지에서는 제자리) */
-  .site-ft .ft-in{max-width:1180px;margin:0 auto;}   /* 261112 수정 — 1160 → 1180(블록 최대 폭과 시작선 맞춤) */
+  .site-ft .ft-in{max-width:var(--site-pw,1180px);margin:0 auto;}   /* 261112 수정 — 1160 → 1180(블록 최대 폭과 시작선 맞춤) · 261113 수정 — 「사이트 폭 지정」이면 본문 폭 */
   .site-ft a{color:inherit;text-decoration:none;cursor:pointer;transition:color .12s;}
   .site-ft a:hover{color:var(--ft-ac);}
   .site-ft .ft-logo{font-size:1.72em;font-weight:800;letter-spacing:-.02em;line-height:1.25;color:var(--ft-hd);}
@@ -17557,6 +17557,11 @@
             <button type="button" class="mt-seg-b" data-m="custom" onclick="hdPadXSet('custom')">직접</button>
           </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접(블록과 같은 3칸) -->
           <div class="srow" id="hdPadXRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="hdPadX" min="0" max="200" step="2" value="48"><span class="v" id="hdPadXV">48px</span></div>
+          <!-- 261113 추가 — 스타일 > 레이아웃 「사이트 폭 지정」일 때만: 좌우 「기본」의 기준(본문 폭에 맞춤 / 화면 끝). 기본은 본문 폭 → 로고 · 버튼이 블록 내용 선에 맞춰진다 -->
+          <div class="srow" id="hdAlignRow" style="display:none;"><span class="k">맞춤</span><div class="mt-seg" id="hdAlignSeg" style="flex:1;min-width:0;margin:0;">
+            <button type="button" class="mt-seg-b active" data-m="content" onclick="hdAlignSet('content')">본문 폭</button>
+            <button type="button" class="mt-seg-b" data-m="edge" onclick="hdAlignSet('edge')">화면 끝</button>
+          </div></div>
           <div class="tx-hint" id="hdPadXHint">좌우를 0으로 하면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.</div>
         </div></div>
       </div>
@@ -18406,6 +18411,8 @@
          사이트 「블록 기본」이면 --site-pw 가 없어 (defMw − 여백×2) + 여백×2 = defMw 그대로 */
       if(opt.padIn){ var P=opt.cap?('min('+px+', '+opt.cap+')'):px; return {mw:'calc(var(--site-pw, calc('+defMw+'px - 2 * '+P+')) + 2 * '+P+')', px:px}; }
       return {mw:'var(--site-pw,'+defMw+'px)', px:px}; }
+    /* 261113 수정 — 「직접」 값도 내용 폭 기준(c.pwc = 1): 사이트 본문 폭과 같은 숫자로 같은 화면(전: 바깥 상자 폭이라 1180 화면이 1276 으로 보였다). pwc 없는 예전 저장 블록은 상자 폭 그대로(모양 유지) */
+    if(opt.padIn && c.pwc){ var P2=opt.cap?('min('+px+', '+opt.cap+')'):px; return {mw:'calc('+oMw+'px + 2 * '+P2+')', px:px}; }
     return {mw:oMw+'px', px:px}; }
   function pwApply(el,c,defMw,defPx,opt){ if(!el || !el.style) return; var v=pwCss(c,defMw,defPx,opt); el.style.setProperty('--pw-mw',v.mw); el.style.setProperty('--pw-px',v.px);
     /* 설정창이 이 블록을 보고 있으면 안내 글자도 바로(직접 슬라이더를 움직일 때 값이 안 바뀌던 것) */
@@ -18415,7 +18422,8 @@
   /* 사이트 값이 바뀌면: 다시 그려야 하는 블록(높이 계산 등) + 열려 있는 설정창 */
   function pwRefresh(){ var site=stSite(); if(!site) return;
     Object.keys(PW_REG).forEach(function(p){ var r=PW_REG[p]; if(!r.redraw) return; [].forEach.call(site.querySelectorAll('.blk[data-block="'+r.kind+'"]'),function(b){ try{ r.redraw(b); }catch(e){} }); });
-    Object.keys(PW_REG).forEach(function(p){ if(window[p+'CurBlk']) try{ pwSync(p); }catch(e){} }); }
+    Object.keys(PW_REG).forEach(function(p){ if(window[p+'CurBlk']) try{ pwSync(p); }catch(e){} });
+    if(typeof hdPadXSide==='function') try{ hdPadXSide(); }catch(e){} }   /* 상단 메뉴 설정 「맞춤」 칸(사이트 폭 지정일 때만)도 바로 */
   /* 블록 설정창 공통 칸(261113 수정 — 스위치 2개 + 되돌리기 글자 → 3칸 「사이트 · 직접 · 가로 100%」, 좌우 여백 3칸과 같은 모양)
      처음 열 때 블록의 「최대 폭」 줄 앞에 만들고, 그 줄을 「직접」 칸 안으로 옮긴 뒤 줄 끝에 ↺(블록 기본 폭으로)를 붙인다 */
   var PW_RESET_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>';
@@ -18443,16 +18451,18 @@
     [].forEach.call(box.querySelectorAll('#'+p+'PwSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===m); });
     var rows=document.getElementById(p+'PwOwnRows'); if(rows) rows.style.display=(m==='own')?'':'none';
     box.classList.toggle('off',mo); pwHint(p); }
-  /* 지금 화면에 보이는 바깥 상자 폭(편집 화면 축소 비율을 뺀 값 · 슬라이더 간격에 맞춤) */
-  function pwSeenMw(p,blk){ var r=PW_REG[p], el=blk.querySelector(r.box), site=stSite(); if(!el) return r.mw; var z=site?(parseFloat(getComputedStyle(site).zoom)||1):1, sl=document.getElementById(r.row);
-    var v=Math.round(el.getBoundingClientRect().width/z); if(sl){ v=Math.max(+sl.min||0,Math.min(+sl.max||v,v)); } return v; }
+  /* 지금 화면에 보이는 폭(편집 화면 축소 비율을 뺀 값). 안쪽 여백이 있는 블록은 내용 폭(상자 − 좌우 여백) */
+  function pwSeenMw(p,blk){ var r=PW_REG[p], el=blk.querySelector(r.box), site=stSite(); if(!el) return r.mw; var z=site?(parseFloat(getComputedStyle(site).zoom)||1):1, sl=document.getElementById(r.row), w=el.getBoundingClientRect().width;
+    if(r.opt && r.opt.padIn){ var cs=getComputedStyle(el); w-=((parseFloat(cs.paddingLeft)||0)+(parseFloat(cs.paddingRight)||0))*z; }
+    var v=Math.round(w/z); if(sl){ v=Math.max(+sl.min||0,Math.min(+sl.max||v,v)); } return v; }
   function pwSet(p,m){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw';
-    if(m==='own' && pwMode(c)!=='own' && !c.pwOwnSet){ c[mk]=pwSeenMw(p,blk); c.pwOwnSet=true; }   /* 처음 직접으로 바꿀 때는 지금 보이는 폭 그대로(튀지 않게) · 그 뒤로는 마지막 직접 값을 기억 */
+    if(m==='own' && pwMode(c)!=='own' && !c.pwOwnSet){ c[mk]=pwSeenMw(p,blk); c.pwOwnSet=true; if(r.opt && r.opt.padIn) c.pwc=1; }   /* 처음 직접으로 바꿀 때는 지금 보이는 폭 그대로(튀지 않게 · 내용 폭 기준) · 그 뒤로는 마지막 직접 값을 기억 */
     c.pw=(m==='site'||m==='full')?m:'own';
     window[p+'Apply'](blk); pwSync(p); if(typeof window[p+'FillBset']==='function') try{ window[p+'FillBset'](); }catch(e){} }
-  /* ↺ — 직접 값만 블록 기본 폭으로(사이트를 따르게 하려면 「사이트」 칸) */
-  function pwReset(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk); c[(r.opt&&r.opt.mwKey)||'mw']=r.mw; c.pwOwnSet=true;
-    window[p+'Apply'](blk); pwSync(p); if(typeof window[p+'FillBset']==='function') try{ window[p+'FillBset'](); }catch(e){} }
+  /* ↺ — 직접 값만 블록 기본 폭으로(사이트를 따르게 하려면 「사이트」 칸). 블록 기본 폭(상자)을 그린 뒤 그 내용 폭을 직접 값으로 */
+  function pwReset(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw'; c[mk]=r.mw; c.pwOwnSet=true; delete c.pwc;
+    window[p+'Apply'](blk); if(r.opt && r.opt.padIn && pwMode(c)==='own'){ var el=blk.querySelector(r.box), cs=el && getComputedStyle(el); if(cs){ c[mk]=Math.round(r.mw-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0)); c.pwc=1; window[p+'Apply'](blk); } }   /* 화면이 좁아 상자가 줄어 있어도 기본 폭 기준으로 */
+    pwSync(p); if(typeof window[p+'FillBset']==='function') try{ window[p+'FillBset'](); }catch(e){} }
   /* 261112 추가 — 휴대폰 좌우 여백 슬라이더를 잡으면 휴대폰 화면을 연다(닫혀 있으면 값을 바꿔도 PC 화면에는 아무 변화가 없어 고장처럼 보였다). 좁은 창은 상단 휴대폰 버튼과 같은 기준(900px)으로 안내만 */
   var stMoAuto=false;   /* 휴대폰 슬라이더가 연 휴대폰 화면인지(사용자가 직접 연 것은 PC 슬라이더로 닫지 않는다) */
   function stMoOpen(){ if(document.body.classList.contains('mview-on') || typeof window.mvSetMode!=='function') return;
@@ -63608,13 +63618,19 @@ function hdSetPad(k,v){ HD.pad[k]=v; hdFill(); hdChanged(); }
 function hdPadX(){ var p=HD.pad||(HD.pad={}); if(p.x==null || isNaN(+p.x)) p.x=(p.side===false)?0:48; p.side=(+p.x>0); return +p.x; }
 /* 261112 추가 — 좌우 3칸(기본 · 없음 · 직접). 예전 값: 48 → 기본 · 0 → 없음 · 그 밖 → 직접 */
 function hdPadXMode(){ var p=HD.pad||(HD.pad={}); if(p.xMode==='base'||p.xMode==='none'||p.xMode==='custom') return p.xMode; var x=hdPadX(); return (x===48)?'base':(x===0?'none':'custom'); }
-function hdPadXCss(){ var m=hdPadXMode(); return (m==='base')?((HD.type==='side')?'32px':'var(--site-px,48px)'):(m==='none'?'0px':(hdPadX()+'px')); }   /* 261112 수정 — 좌측 메뉴의 기본은 32px 고정(240px 세로 칸이라 사이트 좌우 여백을 따르면 로고 · 메뉴 자리가 값마다 줄었다 늘었다 했다) */
+function hdPadXCss(){ var m=hdPadXMode(); if(m==='base' && HD.type!=='side' && hdAlignOn()) return 'max(var(--site-px,48px), calc((100% - var(--site-pw)) / 2))';   /* 261113 추가 — 본문 폭에 맞춤: 넓은 화면은 블록 내용 선 · 좁은 화면은 사이트 좌우 여백 */
+  return (m==='base')?((HD.type==='side')?'32px':'var(--site-px,48px)'):(m==='none'?'0px':(hdPadX()+'px')); }
+/* 261113 추가 — 상단 메뉴 「맞춤」: 스타일 > 레이아웃 「사이트 폭 지정」이고 좌우 「기본」일 때 본문 폭(기본) / 화면 끝 */
+function hdAlignOn(){ return (typeof SITE_LAYOUT!=='undefined' && +SITE_LAYOUT.pw>0) && !(HD.pad && HD.pad.align==='edge'); }
+function hdAlignSet(v){ (HD.pad||(HD.pad={})).align=(v==='edge')?'edge':'content'; hdFill(); hdChanged(); }   /* 261112 수정 — 좌측 메뉴의 기본은 32px 고정(240px 세로 칸이라 사이트 좌우 여백을 따르면 로고 · 메뉴 자리가 값마다 줄었다 늘었다 했다) */
 function hdPadXSet(m){ HD.pad.xMode=m; if(m==='custom' && (!(+HD.pad.x>0))) HD.pad.x=48; hdFill(); hdChanged(); }
 /* 좌측 메뉴는 폭이 좁아 좌우 여백을 14 ~ 32px 로만 쓴다(CSS clamp) → 슬라이더도 그 범위로 · 안내 */
 function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getElementById('hdPadXV'), h=document.getElementById('hdPadXHint'); if(!el) return; var sd=(HD.type==='side'), x=hdPadX();
   el.min=sd?14:0; el.max=sd?32:200; var v=sd?Math.max(14,Math.min(32,x)):x; el.value=v; smRng(el); if(o) o.textContent=v+'px';
   var md=hdPadXMode(); [].forEach.call(document.querySelectorAll('#hdPadXSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===md); }); var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(md==='custom')?'':'none';   /* 261112 추가 — 3칸 */
-  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다. 「없음」이면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.'; }
+  var arw=document.getElementById('hdAlignRow'), aon=(!sd && md==='base' && +SITE_LAYOUT.pw>0); if(arw) arw.style.display=aon?'':'none';   /* 261113 추가 — 맞춤(사이트 폭 지정 · 좌우 기본일 때만) */
+  if(aon){ var av=(HD.pad && HD.pad.align==='edge')?'edge':'content'; [].forEach.call(document.querySelectorAll('#hdAlignSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===av); }); }
+  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':aon?((HD.pad && HD.pad.align==='edge')?'로고와 버튼이 화면 끝에서 스타일 > 레이아웃 좌우 여백만큼 떨어집니다.':'로고와 버튼이 스타일 > 레이아웃 본문 폭 선에 맞춰집니다. 화면이 본문 폭보다 좁으면 좌우 여백을 따릅니다.'):'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다. 「없음」이면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.'; }
 function hdColReset(g){ var lg={logo:'logo',nav:'nav',fx:'fx',util:'util',bg:'bg'}[g]; if(lg) hdUnlink(lg); var c=HD.col[hdEditSt]; if(g==='logo') c.logo=''; else if(g==='nav'){ c.fg=''; c.ac=''; } else if(g==='fx') c.fx=''; else if(g==='util'){ c.ufg=''; c.uac=''; } else if(g==='sub'){ HD.sub.fg=''; HD.sub.bg=''; HD.sub.lineCol=''; } else if(g==='subac') HD.sub.ac=''; else if(g==='bg'){ hdBgCur().col=(hdEditSt==='sticky'?'auto':''); hdBgCur().alpha=1; } hdFill(); hdChanged(); if(g==='subac') hdSubAcShow(); else if(g==='sub') hdSubShow(); }   /* 261109 수정 — 서브메뉴 색을 되돌릴 때도 캔버스의 서브메뉴를 펼쳐 보인다 */
 function hdChanged(){ hdApply(); if(typeof mvKick==='function') try{ mvKick(0); }catch(e){} }
 /* 261106 추가 — 상단 메뉴 사용 (기존 편집기 상단 메뉴 「숨김」 대응 · 푸터 사용과 같은 방식). 꺼도 설정은 그대로 남는다 */
