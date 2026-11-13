@@ -58870,6 +58870,9 @@ global.PolyFX = API;
       if(st.paddingTop) cf.pt=parseFloat(st.paddingTop); if(st.paddingBottom) cf.pb=parseFloat(st.paddingBottom);
       var wEl=blk.querySelector('.two.rt-split')||b; if(wEl && parseFloat(wEl.style.maxWidth)) cf.width=parseFloat(wEl.style.maxWidth);
       else if(wEl && !blk.querySelector('.two.rt-split') && !wEl.style.maxWidth){ var cw0=blk.querySelector('.rt-colw'); if(!cw0 || !parseFloat(cw0.style.maxWidth)) cf.width=1400; }   /* 261112 추가 — 본문만인데 인라인 최대 폭이 없는 견본(홈 텍스트 블록 등)은 실제로 폭 제한이 없다 → 「전체」로 읽는다(전: 기본 1180 으로 읽어 설정창엔 1180 · 화면은 전체였고, 다른 설정을 만지면 1180 으로 줄었다) */   /* 260920 추가 — 인라인 최대 폭(라벨 레이아웃은 묶음 상자, 본문만은 본문)도 설정으로: 안 읽으면 설정을 한 번 만질 때 기본 1180 으로 넓어졌다 */
+      (function(){ var dw=blk.getAttribute('data-pw-w'), dp=blk.getAttribute('data-pw'), dd=blk.getAttribute('data-pw-def'), d0=blk.getAttribute('data-pw-p0');   /* 261113 추가 — 본문 폭 속성이 있으면 그 값(인라인 폭은 calc 라 못 읽음) */
+        var pl=st.paddingLeft; if(pl && !/site-px/.test(pl) && isFinite(parseFloat(pl)) && parseFloat(pl)!==48){ cf.px=parseFloat(pl); cf.pxMode=(cf.px===0)?'none':'custom'; }   /* 좌우 직접 값도(48 · 사이트 값은 기본) */
+        if(dw!=null && dw!=='' && isFinite(+dw)) cf.width=+dw; if(dp==='site'||dp==='own'||dp==='full') cf.pw=dp; if(dd && isFinite(+dd)) cf.pwDef=+dd; if(d0) cf.pwP0=d0; })();
       if(b){ if(b.style.color) cf.color=rtHexOf(b.style.color); if(b.style.fontSize) cf.size=parseFloat(b.style.fontSize); if(b.style.textAlign) cf.align=b.style.textAlign; }
     }
     return blk._rtCfg;
@@ -58972,6 +58975,9 @@ global.PolyFX = API;
     if(blk.getAttribute('data-block')==='tkblk'){ if(!blk.classList.contains('rt-editing') && typeof tkApply==='function') tkApply(blk); return; }   /* 261023 추가 — 탭 블록 */
     if(blk.getAttribute('data-block')==='gridgal'){ if(!blk.classList.contains('rt-editing') && typeof ggApply==='function') ggApply(blk); return; }   /* 261015 추가 */
     var c=rtCfg(blk);
+    /* 261113 추가 — 본문 폭 값을 블록 속성에도 적는다. 페이지 복제처럼 HTML 만 옮기는 길에서는 설정을 인라인 폭으로 다시 읽는데, 폭이 calc(…) 라 읽지 못해 760 → 1180 · 900 → 전체로 바뀌었다 */
+    if(c.pwP0==null && typeof rtPxCss==='function') c.pwP0=rtPxCss(c);
+    [['data-pw',c.pw],['data-pw-w',c.width],['data-pw-def',c.pwDef],['data-pw-p0',c.pwP0]].forEach(function(a){ if(a[1]==null || a[1]==='') blk.removeAttribute(a[0]); else blk.setAttribute(a[0],String(a[1])); });
     if(c.layout==='dual'){ c.layout='single'; if(!(c.cols>1)) c.cols=2; }   /* 260915 수정 — 옛 '본문 2단' → 2열 */
     rtColsSync(blk,c); rtLayoutSync(blk,c);
     var b=rtMain(blk); if(!b) return;
