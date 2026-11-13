@@ -10457,7 +10457,7 @@
     --gd-m1:color-mix(in srgb,var(--gd-ffg) 70%,var(--gd-fbg));--gd-m2:color-mix(in srgb,var(--gd-ffg) 46%,var(--gd-fbg));
     --gd-ln:color-mix(in srgb,var(--gd-ffg) 12%,var(--gd-fbg));--gd-ln2:color-mix(in srgb,var(--gd-ffg) 20%,var(--gd-fbg));--gd-fill:color-mix(in srgb,var(--gd-ffg) 17%,var(--gd-fbg));
     --gd-cc:color-mix(in srgb,var(--gd-ffg) 88%,var(--gd-fbg));background:var(--gd-fbg);color:var(--gd-ffg);}
-  .gd-foot .gd-f-in{box-sizing:border-box;max-width:1160px;margin:0 auto;padding:6px 40px 84px;}
+  .gd-foot .gd-f-in{box-sizing:border-box;max-width:calc(var(--site-pw, 1080px) + 80px);margin:0 auto;padding:6px 40px 84px;}   /* 261113 수정 — 상세 하단(공유 · 댓글)도 본문 폭: 「사이트 폭 지정」이면 내용 폭 = 본문 폭(상자 = 본문 폭 + 좌우 40 × 2) · 블록 기본이면 1160 그대로 */
   .gd-foot .gd-acts{display:flex;align-items:center;gap:16px;padding:18px 0;}
   .gd-foot .gd-acts button{appearance:none;border:0;background:none;padding:0;font:inherit;font-size:13px;color:var(--gd-m1);cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:color .14s,transform .14s;}
   .gd-foot .gd-acts button:hover{transform:translateY(-1px);}
