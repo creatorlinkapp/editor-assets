@@ -2533,7 +2533,7 @@
     --vlf:'CreatorlinkSansKR',sans-serif;--vlbg:#fff;--vltc:#191f28;--vlnc:#8b95a1;--vlhc:#191f28;--vlbc:#6b7684;--vllc:#e5e8eb;
     --vlts:44px;--vlhs:24px;--vlbs:17px;--vldim:0;--vldm:.3;
     --vlcw:320px;--vlch:420px;--vlar:.762;--vlr:28px;--vlst:96px;--vlrp:44px;--vlgap:80px;}
-  .vl-in{max-width:var(--pw-mw,var(--vlmw,1280px));margin:0 auto;box-sizing:border-box;padding:var(--vlpv,120px) min(var(--pw-px,48px),5cqw);}   /* 261113 수정 — 폭 · 좌우를 본문 폭 공통(--pw-mw · --pw-px)에서 */
+  .vl-in{max-width:var(--pw-mw,var(--vlmw,1280px));margin:0 auto;box-sizing:border-box;padding:var(--vlpv,120px) var(--pw-px,48px);}   /* 261113 수정 — 폭 · 좌우를 본문 폭 공통(--pw-mw · --pw-px)에서 */
   .vl-title{margin:0 0 min(48px,6cqw);font-size:min(var(--vlts),7.2cqw);font-weight:700;line-height:1.3;letter-spacing:-.03em;color:var(--vltc);
     white-space:pre-line;word-break:keep-all;}
   .vl-body{display:grid;grid-template-columns:var(--vlcw) minmax(0,1fr);gap:0 var(--vlgap);align-items:start;padding:min(48px,6cqw) 0;}
@@ -2615,7 +2615,7 @@
     --wlf:'Instrument Serif',"Times New Roman",serif;--wlbg:#fffaee;--wltc:#5a684f;--wlcc:#8a7b66;--wllc:#e9dfcd;
     --wlts:96px;--wlcs:18px;--wlrp:56px;--wlind:96px;--wlho:.33;--wlsh:12px;
     --wlisz:400px;--wlar:1;--wlir:16px;}
-  .wl-in{max-width:var(--pw-mw,var(--wlmw,1600px));margin:0 auto;box-sizing:border-box;padding:var(--wlpv,120px) min(var(--pw-px,48px),5cqw);}   /* 261113 수정 — 폭 · 좌우를 본문 폭 공통에서(좌우 64 고정 → 사이트 값) */
+  .wl-in{max-width:var(--pw-mw,var(--wlmw,1600px));margin:0 auto;box-sizing:border-box;padding:var(--wlpv,120px) var(--pw-px,48px);}   /* 261113 수정 — 폭 · 좌우를 본문 폭 공통에서(좌우 64 고정 → 사이트 값) */
   .wl-list{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--wllc);}
   .wl-wrap[data-line="0"] .wl-list,.wl-wrap[data-line="0"] .wl-row{border-color:transparent;}
   .wl-row{position:relative;display:flex;align-items:center;gap:0;box-sizing:border-box;padding:var(--wlrp) 0 calc(var(--wlrp)*1.12);
@@ -2713,7 +2713,7 @@
   .nx-lb{margin:18px 0 0;font-size:var(--nxls);font-weight:500;line-height:1.2;letter-spacing:-.03em;color:var(--nxtc);word-break:keep-all;}
   .nx-lb:empty{display:none;}
   @container (max-width:760px){
-    .nx-in{flex-direction:column;gap:56px;padding:var(--nxptm,96px) min(var(--nxpx,100px),20px) var(--nxpbm,96px);}
+    .nx-in{flex-direction:column;gap:56px;padding:var(--nxptm,96px) var(--site-px,20px) var(--nxpbm,96px);}   /* 261113 수정 — 모바일 좌우 = 사이트 모바일 값(전: 20 고정) */
     .nx-wrap[data-stick][data-pos][data-line] .nx-head{position:relative;top:auto;bottom:auto;margin-top:0;}   /* 261112 수정 — 고정 규칙보다 앞서게 */
     .nx-wrap[data-stick][data-pos][data-line] .nx-body{margin-top:0;}
     .nx-title{font-size:min(var(--nxts),10cqw);}
@@ -7520,8 +7520,8 @@
         <div class="srow" id="stPwRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="stPw" min="960" max="1440" step="20" value="1180"><span class="v" id="stPwV">1180px</span></div>
         <div class="st-note" id="stPwNote" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin:2px 0 10px;">블록 기본: 블록마다 정해진 폭으로 들어갑니다.</div>
         <div class="srow"><span class="k">좌우 여백</span></div>
-        <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="0" max="200" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
-        <div class="srow"><span class="k">휴대폰</span><input class="rng" type="range" id="stPxMo" min="0" max="60" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
+        <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="0" max="120" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
+        <div class="srow"><span class="k">모바일</span><input class="rng" type="range" id="stPxMo" min="0" max="40" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
         <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">화면 끝과 내용 사이의 최소 여백입니다. 최대 폭이나 좌우 폭 제한이 켜진 블록은 넓은 화면에서 그 폭 안에 가운데 놓입니다.</div>   <!-- 261112 수정 — 넓은 화면에서 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 실제 의미로 · PC 슬라이더를 움직이는 동안 안내선(stPxGuide) -->
       </div>
       <div class="st-sec">
@@ -18331,7 +18331,7 @@
     if(h) h.style.display=on?'':'none'; }
   function bpxSync(p,k,c){ var m=bpxMode(c,k), id=p+k.charAt(0).toUpperCase()+k.slice(1);
     rtSegSync(id+'Seg',m); var r=document.getElementById(id+'Row'); if(r) r.style.display=(m==='custom')?'':'none'; bpxBaseHint(id,m==='base'); bpxMoSeg(id);
-    var sl=document.getElementById(id); if(sl){ if(!sl.hasAttribute('data-max')) sl.setAttribute('data-max',sl.max); sl.max=bpxMo()?Math.min(60,+sl.getAttribute('data-max')):sl.getAttribute('data-max');   /* 휴대폰 대상이면 직접 슬라이더 0 ~ 60(스타일 > 레이아웃 휴대폰과 같은 범위) */ var v=parseFloat(c[k]); if(!isFinite(v)) v=48; sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(id+'V'); if(o) o.textContent=v+'px'; }
+    var sl=document.getElementById(id); if(sl){ if(!sl.hasAttribute('data-max')) sl.setAttribute('data-max',sl.max); sl.max=bpxMo()?Math.min(40,+sl.getAttribute('data-max')):sl.getAttribute('data-max');   /* 휴대폰 대상이면 직접 슬라이더 0 ~ 60(스타일 > 레이아웃 휴대폰과 같은 범위) */ var v=parseFloat(c[k]); if(!isFinite(v)) v=48; sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(id+'V'); if(o) o.textContent=v+'px'; }
     /* 디자인 구조(화면 끝까지 채우는 배치 · 탭 안 블록)가 좌우를 0 으로 고정하면 3칸을 눌러도 화면이 그대로 → 흐림 + 안내 */
     var sg=document.getElementById(id+'Seg'), srow=sg && sg.closest('.srow'), blk=window[p+'CurBlk'], fixed=false, inn=blk && BPX_IN[p] && blk.querySelector(BPX_IN[p]);
     if(inn && sl && sl.hasAttribute('data-bpx')){ var old=blk.style.getPropertyValue('--bpx'); blk.style.setProperty('--bpx','7px'); fixed=(parseFloat(getComputedStyle(inn).paddingLeft)||0)!==7; if(old) blk.style.setProperty('--bpx',old); else blk.style.removeProperty('--bpx'); }
@@ -18389,9 +18389,9 @@
      opt.px: 'site' = 좌우는 늘 사이트 값 · 'own' = 좌우는 늘 블록 값(c.px) · 없으면 pw 를 따름 / opt.fullPx: 가로 100% 확장일 때 좌우(이미지형 0)
      opt.mwKey · opt.pxKey: 블록 cfg 의 폭 · 좌우 키 이름(기본 mw · px) */
   var PW_REG={   /* 블록 접두 → {mw: 기본 폭, px: 기본 좌우, opt, row: 「이 블록만 직접」 안으로 옮길 최대 폭 슬라이더 id, kind: data-block, redraw: 사이트 값 바뀔 때 다시 그릴 함수} */
-    vl:{mw:1280, px:48,  opt:{px:'site', padIn:true, cap:'5cqw'}, row:'vlMw', kind:'valuelist'},   /* CONTENT02 이미지 전환 목록(.vl-in 안쪽 좌우 min(값, 5cqw)) */
-    wl:{mw:1600, px:48,  opt:{px:'site', padIn:true, cap:'5cqw'}, row:'wlMw', kind:'worklist'},    /* CONTENT01 마우스 따라오는 이미지 목록(좌우 64 → 사이트 값 · 안쪽 min(값, 5cqw)) */
-    nx:{mw:1760, px:100, opt:{px:'own',  padIn:true, cap:'6cqw'}, row:'nxMw', kind:'stickstat', redraw:function(b){ nxApply(b); }}   /* TEXT01 고정 타이틀 숫자(좌우 100 유지 · 안쪽 min(값, 6cqw) · 타이틀 고정 위치 다시 계산) */
+    vl:{mw:1280, px:48,  opt:{px:'site', padIn:true}, row:'vlMw', box:'.vl-in', kind:'valuelist'},   /* CONTENT02 이미지 전환 목록(.vl-in 안쪽 좌우 = 사이트 값) */
+    wl:{mw:1600, px:48,  opt:{px:'site', padIn:true}, row:'wlMw', box:'.wl-in', kind:'worklist'},    /* CONTENT01 마우스 따라오는 이미지 목록(좌우 64 → 사이트 값) */
+    nx:{mw:1760, px:100, opt:{px:'own',  padIn:true, cap:'6cqw'}, row:'nxMw', box:'.nx-in', kind:'stickstat', redraw:function(b){ nxApply(b); }}   /* TEXT01 고정 타이틀 숫자(좌우 100 유지 · 안쪽 min(값, 6cqw) · 타이틀 고정 위치 다시 계산) */
   };
   function pwMode(c){ var m=c && c.pw; return (m==='site'||m==='own'||m==='full')?m:'own'; }
   function pwCss(c,defMw,defPx,opt){ opt=opt||{}; c=c||{};
@@ -18406,38 +18406,51 @@
       if(opt.padIn){ var P=opt.cap?('min('+px+', '+opt.cap+')'):px; return {mw:'calc(var(--site-pw, calc('+defMw+'px - 2 * '+P+')) + 2 * '+P+')', px:px}; }
       return {mw:'var(--site-pw,'+defMw+'px)', px:px}; }
     return {mw:oMw+'px', px:px}; }
-  function pwApply(el,c,defMw,defPx,opt){ if(!el || !el.style) return; var v=pwCss(c,defMw,defPx,opt); el.style.setProperty('--pw-mw',v.mw); el.style.setProperty('--pw-px',v.px); }
+  function pwApply(el,c,defMw,defPx,opt){ if(!el || !el.style) return; var v=pwCss(c,defMw,defPx,opt); el.style.setProperty('--pw-mw',v.mw); el.style.setProperty('--pw-px',v.px);
+    /* 설정창이 이 블록을 보고 있으면 안내 글자도 바로(직접 슬라이더를 움직일 때 값이 안 바뀌던 것) */
+    if(!window.CL_MVIEW){ var blk=el.closest && el.closest('.blk'), k=blk && blk.getAttribute('data-block'); Object.keys(PW_REG).forEach(function(p){ if(PW_REG[p].kind===k && window[p+'CurBlk']===blk && document.getElementById(p+'PwBox')) pwHint(p); }); } }
   /* 블록 추가로 넣는 블록만 본문 폭 따름 */
   function pwNew(p,blk){ try{ var c=window[p+'Cfg'](blk); c.pw='site'; }catch(e){} }
   /* 사이트 값이 바뀌면: 다시 그려야 하는 블록(높이 계산 등) + 열려 있는 설정창 */
   function pwRefresh(){ var site=stSite(); if(!site) return;
     Object.keys(PW_REG).forEach(function(p){ var r=PW_REG[p]; if(!r.redraw) return; [].forEach.call(site.querySelectorAll('.blk[data-block="'+r.kind+'"]'),function(b){ try{ r.redraw(b); }catch(e){} }); });
     Object.keys(PW_REG).forEach(function(p){ if(window[p+'CurBlk']) try{ pwSync(p); }catch(e){} }); }
-  /* 블록 설정창 공통 칸 — 처음 열 때 블록의 「최대 폭」 줄 앞에 만들고, 그 줄을 「이 블록만 직접」 안으로 옮긴다 */
+  /* 블록 설정창 공통 칸(261113 수정 — 스위치 2개 + 되돌리기 글자 → 3칸 「사이트 · 직접 · 가로 100%」, 좌우 여백 3칸과 같은 모양)
+     처음 열 때 블록의 「최대 폭」 줄 앞에 만들고, 그 줄을 「직접」 칸 안으로 옮긴 뒤 줄 끝에 ↺(블록 기본 폭으로)를 붙인다 */
+  var PW_RESET_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>';
   function pwBox(p){ var r=PW_REG[p]; if(!r) return null; var box=document.getElementById(p+'PwBox'); if(box) return box;
     var sl=document.getElementById(r.row), row=sl && sl.closest('.srow'); if(!row) return null;
-    box=document.createElement('div'); box.id=p+'PwBox'; box.className='pw-box';
-    box.style.margin='10px 0 12px';
-    box.innerHTML='<div class="srow"><span class="k">본문 폭</span><span class="v" id="'+p+'PwCur" style="width:auto;margin-left:auto;white-space:nowrap;"></span></div>'
-      +'<div class="srow"><span class="k">이 블록만 직접</span><button type="button" class="sw" id="'+p+'PwOwn" style="margin-left:auto;" onclick="pwSet(\''+p+'\',\'own\',this)"></button></div>'
+    box=document.createElement('div'); box.id=p+'PwBox'; box.className='pw-box'; box.style.margin='10px 0 12px';
+    box.innerHTML='<div class="srow"><span class="k">본문 폭</span><div class="mt-seg" id="'+p+'PwSeg" style="flex:1;min-width:0;margin:0;">'
+      +'<button type="button" class="mt-seg-b" data-m="site" onclick="pwSet(\''+p+'\',\'site\')">사이트</button>'
+      +'<button type="button" class="mt-seg-b" data-m="own" onclick="pwSet(\''+p+'\',\'own\')">직접</button>'
+      +'<button type="button" class="mt-seg-b" data-m="full" onclick="pwSet(\''+p+'\',\'full\')">가로 100%</button></div></div>'
       +'<div id="'+p+'PwOwnRows"></div>'
-      +'<div class="srow"><span class="k">가로 100% 확장</span><button type="button" class="sw" id="'+p+'PwFull" style="margin-left:auto;" onclick="pwSet(\''+p+'\',\'full\',this)"></button></div>'
-      +'<div class="tx-hint" id="'+p+'PwHint" style="margin-top:4px;"></div>'
-      +'<div class="tx-hint" style="margin-top:4px;"><button type="button" class="pw-reset" onclick="pwReset(\''+p+'\')">블록 기본 폭으로 되돌리기</button></div>';   /* 강조 버튼 대신 글자 버튼(텍스트 블록 「모두 이 값으로 맞추기」와 같은 모양) */
-    row.parentNode.insertBefore(box,row); document.getElementById(p+'PwOwnRows').appendChild(row); return box; }
+      +'<div class="tx-hint" id="'+p+'PwHint" style="margin-top:6px;"></div>';
+    row.parentNode.insertBefore(box,row); document.getElementById(p+'PwOwnRows').appendChild(row);
+    var rb=document.createElement('button'); rb.type='button'; rb.className='sw-reset'; rb.title='블록 기본 폭('+r.mw+'px)으로'; rb.setAttribute('aria-label','블록 기본 폭으로'); rb.innerHTML=PW_RESET_SVG; rb.style.marginLeft='6px';
+    rb.onclick=function(){ pwReset(p); }; row.appendChild(rb); return box; }
+  /* 안내 글자만 다시(슬라이더를 움직일 때마다) */
+  function pwHint(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var h=document.getElementById(p+'PwHint'); if(!h) return;
+    var c=window[p+'Cfg'](blk), m=pwMode(c), on=(+SITE_LAYOUT.pw>0), mo=(typeof bpxMo==='function' && bpxMo()), mw=+c[(r.opt&&r.opt.mwKey)||'mw']||r.mw;
+    h.textContent=mo?'휴대폰 화면은 본문 폭보다 좁아 적용되지 않습니다.'
+      :(m==='site')?(on?('스타일 > 레이아웃의 본문 폭 '+SITE_LAYOUT.pw+'px를 따릅니다.'):('지금은 블록 기본 폭 '+r.mw+'px입니다. 스타일 > 레이아웃에서 「사이트 폭 지정」을 고르면 그 폭을 따릅니다.'))
+      :(m==='own')?('이 블록만 '+mw+'px입니다. 스타일 > 레이아웃 본문 폭을 바꿔도 그대로입니다.')
+      :'화면 끝까지 넓어집니다.'; }
   function pwSync(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var box=pwBox(p); if(!box) return;
-    var c=window[p+'Cfg'](blk), m=pwMode(c), on=(+SITE_LAYOUT.pw>0), mo=(typeof bpxMo==='function' && bpxMo());
-    var ow=document.getElementById(p+'PwOwn'), fu=document.getElementById(p+'PwFull'), rows=document.getElementById(p+'PwOwnRows'), cur=document.getElementById(p+'PwCur'), h=document.getElementById(p+'PwHint');
-    if(ow) ow.classList.toggle('on',m==='own'); if(fu) fu.classList.toggle('on',m==='full'); if(rows) rows.style.display=(m==='own')?'':'none';
-    if(cur) cur.textContent=(m==='full')?'가로 100%':(m==='own')?('이 블록만 '+(+c[(r.opt&&r.opt.mwKey)||'mw']||r.mw)+'px'):(on?('사이트 '+SITE_LAYOUT.pw+'px'):('블록 기본 '+r.mw+'px'));
-    box.classList.toggle('off',mo);
-    if(h) h.textContent=mo?'휴대폰 화면은 본문 폭보다 좁아 적용되지 않습니다.':(m==='site' && !on)?'스타일 > 레이아웃에서 「사이트 폭 지정」을 고르면 그 폭을 따릅니다.':(m==='site')?'스타일 > 레이아웃의 본문 폭을 따릅니다.':'';
-    if(h) h.style.display=h.textContent?'':'none'; }
-  function pwSet(p,which,btn){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw', turnOn=!(btn && btn.classList.contains('on'));
-    if(which==='own'){ if(turnOn){ if(pwMode(c)==='site' && +SITE_LAYOUT.pw>0) c[mk]=+SITE_LAYOUT.pw; else if(!(+c[mk]>0)) c[mk]=r.mw; c.pw='own'; } else c.pw='site'; }   /* 직접으로 바꿀 때는 지금 보이는 폭에서 시작 */
-    else c.pw=turnOn?'full':'site';
+    var c=window[p+'Cfg'](blk), m=pwMode(c), mo=(typeof bpxMo==='function' && bpxMo());
+    [].forEach.call(box.querySelectorAll('#'+p+'PwSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===m); });
+    var rows=document.getElementById(p+'PwOwnRows'); if(rows) rows.style.display=(m==='own')?'':'none';
+    box.classList.toggle('off',mo); pwHint(p); }
+  /* 지금 화면에 보이는 바깥 상자 폭(편집 화면 축소 비율을 뺀 값 · 슬라이더 간격에 맞춤) */
+  function pwSeenMw(p,blk){ var r=PW_REG[p], el=blk.querySelector(r.box), site=stSite(); if(!el) return r.mw; var z=site?(parseFloat(getComputedStyle(site).zoom)||1):1, sl=document.getElementById(r.row);
+    var v=Math.round(el.getBoundingClientRect().width/z); if(sl){ v=Math.max(+sl.min||0,Math.min(+sl.max||v,v)); } return v; }
+  function pwSet(p,m){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw';
+    if(m==='own' && pwMode(c)!=='own' && !c.pwOwnSet){ c[mk]=pwSeenMw(p,blk); c.pwOwnSet=true; }   /* 처음 직접으로 바꿀 때는 지금 보이는 폭 그대로(튀지 않게) · 그 뒤로는 마지막 직접 값을 기억 */
+    c.pw=(m==='site'||m==='full')?m:'own';
     window[p+'Apply'](blk); pwSync(p); if(typeof window[p+'FillBset']==='function') try{ window[p+'FillBset'](); }catch(e){} }
-  function pwReset(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk); c.pw='own'; c[(r.opt&&r.opt.mwKey)||'mw']=r.mw; if(!(r.opt && r.opt.px==='site')) c[(r.opt&&r.opt.pxKey)||'px']=r.px;
+  /* ↺ — 직접 값만 블록 기본 폭으로(사이트를 따르게 하려면 「사이트」 칸) */
+  function pwReset(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk); c[(r.opt&&r.opt.mwKey)||'mw']=r.mw; c.pwOwnSet=true;
     window[p+'Apply'](blk); pwSync(p); if(typeof window[p+'FillBset']==='function') try{ window[p+'FillBset'](); }catch(e){} }
   /* 261112 추가 — 휴대폰 좌우 여백 슬라이더를 잡으면 휴대폰 화면을 연다(닫혀 있으면 값을 바꿔도 PC 화면에는 아무 변화가 없어 고장처럼 보였다). 좁은 창은 상단 휴대폰 버튼과 같은 기준(900px)으로 안내만 */
   var stMoAuto=false;   /* 휴대폰 슬라이더가 연 휴대폰 화면인지(사용자가 직접 연 것은 PC 슬라이더로 닫지 않는다) */
@@ -59114,7 +59127,7 @@ global.PolyFX = API;
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     var vals={gap:(c.gap==null?48:c.gap), size:e.size, lh:e.lh, ls:(c.ls||0), width:(c.width==null?1180:c.width), pt:e.pt, pb:e.pb, px:e.px,
               labelW:(c.labelW==null?340:c.labelW), splitGap:(c.splitGap==null?24:c.splitGap), bgDim:(c.bgDim==null?40:c.bgDim), minH:(c.minH==null?600:c.minH)};
-    var pxm0=rtPxMode(c); (function(){ var s=document.getElementById('rtPx'); if(s){ if(!s.hasAttribute('data-max')) s.setAttribute('data-max',s.max); s.max=bpxMo()?Math.min(60,+s.getAttribute('data-max')):s.getAttribute('data-max'); } })(); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none'; bpxBaseHint('rtPx',pxm0==='base'); bpxMoSeg('rtPx');   /* 261112 추가 — 좌우 3칸 */
+    var pxm0=rtPxMode(c); (function(){ var s=document.getElementById('rtPx'); if(s){ if(!s.hasAttribute('data-max')) s.setAttribute('data-max',s.max); s.max=bpxMo()?Math.min(40,+s.getAttribute('data-max')):s.getAttribute('data-max'); } })(); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none'; bpxBaseHint('rtPx',pxm0==='base'); bpxMoSeg('rtPx');   /* 261112 추가 — 좌우 3칸 */
     var hm=(c.hMode==='screen'||c.hMode==='px')?c.hMode:'auto'; rtSegSync('rtHSeg',hm); var mhr=document.getElementById('rtMinHRow'); if(mhr) mhr.style.display=(hm==='px')?'':'none';   /* 260920 추가 — 높이 */
     rtBgSync();   /* 260920 수정 — 배경 소재 상자(썸네일 · 삭제 · 어둡게 행) 표시 맞춤 */
     var lay=c.layout||'single';
