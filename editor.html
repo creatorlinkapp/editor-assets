@@ -63622,7 +63622,7 @@ function hdPadXCss(){ var m=hdPadXMode(); if(m==='base' && HD.type!=='side' && h
   return (m==='base')?((HD.type==='side')?'32px':'var(--site-px,48px)'):(m==='none'?'0px':(hdPadX()+'px')); }
 /* 261113 추가 — 상단 메뉴 「맞춤」: 스타일 > 레이아웃 「사이트 폭 지정」이고 좌우 「기본」일 때 본문 폭(기본) / 화면 끝 */
 function hdAlignOn(){ return (typeof SITE_LAYOUT!=='undefined' && +SITE_LAYOUT.pw>0) && !(HD.pad && HD.pad.align==='edge'); }
-function hdAlignSet(v){ (HD.pad||(HD.pad={})).align=(v==='edge')?'edge':'content'; hdFill(); hdChanged(); }   /* 261112 수정 — 좌측 메뉴의 기본은 32px 고정(240px 세로 칸이라 사이트 좌우 여백을 따르면 로고 · 메뉴 자리가 값마다 줄었다 늘었다 했다) */
+function hdAlignSet(v){ (HD.pad||(HD.pad={})).align=(v==='edge')?'edge':'content'; hdFill(); hdChanged(); hdPadXSide(); }   /* 그린 뒤 안내(두 줄 알림)를 다시 */   /* 261112 수정 — 좌측 메뉴의 기본은 32px 고정(240px 세로 칸이라 사이트 좌우 여백을 따르면 로고 · 메뉴 자리가 값마다 줄었다 늘었다 했다) */
 function hdPadXSet(m){ HD.pad.xMode=m; if(m==='custom' && (!(+HD.pad.x>0))) HD.pad.x=48; hdFill(); hdChanged(); }
 /* 좌측 메뉴는 폭이 좁아 좌우 여백을 14 ~ 32px 로만 쓴다(CSS clamp) → 슬라이더도 그 범위로 · 안내 */
 function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getElementById('hdPadXV'), h=document.getElementById('hdPadXHint'); if(!el) return; var sd=(HD.type==='side'), x=hdPadX();
@@ -63630,7 +63630,14 @@ function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getE
   var md=hdPadXMode(); [].forEach.call(document.querySelectorAll('#hdPadXSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===md); }); var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(md==='custom')?'':'none';   /* 261112 추가 — 3칸 */
   var arw=document.getElementById('hdAlignRow'), aon=(!sd && md==='base' && +SITE_LAYOUT.pw>0); if(arw) arw.style.display=aon?'':'none';   /* 261113 추가 — 맞춤(사이트 폭 지정 · 좌우 기본일 때만) */
   if(aon){ var av=(HD.pad && HD.pad.align==='edge')?'edge':'content'; [].forEach.call(document.querySelectorAll('#hdAlignSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===av); }); }
-  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':aon?((HD.pad && HD.pad.align==='edge')?'로고와 버튼이 화면 끝에서 스타일 > 레이아웃 좌우 여백만큼 떨어집니다.':'로고와 버튼이 스타일 > 레이아웃 본문 폭 선에 맞춰집니다. 화면이 본문 폭보다 좁으면 좌우 여백을 따릅니다.'):'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다. 「없음」이면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.'; }
+  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':aon?((HD.pad && HD.pad.align==='edge')?'로고와 버튼이 화면 끝에서 스타일 > 레이아웃 좌우 여백만큼 떨어집니다.':'로고와 버튼이 스타일 > 레이아웃 본문 폭 선에 맞춰집니다. 화면이 본문 폭보다 좁으면 좌우 여백을 따릅니다.'+hdAlignWrapNote()):((+SITE_LAYOUT.pw>0 && md!=='base')?'좌우가 「'+(md==='none'?'없음':'직접')+'」이라 본문 폭에 맞추지 않습니다. 본문 폭 선에 맞추려면 좌우를 「기본」으로 바꾸세요.':'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다. 「없음」이면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.'); }   /* 261113 추가 — 사이트 폭 지정인데 좌우 직접 · 없음이면 왜 안 맞는지 안내 */
+/* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
+function hdAlignWrapNote(){ try{
+  var hd=document.querySelector('#stage .site > .site-hd'), nv=hd && hd.querySelector('.site-nav'); if(!nv || HD_LAYOUT_ROWS[HD.layout]>1) return '';
+  function rows(){ var t={}, n=0; [].forEach.call(nv.children,function(e){ if(!e.getClientRects().length || getComputedStyle(e).display==='none') return; var k=Math.round(e.getBoundingClientRect().top); if(!t[k]){ t[k]=1; n++; } }); return n; }
+  var a=rows(); if(a<2) return '';
+  var old=hd.style.getPropertyValue('--hd-sidex'); hd.style.setProperty('--hd-sidex','var(--site-px,48px)'); var b=rows(); if(old) hd.style.setProperty('--hd-sidex',old); else hd.style.removeProperty('--hd-sidex');
+  return (b<a)?' 메뉴가 많아 두 줄이 됐습니다. 「화면 끝」으로 바꾸면 한 줄로 들어갑니다.':''; }catch(e){ return ''; } }
 function hdColReset(g){ var lg={logo:'logo',nav:'nav',fx:'fx',util:'util',bg:'bg'}[g]; if(lg) hdUnlink(lg); var c=HD.col[hdEditSt]; if(g==='logo') c.logo=''; else if(g==='nav'){ c.fg=''; c.ac=''; } else if(g==='fx') c.fx=''; else if(g==='util'){ c.ufg=''; c.uac=''; } else if(g==='sub'){ HD.sub.fg=''; HD.sub.bg=''; HD.sub.lineCol=''; } else if(g==='subac') HD.sub.ac=''; else if(g==='bg'){ hdBgCur().col=(hdEditSt==='sticky'?'auto':''); hdBgCur().alpha=1; } hdFill(); hdChanged(); if(g==='subac') hdSubAcShow(); else if(g==='sub') hdSubShow(); }   /* 261109 수정 — 서브메뉴 색을 되돌릴 때도 캔버스의 서브메뉴를 펼쳐 보인다 */
 function hdChanged(){ hdApply(); if(typeof mvKick==='function') try{ mvKick(0); }catch(e){} }
 /* 261106 추가 — 상단 메뉴 사용 (기존 편집기 상단 메뉴 「숨김」 대응 · 푸터 사용과 같은 방식). 꺼도 설정은 그대로 남는다 */
