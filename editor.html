@@ -17553,16 +17553,15 @@
           <div class="srow"><span class="k">하</span><input class="rng" type="range" id="hdPadB" min="0" max="80" step="1" value="22"><span class="v" id="hdPadBV">22px</span></div>
           <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="hdPadXSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="base" onclick="hdPadXSet('base')">기본</button>
-            <button type="button" class="mt-seg-b" data-m="none" onclick="hdPadXSet('none')">없음</button>
             <button type="button" class="mt-seg-b" data-m="custom" onclick="hdPadXSet('custom')">직접</button>
-          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접(블록과 같은 3칸) -->
+          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 직접 · 261113 수정 — 「없음」 삭제(로고 · 버튼이 화면 끝에 붙기만 하고 쓰는 디자인 0 · 필요하면 직접 0) -->
           <div class="srow" id="hdPadXRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="hdPadX" min="0" max="200" step="2" value="48"><span class="v" id="hdPadXV">48px</span></div>
           <!-- 261113 추가 — 스타일 > 레이아웃 「사이트 폭 지정」일 때만: 좌우 「기본」의 기준(본문 폭에 맞춤 / 화면 끝). 기본은 본문 폭 → 로고 · 버튼이 블록 내용 선에 맞춰진다 -->
           <div class="srow" id="hdAlignRow" style="display:none;"><span class="k">맞춤</span><div class="mt-seg" id="hdAlignSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="content" onclick="hdAlignSet('content')">본문 폭</button>
             <button type="button" class="mt-seg-b" data-m="edge" onclick="hdAlignSet('edge')">화면 끝</button>
           </div></div>
-          <div class="tx-hint" id="hdPadXHint">좌우를 0으로 하면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.</div>
+          <div class="tx-hint" id="hdPadXHint">기본은 스타일 &gt; 레이아웃의 좌우 여백을 따릅니다. 배경은 늘 화면 끝까지 칠해집니다.</div>
         </div></div>
       </div>
       <div class="fld sfold" id="hdBgAcc">
@@ -63616,21 +63615,22 @@ function hdSetBgSh(k,v){ hdUnlink('bg'); hdBgCur().sh[k]=v; hdFill(); hdChanged(
 function hdSetPad(k,v){ HD.pad[k]=v; hdFill(); hdChanged(); }
 /* 261111 추가 — 상단 메뉴 좌우 여백(px). 예전 켬/끔(side) 값은 켬 48 · 끔 0 으로 읽는다 */
 function hdPadX(){ var p=HD.pad||(HD.pad={}); if(p.x==null || isNaN(+p.x)) p.x=(p.side===false)?0:48; p.side=(+p.x>0); return +p.x; }
-/* 261112 추가 — 좌우 3칸(기본 · 없음 · 직접). 예전 값: 48 → 기본 · 0 → 없음 · 그 밖 → 직접 */
-function hdPadXMode(){ var p=HD.pad||(HD.pad={}); if(p.xMode==='base'||p.xMode==='none'||p.xMode==='custom') return p.xMode; var x=hdPadX(); return (x===48)?'base':(x===0?'none':'custom'); }
+/* 261112 추가 — 좌우 칸(기본 · 직접). 예전 값: 48 → 기본 · 그 밖(0 포함) → 직접
+   261113 수정 — 「없음」 삭제: 저장된 「없음」은 「직접 0」으로 옮긴다(모양 그대로) */
+function hdPadXMode(){ var p=HD.pad||(HD.pad={}); if(p.xMode==='none'){ p.xMode='custom'; p.x=0; } if(p.xMode==='base'||p.xMode==='custom') return p.xMode; var x=hdPadX(); return (x===48)?'base':'custom'; }
 function hdPadXCss(){ var m=hdPadXMode(); if(m==='base' && HD.type!=='side' && hdAlignOn()) return 'max(var(--site-px,48px), calc((100% - var(--site-pw)) / 2))';   /* 261113 추가 — 본문 폭에 맞춤: 넓은 화면은 블록 내용 선 · 좁은 화면은 사이트 좌우 여백 */
   return (m==='base')?((HD.type==='side')?'32px':'var(--site-px,48px)'):(m==='none'?'0px':(hdPadX()+'px')); }
 /* 261113 추가 — 상단 메뉴 「맞춤」: 스타일 > 레이아웃 「사이트 폭 지정」이고 좌우 「기본」일 때 본문 폭(기본) / 화면 끝 */
 function hdAlignOn(){ return (typeof SITE_LAYOUT!=='undefined' && +SITE_LAYOUT.pw>0) && !(HD.pad && HD.pad.align==='edge'); }
 function hdAlignSet(v){ (HD.pad||(HD.pad={})).align=(v==='edge')?'edge':'content'; hdFill(); hdChanged(); hdPadXSide(); }   /* 그린 뒤 안내(두 줄 알림)를 다시 */   /* 261112 수정 — 좌측 메뉴의 기본은 32px 고정(240px 세로 칸이라 사이트 좌우 여백을 따르면 로고 · 메뉴 자리가 값마다 줄었다 늘었다 했다) */
-function hdPadXSet(m){ HD.pad.xMode=m; if(m==='custom' && (!(+HD.pad.x>0))) HD.pad.x=48; hdFill(); hdChanged(); }
+function hdPadXSet(m){ HD.pad.xMode=(m==='custom')?'custom':'base'; if(m==='custom' && !(+HD.pad.x>=0 && HD.pad.x!=='')) HD.pad.x=48; hdFill(); hdChanged(); }
 /* 좌측 메뉴는 폭이 좁아 좌우 여백을 14 ~ 32px 로만 쓴다(CSS clamp) → 슬라이더도 그 범위로 · 안내 */
 function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getElementById('hdPadXV'), h=document.getElementById('hdPadXHint'); if(!el) return; var sd=(HD.type==='side'), x=hdPadX();
   el.min=sd?14:0; el.max=sd?32:200; var v=sd?Math.max(14,Math.min(32,x)):x; el.value=v; smRng(el); if(o) o.textContent=v+'px';
   var md=hdPadXMode(); [].forEach.call(document.querySelectorAll('#hdPadXSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===md); }); var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(md==='custom')?'':'none';   /* 261112 추가 — 3칸 */
   var arw=document.getElementById('hdAlignRow'), aon=(!sd && md==='base' && +SITE_LAYOUT.pw>0); if(arw) arw.style.display=aon?'':'none';   /* 261113 추가 — 맞춤(사이트 폭 지정 · 좌우 기본일 때만) */
   if(aon){ var av=(HD.pad && HD.pad.align==='edge')?'edge':'content'; [].forEach.call(document.querySelectorAll('#hdAlignSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===av); }); }
-  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':aon?((HD.pad && HD.pad.align==='edge')?'로고와 버튼이 화면 끝에서 스타일 > 레이아웃 좌우 여백만큼 떨어집니다.':'로고와 버튼이 스타일 > 레이아웃 본문 폭 선에 맞춰집니다. 화면이 본문 폭보다 좁으면 좌우 여백을 따릅니다.'+hdAlignWrapNote()):((+SITE_LAYOUT.pw>0 && md!=='base')?'좌우가 「'+(md==='none'?'없음':'직접')+'」이라 본문 폭에 맞추지 않습니다. 본문 폭 선에 맞추려면 좌우를 「기본」으로 바꾸세요.':'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다. 「없음」이면 로고와 버튼이 화면 끝에 붙습니다. 배경 이미지는 영향받지 않습니다.'); }   /* 261113 추가 — 사이트 폭 지정인데 좌우 직접 · 없음이면 왜 안 맞는지 안내 */
+  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':aon?((HD.pad && HD.pad.align==='edge')?'로고와 버튼이 화면 끝에서 스타일 > 레이아웃 좌우 여백만큼 떨어집니다.':'로고와 버튼이 스타일 > 레이아웃 본문 폭 선에 맞춰집니다. 화면이 본문 폭보다 좁으면 좌우 여백을 따릅니다.'+hdAlignWrapNote()):((+SITE_LAYOUT.pw>0 && md!=='base')?'좌우가 「직접」이라 본문 폭에 맞추지 않습니다. 본문 폭 선에 맞추려면 좌우를 「기본」으로 바꾸세요.':'기본은 스타일 > 레이아웃의 좌우 여백을 따릅니다. 배경은 늘 화면 끝까지 칠해집니다.'); }   /* 261113 추가 — 사이트 폭 지정인데 좌우 직접 · 없음이면 왜 안 맞는지 안내 */
 /* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
 function hdAlignWrapNote(){ try{
   var hd=document.querySelector('#stage .site > .site-hd'), nv=hd && hd.querySelector('.site-nav'); if(!nv || HD_LAYOUT_ROWS[HD.layout]>1) return '';
