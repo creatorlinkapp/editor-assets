@@ -2313,7 +2313,7 @@
   .bc-wrap{position:relative;width:100%;background:#f7f8fa;container-type:inline-size;
     --bcf:'CreatorlinkSansKR',sans-serif;--bcpt:#2fb383;--bctc:#16181d;--bcbc:#5c6470;--bcts:44px;--bcr:28px;--bcar:4/3;--bcp:50%;}
   .bc-in{display:grid;grid-template-columns:minmax(0,43fr) minmax(0,54fr);gap:0 min(96px,7cqw);align-items:center;
-    max-width:var(--bcmw,1140px);margin:0 auto;box-sizing:border-box;padding:var(--bcpv,110px) var(--bpx,var(--site-px,48px));}
+    max-width:var(--pw-mw,var(--bcmw,1140px));margin:0 auto;box-sizing:border-box;padding:var(--bcpv,110px) var(--bpx,var(--site-px,48px));}
   .bc-wrap.tx-r .bc-in{grid-template-columns:minmax(0,54fr) minmax(0,43fr);}
   .bc-wrap.tx-r .bc-txt{order:2;}
   .bc-wrap.notxt .bc-in{grid-template-columns:minmax(0,1fr);}
@@ -2485,7 +2485,7 @@
   .sc-wrap{position:relative;width:100%;background:#fff;container-type:inline-size;
     --scf:'CreatorlinkSansKR',sans-serif;--scpt:#2f4a66;--scbt:#fff;--sccd:#ebf0f5;--sctc:#131a22;--scbc:#4d5866;
     --scts:40px;--scr:10px;--sch:460px;--schm:560px;}
-  .sc-in{max-width:var(--scmw,1140px);margin:0 auto;box-sizing:border-box;padding:var(--scpv,120px) var(--bpx,var(--site-px,48px));}
+  .sc-in{max-width:var(--pw-mw,var(--scmw,1140px));margin:0 auto;box-sizing:border-box;padding:var(--scpv,120px) var(--bpx,var(--site-px,48px));}
   .sc-stack{display:flex;flex-direction:column;}
   .sc-card{position:sticky;height:var(--sch);flex:none;}
   .sc-face{position:relative;height:100%;border-radius:var(--scr);background:var(--sccd);overflow:hidden;
@@ -3786,7 +3786,7 @@
   .ca-wrap{position:relative;container-type:inline-size;font-family:var(--caf);color:var(--catc);
     --caf:'CreatorlinkSansKR',sans-serif;--caac:#03c75a;--catc:#23272e;--casc:#7b818b;--caln:#e6e8ec;--cacb:#ffffff;--cahd:#ffffff;
     --cared:#e5484d;--cablue:#3b82f6;--cach:118px;--caev:22px;--capv:64px;--camw:1140px;--car:8px;--cahh:44px;}
-  .ca-in{max-width:var(--camw);margin:0 auto;padding:var(--capv) var(--bpx,var(--site-px,48px));box-sizing:border-box;}
+  .ca-in{max-width:var(--pw-mw,var(--camw));margin:0 auto;padding:var(--capv) var(--bpx,var(--site-px,48px));box-sizing:border-box;}
   .ca-box{background:var(--cacb);border-radius:var(--car);}
   .ca-hd{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:0 0 18px;}
   .ca-hd .r{display:flex;justify-content:flex-end;}
@@ -4300,7 +4300,7 @@
   .ct-wrap{position:relative;container-type:inline-size;font-family:var(--ctf);color:var(--ctic);
     --ctf:'CreatorlinkSansKR',sans-serif;--cttc:#1c1f24;--ctlc:#5b6270;--ctdc:#9aa0a8;--ctic:#23272e;--ctac:#23272e;--ctab:#ffffff;
     --ctln:#e6e8ec;--ctcb:#ffffff;--ctpv:72px;--ctmw:1140px;--ctts:22px;--ctr:6px;--ctmh:420px;}
-  .ct-in{position:relative;max-width:var(--ctmw);margin:0 auto;padding:var(--ctpv) var(--bpx,var(--site-px,48px));box-sizing:border-box;}
+  .ct-in{position:relative;max-width:var(--pw-mw,var(--ctmw));margin:0 auto;padding:var(--ctpv) var(--bpx,var(--site-px,48px));box-sizing:border-box;}
   .ct-in[data-l="map-l"],.ct-in[data-l="map-r"],.ct-in[data-l="map-form"],.ct-in[data-l="info-l"],.ct-in[data-l="info-r"],.ct-in[data-l="hero"]{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:min(64px,6cqw);align-items:start;}
   .ct-in[data-l="map-l"]{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);}
   .ct-in[data-l="map-r"]{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);}
@@ -4398,7 +4398,7 @@
   .ct-br[data-bl="center"] .ct-head,.ct-br[data-bl="mapl"] .ct-head{margin-bottom:18px;}
   .ct-br[data-bl="mapl"] .ct-side{min-width:0;padding:max(0px,calc(min(48px,5cqw) - var(--ctpv,0px))) 0;box-sizing:border-box;}   /* 261029 수정 — 지도 크게: 지도를 위아래 꽉 채우려고 블록 여백이 0이라 제목이 위 경계에 붙었다 → 오른쪽 열만 좌우 여백과 같은 48px (블록 위아래 여백을 올리면 그만큼 줄어 이중으로 벌어지지 않게) */
   /* 상담 신청 띠 */
-  .ct-strip{display:flex;align-items:center;flex-wrap:wrap;gap:12px 28px;padding:18px min(36px,4cqw);box-sizing:border-box;max-width:var(--ctmw);margin:0 auto;}
+  .ct-strip{display:flex;align-items:center;flex-wrap:wrap;gap:12px 28px;padding:18px min(36px,4cqw);box-sizing:border-box;max-width:var(--pw-mw,var(--ctmw));margin:0 auto;}
   .ct-strip .lead{flex:none;display:flex;flex-direction:column;gap:2px;min-width:0;}
   .ct-strip .lead.row{flex-direction:row;align-items:baseline;gap:10px;}
   .ct-strip .lead span{font-size:13px;font-weight:600;color:var(--ctlc);}
@@ -12664,7 +12664,7 @@
             <div class="srow"><span class="k">칸 사이</span><input class="rng" type="range" id="ixGapx" min="0" max="80" step="2" value="22"><span class="v" id="ixGapxV">22px</span></div>
             <div class="srow"><span class="k">행 안쪽 여백</span><input class="rng" type="range" id="ixRx" min="0" max="60" step="2" value="24"><span class="v" id="ixRxV">24px</span></div>
             <div class="srow"><span class="k">구분선 두께</span><input class="rng" type="range" id="ixLw" min="0" max="4" step="0.5" value="1"><span class="v" id="ixLwV">1.0px</span></div>
-            <div class="sline"><span class="lbl">화면 전체 폭으로</span><button class="sw" id="ixFullSw" onclick="ixSw(this,'full')"></button></div>
+            <div class="sline" style="display:none;"><span class="lbl">화면 전체 폭으로</span><button class="sw" id="ixFullSw" onclick="ixSw(this,'full')"></button></div>
             <div class="sgrp">
               <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="ixMaxw" min="600" max="1800" step="20" value="1240"><span class="v" id="ixMaxwV">1240px</span></div>
               <div class="srow"><span class="k">위아래 여백</span><input class="rng" type="range" id="ixPv" min="0" max="200" step="4" value="56"><span class="v" id="ixPvV">56px</span></div>
@@ -12808,7 +12808,7 @@
             <div class="srow"><span class="k">행 높이</span><input class="rng" type="range" id="fqPy" min="8" max="80" step="1" value="30"><span class="v" id="fqPyV">30px</span></div>
             <div class="srow"><span class="k">제목 아래</span><input class="rng" type="range" id="fqHg" min="0" max="200" step="2" value="72"><span class="v" id="fqHgV">72px</span></div>
             <div class="srow"><span class="k">구분선 두께</span><input class="rng" type="range" id="fqLw" min="0" max="4" step="0.5" value="1"><span class="v" id="fqLwV">1.0px</span></div>
-            <div class="sline"><span class="lbl">화면 전체 폭으로</span><button class="sw" id="fqFullSw" onclick="fqSw(this,'full')"></button></div>
+            <div class="sline" style="display:none;"><span class="lbl">화면 전체 폭으로</span><button class="sw" id="fqFullSw" onclick="fqSw(this,'full')"></button></div>
             <div class="sgrp">
               <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="fqMaxw" min="600" max="1800" step="20" value="1440"><span class="v" id="fqMaxwV">1440px</span></div>
               <div class="srow"><span class="k">위아래 여백</span><input class="rng" type="range" id="fqPv" min="0" max="200" step="4" value="56"><span class="v" id="fqPvV">56px</span></div>
@@ -12952,7 +12952,7 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">행 높이</span><input class="rng" type="range" id="qnPy" min="8" max="80" step="1" value="36"><span class="v" id="qnPyV">36px</span></div>
             <div class="srow"><span class="k">구분선 두께</span><input class="rng" type="range" id="qnLw" min="0" max="4" step="0.5" value="1"><span class="v" id="qnLwV">1.0px</span></div>
-            <div class="sline"><span class="lbl">화면 전체 폭으로</span><button class="sw" id="qnFullSw" onclick="qnSw(this,'full')"></button></div>
+            <div class="sline" style="display:none;"><span class="lbl">화면 전체 폭으로</span><button class="sw" id="qnFullSw" onclick="qnSw(this,'full')"></button></div>
             <div class="sgrp">
               <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="qnMaxw" min="600" max="1800" step="20" value="1440"><span class="v" id="qnMaxwV">1440px</span></div>
               <div class="srow"><span class="k">위아래 여백</span><input class="rng" type="range" id="qnPv" min="0" max="240" step="4" value="112"><span class="v" id="qnPvV">112px</span></div>
@@ -18416,9 +18416,26 @@
         mkRow:{min:720, max:1600, step:10},
         legacy:function(c){ return (c.wrap===false)?'full':'own'; },   /* 예전 「좌우 폭 제한」 끔 = 가로 100% */
         onSet:function(c,m){ c.wrap=(m!=='full'); },   /* 옛 스위치 값도 같이(휴대폰 · 다른 기능이 읽는다) */
-        pxm:function(b){ return bpxMode(bpxEff('im',b),'px'); }}   /* 이미지: .im-wrap 은 내용 폭 상자(content-box) · 좌우는 그 밖 */
+        pxm:function(b){ return bpxMode(bpxEff('im',b),'px'); }},   /* 이미지: .im-wrap 은 내용 폭 상자(content-box) · 좌우는 그 밖 */
+    /* 261113 추가 — A-1(최대 폭 슬라이더가 있던 블록). 상자 안쪽 좌우 = 좌우 3칸(--bpx) */
+    sc:pwBpxReg('sc','stackcard','.sc-in',1140),    /* 스택 카드 CONTENT03 */
+    bc:pwBpxReg('bc','beforeafter','.bc-in',1140),  /* 이전·이후 비교 CONTENT04 */
+    ca:pwBpxReg('ca','calblk','.ca-in',1140),       /* 캘린더 CALENDAR01~06 */
+    ct:pwBpxReg('ct','ctblk','.ct-in',1140),        /* 컨택트 CONTACT01~18 */
+    /* 인덱스 리스트 TEXT06 · FAQ TEXT08 · QnA TEXT10 — 폭은 c.maxw · 「화면 전체 폭으로」 스위치(c.full) = 가로 100% */
+    ix:pwBpxReg('ix','idxlist','.ix-in',1240,{full:true}),
+    fq:pwBpxReg('fq','faqacc','.fq-in',1440,{full:true}),
+    qn:pwBpxReg('qn','qnaacc','.qn-in',1440,{full:true})
   };
-  var PW_BPX={bdPadx:'bd', rtPx:'rt', imPx:'im'};   /* 좌우 3칸 id → 본문 폭 블록 (좌우 기본 안내 · 상자 안쪽 안내는 본문 폭 안내 한 줄로 합친다) */
+  /* 좌우 3칸(padx)이 있는 블록의 본문 폭 등록(같은 모양이 많아 한 함수로). o.full = 예전 「화면 전체 폭으로」 스위치가 있는 블록(폭 키 maxw · 스위치 줄은 숨기고 「가로 100%」로) */
+  function pwBpxReg(p,kind,box,mw,o){ o=o||{}; var r={mw:mw, px:48, def:function(c){ var k=(r.opt&&r.opt.mwKey)||'mw'; return +c.pwDef||+c[k]||mw; }, opt:{padIn:true, pxCss:'var(--bpx,var(--site-px,48px))'}, row:p+(o.full?'Maxw':'Mw'), box:box, kind:kind, bpx:p+'Padx', at:p+'PadxSeg', hintAfter:p+'PadxRow', guide:true,
+      pxm:function(b){ return bpxMode(bpxEff(p,b),'padx'); }};
+    if(o.full){ r.opt={padIn:true, mwKey:'maxw'}; r.legacy=function(c){ return c.full?'full':'own'; }; r.onSet=function(c,m){ c.full=(m==='full'); }; }
+    return r; }
+  /* 블록 추가로 넣을 때 — 디자인 폭이 넓으면(1100 이상) 「기본」(사이트 본문 폭) · 좁으면 「직접」(그 폭 그대로 · B 그룹) · 전체 폭이면 「가로 100%」 */
+  function pwNewBy(p,blk){ try{ var r=PW_REG[p], c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw', w=+c[mk]||r.mw; c.pwDef=w;
+    c.pw=(r.legacy && r.legacy(c)==='full')?'full':(w>=1100?'site':'own'); }catch(e){} }
+  var PW_BPX={bdPadx:'bd', rtPx:'rt', imPx:'im', scPadx:'sc', bcPadx:'bc', caPadx:'ca', ctPadx:'ct', ixPadx:'ix', fqPadx:'fq', qnPadx:'qn'};   /* 좌우 3칸 id → 본문 폭 블록 (좌우 기본 안내 · 상자 안쪽 안내는 본문 폭 안내 한 줄로 합친다) */
   function pwMode(c,r){ var m=c && c.pw; if(m==='site'||m==='own'||m==='full') return m; return (r && r.legacy && c)?r.legacy(c):'own'; }
   function pwCss(c,defMw,defPx,opt){ opt=opt||{}; c=c||{};
     var mk=opt.mwKey||'mw', xk=opt.pxKey||'px', m=pwMode(c);
@@ -18489,13 +18506,13 @@
     /* 같은 설정창을 쓰는 다른 영역(상세 페이지 타이틀 등)이면 3칸 · 되돌리기를 감추고 최대 폭 슬라이더만 그대로 */
     var own=!r.kind || blk.getAttribute('data-block')===r.kind, sr=document.getElementById(p+'PwSegRow'), rs=document.getElementById(p+'PwReset');
     if(sr) sr.style.display=own?'':'none'; if(rs) rs.style.display=own?'':'none';
-    if(own && r.def && c.pwDef==null && +c[(r.opt&&r.opt.mwKey)||'mw']>0 && +c[(r.opt&&r.opt.mwKey)||'mw']<1400) c.pwDef=+c[(r.opt&&r.opt.mwKey)||'mw'];   /* 저장 블록: 처음 열 때의 폭을 블록 기본 폭으로 기억(직접 값을 바꿔도 기본 폭은 그대로) */
+    if(own && r.def && c.pwDef==null && +c[(r.opt&&r.opt.mwKey)||'mw']>0 && (!r.ownMax || +c[(r.opt&&r.opt.mwKey)||'mw']<1400)) c.pwDef=+c[(r.opt&&r.opt.mwKey)||'mw'];   /* 저장 블록: 처음 열 때의 폭을 블록 기본 폭으로 기억(직접 값을 바꿔도 기본 폭은 그대로) */
     if(rs) rs.title='블록 기본 폭('+(r.def?r.def(c):r.mw)+'px)으로';
     [].forEach.call(box.querySelectorAll('#'+p+'PwSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===m); });
     var rows=document.getElementById(p+'PwOwnRows'); if(rows) rows.style.display=(!own || m==='own')?'':'none';
     if(r.mkRow){ var sl=document.getElementById(r.row), v=+c[(r.opt&&r.opt.mwKey)||'mw']||r.mw; if(sl && document.activeElement!==sl){ sl.value=v; if(typeof smRng==='function') smRng(sl); var o=document.getElementById(r.row+'V'); if(o) o.textContent=v+'px'; } }
     box.classList.toggle('off',own && mo);
-    if(r.bpx){ var bh=document.getElementById(r.bpx+'Base'); if(bh) bh.style.display='none'; }   /* 좌우 「기본은 …」 줄은 안내 한 줄에 합쳤다 */
+    if(r.bpx){ var bh=document.getElementById(r.bpx+'Base'); if(bh) bh.style.display='none'; var bsg=document.getElementById(r.bpx+'Seg'), bnt=bsg && bsg.closest('.srow') && bsg.closest('.srow').parentNode.querySelector('.bpx-in-note'); if(bnt) bnt.style.display='none'; }   /* 좌우 「기본은 …」 줄은 안내 한 줄에 합쳤다 */
     pwHint(p); }
   /* 지금 화면에 보이는 폭(편집 화면 축소 비율을 뺀 값). 안쪽 여백이 있는 블록은 내용 폭(상자 − 좌우 여백) */
   function pwSeenMw(p,blk){ var r=PW_REG[p], site=stSite(), z=site?(parseFloat(getComputedStyle(site).zoom)||1):1, sl=document.getElementById(r.row), w;
@@ -42378,7 +42395,7 @@ global.PolyFX = API;
     s.setProperty('--ixpv', txNum(c.pv,56)+'px');
     var inn=wrap.querySelector('.ix-in');
     if(inn){
-      inn.style.maxWidth=c.full?'none':(txNum(c.maxw,1240)+'px');
+      inn.style.maxWidth=(pwMode(c,PW_REG.ix)==='full')?'none':pwCss(c,PW_REG.ix.def(c),48,{padIn:true, mwKey:'maxw', pxCss:bpxCss(c,'padx',16)}).mw;   /* 261113 수정 — 본문 폭(기본 · 직접 · 가로 100%) */
       inn.style.paddingLeft=bpxCss(c,'padx',16);   /* 261112 수정 — 좌우 3칸(기본 = 사이트 값 · 없음 · 직접) */
       inn.style.paddingRight=bpxCss(c,'padx',16);
       inn.style.paddingTop=txNum(c.pv,56)+'px';
@@ -42428,6 +42445,7 @@ global.PolyFX = API;
     if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar);   /* 261001 수정 — 부모 = 지금 보고 있는 페이지(pgxBlkHost) */ }
     if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
     closeBlockAdd();
+    pwNewBy('ix',blk);   /* 261113 추가 — 블록 추가로 넣으면 디자인 폭에 따라 본문 폭 */
     if(typeof selectBlock==='function') selectBlock(blk);
     ixInit(blk);
     blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300);
@@ -42606,7 +42624,7 @@ global.PolyFX = API;
   function ixFillBset(){
     if(!ixCurBlk) return;
     var c=ixCfg(ixCurBlk);
-    bpxSync('ix','padx',c);   /* 261112 추가 — 좌우 3칸 */
+    bpxSync('ix','padx',c);   /* 261112 추가 — 좌우 3칸 */ if(typeof pwSync==='function') pwSync('ix');   /* 261113 추가 — 본문 폭 공통 칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=(v==null?'':v); if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     set('ixCnt',c.cnt); txt('ixCntV',String(txNum(c.cnt,5)));
@@ -42768,7 +42786,7 @@ global.PolyFX = API;
     s.setProperty('--fqhg', txNum(c.hg,72)+'px');
     var inn=wrap.querySelector('.fq-in');
     if(inn){
-      inn.style.maxWidth=c.full?'none':(txNum(c.maxw,1440)+'px');
+      inn.style.maxWidth=(pwMode(c,PW_REG.fq)==='full')?'none':pwCss(c,PW_REG.fq.def(c),48,{padIn:true, mwKey:'maxw', pxCss:bpxCss(c,'padx',48)}).mw;   /* 261113 수정 — 본문 폭(기본 · 직접 · 가로 100%) */
       inn.style.paddingLeft=bpxCss(c,'padx',48);   /* 261112 수정 — 좌우 3칸(기본 = 사이트 값 · 없음 · 직접) */
       inn.style.paddingRight=bpxCss(c,'padx',48);
       inn.style.paddingTop=txNum(c.pv,56)+'px';
@@ -42813,6 +42831,7 @@ global.PolyFX = API;
     if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar);   /* 261001 수정 — 부모 = 지금 보고 있는 페이지(pgxBlkHost) */ }
     if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
     closeBlockAdd();
+    pwNewBy('fq',blk);   /* 261113 추가 — 블록 추가로 넣으면 디자인 폭에 따라 본문 폭 */
     if(typeof selectBlock==='function') selectBlock(blk);
     fqInit(blk);
     blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300);
@@ -42975,7 +42994,7 @@ global.PolyFX = API;
   function fqFillBset(){
     if(!fqCurBlk) return;
     var c=fqCfg(fqCurBlk);
-    bpxSync('fq','padx',c);   /* 261112 추가 — 좌우 3칸 */
+    bpxSync('fq','padx',c);   /* 261112 추가 — 좌우 3칸 */ if(typeof pwSync==='function') pwSync('fq');   /* 261113 추가 — 본문 폭 공통 칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=(v==null?'':v); if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     set('fqCnt',c.cnt); txt('fqCntV',String(txNum(c.cnt,5)));   /* 260929 수정 — 기본 5 */
@@ -43134,7 +43153,7 @@ global.PolyFX = API;
     s.setProperty('--qnac', c.ac||'#585765');
     var inn=wrap.querySelector('.qn-in');
     if(inn){
-      inn.style.maxWidth=c.full?'none':(txNum(c.maxw,1440)+'px');
+      inn.style.maxWidth=(pwMode(c,PW_REG.qn)==='full')?'none':pwCss(c,PW_REG.qn.def(c),48,{padIn:true, mwKey:'maxw', pxCss:bpxCss(c,'padx',48)}).mw;   /* 261113 수정 — 본문 폭(기본 · 직접 · 가로 100%) */
       inn.style.paddingLeft=bpxCss(c,'padx',48);   /* 261112 수정 — 좌우 3칸(기본 = 사이트 값 · 없음 · 직접) */
       inn.style.paddingRight=bpxCss(c,'padx',48);
       inn.style.paddingTop=txNum(c.pv,112)+'px';
@@ -43178,6 +43197,7 @@ global.PolyFX = API;
     if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar);   /* 261001 수정 — 부모 = 지금 보고 있는 페이지(pgxBlkHost) */ }
     if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
     closeBlockAdd();
+    pwNewBy('qn',blk);   /* 261113 추가 — 블록 추가로 넣으면 디자인 폭에 따라 본문 폭 */
     if(typeof selectBlock==='function') selectBlock(blk);
     qnInit(blk);
     blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300);
@@ -43347,7 +43367,7 @@ global.PolyFX = API;
   function qnFillBset(){
     if(!qnCurBlk) return;
     var c=qnCfg(qnCurBlk);
-    bpxSync('qn','padx',c);   /* 261112 추가 — 좌우 3칸 */
+    bpxSync('qn','padx',c);   /* 261112 추가 — 좌우 3칸 */ if(typeof pwSync==='function') pwSync('qn');   /* 261113 추가 — 본문 폭 공통 칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=(v==null?'':v); if(el.classList.contains('rng')) smRng(el); } }
     function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
     set('qnCnt',c.cnt); txt('qnCntV',String(txNum(c.cnt,4)));
@@ -43801,6 +43821,7 @@ global.PolyFX = API;
 
   function bcApply(blk){
     bpxVar(blk,bcCfg(blk));   /* 261112 추가 — 좌우 3칸 */
+    if(blk) pwApply(blk,bcCfg(blk),PW_REG.bc.def(bcCfg(blk)),48,PW_REG.bc.opt);   /* 261113 추가 — 본문 폭(폭 = pw · 좌우 = 좌우 3칸) */
     if(!blk) return;
     var c=bcCfg(blk), wrap=blk.querySelector('.bc-wrap'); if(!wrap) return;
     blk.style.paddingTop='0'; blk.style.paddingBottom='0'; blk.style.paddingLeft='0'; blk.style.paddingRight='0';
@@ -43929,6 +43950,7 @@ global.PolyFX = API;
     if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar);   /* 261001 수정 — 부모 = 지금 보고 있는 페이지(pgxBlkHost) */ }
     if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
     closeBlockAdd();
+    pwNewBy('bc',blk);   /* 261113 추가 — 블록 추가로 넣으면 디자인 폭에 따라 본문 폭 */
     bcInit(blk);
     if(typeof selectBlock==='function') selectBlock(blk);
     if(!BC_REDUCE){ blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300); }
@@ -44051,7 +44073,7 @@ global.PolyFX = API;
   function bcFillBset(){
     if(!bcCurBlk) return;
     var c=bcCfg(bcCurBlk);
-    bpxSync('bc','padx',c);   /* 261112 추가 — 좌우 3칸 */
+    bpxSync('bc','padx',c);   /* 261112 추가 — 좌우 3칸 */ if(typeof pwSync==='function') pwSync('bc');   /* 261113 추가 — 본문 폭 공통 칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     bcImgRender(); bcBtnRender();
     BC_TXT.forEach(function(r){ set(r[0],c[r[1]]||''); var el=document.getElementById(r[0]); if(el&&el.tagName==='TEXTAREA') setTimeout(function(){ ptGrow(el); },0); });
@@ -45567,6 +45589,7 @@ global.PolyFX = API;
 
   function scApply(blk){
     bpxVar(blk,scCfg(blk));   /* 261112 추가 — 좌우 3칸 */
+    if(blk) pwApply(blk,scCfg(blk),PW_REG.sc.def(scCfg(blk)),48,PW_REG.sc.opt);   /* 261113 추가 — 본문 폭(폭 = pw · 좌우 = 좌우 3칸) */
     if(!blk) return;
     var c=scCfg(blk), wrap=blk.querySelector('.sc-wrap'); if(!wrap) return;
     blk.style.paddingTop='0'; blk.style.paddingBottom='0'; blk.style.paddingLeft='0'; blk.style.paddingRight='0';
@@ -45684,6 +45707,7 @@ global.PolyFX = API;
     if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar);   /* 261001 수정 — 부모 = 지금 보고 있는 페이지(pgxBlkHost) */ }
     if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
     closeBlockAdd();
+    pwNewBy('sc',blk);   /* 261113 추가 — 블록 추가로 넣으면 디자인 폭에 따라 본문 폭 */
     scInit(blk);
     if(typeof selectBlock==='function') selectBlock(blk);
     blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300);
@@ -45815,7 +45839,7 @@ global.PolyFX = API;
   function scFillBset(){
     if(!scCurBlk) return;
     var c=scCfg(scCurBlk);
-    bpxSync('sc','padx',c);   /* 261112 추가 — 좌우 3칸 */
+    bpxSync('sc','padx',c);   /* 261112 추가 — 좌우 3칸 */ if(typeof pwSync==='function') pwSync('sc');   /* 261113 추가 — 본문 폭 공통 칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     scItemRender();
     var dd=document.getElementById('scFDD');
@@ -47885,6 +47909,7 @@ global.PolyFX = API;
   function caBlockHTML(){ return '<span class="tag-badge">캘린더</span>'+SM_GEAR+'<div class="ca-wrap"></div>'; }
   function caApply(blk){
     bpxVar(blk,caCfg(blk));   /* 261112 추가 — 좌우 3칸 */
+    if(blk) pwApply(blk,caCfg(blk),PW_REG.ca.def(caCfg(blk)),48,PW_REG.ca.opt);   /* 261113 추가 — 본문 폭(폭 = pw · 좌우 = 좌우 3칸) */
     if(!blk) return;
     var c=caCfg(blk), wrap=blk.querySelector('.ca-wrap'); if(!wrap) return;
     caState(blk,c);
@@ -47980,6 +48005,7 @@ global.PolyFX = API;
     if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar);   /* 261001 수정 — 부모 = 지금 보고 있는 페이지(pgxBlkHost) */ }
     if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
     closeBlockAdd();
+    pwNewBy('ca',blk);   /* 261113 추가 — 블록 추가로 넣으면 디자인 폭에 따라 본문 폭 */
     caInit(blk);
     if(typeof selectBlock==='function') selectBlock(blk);
     blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300);
@@ -48100,7 +48126,7 @@ global.PolyFX = API;
   }
   function caFillBset(){
     if(!caCurBlk) return; var c=caCfg(caCurBlk);
-    bpxSync('ca','padx',c);   /* 261112 추가 — 좌우 3칸 */
+    bpxSync('ca','padx',c);   /* 261112 추가 — 좌우 3칸 */ if(typeof pwSync==='function') pwSync('ca');   /* 261113 추가 — 본문 폭 공통 칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     caOpenId=null; caEvRender(); caSyncSync();
     set('caGId',c.gid||''); set('caGKey',c.gkey||'');
@@ -51940,6 +51966,7 @@ global.PolyFX = API;
   function ctBlockHTML(){ return '<span class="tag-badge">컨택트</span>'+SM_GEAR+'<div class="ct-wrap"></div>'; }
   function ctApply(blk){
     bpxVar(blk,ctCfg(blk));   /* 261112 추가 — 좌우 3칸 */
+    if(blk) pwApply(blk,ctCfg(blk),PW_REG.ct.def(ctCfg(blk)),48,PW_REG.ct.opt);   /* 261113 추가 — 본문 폭(폭 = pw · 좌우 = 좌우 3칸) */
     if(!blk) return;
     var c=ctCfg(blk), wrap=blk.querySelector('.ct-wrap'); if(!wrap) return;
     blk.style.padding='0';
@@ -52029,6 +52056,7 @@ global.PolyFX = API;
     if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar);   /* 261001 수정 — 부모 = 지금 보고 있는 페이지(pgxBlkHost) */ }
     if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
     closeBlockAdd();
+    pwNewBy('ct',blk);   /* 261113 추가 — 블록 추가로 넣으면 디자인 폭에 따라 본문 폭 */
     ctInit(blk);
     if(typeof selectBlock==='function') selectBlock(blk);
     blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300);
@@ -52441,7 +52469,7 @@ global.PolyFX = API;
   }
   function ctFillBset(){
     if(!ctCurBlk) return; var c=ctCfg(ctCurBlk);
-    bpxSync('ct','padx',c);   /* 261112 추가 — 좌우 3칸 */
+    bpxSync('ct','padx',c);   /* 261112 추가 — 좌우 3칸 */ if(typeof pwSync==='function') pwSync('ct');   /* 261113 추가 — 본문 폭 공통 칸 */
     function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
     ctOpenIdx=-1; ctOpenBr=-1; ctOpenInfo=-1;
     ctKindSync(); ctAccSync(ctFillBset._kind!==c.kind); ctFillBset._kind=c.kind; ctFieldRender(); ctInfoRender(); ctBrRender(); ctMailSync(); if(typeof clSmsSync==='function') clSmsSync('ct'); ctBgSync();
