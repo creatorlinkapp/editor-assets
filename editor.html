@@ -11641,7 +11641,7 @@
               <button type="button" class="mt-seg-b" data-m="custom" onclick="rtPxSet('custom')">직접</button>
             </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="rtPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="rtPx" min="0" max="200" step="2" value="48"><span class="v" id="rtPxV">48px</span></div>
-            <div class="tx-hint" style="margin-top:10px;">상단·하단은 이 블록과 위아래 블록 사이의 여백입니다. 좌우는 스타일 > 폭 · 여백 값을 따릅니다. 높이를 정하면 글은 세로 가운데에 놓이고, 글이 더 길면 블록이 늘어납니다.</div>
+            <div class="tx-hint" id="rtHHint" style="margin-top:10px;display:none;">높이를 정하면 글은 세로 가운데에 놓이고, 글이 더 길면 블록이 늘어납니다.</div>   <!-- 261113 수정 — 높이를 정할 때만 · 「좌우는 사이트 값」은 따로 정해진 블록 안내와 반대로 말해 뺐다 -->
           </div></div>
         </div>
 
@@ -18424,7 +18424,7 @@
        legacy = 본문 폭을 고른 적 없는 저장 블록의 모드 · seen = 지금 보이는 내용 폭 · mkRow = 최대 폭 슬라이더가 없던 블록에 새로 만들 줄 · guide = 슬라이더를 움직이는 동안 블록 위 안내선 */
     bd:{mw:1140, px:48, rel:true, opt:{padIn:true, rel:true, pxCss:'var(--bpx,var(--site-px,48px))'}, row:'bdMw', box:'.bd-in', kind:'bdblk', bpx:'bdPadx', hintAfter:'bdPadxRow', guide:true, noFull:true,
         pxm:function(b){ return bpxMode(bpxEff('bd',b),'padx'); }},   /* 게시판: 상자(.bd-in) 안쪽 좌우 = 좌우 3칸(--bpx) */
-    rt:{mw:1180, px:48, rel:true, opt:{mwKey:'width'}, row:'rtWidth', at:'rtPxSeg', kind:'cred', bpx:'rtPx', hintAfter:'rtPxRow', ownMax:1380,
+    rt:{mw:1180, px:48, rel:true, noFull:true, opt:{mwKey:'width'},   /* 261113 수정 — 글이 화면 끝까지 넓어지면 읽기 어려워 「가로 100%」 뺌(이미 가로 100%인 블록만 버튼이 보인다) */ row:'rtWidth', at:'rtPxSeg', kind:'cred', bpx:'rtPx', hintAfter:'rtPxRow', ownMax:1380,
         legacy:function(c){ return (+c.width>=1400)?'full':'own'; },   /* 예전 「전체」(1400) = 가로 100% */
         def:function(c){ var w=+c.pwDef||+c.width; return (w>0 && w<1400)?w:1180; },   /* 블록 기본 폭 = 디자인 폭(760 · 860 · 1180 …) */
         seen:function(b){ var el=b.querySelector('.two.rt-split')||rtColWrap(b)||rtMain(b); return el?el.getBoundingClientRect().width:0; },
@@ -18554,7 +18554,9 @@
       if(x==='base' && r.rel) P=S0; if(f0) P=0;
       var real=(r.opt && r.opt.padIn && m==='own' && !c.pwc)?null:((m==='site' && !on)?(pin?Math.round(def-2*P):Math.round(def-2*(P-pwP0Num(c,P)))):Math.round(N-2*(P-S)));   /* 사이트 폭 지정 전 상자 블록: 상자(블록 기본 폭) − 좌우 */   /* 실제 내용 폭(상자 폭 그대로인 예전 저장 블록은 계산하지 않음) */
       if(mo) b=(x==='base')?'':('좌우 '+P+'px(따로 정함)');   /* 261113 수정 — 좌우 칸을 뺐다: 사이트 값이면 말하지 않고, 따로 정해진 값일 때만 */
-      else if(m==='full') b=(x==='none')?'화면 끝까지 붙음':('화면 끝에서 좌우 '+P+'px'+(r.edge?' · 붙이려면 「끝까지 붙이기」':''));
+      else if(m==='full'){ b=(x==='none')?'화면 끝까지 붙음':('화면 끝에서 좌우 '+P+'px'+(r.edge?' · 붙이려면 「끝까지 붙이기」':''));
+        /* 261113 수정 — 좌우가 따로 정해진 블록은 위 안내 줄(bpxInfo)이 같은 값을 말하므로 이 줄은 감춘다(같은 좌우 안내가 두 번 나왔다) */
+        if(x!=='base' && !(r.edge && x==='none') && !(c.pwP0!=null && !/site-px/.test(c.pwP0) && Math.abs(pwP0Num(c,S0)-P)<0.5)){ h.style.display='none'; return; } }
       else if(x==='base') b=(r.rel && c.pwP0!=null && Math.abs(pwP0Num(c,S0)-S0)>0.5 && real!=null)?('실제 내용 '+real+'px'):'';
       else if(c.pwP0!=null && !/site-px/.test(c.pwP0) && Math.abs(pwP0Num(c,S0)-P)<0.5) b='';   /* 디자인 좌우 그대로면 말하지 않음 */
       else { b='좌우 '+P+'px(따로 정함)'; if(inv) tail=' 좌우는 화면이 본문 폭보다 좁을 때만 보입니다.'; else if(real!=null) b+=' → 실제 내용 '+real+'px'; } }
@@ -59358,7 +59360,7 @@ global.PolyFX = API;
     var vals={gap:(c.gap==null?48:c.gap), size:e.size, lh:e.lh, ls:(c.ls||0), width:(c.width==null?1180:c.width), pt:e.pt, pb:e.pb, px:e.px,
               labelW:(c.labelW==null?340:c.labelW), splitGap:(c.splitGap==null?24:c.splitGap), bgDim:(c.bgDim==null?40:c.bgDim), minH:(c.minH==null?600:c.minH)};
     var pxm0=rtPxMode(c); (function(){ var s=document.getElementById('rtPx'); if(s){ if(!s.hasAttribute('data-max')) s.setAttribute('data-max',s.max); s.max=bpxMo()?Math.min(40,+s.getAttribute('data-max')):s.getAttribute('data-max'); } })(); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none'; bpxBaseHint('rtPx',pxm0==='base'); bpxMoSeg('rtPx'); try{ bpxInfo('rt','px',(typeof rtEff==='function')?rtEff(rtCurBlk):c); }catch(e){}   /* 261112 추가 — 좌우 3칸 */
-    var hm=(c.hMode==='screen'||c.hMode==='px')?c.hMode:'auto'; rtSegSync('rtHSeg',hm); var mhr=document.getElementById('rtMinHRow'); if(mhr) mhr.style.display=(hm==='px')?'':'none';   /* 260920 추가 — 높이 */
+    var hm=(c.hMode==='screen'||c.hMode==='px')?c.hMode:'auto'; rtSegSync('rtHSeg',hm); var mhr=document.getElementById('rtMinHRow'); if(mhr) mhr.style.display=(hm==='px')?'':'none'; var hhn=document.getElementById('rtHHint'); if(hhn) hhn.style.display=(hm==='auto')?'none':'';   /* 260920 추가 — 높이 */
     rtBgSync();   /* 260920 수정 — 배경 소재 상자(썸네일 · 삭제 · 어둡게 행) 표시 맞춤 */
     var lay=c.layout||'single';
     rtSegSync('rtLayoutSeg', lay);   /* 260915 수정 — 도식 버튼 → 세그먼트 */
