@@ -10404,7 +10404,7 @@
   .gd-title .gd-t-bg{display:none;position:absolute;inset:0;background:var(--gd-img,none) center/cover no-repeat;}
   .gd-title[data-bg="img"] .gd-t-bg{display:block;}
   .gd-title .gd-t-bg::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,var(--gd-dim));}
-  .gd-title .gd-t-in{position:relative;z-index:1;box-sizing:border-box;max-width:1240px;margin:0 auto;min-height:var(--gd-mh);padding:var(--gd-pt) var(--gd-px,40px) var(--gd-pb);display:flex;flex-direction:column;}   /* 261111 수정 — 좌우 40px 고정 → 설정창 「좌우」(--gd-px) */
+  .gd-title .gd-t-in{position:relative;z-index:1;box-sizing:border-box;max-width:calc(var(--site-pw, calc(1240px - 2 * var(--gd-px,40px))) + 2 * var(--gd-px,40px));margin:0 auto;min-height:var(--gd-mh);padding:var(--gd-pt) var(--gd-px,40px) var(--gd-pb);display:flex;flex-direction:column;}   /* 261111 수정 — 좌우 40px 고정 → 설정창 「좌우」(--gd-px) */   /* 261113 수정 — 본문 폭: 「사이트 폭 지정」이면 제목(내용) 폭 = 본문 폭(상자 = 본문 폭 + 좌우 × 2) · 블록 기본이면 1240 그대로 */
   .gd-title .gd-t-bar{display:flex;align-items:center;gap:8px;min-height:38px;}
   .gd-title .gd-t-bar .sp{flex:1;}
   .gd-title .gd-nav{display:inline-flex;align-items:center;gap:8px;}
@@ -17752,9 +17752,8 @@
           <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="gdPb" min="0" max="240" step="2" value="60"><span class="v" id="gdPbV">60px</span></div>
           <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="gdPxSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="base" onclick="gdPxSet('base')">기본</button>
-            <button type="button" class="mt-seg-b" data-m="none" onclick="gdPxSet('none')">없음</button>
             <button type="button" class="mt-seg-b" data-m="custom" onclick="gdPxSet('custom')">직접</button>
-          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 없음 · 직접(블록 · 상단 메뉴와 같은 3칸) -->
+          </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 레이아웃 값) · 직접 · 261113 수정 — 「없음」 삭제(제목이 화면 끝에 붙기만 하고 쓰는 디자인 0 · 필요하면 직접 0) -->
           <div class="srow" id="gdPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="gdPx" min="0" max="200" step="2" value="48"><span class="v" id="gdPxV">48px</span></div>
         </div></div>
       </div>
@@ -66583,9 +66582,9 @@ var gdBound=false, gdOpenAt='', gdLibOpened=false;
 function gdDet(){ var X=gdCtx(); return X?X.c.gt.det:null; }
 function gdSetV(k,v){ var X=gdCtx(); if(!X) return; X.c.gt.det[k]=v; gdRender(); }
 /* 261112 추가 — 좌우 3칸. 예전 값: 비었거나 48 → 기본 · 0 → 없음 · 그 밖 → 직접 */
-function gdPxMode(det){ if(det.pxMode==='base'||det.pxMode==='none'||det.pxMode==='custom') return det.pxMode; if(det.px==null || +det.px===48) return 'base'; if(+det.px===0) return 'none'; return 'custom'; }
+function gdPxMode(det){ if(det.pxMode==='none'){ det.pxMode='custom'; det.px=0; } if(det.pxMode==='base'||det.pxMode==='custom') return det.pxMode; if(det.px==null || +det.px===48) return 'base'; return 'custom'; }   /* 261113 수정 — 「없음」 삭제: 저장된 없음 · 예전 0 은 「직접 0」(모양 그대로) */
 function gdPxCss(det){ var m=gdPxMode(det); return (m==='base')?'var(--site-px,48px)':(m==='none'?'0px':(det.px+'px')); }
-function gdPxSet(m){ var X=gdCtx(); if(!X) return; var det=X.c.gt.det; det.pxMode=m; if(m==='custom' && !(+det.px>0)) det.px=48; gdRender(); gdFill(); }
+function gdPxSet(m){ var X=gdCtx(); if(!X) return; var det=X.c.gt.det; det.pxMode=(m==='custom')?'custom':'base'; if(m==='custom' && !(det.px!=null && det.px!=='' && +det.px>=0)) det.px=48; gdRender(); gdFill(); }
 function gdBuild(){
   if(gdBound) return; gdBound=true;
   [['gdDim','dim','%'],['gdPt','pt','px'],['gdPb','pb','px'],['gdPx','px','px']].forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return; el.addEventListener('input',function(){ var x=parseFloat(el.value); if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=x+r[2]; gdSetV(r[1],x); }); });
