@@ -2583,7 +2583,7 @@
   .vl-p:empty{display:none;}
   .vl-th{display:none;}
   /* 261113 추가 — 모바일(컨테이너 760 이하) : 왼쪽 카드를 숨기고, 항목마다 번호 | 제목 · 내용 · 이미지(PC 카드와 같은 비율) 차례로 늘어놓는다(참조 토스 반응형). 흐림 없음. 태블릿은 PC 와 같은 구조 */
-  @container (max-width:1024px){ .vl-in{padding-left:20px;padding-right:20px;}
+  @container (max-width:1024px){ .vl-in{padding-left:var(--site-px,48px);padding-right:var(--site-px,48px);}   /* 261116 수정 — 태블릿 좌우 20 고정 → 사이트 좌우 값(다른 블록 · 메뉴 · 푸터와 같은 선) */
     .vl-body{column-gap:40px;}   /* 261113 추가 — 태블릿 카드 ↔ 목록 간격 40px */
     .vl-row{grid-template-columns:var(--vlnw,64px) minmax(0,1fr);}   /* 261113 추가 — 태블릿 : 내용을 제목 아래로(모바일처럼) */
     .vl-wrap[data-num="0"] .vl-row{grid-template-columns:minmax(0,1fr);}
@@ -2686,7 +2686,7 @@
   /* 261113 추가 — 태블릿 · 모바일(컨테이너 1024 이하)과 터치 기기(마우스 없음): 따라오는 이미지 대신 항목마다 이미지를 제목 · 분류 위에 둔다. 태블릿은 2열, 모바일(760 이하)은 1열.
      「따라오는 이미지」를 끄면 이 이미지도 숨긴다 */
   @container (max-width:1024px){
-    .wl-in{padding-left:20px;padding-right:20px;}   /* 261113 추가 — 태블릿 좌우 여백 20px (모바일과 같게) */
+    .wl-in{padding-left:var(--site-px,48px);padding-right:var(--site-px,48px);}   /* 261113 추가 — 태블릿 좌우 여백 20px (모바일과 같게) */   /* 261116 수정 — 20 고정 → 사이트 좌우 값(다른 블록과 같은 선) */
     .wl-float{display:none !important;}
     .wl-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:min(32px,4cqw);}
     .wl-row{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"th th" "t a" "c a";align-items:center;align-content:start;padding:32px 0 36px;gap:0 14px;}
@@ -2706,7 +2706,7 @@
     .wl-arw svg{width:13px;height:13px;}
   }
   @media (hover:none){
-    .wl-in{padding-left:20px;padding-right:20px;}   /* 261113 추가 — 태블릿 좌우 여백 20px (모바일과 같게) */
+    .wl-in{padding-left:var(--site-px,48px);padding-right:var(--site-px,48px);}   /* 261113 추가 — 태블릿 좌우 여백 20px (모바일과 같게) */   /* 261116 수정 — 20 고정 → 사이트 좌우 값(다른 블록과 같은 선) */
     .wl-float{display:none !important;}
     .wl-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:min(32px,4cqw);}
     .wl-row{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"th th" "t a" "c a";align-items:center;align-content:start;padding:32px 0 36px;gap:0 14px;}
@@ -2784,7 +2784,7 @@
   .nx-lb:empty{display:none;}
   /* 261113 추가 — 태블릿(컨테이너 761~1024): 타이틀 · 소개 글 | 숫자 항목 = 50% : 50% · 좌우 20px (CONTENT01 · 02 와 같게) */
   @container (max-width:1024px){
-    .nx-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;padding-left:20px;padding-right:20px;}
+    .nx-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;padding-left:var(--site-px,48px);padding-right:var(--site-px,48px);}   /* 261116 수정 — 태블릿 좌우 20 고정 → 사이트 좌우 값 */
     .nx-body{width:auto;max-width:none;}
     .nx-desc{max-width:none;}
   }
@@ -17882,7 +17882,7 @@
           </div>
           <div class="srow" style="margin-top:14px;"><span class="k">로고 크기</span><input class="rng" type="range" min="14" max="48" step="1" value="22" data-p="logo" data-u="px"><span class="v">22px</span></div>
           <div class="srow"><span class="k">높이</span><input class="rng" type="range" min="44" max="96" step="1" value="60" data-p="h" data-u="px"><span class="v">60px</span></div>
-          <div class="tx-hint" id="moPxHint">좌우 <span class="mo-px-v">20</span>px · <button type="button" class="pw-reset" onclick="stGoPw('mo')">사이트 전체 한 번에 바꾸기</button></div>   <!-- 261112 추가 — 모바일 상단 바는 좌우 설정 없이 사이트 휴대폰 값(--site-px)을 따른다 -->
+          <div class="tx-hint" id="moPxHint">모바일은 좌우 <span class="mo-px-v">20</span>px · <button type="button" class="pw-reset" onclick="stGoPw('mo')">사이트 전체 한 번에 바꾸기</button></div>   <!-- 261112 추가 — 모바일 상단 바는 좌우 설정 없이 사이트 휴대폰 값(--site-px)을 따른다 -->
           <div class="tx-hint" id="moLogoHint" style="display:none;">버튼이 많아 로고가 상단 바에 맞게 줄어 보입니다.</div>   <!-- 261104 추가 — 사본의 moFit 이 로고를 줄였을 때만(cl-mo-fit) -->
           <div class="gt-h">표시 항목</div>
           <div class="gt-chips" id="moBarChips"></div>
@@ -18832,6 +18832,7 @@
       if(cvw>0 && val>room+1) { h.textContent='편집 화면('+Math.round(room)+'px)보다 넓은 부분은 미리보기에서 보입니다.'; h._wide=1; } })();   /* 261116 수정 — 3줄 → 짧게 */
     /* 261116 수정 — 슬라이더 숫자 · 버튼 · 스위치와 같은 말만 남으면 안내를 감춘다(직접 「이 블록만 Npx」 · 전체 폭 끝까지 붙음) */
     if(h._wide){ h._wide=0; h._lk=null; return; }
+    if(mo && !b){ h._lk=null; h.innerHTML='모바일은 좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo'); return; }   /* 261116 수정 — 모바일 화면 안내 통일(블록 · 푸터 · 메뉴): 본문 폭 대신 좌우 + 바로가기 */
     if(/실제 내용/.test(b)) a=a.replace(/\(스타일 > [^)]*\)/,'');   /* 261116 추가 — 실제 내용이 함께 나오면 경로를 빼 한 줄로 */   /* 261116 수정 — 편집 화면보다 넓으면 그 안내 한 줄만(사이트 설정과 같은 문장) */
     if(m==='own' && !mo && !b && !tail){ h.style.display='none'; return; }
     var txt=[a,b].filter(Boolean).join(' · '); tail=tail.replace(/^\s+/,txt?' ':''); if(!txt && !tail){ h.style.display='none'; return; }
@@ -64531,7 +64532,7 @@ function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getE
   var sr=document.getElementById('hdPadXSegRow'); if(sr) sr.style.display=sd?'':'none';
   var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(sd && md==='custom')?'':'none';
   if(h){ if(!sd && full && md==='custom'){ h.innerHTML='좌우 '+x+'px(따로 정함) · <button type="button" class="pw-reset" onclick="hdPadXSet(\'base\')">사이트 값으로</button>'; h.style.display=''; }
-    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):''); var mvo=document.body.classList.contains('mview-on'); if(!sd && full){ h.innerHTML=mvo?('좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); h.style.display=''; } else if(!sd && mvo){ h.textContent='모바일에서는 본문 폭이 적용되지 않습니다.'; h.style.display=''; }   /* 261116 추가 — 모바일 화면이면 모바일 기준 안내 */ else if(!sd){ var wn=hdAlignWrapNote(); h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw')+(wn?('<br>'+String(wn).trim().replace(/[&<>]/g,'')):''); h.style.display=''; }   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ else { h.textContent=ht; h.style.display=ht?'':'none'; } } } }
+    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):''); var mvo=document.body.classList.contains('mview-on'); if(!sd && full){ h.innerHTML=mvo?('모바일은 좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); h.style.display=''; } else if(!sd && mvo){ h.innerHTML='모바일은 좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo'); h.style.display=''; }   /* 261116 추가 — 모바일 화면이면 모바일 기준 안내 */ else if(!sd){ var wn=hdAlignWrapNote(); h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw')+(wn?('<br>'+String(wn).trim().replace(/[&<>]/g,'')):''); h.style.display=''; }   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ else { h.textContent=ht; h.style.display=ht?'':'none'; } } } }
 function hdWSet(m){ var p=HD.pad||(HD.pad={}); if(m==='full'){ p.align='edge'; } else { p.align='content'; p.xMode='base'; } hdFill(); hdChanged(); hdPadXSide(); }   /* 261116 추가 — 메뉴 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 좌우 여백) */
 /* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
 function hdAlignWrapNote(){ try{
@@ -66149,7 +66150,7 @@ function ftFill(){
 /* 261116 추가 — 푸터 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 사이트 좌우 여백) */
 function ftWSync(){ var full=(FT.w==='full');
   (function(){ var r=document.getElementById('ftWRow'), mo=document.body.classList.contains('mview-on'); if(r){ r.style.opacity=mo?'.45':''; r.style.pointerEvents=mo?'none':''; } })();   /* 261116 추가 — 모바일 화면에서는 본문 폭 버튼만 흐리게 막기(안내 · 링크는 그대로) */ [].forEach.call(document.querySelectorAll('#ftWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
-  var h=document.getElementById('ftWHint'); if(h){ var mvo=document.body.classList.contains('mview-on'); if(full) h.innerHTML=mvo?('좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); else if(mvo) h.textContent='모바일에서는 본문 폭이 적용되지 않습니다.'; else h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw');   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ } }
+  var h=document.getElementById('ftWHint'); if(h){ var mvo=document.body.classList.contains('mview-on'); if(full) h.innerHTML=mvo?('모바일은 좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); else if(mvo) h.innerHTML='모바일은 좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo'); else h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw');   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ } }
 function ftWSet(m){ FT.w=(m==='full')?'full':'site'; ftChanged(); ftWSync(); }
 /* 아이콘 목록 — 손잡이로 순서, 주소 입력, 삭제. 추가는 아직 쓰지 않은 종류에서 고른다(최대 5) */
 function ftSnsRender(){
