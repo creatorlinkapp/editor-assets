@@ -17810,7 +17810,7 @@
             <button type="button" class="mt-seg-b" data-m="custom" onclick="hdPadXSet('custom')">직접</button>
           </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 직접 · 261113 수정 — 「없음」 삭제(로고 · 버튼이 화면 끝에 붙기만 하고 쓰는 디자인 0 · 필요하면 직접 0) -->
           <div class="srow" id="hdPadXRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="hdPadX" min="0" max="200" step="2" value="48"><span class="v" id="hdPadXV">48px</span></div>
-          <div class="tx-hint" id="hdPadXHint" style="margin-top:6px;">로고 · 버튼이 본문 폭 선에 맞춰집니다.</div>
+          <div class="tx-hint" id="hdPadXHint" style="margin-top:6px;">본문 폭 1180px</div>
         </div></div>
       </div>
       <div class="fld sfold" id="hdBgAcc">
@@ -18182,7 +18182,7 @@
             <button type="button" class="mt-seg-b active" data-m="site" onclick="ftWSet('site')">기본</button>
             <button type="button" class="mt-seg-b" data-m="full" onclick="ftWSet('full')">전체 폭</button>
           </div></div>
-          <div class="tx-hint" id="ftWHint" style="margin-top:6px;">푸터 내용이 본문 폭 선에 맞춰집니다.</div>
+          <div class="tx-hint" id="ftWHint" style="margin-top:6px;">본문 폭 1180px</div>
         </div></div>
       </div>
     </div>
@@ -18542,6 +18542,7 @@
     if(+SITE_LAYOUT.pw>0) site.style.setProperty('--site-pw',(+SITE_LAYOUT.pw)+'px'); else site.style.removeProperty('--site-pw');   /* 261113 추가 — 본문 폭: 블록 기본이면 변수를 지워 블록마다 기본 폭(pwCss 의 대체값)으로 */
     stLayoutSync();
     if(typeof hdApply==='function') try{ hdApply(); }catch(e){}
+    if(typeof ftWSync==='function') try{ ftWSync(); }catch(e){}   /* 261116 추가 — 푸터 안내의 본문 폭 · 좌우 숫자도 바로 */
     sitePxRefresh();
     pwRefresh();
     if(typeof mvKick==='function') try{ mvKick(0); }catch(e){}   /* 휴대폰 화면에도 바로 */
@@ -64529,7 +64530,7 @@ function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getE
   var sr=document.getElementById('hdPadXSegRow'); if(sr) sr.style.display=sd?'':'none';
   var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(sd && md==='custom')?'':'none';
   if(h){ if(!sd && full && md==='custom'){ h.innerHTML='좌우 '+x+'px(따로 정함) · <button type="button" class="pw-reset" onclick="hdPadXSet(\'base\')">사이트 값으로</button>'; h.style.display=''; }
-    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):''); if(!sd && full){ h.innerHTML='좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px'); h.style.display=''; } else { h.textContent=ht; h.style.display=ht?'':'none'; } } } }
+    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):''); if(!sd && full){ h.innerHTML='좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px'); h.style.display=''; } else if(!sd){ var wn=hdAlignWrapNote(); h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw')+(wn?('<br>'+String(wn).trim().replace(/[&<>]/g,'')):''); h.style.display=''; }   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ else { h.textContent=ht; h.style.display=ht?'':'none'; } } } }
 function hdWSet(m){ var p=HD.pad||(HD.pad={}); if(m==='full'){ p.align='edge'; } else { p.align='content'; p.xMode='base'; } hdFill(); hdChanged(); hdPadXSide(); }   /* 261116 추가 — 메뉴 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 좌우 여백) */
 /* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
 function hdAlignWrapNote(){ try{
@@ -66146,7 +66147,7 @@ function ftFill(){
 }
 /* 261116 추가 — 푸터 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 사이트 좌우 여백) */
 function ftWSync(){ var full=(FT.w==='full'); [].forEach.call(document.querySelectorAll('#ftWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
-  var h=document.getElementById('ftWHint'); if(h){ if(full) h.innerHTML='좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px'); else h.textContent='푸터 내용이 본문 폭 선에 맞춰집니다.'; } }
+  var h=document.getElementById('ftWHint'); if(h){ if(full) h.innerHTML='좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px'); else h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw');   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ } }
 function ftWSet(m){ FT.w=(m==='full')?'full':'site'; ftChanged(); ftWSync(); }
 /* 아이콘 목록 — 손잡이로 순서, 주소 입력, 삭제. 추가는 아직 쓰지 않은 종류에서 고른다(최대 5) */
 function ftSnsRender(){
