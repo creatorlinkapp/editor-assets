@@ -10970,7 +10970,7 @@
   #stage .site-ft .ft-ed:hover{outline-color:color-mix(in srgb,var(--ed,#03C75A) 55%,transparent);}
   #stage .site-ft .ft-ed:focus{outline:1.5px solid var(--ed,#03C75A);}
   #stage .site-ft .ft-ed:empty::before{content:attr(data-ph);opacity:.45;}
-  html.mview .site-ft .ft-gear,html.mview .site-ft .ft-badge,html.mview:is(.pview,.mv-preview) .ft-offbar,html.mview .ft-offbar button{display:none !important;}   /* 261106 수정 — 숨김 줄은 모바일 편집 사본에서는 보인다(누르는 버튼 없이 · PC 설정창에서 숨김 해제), 미리보기에서만 빠진다 */
+  html.mview:is(.pview,.mv-preview) .site-ft .ft-gear,html.mview .site-ft .ft-badge,html.mview:is(.pview,.mv-preview) .ft-offbar,html.mview .ft-offbar button{display:none !important;}   /* 261106 수정 — 숨김 줄은 모바일 편집 사본에서는 보인다(누르는 버튼 없이 · PC 설정창에서 숨김 해제), 미리보기에서만 빠진다 */
   html.mob .site > .ft-offbar,html.mob .site > .site-hd.hd-off > .hd-offbar{height:40px;padding:0 16px;justify-content:center;font-size:13px;}   /* 261106 추가 — 모바일 편집 사본의 숨김 줄 */
   html.mview #stage .site-ft::after{display:none !important;}
   html.mview #stage .site-ft .ft-ed{outline:none !important;cursor:inherit;}
@@ -65066,12 +65066,13 @@ function moDrHtml(dr,D,model,ics,logo){
 /* 261104 추가 — 연락처 · SNS(ct) : 푸터에 적은 사업자 정보의 「전화 · 이메일」과 푸터 SNS 를 그대로 쓴다(따로 적는 칸 없음) */
 function moFtParts(){ var on=(typeof FT!=='undefined') && FT.on!==false, p=(on && typeof ftDesign==='function')?(ftDesign(FT.design).parts||{}):{}; return {on:on, biz:!!p.biz, sns:!!p.sns}; }
 /* 261104 추가 — 「푸터에서 고치기」: 연락처 · SNS 는 PC 편집 화면의 푸터에서만 고칠 수 있다 → PC 로 바꾸고 푸터로 이동 · 사업자 정보 줄 강조 · 푸터 설정창(아이콘) 열기 */
-function moFtGo(){
+function moFtGo(plain){   /* 261116 수정 — plain: 모바일 화면 푸터 톱니에서 왔을 때(연락처 펼침 · 사업자 줄 강조 없이 · 토스트로 이유 알림) */
   if(typeof mvSetMode==='function') try{ mvSetMode('pc'); }catch(e){}
+  if(plain && typeof clToast==='function') try{ clToast('푸터는 PC 화면에서 설정합니다.'); }catch(e){}
   setTimeout(function(){
     /* 설정창을 먼저 연다 — 열 때 푸터를 다시 그려(ftRender) 먼저 시작한 스크롤 · 강조가 끊겼다 */
     if(typeof ftSetOpen==='function') try{ ftSetOpen(); }catch(e){}
-    var a=document.getElementById('ftSnsAcc'); if(a && !a.classList.contains('open') && a.style.display!=='none'){ var h=a.querySelector('.fold-h'); if(h) h.click(); }
+    var a=document.getElementById('ftSnsAcc'); if(!plain && a && !a.classList.contains('open') && a.style.display!=='none'){ var h=a.querySelector('.fold-h'); if(h) h.click(); }
     /* PC 로 넓어지는 전환 · 설정창이 열리며 캔버스 배율(--site-zoom)이 바뀌는 동안은 편집기가 「보던 자리」를 다시 맞춰 먼저 시작한 이동을 되돌린다 → 전환이 끝나고 배율이 멈춘 뒤 내려간다 */
     var t0=Date.now(), zPrev='', same=0, rs=document.documentElement.style;
     (function wait(){ var b=document.body.classList, z=rs.getPropertyValue('--site-zoom'); same=(z===zPrev)?same+1:0; zPrev=z;
@@ -65080,7 +65081,7 @@ function moFtGo(){
       var ft=document.querySelector('#stage .site-ft'); if(!ft) return;
       var stg=document.getElementById('stage'), fr=ft.getBoundingClientRect(), sr=stg.getBoundingClientRect();
       var y=stg.scrollTop+(fr.bottom-sr.bottom)+24; try{ stg.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }catch(e){ stg.scrollTop=Math.max(0,y); }
-      var biz=ft.querySelector('.ft-biz'); if(biz){ biz.classList.remove('mo-ft-flash'); void biz.offsetWidth; biz.classList.add('mo-ft-flash'); setTimeout(function(){ biz.classList.remove('mo-ft-flash'); },2400); }
+      var biz=!plain && ft.querySelector('.ft-biz'); if(biz){ biz.classList.remove('mo-ft-flash'); void biz.offsetWidth; biz.classList.add('mo-ft-flash'); setTimeout(function(){ biz.classList.remove('mo-ft-flash'); },2400); }
     }
   },350);
 }
@@ -65313,6 +65314,7 @@ function moClose(){ var d=document.getElementById('moDock'); if(!d || !d.classLi
     var nm=document.getElementById('siteNavMob'), nmT=null;
     if(nm) new MutationObserver(function(){ if(!me.classList.contains('show')) return; clearTimeout(nmT); nmT=setTimeout(moFill,60); }).observe(nm,{childList:true,subtree:true,characterData:true});
     window.addEventListener('message',function(e){ var d=e.data; if(d && typeof d==='object' && d.t==='cl-mo-fit'){ var h=document.getElementById('moLogoHint'); if(h){ h.textContent=(d.k==='ic')?'버튼이 많아 모바일 상단 바에서는 버튼이 아이콘 모양으로 보입니다.':'버튼이 많아 로고가 상단 바에 맞게 줄어 보입니다.'; h.style.display=d.on?'':'none'; } } });   /* 261104 추가 — 로고가 상단 바에 맞게 줄어 보이는 중 */
+    window.addEventListener('message',function(e){ var d=e.data; if(d && typeof d==='object' && d.t==='cl-ft-open') moFtGo(true); });   /* 261116 추가 — 모바일 사본 푸터 톱니 */
     window.addEventListener('message',function(e){ var d=e.data; if(d && typeof d==='object' && d.t==='cl-mo-open'){ var m=document.getElementById('moDock'); if(m && m.classList.contains('show')) moClose(); else moSetOpen(); } });   /* 사본 헤더 톱니 — 다시 누르면 닫는다(블록 톱니와 같은 토글) */
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else setTimeout(boot,0);
@@ -66065,7 +66067,7 @@ document.addEventListener('click',function(e){
   var t=e.target; if(!t || !t.closest) return;
   var ft=t.closest('#stage .site-ft'); if(!ft) return;
   var gear=t.closest('.ft-gear');
-  if(gear){ e.stopPropagation(); if(!window.CL_MVIEW){ if(ftDockOn) ftClose(); else ftSetOpen(); } return; }
+  if(gear){ e.stopPropagation(); if(!window.CL_MVIEW){ if(ftDockOn) ftClose(); else ftSetOpen(); } else { try{ clHost().postMessage({t:'cl-ft-open'},'*'); }catch(x){} } return; }   /* 261116 수정 — 모바일 사본 톱니: 푸터는 모바일 전용 값이 없어 PC 화면 푸터 설정으로 */
   var a=t.closest('a'); if(a && a.hasAttribute('href')) e.preventDefault();      /* 편집 화면에서는 바깥 주소로 나가지 않는다 */
   var go=t.closest('[data-go]');
   if(go){ e.preventDefault(); if(!window.CL_MVIEW) ftGo(go.getAttribute('data-go')); }
@@ -66293,7 +66295,7 @@ function ftSnap(preview){
   if(!el) return '';
   if(preview && typeof FT!=='undefined' && FT.on===false) return '';   /* 261106 수정 — 숨긴 푸터: 미리보기에서는 빠지고, 모바일 편집 사본에는 흐리게(.ft-hid · 블록 숨김과 같게) */
   var c=el.cloneNode(true); c.classList.remove('ft-editing');
-  c.querySelectorAll('.ft-gear,.ft-badge,.bk-hid').forEach(function(x){ x.remove(); });
+  c.querySelectorAll(preview?'.ft-gear,.ft-badge,.bk-hid':'.ft-badge,.bk-hid').forEach(function(x){ x.remove(); });   /* 261116 수정 — 모바일 편집 사본에는 톱니를 남긴다(누르면 PC 화면 푸터 설정 · cl-ft-open) */
   c.querySelectorAll('.ft-ed').forEach(function(x){ if(!x.textContent.trim()){ x.remove(); return; } x.removeAttribute('contenteditable'); x.removeAttribute('data-ph'); x.removeAttribute('spellcheck'); });
   return c.outerHTML;
 }
