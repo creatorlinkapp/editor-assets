@@ -22274,7 +22274,10 @@
       var b=sb[i]; c.classList.remove('sel','just-added','blk-removing','blk-spot','rt-editing','rt-showarea');
       /* 261116 추가 — 화면 복사(cloneNode)는 블록 요소에 붙은 설정값(_xxCfg 등)을 옮기지 않아 본문 폭 · 직접 값 등이 기본으로 돌아갔다 → 블록 복제 · 보관함과 같은 방식(bkProps) */
       var pr=(b && typeof bkProps==='function')?bkProps(b):{}; Object.keys(pr).forEach(function(k){ c[k]=pr[k]; });
-      if(b && c.parentNode===dom){ var s=b.cloneNode(true); Object.keys(pr).forEach(function(k){ try{ s[k]=JSON.parse(JSON.stringify(pr[k])); }catch(e){} }); c._pgxSrc=s; }   /* 지금 모습을 원본으로 남겨 처음 열 때 블록 복제와 같은 초기화(smCloneInit) */
+      if(b && c.parentNode===dom){ var s=b.cloneNode(true);
+        /* 지금 모습을 원본으로 남겨 처음 열 때 블록 복제와 같은 초기화(smCloneInit). 설정값 말고도 복제가 읽는 값(펼친 항목 _fqOpen · 고른 지점 _ctSel 등)까지 — 글로 옮길 수 있는 값만(엔진 상태 · 화면 요소는 빠진다) */
+        Object.keys(b).forEach(function(k){ if(k.charAt(0)!=='_' || k==='_pgxSrc') return; var v=b[k]; if(v==null || typeof v==='function' || (typeof v==='object' && (v.nodeType || v.alive!==undefined))) return; try{ s[k]=JSON.parse(JSON.stringify(v)); }catch(e){} });
+        Object.keys(pr).forEach(function(k){ try{ s[k]=JSON.parse(JSON.stringify(pr[k])); }catch(e){} }); c._pgxSrc=s; }
     });
     dom._pgxDup=1;
     pgxKeep[dst.id]=dom;   /* 열 때 pgxSwap 이 pgDupInit · + 버튼(pgxAddbars) · 멈춘 엔진(pgxRevive)을 챙긴다 */
