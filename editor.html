@@ -18404,12 +18404,12 @@
     /* 261116 추가 — 모바일 화면에서는 본문 폭이 적용되지 않아 바꿔도 변화가 없다 → 안내 뒤에 한 문장(화면을 바꾸면 다시 그린다) */
     if(!document.body._stMoObs && window.MutationObserver){ document.body._stMoObs=new MutationObserver(function(){ var mo1=document.body.classList.contains('mview-on'); if(mo1!==document.body._stMoWas){ document.body._stMoWas=mo1; try{ stLayoutSync(); }catch(e){} } }); document.body._stMoWas=document.body.classList.contains('mview-on'); document.body._stMoObs.observe(document.body,{attributes:true,attributeFilter:['class']}); }
     var moNote=document.body.classList.contains('mview-on')?' 모바일 화면에는 본문 폭이 적용되지 않습니다.':'';
-    var pn=document.getElementById('stPwNote'); if(pn) pn.textContent=moNote?((on?'본문 폭 「기본」인 블록이 이 폭에 맞춰집니다.':'블록마다 디자인에 정해진 폭으로 들어갑니다.')+moNote):on?('본문 폭 「기본」인 블록이 이 폭에 맞춰집니다. 블록에서 「직접」으로 따로 정할 수 있습니다.'+stPwVisNote()):'블록마다 디자인에 정해진 폭으로 들어갑니다. 「사이트 폭 지정」을 고르면 블록이 한 폭으로 맞춰집니다.';
+    var pn=document.getElementById('stPwNote'); if(pn) pn.textContent=moNote?((on?'본문 폭 「기본」인 블록이 이 폭에 맞춰집니다.':'블록마다 디자인에 정해진 폭으로 들어갑니다.')+moNote):on?('본문 폭 「기본」인 블록이 이 폭에 맞춰집니다.'+(stPwVisNote()||' 블록에서 「직접」으로 따로 정할 수 있습니다.')):'블록마다 디자인에 정해진 폭으로 들어갑니다. 「사이트 폭 지정」을 고르면 블록이 한 폭으로 맞춰집니다.';
   }
   /* 261113 추가 — 편집 화면에서 블록이 쓸 수 있는 내용 폭(좌측 메뉴면 메뉴를 뺀 자리 − 좌우 여백). 사이트 폭이 이보다 넓으면 편집 화면에서는 변화가 안 보여 고장처럼 보였다 */
   function stBlkArea(){ var site=stSite(); if(!site) return 0; var z=parseFloat(getComputedStyle(site).zoom)||1, b=site.querySelector(':scope > .blk'); var w=b?b.getBoundingClientRect().width:site.getBoundingClientRect().width; return Math.round(w/z); }
   function stPwVisNote(){ var site=stSite(), pw=+SITE_LAYOUT.pw; if(!site || !(pw>0)) return ''; var vis=stBlkArea()-2*(+SITE_LAYOUT.pc||48); if(!(vis>0) || pw<=vis) return '';
-    var side=(site.getAttribute('data-hd-type')==='side'); return ' 지금 편집 화면은 '+(side?'좌측 메뉴를 뺀 ':'')+'블록 자리가 '+vis+'px라 그보다 넓은 값은 넓은 화면(미리보기)에서만 차이가 보입니다.'; }
+    var side=(site.getAttribute('data-hd-type')==='side'); return ' '+(side?'좌측 메뉴를 뺀 ':'')+'편집 화면('+vis+'px)보다 넓은 부분은 미리보기에서 보입니다.'; }   /* 261116 수정 — 3줄 → 2줄(이때는 「직접」 문장 대신 이 문장) */
   /* 261113 추가 — 본문 폭 2칸: 블록 기본 ↔ 사이트 폭 지정(마지막 값에서 다시 시작) */
   function stPwSet(m){ SITE_LAYOUT.pw=(m==='site')?(+SITE_LAYOUT.pwLast||1180):0; stLayoutApply(); if(m==='site'){ stPxHeld=false; stPxGuide(true,'pw'); stPxGuide(false); } }
 
