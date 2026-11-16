@@ -62981,7 +62981,7 @@ global.PolyFX = API;
             next.remove();
           }
         });
-        if(lastAb) lastAb.style.marginBottom='40px';
+        /* 261116 수정 — 마지막 + 막대에 40px 을 주지 않는다: 롤오버 · 선택 때만 막대가 나타나 푸터가 40px 밀리며 흰 띠가 생겼다(PC 는 260917 에 같은 이유로 뺌) */
         /* 헤더·블록 뒤가 아닌 자리에 남은 고아 addbar 제거 */
         Array.prototype.slice.call(site.querySelectorAll('.addbar')).forEach(function(a){
           var p=a.previousElementSibling;
