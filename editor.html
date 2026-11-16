@@ -18473,8 +18473,7 @@
     return r; }
   /* 블록 추가로 넣을 때 — 디자인 폭이 넓으면(1100 이상) 「기본」(사이트 본문 폭) · 좁으면 「직접」(그 폭 그대로 · B 그룹) · 전체 폭이면 「가로 100%」 */
   function pwNewBy(p,blk){ try{ var r=PW_REG[p], c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw', w=+c[mk]||r.mw; c.pwDef=w;
-    c.pw=(r.legacy && r.legacy(c)==='full')?'full':((w>=1100 && w<=1300)?'site':'own');   /* 261116 수정 — 본문 폭이 한 값이 되면서 1180 보다 많이 넓은 디자인(FAQ · QnA 1440 · CONTACT16 1600)도 「직접」으로 넣어 원래 폭 유지 */
-    if(c.pw==='own' && w>1300 && r.opt && r.opt.padIn){ var P0=(r.rel && c.pwP0!=null)?pwP0Num(c,+SITE_LAYOUT.pc||48):(+SITE_LAYOUT.pc||48); if(r.bpx && c.pwP0==null) P0=parseFloat(bpxCss(c,(r.bpx===p+'Px')?'px':'padx',48))||+SITE_LAYOUT.pc||48; c[mk]=Math.round((w-2*P0)/10)*10; c.pwc=1; c.pwOwnSet=true; }   /* 넓은 디자인은 넣을 때부터 내용 폭 기준 값으로(설정창을 처음 열 때 옮기는 계산이 막 넣은 블록에서 좌우 0 으로 읽혀 1440 이 그대로 남았다) */
+    c.pw=(r.legacy && r.legacy(c)==='full')?'full':(w>=1100?'site':'own');   /* 261116 수정 — 1180 보다 넓은 디자인(FAQ · QnA 1440 · CONTACT16 1600)도 「기본」(본문 폭 한 값 · 선 밖으로 튀지 않게). 좁은 디자인(1100 미만)만 「직접」 */
     if(r.rel && r.bpx && c.pwP0==null) c.pwP0=(p==='rt')?rtPxCss(c):bpxCss(c,(r.bpx===p+'Px')?'px':'padx',(p==='gg')?0:48); }catch(e){} }
   Object.keys(PW_REG).forEach(function(p){ var r=PW_REG[p]; if(r.opt) r.opt.r=r; });   /* 261113 추가 — pwCss 가 저장 블록 모드를 판단할 때 쓴다 */
   var PW_BPX={bdPadx:'bd', rtPx:'rt', imPx:'im', scPadx:'sc', bcPadx:'bc', caPadx:'ca', ctPadx:'ct', ixPadx:'ix', fqPadx:'fq', qnPadx:'qn', ggPx:'gg', vcPadx:'vc', twPadx:'tw', rsPadx:'rs'};   /* 261113 수정 — 갤러리 · 영상 카드 · 타자 · 떠오르는 텍스트 빠져 있던 것 */   /* 좌우 3칸 id → 본문 폭 블록 (좌우 기본 안내 · 상자 안쪽 안내는 본문 폭 안내 한 줄로 합친다) */
@@ -18504,9 +18503,7 @@
     /* 설정창이 이 블록을 보고 있으면 안내 글자도 바로(직접 슬라이더를 움직일 때 값이 안 바뀌던 것) */
     if(!window.CL_MVIEW){ var blk=el.closest && el.closest('.blk'), k=blk && blk.getAttribute('data-block'); Object.keys(PW_REG).forEach(function(p){ if(PW_REG[p].kind===k && window[p+'CurBlk']===blk && document.getElementById(p+'PwBox')) pwHint(p); }); } }
   /* 블록 추가로 넣는 블록만 본문 폭 따름 */
-  function pwNew(p,blk){ try{ var c=window[p+'Cfg'](blk); c.pw='site';
-    /* 261116 추가 — 1180 보다 많이 넓은 디자인(TEXT01 1760 · CONTENT01 1600)은 「직접」 + 내용 폭 기준 값으로 넣어 원래 모양 유지(본문 폭이 한 값이 되면서) */
-    var r=PW_REG[p], mk=(r.opt&&r.opt.mwKey)||'mw', w=+c[mk]||r.mw; if(w>1300 && r.opt && r.opt.padIn){ var P=(r.opt.px==='own')?((+c.px>=0 && c.px!=='')?+c.px:r.px):(+SITE_LAYOUT.pc||48); c.pw='own'; c[mk]=Math.round((w-2*P)/10)*10; c.pwc=1; c.pwOwnSet=true; c.pwDef=w; } }catch(e){} }
+  function pwNew(p,blk){ try{ var c=window[p+'Cfg'](blk); c.pw='site'; }catch(e){} }   /* 261116 수정 — 넓은 디자인(TEXT01 · CONTENT01)도 「기본」 */
   /* 사이트 값이 바뀌면: 다시 그려야 하는 블록(높이 계산 등) + 열려 있는 설정창 */
   function pwRefresh(){ var site=stSite(); if(!site) return;
     if(+SITE_LAYOUT.pw>0 && typeof rtApply==='function') [].forEach.call(site.querySelectorAll('.blk[data-block="cred"]:not([data-pw-w])'),function(b){ try{ rtApply(b); }catch(e){} });   /* 261113 추가 — 견본 HTML 에 폭이 직접 적힌 텍스트 블록(그린 적 없는 블록)도 사이트 폭을 따르게 한 번 그린다 */
