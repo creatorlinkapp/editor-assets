@@ -18440,7 +18440,7 @@
         pxm:function(b){ return bpxMode(bpxEff('im',b),'px'); }},   /* 이미지: .im-wrap 은 내용 폭 상자(content-box) · 좌우는 그 밖 */
     /* 261113 추가 — A-1(최대 폭 슬라이더가 있던 블록). 상자 안쪽 좌우 = 좌우 3칸(--bpx) */
     sc:pwBpxReg('sc','stackcard','.sc-in',1140,{noFull:true}),    /* 스택 카드 CONTENT03 */
-    bc:Object.assign(pwBpxReg('bc','beforeafter','.bc-in',1140),{edge:true}),  /* 이전·이후 비교 CONTENT04 */
+    bc:pwBpxReg('bc','beforeafter','.bc-in',1140),   /* 261116 수정 — 「끝까지 붙이기」 뺌: 사진 옆 글 · 버튼까지 화면 끝에 붙었다(전체 폭은 그대로 · 좌우는 사이트 값) */  /* 이전·이후 비교 CONTENT04 */
     ca:pwBpxReg('ca','calblk','.ca-in',1140,{noFull:true}),       /* 캘린더 CALENDAR01~06 */
     ct:Object.assign(pwBpxReg('ct','ctblk','.ct-in',1140,{noFull:true}),{fix0:function(c){ return !!(c && c.kind==='strip'); }}),   /* 띠 디자인(CONTACT11~14): 상자 좌우 0 · 띠 안쪽에 따로 여백 */        /* 컨택트 CONTACT01~18 */
     /* 인덱스 리스트 TEXT06 · FAQ TEXT08 · QnA TEXT10 — 폭은 c.maxw · 「화면 전체 폭으로」 스위치(c.full) = 가로 100% */
@@ -21967,7 +21967,9 @@
     clone.id='menu'+(++menuSeq)+'_'+Date.now(); clone.cur=false;
     if(clone.children) clone.children.forEach(function(c,i){ var oid=c.id; c.id=clone.id+'_c'+i; c.cur=false; if(clone.tab && clone.tab.def===oid) clone.tab.def=c.id; });   /* 261001 수정 — 탭메뉴의 기본 탭도 복제본의 id 로 */
     f.arr.splice(f.idx+1,0,clone);
-    if(f.sub && typeof PGX_PAGES!=='undefined' && PGX_PAGES[id]){ PGX_PAGES[clone.id]=JSON.parse(JSON.stringify(PGX_PAGES[id])); if(typeof pgxKeep!=='undefined' && pgxKeep[id]){ var dom=pgxKeep[id].cloneNode(true); dom.setAttribute('data-pgx-page',clone.id); pgxKeep[clone.id]=dom; } }   /* 260921 추가 — 페이지 내용도 함께 복제 */
+    if(f.sub && typeof PGX_PAGES!=='undefined' && PGX_PAGES[id]){ PGX_PAGES[clone.id]=JSON.parse(JSON.stringify(PGX_PAGES[id])); if(typeof pgxKeep!=='undefined' && pgxKeep[id]){ var dom=pgxKeep[id].cloneNode(true); dom.setAttribute('data-pgx-page',clone.id); pgxKeep[clone.id]=dom;
+        /* 261116 추가 — 화면 복사(cloneNode)는 블록 요소에 붙은 설정값(_xxCfg 등)을 옮기지 않아, 복제된 페이지에서 본문 폭 · 직접 값 · 끝까지 붙이기 등이 기본으로 돌아갔다 → 블록 복제 · 보관함과 같은 방식(bkProps)으로 같이 옮긴다 */
+        if(typeof bkProps==='function'){ var sb=pgxKeep[id].querySelectorAll('.blk'), db=dom.querySelectorAll('.blk'); for(var bi=0; bi<sb.length && bi<db.length; bi++){ var pr=bkProps(sb[bi]); Object.keys(pr).forEach(function(k){ db[bi][k]=pr[k]; }); } } } }   /* 260921 추가 — 페이지 내용도 함께 복제 */
     renderPages();
   }
   function pgToggleT(ev,id){ if(ev)ev.stopPropagation(); if(typeof tmToggle==='function'){ tmToggle(id); return; } var f=pgFind(id); if(f){ f.node.tOn=!f.node.tOn; renderPages(); } }   /* 261001 수정 — 탭메뉴 모듈(tm)로 넘긴다: 디자인 고르기 · 되돌리기 */
