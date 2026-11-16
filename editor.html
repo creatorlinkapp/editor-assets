@@ -22274,6 +22274,7 @@
       var b=sb[i]; c.classList.remove('sel','just-added','blk-removing','blk-spot','rt-editing','rt-showarea');
       /* 261116 추가 — 화면 복사(cloneNode)는 블록 요소에 붙은 설정값(_xxCfg 등)을 옮기지 않아 본문 폭 · 직접 값 등이 기본으로 돌아갔다 → 블록 복제 · 보관함과 같은 방식(bkProps) */
       var pr=(b && typeof bkProps==='function')?bkProps(b):{}; Object.keys(pr).forEach(function(k){ c[k]=pr[k]; });
+      if(c._ctCfg && c._ctCfg.fix) c._ctCfg.fix=false;   /* 261116 추가 — 하단 고정은 하나만: 열기 전(보관 중)에도 복제본은 고정이 아니게(ctCloneInit 와 같은 규칙) */
       if(b && c.parentNode===dom){ var s=b.cloneNode(true);
         /* 지금 모습을 원본으로 남겨 처음 열 때 블록 복제와 같은 초기화(smCloneInit). 설정값 말고도 복제가 읽는 값(펼친 항목 _fqOpen · 고른 지점 _ctSel 등)까지 — 글로 옮길 수 있는 값만(엔진 상태 · 화면 요소는 빠진다) */
         Object.keys(b).forEach(function(k){ if(k.charAt(0)!=='_' || k==='_pgxSrc') return; var v=b[k]; if(v==null || typeof v==='function' || (typeof v==='object' && (v.nodeType || v.alive!==undefined))) return; try{ s[k]=JSON.parse(JSON.stringify(v)); }catch(e){} });
@@ -52617,6 +52618,7 @@ global.PolyFX = API;
     if(!clone || clone.getAttribute('data-block')!=='ctblk') return;
     clone._ctSig=null; clone._ctSigH=null; clone._ctSel=src._ctSel|0; clone._ctQ=src._ctQ?ctClone(src._ctQ):null;
     try{ clone._ctCfg=ctClone(ctCfg(src)); }catch(e){ clone._ctCfg=null; }
+    if(clone._ctCfg && clone._ctCfg.fix && !window.CL_MVIEW) clone._ctCfg.fix=false;   /* 261116 추가 — 하단 고정은 사이트에 하나만(ctFixOne): 복제본(블록 · 페이지 복제 · 보관함)은 고정을 끈 채로. 전: 복제하면 고정 블록이 둘이 됐다 */
     setTimeout(function(){ ctInit(clone); },0);
   }
   /* 캔버스 조작 — 지점 검색·선택 (게시 화면에서도 같은 함수) */
