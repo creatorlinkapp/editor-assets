@@ -10972,7 +10972,7 @@
   #stage .site-ft .ft-ed:empty::before{content:attr(data-ph);opacity:.45;}
   html.mview:is(.pview,.mv-preview) .site-ft .ft-gear,html.mview .site-ft .ft-badge,html.mview:is(.pview,.mv-preview) .ft-offbar,html.mview .ft-offbar button{display:none !important;}   /* 261106 수정 — 숨김 줄은 모바일 편집 사본에서는 보인다(누르는 버튼 없이 · PC 설정창에서 숨김 해제), 미리보기에서만 빠진다 */
   html.mob .site > .ft-offbar,html.mob .site > .site-hd.hd-off > .hd-offbar{height:40px;padding:0 16px;justify-content:center;font-size:13px;}   /* 261106 추가 — 모바일 편집 사본의 숨김 줄 */
-  html.mview #stage .site-ft::after{display:none !important;}
+  html.mview:is(.pview,.mv-preview) #stage .site-ft::after{display:none !important;}   /* 261116 수정 — 모바일 편집 사본에서도 설정 버튼과 함께 테두리를 보인다(메뉴와 같게) · 미리보기에서만 끈다 */
   html.mview #stage .site-ft .ft-ed{outline:none !important;cursor:inherit;}
   /* 푸터가 있으면(또는 꺼짐 표시줄이 있으면) 맨 아래 + 버튼 자리로 비워 두던 여백은 필요 없다 */
   #stage .site.ft-on,#stage .site.ft-off,#tfxLayer .site.ft-on,#tfxLayer .site.ft-off{padding-bottom:0;}
