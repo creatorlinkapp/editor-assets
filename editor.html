@@ -11864,6 +11864,7 @@
               <button type="button" class="mt-seg-b" data-m="px" onclick="rtHMode('px')">직접</button>
             </div></div>
             <div class="srow" id="rtMinHRow" style="display:none;"><span class="k">최소 높이</span><input class="rng" type="range" id="rtMinH" min="200" max="1200" step="10" value="600"><span class="v" id="rtMinHV">600px</span></div>
+            <div class="tx-hint" id="rtHHint" style="margin:-6px 0 22px;display:none;">높이를 정하면 글은 세로 가운데에 놓이고, 글이 더 길면 블록이 늘어납니다.</div>   <!-- 261116 수정 — 높이 칸 바로 아래로(전: 섹션 맨 아래 · 좌우 칸을 숨긴 뒤 본문 폭 안내 밑에 남아 본문 폭 설명처럼 읽혔다). 간격은 본문 폭 묶음과 같게: 칸 → 6px → 안내 → 22px → 슬라이더 -->
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="rtPt" min="0" max="200" step="2" value="56"><span class="v" id="rtPtV">56px</span></div>
             <div class="srow"><span class="k">하단</span><input class="rng" type="range" id="rtPb" min="0" max="200" step="2" value="56"><span class="v" id="rtPbV">56px</span></div>
             <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="rtPxSeg" style="flex:1;min-width:0;margin:0;">
@@ -11872,7 +11873,6 @@
               <button type="button" class="mt-seg-b" data-m="custom" onclick="rtPxSet('custom')">직접</button>
             </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 없음 · 직접 -->
             <div class="srow" id="rtPxRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="rtPx" min="0" max="200" step="2" value="48"><span class="v" id="rtPxV">48px</span></div>
-            <div class="tx-hint" id="rtHHint" style="margin-top:10px;display:none;">높이를 정하면 글은 세로 가운데에 놓이고, 글이 더 길면 블록이 늘어납니다.</div>   <!-- 261113 수정 — 높이를 정할 때만 · 「좌우는 사이트 값」은 따로 정해진 블록 안내와 반대로 말해 뺐다 -->
           </div></div>
         </div>
 
@@ -18788,7 +18788,7 @@
         var c0=window[p+'Cfg'](b); c0[(r.opt&&r.opt.mwKey)||'mw']=v; c0.pwOwnSet=true; window[p+'Apply'](b); pwHint(p); if(typeof markDirty==='function') markDirty(); }); }
     if(!row) return null;
     if(r.ownMax && sl){ sl.max=r.ownMax; }   /* 텍스트: 예전 「전체」(1400)는 「가로 100%」 칸으로 → 직접은 1380 까지 */
-    box=document.createElement('div'); box.id=p+'PwBox'; box.className='pw-box'; box.style.margin='10px 0 12px';
+    box=document.createElement('div'); box.id=p+'PwBox'; box.className='pw-box'; box.style.margin='22px 0 12px';   /* 261116 수정 — 위 22px: 칸 버튼 줄 앞뒤 간격을 맞춘다(위 칸 버튼 → 슬라이더 22px 와 같게 · 전 10px 이라 하단 슬라이더에 붙어 보였다) */
     box.innerHTML='<div class="srow" id="'+p+'PwSegRow"><span class="k">본문 폭</span><div class="mt-seg" id="'+p+'PwSeg" style="flex:1;min-width:0;margin:0;">'
       +'<button type="button" class="mt-seg-b" data-m="site" onclick="pwSet(\''+p+'\',\'site\')">기본</button>'   /* 261113 수정 — 「사이트」 → 「기본」(좌우 3칸 「기본」과 같은 뜻: 스타일 > 폭 · 여백 값) */
       +'<button type="button" class="mt-seg-b" data-m="own" onclick="pwSet(\''+p+'\',\'own\')">직접</button>'
@@ -59956,7 +59956,7 @@ global.PolyFX = API;
     var vals={gap:(c.gap==null?48:c.gap), size:e.size, lh:e.lh, ls:(c.ls||0), width:(c.width==null?1180:c.width), pt:e.pt, pb:e.pb, px:e.px,
               labelW:(c.labelW==null?340:c.labelW), splitGap:(c.splitGap==null?24:c.splitGap), bgDim:(c.bgDim==null?40:c.bgDim), minH:(c.minH==null?600:c.minH)};
     var pxm0=rtPxMode(c); (function(){ var s=document.getElementById('rtPx'); if(s){ if(!s.hasAttribute('data-max')) s.setAttribute('data-max',s.max); s.max=bpxMo()?Math.min(40,+s.getAttribute('data-max')):s.getAttribute('data-max'); } })(); rtSegSync('rtPxSeg',pxm0); var pxr=document.getElementById('rtPxRow'); if(pxr) pxr.style.display=(pxm0==='custom')?'':'none'; bpxBaseHint('rtPx',pxm0==='base'); bpxMoSeg('rtPx'); try{ bpxInfo('rt','px',(typeof rtEff==='function')?rtEff(rtCurBlk):c); }catch(e){}   /* 261112 추가 — 좌우 3칸 */
-    var hm=(c.hMode==='screen'||c.hMode==='px')?c.hMode:'auto'; rtSegSync('rtHSeg',hm); var mhr=document.getElementById('rtMinHRow'); if(mhr) mhr.style.display=(hm==='px')?'':'none'; var hhn=document.getElementById('rtHHint'); if(hhn) hhn.style.display=(hm==='auto')?'none':'';   /* 260920 추가 — 높이 */
+    var hm=(c.hMode==='screen'||c.hMode==='px')?c.hMode:'auto'; rtSegSync('rtHSeg',hm); var mhr=document.getElementById('rtMinHRow'); if(mhr) mhr.style.display=(hm==='px')?'':'none'; var hhn=document.getElementById('rtHHint'); if(hhn){ hhn.style.display=(hm==='auto')?'none':''; hhn.style.marginTop=(hm==='px')?'6px':'-6px'; }   /* 261116 수정 — 칸 바로 아래(칸 아래 12px 를 당겨 6px) · 직접이면 최소 높이 슬라이더 아래 6px */   /* 260920 추가 — 높이 */
     rtBgSync();   /* 260920 수정 — 배경 소재 상자(썸네일 · 삭제 · 어둡게 행) 표시 맞춤 */
     var lay=c.layout||'single';
     rtSegSync('rtLayoutSeg', lay);   /* 260915 수정 — 도식 버튼 → 세그먼트 */
