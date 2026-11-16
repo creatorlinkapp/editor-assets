@@ -18330,7 +18330,7 @@
   /* 261113 추가 — 좌우 칸을 뺀 뒤: 좌우가 사이트 값이 아닌 블록(예전에 정한 값 · 디자인 값)은 한 줄 안내 + 「사이트 값으로」 */
   function bpxInfo(p,k,c){ var id=p+k.charAt(0).toUpperCase()+k.slice(1), sg=document.getElementById(id+'Seg'), sr=sg && sg.closest('.srow'); if(!sr) return;
     var h=document.getElementById(id+'Info'); if(!h){ h=document.createElement('div'); h.className='tx-hint'; h.id=id+'Info'; h.style.marginTop='6px'; sr.insertAdjacentElement('afterend',h); }
-    var m=(p==='rt' && typeof rtPxMode==='function')?rtPxMode(c):bpxMode(c,k), r=(typeof PW_REG!=='undefined')?PW_REG[p]:null, blk=window[p+'CurBlk'];
+    var blk0=window[p+'CurBlk'], m=(p==='rt' && typeof rtPxMode==='function')?rtPxMode((blk0 && typeof bpxEff==='function')?bpxEff('rt',blk0):c):bpxMode(c,k), r=(typeof PW_REG!=='undefined')?PW_REG[p]:null, blk=blk0;   /* 261116 수정 — 텍스트는 넘겨받은 값(rtEff)이 「지금 보이는 좌우」라 사이트 PC 좌우가 48 이 아니면 「따로 정함」으로 잘못 나왔다 → 실제 설정값으로 판단 */
     if(r && r.edge && blk && pwMode(window[p+'Cfg'](blk),r)==='full' && m==='none' && !bpxMo()) m='base';   /* 「끝까지 붙이기」 스위치로 보여 줌 */
     if(sr.classList.contains('off')){ h.style.display='none'; return; }
     if(m==='base'){ var cb=blk && window[p+'Cfg'] && window[p+'Cfg'](blk), b0=cb && cb.pwP0; if(b0!=null && !/site-px/.test(b0) && !bpxMo()){ h.style.display=''; h.innerHTML='좌우 사이트 값 · <button type="button" class="pw-reset" onclick="pwPxReset(\''+p+'\')">디자인 좌우('+(parseFloat(b0)||0)+'px)로</button>'; } else h.style.display='none'; return; }
