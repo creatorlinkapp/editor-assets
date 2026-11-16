@@ -3443,7 +3443,7 @@
   .fm-dlset .btn-sm{flex:none;cursor:pointer;font-family:inherit;}   /* 261113 수정 — label → button(파일 보관함 열기) */
   .fm-dset .fm-types.fm-tm{flex:1;margin:0;grid-template-columns:repeat(4,1fr);gap:3px;}
   .fm-dset .fm-types.fm-tm button{height:26px;padding:0;font-size:11px;}
-  .pw-box .pw-reset,#bset .tx-hint .pw-reset{border:0;background:none;padding:0;font:inherit;color:var(--green-text);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;}   /* 261113 추가 — 본문 폭 「블록 기본 폭으로 되돌리기」 */
+  .pw-box .pw-reset,.tx-hint .pw-reset{border:0;background:none;padding:0;font:inherit;color:var(--green-text);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;}   /* 261113 추가 — 본문 폭 「블록 기본 폭으로 되돌리기」 */
   .pw-box.off{opacity:.45;pointer-events:none;}
   /* 261113 수정 — 블록 좌우 칸(기본 · 없음 · 직접)을 뺀다: 내용 폭은 「본문 폭」 하나로, 좌우는 스타일 > 폭 · 여백(사이트 값). 따로 정해진 블록은 안내 한 줄(bpxInfo) · 사진형은 「끝까지 붙이기」 */
   #bset .srow:has(> #rtPxSeg),#rtPxRow,#rtPxBase,#rtPxFix,#bset .srow:has(> #imPxSeg),#imPxRow,#imPxBase,#imPxFix,#bset .srow:has(> #ggPxSeg),#ggPxRow,#ggPxBase,#ggPxFix,#bset .srow:has(> #b2PxSeg),#b2PxRow,#b2PxBase,#b2PxFix,#bset .srow:has(> #ixPadxSeg),#ixPadxRow,#ixPadxBase,#ixPadxFix,#bset .srow:has(> #fqPadxSeg),#fqPadxRow,#fqPadxBase,#fqPadxFix,#bset .srow:has(> #qnPadxSeg),#qnPadxRow,#qnPadxBase,#qnPadxFix,#bset .srow:has(> #srPadxSeg),#srPadxRow,#srPadxBase,#srPadxFix,#bset .srow:has(> #bcPadxSeg),#bcPadxRow,#bcPadxBase,#bcPadxFix,#bset .srow:has(> #bdPadxSeg),#bdPadxRow,#bdPadxBase,#bdPadxFix,#bset .srow:has(> #caPadxSeg),#caPadxRow,#caPadxBase,#caPadxFix,#bset .srow:has(> #ctPadxSeg),#ctPadxRow,#ctPadxBase,#ctPadxFix,#bset .srow:has(> #fmPadxSeg),#fmPadxRow,#fmPadxBase,#fmPadxFix,#bset .srow:has(> #scPadxSeg),#scPadxRow,#scPadxBase,#scPadxFix,#bset .srow:has(> #rsPadxSeg),#rsPadxRow,#rsPadxBase,#rsPadxFix,#bset .srow:has(> #twPadxSeg),#twPadxRow,#twPadxBase,#twPadxFix,#bset .srow:has(> #vcPadxSeg),#vcPadxRow,#vcPadxBase,#vcPadxFix,#bset .bpx-in-note,.srow:has(> #gdPxSeg),#gdPxRow,#gdPxBase{display:none!important;}
@@ -18667,7 +18667,7 @@
   /* 261113 추가 — 본문 폭 2칸: 블록 기본 ↔ 사이트 폭 지정(마지막 값에서 다시 시작) */
   function stPwSet(m){ SITE_LAYOUT.pw=(m==='site')?(+SITE_LAYOUT.pwLast||1180):0; stLayoutApply(); if(m==='site'){ stPxHeld=false; stPxGuide(true,'pw'); stPxGuide(false); } }
   /* 261116 추가 — 블록 · 메뉴 · 푸터 안내의 「사이트에서 바꾸기」: 스타일 창을 열고 폭 · 여백의 그 줄(본문 폭 · 좌우 여백 PC)로 데려가 잠깐 표시 */
-  function ST_GO_BTN(k){ return '<button type="button" class="pw-reset" onclick="stGoPw(\x27'+k+'\x27)">사이트에서 바꾸기</button>'; }
+  function ST_GO_BTN(k){ return '<button type="button" class="pw-reset" onclick="stGoPw(\x27'+k+'\x27)">사이트 전체 한 번에 바꾸기</button>'; }   /* 261116 수정 — 「사이트에서 바꾸기」 → 바꾸면 전체가 한 번에 바뀐다는 걸 알 수 있게 */
   function stGoPw(k){ try{ var sp=document.getElementById('panelStyle'); if(!(sp && sp.classList.contains('show'))) togglePanel('style'); }catch(e){} try{ stTab('style'); }catch(e){} stLayoutSync();   /* 스타일 창이 이미 열려 있으면 닫지 않는다(togglePanel 은 열려 있으면 닫음) */
     var row=document.getElementById(k==='px'?'stPxPc':'stPw'); row=row && row.closest('.srow'); if(!row) return; try{ row.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){ row.scrollIntoView(); }
     row.classList.remove('st-flash'); void row.offsetWidth; row.classList.add('st-flash'); setTimeout(function(){ row.classList.remove('st-flash'); },1600); }
