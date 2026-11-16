@@ -3444,7 +3444,7 @@
   .fm-dset .fm-types.fm-tm{flex:1;margin:0;grid-template-columns:repeat(4,1fr);gap:3px;}
   .fm-dset .fm-types.fm-tm button{height:26px;padding:0;font-size:11px;}
   .pw-box .pw-reset,.tx-hint .pw-reset{border:0;background:none;padding:0;font:inherit;color:var(--green-text);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;}   /* 261113 추가 — 본문 폭 「블록 기본 폭으로 되돌리기」 */
-  .pw-box.off{opacity:.45;pointer-events:none;}
+  .pw-box.off > :not(.pw-hint){opacity:.45;pointer-events:none;}   /* 261116 수정 — 흐리게 막는 건 버튼 · 슬라이더만, 안내 줄은 또렷하게(27번에서 안내를 칸 안으로 옮긴 뒤 같이 흐려졌다) */
   /* 261113 수정 — 블록 좌우 칸(기본 · 없음 · 직접)을 뺀다: 내용 폭은 「본문 폭」 하나로, 좌우는 스타일 > 폭 · 여백(사이트 값). 따로 정해진 블록은 안내 한 줄(bpxInfo) · 사진형은 「끝까지 붙이기」 */
   #bset .srow:has(> #rtPxSeg),#rtPxRow,#rtPxBase,#rtPxFix,#bset .srow:has(> #imPxSeg),#imPxRow,#imPxBase,#imPxFix,#bset .srow:has(> #ggPxSeg),#ggPxRow,#ggPxBase,#ggPxFix,#bset .srow:has(> #b2PxSeg),#b2PxRow,#b2PxBase,#b2PxFix,#bset .srow:has(> #ixPadxSeg),#ixPadxRow,#ixPadxBase,#ixPadxFix,#bset .srow:has(> #fqPadxSeg),#fqPadxRow,#fqPadxBase,#fqPadxFix,#bset .srow:has(> #qnPadxSeg),#qnPadxRow,#qnPadxBase,#qnPadxFix,#bset .srow:has(> #srPadxSeg),#srPadxRow,#srPadxBase,#srPadxFix,#bset .srow:has(> #bcPadxSeg),#bcPadxRow,#bcPadxBase,#bcPadxFix,#bset .srow:has(> #bdPadxSeg),#bdPadxRow,#bdPadxBase,#bdPadxFix,#bset .srow:has(> #caPadxSeg),#caPadxRow,#caPadxBase,#caPadxFix,#bset .srow:has(> #ctPadxSeg),#ctPadxRow,#ctPadxBase,#ctPadxFix,#bset .srow:has(> #fmPadxSeg),#fmPadxRow,#fmPadxBase,#fmPadxFix,#bset .srow:has(> #scPadxSeg),#scPadxRow,#scPadxBase,#scPadxFix,#bset .srow:has(> #rsPadxSeg),#rsPadxRow,#rsPadxBase,#rsPadxFix,#bset .srow:has(> #twPadxSeg),#twPadxRow,#twPadxBase,#twPadxFix,#bset .srow:has(> #vcPadxSeg),#vcPadxRow,#vcPadxBase,#vcPadxFix,#bset .bpx-in-note,.srow:has(> #gdPxSeg),#gdPxRow,#gdPxBase{display:none!important;}
   .pw-edge .sw{margin-left:auto;}   /* 휴대폰 대상: 본문 폭은 적용되지 않음 */
@@ -17882,7 +17882,7 @@
           </div>
           <div class="srow" style="margin-top:14px;"><span class="k">로고 크기</span><input class="rng" type="range" min="14" max="48" step="1" value="22" data-p="logo" data-u="px"><span class="v">22px</span></div>
           <div class="srow"><span class="k">높이</span><input class="rng" type="range" min="44" max="96" step="1" value="60" data-p="h" data-u="px"><span class="v">60px</span></div>
-          <div class="tx-hint">좌우 여백은 스타일 &gt; 폭 · 여백 &gt; 좌우 여백 &gt; 모바일 값을 따릅니다.</div>   <!-- 261112 추가 — 모바일 상단 바는 좌우 설정 없이 사이트 휴대폰 값(--site-px)을 따른다 -->
+          <div class="tx-hint" id="moPxHint">좌우 <span class="mo-px-v">20</span>px · <button type="button" class="pw-reset" onclick="stGoPw('mo')">사이트 전체 한 번에 바꾸기</button></div>   <!-- 261112 추가 — 모바일 상단 바는 좌우 설정 없이 사이트 휴대폰 값(--site-px)을 따른다 -->
           <div class="tx-hint" id="moLogoHint" style="display:none;">버튼이 많아 로고가 상단 바에 맞게 줄어 보입니다.</div>   <!-- 261104 추가 — 사본의 moFit 이 로고를 줄였을 때만(cl-mo-fit) -->
           <div class="gt-h">표시 항목</div>
           <div class="gt-chips" id="moBarChips"></div>
@@ -18543,6 +18543,7 @@
     stLayoutSync();
     if(typeof hdApply==='function') try{ hdApply(); }catch(e){}
     if(typeof ftWSync==='function') try{ ftWSync(); }catch(e){}   /* 261116 추가 — 푸터 안내의 본문 폭 · 좌우 숫자도 바로 */
+    [].forEach.call(document.querySelectorAll('.mo-px-v'),function(e){ e.textContent=String(SITE_LAYOUT.mo); });   /* 261116 추가 — 모바일 메뉴 상단 바 「좌우 Npx」 */
     sitePxRefresh();
     pwRefresh();
     if(typeof mvKick==='function') try{ mvKick(0); }catch(e){}   /* 휴대폰 화면에도 바로 */
@@ -66146,7 +66147,8 @@ function ftFill(){
   ftSnsRender();
 }
 /* 261116 추가 — 푸터 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 사이트 좌우 여백) */
-function ftWSync(){ var full=(FT.w==='full'); [].forEach.call(document.querySelectorAll('#ftWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
+function ftWSync(){ var full=(FT.w==='full');
+  (function(){ var r=document.getElementById('ftWRow'), mo=document.body.classList.contains('mview-on'); if(r){ r.style.opacity=mo?'.45':''; r.style.pointerEvents=mo?'none':''; } })();   /* 261116 추가 — 모바일 화면에서는 본문 폭 버튼만 흐리게 막기(안내 · 링크는 그대로) */ [].forEach.call(document.querySelectorAll('#ftWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
   var h=document.getElementById('ftWHint'); if(h){ var mvo=document.body.classList.contains('mview-on'); if(full) h.innerHTML=mvo?('좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); else if(mvo) h.textContent='모바일에서는 본문 폭이 적용되지 않습니다.'; else h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw');   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ } }
 function ftWSet(m){ FT.w=(m==='full')?'full':'site'; ftChanged(); ftWSync(); }
 /* 아이콘 목록 — 손잡이로 순서, 주소 입력, 삭제. 추가는 아직 쓰지 않은 종류에서 고른다(최대 5) */
