@@ -10885,7 +10885,8 @@
   .site-ft{--ft-bg:#1E2227;--ft-fg:#8A909A;--ft-hd:#EAECEF;--ft-ac:#4FE08D;--ft-ln:rgba(255,255,255,.09);--ft-pt:56px;--ft-pb:34px;--ft-fs:14px;--ft-isz:18px;
     position:relative;background:var(--ft-bg);color:var(--ft-fg);font-size:var(--ft-fs);line-height:1.7;padding:var(--ft-pt) var(--site-px,48px) var(--ft-pb);box-shadow:inset 0 1px 0 var(--ft-ln);word-break:keep-all;text-align:left;}   /* 261112 수정 — 좌우 40 고정 → 사이트 좌우 여백(스타일 > 폭 · 여백) */   /* 위 구분선은 테두리가 아니라 안쪽 그림자 — 테두리로 두면 롤오버 외곽선(안쪽 기준) 위로 1px 이 삐져나온다 */
   .site > .site-ft,.site > .ft-offbar{position:sticky;top:9999px;}   /* 내용이 짧은 페이지에서도 페이지 맨 아래에 붙는다(컨테이너 밖으로는 못 나가므로 긴 페이지에서는 제자리) */
-  .site-ft .ft-in{max-width:var(--site-pw,1180px);margin:0 auto;}   /* 261112 수정 — 1160 → 1180(블록 최대 폭과 시작선 맞춤) · 261113 수정 — 「사이트 폭 지정」이면 본문 폭 */
+  .site-ft .ft-in{max-width:var(--site-pw,1180px);margin:0 auto;}
+  .site-ft[data-ft-w="full"] .ft-in{max-width:none;}   /* 261116 추가 — 푸터 본문 폭 「전체 폭」: 화면 끝에서 좌우 여백만큼(메뉴 전체 폭과 같은 선) */   /* 261112 수정 — 1160 → 1180(블록 최대 폭과 시작선 맞춤) · 261113 수정 — 「사이트 폭 지정」이면 본문 폭 */
   .site-ft a{color:inherit;text-decoration:none;cursor:pointer;transition:color .12s;}
   .site-ft a:hover{color:var(--ft-ac);}
   .site-ft .ft-logo{font-size:1.72em;font-weight:800;letter-spacing:-.02em;line-height:1.25;color:var(--ft-hd);}
@@ -18170,11 +18171,16 @@
       </div>
 
       <div class="fld sfold" id="ftPadAcc">
-        <div class="fld-h fold-h" onclick="smAcc(this)">여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        <div class="fld-h fold-h" onclick="smAcc(this)">폭 · 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
         <div class="acc-body"><div class="acc-in">
           <div class="srow" style="margin-top:0;"><span class="k">상</span><input class="rng" type="range" id="ftPt" min="0" max="200" step="1" value="56"><span class="v" id="ftPtV">56px</span></div>
           <div class="srow"><span class="k">하</span><input class="rng" type="range" id="ftPb" min="0" max="200" step="1" value="34"><span class="v" id="ftPbV">34px</span></div>
-          <div class="tx-hint" style="margin-top:10px;">좌우 여백은 스타일 &gt; 폭 · 여백 값을 따릅니다.</div>   <!-- 261112 추가 — 푸터 좌우는 사이트 값(--site-px) -->
+          <!-- 261116 추가 — 메뉴와 같은 「본문 폭: 기본 · 전체 폭」(메뉴를 전체 폭으로 바꾸면 푸터도 맞출 수 있게) -->
+          <div class="srow" id="ftWRow"><span class="k">본문 폭</span><div class="mt-seg" id="ftWSeg" style="flex:1;min-width:0;margin:0;">
+            <button type="button" class="mt-seg-b active" data-m="site" onclick="ftWSet('site')">기본</button>
+            <button type="button" class="mt-seg-b" data-m="full" onclick="ftWSet('full')">전체 폭</button>
+          </div></div>
+          <div class="tx-hint" id="ftWHint" style="margin-top:6px;">푸터 내용이 본문 폭 선에 맞춰집니다.</div>
         </div></div>
       </div>
     </div>
@@ -66012,7 +66018,7 @@ function ftRender(){
   if(off) off.remove();
   if(!el){ el=document.createElement('footer'); el.className='site-ft'; el._ftHtml=null; }
   var d=ftDesign(FT.design), css=ftStyle(ftVal(FT));
-  el.setAttribute('data-ft-design',d.id); el.setAttribute('data-ft-ic',d.ic);
+  el.setAttribute('data-ft-design',d.id); el.setAttribute('data-ft-ic',d.ic); el.setAttribute('data-ft-w',(FT.w==='full')?'full':'site');   /* 261116 추가 — 본문 폭(기본 · 전체 폭) */
   if(el.getAttribute('style')!==css) el.setAttribute('style',css);
   var html=ftBody(FT,false); if(el._ftHtml!==html){ el.innerHTML=html; el._ftHtml=html; el._ftJs=null; }   /* 261106 수정 — 다시 그리면 코드 JS 도 다시 돌린다(_ftJs) */
   ftCodeSync(el);   /* 261106 추가 — 푸터 코드(CSS · JS) */
@@ -66127,8 +66133,13 @@ function ftFill(){
   var ps=document.getElementById('ftPolSw'); if(ps) ps.classList.toggle('on',!!FT.pol);
   FT_RNG.forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return; el.value=v[r[1]]; if(typeof smRng==='function') smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v[r[1]]+r[2]; });
   ftSwMark(); ftRsMark();
+  ftWSync();
   ftSnsRender();
 }
+/* 261116 추가 — 푸터 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 사이트 좌우 여백) */
+function ftWSync(){ var full=(FT.w==='full'); [].forEach.call(document.querySelectorAll('#ftWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
+  var h=document.getElementById('ftWHint'); if(h) h.textContent=full?('좌우 '+(+SITE_LAYOUT.pc||48)+'px(스타일 > 폭 · 여백 > 좌우 여백 > PC 값).'):'푸터 내용이 본문 폭 선에 맞춰집니다.'; }
+function ftWSet(m){ FT.w=(m==='full')?'full':'site'; ftChanged(); ftWSync(); }
 /* 아이콘 목록 — 손잡이로 순서, 주소 입력, 삭제. 추가는 아직 쓰지 않은 종류에서 고른다(최대 5) */
 function ftSnsRender(){
   var list=document.getElementById('ftSnsList'); if(!list) return;
