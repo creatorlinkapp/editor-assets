@@ -18546,7 +18546,7 @@
     var def=(r.def?r.def(c):r.mw), pin=!!(r.opt && r.opt.padIn), dd=pin?(def-2*((r.opt.px==='own')?r.px:S)):def, N=(m==='site')?(on?+SITE_LAYOUT.pw:dd):mw;   /* 261113 수정 — 상자 안쪽 여백 블록의 「블록 기본 폭」은 내용 폭(상자 − 좌우)으로(전: 상자 폭 1140 이라 실제 내용 1044 와 달랐다) */
     var a=mo?'휴대폰에서는 본문 폭이 적용되지 않습니다'
       :(m==='site')?(on?('본문 폭 '+N+'px(스타일 > 폭 · 여백 값)'):('디자인 폭 '+dd+'px'))
-      :(m==='own')?('이 블록만 '+mw+'px'):'화면 폭 전체';
+      :(m==='own')?('이 블록만 '+mw+'px'):'';   /* 261116 수정 — 「화면 폭 전체」는 버튼 이름과 같은 말이라 뺌 */
     var b='', tail='';
     var sg=r.bpx && document.getElementById(r.bpx+'Seg'), fixed=sg && sg.closest('.srow') && sg.closest('.srow').classList.contains('off');   /* 디자인이 좌우를 고정하면 그 안내가 따로 나온다 */
     if(r.pxm && sg && !fixed){ var x=r.pxm(blk), pv=mo?SITE_LAYOUT.mo:S, ec=(typeof bpxEff==='function')?bpxEff(p,blk):c, xk=(r.bpx===p+'Px')?'px':'padx', P=(x==='base')?pv:(x==='none'?0:(+ec[xk]||0));
@@ -18555,7 +18555,7 @@
       if(x==='base' && r.rel) P=S0; if(f0) P=0;
       var real=(r.opt && r.opt.padIn && m==='own' && !c.pwc)?null:((m==='site' && !on)?(pin?Math.round(def-2*P):Math.round(def-2*(P-pwP0Num(c,P)))):Math.round(N-2*(P-S)));   /* 사이트 폭 지정 전 상자 블록: 상자(블록 기본 폭) − 좌우 */   /* 실제 내용 폭(상자 폭 그대로인 예전 저장 블록은 계산하지 않음) */
       if(mo) b=(x==='base')?'':('좌우 '+P+'px(따로 정함)');   /* 261113 수정 — 좌우 칸을 뺐다: 사이트 값이면 말하지 않고, 따로 정해진 값일 때만 */
-      else if(m==='full'){ b=(x==='none')?'화면 끝까지 붙음':('화면 끝에서 좌우 '+P+'px');   /* 261116 수정 — 「붙이려면 「끝까지 붙이기」」는 바로 위 스위치와 겹쳐 뺌 */
+      else if(m==='full'){ b=(x==='none')?'':('화면 끝에서 좌우 '+P+'px'+(x==='base'?'(스타일 > 폭 · 여백 값)':''));   /* 261116 수정 — 붙었을 때는 스위치가 말하므로 안내 없음 */   /* 261116 수정 — 「붙이려면 「끝까지 붙이기」」는 바로 위 스위치와 겹쳐 뺌 */
         /* 261113 수정 — 좌우가 따로 정해진 블록은 위 안내 줄(bpxInfo)이 같은 값을 말하므로 이 줄은 감춘다(같은 좌우 안내가 두 번 나왔다) */
         if(x!=='base' && !(r.edge && x==='none') && !(c.pwP0!=null && !/site-px/.test(c.pwP0) && Math.abs(pwP0Num(c,S0)-P)<0.5)){ h.style.display='none'; return; } }
       else if(x==='base') b=(r.rel && c.pwP0!=null && Math.abs(pwP0Num(c,S0)-S0)>0.5 && real!=null)?('실제 내용 '+real+'px'):'';
@@ -18566,13 +18566,18 @@
     (function(){ if(mo || m==='full') return; var st0=(typeof stSite==='function')?stSite():null; if(!st0) return; var cvw=Math.round(blk.getBoundingClientRect().width/(parseFloat(getComputedStyle(st0).zoom)||1));   /* 블록이 놓인 자리(좌측 메뉴면 메뉴를 뺀 폭) */ var val=(m==='own')?((typeof real!=='undefined' && real!=null)?real:mw):((m==='site' && on)?N:0);
       var pe=(p==='rt')?blk:(r.box?blk.querySelector(r.box):null), Pa=pe?(parseFloat(getComputedStyle(pe).paddingLeft)||0):S0, room=cvw-2*Pa;   /* 실제 좌우(디자인 좌우 0 · 16 등)를 뺀 자리 */
       if(cvw>0 && val>room+1) tail+=' 편집 화면('+Math.round(room)+'px)보다 넓어 여기서는 그 폭까지만 보이고, 미리보기에서 확인할 수 있습니다.'; })();   /* 261116 수정 — 3줄 → 짧게 */
-    h.textContent=a+(b?' · '+b:'')+'.'+tail; }
+    /* 261116 수정 — 슬라이더 숫자 · 버튼 · 스위치와 같은 말만 남으면 안내를 감춘다(직접 「이 블록만 Npx」 · 전체 폭 끝까지 붙음) */
+    if(m==='own' && !mo && !b && !tail){ h.style.display='none'; return; }
+    var txt=[a,b].filter(Boolean).join(' · '); tail=tail.replace(/^\s+/,txt?' ':''); if(!txt && !tail){ h.style.display='none'; return; }
+    h.textContent=(txt?txt+'.':'')+tail; }
 
   function pwSync(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var box=pwBox(p); if(!box) return;
     var c=window[p+'Cfg'](blk), m=pwMode(c,r), mo=(typeof bpxMo==='function' && bpxMo());
     /* 같은 설정창을 쓰는 다른 영역(상세 페이지 타이틀 등)이면 3칸 · 되돌리기를 감추고 최대 폭 슬라이더만 그대로 */
     var own=!r.kind || blk.getAttribute('data-block')===r.kind, sr=document.getElementById(p+'PwSegRow'), rs=document.getElementById(p+'PwReset');
     if(sr) sr.style.display=own?'':'none'; if(rs) rs.style.display=own?'':'none';
+    /* 261116 추가 — 직접 슬라이더는 이름 없이(사이트 설정 사이트 폭 슬라이더와 같은 모양 · 「최대 폭」은 예전 이름). 3칸이 없는 영역(상세 타이틀)은 원래 이름 그대로 */
+    (function(){ var s0=document.getElementById(r.row), k0=s0 && s0.closest('.srow') && s0.closest('.srow').querySelector(':scope > .k'); if(!k0) return; if(k0._lbl==null) k0._lbl=k0.textContent; k0.textContent=own?'':k0._lbl; })();
     if(own && r.rel && r.bpx && c.pwP0==null) c.pwP0=(p==='rt')?rtPxCss(c):bpxCss(c,(r.bpx===p+'Px')?'px':'padx',(p==='gg')?0:48);   /* 261113 추가 — 텍스트 · 이미지: 설정창을 처음 열 때의 좌우 = 디자인 원래 좌우(그 뒤 바꾸면 그만큼 보인다) */
     /* 261113 추가 — 예전 방식 「직접」(상자 폭 기준 · pwc 없음)은 설정창을 열 때 내용 폭 기준으로 옮긴다(화면 그대로 · 전: 안내 「이 블록만 760px」인데 실제 내용 664px) */
     if(own && m==='own' && r.rel && r.opt && r.opt.padIn && !c.pwc){ var mk0=(r.opt.mwKey)||'mw', Q0=pwFix0(p,blk,c)?0:((r.rel && c.pwP0!=null)?pwP0Num(c,+SITE_LAYOUT.pc||48):(+SITE_LAYOUT.pc||48)); if(r.def && c.pwDef==null && +c[mk0]>0) c.pwDef=+c[mk0]; c[mk0]=Math.round((+c[mk0]||(r.def?r.def(c):r.mw))-2*Q0); c.pwc=1; c.pwOwnSet=true; try{ window[p+'Apply'](blk); }catch(e){} var sl0=document.getElementById(r.row); if(sl0){ sl0.value=c[mk0]; if(typeof smRng==='function') smRng(sl0); var v0=document.getElementById(r.row+'V'); if(v0) v0.textContent=c[mk0]+'px'; } }
