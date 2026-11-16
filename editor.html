@@ -18657,7 +18657,7 @@
         ps.addEventListener('pointerup',function(){ stPxGuide(false); }); ps.addEventListener('keyup',function(){ stPxGuide(false); }); }
       if(document.activeElement!==ps) ps.value=pv; if(typeof smRng==='function') smRng(ps); var pvv=document.getElementById('stPwV'); if(pvv) pvv.textContent=pv+'px'; }
     /* 261116 추가 — 모바일 화면에서는 본문 폭이 적용되지 않아 바꿔도 변화가 없다 → 안내 뒤에 한 문장(화면을 바꾸면 다시 그린다) */
-    if(!document.body._stMoObs && window.MutationObserver){ document.body._stMoObs=new MutationObserver(function(){ var mo1=document.body.classList.contains('mview-on'); if(mo1!==document.body._stMoWas){ document.body._stMoWas=mo1; try{ stLayoutSync(); }catch(e){} } }); document.body._stMoWas=document.body.classList.contains('mview-on'); document.body._stMoObs.observe(document.body,{attributes:true,attributeFilter:['class']}); }
+    if(!document.body._stMoObs && window.MutationObserver){ document.body._stMoObs=new MutationObserver(function(){ var mo1=document.body.classList.contains('mview-on'); if(mo1!==document.body._stMoWas){ document.body._stMoWas=mo1; try{ stLayoutSync(); }catch(e){} try{ if(typeof hdPadXSide==='function') hdPadXSide(); }catch(e){} try{ if(typeof ftWSync==='function') ftWSync(); }catch(e){} } });   /* 261116 수정 — 메뉴 · 푸터 안내도 PC · 모바일에 맞춰 */ document.body._stMoWas=document.body.classList.contains('mview-on'); document.body._stMoObs.observe(document.body,{attributes:true,attributeFilter:['class']}); }
     var moNote=document.body.classList.contains('mview-on')?' 모바일 화면에는 본문 폭이 적용되지 않습니다.':'';
     var pn=document.getElementById('stPwNote'); if(pn) pn.textContent=moNote?moNote.trim():(stPwVisNote().trim()||'「기본」인 블록이 이 폭에 맞춰집니다.');   /* 261116 수정 — 한 줄로: 평소엔 「기본」 한 문장, 편집 화면보다 넓거나 모바일 화면이면 그 안내만 */
   }
@@ -18670,7 +18670,7 @@
   /* 261116 추가 — 블록 · 메뉴 · 푸터 안내의 「사이트에서 바꾸기」: 스타일 창을 열고 폭 · 여백의 그 줄(본문 폭 · 좌우 여백 PC)로 데려가 잠깐 표시 */
   function ST_GO_BTN(k){ return '<button type="button" class="pw-reset" onclick="stGoPw(\x27'+k+'\x27)">사이트 전체 한 번에 바꾸기</button>'; }   /* 261116 수정 — 「사이트에서 바꾸기」 → 바꾸면 전체가 한 번에 바뀐다는 걸 알 수 있게 */
   function stGoPw(k){ try{ var sp=document.getElementById('panelStyle'); if(!(sp && sp.classList.contains('show'))) togglePanel('style'); }catch(e){} try{ stTab('style'); }catch(e){} stLayoutSync();   /* 스타일 창이 이미 열려 있으면 닫지 않는다(togglePanel 은 열려 있으면 닫음) */
-    var row=document.getElementById(k==='px'?'stPxPc':'stPw'); row=row && row.closest('.srow'); if(!row) return; try{ row.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){ row.scrollIntoView(); }
+    var row=document.getElementById(k==='px'?'stPxPc':(k==='mo'?'stPxMo':'stPw')); row=row && row.closest('.srow'); if(!row) return; try{ row.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){ row.scrollIntoView(); }
     row.classList.remove('st-flash'); void row.offsetWidth; row.classList.add('st-flash'); setTimeout(function(){ row.classList.remove('st-flash'); },1600); }
 
   /* ══ 261113 추가 — 본문 폭 공통(블록 cfg 키 pw) ═══════════════════════════════════════
@@ -64530,7 +64530,7 @@ function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getE
   var sr=document.getElementById('hdPadXSegRow'); if(sr) sr.style.display=sd?'':'none';
   var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(sd && md==='custom')?'':'none';
   if(h){ if(!sd && full && md==='custom'){ h.innerHTML='좌우 '+x+'px(따로 정함) · <button type="button" class="pw-reset" onclick="hdPadXSet(\'base\')">사이트 값으로</button>'; h.style.display=''; }
-    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):''); if(!sd && full){ h.innerHTML='좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px'); h.style.display=''; } else if(!sd){ var wn=hdAlignWrapNote(); h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw')+(wn?('<br>'+String(wn).trim().replace(/[&<>]/g,'')):''); h.style.display=''; }   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ else { h.textContent=ht; h.style.display=ht?'':'none'; } } } }
+    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):''); var mvo=document.body.classList.contains('mview-on'); if(!sd && full){ h.innerHTML=mvo?('좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); h.style.display=''; } else if(!sd && mvo){ h.textContent='모바일에서는 본문 폭이 적용되지 않습니다.'; h.style.display=''; }   /* 261116 추가 — 모바일 화면이면 모바일 기준 안내 */ else if(!sd){ var wn=hdAlignWrapNote(); h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw')+(wn?('<br>'+String(wn).trim().replace(/[&<>]/g,'')):''); h.style.display=''; }   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ else { h.textContent=ht; h.style.display=ht?'':'none'; } } } }
 function hdWSet(m){ var p=HD.pad||(HD.pad={}); if(m==='full'){ p.align='edge'; } else { p.align='content'; p.xMode='base'; } hdFill(); hdChanged(); hdPadXSide(); }   /* 261116 추가 — 메뉴 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 좌우 여백) */
 /* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
 function hdAlignWrapNote(){ try{
@@ -66147,7 +66147,7 @@ function ftFill(){
 }
 /* 261116 추가 — 푸터 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 사이트 좌우 여백) */
 function ftWSync(){ var full=(FT.w==='full'); [].forEach.call(document.querySelectorAll('#ftWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
-  var h=document.getElementById('ftWHint'); if(h){ if(full) h.innerHTML='좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px'); else h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw');   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ } }
+  var h=document.getElementById('ftWHint'); if(h){ var mvo=document.body.classList.contains('mview-on'); if(full) h.innerHTML=mvo?('좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); else if(mvo) h.textContent='모바일에서는 본문 폭이 적용되지 않습니다.'; else h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw');   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ } }
 function ftWSet(m){ FT.w=(m==='full')?'full':'site'; ftChanged(); ftWSync(); }
 /* 아이콘 목록 — 손잡이로 순서, 주소 입력, 삭제. 추가는 아직 쓰지 않은 종류에서 고른다(최대 5) */
 function ftSnsRender(){
