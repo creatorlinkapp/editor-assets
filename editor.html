@@ -7526,7 +7526,7 @@
         <div class="srow"><span class="k">좌우 여백</span></div>
         <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="16" max="120" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
         <div class="srow"><span class="k">모바일</span><input class="rng" type="range" id="stPxMo" min="12" max="40" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
-        <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">화면 끝과 내용 사이 여백입니다. 넓은 화면에서는 본문 폭이 먼저라, 좁은 화면과 가로 100% 블록에서 보입니다.</div>   <!-- 261112 수정 — 넓은 화면에서 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 실제 의미로 · PC 슬라이더를 움직이는 동안 안내선(stPxGuide) -->
+        <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">화면 끝과 내용 사이 여백입니다. 넓은 화면에서는 본문 폭이 먼저라, 좁은 화면과 전체 폭 블록에서 보입니다.</div>   <!-- 261112 수정 — 넓은 화면에서 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 실제 의미로 · PC 슬라이더를 움직이는 동안 안내선(stPxGuide) -->
       </div>
       <div class="st-sec">
         <div class="st-sec-h">배경 <span>사이트 전체</span></div>
@@ -18528,7 +18528,7 @@
     box.innerHTML='<div class="srow" id="'+p+'PwSegRow"><span class="k">본문 폭</span><div class="mt-seg" id="'+p+'PwSeg" style="flex:1;min-width:0;margin:0;">'
       +'<button type="button" class="mt-seg-b" data-m="site" onclick="pwSet(\''+p+'\',\'site\')">기본</button>'   /* 261113 수정 — 「사이트」 → 「기본」(좌우 3칸 「기본」과 같은 뜻: 스타일 > 폭 · 여백 값) */
       +'<button type="button" class="mt-seg-b" data-m="own" onclick="pwSet(\''+p+'\',\'own\')">직접</button>'
-      +'<button type="button" class="mt-seg-b" data-m="full" onclick="pwSet(\''+p+'\',\'full\')">가로 100%</button></div></div>'
+      +'<button type="button" class="mt-seg-b" data-m="full" onclick="pwSet(\''+p+'\',\'full\')">전체 폭</button></div></div>'   /* 261116 수정 — 「가로 100%」가 두 줄로 꺾여 「전체 폭」 */
       +'<div id="'+p+'PwOwnRows"></div>'
       +(r.edge?'<div class="sline pw-edge" id="'+p+'PwEdge" style="margin-top:8px;display:none;"><span class="lbl">끝까지 붙이기</span><button type="button" class="sw" id="'+p+'PwEdgeSw" onclick="pwEdge(\''+p+'\')" aria-label="끝까지 붙이기"></button></div>':'');   /* 261113 추가 — 사진형 블록: 가로 100% 일 때 좌우 여백 없이 화면 끝까지 */
     (atRow||row).parentNode.insertBefore(box,atRow||row); document.getElementById(p+'PwOwnRows').appendChild(row);
@@ -18546,7 +18546,7 @@
     var def=(r.def?r.def(c):r.mw), pin=!!(r.opt && r.opt.padIn), dd=pin?(def-2*((r.opt.px==='own')?r.px:S)):def, N=(m==='site')?(on?+SITE_LAYOUT.pw:dd):mw;   /* 261113 수정 — 상자 안쪽 여백 블록의 「블록 기본 폭」은 내용 폭(상자 − 좌우)으로(전: 상자 폭 1140 이라 실제 내용 1044 와 달랐다) */
     var a=mo?'휴대폰에서는 본문 폭이 적용되지 않습니다'
       :(m==='site')?(on?('본문 폭 '+N+'px(스타일 > 폭 · 여백 값)'):('디자인 폭 '+dd+'px'))
-      :(m==='own')?('이 블록만 '+mw+'px'):'본문 폭 없이 화면 폭 전체';
+      :(m==='own')?('이 블록만 '+mw+'px'):'화면 폭 전체';
     var b='', tail='';
     var sg=r.bpx && document.getElementById(r.bpx+'Seg'), fixed=sg && sg.closest('.srow') && sg.closest('.srow').classList.contains('off');   /* 디자인이 좌우를 고정하면 그 안내가 따로 나온다 */
     if(r.pxm && sg && !fixed){ var x=r.pxm(blk), pv=mo?SITE_LAYOUT.mo:S, ec=(typeof bpxEff==='function')?bpxEff(p,blk):c, xk=(r.bpx===p+'Px')?'px':'padx', P=(x==='base')?pv:(x==='none'?0:(+ec[xk]||0));
@@ -18555,17 +18555,17 @@
       if(x==='base' && r.rel) P=S0; if(f0) P=0;
       var real=(r.opt && r.opt.padIn && m==='own' && !c.pwc)?null:((m==='site' && !on)?(pin?Math.round(def-2*P):Math.round(def-2*(P-pwP0Num(c,P)))):Math.round(N-2*(P-S)));   /* 사이트 폭 지정 전 상자 블록: 상자(블록 기본 폭) − 좌우 */   /* 실제 내용 폭(상자 폭 그대로인 예전 저장 블록은 계산하지 않음) */
       if(mo) b=(x==='base')?'':('좌우 '+P+'px(따로 정함)');   /* 261113 수정 — 좌우 칸을 뺐다: 사이트 값이면 말하지 않고, 따로 정해진 값일 때만 */
-      else if(m==='full'){ b=(x==='none')?'화면 끝까지 붙음':('화면 끝에서 좌우 '+P+'px'+(r.edge?' · 붙이려면 「끝까지 붙이기」':''));
+      else if(m==='full'){ b=(x==='none')?'화면 끝까지 붙음':('화면 끝에서 좌우 '+P+'px');   /* 261116 수정 — 「붙이려면 「끝까지 붙이기」」는 바로 위 스위치와 겹쳐 뺌 */
         /* 261113 수정 — 좌우가 따로 정해진 블록은 위 안내 줄(bpxInfo)이 같은 값을 말하므로 이 줄은 감춘다(같은 좌우 안내가 두 번 나왔다) */
         if(x!=='base' && !(r.edge && x==='none') && !(c.pwP0!=null && !/site-px/.test(c.pwP0) && Math.abs(pwP0Num(c,S0)-P)<0.5)){ h.style.display='none'; return; } }
       else if(x==='base') b=(r.rel && c.pwP0!=null && Math.abs(pwP0Num(c,S0)-S0)>0.5 && real!=null)?('실제 내용 '+real+'px'):'';
       else if(c.pwP0!=null && !/site-px/.test(c.pwP0) && Math.abs(pwP0Num(c,S0)-P)<0.5) b='';   /* 디자인 좌우 그대로면 말하지 않음 */
-      else { b='좌우 '+P+'px(따로 정함)'; if(inv) tail=' 좌우는 화면이 본문 폭보다 좁을 때만 보입니다.'; else if(real!=null) b+=' → 실제 내용 '+real+'px'; } }
+      else { b=''; if(inv) tail=' 좌우는 화면이 본문 폭보다 좁을 때만 보입니다.'; else if(real!=null && real!==N) b='실제 내용 '+real+'px'; } }   /* 261116 수정 — 「좌우 Npx(따로 정함)」은 위 안내 줄(bpxInfo)과 같은 말이라 뺌 · 폭만 */
     if(!mo && m==='site' && !on) tail+=' 사이트 폭을 지정하면 그 폭을 따릅니다.';
     /* 261113 추가 — 편집 화면보다 넓은 폭: 편집 화면에서는 화면 폭만큼만 보여 미리보기와 달라 보였다 */
     (function(){ if(mo || m==='full') return; var st0=(typeof stSite==='function')?stSite():null; if(!st0) return; var cvw=Math.round(blk.getBoundingClientRect().width/(parseFloat(getComputedStyle(st0).zoom)||1));   /* 블록이 놓인 자리(좌측 메뉴면 메뉴를 뺀 폭) */ var val=(m==='own')?((typeof real!=='undefined' && real!=null)?real:mw):((m==='site' && on)?N:0);
       var pe=(p==='rt')?blk:(r.box?blk.querySelector(r.box):null), Pa=pe?(parseFloat(getComputedStyle(pe).paddingLeft)||0):S0, room=cvw-2*Pa;   /* 실제 좌우(디자인 좌우 0 · 16 등)를 뺀 자리 */
-      if(cvw>0 && val>room+1) tail+=' 편집 화면의 블록 자리('+Math.round(room)+'px)보다 넓어 여기서는 그 폭만큼만 보입니다. 넓은 화면에서는 '+val+'px입니다.'; })();
+      if(cvw>0 && val>room+1) tail+=' 편집 화면('+Math.round(room)+'px)보다 넓어 여기서는 그 폭까지만 보이고, 미리보기에서 확인할 수 있습니다.'; })();   /* 261116 수정 — 3줄 → 짧게 */
     h.textContent=a+(b?' · '+b:'')+'.'+tail; }
 
   function pwSync(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var box=pwBox(p); if(!box) return;
@@ -18603,7 +18603,12 @@
   function pwSet(p,m){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw';
     if(m==='own' && pwMode(c,r)!=='own' && !c.pwOwnSet){ c[mk]=pwSeenMw(p,blk); c.pwOwnSet=true; if(r.opt && r.opt.padIn) c.pwc=1; }   /* 처음 직접으로 바꿀 때는 지금 보이는 폭 그대로(튀지 않게 · 내용 폭 기준) · 그 뒤로는 마지막 직접 값을 기억 */
     if(m==='own' && r.ownMax && +c[mk]>r.ownMax) c[mk]=r.ownMax;
+    var prev=pwMode(c,r);
     c.pw=(m==='site'||m==='full')?m:'own'; if(r.onSet) r.onSet(c,c.pw);
+    /* 261116 추가 — 「끝까지 붙이기」(좌우 0)는 전체 폭에서만. 다른 칸으로 가면 원래 좌우로 돌리고, 전체 폭으로 돌아오면 다시 붙인다(전: 좌우 0 이 남아 「따로 정해져 있습니다」 · 디자인 폭보다 넓어졌다) */
+    if(r.edge && r.pxm && !(typeof bpxMo==='function' && bpxMo())){ var exk=(r.bpx===p+'Px')?'px':'padx';
+      if(prev==='full' && c.pw!=='full'){ if(r.pxm(blk)==='none'){ c.pwEdgeOn=1; var d0=c.pwP0; if(d0!=null && !/site-px/.test(d0) && (parseFloat(d0)||0)>0) pwPxReset(p); else bpxSet(p,exk,'base'); } else delete c.pwEdgeOn; }
+      else if(prev!=='full' && c.pw==='full' && c.pwEdgeOn){ delete c.pwEdgeOn; bpxSet(p,exk,'none'); } }
     window[p+'Apply'](blk); pwSync(p); if(typeof window[p+'FillBset']==='function') try{ window[p+'FillBset'](); }catch(e){}
     if(typeof markDirty==='function') markDirty(); pwGuide(p); }
   /* 261113 추가 — 좌우 ↺: 처음 넣었을 때의 디자인 좌우로(사이트 값 · 0 · 숫자) */
