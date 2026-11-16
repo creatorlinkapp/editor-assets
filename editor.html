@@ -18531,7 +18531,7 @@
       +'<button type="button" class="mt-seg-b" data-m="full" onclick="pwSet(\''+p+'\',\'full\')">전체 폭</button></div></div>'   /* 261116 수정 — 「가로 100%」가 두 줄로 꺾여 「전체 폭」 */
       +'<div id="'+p+'PwOwnRows"></div>'
       +(r.edge?'<div class="sline pw-edge" id="'+p+'PwEdge" style="margin-top:8px;display:none;"><span class="lbl">끝까지 붙이기</span><button type="button" class="sw" id="'+p+'PwEdgeSw" onclick="pwEdge(\''+p+'\')" aria-label="끝까지 붙이기"></button></div>':'');   /* 261113 추가 — 사진형 블록: 가로 100% 일 때 좌우 여백 없이 화면 끝까지 */
-    (atRow||row).parentNode.insertBefore(box,atRow||row); document.getElementById(p+'PwOwnRows').appendChild(row);
+    (atRow||row).parentNode.insertBefore(box,atRow||row); document.getElementById(p+'PwOwnRows').appendChild(row); row.style.marginTop='10px';   /* 261116 추가 — 본문 폭 칸과 직접 슬라이더가 2px로 붙어 보여 다른 줄과 같은 10px */
     var h=document.createElement('div'); h.className='tx-hint pw-hint'; h.id=p+'PwHint'; h.style.marginTop='6px';   /* 안내 한 줄 — 좌우 칸이 있으면 좌우 칸 밑(본문 폭 + 좌우 결과를 함께) */
     var ha=r.hintAfter && document.getElementById(r.hintAfter); if(ha) ha.insertAdjacentElement('afterend',h); else box.appendChild(h);
     /* 261116 수정 — 직접 슬라이더 ↺(디자인 폭으로) 뺌: 「기본」과 하는 일이 겹치고, 다른 ↺(사이트 값 따르기)와 뜻이 달랐다. 마우스를 올렸을 때 뜨는 숫자도 늘 1180 이라 틀렸다 */
