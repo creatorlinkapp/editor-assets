@@ -22244,10 +22244,52 @@
     clone.id='menu'+(++menuSeq)+'_'+Date.now(); clone.cur=false;
     if(clone.children) clone.children.forEach(function(c,i){ var oid=c.id; c.id=clone.id+'_c'+i; c.cur=false; if(clone.tab && clone.tab.def===oid) clone.tab.def=c.id; });   /* 261001 수정 — 탭메뉴의 기본 탭도 복제본의 id 로 */
     f.arr.splice(f.idx+1,0,clone);
-    if(f.sub && typeof PGX_PAGES!=='undefined' && PGX_PAGES[id]){ PGX_PAGES[clone.id]=JSON.parse(JSON.stringify(PGX_PAGES[id])); if(typeof pgxKeep!=='undefined' && pgxKeep[id]){ var dom=pgxKeep[id].cloneNode(true); dom.setAttribute('data-pgx-page',clone.id); pgxKeep[clone.id]=dom;
-        /* 261116 추가 — 화면 복사(cloneNode)는 블록 요소에 붙은 설정값(_xxCfg 등)을 옮기지 않아, 복제된 페이지에서 본문 폭 · 직접 값 · 끝까지 붙이기 등이 기본으로 돌아갔다 → 블록 복제 · 보관함과 같은 방식(bkProps)으로 같이 옮긴다 */
-        if(typeof bkProps==='function'){ var sb=pgxKeep[id].querySelectorAll('.blk'), db=dom.querySelectorAll('.blk'); for(var bi=0; bi<sb.length && bi<db.length; bi++){ var pr=bkProps(sb[bi]); Object.keys(pr).forEach(function(k){ db[bi][k]=pr[k]; }); } } } }   /* 260921 추가 — 페이지 내용도 함께 복제 */
+    /* 261116 수정 — 메뉴(상위 · 하위 · 탭) 페이지도 블록까지 복제한다. 전: 「페이지」 구역(f.sub)만 복제 — 9/21 에는 그것만 페이지가 있었고, 메뉴 페이지(pgxMenuPage)가 생긴 뒤에도 조건이 남아 메뉴를 복제하면 빈 페이지가 됐다.
+       하위메뉴 페이지도 각각 · 기본 페이지(홈 · cur) 메뉴는 홈 블록을 새 페이지로 */
+    pgDupPage(f.node, clone);
+    (f.node.children||[]).forEach(function(c,i){ if(clone.children && clone.children[i]) pgDupPage(c, clone.children[i]); });
     renderPages();
+  }
+  function pgDupPage(src, dst){
+    if(typeof PGX_PAGES==='undefined' || typeof pgxKeep==='undefined' || !src || !dst) return;
+    var dom=null, sb=[], P=null;
+    if(src.cur){   /* 기본 페이지(홈)의 블록은 .site 에 바로 있다 → 블록만 새 페이지 틀에 */
+      var site=document.querySelector('#stage .site'); if(!site) return;
+      P={blk:true, simple:true, menu:true, bg:'var(--st-bg,#ffffff)', ink:'var(--st-fg,#111111)', from:''};
+      sb=[].slice.call(site.querySelectorAll(':scope > .blk'));
+      dom=document.createElement('div'); dom.className='pgx-page pgx-blk'; dom.style.setProperty('--pgx-bg',P.bg); dom.style.setProperty('--pgx-ink',P.ink);
+      sb.forEach(function(b){ dom.appendChild(b.cloneNode(true)); });
+    } else if(PGX_PAGES[src.id]){
+      /* 아직 열지 않은 견본 페이지는 원본을 먼저 채운다(잠깐 붙였다 되돌림). 전: 복제본이 견본째 복사돼 먼저 열면 원래 게시판(공지 등)을 가져가고 원본엔 새 게시판이 생겼다 */
+      var S=PGX_PAGES[src.id]; if(S.seed && !S.seeded && !pgxKeep[src.id] && typeof pgxSwap==='function'){ var back=pgxCur, stg=document.getElementById('stage'), top=stg?stg.scrollTop:0; try{ pgxSwap(src.id); }catch(x){} pgxKeepScroll=top; try{ pgxSwap(back); }catch(x){} }
+      P=JSON.parse(JSON.stringify(PGX_PAGES[src.id]));
+      if(pgxKeep[src.id]){ sb=[].slice.call(pgxKeep[src.id].querySelectorAll('.blk')); dom=pgxKeep[src.id].cloneNode(true); }   /* 260921 방식 그대로: 페이지 통째 복사 */
+    }
+    if(!P) return;   /* 한 번도 열지 않은 메뉴 — 복사할 내용이 없다(열면 빈 페이지) */
+    PGX_PAGES[dst.id]=P;
+    if(!dom) return;
+    dom.setAttribute('data-pgx-page',dst.id);
+    var db=src.cur?[].slice.call(dom.querySelectorAll(':scope > .blk')):[].slice.call(dom.querySelectorAll('.blk'));
+    db.forEach(function(c,i){
+      var b=sb[i]; c.classList.remove('sel','just-added','blk-removing','blk-spot','rt-editing','rt-showarea');
+      /* 261116 추가 — 화면 복사(cloneNode)는 블록 요소에 붙은 설정값(_xxCfg 등)을 옮기지 않아 본문 폭 · 직접 값 등이 기본으로 돌아갔다 → 블록 복제 · 보관함과 같은 방식(bkProps) */
+      var pr=(b && typeof bkProps==='function')?bkProps(b):{}; Object.keys(pr).forEach(function(k){ c[k]=pr[k]; });
+      if(b && c.parentNode===dom){ var s=b.cloneNode(true); Object.keys(pr).forEach(function(k){ try{ s[k]=JSON.parse(JSON.stringify(pr[k])); }catch(e){} }); c._pgxSrc=s; }   /* 지금 모습을 원본으로 남겨 처음 열 때 블록 복제와 같은 초기화(smCloneInit) */
+    });
+    dom._pgxDup=1;
+    pgxKeep[dst.id]=dom;   /* 열 때 pgxSwap 이 pgDupInit · + 버튼(pgxAddbars) · 멈춘 엔진(pgxRevive)을 챙긴다 */
+  }
+  /* 261116 추가 — 복제한 페이지를 처음 열 때: 블록 복제와 같은 길(smCloneInit — 설정 승계 · 엔진 · 이벤트). 전: 화면 복사만 해 두어 기본값 갤러리(설정값 없음) 등은 멈춘 채였다 */
+  function pgDupInit(pg){
+    if(!pg || !pg._pgxDup || window.CL_MVIEW) return; delete pg._pgxDup;
+    [].forEach.call(pg.querySelectorAll(':scope > .blk'),function(c){
+      var s=c._pgxSrc; if(!s) return; delete c._pgxSrc;
+      try{ if(typeof smCloneInit==='function') smCloneInit(s,c); }catch(e){ try{ console.warn('[pg] dup init',e); }catch(_){} }
+      ['_mvOv','_mvTextSplit'].forEach(function(k){ if(s[k]!=null && c[k]==null){ try{ c[k]=JSON.parse(JSON.stringify(s[k])); }catch(e){} } });
+      if(c.getAttribute('data-block')==='formblk' && typeof fmDupName==='function') fmDupName(c);   /* 블록 복제와 같게 폼 이름에 (복사본) */
+      if(c.getAttribute('data-block')==='tkblk' && typeof fmDupNameTab==='function') fmDupNameTab(c);
+    });
+    if(typeof bkCodeSync==='function') try{ bkCodeSync(); }catch(e){}
   }
   function pgToggleT(ev,id){ if(ev)ev.stopPropagation(); if(typeof tmToggle==='function'){ tmToggle(id); return; } var f=pgFind(id); if(f){ f.node.tOn=!f.node.tOn; renderPages(); } }   /* 261001 수정 — 탭메뉴 모듈(tm)로 넘긴다: 디자인 고르기 · 되돌리기 */
   function pgDel(id){   /* 261001 수정 — 메뉴를 지우면 그 메뉴(와 하위메뉴)의 페이지도 지운다. 열려 있던 페이지면 기본 페이지로 돌아간다 */
@@ -22869,6 +22911,7 @@
         if(PGX_PAGES[id].blk) pgxKeep[id]=pg;
       }
       var hd=site.querySelector(':scope > .cl-tabmenu')||site.querySelector(':scope > .site-hd'); site.insertBefore(pg, hd?hd.nextSibling:site.firstChild);   /* 261001 수정 — 탭메뉴 블록이 있으면 그 아래 */
+      if(pg._pgxDup && typeof pgDupInit==='function') pgDupInit(pg);   /* 261116 추가 — 메뉴 복제로 만든 페이지를 처음 열 때 블록 초기화 */
       if(PGX_PAGES[id].blk) pgxAddbars(pg);   /* 261001 추가 — 블록 아래 + 버튼 */
       if(PGX_PAGES[id].blk) pgxRevive(pg);   /* 261005 추가 — 보관해 둔 페이지를 다시 붙이면 멈춘 갤러리 엔진을 다시 켠다 */
     } else id='home';
