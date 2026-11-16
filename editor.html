@@ -7519,11 +7519,11 @@
         <!-- 261113 추가 — 본문 폭: 블록 기본(블록마다 디자인 폭 · 지금 화면 그대로) / 사이트 폭 지정(본문 폭 따름 블록이 이 폭에 맞춰짐) -->
         <!-- 261116 수정 — 본문 폭은 사이트 전체 한 값(아임웹 「본문폭」처럼). 「디자인 폭 / 사이트 폭 지정」 2칸을 뺐다: 처음 상태에서 블록마다 폭이 1044 · 1140 · 1180 … 으로 달라 시작선이 어긋났고, 블록의 「기본」이 사이트 설정에 따라 뜻이 바뀌어 헷갈렸다 -->
         <div class="srow" id="stPwRow"><span class="k">본문 폭</span><input class="rng" type="range" id="stPw" min="960" max="1440" step="20" value="1180"><span class="v" id="stPwV">1180px</span></div>
-        <div class="st-note" id="stPwNote" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin:2px 0 10px;">본문 폭 「기본」인 블록이 이 폭에 맞춰집니다. 블록에서 「직접」으로 따로 정할 수 있습니다.</div>
+        <div class="st-note" id="stPwNote" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin:2px 0 10px;">「기본」인 블록이 이 폭에 맞춰집니다.</div>
         <div class="srow"><span class="k">좌우 여백</span></div>
         <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="16" max="120" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
         <div class="srow"><span class="k">모바일</span><input class="rng" type="range" id="stPxMo" min="12" max="40" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
-        <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">화면 끝과 내용 사이 최소 여백입니다. 좁은 화면과 전체 폭 블록에서 보입니다.</div>   <!-- 261112 수정 — 넓은 화면에서 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 실제 의미로 · PC 슬라이더를 움직이는 동안 안내선(stPxGuide) -->
+        <div class="st-note" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin-top:6px;">좁은 화면과 전체 폭 블록에서 보이는 최소 여백입니다.</div>   <!-- 261112 수정 — 넓은 화면에서 값을 바꿔도 최대 폭 블록이 그대로라 고장처럼 보였다 → 실제 의미로 · PC 슬라이더를 움직이는 동안 안내선(stPxGuide) -->
       </div>
       <div class="st-sec">
         <div class="st-sec-h">배경 <span>사이트 전체</span></div>
@@ -18333,12 +18333,12 @@
     var m=(p==='rt' && typeof rtPxMode==='function')?rtPxMode(c):bpxMode(c,k), r=(typeof PW_REG!=='undefined')?PW_REG[p]:null, blk=window[p+'CurBlk'];
     if(r && r.edge && blk && pwMode(window[p+'Cfg'](blk),r)==='full' && m==='none' && !bpxMo()) m='base';   /* 「끝까지 붙이기」 스위치로 보여 줌 */
     if(sr.classList.contains('off')){ h.style.display='none'; return; }
-    if(m==='base'){ var cb=blk && window[p+'Cfg'] && window[p+'Cfg'](blk), b0=cb && cb.pwP0; if(b0!=null && !/site-px/.test(b0) && !bpxMo()){ h.style.display=''; h.innerHTML='좌우를 사이트 값으로 바꿨습니다. <button type="button" class="pw-reset" onclick="pwPxReset(\''+p+'\')">디자인 좌우('+(parseFloat(b0)||0)+'px)로</button>'; } else h.style.display='none'; return; }
+    if(m==='base'){ var cb=blk && window[p+'Cfg'] && window[p+'Cfg'](blk), b0=cb && cb.pwP0; if(b0!=null && !/site-px/.test(b0) && !bpxMo()){ h.style.display=''; h.innerHTML='좌우 사이트 값 · <button type="button" class="pw-reset" onclick="pwPxReset(\''+p+'\')">디자인 좌우('+(parseFloat(b0)||0)+'px)로</button>'; } else h.style.display='none'; return; }
     var v=(m==='none')?0:(+c[k]||0); h.style.display='';
     var cd=blk && window[p+'Cfg'] && window[p+'Cfg'](blk), dz=!r || cd && cd.pwP0!=null && !/site-px/.test(cd.pwP0) && Math.abs((parseFloat(cd.pwP0)||0)-v)<0.5;   /* 디자인에 원래 있는 값이면 「이 디자인은 …」 */
     if(dz){ h.style.display='none'; return; }   /* 261113 수정 — 디자인에 원래 있는 좌우는 말하지 않는다(사용자가 바꾼 적 없는데 매번 보여 거슬렸다) */
-    var d0=cd && cd.pwP0; if(d0!=null && !/site-px/.test(d0)){ h.innerHTML='이 블록은 좌우가 '+v+'px로 따로 정해져 있습니다. <button type="button" class="pw-reset" onclick="pwPxReset(\''+p+'\')">디자인 좌우로</button>'; return; }
-    h.innerHTML=(m==='none'?'이 블록은 좌우 여백이 0px로 따로 정해져 있습니다. ':('이 블록은 좌우가 '+v+'px로 따로 정해져 있습니다. '))+'<button type="button" class="pw-reset" onclick="'+(p==='rt'?"rtPxSet('base')":"bpxSet('"+p+"','"+k+"','base')")+'">사이트 값으로</button>'; }
+    var d0=cd && cd.pwP0; if(d0!=null && !/site-px/.test(d0)){ h.innerHTML='좌우 '+v+'px(따로 정함) · <button type="button" class="pw-reset" onclick="pwPxReset(\''+p+'\')">디자인 좌우로</button>'; return; }
+    h.innerHTML='좌우 '+v+'px(따로 정함) · '+'<button type="button" class="pw-reset" onclick="'+(p==='rt'?"rtPxSet('base')":"bpxSet('"+p+"','"+k+"','base')")+'">사이트 값으로</button>'; }
   function bpxSet(p,k,m){ var blk=window[p+'CurBlk']; if(!blk) return;
     if(m==='custom' && bpxMode(bpxEff(p,blk),k)!=='custom') bpxUpd(p,k, SITE_LAYOUT[bpxMo()?'mo':'pc']);   /* 직접으로 바꿀 때는 지금 보이는 사이트 값에서 시작 */
     bpxMoOv(blk,k,m); bpxUpd(p,k+'Mode',m); bpxSync(p,k,bpxEff(p,blk)); var pid=p+k.charAt(0).toUpperCase()+k.slice(1); if(typeof PW_BPX!=="undefined" && PW_BPX[pid]){ pwSync(PW_BPX[pid]); pwGuide(PW_BPX[pid]); }   /* 261113 추가 */ if(bpxMo() && typeof mvKick==='function') mvKick(0); }
@@ -18402,12 +18402,12 @@
     /* 261116 추가 — 모바일 화면에서는 본문 폭이 적용되지 않아 바꿔도 변화가 없다 → 안내 뒤에 한 문장(화면을 바꾸면 다시 그린다) */
     if(!document.body._stMoObs && window.MutationObserver){ document.body._stMoObs=new MutationObserver(function(){ var mo1=document.body.classList.contains('mview-on'); if(mo1!==document.body._stMoWas){ document.body._stMoWas=mo1; try{ stLayoutSync(); }catch(e){} } }); document.body._stMoWas=document.body.classList.contains('mview-on'); document.body._stMoObs.observe(document.body,{attributes:true,attributeFilter:['class']}); }
     var moNote=document.body.classList.contains('mview-on')?' 모바일 화면에는 본문 폭이 적용되지 않습니다.':'';
-    var pn=document.getElementById('stPwNote'); if(pn) pn.textContent=moNote?((on?'본문 폭 「기본」인 블록이 이 폭에 맞춰집니다.':'블록마다 디자인에 정해진 폭으로 들어갑니다.')+moNote):on?('본문 폭 「기본」인 블록이 이 폭에 맞춰집니다.'+(stPwVisNote()||' 블록에서 「직접」으로 따로 정할 수 있습니다.')):'블록마다 디자인에 정해진 폭으로 들어갑니다. 「사이트 폭 지정」을 고르면 블록이 한 폭으로 맞춰집니다.';
+    var pn=document.getElementById('stPwNote'); if(pn) pn.textContent=moNote?moNote.trim():(stPwVisNote().trim()||'「기본」인 블록이 이 폭에 맞춰집니다.');   /* 261116 수정 — 한 줄로: 평소엔 「기본」 한 문장, 편집 화면보다 넓거나 모바일 화면이면 그 안내만 */
   }
   /* 261113 추가 — 편집 화면에서 블록이 쓸 수 있는 내용 폭(좌측 메뉴면 메뉴를 뺀 자리 − 좌우 여백). 사이트 폭이 이보다 넓으면 편집 화면에서는 변화가 안 보여 고장처럼 보였다 */
   function stBlkArea(){ var site=stSite(); if(!site) return 0; var z=parseFloat(getComputedStyle(site).zoom)||1, b=site.querySelector(':scope > .blk'); var w=b?b.getBoundingClientRect().width:site.getBoundingClientRect().width; return Math.round(w/z); }
   function stPwVisNote(){ var site=stSite(), pw=+SITE_LAYOUT.pw; if(!site || !(pw>0)) return ''; var vis=stBlkArea()-2*(+SITE_LAYOUT.pc||48); if(!(vis>0) || pw<=vis) return '';
-    var side=(site.getAttribute('data-hd-type')==='side'); return ' '+(side?'좌측 메뉴를 뺀 ':'')+'편집 화면('+vis+'px)보다 넓은 부분은 미리보기에서 보입니다.'; }   /* 261116 수정 — 3줄 → 2줄(이때는 「직접」 문장 대신 이 문장) */
+    var side=(site.getAttribute('data-hd-type')==='side'); return ' 편집 화면('+vis+'px)보다 넓은 부분은 미리보기에서 보입니다.'; }   /* 261116 수정 — 3줄 → 2줄(이때는 「직접」 문장 대신 이 문장) */
   /* 261113 추가 — 본문 폭 2칸: 블록 기본 ↔ 사이트 폭 지정(마지막 값에서 다시 시작) */
   function stPwSet(m){ SITE_LAYOUT.pw=(m==='site')?(+SITE_LAYOUT.pwLast||1180):0; stLayoutApply(); if(m==='site'){ stPxHeld=false; stPxGuide(true,'pw'); stPxGuide(false); } }
 
@@ -66844,7 +66844,7 @@ function gdFill(){
     /* 261113 추가 — 좌우 칸을 뺐다(블록과 같게): 예전에 직접 정한 값만 한 줄 안내 + 「사이트 값으로」 */
     var sg0=document.getElementById('gdPxSeg'), sr0=sg0 && sg0.closest('.srow'), gi=document.getElementById('gdPxInfo');
     if(sr0 && !gi){ gi=document.createElement('div'); gi.className='tx-hint'; gi.id='gdPxInfo'; gi.style.marginTop='6px'; sr0.insertAdjacentElement('afterend',gi); }
-    if(gi){ gi.style.display=(gm==='custom')?'':'none'; if(gm==='custom') gi.innerHTML='이 타이틀은 좌우가 '+((det.px==null)?48:+det.px)+'px로 따로 정해져 있습니다. <button type="button" class="pw-reset" onclick="gdPxSet(\'base\')">사이트 값으로</button>'; } })();   /* 261112 추가 — 좌우 3칸 */
+    if(gi){ gi.style.display=(gm==='custom')?'':'none'; if(gm==='custom') gi.innerHTML='좌우 '+((det.px==null)?48:+det.px)+'px(따로 정함) · <button type="button" class="pw-reset" onclick="gdPxSet(\'base\')">사이트 값으로</button>'; } })();   /* 261112 추가 — 좌우 3칸 */
   var bg=document.getElementById('gdBg'), bv=document.getElementById('gdBgV'), br=document.getElementById('gdBgR');
   var bg0=(D.bg==='d')?'#333333':'#ffffff'; if(D.bg!=='d'){ try{ var sb=String(getComputedStyle(gdSite()).getPropertyValue('--st-bg')||'').trim(); if(/^#[0-9a-f]{6}$/i.test(sb)) bg0=sb; }catch(x){} }   /* 261007 추가 — 기본 = 컬러 모드의 배경색 */
   if(bg){ bg.value=/^#[0-9a-f]{6}$/i.test(det.bg||'')?det.bg:bg0; bg.classList.toggle('auto',!det.bg); } if(bv) bv.textContent=det.bg?det.bg.toUpperCase():'기본'; if(br) br.classList.toggle('off',!det.bg);
