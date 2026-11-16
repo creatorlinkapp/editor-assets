@@ -18534,8 +18534,8 @@
     (atRow||row).parentNode.insertBefore(box,atRow||row); document.getElementById(p+'PwOwnRows').appendChild(row);
     var h=document.createElement('div'); h.className='tx-hint pw-hint'; h.id=p+'PwHint'; h.style.marginTop='6px';   /* 안내 한 줄 — 좌우 칸이 있으면 좌우 칸 밑(본문 폭 + 좌우 결과를 함께) */
     var ha=r.hintAfter && document.getElementById(r.hintAfter); if(ha) ha.insertAdjacentElement('afterend',h); else box.appendChild(h);
-    var rb=document.createElement('button'); rb.type='button'; rb.className='sw-reset'; rb.id=p+'PwReset'; rb.title='디자인 폭('+r.mw+'px)으로'; rb.setAttribute('aria-label','디자인 폭으로'); rb.innerHTML=PW_RESET_SVG; rb.style.marginLeft='6px';
-    rb.onclick=function(){ pwReset(p); }; row.appendChild(rb); return box; }
+    /* 261116 수정 — 직접 슬라이더 ↺(디자인 폭으로) 뺌: 「기본」과 하는 일이 겹치고, 다른 ↺(사이트 값 따르기)와 뜻이 달랐다. 마우스를 올렸을 때 뜨는 숫자도 늘 1180 이라 틀렸다 */
+    return box; }
   /* 안내 한 줄(슬라이더 · 칸을 바꿀 때마다) — 앞: 본문 폭 / 뒤: 좌우(261113 수정 — 좌우를 바꿔도 넓은 화면에서 안 보이는 경우 · 「가로 100%」와 「좌우 없음」의 차이를 알려 준다) */
   function pwHint(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var h=document.getElementById(p+'PwHint'); if(!h) return;
     if(r.kind && blk.getAttribute('data-block')!==r.kind){ h.style.display='none'; return; } h.style.display='';
