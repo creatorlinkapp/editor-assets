@@ -12474,7 +12474,7 @@
         </div>
 
         <div class="fld sfold" id="twBoxAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">폭 · 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="fld-h fold-h" onclick="smAcc(this)">높이 · 폭 · 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="twHt" min="200" max="900" step="10" value="420"><span class="v" id="twHtV">420px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="twPt" min="0" max="160" step="2" value="0"><span class="v" id="twPtV">0px</span></div>
@@ -12563,7 +12563,7 @@
           </div></div>
         </div>
         <div class="fld sfold" id="rsBoxAcc">
-          <div class="fld-h fold-h" onclick="smAcc(this)">폭 · 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="fld-h fold-h" onclick="smAcc(this)">높이 · 폭 · 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">높이</span><input class="rng" type="range" id="rsHt" min="160" max="900" step="10" value="360"><span class="v" id="rsHtV">360px</span></div>
             <div class="srow"><span class="k">상단</span><input class="rng" type="range" id="rsPt" min="0" max="160" step="2" value="0"><span class="v" id="rsPtV">0px</span></div>
@@ -18776,6 +18776,8 @@
   /* 블록 설정창 공통 칸(261113 수정 — 스위치 2개 + 되돌리기 글자 → 3칸 「사이트 · 직접 · 가로 100%」, 좌우 여백 3칸과 같은 모양)
      처음 열 때 블록의 「최대 폭」 줄 앞에 만들고, 그 줄을 「직접」 칸 안으로 옮긴 뒤 줄 끝에 ↺(블록 기본 폭으로)를 붙인다 */
   var PW_RESET_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>';
+  /* 261116 추가 — 본문 폭 위 간격: 바로 위 보이는 줄이 칸 버튼 줄(아래 12px 이 이미 있음) · 안내(아래 22px) · 없음이면 10px, 슬라이더 · 그 밖이면 22px — 칸 버튼 ↔ 슬라이더 간격 22px 규칙 */
+  function pwBoxGap(box){ if(!box) return; var p=box.previousElementSibling; while(p && getComputedStyle(p).display==='none') p=p.previousElementSibling; var v=(!p || p.querySelector('.mt-seg') || p.classList.contains('tx-hint'))?'10px':'22px'; if(box.style.marginTop!==v) box.style.marginTop=v; }
   function pwBox(p){ var r=PW_REG[p]; if(!r) return null; var box=document.getElementById(p+'PwBox'); if(box) return box;
     var sl=document.getElementById(r.row), row=sl && sl.closest('.srow');
     var at=r.at && document.getElementById(r.at), atRow=at && (at.closest('.srow')||at);
@@ -18788,14 +18790,15 @@
         var c0=window[p+'Cfg'](b); c0[(r.opt&&r.opt.mwKey)||'mw']=v; c0.pwOwnSet=true; window[p+'Apply'](b); pwHint(p); if(typeof markDirty==='function') markDirty(); }); }
     if(!row) return null;
     if(r.ownMax && sl){ sl.max=r.ownMax; }   /* 텍스트: 예전 「전체」(1400)는 「가로 100%」 칸으로 → 직접은 1380 까지 */
-    box=document.createElement('div'); box.id=p+'PwBox'; box.className='pw-box'; box.style.margin='22px 0 12px';   /* 261116 수정 — 위 22px: 칸 버튼 줄 앞뒤 간격을 맞춘다(위 칸 버튼 → 슬라이더 22px 와 같게 · 전 10px 이라 하단 슬라이더에 붙어 보였다) */
+    box=document.createElement('div'); box.id=p+'PwBox'; box.className='pw-box'; box.style.margin='10px 0 22px';   /* 261116 수정 — 본문 폭을 여백(상단 · 위아래) 위로 옮기며: 아래 22px(→ 슬라이더) · 위는 pwBoxGap 이 앞줄에 따라 10 · 22px */
     box.innerHTML='<div class="srow" id="'+p+'PwSegRow"><span class="k">본문 폭</span><div class="mt-seg" id="'+p+'PwSeg" style="flex:1;min-width:0;margin:0;">'
       +'<button type="button" class="mt-seg-b" data-m="site" onclick="pwSet(\''+p+'\',\'site\')">기본</button>'   /* 261113 수정 — 「사이트」 → 「기본」(좌우 3칸 「기본」과 같은 뜻: 스타일 > 폭 · 여백 값) */
       +'<button type="button" class="mt-seg-b" data-m="own" onclick="pwSet(\''+p+'\',\'own\')">직접</button>'
       +'<button type="button" class="mt-seg-b" data-m="full" onclick="pwSet(\''+p+'\',\'full\')">전체 폭</button></div></div>'   /* 261116 수정 — 「가로 100%」가 두 줄로 꺾여 「전체 폭」 */
       +'<div id="'+p+'PwOwnRows"></div>'
       +(r.edge?'<div class="sline pw-edge" id="'+p+'PwEdge" style="margin-top:10px;display:none;"><span class="lbl">끝까지 붙이기</span><button type="button" class="sw" id="'+p+'PwEdgeSw" onclick="pwEdge(\''+p+'\')" aria-label="끝까지 붙이기"></button></div>':'');   /* 261113 추가 — 사진형 블록: 가로 100% 일 때 좌우 여백 없이 화면 끝까지 */
-    (atRow||row).parentNode.insertBefore(box,atRow||row); document.getElementById(p+'PwOwnRows').appendChild(row); row.style.marginTop='10px';   /* 261116 추가 — 본문 폭 칸과 직접 슬라이더가 2px로 붙어 보여 다른 줄과 같은 10px */
+    (atRow||row).parentNode.insertBefore(box,atRow||row);   /* 261116 추가 — 순서를 제목(높이 · 폭 · 여백)과 같게: 첫 여백 줄(상단 · 위아래) 바로 위로. 전: 숨긴 좌우 칸 자리라 여백 밑에 있었다(사이트 · 메뉴 · 푸터 설정은 본문 폭이 먼저) */
+    (function(){ var par=box.parentNode, f=[].filter.call(par.children,function(e){ if(e===box) return false; var k=e.querySelector && e.querySelector(':scope > .k'); return !!k && /^(상단|위아래)$/.test(k.textContent.trim()); })[0]; if(f) par.insertBefore(box,f);   pwBoxGap(box); if(window.MutationObserver) new MutationObserver(function(){ pwBoxGap(box); }).observe(par,{attributes:true,subtree:true,attributeFilter:['style']}); })(); document.getElementById(p+'PwOwnRows').appendChild(row); row.style.marginTop='10px';   /* 261116 추가 — 본문 폭 칸과 직접 슬라이더가 2px로 붙어 보여 다른 줄과 같은 10px */
     var h=document.createElement('div'); h.className='tx-hint pw-hint'; h.id=p+'PwHint'; h.style.marginTop='6px';   /* 안내 한 줄 — 좌우 칸이 있으면 좌우 칸 밑(본문 폭 + 좌우 결과를 함께) */
     box.appendChild(h);   /* 261116 수정 — 안내는 늘 본문 폭 칸 바로 아래(6px). 전: 숨긴 좌우 칸 밑에 붙어 블록마다 12px · 6px 로 달랐다 */
     /* 261116 수정 — 직접 슬라이더 ↺(디자인 폭으로) 뺌: 「기본」과 하는 일이 겹치고, 다른 ↺(사이트 값 따르기)와 뜻이 달랐다. 마우스를 올렸을 때 뜨는 숫자도 늘 1180 이라 틀렸다 */
