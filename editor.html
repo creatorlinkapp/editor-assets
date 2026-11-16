@@ -5097,6 +5097,8 @@
   .srow .v{font-size:var(--fs-sm);font-weight:800;color:var(--green-text);font-variant-numeric:tabular-nums;min-width:42px;text-align:right;flex:none;}
   /* 260906 추가 — 슬라이더 값을 누르면 숫자를 직접 입력 */
   .srow .v.vin-able{cursor:text;border-radius:5px;padding:2px 4px;margin:-2px -4px;transition:background .12s;}
+  .srow.st-flash{animation:stFlash 1.6s ease;border-radius:8px;}   /* 261116 추가 — 「사이트에서 바꾸기」로 온 줄을 잠깐 표시 */
+  @keyframes stFlash{0%,35%{background:var(--green-soft);box-shadow:0 0 0 6px var(--green-soft);}100%{background:transparent;box-shadow:0 0 0 6px transparent;}}
   .srow .v.vin-able:hover{background:var(--green-soft);text-decoration:underline dotted;text-underline-offset:3px;}
   .srow .v.editing{background:#fff;box-shadow:0 0 0 1.5px var(--green);text-decoration:none;}
   .srow .v input.vin{width:100%;min-width:0;height:20px;border:none;outline:none;background:transparent;text-align:right;font:inherit;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;padding:0;margin:0;-moz-appearance:textfield;}
@@ -18664,6 +18666,11 @@
     var side=(site.getAttribute('data-hd-type')==='side'); return ' 편집 화면('+vis+'px)보다 넓은 부분은 미리보기에서 보입니다.'; }   /* 261116 수정 — 3줄 → 2줄(이때는 「직접」 문장 대신 이 문장) */
   /* 261113 추가 — 본문 폭 2칸: 블록 기본 ↔ 사이트 폭 지정(마지막 값에서 다시 시작) */
   function stPwSet(m){ SITE_LAYOUT.pw=(m==='site')?(+SITE_LAYOUT.pwLast||1180):0; stLayoutApply(); if(m==='site'){ stPxHeld=false; stPxGuide(true,'pw'); stPxGuide(false); } }
+  /* 261116 추가 — 블록 · 메뉴 · 푸터 안내의 「사이트에서 바꾸기」: 스타일 창을 열고 폭 · 여백의 그 줄(본문 폭 · 좌우 여백 PC)로 데려가 잠깐 표시 */
+  function ST_GO_BTN(k){ return '<button type="button" class="pw-reset" onclick="stGoPw(\x27'+k+'\x27)">사이트에서 바꾸기</button>'; }
+  function stGoPw(k){ try{ var sp=document.getElementById('panelStyle'); if(!(sp && sp.classList.contains('show'))) togglePanel('style'); }catch(e){} try{ stTab('style'); }catch(e){} stLayoutSync();   /* 스타일 창이 이미 열려 있으면 닫지 않는다(togglePanel 은 열려 있으면 닫음) */
+    var row=document.getElementById(k==='px'?'stPxPc':'stPw'); row=row && row.closest('.srow'); if(!row) return; try{ row.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){ row.scrollIntoView(); }
+    row.classList.remove('st-flash'); void row.offsetWidth; row.classList.add('st-flash'); setTimeout(function(){ row.classList.remove('st-flash'); },1600); }
 
   /* ══ 261113 추가 — 본문 폭 공통(블록 cfg 키 pw) ═══════════════════════════════════════
      pw: 'site' = 사이트 본문 폭 따름(블록 추가로 넣을 때만 이 값) · 'own' = 이 블록만 직접(c.mw · c.px) · 'full' = 가로 100% 확장
@@ -18792,7 +18799,7 @@
     /* 261116 수정 — 직접 슬라이더 ↺(디자인 폭으로) 뺌: 「기본」과 하는 일이 겹치고, 다른 ↺(사이트 값 따르기)와 뜻이 달랐다. 마우스를 올렸을 때 뜨는 숫자도 늘 1180 이라 틀렸다 */
     return box; }
   /* 안내 한 줄(슬라이더 · 칸을 바꿀 때마다) — 앞: 본문 폭 / 뒤: 좌우(261113 수정 — 좌우를 바꿔도 넓은 화면에서 안 보이는 경우 · 「가로 100%」와 「좌우 없음」의 차이를 알려 준다) */
-  function pwHint(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var h=document.getElementById(p+'PwHint'); if(!h) return;
+  function pwHint(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var h=document.getElementById(p+'PwHint'); if(!h) return; h._lk=null;
     if(r.kind && blk.getAttribute('data-block')!==r.kind){ h.style.display='none'; return; } h.style.display='';
     var c=window[p+'Cfg'](blk), m=pwMode(c,r), on=(+SITE_LAYOUT.pw>0), mo=(typeof bpxMo==='function' && bpxMo()), mw=+c[(r.opt&&r.opt.mwKey)||'mw']||r.mw;
     /* 261113 수정 — 안내를 짧게(본문 폭 · 좌우 한 줄) + 좌우를 바꾸면 실제 내용 폭을 함께(슬라이더 숫자와 실제 폭이 달라 헷갈렸다) */
@@ -18800,7 +18807,7 @@
     var S0=+SITE_LAYOUT.pc||48, S=(r.rel && c.pwP0!=null)?pwP0Num(c,S0):S0, f0=pwFix0(p,blk,c); if(f0) S=0;   /* 디자인 좌우 기준 블록(갤러리)은 그 값이 기준 */
     var def=(r.def?r.def(c):r.mw), pin=!!(r.opt && r.opt.padIn), dd=pin?(def-2*((r.opt.px==='own')?r.px:S)):def, N=(m==='site')?(on?+SITE_LAYOUT.pw:dd):mw;   /* 261113 수정 — 상자 안쪽 여백 블록의 「블록 기본 폭」은 내용 폭(상자 − 좌우)으로(전: 상자 폭 1140 이라 실제 내용 1044 와 달랐다) */
     var a=mo?'모바일에서는 본문 폭이 적용되지 않습니다'
-      :(m==='site')?(on?('본문 폭 '+N+'px(스타일 > 폭 · 여백 > 본문 폭 값)'):('디자인 폭 '+dd+'px'))
+      :(m==='site')?(on?((h._lk='pw'),('본문 폭 '+N+'px')):('디자인 폭 '+dd+'px'))
       :(m==='own')?('이 블록만 '+mw+'px'):'';   /* 261116 수정 — 「화면 폭 전체」는 버튼 이름과 같은 말이라 뺌 */
     var b='', tail='';
     var sg=r.bpx && document.getElementById(r.bpx+'Seg'), fixed=sg && sg.closest('.srow') && sg.closest('.srow').classList.contains('off');   /* 디자인이 좌우를 고정하면 그 안내가 따로 나온다 */
@@ -18810,7 +18817,7 @@
       if(x==='base' && r.rel) P=S0; if(f0) P=0;
       var real=(r.opt && r.opt.padIn && m==='own' && !c.pwc)?null:((m==='site' && !on)?(pin?Math.round(def-2*P):Math.round(def-2*(P-pwP0Num(c,P)))):Math.round(N-2*(P-S)));   /* 사이트 폭 지정 전 상자 블록: 상자(블록 기본 폭) − 좌우 */   /* 실제 내용 폭(상자 폭 그대로인 예전 저장 블록은 계산하지 않음) */
       if(mo) b=(x==='base')?'':('좌우 '+P+'px(따로 정함)');   /* 261113 수정 — 좌우 칸을 뺐다: 사이트 값이면 말하지 않고, 따로 정해진 값일 때만 */
-      else if(m==='full'){ b=(x==='none')?'':((x==='base')?('좌우 '+P+'px(스타일 > 폭 · 여백 > 좌우 여백 > PC 값)'):('화면 끝에서 좌우 '+P+'px'));   /* 261116 수정 — 한 줄에 들어가게 사이트 값일 때는 「화면 끝에서」 뺌(바로 위 「끝까지 붙이기」가 같은 뜻) */   /* 261116 수정 — 붙었을 때는 스위치가 말하므로 안내 없음 */   /* 261116 수정 — 「붙이려면 「끝까지 붙이기」」는 바로 위 스위치와 겹쳐 뺌 */
+      else if(m==='full'){ b=(x==='none')?'':((x==='base')?((h._lk='px'),('좌우 '+P+'px')):('화면 끝에서 좌우 '+P+'px'));   /* 261116 수정 — 한 줄에 들어가게 사이트 값일 때는 「화면 끝에서」 뺌(바로 위 「끝까지 붙이기」가 같은 뜻) */   /* 261116 수정 — 붙었을 때는 스위치가 말하므로 안내 없음 */   /* 261116 수정 — 「붙이려면 「끝까지 붙이기」」는 바로 위 스위치와 겹쳐 뺌 */
         /* 261113 수정 — 좌우가 따로 정해진 블록은 위 안내 줄(bpxInfo)이 같은 값을 말하므로 이 줄은 감춘다(같은 좌우 안내가 두 번 나왔다) */
         if(x!=='base' && !(r.edge && x==='none') && !(c.pwP0!=null && !/site-px/.test(c.pwP0) && Math.abs(pwP0Num(c,S0)-P)<0.5)){ h.style.display='none'; return; } }
       else if(x==='base') b=(r.rel && c.pwP0!=null && Math.abs(pwP0Num(c,S0)-S0)>0.5 && real!=null)?('실제 내용 '+real+'px'):'';
@@ -18822,10 +18829,11 @@
       var pe=(p==='rt')?blk:(r.box?blk.querySelector(r.box):null), Pa=pe?(parseFloat(getComputedStyle(pe).paddingLeft)||0):S0, room=cvw-2*Pa;   /* 실제 좌우(디자인 좌우 0 · 16 등)를 뺀 자리 */
       if(cvw>0 && val>room+1) { h.textContent='편집 화면('+Math.round(room)+'px)보다 넓은 부분은 미리보기에서 보입니다.'; h._wide=1; } })();   /* 261116 수정 — 3줄 → 짧게 */
     /* 261116 수정 — 슬라이더 숫자 · 버튼 · 스위치와 같은 말만 남으면 안내를 감춘다(직접 「이 블록만 Npx」 · 전체 폭 끝까지 붙음) */
-    if(h._wide){ h._wide=0; return; }
+    if(h._wide){ h._wide=0; h._lk=null; return; }
     if(/실제 내용/.test(b)) a=a.replace(/\(스타일 > [^)]*\)/,'');   /* 261116 추가 — 실제 내용이 함께 나오면 경로를 빼 한 줄로 */   /* 261116 수정 — 편집 화면보다 넓으면 그 안내 한 줄만(사이트 설정과 같은 문장) */
     if(m==='own' && !mo && !b && !tail){ h.style.display='none'; return; }
     var txt=[a,b].filter(Boolean).join(' · '); tail=tail.replace(/^\s+/,txt?' ':''); if(!txt && !tail){ h.style.display='none'; return; }
+    if(h._lk && !tail && !/실제 내용/.test(txt)){ var lk=h._lk; h._lk=null; h.innerHTML=txt.replace(/[&<>]/g,'')+' · '+ST_GO_BTN(lk); return; } h._lk=null;   /* 261116 수정 — 「(스타일 > 폭 · 여백 > …)」 경로 대신 「사이트에서 바꾸기」 바로가기 */
     h.textContent=(txt?txt+'.':'')+tail; }
 
   function pwSync(p){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var box=pwBox(p); if(!box) return;
@@ -64521,7 +64529,7 @@ function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getE
   var sr=document.getElementById('hdPadXSegRow'); if(sr) sr.style.display=sd?'':'none';
   var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(sd && md==='custom')?'':'none';
   if(h){ if(!sd && full && md==='custom'){ h.innerHTML='좌우 '+x+'px(따로 정함) · <button type="button" class="pw-reset" onclick="hdPadXSet(\'base\')">사이트 값으로</button>'; h.style.display=''; }
-    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):('좌우 '+(+SITE_LAYOUT.pc||48)+'px(스타일 > 폭 · 여백 > 좌우 여백 > PC 값).')); h.textContent=ht; h.style.display=ht?'':'none'; } } }
+    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):''); if(!sd && full){ h.innerHTML='좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px'); h.style.display=''; } else { h.textContent=ht; h.style.display=ht?'':'none'; } } } }
 function hdWSet(m){ var p=HD.pad||(HD.pad={}); if(m==='full'){ p.align='edge'; } else { p.align='content'; p.xMode='base'; } hdFill(); hdChanged(); hdPadXSide(); }   /* 261116 추가 — 메뉴 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 좌우 여백) */
 /* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
 function hdAlignWrapNote(){ try{
@@ -66138,7 +66146,7 @@ function ftFill(){
 }
 /* 261116 추가 — 푸터 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 사이트 좌우 여백) */
 function ftWSync(){ var full=(FT.w==='full'); [].forEach.call(document.querySelectorAll('#ftWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
-  var h=document.getElementById('ftWHint'); if(h) h.textContent=full?('좌우 '+(+SITE_LAYOUT.pc||48)+'px(스타일 > 폭 · 여백 > 좌우 여백 > PC 값).'):'푸터 내용이 본문 폭 선에 맞춰집니다.'; }
+  var h=document.getElementById('ftWHint'); if(h){ if(full) h.innerHTML='좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px'); else h.textContent='푸터 내용이 본문 폭 선에 맞춰집니다.'; } }
 function ftWSet(m){ FT.w=(m==='full')?'full':'site'; ftChanged(); ftWSync(); }
 /* 아이콘 목록 — 손잡이로 순서, 주소 입력, 삭제. 추가는 아직 쓰지 않은 종류에서 고른다(최대 5) */
 function ftSnsRender(){
