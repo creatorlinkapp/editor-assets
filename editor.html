@@ -17793,19 +17793,19 @@
       <div class="fld sfold" id="hdPadAcc">
         <div class="fld-h fold-h" onclick="smAcc(this)">폭 · 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
         <div class="acc-body"><div class="acc-in">
-          <div class="srow" style="margin-top:0;"><span class="k">상</span><input class="rng" type="range" id="hdPadT" min="0" max="80" step="1" value="22"><span class="v" id="hdPadTV">22px</span></div>
-          <div class="srow"><span class="k">하</span><input class="rng" type="range" id="hdPadB" min="0" max="80" step="1" value="22"><span class="v" id="hdPadBV">22px</span></div>
           <!-- 261116 수정 — 블록과 같은 모양: 본문 폭(기본 · 전체 폭) + 전체 폭일 때만 좌우(기본 · 직접). 「맞춤」 칸은 본문 폭 칸으로 합쳤다 -->
-          <div class="srow" id="hdWRow"><span class="k">본문 폭</span><div class="mt-seg" id="hdWSeg" style="flex:1;min-width:0;margin:0;">
+          <div class="srow" id="hdWRow" style="margin-top:0;"><span class="k">본문 폭</span><div class="mt-seg" id="hdWSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="site" onclick="hdWSet('site')">기본</button>
             <button type="button" class="mt-seg-b" data-m="full" onclick="hdWSet('full')">전체 폭</button>
           </div></div>
-          <div class="srow" id="hdPadXSegRow"><span class="k">좌우</span><div class="mt-seg" id="hdPadXSeg" style="flex:1;min-width:0;margin:0;">
+          <div class="srow" id="hdPadXSegRow" style="margin-top:0;"><span class="k">좌우</span><div class="mt-seg" id="hdPadXSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="base" onclick="hdPadXSet('base')">기본</button>
             <button type="button" class="mt-seg-b" data-m="custom" onclick="hdPadXSet('custom')">직접</button>
           </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 직접 · 261113 수정 — 「없음」 삭제(로고 · 버튼이 화면 끝에 붙기만 하고 쓰는 디자인 0 · 필요하면 직접 0) -->
           <div class="srow" id="hdPadXRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="hdPadX" min="0" max="200" step="2" value="48"><span class="v" id="hdPadXV">48px</span></div>
           <div class="tx-hint" id="hdPadXHint" style="margin-top:6px;">본문 폭 1180px</div>
+          <div class="srow" style="margin-top:22px;"><span class="k">상</span><input class="rng" type="range" id="hdPadT" min="0" max="80" step="1" value="22"><span class="v" id="hdPadTV">22px</span></div>   <!-- 261116 수정 — 블록 · 사이트 설정과 같은 순서(본문 폭 → 여백) · 안내 → 슬라이더 22px -->
+          <div class="srow"><span class="k">하</span><input class="rng" type="range" id="hdPadB" min="0" max="80" step="1" value="22"><span class="v" id="hdPadBV">22px</span></div>
         </div></div>
       </div>
       <div class="fld sfold" id="hdBgAcc">
@@ -18170,14 +18170,14 @@
       <div class="fld sfold" id="ftPadAcc">
         <div class="fld-h fold-h" onclick="smAcc(this)">폭 · 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
         <div class="acc-body"><div class="acc-in">
-          <div class="srow" style="margin-top:0;"><span class="k">상</span><input class="rng" type="range" id="ftPt" min="0" max="200" step="1" value="56"><span class="v" id="ftPtV">56px</span></div>
-          <div class="srow"><span class="k">하</span><input class="rng" type="range" id="ftPb" min="0" max="200" step="1" value="34"><span class="v" id="ftPbV">34px</span></div>
           <!-- 261116 추가 — 메뉴와 같은 「본문 폭: 기본 · 전체 폭」(메뉴를 전체 폭으로 바꾸면 푸터도 맞출 수 있게) -->
-          <div class="srow" id="ftWRow"><span class="k">본문 폭</span><div class="mt-seg" id="ftWSeg" style="flex:1;min-width:0;margin:0;">
+          <div class="srow" id="ftWRow" style="margin-top:0;"><span class="k">본문 폭</span><div class="mt-seg" id="ftWSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="site" onclick="ftWSet('site')">기본</button>
             <button type="button" class="mt-seg-b" data-m="full" onclick="ftWSet('full')">전체 폭</button>
           </div></div>
           <div class="tx-hint" id="ftWHint" style="margin-top:6px;">본문 폭 1180px</div>
+          <div class="srow" style="margin-top:22px;"><span class="k">상</span><input class="rng" type="range" id="ftPt" min="0" max="200" step="1" value="56"><span class="v" id="ftPtV">56px</span></div>   <!-- 261116 수정 — 블록 · 사이트 설정과 같은 순서(본문 폭 → 여백) · 안내 → 슬라이더 22px -->
+          <div class="srow"><span class="k">하</span><input class="rng" type="range" id="ftPb" min="0" max="200" step="1" value="34"><span class="v" id="ftPbV">34px</span></div>
         </div></div>
       </div>
     </div>
