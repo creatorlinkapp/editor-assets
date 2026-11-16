@@ -7519,7 +7519,7 @@
         <!-- 261113 추가 — 본문 폭: 블록 기본(블록마다 디자인 폭 · 지금 화면 그대로) / 사이트 폭 지정(본문 폭 따름 블록이 이 폭에 맞춰짐) -->
         <!-- 261116 수정 — 본문 폭은 사이트 전체 한 값(아임웹 「본문폭」처럼). 「디자인 폭 / 사이트 폭 지정」 2칸을 뺐다: 처음 상태에서 블록마다 폭이 1044 · 1140 · 1180 … 으로 달라 시작선이 어긋났고, 블록의 「기본」이 사이트 설정에 따라 뜻이 바뀌어 헷갈렸다 -->
         <div class="srow" id="stPwRow"><span class="k">본문 폭</span><input class="rng" type="range" id="stPw" min="960" max="1440" step="20" value="1180"><span class="v" id="stPwV">1180px</span></div>
-        <div class="st-note" id="stPwNote" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin:2px 0 10px;">「기본」인 블록이 이 폭에 맞춰집니다.</div>
+        <div class="st-note" id="stPwNote" style="font-size:var(--fs-xs);line-height:1.55;color:#9AA0AA;margin:6px 0 10px;">「기본」인 블록이 이 폭에 맞춰집니다.</div>
         <div class="srow"><span class="k">좌우 여백</span></div>
         <div class="srow"><span class="k">PC</span><input class="rng" type="range" id="stPxPc" min="16" max="120" step="2" value="48"><span class="v" id="stPxPcV">48px</span></div>
         <div class="srow"><span class="k">모바일</span><input class="rng" type="range" id="stPxMo" min="12" max="40" step="1" value="20"><span class="v" id="stPxMoV">20px</span></div>
@@ -18531,10 +18531,10 @@
       +'<button type="button" class="mt-seg-b" data-m="own" onclick="pwSet(\''+p+'\',\'own\')">직접</button>'
       +'<button type="button" class="mt-seg-b" data-m="full" onclick="pwSet(\''+p+'\',\'full\')">전체 폭</button></div></div>'   /* 261116 수정 — 「가로 100%」가 두 줄로 꺾여 「전체 폭」 */
       +'<div id="'+p+'PwOwnRows"></div>'
-      +(r.edge?'<div class="sline pw-edge" id="'+p+'PwEdge" style="margin-top:8px;display:none;"><span class="lbl">끝까지 붙이기</span><button type="button" class="sw" id="'+p+'PwEdgeSw" onclick="pwEdge(\''+p+'\')" aria-label="끝까지 붙이기"></button></div>':'');   /* 261113 추가 — 사진형 블록: 가로 100% 일 때 좌우 여백 없이 화면 끝까지 */
+      +(r.edge?'<div class="sline pw-edge" id="'+p+'PwEdge" style="margin-top:10px;display:none;"><span class="lbl">끝까지 붙이기</span><button type="button" class="sw" id="'+p+'PwEdgeSw" onclick="pwEdge(\''+p+'\')" aria-label="끝까지 붙이기"></button></div>':'');   /* 261113 추가 — 사진형 블록: 가로 100% 일 때 좌우 여백 없이 화면 끝까지 */
     (atRow||row).parentNode.insertBefore(box,atRow||row); document.getElementById(p+'PwOwnRows').appendChild(row); row.style.marginTop='10px';   /* 261116 추가 — 본문 폭 칸과 직접 슬라이더가 2px로 붙어 보여 다른 줄과 같은 10px */
     var h=document.createElement('div'); h.className='tx-hint pw-hint'; h.id=p+'PwHint'; h.style.marginTop='6px';   /* 안내 한 줄 — 좌우 칸이 있으면 좌우 칸 밑(본문 폭 + 좌우 결과를 함께) */
-    var ha=r.hintAfter && document.getElementById(r.hintAfter); if(ha) ha.insertAdjacentElement('afterend',h); else box.appendChild(h);
+    box.appendChild(h);   /* 261116 수정 — 안내는 늘 본문 폭 칸 바로 아래(6px). 전: 숨긴 좌우 칸 밑에 붙어 블록마다 12px · 6px 로 달랐다 */
     /* 261116 수정 — 직접 슬라이더 ↺(디자인 폭으로) 뺌: 「기본」과 하는 일이 겹치고, 다른 ↺(사이트 값 따르기)와 뜻이 달랐다. 마우스를 올렸을 때 뜨는 숫자도 늘 1180 이라 틀렸다 */
     return box; }
   /* 안내 한 줄(슬라이더 · 칸을 바꿀 때마다) — 앞: 본문 폭 / 뒤: 좌우(261113 수정 — 좌우를 바꿔도 넓은 화면에서 안 보이는 경우 · 「가로 100%」와 「좌우 없음」의 차이를 알려 준다) */
@@ -18568,7 +18568,8 @@
       var pe=(p==='rt')?blk:(r.box?blk.querySelector(r.box):null), Pa=pe?(parseFloat(getComputedStyle(pe).paddingLeft)||0):S0, room=cvw-2*Pa;   /* 실제 좌우(디자인 좌우 0 · 16 등)를 뺀 자리 */
       if(cvw>0 && val>room+1) { h.textContent='편집 화면('+Math.round(room)+'px)보다 넓은 부분은 미리보기에서 보입니다.'; h._wide=1; } })();   /* 261116 수정 — 3줄 → 짧게 */
     /* 261116 수정 — 슬라이더 숫자 · 버튼 · 스위치와 같은 말만 남으면 안내를 감춘다(직접 「이 블록만 Npx」 · 전체 폭 끝까지 붙음) */
-    if(h._wide){ h._wide=0; return; }   /* 261116 수정 — 편집 화면보다 넓으면 그 안내 한 줄만(사이트 설정과 같은 문장) */
+    if(h._wide){ h._wide=0; return; }
+    if(/실제 내용/.test(b)) a=a.replace(/\(스타일 > [^)]*\)/,'');   /* 261116 추가 — 실제 내용이 함께 나오면 경로를 빼 한 줄로 */   /* 261116 수정 — 편집 화면보다 넓으면 그 안내 한 줄만(사이트 설정과 같은 문장) */
     if(m==='own' && !mo && !b && !tail){ h.style.display='none'; return; }
     var txt=[a,b].filter(Boolean).join(' · '); tail=tail.replace(/^\s+/,txt?' ':''); if(!txt && !tail){ h.style.display='none'; return; }
     h.textContent=(txt?txt+'.':'')+tail; }
