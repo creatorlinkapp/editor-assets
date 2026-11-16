@@ -17545,21 +17545,21 @@
       </div>
 
       <div class="fld sfold" id="hdPadAcc">
-        <div class="fld-h fold-h" onclick="smAcc(this)">여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        <div class="fld-h fold-h" onclick="smAcc(this)">폭 · 여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
         <div class="acc-body"><div class="acc-in">
           <div class="srow" style="margin-top:0;"><span class="k">상</span><input class="rng" type="range" id="hdPadT" min="0" max="80" step="1" value="22"><span class="v" id="hdPadTV">22px</span></div>
           <div class="srow"><span class="k">하</span><input class="rng" type="range" id="hdPadB" min="0" max="80" step="1" value="22"><span class="v" id="hdPadBV">22px</span></div>
-          <div class="srow"><span class="k">좌우</span><div class="mt-seg" id="hdPadXSeg" style="flex:1;min-width:0;margin:0;">
+          <!-- 261116 수정 — 블록과 같은 모양: 본문 폭(기본 · 전체 폭) + 전체 폭일 때만 좌우(기본 · 직접). 「맞춤」 칸은 본문 폭 칸으로 합쳤다 -->
+          <div class="srow" id="hdWRow"><span class="k">본문 폭</span><div class="mt-seg" id="hdWSeg" style="flex:1;min-width:0;margin:0;">
+            <button type="button" class="mt-seg-b active" data-m="site" onclick="hdWSet('site')">기본</button>
+            <button type="button" class="mt-seg-b" data-m="full" onclick="hdWSet('full')">전체 폭</button>
+          </div></div>
+          <div class="srow" id="hdPadXSegRow"><span class="k">좌우</span><div class="mt-seg" id="hdPadXSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="base" onclick="hdPadXSet('base')">기본</button>
             <button type="button" class="mt-seg-b" data-m="custom" onclick="hdPadXSet('custom')">직접</button>
           </div></div>   <!-- 261112 수정 — 좌우: 슬라이더 → 기본(스타일 > 폭 · 여백 값) · 직접 · 261113 수정 — 「없음」 삭제(로고 · 버튼이 화면 끝에 붙기만 하고 쓰는 디자인 0 · 필요하면 직접 0) -->
           <div class="srow" id="hdPadXRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="hdPadX" min="0" max="200" step="2" value="48"><span class="v" id="hdPadXV">48px</span></div>
-          <!-- 261113 추가 — 스타일 > 폭 · 여백 「사이트 폭 지정」일 때만: 좌우 「기본」의 기준(본문 폭에 맞춤 / 화면 끝). 기본은 본문 폭 → 로고 · 버튼이 블록 내용 선에 맞춰진다 -->
-          <div class="srow" id="hdAlignRow" style="display:none;"><span class="k">맞춤</span><div class="mt-seg" id="hdAlignSeg" style="flex:1;min-width:0;margin:0;">
-            <button type="button" class="mt-seg-b active" data-m="content" onclick="hdAlignSet('content')">본문 폭</button>
-            <button type="button" class="mt-seg-b" data-m="edge" onclick="hdAlignSet('edge')">화면 끝</button>
-          </div></div>
-          <div class="tx-hint" id="hdPadXHint">기본은 스타일 &gt; 폭 · 여백의 좌우 여백을 따릅니다. 배경은 늘 화면 끝까지 칠해집니다.</div>
+          <div class="tx-hint" id="hdPadXHint" style="margin-top:6px;">로고 · 버튼이 본문 폭 선에 맞춰집니다.</div>
         </div></div>
       </div>
       <div class="fld sfold" id="hdBgAcc">
@@ -63869,10 +63869,16 @@ function hdPadXSet(m){ HD.pad.xMode=(m==='custom')?'custom':'base'; if(m==='cust
 /* 좌측 메뉴는 폭이 좁아 좌우 여백을 14 ~ 32px 로만 쓴다(CSS clamp) → 슬라이더도 그 범위로 · 안내 */
 function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getElementById('hdPadXV'), h=document.getElementById('hdPadXHint'); if(!el) return; var sd=(HD.type==='side'), x=hdPadX();
   el.min=sd?14:0; el.max=sd?32:200; var v=sd?Math.max(14,Math.min(32,x)):x; el.value=v; smRng(el); if(o) o.textContent=v+'px';
-  var md=hdPadXMode(); [].forEach.call(document.querySelectorAll('#hdPadXSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===md); }); var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(md==='custom')?'':'none';   /* 261112 추가 — 3칸 */
-  var arw=document.getElementById('hdAlignRow'), aon=(!sd && md==='base' && +SITE_LAYOUT.pw>0); if(arw) arw.style.display=aon?'':'none';   /* 261113 추가 — 맞춤(사이트 폭 지정 · 좌우 기본일 때만) */
-  if(aon){ var av=(HD.pad && HD.pad.align==='edge')?'edge':'content'; [].forEach.call(document.querySelectorAll('#hdAlignSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===av); }); }
-  if(h) h.textContent=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':aon?((HD.pad && HD.pad.align==='edge')?'로고와 버튼이 화면 끝에서 스타일 > 폭 · 여백 좌우 여백만큼 떨어집니다.':'로고와 버튼이 스타일 > 폭 · 여백 본문 폭 선에 맞춰집니다. 화면이 본문 폭보다 좁으면 좌우 여백을 따릅니다.'+hdAlignWrapNote()):((+SITE_LAYOUT.pw>0 && md!=='base')?'좌우가 「직접」이라 본문 폭에 맞추지 않습니다. 본문 폭 선에 맞추려면 좌우를 「기본」으로 바꾸세요.':'기본은 스타일 > 폭 · 여백의 좌우 여백을 따릅니다. 배경은 늘 화면 끝까지 칠해집니다.'); }   /* 261113 추가 — 사이트 폭 지정인데 좌우 직접 · 없음이면 왜 안 맞는지 안내 */
+  /* 261116 수정 — 블록과 같은 모양: 「본문 폭: 기본 · 전체 폭」 하나 + 전체 폭일 때만 「좌우: 기본 · 직접」(전: 「좌우」 아래 「맞춤: 본문 폭 · 화면 끝」 — 좌우를 직접으로 바꾸면 맞춤이 사라져 헷갈렸다).
+     저장 값은 그대로 읽는다: 좌우 기본 + 맞춤 본문 폭 = 기본 · 맞춤 화면 끝 또는 좌우 직접 = 전체 폭 */
+  var md=hdPadXMode(), full=sd || (HD.pad && HD.pad.align==='edge') || md==='custom';
+  [].forEach.call(document.querySelectorAll('#hdPadXSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===md); });
+  [].forEach.call(document.querySelectorAll('#hdWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
+  var wr=document.getElementById('hdWRow'); if(wr) wr.style.display=sd?'none':'';
+  var sr=document.getElementById('hdPadXSegRow'); if(sr) sr.style.display=full?'':'none';
+  var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(full && md==='custom')?'':'none';
+  if(h){ var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):(md==='base'?('좌우 '+(+SITE_LAYOUT.pc||48)+'px(스타일 > 폭 · 여백 > 좌우 여백 > PC 값).'):'')); h.textContent=ht; h.style.display=ht?'':'none'; } }
+function hdWSet(m){ var p=HD.pad||(HD.pad={}); if(m==='full'){ p.align='edge'; } else { p.align='content'; p.xMode='base'; } hdFill(); hdChanged(); hdPadXSide(); }   /* 261116 추가 — 메뉴 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 좌우 여백) */
 /* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
 function hdAlignWrapNote(){ try{
   var hd=document.querySelector('#stage .site > .site-hd'), nv=hd && hd.querySelector('.site-nav'); if(!nv || HD_LAYOUT_ROWS[HD.layout]>1) return '';
