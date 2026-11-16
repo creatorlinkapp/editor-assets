@@ -63875,9 +63875,11 @@ function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getE
   [].forEach.call(document.querySelectorAll('#hdPadXSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===md); });
   [].forEach.call(document.querySelectorAll('#hdWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
   var wr=document.getElementById('hdWRow'); if(wr) wr.style.display=sd?'none':'';
-  var sr=document.getElementById('hdPadXSegRow'); if(sr) sr.style.display=full?'':'none';
-  var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(full && md==='custom')?'':'none';
-  if(h){ var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):(md==='base'?('좌우 '+(+SITE_LAYOUT.pc||48)+'px(스타일 > 폭 · 여백 > 좌우 여백 > PC 값).'):'')); h.textContent=ht; h.style.display=ht?'':'none'; } }
+  /* 261116 수정 — 좌우 칸은 좌측 메뉴만(240 세로 칸이라 따로 씀). 상단 · 전체 메뉴 · 토글은 사이트 좌우 값 하나(블록과 같음 · 쓰는 디자인 0). 예전에 직접으로 저장한 메뉴는 모양 그대로 두고 「따로 정함 · 사이트 값으로」 */
+  var sr=document.getElementById('hdPadXSegRow'); if(sr) sr.style.display=sd?'':'none';
+  var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(sd && md==='custom')?'':'none';
+  if(h){ if(!sd && full && md==='custom'){ h.innerHTML='좌우 '+x+'px(따로 정함) · <button type="button" class="pw-reset" onclick="hdPadXSet(\'base\')">사이트 값으로</button>'; h.style.display=''; }
+    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):('좌우 '+(+SITE_LAYOUT.pc||48)+'px(스타일 > 폭 · 여백 > 좌우 여백 > PC 값).')); h.textContent=ht; h.style.display=ht?'':'none'; } } }
 function hdWSet(m){ var p=HD.pad||(HD.pad={}); if(m==='full'){ p.align='edge'; } else { p.align='content'; p.xMode='base'; } hdFill(); hdChanged(); hdPadXSide(); }   /* 261116 추가 — 메뉴 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 좌우 여백) */
 /* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
 function hdAlignWrapNote(){ try{
