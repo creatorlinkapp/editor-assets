@@ -18566,8 +18566,9 @@
     /* 261113 추가 — 편집 화면보다 넓은 폭: 편집 화면에서는 화면 폭만큼만 보여 미리보기와 달라 보였다 */
     (function(){ if(mo || m==='full') return; var st0=(typeof stSite==='function')?stSite():null; if(!st0) return; var cvw=Math.round(blk.getBoundingClientRect().width/(parseFloat(getComputedStyle(st0).zoom)||1));   /* 블록이 놓인 자리(좌측 메뉴면 메뉴를 뺀 폭) */ var val=(m==='own')?((typeof real!=='undefined' && real!=null)?real:mw):((m==='site' && on)?N:0);
       var pe=(p==='rt')?blk:(r.box?blk.querySelector(r.box):null), Pa=pe?(parseFloat(getComputedStyle(pe).paddingLeft)||0):S0, room=cvw-2*Pa;   /* 실제 좌우(디자인 좌우 0 · 16 등)를 뺀 자리 */
-      if(cvw>0 && val>room+1) tail+=' 편집 화면('+Math.round(room)+'px)보다 넓어 여기서는 그 폭까지만 보이고, 미리보기에서 확인할 수 있습니다.'; })();   /* 261116 수정 — 3줄 → 짧게 */
+      if(cvw>0 && val>room+1) { h.textContent='편집 화면('+Math.round(room)+'px)보다 넓은 부분은 미리보기에서 보입니다.'; h._wide=1; } })();   /* 261116 수정 — 3줄 → 짧게 */
     /* 261116 수정 — 슬라이더 숫자 · 버튼 · 스위치와 같은 말만 남으면 안내를 감춘다(직접 「이 블록만 Npx」 · 전체 폭 끝까지 붙음) */
+    if(h._wide){ h._wide=0; return; }   /* 261116 수정 — 편집 화면보다 넓으면 그 안내 한 줄만(사이트 설정과 같은 문장) */
     if(m==='own' && !mo && !b && !tail){ h.style.display='none'; return; }
     var txt=[a,b].filter(Boolean).join(' · '); tail=tail.replace(/^\s+/,txt?' ':''); if(!txt && !tail){ h.style.display='none'; return; }
     h.textContent=(txt?txt+'.':'')+tail; }
