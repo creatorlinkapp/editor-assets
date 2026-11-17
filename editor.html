@@ -43244,7 +43244,8 @@ global.PolyFX = API;
   }
   /* 열린 항목 — 설정이 아니라 화면 상태라 블록에만 둔다 (다시 그려도 유지) */
   function fqOpenSet(blk){
-    if(!Array.isArray(blk._fqOpen)){ blk._fqOpen=(fqCfg(blk).first!==false)?[0]:[]; }
+    var f0=(fqCfg(blk).first!==false); if(blk._fqFirst!==undefined && blk._fqFirst!==f0) blk._fqOpen=null; blk._fqFirst=f0;   /* 261117 추가 — 「첫 항목 펼쳐 두기」 값이 바뀌면 처음 상태로(모바일 화면 사본은 설정만 새로 받아 펼침 상태가 그대로 남았다) */
+    if(!Array.isArray(blk._fqOpen)){ blk._fqOpen=f0?[0]:[]; }
     return blk._fqOpen;
   }
   function fqToggle(blk,i){
@@ -43357,7 +43358,7 @@ global.PolyFX = API;
     if(!clone || clone.getAttribute('data-block')!=='faqacc') return;
     clone._fqIO=null;
     try{ clone._fqCfg=JSON.parse(JSON.stringify(fqCfg(src))); }catch(e){ clone._fqCfg=null; }
-    try{ clone._fqOpen=(src._fqOpen||[]).slice(); }catch(e){ clone._fqOpen=null; }
+    try{ clone._fqOpen=Array.isArray(src._fqOpen)?src._fqOpen.slice():null; }catch(e){ clone._fqOpen=null; }   /* 261117 수정 — 원본에 펼침 상태가 없으면(모바일 화면 사본처럼 값만 넘겨 만들 때) 「모두 접힘」이 아니라 처음 상태(첫 항목 펼쳐 두기)로 */
     setTimeout(function(){ fqInit(clone); },0);
   }
 
@@ -43613,7 +43614,8 @@ global.PolyFX = API;
   }
   /* 열린 항목 — 설정이 아니라 화면 상태라 블록에만 둔다 */
   function qnOpenSet(blk){
-    if(!Array.isArray(blk._qnOpen)){ blk._qnOpen=(qnCfg(blk).first!==false)?[0]:[]; }
+    var f0=(qnCfg(blk).first!==false); if(blk._qnFirst!==undefined && blk._qnFirst!==f0) blk._qnOpen=null; blk._qnFirst=f0;   /* 261117 추가 — 「첫 항목 펼쳐 두기」 값이 바뀌면 처음 상태로(모바일 화면 사본은 설정만 새로 받아 펼침 상태가 그대로 남았다) */
+    if(!Array.isArray(blk._qnOpen)){ blk._qnOpen=f0?[0]:[]; }
     return blk._qnOpen;
   }
   function qnToggle(blk,i){
@@ -43723,7 +43725,7 @@ global.PolyFX = API;
     if(!clone || clone.getAttribute('data-block')!=='qnaacc') return;
     clone._qnIO=null;
     try{ clone._qnCfg=JSON.parse(JSON.stringify(qnCfg(src))); }catch(e){ clone._qnCfg=null; }
-    try{ clone._qnOpen=(src._qnOpen||[]).slice(); }catch(e){ clone._qnOpen=null; }
+    try{ clone._qnOpen=Array.isArray(src._qnOpen)?src._qnOpen.slice():null; }catch(e){ clone._qnOpen=null; }   /* 261117 수정 — 원본에 펼침 상태가 없으면(모바일 화면 사본처럼 값만 넘겨 만들 때) 「모두 접힘」이 아니라 처음 상태(첫 항목 펼쳐 두기)로 */
     setTimeout(function(){ qnInit(clone); },0);
   }
 
