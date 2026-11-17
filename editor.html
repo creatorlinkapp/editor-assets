@@ -19279,7 +19279,7 @@
       if(pwFix0(p,blk,c)) P1=0;
       if(r.opt && r.opt.padIn) d1-=2*P1; else if(r.rel && c.pwP0!=null) d1-=2*(P1-pwP0Num(c,S1));
       rs.title='디자인 폭('+Math.round(d1)+'px)으로'; }
-    [].forEach.call(box.querySelectorAll('#'+p+'PwSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===m); if(r.noFull && b.getAttribute('data-m')==='full') b.classList.toggle('pw-off', m!=='full'); });   /* 261117 수정 — 숨김 → 흐리게: 블록 · 메뉴 · 푸터 모두 「기본 · 직접 · 전체 폭」 3칸으로 같게 보이고, 못 쓰는 칸은 눌러서 이유를 본다 */
+    [].forEach.call(box.querySelectorAll('#'+p+'PwSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===m); if(r.noFull && b.getAttribute('data-m')==='full'){ b.classList.toggle('pw-off', m!=='full'); if(m!=='full') b.setAttribute('title',PW_NOFULL_MSG); else b.removeAttribute('title'); } });   /* 261117 수정 — 숨김 → 흐리게: 블록 · 메뉴 · 푸터 모두 「기본 · 직접 · 전체 폭」 3칸으로 같게 보이고, 못 쓰는 칸은 눌러서 이유를 본다 */
     var rows=document.getElementById(p+'PwOwnRows'); if(rows) rows.style.display=(!own || m==='own')?'':'none';
     /* 261113 추가 — 직접 슬라이더 최소값: 디자인 폭이 더 좁으면(예: CALENDAR04 480) 그 폭까지 낮춘다(전: 최소 720 이라 한 번 만지면 원래 폭으로 못 돌아감) · 일반 디자인은 원래 최소값 그대로 */
     (function(){ var sx=document.getElementById(r.row); if(!sx || !own) return; if(!sx.hasAttribute('data-min0')) sx.setAttribute('data-min0',sx.min); var m0=+sx.getAttribute('data-min0')||0, mk2=(r.opt&&r.opt.mwKey)||'mw', d2=(r.def?r.def(c):r.mw), Q2=(r.rel && c.pwP0!=null)?pwP0Num(c,+SITE_LAYOUT.pc||48):(+SITE_LAYOUT.pc||48), dc=(r.opt && r.opt.padIn && r.rel)?(d2-2*Q2):d2, cur=+c[mk2]||dc, lo=Math.min(m0, Math.floor(Math.min(dc,cur)/10)*10); if(lo>0 && +sx.min!==lo){ sx.min=lo; if(document.activeElement!==sx){ sx.value=cur; if(typeof smRng==='function') smRng(sx); } } })();
@@ -19296,8 +19296,9 @@
     var v=w/z;
     if(r.rel){ var pel=r.seen?blk:blk.querySelector(r.box); if(pel){ var cq=window[p+'Cfg'](blk), Q=pwFix0(p,blk,cq)?0:((r.rel && cq.pwP0!=null)?pwP0Num(cq,+SITE_LAYOUT.pc||48):(+SITE_LAYOUT.pc||48)); v+=2*((parseFloat(getComputedStyle(pel).paddingLeft)||0)-Q); } }   /* 261113 추가 — 좌우를 더하고 빼는 블록: 본문 폭 = 내용 폭 + (블록 좌우 − 사이트 좌우) × 2 (직접으로 바꿀 때 튀지 않게) */
     v=Math.round(v); if(sl){ v=Math.max(+sl.min||0,Math.min(+sl.max||v,v)); } return v; }
+  var PW_NOFULL_MSG='글 줄이 너무 길어져 이 블록은 전체 폭을 쓰지 않습니다.';   /* 261117 추가 — 흐린 「전체 폭」 이유(안내 줄 · 툴팁) */
   function pwSet(p,m){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw';
-    if(m==='full' && r.noFull && pwMode(c,r)!=='full'){ if(typeof clToast==='function') clToast('글이 화면 끝까지 길어지면 읽기 어려워, 이 블록은 전체 폭을 쓰지 않습니다.'); return; }   /* 261117 추가 — 흐린 「전체 폭」(글 · 카드 · 목록 블록) */
+    if(m==='full' && r.noFull && pwMode(c,r)!=='full') return;   /* 261117 추가 — 흐린 「전체 폭」(글 · 카드 · 목록 블록): 눌러도 그대로 · 이유는 마우스를 올렸을 때 툴팁(PW_NOFULL_MSG)으로만(안내 줄에 다시 쓰면 같은 말이 두 번이고 줄이 생겼다 사라져 아래 칸이 움직였다) */
     if(m==='own' && pwMode(c,r)!=='own' && !c.pwOwnSet){ c[mk]=pwSeenMw(p,blk); c.pwOwnSet=true; if(r.opt && r.opt.padIn) c.pwc=1; }   /* 처음 직접으로 바꿀 때는 지금 보이는 폭 그대로(튀지 않게 · 내용 폭 기준) · 그 뒤로는 마지막 직접 값을 기억 */
     if(m==='own' && r.ownMax && +c[mk]>r.ownMax) c[mk]=r.ownMax;
     var prev=pwMode(c,r);
@@ -25964,7 +25965,7 @@
   /* 261112 추가 — 고정 타이틀 숫자(masstigegov.com 「We Stay For The Results.」 참조 · 글만)를 TEXT01 로 맨 앞에. 기존 TEXT01~18 은 TEXT02~19 로 한 칸씩 민다
      (새로 추가하는 텍스트 블록은 이 줄 아래에 같은 꼴로 한 줄씩 더한다 — 나중에 넣은 것이 01. 미리보기 영상 · 썸네일 파일명은 번호와 무관하게 그대로. 고정 카드(기본 텍스트)는 계속 맨 앞) */
   (function(){ var L=BA_CARDS_TEXT; L.forEach(function(c){ var m=/^TEXT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='TEXT'+(n<10?'0':'')+n; });
-    L.unshift({no:1, kind:'stickstat', label:'TEXT01', ar:'800/450', img:ED_IMG+'ba/stickstat-5.jpg', vid:'ba/stickstat-5'}); })();
+    L.unshift({no:1, kind:'stickstat', label:'TEXT01', ar:'800/450', img:ED_IMG+'ba/stickstat-6.jpg', vid:'ba/stickstat-6'}); })();
   /* 261117 추가 — 연혁 타임라인(연도가 멈춘 채 그 해의 줄들이 지나가고, 가운데 선이 스크롤만큼 그라데이션으로 채워지는 연혁)을 TEXT01 로 맨 앞에. 기존 TEXT01-19 는 TEXT02-20 으로 한 칸씩 민다
      (사진형으로 컨텐츠 CONTENT01 에 넣었다가, 사진을 뺀 목록형으로 바꾸며 글만 있는 블록이 되어 텍스트 「목록」 탭(인덱스 리스트 · FAQ · QnA 옆)으로 옮겼다 · 썸네일 = 실제 블록 정지컷) */
   (function(){ var L=BA_CARDS_TEXT; L.forEach(function(c){ var m=/^TEXT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='TEXT'+(n<10?'0':'')+n; });
