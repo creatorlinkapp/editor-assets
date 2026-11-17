@@ -4939,7 +4939,7 @@
   /* 261117 추가 — 텍스트 블록 설정창 안내 문구: 위 칸과 6px(블록마다 6 · 7 · 8 · 10px 이던 것). 스위치 줄은 아래 안쪽 여백 2px 을 빼 4px, 칸 버튼 줄은 아래 12px 을 당겨 -6px. TEXT01(고정 타이틀 숫자)은 팀원 작업 중이라 뺀다 */
   :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:6px !important;}
   :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.sline,.sline + :is([style*="display:none"],[style*="display: none"])) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:4px !important;}
-  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) .rt-typo-ov + :is(.tx-hint,.mtk-hint){margin-top:-4px !important;}   /* 위 줄 아래 여백 10px 과 겹쳐 6px */
+  :is(#bsetRich) #rtOvHint{margin-top:10px !important;}   /* 261117 수정 — 「기본 글자」 안내는 바로 위 칸이 아니라 섹션 전체 설명이라 10px 띄운다(전: 숨은 「따로 정한 값」 줄 규칙이 걸려 글자색 줄에 2px 로 붙었다) */
   :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) .srow:has(> .mt-seg) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:-6px !important;}
   /* 260906 추가 — 안내문 첫 문장(핵심)은 살짝 진하게, 뒤 문장(부연)은 연하게 */
   .mtk-hint .lead,.tx-hint .lead,.dd-note .lead,.cfx-note .lead{color:var(--ink-2s);font-weight:600;}
@@ -11857,7 +11857,7 @@
           <div class="srow"><span class="k">글자색</span><span class="sw-col"><input type="color" id="rtColor" value="#3c424b"><span class="hex" id="rtColorV">#3C424B</span><button type="button" class="sw-reset" id="rtColorR" onclick="rtColorReset()" title="블록 글자색을 테마 기본색으로 되돌리기 (글자 툴바로 준 강조색은 그대로)" aria-label="기본으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button></span></div>
           <div class="rt-typo-ov" id="rtTypoOv" style="display:none;"><i aria-hidden="true"></i><span id="rtTypoOvT">따로 정한 값이 있습니다</span><button type="button" onclick="rtTypoReset()" title="이 블록에 따로 정해진 크기 · 줄 간격 · 자간을 지우고 사이트 서체 설정을 따르게 합니다">기본값으로</button></div>   <!-- 261113 추가 -->
           <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="rtWidth" min="400" max="1400" step="20" value="1180"><span class="v" id="rtWidthV">1180px</span></div>
-          <div class="tx-hint" id="rtOvHint">이 블록 글 전체의 기본값입니다. 글자 툴바로 따로 바꾼 글자는 그 값이 먼저 적용됩니다.<span id="rtOvBtnWrap" style="display:none;"></span> 툴바로 따로 정렬한 글이 있으면 정렬 ↺ 가 켜지고, 누르면 정렬만 정리됩니다. 툴바로 준 강조색은 블록 글자색을 바꿔도 그대로 남습니다. 글자 크기 · 줄 간격 · 자간은 「스타일 › 서체」와 글 스타일 · 글자 툴바에서 정합니다.</div>   <!-- 261111 추가 — 툴바로 따로 바꾼 정렬 · 크기 · 줄간격 · 자간 · 색이 있을 때만 버튼(rtOvSync) -->
+          <div class="tx-hint" id="rtOvHint">이 블록 글 전체의 기본값입니다. 툴바로 따로 바꾼 글자는 그 값이 먼저 보입니다.<span id="rtOvBtnWrap" style="display:none;"></span> 크기 · 줄 간격 · 자간은 「스타일 › 서체」에서 바꿉니다.</div>   <!-- 261117 수정 — 5문장 → 3문장(↺ 설명은 버튼에 마우스를 올리면 나온다 · 강조색 문장은 둘째 문장과 같은 뜻) -->   <!-- 261111 추가 — 툴바로 따로 바꾼 정렬 · 크기 · 줄간격 · 자간 · 색이 있을 때만 버튼(rtOvSync) -->
           </div></div>
         </div>
 
