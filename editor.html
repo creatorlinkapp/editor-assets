@@ -2924,14 +2924,14 @@
   #stage .blk[data-block="flowband"]:not(.sel) :is(.fb-eb,.fb-tt).is-empty{display:none;}   /* 비운 칸 자리표시는 블록을 골랐을 때만 */
   .fb-row{overflow:hidden;}
   .fb-row + .fb-row{margin-top:var(--fbgap);}
-  .fb-wrap[data-fade="1"] .fb-row{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+  .fb-row{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
   .fb-track{display:flex;width:max-content;will-change:transform;}
-  .fb-wrap[data-pause="1"] .fb-row:hover .fb-track{animation-play-state:paused !important;}
+  .fb-row:hover .fb-track{animation-play-state:paused !important;}   /* 양 끝 흐림 · 마우스 올리면 멈춤은 늘 켠다(스위치는 뺐다 — 끌 일이 거의 없고, 후기는 멈춰야 읽힌다) */
   .fb-set{display:flex;align-items:center;gap:var(--fbgap);padding-right:var(--fbgap);flex:none;}
   .fb-it{flex:none;}
   /* 문구 */
   .fb-tx{font-size:var(--fbts);font-weight:800;letter-spacing:-.03em;line-height:1.2;white-space:nowrap;}
-  .fb-wrap[data-outline="1"] .fb-tx:nth-child(4n+3){color:transparent;-webkit-text-stroke:1.5px var(--fbtc);}
+  .fb-wrap[data-outline="1"] .fb-tx.fb-alt{color:transparent;-webkit-text-stroke:1.5px var(--fbtc);}   /* 문구를 하나 걸러 속 빈 글자로(.fb-alt 는 그릴 때 붙인다 — 사이 기호가 없어도 번갈아 나오게) */
   .fb-sep{font-size:calc(var(--fbts) * .5);color:var(--fbsc);line-height:1;}
   .fb-wrap[data-t="text"] .fb-set{gap:calc(var(--fbgap) * 2);padding-right:calc(var(--fbgap) * 2);}
   /* 이미지 */
@@ -2939,7 +2939,7 @@
   .fb-im img{display:block;height:100%;width:auto;max-width:none;}
   /* 후기 카드 */
   .fb-rv{width:340px;height:200px;box-sizing:border-box;background:var(--fbcb);border-radius:16px;padding:26px 28px;display:flex;flex-direction:column;}
-  .fb-st{font-size:14px;letter-spacing:3px;color:var(--fbtc);}
+  .fb-st{font-size:14px;letter-spacing:3px;color:var(--fbstc,var(--fbtc));}
   .fb-st i{font-style:normal;opacity:.2;}
   .fb-q{flex:1;margin:12px 0 16px;font-size:16px;line-height:1.7;word-break:keep-all;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
   .fb-who{display:flex;align-items:center;gap:10px;}
@@ -2951,7 +2951,7 @@
   .fb-cap img{display:block;height:100%;width:auto;max-width:none;}
   /* 좁은 화면 */
   @container (max-width:760px){
-    .fb-wrap{padding:var(--fbpvm,64px) 0;}
+    html:not(.mob) .fb-wrap{padding:var(--fbpvm,64px) 0;}   /* 좁은 PC 화면만 줄인다 — 휴대폰 화면(html.mob)은 모바일 위아래 값(_mvOv.pv)을 그대로 쓴다 */
     .fb-head{margin-bottom:32px;padding:0 var(--site-px,20px);}
     .fb-rv{width:280px;height:190px;padding:22px 22px;}
     .fb-q{font-size:15px;}
@@ -14573,8 +14573,6 @@
             </div>
             <div class="srow" style="margin-top:12px;"><span class="k">속도</span><input class="rng" type="range" id="fbSpd" min="10" max="120" step="2" value="40"><span class="v" id="fbSpdV">40</span></div>
             <div class="srow"><span class="k">간격</span><input class="rng" type="range" id="fbGap" min="8" max="64" step="2" value="20"><span class="v" id="fbGapV">20px</span></div>
-            <div class="sline"><span class="lbl">양 끝 흐리게</span><button type="button" class="sw on" id="fbFade" onclick="fbSw(this,'fade')"></button></div>
-            <div class="sline"><span class="lbl">마우스 올리면 멈춤</span><button type="button" class="sw on" id="fbPause" onclick="fbSw(this,'pause')"></button></div>
           </div></div>
         </div>
         <div class="fld sfold" id="fbShapeAcc">
@@ -14600,11 +14598,12 @@
           <div class="fld-h fold-h" onclick="smAcc(this)">색<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">배경색</span><span class="sw-col"><input type="color" id="fbBg" value="#ffffff"><span class="hex" id="fbBgV">#FFFFFF</span></span></div>
-            <div class="srow"><span class="k">글 · 별</span><span class="sw-col"><input type="color" id="fbTc" value="#222222"><span class="hex" id="fbTcV">#222222</span></span></div>
+            <div class="srow"><span class="k">글</span><span class="sw-col"><input type="color" id="fbTc" value="#222222"><span class="hex" id="fbTcV">#222222</span></span></div>
+            <div class="srow" data-fbt="rv"><span class="k">별</span><span class="sw-col"><input type="color" id="fbStc" value="#222222"><span class="hex" id="fbStcV">#222222</span></span></div>
             <div class="srow" data-fbt="rv"><span class="k">소속 글</span><span class="sw-col"><input type="color" id="fbMc" value="#90909a"><span class="hex" id="fbMcV">#90909A</span></span></div>
             <div class="srow" data-fbt="rv"><span class="k">카드</span><span class="sw-col"><input type="color" id="fbCb" value="#f7f7f9"><span class="hex" id="fbCbV">#F7F7F9</span></span></div>
-            <div class="srow" data-fbt="rv"><span class="k">포인트 (이름 앞 원)</span><span class="sw-col"><input type="color" id="fbPc" value="#d1e8a0"><span class="hex" id="fbPcV">#D1E8A0</span></span></div>
-            <div class="srow" data-fbt="text"><span class="k">포인트 (사이 기호)</span><span class="sw-col"><input type="color" id="fbSc" value="#b8925a"><span class="hex" id="fbScV">#B8925A</span></span></div>
+            <div class="srow" data-fbt="rv"><span class="k">포인트</span><span class="sw-col"><input type="color" id="fbPc" value="#d1e8a0"><span class="hex" id="fbPcV">#D1E8A0</span></span></div>
+            <div class="srow" data-fbt="text"><span class="k">포인트</span><span class="sw-col"><input type="color" id="fbSc" value="#b8925a"><span class="hex" id="fbScV">#B8925A</span></span></div>
           </div></div>
         </div>
         <div class="fld sfold" id="fbBoxAcc">
@@ -45055,9 +45054,9 @@ global.PolyFX = API;
      ══════════════════════════════════════════════════════════════════ */
   var FB_DEF={
     type:'review', rs:'card', head:true, eyebrow:'REVIEW', title:'벌써 1,200개의 후기가 쌓였어요',
-    rows:2, dir:'left', spd:40, gap:20, fade:true, pause:true,
+    rows:2, dir:'left', spd:40, gap:20,
     ts:56, outline:true, sep:'✦', ih:260, ir:14, ch:300, tts:40,
-    bg:'#ffffff', tc:'#222222', mc:'#90909a', cb:'#f7f7f9', pc:'#d1e8a0', sc:'#b8925a',
+    bg:'#ffffff', tc:'#222222', stc:'#222222', mc:'#90909a', cb:'#f7f7f9', pc:'#d1e8a0', sc:'#b8925a',
     pv:96,
     texts:[], imgs:[], reviews:[], caps:[]
   };
@@ -45170,6 +45169,7 @@ global.PolyFX = API;
       var set=g.map(function(it){ return fbItemH(c,tk,it); }).join('');
       return '<div class="fb-row" data-r="'+ri+'"><div class="fb-track"><div class="fb-set">'+set+'</div></div></div>';
     }).join('');
+    host.querySelectorAll('.fb-set').forEach(function(set){ set.querySelectorAll('.fb-tx').forEach(function(t,i){ if(i%2===1) t.classList.add('fb-alt'); }); });
     blk._fbSets=null;
     host.querySelectorAll('img').forEach(function(im){ if(!im.complete) im.addEventListener('load',function(){ fbLayoutSoon(blk); },{once:true}); });
     fbLayout(blk);
@@ -45226,12 +45226,10 @@ global.PolyFX = API;
     var c=fbCfg(blk), wrap=blk.querySelector('.fb-wrap'); if(!wrap) return;
     blk.style.paddingTop='0'; blk.style.paddingBottom='0'; blk.style.paddingLeft='0'; blk.style.paddingRight='0';
     var s=wrap.style, tk=fbTKey(c), pv=txNum(c.pv,96);
-    [['--fbbg',c.bg||'#ffffff'],['--fbtc',c.tc||'#222222'],['--fbmc',c.mc||'#90909a'],['--fbcb',c.cb||'#f7f7f9'],['--fbpc',c.pc||'#d1e8a0'],['--fbsc',c.sc||'#b8925a'],
+    [['--fbbg',c.bg||'#ffffff'],['--fbtc',c.tc||'#222222'],['--fbstc',c.stc||c.tc||'#222222'],['--fbmc',c.mc||'#90909a'],['--fbcb',c.cb||'#f7f7f9'],['--fbpc',c.pc||'#d1e8a0'],['--fbsc',c.sc||'#b8925a'],
      ['--fbgap',txNum(c.gap,20)+'px'],['--fbts',txNum(c.ts,56)+'px'],['--fbih',txNum(c.ih,260)+'px'],['--fbir',txNum(c.ir,14)+'px'],
      ['--fbch',txNum(c.ch,300)+'px'],['--fbtts',txNum(c.tts,40)+'px'],['--fbpv',pv+'px'],['--fbpvm',Math.round(pv*0.66)+'px']].forEach(function(q){ s.setProperty(q[0],q[1]); });
     wrap.setAttribute('data-t',tk);
-    wrap.setAttribute('data-fade',c.fade===false?'0':'1');
-    wrap.setAttribute('data-pause',c.pause===false?'0':'1');
     wrap.setAttribute('data-outline',c.outline===false?'0':'1');
     var hasHd=(c.head!==false) && !!(String(c.eyebrow||'').trim()||String(c.title||'').trim());
     wrap.setAttribute('data-head',(c.head===false)?'off':(hasHd?'1':'0'));
@@ -45246,6 +45244,7 @@ global.PolyFX = API;
   function fbCloneInit(src,clone){
     if(!clone || clone.getAttribute('data-block')!=='flowband') return;
     clone._fbSig=null; var w=clone.querySelector('.fb-wrap'); if(w) w._fbRO=null;
+    try{ if(src && src._mvOv) clone._mvOv=JSON.parse(JSON.stringify(src._mvOv)); }catch(e){}   /* 모바일 값도 함께 복사 — 빠지면 복제본이 휴대폰에서 PC 크기로 나온다 */
     try{ clone._fbCfg=JSON.parse(JSON.stringify(fbCfg(src))); }catch(e){ clone._fbCfg=null; }
     setTimeout(function(){ fbInit(clone); },0);
   }
@@ -45349,8 +45348,8 @@ global.PolyFX = API;
     var m=a.splice(from,1)[0]; a.splice(to,0,m); fbItemRender(); fbApply(fbCurBlk);
   }
   var FB_RNG=[['fbSpd','spd',''],['fbGap','gap','px'],['fbTs','ts','px'],['fbIh','ih','px'],['fbIr','ir','px'],['fbCh','ch','px'],['fbTts','tts','px'],['fbPv','pv','px']];
-  var FB_COL=[['fbBg','bg'],['fbTc','tc'],['fbMc','mc'],['fbCb','cb'],['fbPc','pc'],['fbSc','sc']];
-  var FB_SW=[['fbHead','head'],['fbFade','fade'],['fbPause','pause'],['fbOutline','outline']];
+  var FB_COL=[['fbBg','bg'],['fbTc','tc'],['fbStc','stc'],['fbMc','mc'],['fbCb','cb'],['fbPc','pc'],['fbSc','sc']];
+  var FB_SW=[['fbHead','head'],['fbOutline','outline']];
   function fbBuildBset(){
     if(fbBound) return; fbBound=true;
     FB_RNG.forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return;
@@ -64447,7 +64446,7 @@ global.PolyFX = API;
       qnaacc      :{},
       scrollread  :{},
       timeline    :{},
-      flowband    :{imgs:1, caps:1},
+      flowband    :{type:1, rs:1, headEdited:1, imgs:1, caps:1},   /* 261117 추가 — 흐르는 띠: 종류 · 후기 모양(카드 / 캡처) · 항목 사진은 PC · 모바일 공유 */
       imgring     :{imgMode:1, theme:1, kw:1, imgs:1, caps:1, gt:1, posts:1},   /* 260923 추가 — 3D 이미지 링 · 이미지(모드·주제·키워드·목록)는 PC·모바일 공유, 링·움직임·배경·여백은 기기별 */
       crumple     :{items:1},   /* 260923 추가 — 구김 이미지 · 컨텐츠 목록은 PC·모바일 공유 */
       beforeafter :{before:1, after:1, link1:1, bst:1},   /* 261006 수정 — 버튼 스타일도 공유 */   /* 260923 추가 — 이전·이후 비교 · 이미지 두 장과 버튼 링크는 PC·모바일 공유 */
