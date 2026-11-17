@@ -10542,7 +10542,9 @@
   .gt-chip.on{border-color:var(--green);} .gt-chip.on .lb,.gt-chip.on .ar{color:var(--green-text);}
   .gt-chip.on:hover,.gt-chip.open{background:var(--green-soft);}
   .gt-chip.open .ar svg{transform:rotate(90deg);}
-  #bset .mt-seg-b:disabled{opacity:.35;cursor:default;}   /* 261008 추가 — 고를 수 없는 갤러리 타입(사진이 자동으로 오는 모드의 상세 페이지형) */
+  #bset .mt-seg-b:disabled{opacity:.35;cursor:default;}
+  #bset .mt-seg-b.pw-off{opacity:.35;cursor:default;}   /* 261117 추가 — 이 블록에서 못 쓰는 「전체 폭」(눌러도 바뀌지 않고 이유만 알림) */
+  #bset .mt-seg-b.pw-off:hover{background:transparent;color:inherit;}   /* 261008 추가 — 고를 수 없는 갤러리 타입(사진이 자동으로 오는 모드의 상세 페이지형) */
   /* 261012 추가 — 갤러리 타입 설명: 머리의 물음표(.gt-q · 14개 갤러리 공통) → #gtHelpModal(그림 3장씩 두 줄). 지금 블록의 타입 줄은 그린 테두리 + 「지금 설정」 */
   .gt-q{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-left:-4px;padding:0;border:0;border-radius:50%;background:none;color:var(--ink-3);cursor:pointer;}
   .gt-q svg{width:14px;height:14px;fill:currentColor;display:block;}
@@ -11129,6 +11131,7 @@
     position:relative;background:var(--ft-bg);color:var(--ft-fg);font-size:var(--ft-fs);line-height:1.7;padding:var(--ft-pt) var(--site-px,48px) var(--ft-pb);box-shadow:inset 0 1px 0 var(--ft-ln);word-break:keep-all;text-align:left;}   /* 261112 수정 — 좌우 40 고정 → 사이트 좌우 여백(스타일 > 폭 · 여백) */   /* 위 구분선은 테두리가 아니라 안쪽 그림자 — 테두리로 두면 롤오버 외곽선(안쪽 기준) 위로 1px 이 삐져나온다 */
   .site > .site-ft,.site > .ft-offbar{position:sticky;top:9999px;}   /* 내용이 짧은 페이지에서도 페이지 맨 아래에 붙는다(컨테이너 밖으로는 못 나가므로 긴 페이지에서는 제자리) */
   .site-ft .ft-in{max-width:var(--site-pw,1180px);margin:0 auto;}
+  .site-ft[data-ft-w="own"] .ft-in{max-width:max(var(--ft-w,1440px),var(--site-pw,0px));}   /* 261117 추가 — 푸터 본문 폭 「직접」(본문 폭보다 좁아지지는 않는다) */
   .site-ft[data-ft-w="full"] .ft-in{max-width:none;}   /* 261116 추가 — 푸터 본문 폭 「전체 폭」: 화면 끝에서 좌우 여백만큼(메뉴 전체 폭과 같은 선) */   /* 261112 수정 — 1160 → 1180(블록 최대 폭과 시작선 맞춤) · 261113 수정 — 「사이트 폭 지정」이면 본문 폭 */
   .site-ft a{color:inherit;text-decoration:none;cursor:pointer;transition:color .12s;}
   .site-ft a:hover{color:var(--ft-ac);}
@@ -18212,8 +18215,10 @@
           <!-- 261116 수정 — 블록과 같은 모양: 본문 폭(기본 · 전체 폭) + 전체 폭일 때만 좌우(기본 · 직접). 「맞춤」 칸은 본문 폭 칸으로 합쳤다 -->
           <div class="srow" id="hdWRow" style="margin-top:0;"><span class="k">본문 폭</span><div class="mt-seg" id="hdWSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="site" onclick="hdWSet('site')">기본</button>
+            <button type="button" class="mt-seg-b" data-m="own" onclick="hdWSet('own')">직접</button>
             <button type="button" class="mt-seg-b" data-m="full" onclick="hdWSet('full')">전체 폭</button>
           </div></div>
+          <div class="srow" id="hdWOwnRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="hdWOwn" min="1180" max="1920" step="10" value="1440"><span class="v" id="hdWOwnV">1440px</span></div>   <!-- 261117 추가 — 메뉴만 넓히기(본문 폭 ~ 1920) -->
           <div class="srow" id="hdPadXSegRow" style="margin-top:0;"><span class="k">좌우</span><div class="mt-seg" id="hdPadXSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="base" onclick="hdPadXSet('base')">기본</button>
             <button type="button" class="mt-seg-b" data-m="custom" onclick="hdPadXSet('custom')">직접</button>
@@ -18589,8 +18594,10 @@
           <!-- 261116 추가 — 메뉴와 같은 「본문 폭: 기본 · 전체 폭」(메뉴를 전체 폭으로 바꾸면 푸터도 맞출 수 있게) -->
           <div class="srow" id="ftWRow" style="margin-top:0;"><span class="k">본문 폭</span><div class="mt-seg" id="ftWSeg" style="flex:1;min-width:0;margin:0;">
             <button type="button" class="mt-seg-b active" data-m="site" onclick="ftWSet('site')">기본</button>
+            <button type="button" class="mt-seg-b" data-m="own" onclick="ftWSet('own')">직접</button>
             <button type="button" class="mt-seg-b" data-m="full" onclick="ftWSet('full')">전체 폭</button>
           </div></div>
+          <div class="srow" id="ftWOwnRow" style="display:none;"><span class="k"></span><input class="rng" type="range" id="ftWOwn" min="1180" max="1920" step="10" value="1440"><span class="v" id="ftWOwnV">1440px</span></div>   <!-- 261117 추가 — 푸터만 넓히기(본문 폭 ~ 1920 · 메뉴와 같음) -->
           <div class="tx-hint" id="ftWHint" style="margin-top:6px;">본문 폭 1180px</div>
           <div class="srow" style="margin-top:22px;"><span class="k">상</span><input class="rng" type="range" id="ftPt" min="0" max="200" step="1" value="56"><span class="v" id="ftPtV">56px</span></div>   <!-- 261116 수정 — 블록 · 사이트 설정과 같은 순서(본문 폭 → 여백) · 안내 → 슬라이더 22px -->
           <div class="srow"><span class="k">하</span><input class="rng" type="range" id="ftPb" min="0" max="200" step="1" value="34"><span class="v" id="ftPbV">34px</span></div>
@@ -19272,7 +19279,7 @@
       if(pwFix0(p,blk,c)) P1=0;
       if(r.opt && r.opt.padIn) d1-=2*P1; else if(r.rel && c.pwP0!=null) d1-=2*(P1-pwP0Num(c,S1));
       rs.title='디자인 폭('+Math.round(d1)+'px)으로'; }
-    [].forEach.call(box.querySelectorAll('#'+p+'PwSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===m); if(r.noFull && b.getAttribute('data-m')==='full') b.style.display=(m==='full')?'':'none'; });
+    [].forEach.call(box.querySelectorAll('#'+p+'PwSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===m); if(r.noFull && b.getAttribute('data-m')==='full') b.classList.toggle('pw-off', m!=='full'); });   /* 261117 수정 — 숨김 → 흐리게: 블록 · 메뉴 · 푸터 모두 「기본 · 직접 · 전체 폭」 3칸으로 같게 보이고, 못 쓰는 칸은 눌러서 이유를 본다 */
     var rows=document.getElementById(p+'PwOwnRows'); if(rows) rows.style.display=(!own || m==='own')?'':'none';
     /* 261113 추가 — 직접 슬라이더 최소값: 디자인 폭이 더 좁으면(예: CALENDAR04 480) 그 폭까지 낮춘다(전: 최소 720 이라 한 번 만지면 원래 폭으로 못 돌아감) · 일반 디자인은 원래 최소값 그대로 */
     (function(){ var sx=document.getElementById(r.row); if(!sx || !own) return; if(!sx.hasAttribute('data-min0')) sx.setAttribute('data-min0',sx.min); var m0=+sx.getAttribute('data-min0')||0, mk2=(r.opt&&r.opt.mwKey)||'mw', d2=(r.def?r.def(c):r.mw), Q2=(r.rel && c.pwP0!=null)?pwP0Num(c,+SITE_LAYOUT.pc||48):(+SITE_LAYOUT.pc||48), dc=(r.opt && r.opt.padIn && r.rel)?(d2-2*Q2):d2, cur=+c[mk2]||dc, lo=Math.min(m0, Math.floor(Math.min(dc,cur)/10)*10); if(lo>0 && +sx.min!==lo){ sx.min=lo; if(document.activeElement!==sx){ sx.value=cur; if(typeof smRng==='function') smRng(sx); } } })();
@@ -19290,6 +19297,7 @@
     if(r.rel){ var pel=r.seen?blk:blk.querySelector(r.box); if(pel){ var cq=window[p+'Cfg'](blk), Q=pwFix0(p,blk,cq)?0:((r.rel && cq.pwP0!=null)?pwP0Num(cq,+SITE_LAYOUT.pc||48):(+SITE_LAYOUT.pc||48)); v+=2*((parseFloat(getComputedStyle(pel).paddingLeft)||0)-Q); } }   /* 261113 추가 — 좌우를 더하고 빼는 블록: 본문 폭 = 내용 폭 + (블록 좌우 − 사이트 좌우) × 2 (직접으로 바꿀 때 튀지 않게) */
     v=Math.round(v); if(sl){ v=Math.max(+sl.min||0,Math.min(+sl.max||v,v)); } return v; }
   function pwSet(p,m){ var r=PW_REG[p], blk=window[p+'CurBlk']; if(!r || !blk) return; var c=window[p+'Cfg'](blk), mk=(r.opt&&r.opt.mwKey)||'mw';
+    if(m==='full' && r.noFull && pwMode(c,r)!=='full'){ if(typeof clToast==='function') clToast('글이 화면 끝까지 길어지면 읽기 어려워, 이 블록은 전체 폭을 쓰지 않습니다.'); return; }   /* 261117 추가 — 흐린 「전체 폭」(글 · 카드 · 목록 블록) */
     if(m==='own' && pwMode(c,r)!=='own' && !c.pwOwnSet){ c[mk]=pwSeenMw(p,blk); c.pwOwnSet=true; if(r.opt && r.opt.padIn) c.pwc=1; }   /* 처음 직접으로 바꿀 때는 지금 보이는 폭 그대로(튀지 않게 · 내용 폭 기준) · 그 뒤로는 마지막 직접 값을 기억 */
     if(m==='own' && r.ownMax && +c[mk]>r.ownMax) c[mk]=r.ownMax;
     var prev=pwMode(c,r);
@@ -65743,7 +65751,8 @@ function hdPadX(){ var p=HD.pad||(HD.pad={}); if(p.x==null || isNaN(+p.x)) p.x=(
 /* 261112 추가 — 좌우 칸(기본 · 직접). 예전 값: 48 → 기본 · 그 밖(0 포함) → 직접
    261113 수정 — 「없음」 삭제: 저장된 「없음」은 「직접 0」으로 옮긴다(모양 그대로) */
 function hdPadXMode(){ var p=HD.pad||(HD.pad={}); if(p.xMode==='none'){ p.xMode='custom'; p.x=0; } if(p.xMode==='base'||p.xMode==='custom') return p.xMode; var x=hdPadX(); return (x===48)?'base':'custom'; }
-function hdPadXCss(){ var m=hdPadXMode(); if(m==='base' && HD.type!=='side' && hdAlignOn()) return 'max(var(--site-px,48px), calc((100% - var(--site-pw)) / 2))';   /* 261113 추가 — 본문 폭에 맞춤: 넓은 화면은 블록 내용 선 · 좁은 화면은 사이트 좌우 여백 */
+function hdPadXCss(){ var m=hdPadXMode(); if(m==='base' && HD.type!=='side' && HD.pad && HD.pad.align==='own') return 'max(var(--site-px,48px), calc((100% - max('+hdWOwnPx()+'px, var(--site-pw,0px))) / 2))';   /* 261117 추가 — 「직접」: 메뉴만 그 폭(본문 폭보다 좁아지지는 않는다) */
+  if(m==='base' && HD.type!=='side' && hdAlignOn()) return 'max(var(--site-px,48px), calc((100% - var(--site-pw)) / 2))';   /* 261113 추가 — 본문 폭에 맞춤: 넓은 화면은 블록 내용 선 · 좁은 화면은 사이트 좌우 여백 */
   return (m==='base')?((HD.type==='side')?'32px':'var(--site-px,48px)'):(m==='none'?'0px':(hdPadX()+'px')); }
 /* 261113 추가 — 상단 메뉴 「맞춤」: 스타일 > 폭 · 여백 「사이트 폭 지정」이고 좌우 「기본」일 때 본문 폭(기본) / 화면 끝 */
 function hdAlignOn(){ return (typeof SITE_LAYOUT!=='undefined' && +SITE_LAYOUT.pw>0) && !(HD.pad && HD.pad.align==='edge'); }
@@ -65756,21 +65765,29 @@ function hdPadXSide(){ var el=document.getElementById('hdPadX'), o=document.getE
      저장 값은 그대로 읽는다: 좌우 기본 + 맞춤 본문 폭 = 기본 · 맞춤 화면 끝 또는 좌우 직접 = 전체 폭 */
   var md=hdPadXMode(), full=sd || (HD.pad && HD.pad.align==='edge') || md==='custom';
   [].forEach.call(document.querySelectorAll('#hdPadXSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===md); });
-  [].forEach.call(document.querySelectorAll('#hdWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
+  var own=!sd && !full && HD.pad && HD.pad.align==='own';   /* 261117 추가 — 직접 */
+  [].forEach.call(document.querySelectorAll('#hdWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':(own?'own':'site'))); });
+  (function(){ var orw=document.getElementById('hdWOwnRow'), ow=document.getElementById('hdWOwn'), ov=document.getElementById('hdWOwnV'); if(orw) orw.style.display=own?'':'none'; if(own && ow){ ow.min=hdWMin(); ow.max=1920; ow.value=hdWOwnPx(); if(typeof smRng==='function') smRng(ow); if(ov) ov.textContent=hdWOwnPx()+'px'; } })();
   var wr=document.getElementById('hdWRow'); if(wr) wr.style.display=sd?'none':'';
   /* 261116 수정 — 좌우 칸은 좌측 메뉴만(240 세로 칸이라 따로 씀). 상단 · 전체 메뉴 · 토글은 사이트 좌우 값 하나(블록과 같음 · 쓰는 디자인 0). 예전에 직접으로 저장한 메뉴는 모양 그대로 두고 「따로 정함 · 사이트 값으로」 */
   var sr=document.getElementById('hdPadXSegRow'); if(sr) sr.style.display=sd?'':'none';
   var rw=document.getElementById('hdPadXRow'); if(rw) rw.style.display=(sd && md==='custom')?'':'none';
   if(h){ if(!sd && full && md==='custom'){ h.innerHTML='좌우 '+x+'px(따로 정함) · <button type="button" class="pw-reset" onclick="hdPadXSet(\'base\')">사이트 값으로</button>'; h.style.display=''; }
-    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):''); var mvo=document.body.classList.contains('mview-on'); if(!sd && full){ h.innerHTML=mvo?('좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); h.style.display=''; } else if(!sd && mvo){ h.innerHTML='좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo'); h.style.display=''; }   /* 261116 추가 — 모바일 화면이면 모바일 기준 안내 */ else if(!sd){ var wn=hdAlignWrapNote(); h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw')+(wn?('<br>'+String(wn).trim().replace(/[&<>]/g,'')):''); h.style.display=''; }   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ else { h.textContent=ht; h.style.display=ht?'':'none'; } } } }
-function hdWSet(m){ var p=HD.pad||(HD.pad={}); if(m==='full'){ p.align='edge'; } else { p.align='content'; p.xMode='base'; } hdFill(); hdChanged(); hdPadXSide(); }   /* 261116 추가 — 메뉴 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 좌우 여백) */
+    else { var ht=sd?'좌측 메뉴는 폭이 좁아 사이트 좌우 여백과 따로 씁니다. 기본 32px · 직접 14 ~ 32px.':(!full?('로고 · 버튼이 본문 폭 선에 맞춰집니다.'+hdAlignWrapNote()):''); var mvo=document.body.classList.contains('mview-on'); if(!sd && full){ h.innerHTML=mvo?('좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); h.style.display=''; } else if(!sd && mvo){ h.innerHTML='좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo'); h.style.display=''; }   /* 261116 추가 — 모바일 화면이면 모바일 기준 안내 */ else if(!sd && own){ var wo=hdAlignWrapNote(); h.innerHTML='메뉴만 '+hdWOwnPx()+'px'+(wo?('<br>'+String(wo).trim().replace(/[&<>]/g,'')):''); h.style.display=''; }   /* 261117 추가 — 직접(블록 「이 블록만 Npx」와 같은 말) */ else if(!sd){ var wn=hdAlignWrapNote(); h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw')+(wn?('<br>'+String(wn).trim().replace(/[&<>]/g,'')):''); h.style.display=''; }   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ else { h.textContent=ht; h.style.display=ht?'':'none'; } } } }
+function hdWSet(m){ var p=HD.pad||(HD.pad={}); if(m==='full'){ p.align='edge'; } else if(m==='own'){ p.align='own'; p.xMode='base'; p.w=hdWOwnPx(); } else { p.align='content'; p.xMode='base'; } hdFill(); hdChanged(); hdPadXSide(); }
+/* 261117 추가 — 메뉴 본문 폭 「직접」: 메뉴만 본문 폭보다 넓게(항목이 많아 두 줄이 될 때 · 헤더를 본문보다 넓게 쓰는 디자인). 최소 = 본문 폭 · 최대 1920 */
+function hdWMin(){ return Math.max(960,+SITE_LAYOUT.pw||1180); }
+function hdWOwnPx(){ var p=HD.pad||(HD.pad={}), mn=hdWMin(); if(!(+p.w>0)) p.w=mn; return Math.max(mn,Math.min(1920,+p.w)); }
+(function(){ function bind(){ var el=document.getElementById('hdWOwn'); if(!el || el._hdB) return; el._hdB=1;
+  el.addEventListener('input',function(){ var v=+el.value; (HD.pad||(HD.pad={})).w=v; if(typeof smRng==='function') smRng(el); var o=document.getElementById('hdWOwnV'); if(o) o.textContent=v+'px'; hdChanged(); hdPadXSide(); }); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind(); })();   /* 261116 추가 — 메뉴 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 좌우 여백) */
 /* 261113 추가 — 본문 폭에 맞춰서 메뉴가 두 줄로 넘어갔으면 알림(화면 끝이면 한 줄인지 같은 순간에 재 본다 · 화면에는 그리지 않는다). 자동으로 바꾸지는 않는다 */
 function hdAlignWrapNote(){ try{
   var hd=document.querySelector('#stage .site > .site-hd'), nv=hd && hd.querySelector('.site-nav'); if(!nv || HD_LAYOUT_ROWS[HD.layout]>1) return '';
   function rows(){ var t={}, n=0; [].forEach.call(nv.children,function(e){ if(!e.getClientRects().length || getComputedStyle(e).display==='none') return; var k=Math.round(e.getBoundingClientRect().top); if(!t[k]){ t[k]=1; n++; } }); return n; }
   var a=rows(); if(a<2) return '';
   var old=hd.style.getPropertyValue('--hd-sidex'); hd.style.setProperty('--hd-sidex','var(--site-px,48px)'); var b=rows(); if(old) hd.style.setProperty('--hd-sidex',old); else hd.style.removeProperty('--hd-sidex');
-  return (b<a)?' 메뉴가 많아 두 줄이 됐습니다. 「화면 끝」으로 바꾸면 한 줄로 들어갑니다.':''; }catch(e){ return ''; } }
+  return (b<a)?' 메뉴가 많아 두 줄이 됐습니다. 「직접」으로 넓히거나 「전체 폭」으로 바꾸면 한 줄로 들어갑니다.':'';   /* 261117 수정 — 옛 이름 「화면 끝」 → 지금 칸 이름(직접 · 전체 폭) */ }catch(e){ return ''; } }
 function hdColReset(g){ var lg={logo:'logo',nav:'nav',fx:'fx',util:'util',bg:'bg'}[g]; if(lg) hdUnlink(lg); var c=HD.col[hdEditSt]; if(g==='logo') c.logo=''; else if(g==='nav'){ c.fg=''; c.ac=''; } else if(g==='fx') c.fx=''; else if(g==='util'){ c.ufg=''; c.uac=''; } else if(g==='sub'){ HD.sub.fg=''; HD.sub.bg=''; HD.sub.lineCol=''; } else if(g==='subac') HD.sub.ac=''; else if(g==='bg'){ hdBgCur().col=(hdEditSt==='sticky'?'auto':''); hdBgCur().alpha=1; } hdFill(); hdChanged(); if(g==='subac') hdSubAcShow(); else if(g==='sub') hdSubShow(); }   /* 261109 수정 — 서브메뉴 색을 되돌릴 때도 캔버스의 서브메뉴를 펼쳐 보인다 */
 function hdChanged(){ hdApply(); if(typeof stLayoutSync==='function') try{ stLayoutSync(); }catch(e){} if(typeof mvKick==='function') try{ mvKick(0); }catch(e){} }
 /* 261106 추가 — 상단 메뉴 사용 (기존 편집기 상단 메뉴 「숨김」 대응 · 푸터 사용과 같은 방식). 꺼도 설정은 그대로 남는다 */
@@ -67260,8 +67277,8 @@ function ftRender(){
   site.classList.add('ft-on'); site.classList.remove('ft-off');
   if(off) off.remove();
   if(!el){ el=document.createElement('footer'); el.className='site-ft'; el._ftHtml=null; }
-  var d=ftDesign(FT.design), css=ftStyle(ftVal(FT));
-  el.setAttribute('data-ft-design',d.id); el.setAttribute('data-ft-ic',d.ic); el.setAttribute('data-ft-w',(FT.w==='full')?'full':'site');   /* 261116 추가 — 본문 폭(기본 · 전체 폭) */
+  var d=ftDesign(FT.design), css=ftStyle(ftVal(FT))+((FT.w==='own')?(';--ft-w:'+ftWOwnPx()+'px;'):'');   /* 261117 추가 — 푸터 「직접」 폭(아래 style 을 통째로 쓰므로 같은 문자열에 넣는다) */
+  el.setAttribute('data-ft-design',d.id); el.setAttribute('data-ft-ic',d.ic); el.setAttribute('data-ft-w',(FT.w==='full'||FT.w==='own')?FT.w:'site');   /* 261117 수정 — 직접 추가 */   /* 261116 추가 — 본문 폭(기본 · 전체 폭) */
   if(el.getAttribute('style')!==css) el.setAttribute('style',css);
   var html=ftBody(FT,false); if(el._ftHtml!==html){ el.innerHTML=html; el._ftHtml=html; el._ftJs=null; }   /* 261106 수정 — 다시 그리면 코드 JS 도 다시 돌린다(_ftJs) */
   ftCodeSync(el);   /* 261106 추가 — 푸터 코드(CSS · JS) */
@@ -67380,10 +67397,15 @@ function ftFill(){
   ftSnsRender();
 }
 /* 261116 추가 — 푸터 본문 폭: 기본(본문 폭 선) · 전체 폭(화면 끝에서 사이트 좌우 여백) */
-function ftWSync(){ var full=(FT.w==='full');
-  (function(){ var r=document.getElementById('ftWRow'), mo=document.body.classList.contains('mview-on'); if(r){ r.style.opacity=mo?'.45':''; r.style.pointerEvents=mo?'none':''; } })();   /* 261116 추가 — 모바일 화면에서는 본문 폭 버튼만 흐리게 막기(안내 · 링크는 그대로) */ [].forEach.call(document.querySelectorAll('#ftWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':'site')); });
-  var h=document.getElementById('ftWHint'); if(h){ var mvo=document.body.classList.contains('mview-on'); if(full) h.innerHTML=mvo?('좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); else if(mvo) h.innerHTML='좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo'); else h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw');   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ } }
-function ftWSet(m){ FT.w=(m==='full')?'full':'site'; ftChanged(); ftWSync(); }
+function ftWSync(){ var full=(FT.w==='full'), own=(FT.w==='own');   /* 261117 추가 — 직접 */
+  (function(){ var orw=document.getElementById('ftWOwnRow'), ow=document.getElementById('ftWOwn'), ov=document.getElementById('ftWOwnV'); if(orw) orw.style.display=own?'':'none'; if(own && ow){ ow.min=hdWMin(); ow.max=1920; ow.value=ftWOwnPx(); if(typeof smRng==='function') smRng(ow); if(ov) ov.textContent=ftWOwnPx()+'px'; } })();
+  (function(){ var r=document.getElementById('ftWRow'), mo=document.body.classList.contains('mview-on'); if(r){ r.style.opacity=mo?'.45':''; r.style.pointerEvents=mo?'none':''; } })();   /* 261116 추가 — 모바일 화면에서는 본문 폭 버튼만 흐리게 막기(안내 · 링크는 그대로) */ [].forEach.call(document.querySelectorAll('#ftWSeg .mt-seg-b'),function(b){ b.classList.toggle('active',b.getAttribute('data-m')===(full?'full':(own?'own':'site'))); });
+  var h=document.getElementById('ftWHint'); if(h){ var mvo=document.body.classList.contains('mview-on'); if(own && !mvo) h.innerHTML='푸터만 '+ftWOwnPx()+'px'; else if(full) h.innerHTML=mvo?('좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo')):('좌우 '+(+SITE_LAYOUT.pc||48)+'px · '+ST_GO_BTN('px')); else if(mvo) h.innerHTML='좌우 '+(+SITE_LAYOUT.mo||20)+'px · '+ST_GO_BTN('mo'); else h.innerHTML='본문 폭 '+(+SITE_LAYOUT.pw||1180)+'px · '+ST_GO_BTN('pw');   /* 261116 수정 — 기본도 블록과 같은 문장 + 바로가기 */ } }
+function ftWSet(m){ FT.w=(m==='full'||m==='own')?m:'site'; if(m==='own') FT.wpx=ftWOwnPx(); ftChanged(); ftWSync(); }
+function ftWOwnPx(){ var mn=hdWMin(); if(!(+FT.wpx>0)) FT.wpx=mn; return Math.max(mn,Math.min(1920,+FT.wpx)); }   /* 261117 추가 — 푸터 「직접」 폭(메뉴와 같은 범위) */
+(function(){ function bind(){ var el=document.getElementById('ftWOwn'); if(!el || el._ftB) return; el._ftB=1;
+  el.addEventListener('input',function(){ FT.wpx=+el.value; if(typeof smRng==='function') smRng(el); var o=document.getElementById('ftWOwnV'); if(o) o.textContent=FT.wpx+'px'; ftChanged(); ftWSync(); }); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind(); })();
 /* 아이콘 목록 — 손잡이로 순서, 주소 입력, 삭제. 추가는 아직 쓰지 않은 종류에서 고른다(최대 5) */
 function ftSnsRender(){
   var list=document.getElementById('ftSnsList'); if(!list) return;
