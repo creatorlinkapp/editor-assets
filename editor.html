@@ -2897,6 +2897,80 @@
   #bset #tlItemList .mt-imgdrag,#bset #tlItemList .mt-imgdel{margin-top:0;}
   #bset #tlItemList .tl-caps{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
   #bset #tlItemList .tl-caps .tl-tin{grid-column:1 / -1;}
+  /* ══════════════════════════════════════════════════════════════════
+     261117 추가 — 흐르는 띠 블록 (TEXT01 · kind flowband · 접두어 fb)
+     · 줄(.fb-row) 안의 트랙(.fb-track)이 묶음(.fb-set)을 여러 벌 이어 붙여 -50% 까지 흐른다(애니메이션 길이 · 방향은 JS)
+     ══════════════════════════════════════════════════════════════════ */
+  @keyframes fbmq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .blk.fb-blk{padding:0;}
+  .blk.fb-blk::before{content:"";position:absolute;inset:0;z-index:55;pointer-events:none;box-shadow:inset 0 0 0 2px var(--green);opacity:0;transition:opacity .12s;}
+  .blk.fb-blk:hover::before{opacity:1;}
+  @media (hover:none){ .blk.sel.fb-blk::before{opacity:1;} }
+  #baGrid .ba-card[data-kind="flowband"]{border-radius:var(--r-xl);}
+  .fb-wrap{position:relative;width:100%;overflow:hidden;background:var(--fbbg);color:var(--fbtc);container-type:inline-size;padding:var(--fbpv,96px) 0;
+    --fbbg:#ffffff;--fbtc:#222222;--fbmc:#90909a;--fbcb:#f7f7f9;--fbpc:#d1e8a0;--fbsc:#b8925a;--fbgap:20px;--fblh:40px;--fbts:56px;--fbih:260px;--fbir:14px;--fbch:300px;--fbtts:40px;}
+  .fb-head{max-width:var(--site-pw,1180px);margin:0 auto 48px;padding:0 var(--site-px,48px);text-align:center;}
+  .fb-wrap[data-head="off"] .fb-head,.fb-wrap[data-head="0"] .fb-head{display:none;}
+  .fb-wrap[data-head="1"] .fb-head:has(.fb-tt.is-empty){margin-bottom:28px;}
+  .fb-eb{font-size:16px;line-height:1.4;color:color-mix(in srgb,var(--fbtc) 62%,var(--fbbg));margin-bottom:12px;}
+  .fb-tt{margin:0;font-size:var(--fbtts);font-weight:700;line-height:1.3;letter-spacing:-.025em;word-break:keep-all;}
+  .fb-eb.is-empty{display:none;}
+  .fb-tt.is-empty + *{margin-top:0;}
+  .fb-wrap .cred.fb-e.fb-e.fb-e{font:inherit;color:inherit;text-align:inherit;letter-spacing:inherit;line-height:inherit;font-weight:inherit;font-style:inherit;word-break:inherit;white-space:normal;}
+  .fb-wrap .fb-e p{margin:0;}
+  #stage .blk[data-block="flowband"] .fb-head .cred{cursor:text;outline:1.5px dashed transparent;outline-offset:6px;transition:outline-color .12s;min-height:1em;}
+  #stage .blk[data-block="flowband"].sel:not(.rt-editing) .fb-head .cred:hover,#stage .blk[data-block="flowband"].rt-editing .fb-head .cred:focus{outline-color:var(--green);}
+  #stage .blk[data-block="flowband"] .fb-head .cred.rt-ph[data-ph]::before{content:none;display:none;}
+  #stage .blk[data-block="flowband"] .fb-head .cred.rt-ph[data-ph]::after{opacity:.42;}
+  html.mview #stage .blk[data-block="flowband"] .fb-head .cred{outline-color:transparent !important;cursor:auto;}
+  html:is(.pview,.pvm,.mview) .fb-eb.is-empty,html:is(.pview,.pvm,.mview) .fb-tt.is-empty{display:none;}
+  #stage .blk[data-block="flowband"]:not(.sel) :is(.fb-eb,.fb-tt).is-empty{display:none;}   /* 비운 칸 자리표시는 블록을 골랐을 때만 */
+  .fb-row{overflow:hidden;}
+  .fb-row + .fb-row{margin-top:var(--fbgap);}
+  .fb-wrap[data-fade="1"] .fb-row{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+  .fb-track{display:flex;width:max-content;will-change:transform;}
+  .fb-wrap[data-pause="1"] .fb-row:hover .fb-track{animation-play-state:paused !important;}
+  .fb-set{display:flex;align-items:center;gap:var(--fbgap);padding-right:var(--fbgap);flex:none;}
+  .fb-it{flex:none;}
+  /* 로고 */
+  .fb-lg img{display:block;height:var(--fblh);width:auto;}
+  .fb-wrap[data-gray="1"] .fb-lg img{filter:grayscale(1);opacity:.55;transition:filter .2s,opacity .2s;}
+  .fb-wrap[data-gray="1"] .fb-lg:hover img{filter:none;opacity:1;}
+  .fb-wrap[data-t="logo"] .fb-set{gap:calc(var(--fbgap) * 3);padding-right:calc(var(--fbgap) * 3);}
+  /* 문구 */
+  .fb-tx{font-size:var(--fbts);font-weight:800;letter-spacing:-.03em;line-height:1.2;white-space:nowrap;}
+  .fb-wrap[data-outline="1"] .fb-tx:nth-child(4n+3){color:transparent;-webkit-text-stroke:1.5px var(--fbtc);}
+  .fb-sep{font-size:calc(var(--fbts) * .5);color:var(--fbsc);line-height:1;}
+  .fb-wrap[data-t="text"] .fb-set{gap:calc(var(--fbgap) * 2);padding-right:calc(var(--fbgap) * 2);}
+  /* 이미지 */
+  .fb-im{height:var(--fbih);border-radius:var(--fbir);overflow:hidden;}
+  .fb-im img{display:block;height:100%;width:auto;max-width:none;}
+  /* 후기 카드 */
+  .fb-rv{width:340px;height:200px;box-sizing:border-box;background:var(--fbcb);border-radius:16px;padding:26px 28px;display:flex;flex-direction:column;}
+  .fb-st{font-size:14px;letter-spacing:3px;color:var(--fbtc);}
+  .fb-st i{font-style:normal;opacity:.2;}
+  .fb-q{flex:1;margin:12px 0 16px;font-size:16px;line-height:1.7;word-break:keep-all;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .fb-who{display:flex;align-items:center;gap:10px;}
+  .fb-av{width:36px;height:36px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;background:var(--fbpc);color:#222;font-size:14px;font-weight:700;}
+  .fb-who b{display:block;font-size:14px;font-weight:700;}
+  .fb-who em{display:block;font-style:normal;font-size:13px;color:var(--fbmc);margin-top:2px;}
+  /* 후기 캡처 */
+  .fb-cap{height:var(--fbch);border-radius:14px;overflow:hidden;border:1px solid color-mix(in srgb,var(--fbtc) 8%,transparent);}
+  .fb-cap img{display:block;height:100%;width:auto;max-width:none;}
+  /* 좁은 화면 */
+  @container (max-width:760px){
+    .fb-wrap{padding:var(--fbpvm,64px) 0;}
+    .fb-head{margin-bottom:32px;padding:0 var(--site-px,20px);}
+    .fb-rv{width:280px;height:190px;padding:22px 22px;}
+    .fb-q{font-size:15px;}
+  }
+  @media (prefers-reduced-motion:reduce){ .fb-row{overflow-x:auto;} }
+  #bset #fbItemList .mt-imgrow{align-items:center;}
+  #bset #fbItemList .mt-imgdrag,#bset #fbItemList .mt-imgthumb,#bset #fbItemList .mt-imgdel{margin-top:0;}
+  #bset #fbItemList:is([data-t="logo"],[data-t="image"],[data-t="cap"]) .vc-caps > input:first-of-type{display:none;}
+  #bset #fbItemList .fb-rvcaps{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+  #bset #fbItemList .fb-rvcaps .fb-rvt{grid-column:1 / -1;}
+  #bset #fbItemList .fb-star{height:var(--h-ui);border:1px solid var(--line);border-radius:var(--r-sm);background:var(--bg-1,#fff);font-size:12px;color:var(--ink);letter-spacing:1px;padding:0 6px;}
   /* ═════════════════════════════════════════════════════════════════
      260929 추가 — 폼 블록 (FORM01~10 · 접두어 fm · cfg _fmCfg)
      · 기존 편집기(addblock.net config) 블록추가 > 폼 카테고리 10종을 한 블록 종류(formblk) + 시작값(FM_PRESETS)으로 옮겼다.
@@ -5005,11 +5079,11 @@
   #b2LiveBar .lb{color:var(--green-text,#1f7a45);}
   .tx-hint{font-size:var(--fs-sm);line-height:1.55;color:var(--ink-3);margin-top:8px;}
   /* 261117 추가 — 텍스트 블록 설정창 안내 문구: 위 칸과 6px(블록마다 6 · 7 · 8 · 10px 이던 것). 스위치 줄은 아래 안쪽 여백 2px 을 빼 4px, 칸 버튼 줄은 아래 12px 을 당겨 -6px. TEXT01(고정 타이틀 숫자)은 팀원 작업 중이라 뺀다 */
-  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetTimeline,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:6px !important;}
-  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetTimeline,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.sline,.sline + :is([style*="display:none"],[style*="display: none"])) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:4px !important;}
+  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetTimeline,#bsetFlowBand,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:6px !important;}
+  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetTimeline,#bsetFlowBand,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.sline,.sline + :is([style*="display:none"],[style*="display: none"])) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:4px !important;}
   :is(#bsetRich) #rtOvHint{margin-top:10px !important;}   /* 261117 수정 — 「기본 글자」 안내는 바로 위 칸이 아니라 섹션 전체 설명이라 10px 띄운다(전: 숨은 「따로 정한 값」 줄 규칙이 걸려 글자색 줄에 2px 로 붙었다) */
   #rtAlignR{display:none !important;}   /* 261117 추가 — 정렬 ↺ 숨김: 정렬 아이콘을 누르면 툴바로 따로 바꾼 정렬까지 지우고 통일하므로(rtAlign → rtOvStrip) 하는 일이 겹쳤다 · 마크업 · 함수는 그대로(팀장님 코드) */
-  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetTimeline,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) .srow:has(> .mt-seg) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:-6px !important;}
+  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetTimeline,#bsetFlowBand,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) .srow:has(> .mt-seg) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:-6px !important;}
   /* 260906 추가 — 안내문 첫 문장(핵심)은 살짝 진하게, 뒤 문장(부연)은 연하게 */
   .mtk-hint .lead,.tx-hint .lead,.dd-note .lead,.cfx-note .lead{color:var(--ink-2s);font-weight:600;}
   /* 블록설정: 직접 입력 리스트 (URL + 제목/카테고리 캡션 · 드래그 정렬) */
@@ -6821,7 +6895,7 @@
      모바일 사본(html.mob)은 블록을 눌러 PC 에서 고르는 편집 통로라 그대로 둔다 */
      261113 수정 — 미리보기 창의 「모바일」 보기 사본(html.pvm)도 똑같이 뺀다: 편집용 모바일 사본이 아니라 보기 전용이라 롤오버 · 톱니 · + 가 뜨면 안 된다
   html:is(.pview,.pvm) #stage .blk{cursor:auto;box-shadow:none !important;}
-  html:is(.pview,.pvm) #stage .blk::after,html:is(.pview,.pvm) #stage .blk:is(.b2-blk,.cr-blk,.dg-blk,.fl-blk,.gs-blk,.hg-blk,.hz-blk,.ig-blk,.ir-blk,.mt-blk,.pt-blk,.rs-blk,.sc-blk,.vl-blk,.sg-blk,.rb-blk,.sk-blk,.sm-blk,.sq-blk,.sr-blk,.tl-blk,.ss-blk,.tg-blk,.tw-blk,.vc-blk,.wc-blk)::before{opacity:0 !important;}   /* 261013 수정 — ::before 는 풀블리드 블록의 외곽선 오버레이만. 모든 .blk::before 를 끄면 배경 이미지 블록의 「어둡게」 층(.rt-bgimg::before)까지 사라져 롤오버 때 사진이 밝아진다 */
+  html:is(.pview,.pvm) #stage .blk::after,html:is(.pview,.pvm) #stage .blk:is(.b2-blk,.cr-blk,.dg-blk,.fl-blk,.gs-blk,.hg-blk,.hz-blk,.ig-blk,.ir-blk,.mt-blk,.pt-blk,.rs-blk,.sc-blk,.vl-blk,.sg-blk,.rb-blk,.sk-blk,.sm-blk,.sq-blk,.sr-blk,.tl-blk,.fb-blk,.ss-blk,.tg-blk,.tw-blk,.vc-blk,.wc-blk)::before{opacity:0 !important;}   /* 261013 수정 — ::before 는 풀블리드 블록의 외곽선 오버레이만. 모든 .blk::before 를 끄면 배경 이미지 블록의 「어둡게」 층(.rt-bgimg::before)까지 사라져 롤오버 때 사진이 밝아진다 */
   html:is(.pview,.pvm) #stage .blk .gear-fab,html:is(.pview,.pvm) #stage .blk .tag-badge,html:is(.pview,.pvm) #stage .addbar,html:is(.pview,.pvm) #stage .site-hd .hd-gear,html:is(.pview,.pvm) #stage .site-hd::after{display:none !important;}
   html:is(.pview,.pvm) #stage .site > .site-hd:hover{box-shadow:none !important;}
   html:is(.pview,.pvm) #stage .cred,html:is(.pview,.pvm) #stage .cred:hover,html:is(.pview,.pvm) #stage .ft-ed,html:is(.pview,.pvm) #stage .ft-ed:hover,html:is(.pview,.pvm) #stage .tm-ln:hover{outline-color:transparent !important;cursor:inherit !important;}   /* 글 영역(텍스트 · 타이틀 · 탭메뉴 · 푸터)의 점선 롤오버도 없이 */  /* 260904 수정 — 외곽선 오버레이(::after, 88)보다 위: 배지 위로 흰 헤일로 선이 겹쳐 보이던 문제 */
@@ -14347,6 +14421,110 @@
           <div class="acc-body"><div class="acc-in">
             <div class="srow"><span class="k">최대 폭</span><input class="rng" type="range" id="tlMw" min="720" max="1600" step="10" value="1240"><span class="v" id="tlMwV">1240px</span></div>
             <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="tlPv" min="0" max="240" step="2" value="120"><span class="v" id="tlPvV">120px</span></div>
+          </div></div>
+        </div>
+
+      </div>
+      <!-- 261117 추가 — 흐르는 띠 블록 설정 (TEXT01 · 접두어 fb) -->
+      <div id="bsetFlowBand" style="display:none;">
+
+        <div class="fld sfold open" id="fbTypeAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">종류<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
+            <div class="mt-seg" id="fbTypeSeg">
+              <button type="button" class="mt-seg-b" data-m="logo" onclick="fbType('logo')">로고</button>
+              <button type="button" class="mt-seg-b" data-m="text" onclick="fbType('text')">문구</button>
+              <button type="button" class="mt-seg-b" data-m="image" onclick="fbType('image')">이미지</button>
+              <button type="button" class="mt-seg-b active" data-m="review" onclick="fbType('review')">후기</button>
+            </div>
+            <div class="mt-seg" id="fbRsSeg" data-fbt="rv cap" style="margin-top:8px;">
+              <button type="button" class="mt-seg-b active" data-m="card" onclick="fbRs('card')">카드형</button>
+              <button type="button" class="mt-seg-b" data-m="cap" onclick="fbRs('cap')">캡처형</button>
+            </div>
+            <div class="tx-hint">종류마다 항목을 따로 기억합니다. 다른 종류로 바꿨다가 돌아와도 넣어 둔 항목이 그대로 남습니다.</div>
+          </div></div>
+        </div>
+        <div class="fld sfold open" id="fbHeadAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">제목<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
+            <div class="sline"><span class="lbl">제목 표시</span><button type="button" class="sw on" id="fbHead" onclick="fbSw(this,'head')"></button></div>
+            <div id="fbHeadRows">
+              <input class="s-in" type="text" id="fbEb" placeholder="작은 제목 (비워 두면 숨김)" spellcheck="false" autocomplete="off" style="margin-top:10px;" oninput="fbTxt('eyebrow',this.value)">
+              <textarea class="s-ta" id="fbTt" rows="2" placeholder="제목 (비워 두면 숨김 · 줄바꿈으로 행을 나눕니다)" style="margin-top:8px;" oninput="fbTxt('title',this.value)"></textarea>
+            </div>
+          </div></div>
+        </div>
+        <div class="fld sfold open acc-flush" id="fbItemAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">항목 <span class="n" id="fbItemCount"></span><span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
+            <div class="rs-box" data-rs="fb">
+            <div class="mt-imglist" id="fbItemList" data-rowcard="1"></div>
+            <div class="im-addrow">
+              <input type="file" id="fbListUp" accept="image/*" multiple style="display:none;" onchange="blkListUpload(this,'fb')">
+              <button type="button" class="ghost" id="fbItemUp" onclick="document.getElementById('fbListUp').click()" title="내 컴퓨터의 이미지를 보관함과 이 목록에 함께 넣습니다"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>업로드</button>
+              <button type="button" class="btn-sm" id="fbItemAdd" onclick="fbItemAddRow()"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>추가</button>
+            </div>
+            </div>
+            <div class="mtk-hint" id="fbItemHint"></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="fbMoveAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">움직임<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow" style="margin-bottom:6px;"><span class="k">줄 수</span></div>
+            <div class="mt-seg" id="fbRowsSeg">
+              <button type="button" class="mt-seg-b" data-m="1" onclick="fbSeg('rows','1','fbRowsSeg')">1줄</button>
+              <button type="button" class="mt-seg-b active" data-m="2" onclick="fbSeg('rows','2','fbRowsSeg')">2줄 (서로 반대로)</button>
+            </div>
+            <div class="srow" style="margin:12px 0 6px;"><span class="k">방향</span></div>
+            <div class="mt-seg" id="fbDirSeg">
+              <button type="button" class="mt-seg-b active" data-m="left" onclick="fbSeg('dir','left','fbDirSeg')">왼쪽으로</button>
+              <button type="button" class="mt-seg-b" data-m="right" onclick="fbSeg('dir','right','fbDirSeg')">오른쪽으로</button>
+            </div>
+            <div class="srow" style="margin-top:12px;"><span class="k">속도</span><input class="rng" type="range" id="fbSpd" min="10" max="120" step="2" value="40"><span class="v" id="fbSpdV">40</span></div>
+            <div class="srow"><span class="k">간격</span><input class="rng" type="range" id="fbGap" min="8" max="64" step="2" value="20"><span class="v" id="fbGapV">20px</span></div>
+            <div class="sline"><span class="lbl">양 끝 흐리게</span><button type="button" class="sw on" id="fbFade" onclick="fbSw(this,'fade')"></button></div>
+            <div class="sline"><span class="lbl">마우스 올리면 멈춤</span><button type="button" class="sw on" id="fbPause" onclick="fbSw(this,'pause')"></button></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="fbShapeAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">모양<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow" data-fbt="logo"><span class="k">로고 높이</span><input class="rng" type="range" id="fbLh" min="24" max="96" step="2" value="40"><span class="v" id="fbLhV">40px</span></div>
+            <div class="sline" data-fbt="logo"><span class="lbl">흑백으로 보이기</span><button type="button" class="sw on" id="fbGray" onclick="fbSw(this,'gray')"></button></div>
+            <div class="tx-hint" data-fbt="logo">켜면 로고가 흐린 흑백으로 흐르다가 마우스를 올린 로고만 원래 색으로 보입니다.</div>
+            <div class="srow" data-fbt="text"><span class="k">글자 크기</span><input class="rng" type="range" id="fbTs" min="24" max="120" step="2" value="56"><span class="v" id="fbTsV">56px</span></div>
+            <div class="sline" data-fbt="text"><span class="lbl">속이 빈 글자 섞기</span><button type="button" class="sw on" id="fbOutline" onclick="fbSw(this,'outline')"></button></div>
+            <div class="srow" data-fbt="text" style="margin:12px 0 6px;"><span class="k">사이 기호</span></div>
+            <div class="mt-seg" id="fbSepSeg" data-fbt="text">
+              <button type="button" class="mt-seg-b active" data-m="✦" onclick="fbSeg('sep','✦','fbSepSeg')">✦</button>
+              <button type="button" class="mt-seg-b" data-m="★" onclick="fbSeg('sep','★','fbSepSeg')">★</button>
+              <button type="button" class="mt-seg-b" data-m="●" onclick="fbSeg('sep','●','fbSepSeg')">●</button>
+              <button type="button" class="mt-seg-b" data-m="" onclick="fbSeg('sep','','fbSepSeg')">없음</button>
+            </div>
+            <div class="srow" data-fbt="image"><span class="k">사진 높이</span><input class="rng" type="range" id="fbIh" min="140" max="480" step="10" value="260"><span class="v" id="fbIhV">260px</span></div>
+            <div class="srow" data-fbt="image"><span class="k">모서리</span><input class="rng" type="range" id="fbIr" min="0" max="40" step="1" value="14"><span class="v" id="fbIrV">14px</span></div>
+            <div class="srow" data-fbt="cap"><span class="k">캡처 높이</span><input class="rng" type="range" id="fbCh" min="200" max="480" step="10" value="300"><span class="v" id="fbChV">300px</span></div>
+            <div class="tx-hint" data-fbt="rv">카드 크기는 모두 같게 맞춰집니다. 후기 글은 3줄까지 보입니다.</div>
+            <div class="srow"><span class="k">제목 크기</span><input class="rng" type="range" id="fbTts" min="24" max="72" step="1" value="40"><span class="v" id="fbTtsV">40px</span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="fbColorAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">색<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow"><span class="k">배경색</span><span class="sw-col"><input type="color" id="fbBg" value="#ffffff"><span class="hex" id="fbBgV">#FFFFFF</span></span></div>
+            <div class="srow"><span class="k">글 · 별</span><span class="sw-col"><input type="color" id="fbTc" value="#222222"><span class="hex" id="fbTcV">#222222</span></span></div>
+            <div class="srow" data-fbt="rv"><span class="k">소속 글</span><span class="sw-col"><input type="color" id="fbMc" value="#90909a"><span class="hex" id="fbMcV">#90909A</span></span></div>
+            <div class="srow" data-fbt="rv"><span class="k">카드</span><span class="sw-col"><input type="color" id="fbCb" value="#f7f7f9"><span class="hex" id="fbCbV">#F7F7F9</span></span></div>
+            <div class="srow" data-fbt="rv"><span class="k">포인트 (이름 앞 원)</span><span class="sw-col"><input type="color" id="fbPc" value="#d1e8a0"><span class="hex" id="fbPcV">#D1E8A0</span></span></div>
+            <div class="srow" data-fbt="text"><span class="k">포인트 (사이 기호)</span><span class="sw-col"><input type="color" id="fbSc" value="#b8925a"><span class="hex" id="fbScV">#B8925A</span></span></div>
+          </div></div>
+        </div>
+        <div class="fld sfold" id="fbBoxAcc">
+          <div class="fld-h fold-h" onclick="smAcc(this)">여백<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="acc-body"><div class="acc-in">
+            <div class="srow"><span class="k">위아래</span><input class="rng" type="range" id="fbPv" min="0" max="200" step="2" value="96"><span class="v" id="fbPvV">96px</span></div>
+            <div class="tx-hint">흐르는 띠는 화면 양 끝까지 흐르는 블록이라 본문 폭 · 좌우 여백이 없습니다. 제목만 사이트 본문 폭에 맞춰집니다.</div>
           </div></div>
         </div>
 
@@ -23895,6 +24073,7 @@
     if(card.getAttribute('data-kind')==='idxlist'){ baInsertIdx(card); return; }
     if(card.getAttribute('data-kind')==='faqacc'){ baInsertFaq(card); return; }   /* 260923 추가 — FAQ 아코디언 */
     if(card.getAttribute('data-kind')==='qnaacc'){ baInsertQna(card); return; }   /* 260923 추가 — QnA 아코디언 */
+    if(card.getAttribute('data-kind')==='flowband'){ baInsertFlowBand(card); return; }
     if(card.getAttribute('data-kind')==='timeline'){ baInsertTimeline(card); return; }   /* 261117 추가 — 연혁 타임라인(TEXT01) */
     if(card.getAttribute('data-kind')==='scrollread'){ baInsertScrollRead(card); return; }   /* 260923 추가 — 스크롤 문장 등장 */
     if(card.getAttribute('data-kind')==='cardring'){ baInsertRing(card); return; }
@@ -25456,6 +25635,7 @@
     if(clone && clone.getAttribute('data-block')==='idxlist'){ if(typeof ixCloneInit==='function') ixCloneInit(src,clone); return; }
     if(clone && clone.getAttribute('data-block')==='faqacc'){ if(typeof fqCloneInit==='function') fqCloneInit(src,clone); return; }   /* 260923 추가 */
     if(clone && clone.getAttribute('data-block')==='qnaacc'){ if(typeof qnCloneInit==='function') qnCloneInit(src,clone); return; }   /* 260923 추가 — QnA 아코디언 */
+    if(clone && clone.getAttribute('data-block')==='flowband'){ if(typeof fbCloneInit==='function') fbCloneInit(src,clone); return; }
     if(clone && clone.getAttribute('data-block')==='timeline'){ if(typeof tlCloneInit==='function') tlCloneInit(src,clone); return; }   /* 261117 추가 — 연혁 타임라인(TEXT01) */
     if(clone && clone.getAttribute('data-block')==='scrollread'){ if(typeof srCloneInit==='function') srCloneInit(src,clone); return; }   /* 260923 추가 — 스크롤 문장 등장 */
     if(clone && clone.getAttribute('data-block')==='cardring'){ if(typeof crCloneInit==='function') crCloneInit(src,clone); return; }
@@ -25692,6 +25872,9 @@
      (사진형으로 컨텐츠 CONTENT01 에 넣었다가, 사진을 뺀 목록형으로 바꾸며 글만 있는 블록이 되어 텍스트 「목록」 탭(인덱스 리스트 · FAQ · QnA 옆)으로 옮겼다 · 썸네일 = 실제 블록 정지컷) */
   (function(){ var L=BA_CARDS_TEXT; L.forEach(function(c){ var m=/^TEXT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='TEXT'+(n<10?'0':'')+n; });
     L.unshift({no:1, kind:'timeline', label:'TEXT01', ar:'800/480', img:ED_IMG+'ba/timeline-5.jpg', vid:'ba/timeline-5'}); })();
+  /* 261117 추가 — 흐르는 띠(로고 · 문구 · 이미지 · 후기 카드 / 캡처를 한 블록에서 종류만 바꿔 흘린다)를 TEXT01 로 맨 앞에. 기존 TEXT01-20 은 TEXT02-21 로 한 칸씩 민다 */
+  (function(){ var L=BA_CARDS_TEXT; L.forEach(function(c){ var m=/^TEXT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='TEXT'+(n<10?'0':'')+n; });
+    L.unshift({no:1, kind:'flowband', label:'TEXT01', ar:'800/480', img:ED_IMG+'ba/flowband-1.jpg'}); })();
   var BA_MOTO_THUMB=ED_IMG+'ba/image01-6.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_IMG2_THUMB='data:image/jpeg;base64,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SDC6sfms/mW/RBovqyq81n8yfVlV5rP5lvUQaE4XV+az+ZWHCaw/ms/nXQog5p2DVp4NZ/OoXYFXngyP+ddWiDjH7O4keDIvWLHk2XxV3COH1i7tEHnjtksXPCOH1v8AZRu2Pxk/o4PW/wBl6OiDzU7G419lB67+ysOxmN/ZQeu/svTUQchsns/iOE4jNNWMjax8OUZJM2twV16IgwsWppKvC6iCEAyPbZtzYcVyXixinmResXdIg4bxYxTzIvWKnivivmResXdIg4UbL4p5kXrFXxYxTzIvWLuUQcN4sYp9nF6xU8WMV+zh9Yu6RBwTtlsWI0jh9b/ZWDZLFQdWQ+t/svQEQcGNl8VH5kXrFXxXxTzIvWLu0QcJ4r4r5kXrFG/ZTFT+ZD61d+iDzs7IYuTfJD61Xs2TxZv5kPrf7L0FEHAHZTFvs4fWq07J4v8AZw+tXoKIPPTsli/2cPrf7K07I4x9nD63+y9ERB5ydj8YP6OH1o+SsOx2M/ZQetHyXpKIPK59hcckN2w0/rv7LFd9HuPuP4mm9cPkvXkQeV0+w2OxtAdHBp+2/sskbGY19nB67+y9LRB5p4mY1Y/g4OH2v9l6NTMdHSxMd5TWAG3SApUQFzuI4VXVOJSyxtjMRtlu+x4BdEiDlBgFbbKWRAdTrq4YHXM/NY8cwDwF1KIOS+oa5xLnU8NugyZj8lr5dm8dhqhUUz2vBLQYXygNYOfLpoT8F3qIOFxTZTFcTMULzSilJPhDHjMZB0A307VnQbPVFDTsgpaaJsbQGhoktYBdYiDmTgdTLHymZD0CW4WnxrZHGq+nEVFWupnX1cJdD1EAX9q75EHneCbC4hhFE+IysqJZDd7pXXaeoDmCuqNlsabTyhtHh9QXkgxGQhrm9Bvp7F6EiDz3DNkMUw+7hBRjzGttdg6LrbR4FiOa72RAnnY+w9I511iIOTm2eqasFlRSwPtwc4gg+iy17tjZYqxtXBRRtlvY7ufKCOscF3iIOSl2bqXtLmxtEltPwmix6PZnE4onMqTFKS4nQ2HtJXaog42XZyviaXUcFKyQ9g7za5WN9R482VjHQscSOVNFOGtB6Mp1K7tEHl20GxW01U+OfDaotka2zo31Nmv+XtWTguy2Pw0b2YlTQGUjUxVN8/bpovSEQeb0mxGJwVrZGySeDkHNDPOJDfms7iAoMT2JxaYsNNSRiZjszJm1OUs/mzL09EHAU+ye0NOGBuJCWMEZo58rtOexAW5bgdYw5WiJrXDlEcb9i6ZEHKU2A1lM9wETCwXLeUBx4nQLdYZRS0rpHSG2cDk3vbitiiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIg/9k=';   /* 260919 추가 — 이미지 블록(IMAGE02) · 카드 썸네일(실제 블록 스크린샷, 인라인). 서버에 ba/image02.jpg 를 올리면 ED_IMG+'ba/image02.jpg' 로 바꾼다 */
   var BA_BC_THUMB=ED_IMG+'ba/image03.jpg';   /* 260930 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙). 예전 SVG 그림은 없앴다 */
@@ -26089,7 +26272,7 @@
     content:{ bookflip2:'3D', stackcard:'스크롤', beforeafter:'', worklist:'목록' },   /* 261111 추가 — 마우스 따라오는 이미지 목록 = 목록 탭 */
     slide:{ stripgal:'3D', cardring:'3D', bookflip2:'3D', scene1:'와이드', scene2:'와이드', scene3:'와이드', photo1:'기본', multi4:'기본', logoflow:'기본', sqcar:'기본' },   /* 261109 추가 — 스퀴즈 캐러셀 */
     form:{ basic:'문의', gray:'문의', message:'문의', info:'정보 수집', personal:'정보 수집', company:'정보 수집', customer:'정보 수집', meeting:'신청', order:'신청', survey:'신청' },
-    text:{ cred:'기본', timeline:'목록', stickstat:'모션', smeartext:'모션', polytext:'모션', typetext:'모션', arctext:'모션', risetext:'모션', scrollread:'모션', idxlist:'목록', faqacc:'목록', qnaacc:'목록' },
+    text:{ cred:'기본', timeline:'목록', flowband:'목록', stickstat:'모션', smeartext:'모션', polytext:'모션', typetext:'모션', arctext:'모션', risetext:'모션', scrollread:'모션', idxlist:'목록', faqacc:'목록', qnaacc:'목록' },
     image:{ rbstat:'이미지', imggrid:'이미지', 'imggrid/video':'동영상', 'imggrid/yt1':'동영상', 'imggrid/yt2':'동영상', 'imggrid/shorts3':'동영상', 'cred/vtext':'동영상', 'cred/bgvid':'동영상', 'imggrid/logo5':'로고', 'imggrid/logo5d':'로고' },   /* 261028 삭제 — moto3d · crumple 은 히어로 섹션(grp 를 옮길 때 직접 준다) */
     button:{ invert:'채움', fill:'채움', wipe:'채움', bgrow:'채움', highlight:'채움', fade:'채움',
              line:'선', cline:'선', bracket:'선', ring:'선', dot:'선', round:'선', circle:'채움',
@@ -26314,7 +26497,8 @@
   SM_KIND.ltblk='최근게시물';   /* 261023 추가 — 최근게시물 블록 */
   SM_KIND.valuelist='이미지 전환 목록';   /* 261111 추가 — CONTENT01 */
   SM_KIND.worklist='마우스 따라오는 이미지 목록';
-  SM_KIND.timeline='연혁 타임라인';   /* 261117 추가 — TEXT01 */
+  SM_KIND.timeline='연혁 타임라인';
+  SM_KIND.flowband='흐르는 띠';   /* 261117 추가 — TEXT01 */
   SM_KIND.stickstat='고정 타이틀 숫자';   /* 261112 추가 — TEXT01 */   /* 261111 추가 — 마우스 따라오는 이미지 목록(CONTENT01) */
   SM_KIND.cnblk='컨텐츠';   /* 261022 추가 — 컨텐츠 블록 */
   function bsetSync(blk){
@@ -26348,7 +26532,8 @@
     var isIx=(kindAttr==='idxlist');
     var isFq=(kindAttr==='faqacc');   /* 260923 추가 — FAQ 아코디언 */
     var isQn=(kindAttr==='qnaacc');   /* 260923 추가 — QnA 아코디언 */
-    var isTl=(kindAttr==='timeline');   /* 261117 추가 — 연혁 타임라인(TEXT01) */
+    var isTl=(kindAttr==='timeline');
+    var isFb=(kindAttr==='flowband');   /* 261117 추가 — 연혁 타임라인(TEXT01) */
     var isSr=(kindAttr==='scrollread');   /* 260923 추가 — 스크롤 문장 등장 */
     var isBc=(kindAttr==='beforeafter');   /* 260923 추가 — 이전·이후 비교 */
     var isCk=(kindAttr==='crumple');   /* 260923 추가 — 구김 이미지(IMAGE04) */
@@ -26369,12 +26554,13 @@
     var isCd=(kindAttr==='cdblk');   /* 261019 추가 — 카운트다운 블록(COUNTDOWN01~09) */
     var isRt=(kindAttr==='cred');   /* 260905 추가 — 이력 텍스트 블록 */
     var d=document.getElementById('bsetDefault'), s=document.getElementById('bsetSmear'), m=document.getElementById('bsetMoto'), g=document.getElementById('bsetStrip'), fl=document.getElementById('bsetFloat'), pt=document.getElementById('bsetPoly'), tw=document.getElementById('bsetType'), cr=document.getElementById('bsetRing'), hx=document.getElementById('bsetSpiral'), ax=document.getElementById('bsetArc'), ix=document.getElementById('bsetIdx');
-    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isSq||isRb||isTg||isFq||isQn||isSk||isSr||isTl||isBc||isCk||isSc||isVl||isWl||isNx||isIr||isFm||isCa||isCt||isBd||isDv||isCd||isNm||isQr||isCn||isSn||isTk||isLt)?'none':'';   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 수정 — 구분선 */
+    if(d) d.style.display=(isSm||isMt||isSg||isFl||isPt||isTw||isCr||isHx||isAx||isIx||isRt||isB2||isDg||isGg||isSs||isVc||isRs||isIg||isWc||isHg||isIm||isBt||isGs||isHz||isSq||isRb||isTg||isFq||isQn||isSk||isSr||isTl||isFb||isBc||isCk||isSc||isVl||isWl||isNx||isIr||isFm||isCa||isCt||isBd||isDv||isCd||isNm||isQr||isCn||isSn||isTk||isLt)?'none':'';   /* 261008 수정 — 게시판 */   /* 260929 수정 — 폼·캘린더·컨택트 */   /* 261019 수정 — 구분선 */
     var rsp=document.getElementById('bsetRise'); if(rsp) rsp.style.display=isRs?'':'none';
     var fqp=document.getElementById('bsetFaq'); if(fqp) fqp.style.display=isFq?'':'none';   /* 260923 추가 */
     var qnp=document.getElementById('bsetQna'); if(qnp) qnp.style.display=isQn?'':'none';   /* 260923 추가 — QnA 아코디언 */
     var srp=document.getElementById('bsetScrollRead'); if(srp) srp.style.display=isSr?'':'none';
-    var tlp=document.getElementById('bsetTimeline'); if(tlp) tlp.style.display=isTl?'':'none';   /* 261117 추가 */   /* 260923 추가 */
+    var tlp=document.getElementById('bsetTimeline'); if(tlp) tlp.style.display=isTl?'':'none';
+    var fbp=document.getElementById('bsetFlowBand'); if(fbp) fbp.style.display=isFb?'':'none';   /* 261117 추가 */   /* 260923 추가 */
     var bcp=document.getElementById('bsetBc'); if(bcp) bcp.style.display=isBc?'':'none';   /* 260923 추가 — 이전·이후 비교 */
     var irp=document.getElementById('bsetIr'); if(irp) irp.style.display=isIr?'':'none';   /* 260923 추가 — 3D 이미지 링 */
     var ckp=document.getElementById('bsetCk'); if(ckp) ckp.style.display=isCk?'':'none';   /* 260923 추가 — 구김 이미지 */
@@ -26456,7 +26642,7 @@
     ixCurBlk=isIx?blk:null;
     fqCurBlk=isFq?blk:null;   /* 260923 추가 */
     qnCurBlk=isQn?blk:null;   /* 260923 추가 — QnA 아코디언 */
-    srCurBlk=isSr?blk:null;   tlCurBlk=isTl?blk:null;   /* 261117 추가 */   /* 260923 추가 */
+    srCurBlk=isSr?blk:null;   tlCurBlk=isTl?blk:null;   fbCurBlk=isFb?blk:null;   /* 261117 추가 */   /* 260923 추가 */
     bcCurBlk=isBc?blk:null;   /* 260923 추가 — 이전·이후 비교 */
     irCurBlk=isIr?blk:null;   /* 260923 추가 — 3D 이미지 링 */
     ckCurBlk=isCk?blk:null;   /* 260923 추가 — 구김 이미지 */
@@ -26513,7 +26699,8 @@
     if(isFq){ fqBuildBset(); fqFillBset(); }   /* 260923 추가 */
     if(isQn){ qnBuildBset(); qnFillBset(); }   /* 260923 추가 — QnA 아코디언 */
     if(isSr){ srBuildBset(); srFillBset(); }
-    if(isTl){ tlBuildBset(); tlFillBset(); }   /* 261117 추가 */   /* 260923 추가 */
+    if(isTl){ tlBuildBset(); tlFillBset(); }
+    if(isFb){ fbBuildBset(); fbFillBset(); }   /* 261117 추가 */   /* 260923 추가 */
     if(isBc){ bcBuildBset(); bcFillBset(); }   /* 260923 추가 — 이전·이후 비교 */
     if(isIr){ irBuildBset(); irFillBset(); }   /* 260923 추가 — 3D 이미지 링 */
     if(isCk){ ckBuildBset(); ckFillBset(); }   /* 260923 추가 — 구김 이미지 */
@@ -28054,6 +28241,7 @@
     sc:{video:true,max:function(){return SC_MAX;},cur:function(){return scCurBlk;},cfg:function(b){return scCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push(scItemNew(a.src)); },render:function(){ scItemRender(); },apply:function(b){ scApply(b); }},   /* 260923 추가 — 스택 카드 */
     vl:{video:true,max:function(){return VL_MAX;},cur:function(){return vlCurBlk;},cfg:function(b){return vlCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push(vlItemNew(a.src)); },render:function(){ vlItemRender(); },apply:function(b){ vlApply(b); }},   /* 261111 추가 — 이미지 전환 목록 */
     wl:{video:true,max:function(){return WL_MAX;},cur:function(){return wlCurBlk;},cfg:function(b){return wlCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push(wlItemNew(a.src)); },render:function(){ wlItemRender(); },apply:function(b){ wlApply(b); }},   /* 261111 추가 — 마우스 따라오는 이미지 목록(CONTENT01) */
+    fb:{video:false,max:function(){return FB_MAX;},cur:function(){return fbCurBlk;},cfg:function(b){return fbCfg(b);},len:function(c){ return (c[FB_KEY[fbTKey(c)]]||[]).length; },push:function(c,a){ var k=FB_KEY[fbTKey(c)]; if(k==='texts'||k==='reviews') return; c[k].push({src:a.src}); },render:function(){ fbItemRender(); },apply:function(b){ fbApply(b); }},
     ir:{video:false,max:IR_MAX,cur:function(){return irCurBlk;},cfg:function(b){return irCfg(b);},len:function(c){return (c.imgs||[]).length;},push:function(c,a){ irMaterialize(c); c.imgs.push(a.src); },render:function(){ irImgRender(); irImgSegSync(); },apply:function(b){ irApply(b); }},   /* 260923 추가 — 3D 이미지 링 */
     ck:{video:true,max:function(){return CK_MAX;},cur:function(){return ckCurBlk;},cfg:function(b){return ckCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push({src:a.src}); },render:function(){ ckItemRender(); },apply:function(b){ ckApply(b); }},   /* 260923 추가 — 구김 이미지 */
     sk:{video:true,max:function(){return SK_MAX;},cur:function(){return skCurBlk;},cfg:function(b){return skCfg(b);},len:function(c){return (c.items||[]).length;},push:function(c,a){ c.items.push({src:a.src}); },render:function(){ skItemRender(); },apply:function(b){ skApply(b); }},   /* 260923 추가 — 스택 갤러리 */
@@ -44767,6 +44955,339 @@ global.PolyFX = API;
   window.tlCapInput=tlCapInput; window.tlItemAddRow=tlItemAddRow; window.tlItemDel=tlItemDel; window.tlItemReorder=tlItemReorder;
 
   /* ══════════════════════════════════════════════════════════════════
+     261117 추가 — 흐르는 띠 블록 (TEXT01 · kind flowband · 접두어 fb · cfg _fbCfg)
+     · 한 블록 · 내용 종류 4가지(type): 로고 · 문구 · 이미지 · 후기(rs: 카드형 card / 캡처형 cap)
+     · 움직임(속도 px/초 · 방향 · 줄 수 · 간격 · 양 끝 흐림 · 마우스 올리면 멈춤)은 모든 종류 공통
+     · 종류마다 항목 목록을 따로 가진다(logos · texts · imgs · reviews · caps) — 종류를 바꿔도 다른 종류 내용이 남는다
+     · 줄은 항목 묶음을 화면 폭보다 길게 되풀이한 뒤 두 벌 이어 붙이고 -50% 까지 흘린다(끊김 없이). 길이는 그릴 때 잰다
+     · 작은 제목 · 제목은 캔버스에서 바로 고친다(연혁 타임라인과 같은 방식)
+     ══════════════════════════════════════════════════════════════════ */
+  var FB_DEF={
+    type:'review', rs:'card', head:true, eyebrow:'REVIEW', title:'벌써 1,200개의 후기가 쌓였어요',
+    rows:2, dir:'left', spd:40, gap:20, fade:true, pause:true,
+    lh:40, gray:true, ts:56, outline:true, sep:'✦', ih:260, ir:14, ch:300, tts:40,
+    bg:'#ffffff', tc:'#222222', mc:'#90909a', cb:'#f7f7f9', pc:'#d1e8a0', sc:'#b8925a',
+    pv:96,
+    logos:[], texts:[], imgs:[], reviews:[], caps:[]
+  };
+  /* 종류를 바꿀 때 제목을 직접 고친 적이 없으면 그 종류에 어울리는 제목으로 */
+  var FB_HEAD={
+    logo:  [true,'함께한 브랜드',''],
+    text:  [false,'',''],
+    image: [false,'PORTFOLIO','빛이 머문 순간들'],
+    rv:    [true,'REVIEW','벌써 1,200개의 후기가 쌓였어요'],
+    cap:   [true,'REAL REVIEW','고객님이 직접 보내 주신 이야기']
+  };
+  var FB_KEY={logo:'logos', text:'texts', image:'imgs', rv:'reviews', cap:'caps'};
+  /* 종류마다 줄 수 기본값 — 캡처 · 사진 · 로고는 한 줄, 문구 · 후기 카드는 두 줄(서로 반대로). 직접 바꾸면(rowsEdited) 그 값을 유지 */
+  var FB_ROWS={logo:1, text:2, image:1, rv:2, cap:1};
+  var FB_MAX=20, FB_MIN=1;
+  var fbCurBlk=null, fbBound=false;
+  var FB_REDUCE=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  /* 견본 — 로고는 가상의 브랜드 글자 로고(SVG), 후기 캡처는 대화 · 리뷰 모양을 그린 SVG(실제로는 사용자가 캡처 이미지를 올린다) */
+  function fbSvg(w,h,body){ return 'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">'+body+'</svg>'); }
+  var FB_FF="Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
+  function fbLogo(icon,word,w,thin){ return fbSvg(w,40,(icon||'')+'<text x="'+(icon?44:0)+'" y="28" font-family="'+FB_FF+'" font-size="'+(thin?20:24)+'" font-weight="'+(thin?500:800)+'" letter-spacing="'+(thin?3:-0.5)+'" fill="#222">'+word+'</text>'); }
+  var FB_SAMPLE_LOGOS=[
+    fbLogo('<circle cx="16" cy="20" r="12" fill="none" stroke="#222" stroke-width="3"/><circle cx="16" cy="20" r="5" fill="#222"/>','Nova',110),
+    fbLogo('<path d="M4 32L16 8l12 24z" fill="#222"/>','PEAK',120),
+    fbLogo('','MAISON LUMI',176,1),
+    fbLogo('<rect x="4" y="8" width="11" height="11" rx="2" fill="#222"/><rect x="18" y="8" width="11" height="11" rx="5.5" fill="#222"/><rect x="4" y="22" width="11" height="11" rx="5.5" fill="#222"/><rect x="18" y="22" width="11" height="11" rx="2" fill="#222"/>','blocks',134),
+    fbLogo('<path d="M4 20c5-11 19-11 24 0-5 11-19 11-24 0z" fill="none" stroke="#222" stroke-width="3"/>','Orbit',118),
+    fbLogo('','HAEON',96,1),
+    fbLogo('<path d="M16 5l3.6 8.6 9.4.6-7.2 6 2.3 9.1L16 24.3l-8.1 5 2.3-9.1-7.2-6 9.4-.6z" fill="#222"/>','Stella',126),
+    fbLogo('<path d="M6 32V8h9a8 8 0 010 16H6" fill="none" stroke="#222" stroke-width="3.4"/>','Plain.',118)
+  ];
+  var FB_SAMPLE_TEXTS=['사진 한 장으로 남기는 오늘','STUDIO B','예약 오픈','SINCE 2019'];
+  var FB_IMG='https://images.unsplash.com/', FB_IQ='?w=900&h=600&fit=crop&q=75';
+  var FB_SAMPLE_IMGS=['photo-1471341971476-ae15ff5dd4ea','photo-1616725104776-72fd9a51dfbd','photo-1519741497674-611481863552','photo-1768818928341-3b31b8965c6d','photo-1542038784456-1ea8e935640e','photo-1554048612-b6a482bc67e5'].map(function(id){ return FB_IMG+id+FB_IQ; });
+  var FB_SAMPLE_REVIEWS=[
+    ['보정까지 꼼꼼해서 원본보다 훨씬 자연스러웠어요.','이서준','프로필 촬영'],['단체 촬영인데도 한 명씩 신경 써 주셨어요.','한빛 상사','단체 촬영'],
+    ['아이가 웃는 순간을 놓치지 않고 담아 주셨어요.','김민지','가족사진'],['10년 전 그 자리에서 다시 찍어 주셔서 감동이었어요.','최유나','웨딩 촬영'],
+    ['긴장했는데 편하게 이끌어 주셔서 표정이 살았어요.','박하은','웨딩 촬영'],['야외 스냅까지 함께 찍어서 영상에 썼어요.','오세린','야외 스냅'],
+    ['제품 컷이 깔끔해서 상세페이지에 바로 썼어요.','스튜디오 담','제품 촬영'],['증명사진 찍으러 갔다가 프로필까지 찍었어요.','윤도현','증명사진'],
+    ['조명을 같이 골라 주셔서 원하는 분위기가 나왔어요.','정우진','프로필 촬영'],['일정이 급했는데 맞춰 주셔서 감사했습니다.','라온 컴퍼니','기업 촬영']
+  ];
+  function fbEscX(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function fbChatSvg(lines,time){
+    var y=34, b='<rect width="240" height="300" fill="#bacee0"/><text x="120" y="20" text-anchor="middle" font-family="'+FB_FF+'" font-size="11" fill="#3a4a5a">스튜디오 B</text>';
+    lines.forEach(function(l){ var me=l[0]==='me', w=Math.min(200,l[1].length*12.5+20), x=me?228-w:12;
+      b+='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="34" rx="12" fill="'+(me?'#fee500':'#ffffff')+'"/><text x="'+(x+10)+'" y="'+(y+22)+'" font-family="'+FB_FF+'" font-size="12" fill="#222">'+fbEscX(l[1])+'</text>'; y+=44; });
+    b+='<text x="14" y="'+(y+6)+'" font-family="'+FB_FF+'" font-size="10" fill="#556">'+time+'</text>';
+    return fbSvg(240,300,b);
+  }
+  function fbRevSvg(id,txt,kw){
+    var b='<rect width="260" height="300" rx="0" fill="#ffffff"/><circle cx="32" cy="32" r="14" fill="#e9ecef"/><text x="54" y="37" font-family="'+FB_FF+'" font-size="13" font-weight="700" fill="#222">'+id+'</text>'
+      +'<text x="18" y="70" font-family="'+FB_FF+'" font-size="13" letter-spacing="2" fill="#ff6a00">★★★★★</text>'
+      +'<rect x="18" y="82" width="224" height="110" rx="8" fill="#eceff3"/><path d="M60 170l40-46 30 30 22-22 50 38z" fill="#d6dbe2"/>';
+    txt.forEach(function(t,i){ b+='<text x="18" y="'+(214+i*20)+'" font-family="'+FB_FF+'" font-size="13" fill="#333">'+fbEscX(t)+'</text>'; });
+    b+='<rect x="18" y="262" width="'+(kw.length*12+18)+'" height="22" rx="11" fill="#f1f3f5"/><text x="27" y="277" font-family="'+FB_FF+'" font-size="11" fill="#555">'+fbEscX(kw)+'</text>';
+    return fbSvg(260,300,b);
+  }
+  var FB_SAMPLE_CAPS=[
+    fbChatSvg([['you','작가님 사진 받았어요!!'],['you','진짜 너무 예뻐요 😭'],['you','부모님도 액자로 거신대요'],['me','마음에 드셨다니 기뻐요 🙂']],'오후 3:12'),
+    fbRevSvg('blossom_92',['본식 스냅 결과물이 기대 이상이에요.','동선도 미리 다 짜 주셨어요.'],'사진이 예뻐요'),
+    fbChatSvg([['you','프로필 덕분에 오디션 붙었어요!'],['you','다음에 또 갈게요 🙏'],['me','축하드려요!! 또 예쁘게 담아 드릴게요']],'오전 11:40'),
+    fbRevSvg('minji.k',['낯을 가리는 아기랑 놀아 주시면서','찍어 주셔서 웃는 사진이 많아요.'],'아이와 가기 좋아요'),
+    fbChatSvg([['you','제품 사진 반응이 너무 좋아요'],['you','2차 촬영도 예약하고 싶어요!'],['me','네! 일정 보내 드릴게요']],'오후 6:05')
+  ];
+  function fbTKey(c){ return c.type==='review'?(c.rs==='cap'?'cap':'rv'):c.type; }
+  function fbCfg(blk){
+    if(!blk._fbCfg){
+      var c=JSON.parse(JSON.stringify(FB_DEF));
+      c.logos=FB_SAMPLE_LOGOS.map(function(s){ return {src:s}; });
+      c.texts=FB_SAMPLE_TEXTS.map(function(t){ return {t:t}; });
+      c.imgs=FB_SAMPLE_IMGS.map(function(s){ return {src:s}; });
+      c.reviews=FB_SAMPLE_REVIEWS.map(function(r){ return {s:5, t:r[0], n:r[1], m:r[2]}; });
+      c.caps=FB_SAMPLE_CAPS.map(function(s){ return {src:s}; });
+      blk._fbCfg=c;
+    }
+    var c2=blk._fbCfg;
+    Object.keys(FB_DEF).forEach(function(k){ if(c2[k]==null) c2[k]=Array.isArray(FB_DEF[k])?[]:FB_DEF[k]; });
+    ['logos','texts','imgs','reviews','caps'].forEach(function(k){ if(!Array.isArray(c2[k])) c2[k]=[]; });
+    if(c2.ebH==null) c2.ebH=tlTxH(c2.eyebrow);
+    if(c2.titleH==null) c2.titleH=tlTxH(c2.title);
+    return c2;
+  }
+  function fbBlockHTML(){
+    return '<span class="tag-badge">텍스트</span>'+SM_GEAR
+      +'<div class="fb-wrap"><div class="fb-head"><div class="fb-eb"></div><h2 class="fb-tt"></h2></div><div class="fb-rows"></div></div>';
+  }
+  function fbAttr(s){ return _mtAttr(s); }
+  /* 항목 하나 → HTML */
+  function fbItemH(c,tk,it){
+    it=it||{};
+    if(tk==='logo') return it.src?'<span class="fb-it fb-lg"><img src="'+fbAttr(it.src)+'" alt="" draggable="false"></span>':'';
+    if(tk==='image') return it.src?'<span class="fb-it fb-im"><img src="'+fbAttr(it.src)+'" alt="" draggable="false" loading="lazy"></span>':'';
+    if(tk==='cap') return it.src?'<span class="fb-it fb-cap"><img src="'+fbAttr(it.src)+'" alt="" draggable="false" loading="lazy"></span>':'';
+    if(tk==='text'){ var t=String(it.t||'').trim(); if(!t) return ''; return '<span class="fb-it fb-tx">'+rsEsc(t)+'</span>'+(c.sep?'<span class="fb-sep" aria-hidden="true">'+rsEsc(c.sep)+'</span>':''); }
+    var n=Math.max(0,Math.min(5,Math.round(+it.s||5))), nm=String(it.n||'');
+    return '<span class="fb-it fb-rv"><span class="fb-st" aria-label="별점 '+n+'점">'+'★★★★★'.slice(0,n)+'<i>'+'★★★★★'.slice(n)+'</i></span>'
+      +'<span class="fb-q">'+rsEsc(it.t||'')+'</span>'
+      +'<span class="fb-who"><span class="fb-av">'+rsEsc(nm.charAt(0)||'·')+'</span><span><b>'+rsEsc(nm)+'</b><em>'+rsEsc(it.m||'')+'</em></span></span></span>';
+  }
+  /* 줄마다 항목 나누기 — 후기(카드 · 캡처)는 두 줄이면 번갈아 나누고, 로고 · 문구 · 이미지는 둘째 줄을 거꾸로 */
+  function fbRowItems(c,tk,items){
+    var rows=(+c.rows===2)?2:1; if(rows===1) return [items];
+    if((tk==='rv'||tk==='cap') && items.length>=4) return [items.filter(function(x,i){ return i%2===0; }), items.filter(function(x,i){ return i%2===1; })];
+    return [items, items.slice().reverse()];
+  }
+  function fbBuild(blk,c){
+    var host=blk.querySelector('.fb-rows'); if(!host) return;
+    var tk=fbTKey(c), items=c[FB_KEY[tk]]||[];
+    var groups=fbRowItems(c,tk,items);
+    host.innerHTML=groups.map(function(g,ri){
+      var set=g.map(function(it){ return fbItemH(c,tk,it); }).join('');
+      return '<div class="fb-row" data-r="'+ri+'"><div class="fb-track"><div class="fb-set">'+set+'</div></div></div>';
+    }).join('');
+    blk._fbSets=null;
+    host.querySelectorAll('img').forEach(function(im){ if(!im.complete) im.addEventListener('load',function(){ fbLayoutSoon(blk); },{once:true}); });
+    fbLayout(blk);
+  }
+  /* 길이 맞추기 — 묶음(.fb-set)을 화면 폭보다 길게 되풀이 → 두 벌 → -50% 까지 흘린다. 속도 = px/초 */
+  function fbLayout(blk){
+    var c=fbCfg(blk), wrap=blk.querySelector('.fb-wrap'); if(!wrap) return;
+    var W=wrap.offsetWidth||1200, spd=Math.max(5,txNum(c.spd,40));
+    wrap.querySelectorAll('.fb-row').forEach(function(row,ri){
+      var tr=row.querySelector('.fb-track'), first=tr&&tr.querySelector('.fb-set'); if(!tr||!first) return;
+      tr.querySelectorAll('.fb-set:not(:first-child)').forEach(function(x){ x.remove(); });
+      var sw=first.scrollWidth+txNum(c.gap,20); if(sw<20){ tr.style.animation='none'; return; }
+      var reps=Math.max(1,Math.ceil((W*1.1)/sw)), unit=reps*2;
+      for(var i=1;i<unit;i++){ var cl=first.cloneNode(true); cl.setAttribute('aria-hidden','true'); tr.appendChild(cl); }
+      var dur=(sw*reps)/spd;
+      var rev=((c.dir==='right')?1:0)^(ri===1?1:0);
+      tr.style.animation=FB_REDUCE?'none':('fbmq '+dur.toFixed(2)+'s linear infinite'+(rev?' reverse':''));
+    });
+  }
+  function fbLayoutSoon(blk){ clearTimeout(blk._fbLT); blk._fbLT=setTimeout(function(){ fbLayout(blk); },120); }
+  function fbHeadSet(blk,c){
+    var wrap=blk.querySelector('.fb-wrap'); if(!wrap) return;
+    [['eb',wrap.querySelector('.fb-eb'),'ebH','작은 제목을 입력하세요'],['title',wrap.querySelector('.fb-tt'),'titleH','제목을 입력하세요']].forEach(function(q){
+      var host=q[1]; if(!host) return;
+      var v=c[q[2]]||'', empty=tlEmptyH(v);
+      host.classList.toggle('is-empty', empty);
+      if(blk.classList.contains('rt-editing') && host.querySelector('.fb-e')) return;
+      var html=(empty && window.CL_MVIEW)?'':'<div class="cred fb-e'+(empty?' rt-ph':'')+'" data-fb-ed="'+q[0]+'" data-ph="'+q[3]+'">'+(empty?'<p><br></p>':v)+'</div>';
+      if(host._fbH!==html || (html && !host.querySelector('.fb-e'))){ host.innerHTML=html; host._fbH=html; }
+    });
+  }
+  function fbRtSave(blk){
+    var c=fbCfg(blk);
+    blk.querySelectorAll('.fb-wrap .cred[data-fb-ed]').forEach(function(r){
+      try{ rtCleanFonts(r); }catch(x){}
+      var h=(typeof rtHtmlOf==='function')?rtHtmlOf(r):r.innerHTML; if(tlEmptyH(h)) h='';
+      if(r.getAttribute('data-fb-ed')==='eb'){ c.ebH=h; c.eyebrow=tlPlainOf(h); } else { c.titleH=h; c.title=tlPlainOf(h); }
+      c.headEdited=true;
+      var host=r.parentNode; if(host){ host._fbH=null; host.classList.toggle('is-empty', !h); }
+      if(typeof rtPhSync==='function') rtPhSync(r);
+    });
+    if(fbCurBlk===blk){ [['fbEb',c.eyebrow],['fbTt',c.title]].forEach(function(q){ var el=document.getElementById(q[0]); if(el && document.activeElement!==el) el.value=q[1]; }); }
+  }
+  if(!window.CL_MVIEW) document.addEventListener('mousedown',function(e){
+    if(e.button!==0) return;
+    var r=e.target.closest && e.target.closest('#stage .blk[data-block="flowband"] .cred[data-fb-ed]'); if(!r || typeof rtEditStart!=='function') return;
+    var blk=r.closest('.blk');
+    if(rtEditBlk===blk){ if(blk._rtActive!==r){ blk._rtActive=r; setTimeout(function(){ rtTbPlace(true); rtTbState(); },0); } return; }
+    if(typeof selectBlock==='function' && !blk.classList.contains('sel')) selectBlock(blk);
+    rtEditStart(blk,true,r);
+  });
+  function fbApply(blk){
+    if(!blk) return;
+    var c=fbCfg(blk), wrap=blk.querySelector('.fb-wrap'); if(!wrap) return;
+    blk.style.paddingTop='0'; blk.style.paddingBottom='0'; blk.style.paddingLeft='0'; blk.style.paddingRight='0';
+    var s=wrap.style, tk=fbTKey(c), pv=txNum(c.pv,96);
+    [['--fbbg',c.bg||'#ffffff'],['--fbtc',c.tc||'#222222'],['--fbmc',c.mc||'#90909a'],['--fbcb',c.cb||'#f7f7f9'],['--fbpc',c.pc||'#d1e8a0'],['--fbsc',c.sc||'#b8925a'],
+     ['--fbgap',txNum(c.gap,20)+'px'],['--fblh',txNum(c.lh,40)+'px'],['--fbts',txNum(c.ts,56)+'px'],['--fbih',txNum(c.ih,260)+'px'],['--fbir',txNum(c.ir,14)+'px'],
+     ['--fbch',txNum(c.ch,300)+'px'],['--fbtts',txNum(c.tts,40)+'px'],['--fbpv',pv+'px'],['--fbpvm',Math.round(pv*0.66)+'px']].forEach(function(q){ s.setProperty(q[0],q[1]); });
+    wrap.setAttribute('data-t',tk);
+    wrap.setAttribute('data-fade',c.fade===false?'0':'1');
+    wrap.setAttribute('data-pause',c.pause===false?'0':'1');
+    wrap.setAttribute('data-gray',c.gray===false?'0':'1');
+    wrap.setAttribute('data-outline',c.outline===false?'0':'1');
+    var hasHd=(c.head!==false) && !!(String(c.eyebrow||'').trim()||String(c.title||'').trim());
+    wrap.setAttribute('data-head',(c.head===false)?'off':(hasHd?'1':'0'));
+    fbHeadSet(blk,c);
+    var items=c[FB_KEY[tk]]||[];
+    var sig=[tk,c.rows,c.sep,JSON.stringify(items)].join('|');
+    if(blk._fbSig!==sig || !blk.querySelector('.fb-row')){ blk._fbSig=sig; fbBuild(blk,c); }
+    else fbLayout(blk);
+    if(!wrap._fbRO && window.ResizeObserver){ wrap._fbRO=new ResizeObserver(function(){ fbLayoutSoon(blk); }); wrap._fbRO.observe(wrap); }
+  }
+  function fbInit(blk){ if(!blk) return; blk._fbSig=null; fbApply(blk); }
+  function fbCloneInit(src,clone){
+    if(!clone || clone.getAttribute('data-block')!=='flowband') return;
+    clone._fbSig=null; var w=clone.querySelector('.fb-wrap'); if(w) w._fbRO=null;
+    try{ clone._fbCfg=JSON.parse(JSON.stringify(fbCfg(src))); }catch(e){ clone._fbCfg=null; }
+    setTimeout(function(){ fbInit(clone); },0);
+  }
+  /* ── 텍스트 카드 → 흐르는 띠 블록 삽입 ── */
+  function baInsertFlowBand(card){
+    var stage=document.getElementById('stage');
+    var site=stage?stage.querySelector('.site'):null;
+    if(!site){ closeBlockAdd(); return; }
+    var blk=document.createElement('div');
+    blk.className='blk fb-blk';
+    blk.setAttribute('data-block','flowband');
+    blk.setAttribute('onclick','selectBlock(this)');
+    blk.innerHTML=fbBlockHTML();
+    blk._mvOv={tts:26, ts:32, lh:30, ih:180, ch:240, gap:14, pv:64, spd:30};   /* 모바일 시작값 — 글자 · 높이 · 간격을 줄이고 조금 느리게 */
+    var addbar=document.createElement('div');
+    addbar.className='addbar';
+    addbar.innerHTML='<button class="addbtn" onclick="event.stopPropagation();openBlockAdd(this)"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>';
+    if(pgxBlkHost(site) && baPendingAddbar && baPendingAddbar.parentNode===pgxBlkHost.h){ pgxBlkHost.h.insertBefore(blk, baPendingAddbar.nextSibling); pgxBlkHost.h.insertBefore(addbar, blk.nextSibling); } else { pgxBlkHost.h.appendChild(blk); pgxBlkHost.h.appendChild(addbar); }
+    if(typeof bindBlockHoverAddbars==='function') bindBlockHoverAddbars();
+    closeBlockAdd();
+    fbInit(blk);
+    if(typeof selectBlock==='function') selectBlock(blk);
+    if(!FB_REDUCE){ blk.classList.add('just-added'); setTimeout(function(){ blk.classList.remove('just-added'); },1300); }
+    baPendingAddbar=null;
+    if(typeof showToast==='function') showToast('블록을 추가했습니다.');
+  }
+
+  /* ── 블록설정 ── */
+  function fbUpd(key,val){ if(!fbCurBlk) return; fbCfg(fbCurBlk)[key]=val; fbApply(fbCurBlk); }
+  function fbSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
+  function fbSw(btn,key){ if(!btn) return; btn.classList.toggle('on'); fbUpd(key, btn.classList.contains('on')); fbRowsSync(); }
+  function fbType(m){
+    if(!fbCurBlk) return; var c=fbCfg(fbCurBlk);
+    c.type=m; var tk=fbTKey(c);
+    if(!c.headEdited){ var d=FB_HEAD[tk]; c.head=d[0]; c.eyebrow=d[1]; c.title=d[2]; c.ebH=tlTxH(d[1]); c.titleH=tlTxH(d[2]); }
+    if(!c.rowsEdited) c.rows=FB_ROWS[tk];
+    fbApply(fbCurBlk); fbFillBset();
+  }
+  function fbRs(m){ if(!fbCurBlk) return; var c=fbCfg(fbCurBlk); c.rs=(m==='cap')?'cap':'card'; fbType('review'); }
+  function fbSeg(key,m,id){ fbSegSync(id,m); if(key==='rows' && fbCurBlk) fbCfg(fbCurBlk).rowsEdited=true; fbUpd(key,(key==='rows')?+m:m); }
+  function fbTxt(key,v){ if(!fbCurBlk) return; var c=fbCfg(fbCurBlk); c[key]=v; c[key==='eyebrow'?'ebH':'titleH']=tlTxH(v); c.headEdited=true; fbApply(fbCurBlk); }
+  /* 고른 종류에 맞는 칸만 보이게 — data-fbt="logo text image rv cap" */
+  function fbRowsSync(){
+    if(!fbCurBlk) return; var c=fbCfg(fbCurBlk), tk=fbTKey(c);
+    document.querySelectorAll('#bsetFlowBand [data-fbt]').forEach(function(el){ el.style.display=(' '+el.getAttribute('data-fbt')+' ').indexOf(' '+tk+' ')>=0?'':'none'; });
+    var hr=document.getElementById('fbHeadRows'); if(hr) hr.style.display=(c.head===false)?'none':'';
+  }
+  /* 항목 목록 — 종류마다 칸이 다르다 */
+  var FB_DRAG='<span class="mt-imgdrag" title="드래그하여 순서 변경"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></span>';
+  var FB_DEL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/></svg>';
+  function fbItemRender(){
+    if(!fbCurBlk) return;
+    var c=fbCfg(fbCurBlk), tk=fbTKey(c), arr=c[FB_KEY[tk]];
+    var list=document.getElementById('fbItemList'); if(!list) return;
+    var dis=(arr.length<=FB_MIN), img=(tk==='logo'||tk==='image'||tk==='cap');
+    list.setAttribute('data-t',tk);
+    list.innerHTML=arr.map(function(it,i){
+      it=it||{}; var del='<button type="button" class="mt-imgdel" onclick="fbItemDel('+i+')" title="삭제" aria-label="삭제"'+(dis?' disabled':'')+'>'+FB_DEL+'</button>';
+      if(img){ var u=String(it.src||''); return '<div class="mt-imgrow" data-i="'+i+'">'+FB_DRAG+'<span class="mt-imgthumb"'+(u?' style="background-image:url(&quot;'+fbAttr(u)+'&quot;)"':'')+' title="눌러서 보관함에서 이미지 고르기"></span>'
+        +'<div class="vc-caps"><input type="text" value="'+fbAttr(u)+'" placeholder="https:// … 이미지 URL" spellcheck="false" autocomplete="off" oninput="fbSrcInput('+i+',this.value)"></div>'+del+'</div>'; }
+      if(tk==='text') return '<div class="mt-imgrow" data-i="'+i+'">'+FB_DRAG+'<div class="vc-caps"><input type="text" value="'+fbAttr(it.t||'')+'" placeholder="문구" spellcheck="false" oninput="fbCapInput('+i+',&#39;t&#39;,this.value)"></div>'+del+'</div>';
+      var st=Math.max(1,Math.min(5,Math.round(+it.s||5)));
+      return '<div class="mt-imgrow" data-i="'+i+'">'+FB_DRAG+'<div class="vc-caps fb-rvcaps">'
+        +'<input type="text" class="fb-rvt" value="'+fbAttr(it.t||'')+'" placeholder="후기 글" spellcheck="false" oninput="fbCapInput('+i+',&#39;t&#39;,this.value)">'
+        +'<input type="text" value="'+fbAttr(it.n||'')+'" placeholder="이름" spellcheck="false" oninput="fbCapInput('+i+',&#39;n&#39;,this.value)">'
+        +'<input type="text" value="'+fbAttr(it.m||'')+'" placeholder="소속 · 상품 (예: 웨딩 촬영)" spellcheck="false" oninput="fbCapInput('+i+',&#39;m&#39;,this.value)">'
+        +'<select class="fb-star" onchange="fbCapInput('+i+',&#39;s&#39;,+this.value)" aria-label="별점">'+[5,4,3,2,1].map(function(n){ return '<option value="'+n+'"'+(n===st?' selected':'')+'>'+'★'.repeat(n)+'</option>'; }).join('')+'</select>'
+        +'</div>'+del+'</div>';
+    }).join('');
+    var cnt=document.getElementById('fbItemCount'); if(cnt) cnt.textContent=arr.length+'/'+FB_MAX;
+    var add=document.getElementById('fbItemAdd'), up=document.getElementById('fbItemUp');
+    if(add){ add.disabled=(arr.length>=FB_MAX); add.setAttribute('onclick',img?'blkListPick(\'fb\',this)':'fbItemAddRow()'); }
+    if(up) up.style.display=img?'':'none';
+    var hint=document.getElementById('fbItemHint');
+    if(hint) hint.textContent={logo:'로고는 배경이 투명한 PNG · SVG 가 잘 어울립니다. 썸네일을 누르면 보관함에서 바꿉니다.',text:'문구 사이에는 「모양」의 기호가 들어갑니다.',image:'높이는 같고 폭은 사진 비율대로 흐릅니다.',rv:'후기 글은 3줄까지 보이고 넘치면 줄여 보입니다.',cap:'캡처 속 이름 · 프로필 사진 같은 개인정보는 가리고 올려 주세요. 높이는 같고 폭은 캡처 비율대로 흐릅니다.'}[tk]||'';
+    if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',fbItemReorder);
+  }
+  function fbArr(){ var c=fbCfg(fbCurBlk); return c[FB_KEY[fbTKey(c)]]; }
+  var _fbTypeTimer=null;
+  function fbSrcInput(i,v){
+    if(!fbCurBlk) return; var a=fbArr(); if(!a[i]) return; a[i].src=v;
+    var row=document.querySelector('#fbItemList .mt-imgrow[data-i="'+i+'"]'), th=row&&row.querySelector('.mt-imgthumb');
+    if(th) th.style.backgroundImage=v?('url("'+String(v).replace(/"/g,'\\"')+'")'):'';
+    clearTimeout(_fbTypeTimer); _fbTypeTimer=setTimeout(function(){ if(fbCurBlk) fbApply(fbCurBlk); },400);
+  }
+  function fbCapInput(i,key,v){ if(!fbCurBlk) return; var a=fbArr(); if(!a[i]) return; a[i][key]=v; fbApply(fbCurBlk); }
+  function fbItemAddRow(){
+    if(!fbCurBlk) return; var c=fbCfg(fbCurBlk), tk=fbTKey(c), a=fbArr();
+    if(a.length>=FB_MAX){ clToast('항목은 최대 '+FB_MAX+'개까지 넣을 수 있습니다.'); return; }
+    a.push(tk==='text'?{t:''}:{s:5,t:'',n:'',m:''}); fbItemRender(); fbApply(fbCurBlk);
+    var rows=document.querySelectorAll('#fbItemList .mt-imgrow'), inp=rows.length&&rows[rows.length-1].querySelector('input'); if(inp) try{ inp.focus(); }catch(e){}
+  }
+  function fbItemDel(i){
+    if(!fbCurBlk) return; var a=fbArr();
+    if(a.length<=FB_MIN){ clToast('항목은 최소 '+FB_MIN+'개가 있어야 합니다.'); return; }
+    a.splice(i,1); fbItemRender(); fbApply(fbCurBlk);
+  }
+  function fbItemReorder(from,to){
+    if(!fbCurBlk||from==null||to==null||from===to) return; var a=fbArr();
+    if(from<0||from>=a.length||to<0||to>=a.length) return;
+    var m=a.splice(from,1)[0]; a.splice(to,0,m); fbItemRender(); fbApply(fbCurBlk);
+  }
+  var FB_RNG=[['fbSpd','spd',''],['fbGap','gap','px'],['fbLh','lh','px'],['fbTs','ts','px'],['fbIh','ih','px'],['fbIr','ir','px'],['fbCh','ch','px'],['fbTts','tts','px'],['fbPv','pv','px']];
+  var FB_COL=[['fbBg','bg'],['fbTc','tc'],['fbMc','mc'],['fbCb','cb'],['fbPc','pc'],['fbSc','sc']];
+  var FB_SW=[['fbHead','head'],['fbFade','fade'],['fbPause','pause'],['fbGray','gray'],['fbOutline','outline']];
+  function fbBuildBset(){
+    if(fbBound) return; fbBound=true;
+    FB_RNG.forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return;
+      el.addEventListener('input',function(){ var v=parseFloat(el.value); smRng(el); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=v+r[2]; fbUpd(r[1],v); }); });
+    FB_COL.forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return;
+      el.addEventListener('input',function(){ var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(el.value); fbUpd(r[1],el.value); }); });
+  }
+  function fbFillBset(){
+    if(!fbCurBlk) return;
+    var c=fbCfg(fbCurBlk);
+    function set(id,v){ var el=document.getElementById(id); if(el){ el.value=v; if(el.classList.contains('rng')) smRng(el); } }
+    fbSegSync('fbTypeSeg',c.type); fbSegSync('fbRsSeg',c.rs==='cap'?'cap':'card');
+    fbSegSync('fbRowsSeg',String(+c.rows===2?2:1)); fbSegSync('fbDirSeg',c.dir==='right'?'right':'left'); fbSegSync('fbSepSeg',c.sep||'');
+    set('fbEb',c.eyebrow||''); set('fbTt',c.title||'');
+    var mo=(typeof window.mvTarget==='function' && window.mvTarget()==='mobile');
+    [['fbTs',mo?18:24,mo?56:120],['fbTts',mo?18:24,mo?40:72],['fbLh',mo?18:24,mo?60:96],['fbIh',mo?100:140,mo?320:480],['fbCh',mo?160:200,mo?360:480]].forEach(function(q){ var el=document.getElementById(q[0]); if(el){ el.min=q[1]; el.max=q[2]; } });
+    FB_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
+    FB_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
+    FB_SW.forEach(function(r){ var el=document.getElementById(r[0]); if(el) el.classList.toggle('on', c[r[1]]!==false); });
+    fbItemRender(); fbRowsSync();
+  }
+  window.fbCfg=fbCfg; window.fbApply=fbApply; window.fbInit=fbInit; window.fbBlockHTML=fbBlockHTML; window.fbCloneInit=fbCloneInit; window.fbRtSave=fbRtSave;
+  window.fbUpd=fbUpd; window.fbSw=fbSw; window.fbType=fbType; window.fbRs=fbRs; window.fbSeg=fbSeg; window.fbTxt=fbTxt;
+  window.fbSrcInput=fbSrcInput; window.fbCapInput=fbCapInput; window.fbItemAddRow=fbItemAddRow; window.fbItemDel=fbItemDel; window.fbItemReorder=fbItemReorder;
+
+  /* ══════════════════════════════════════════════════════════════════
      260923 추가 — 이전·이후 비교 이미지 블록 (IMAGE03 · 접두어 bc · cfg _bcCfg)
      · 참조 사이트(vibe3d.ai) 첫 기능 섹션을 분리 — 왼쪽 글 + 오른쪽 이미지 두 장(이전/이후)
      · 롤오버: 마우스를 따라 경계가 움직이고, 벗어나면 그 자리에 머문다 (참조와 같음) · 드래그: 누른 채 움직일 때만
@@ -60098,6 +60619,7 @@ global.PolyFX = API;
     if(blk.getAttribute('data-block')==='ctblk'){ if(!blk.classList.contains('rt-editing') && typeof ctApply==='function') ctApply(blk); return; }   /* 261022 추가 — 컨택트/지점 제목 · 설명 */
     if(blk.getAttribute('data-block')==='valuelist'){ if(!blk.classList.contains('rt-editing') && typeof vlApply==='function') vlApply(blk); return; }
     if(blk.getAttribute('data-block')==='timeline'){ if(!blk.classList.contains('rt-editing') && typeof tlApply==='function') tlApply(blk); return; }
+    if(blk.getAttribute('data-block')==='flowband'){ if(!blk.classList.contains('rt-editing') && typeof fbApply==='function') fbApply(blk); return; }
     if(blk.getAttribute('data-block')==='stickstat'){ if(!blk.classList.contains('rt-editing') && typeof nxApply==='function') nxApply(blk); return; }   /* 261112 추가 — 고정 타이틀 숫자 타이틀 · 소개 글 */   /* 261111 추가 — 이미지 전환 목록 타이틀 */
     if(blk.getAttribute('data-block')==='beforeafter'){ if(!blk.classList.contains('rt-editing') && typeof bcApply==='function') bcApply(blk); return; }   /* 261022 추가 — 이전·이후 비교 제목 · 본문 */
     if(blk.getAttribute('data-block')==='cnblk'){ if(!blk.classList.contains('rt-editing') && typeof cnApply==='function'){ cnApply(blk); if(typeof cnCurBlk!=='undefined' && cnCurBlk===blk){ cnItemsRender(); cnRows(); } } return; }   /* 261022 추가 — 컨텐츠 블록 글 칸 */
@@ -60569,6 +61091,7 @@ global.PolyFX = API;
     if(blk.getAttribute('data-block')==='ctblk'){ if(typeof ctRtSave==='function') ctRtSave(blk); return; }   /* 261022 추가 — 컨택트/지점 제목 · 설명 */
     if(blk.getAttribute('data-block')==='valuelist'){ if(typeof vlRtSave==='function') vlRtSave(blk); return; }
     if(blk.getAttribute('data-block')==='timeline'){ if(typeof tlRtSave==='function') tlRtSave(blk); return; }
+    if(blk.getAttribute('data-block')==='flowband'){ if(typeof fbRtSave==='function') fbRtSave(blk); return; }
     if(blk.getAttribute('data-block')==='stickstat'){ if(typeof nxRtSave==='function') nxRtSave(blk); return; }   /* 261112 추가 — 고정 타이틀 숫자 타이틀 · 소개 글 */   /* 261111 추가 — 이미지 전환 목록 타이틀 */
     if(blk.getAttribute('data-block')==='beforeafter'){ if(typeof bcRtSave==='function') bcRtSave(blk); return; }   /* 261022 추가 — 이전·이후 비교 제목 · 본문 */
     if(blk.getAttribute('data-block')==='cnblk'){ if(typeof cnRtSave==='function') cnRtSave(blk); return; }   /* 261022 추가 — 컨텐츠 블록 글 칸 */
@@ -61708,7 +62231,7 @@ global.PolyFX = API;
     var pb=document.getElementById('rtPlus'); if(!pb) return;
     /* 261006 수정 — 탭메뉴 문구에는 + 삽입 메뉴 없음 · 261008 수정 — 갤러리 상세 페이지 타이틀은 「텍스트」(내용) 칸에서만 삽입 메뉴를 연다(제목 칸은 한 줄 글이라 없음). 넣은 요소는 게시글 내용의 서식(dh)에 남고, 리스트 캡션에는 글만 간다 */
     var gdEd=rtIsGd(rtEditBlk)?(function(){ var a=rtEditBlk._rtActive; return (a && a.getAttribute)?a.getAttribute('data-gd-ed'):''; })():'';
-    if(!rtEditBlk || window.CL_MVIEW || rtIsTm(rtEditBlk) || (rtIsGd(rtEditBlk) && gdEd!=='s') || rtEditBlk.getAttribute('data-block')==='gridgal' || rtEditBlk.getAttribute('data-block')==='valuelist' || rtEditBlk.getAttribute('data-block')==='stickstat' || rtEditBlk.getAttribute('data-block')==='timeline' || (rtEditBlk.getAttribute('data-block')==='ctblk' && !(rtEditBlk._rtActive && rtEditBlk._rtActive.getAttribute && rtEditBlk._rtActive.getAttribute('data-ct-ed')==='desc')) || (rtEditBlk.getAttribute('data-block')==='beforeafter' && !(rtEditBlk._rtActive && rtEditBlk._rtActive.getAttribute && /^(body|act)$/.test(rtEditBlk._rtActive.getAttribute('data-bc-ed')||'')))){   /* 261022 추가 — 이전·이후 비교: + 삽입은 본문 · 버튼 칸에서만 */ pb.classList.remove('show'); return; }   /* 261022 추가 — 컨택트/지점은 설명 칸에서만 + 삽입 */   /* 261015 추가 — 그리드 갤러리 제목·설명도 삽입 메뉴 없음 */
+    if(!rtEditBlk || window.CL_MVIEW || rtIsTm(rtEditBlk) || (rtIsGd(rtEditBlk) && gdEd!=='s') || rtEditBlk.getAttribute('data-block')==='gridgal' || rtEditBlk.getAttribute('data-block')==='valuelist' || rtEditBlk.getAttribute('data-block')==='stickstat' || rtEditBlk.getAttribute('data-block')==='timeline' || rtEditBlk.getAttribute('data-block')==='flowband' || (rtEditBlk.getAttribute('data-block')==='ctblk' && !(rtEditBlk._rtActive && rtEditBlk._rtActive.getAttribute && rtEditBlk._rtActive.getAttribute('data-ct-ed')==='desc')) || (rtEditBlk.getAttribute('data-block')==='beforeafter' && !(rtEditBlk._rtActive && rtEditBlk._rtActive.getAttribute && /^(body|act)$/.test(rtEditBlk._rtActive.getAttribute('data-bc-ed')||'')))){   /* 261022 추가 — 이전·이후 비교: + 삽입은 본문 · 버튼 칸에서만 */ pb.classList.remove('show'); return; }   /* 261022 추가 — 컨택트/지점은 설명 칸에서만 + 삽입 */   /* 261015 추가 — 그리드 갤러리 제목·설명도 삽입 메뉴 없음 */
     var b=rtBody(rtEditBlk), br=b.getBoundingClientRect();
     var rect=rtCaretRect(); if(!rect && rtSavedRange){ try{ var x=rtSavedRange.getBoundingClientRect(); if(x.height) rect=x; }catch(e){} }
     if(!rect) rect={top:br.top,height:Math.min(br.height,40)};
@@ -63302,7 +63825,8 @@ global.PolyFX = API;
       faqacc      :{cfg:'_fqCfg', apply:function(b){ fqApply(b); }},   /* 260923 추가 — FAQ 아코디언 */
       qnaacc      :{cfg:'_qnCfg', apply:function(b){ qnApply(b); }},   /* 260923 추가 — QnA 아코디언 */
       scrollread  :{cfg:'_srCfg', apply:function(b){ srApply(b); }},
-      timeline    :{cfg:'_tlCfg', apply:function(b){ tlApply(b); }},   /* 261117 추가 — 연혁 타임라인(TEXT01) */   /* 260923 추가 — 스크롤 문장 등장 */
+      timeline    :{cfg:'_tlCfg', apply:function(b){ tlApply(b); }},
+      flowband    :{cfg:'_fbCfg', apply:function(b){ fbApply(b); }},   /* 261117 추가 — 연혁 타임라인(TEXT01) */   /* 260923 추가 — 스크롤 문장 등장 */
       beforeafter :{cfg:'_bcCfg', apply:function(b){ bcApply(b); }},   /* 260923 추가 — 이전·이후 비교 */
       imgring     :{cfg:'_irCfg', apply:function(b){ irApply(b); }},   /* 260923 추가 — 3D 이미지 링 */
       crumple     :{cfg:'_ckCfg', apply:function(b){ ckApply(b); }},   /* 260923 추가 — 구김 이미지 */
@@ -63835,6 +64359,7 @@ global.PolyFX = API;
       qnaacc      :{},
       scrollread  :{},
       timeline    :{},
+      flowband    :{logos:1, imgs:1, caps:1},
       imgring     :{imgMode:1, theme:1, kw:1, imgs:1, caps:1, gt:1, posts:1},   /* 260923 추가 — 3D 이미지 링 · 이미지(모드·주제·키워드·목록)는 PC·모바일 공유, 링·움직임·배경·여백은 기기별 */
       crumple     :{items:1},   /* 260923 추가 — 구김 이미지 · 컨텐츠 목록은 PC·모바일 공유 */
       beforeafter :{before:1, after:1, link1:1, bst:1},   /* 261006 수정 — 버튼 스타일도 공유 */   /* 260923 추가 — 이전·이후 비교 · 이미지 두 장과 버튼 링크는 PC·모바일 공유 */
@@ -63885,7 +64410,8 @@ global.PolyFX = API;
       faqacc   :{items:1, cnt:1, eyebrow:1, title:1},   /* 260923 추가 */
       qnaacc   :{items:1, cnt:1, title:1},   /* 260923 추가 — QnA 아코디언 */
       scrollread:{text:1},   /* 260923 추가 */
-      timeline :{items:1, eyebrow:1, title:1, ebH:1, titleH:1},   /* 261117 추가 — 연혁 타임라인: 항목(날짜 · 내용 · 사진) · 제목은 PC · 모바일 공유(「모바일 문구 따로」를 켜면 분리) */
+      timeline :{items:1, eyebrow:1, title:1, ebH:1, titleH:1},
+      flowband :{texts:1, reviews:1, eyebrow:1, title:1, ebH:1, titleH:1},   /* 261117 추가 — 연혁 타임라인: 항목(날짜 · 내용 · 사진) · 제목은 PC · 모바일 공유(「모바일 문구 따로」를 켜면 분리) */
       beforeafter:{labB:1, labA:1, title:1, body:1, titleH:1, bodyH:1, btn1:1, actH:1},
       valuelist:{title:1, titleH:1}   /* 261111 추가 — 이미지 전환 목록 타이틀: PC·모바일 공유(「모바일 문구 따로」를 켜면 분리) */   /* 260923 추가 — 이전·이후 비교 */
     };
@@ -63973,7 +64499,7 @@ global.PolyFX = API;
     }
     function mvDefaultCfg(blk,def){
       /* xxCfg(blk) 가 기본값을 만들어 준다 */
-      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_tlCfg:'tlCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_sqCfg:'sqCfg',_rbCfg:'rbCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_vlCfg:'vlCfg',_wlCfg:'wlCfg',_nxCfg:'nxCfg',_cnCfg:'cnCfg',_snCfg:'snCfg',_tkCfg:'tkCfg',_ltCfg:'ltCfg',_cdCfg:'cdCfg',_nmCfg:'nmCfg',_qrCfg:'qrCfg',_dvCfg:'dvCfg',_bdCfg:'bdCfg'}[def.cfg];   /* 260922 수정 */
+      var fn={_smCfg:'smCfg',_mtCfg:'mtCfg',_imCfg:'imCfg',_sgCfg:'sgCfg',_flCfg:'flCfg',_ptCfg:'ptCfg',_twCfg:'twCfg',_rsCfg:'rsCfg',_btCfg:'btCfg',_axCfg:'axCfg',_ixCfg:'ixCfg',_fqCfg:'fqCfg',_qnCfg:'qnCfg',_srCfg:'srCfg',_tlCfg:'tlCfg',_fbCfg:'fbCfg',_bcCfg:'bcCfg',_ckCfg:'ckCfg',_irCfg:'irCfg',_fmCfg:'fmCfg',_caCfg:'caCfg',_ctCfg:'ctCfg',_crCfg:'crCfg',_hxCfg:'hxCfg',_rtCfg:'rtCfg',_b2Cfg:'b2Cfg',_dgCfg:'dgCfg',_ggCfg:'ggCfg',_ssCfg:'ssCfg',_vcCfg:'vcCfg',_igCfg:'igCfg',_wcCfg:'wcCfg',_hgCfg:'hgCfg',_gsCfg:'gsCfg',_hzCfg:'hzCfg',_sqCfg:'sqCfg',_rbCfg:'rbCfg',_tgCfg:'tgCfg',_skCfg:'skCfg',_scCfg:'scCfg',_vlCfg:'vlCfg',_wlCfg:'wlCfg',_nxCfg:'nxCfg',_cnCfg:'cnCfg',_snCfg:'snCfg',_tkCfg:'tkCfg',_ltCfg:'ltCfg',_cdCfg:'cdCfg',_nmCfg:'nmCfg',_qrCfg:'qrCfg',_dvCfg:'dvCfg',_bdCfg:'bdCfg'}[def.cfg];   /* 260922 수정 */
       try{ return window[fn](blk); }catch(x){ return {}; }
     }
     /* 헤더 세그먼트·초기화 버튼 상태 */
@@ -64022,7 +64548,7 @@ global.PolyFX = API;
     /* Apply 가로채기 — 모든 설정 변경은 xxApply 로 모이므로 여기서 한 번만 갈라 놓으면 된다 */
     Object.keys(MV_TYPES).forEach(function(type){
       var def=MV_TYPES[type];
-      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_tlCfg:'tlApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_sqCfg:'sqApply',_rbCfg:'rbApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_vlCfg:'vlApply',_wlCfg:'wlApply',_nxCfg:'nxApply',_cnCfg:'cnApply',_snCfg:'snApply',_tkCfg:'tkApply',_ltCfg:'ltApply',_cdCfg:'cdApply',_nmCfg:'nmApply',_qrCfg:'qrApply',_dvCfg:'dvApply',_bdCfg:'bdApply'}[def.cfg];   /* 261112 수정 — 카운트다운 · 숫자 카운터 · QR · 구분선 · 게시판이 빠져 모바일에서 고친 값이 PC 화면에도 그려졌다 */   /* 260922 수정 */
+      var name={_smCfg:'smApply',_mtCfg:'mtApply',_imCfg:'imApply',_sgCfg:'sgApply',_flCfg:'flApply',_ptCfg:'ptApply',_twCfg:'twApply',_rsCfg:'rsApply',_btCfg:'btApply',_axCfg:'axApply',_ixCfg:'ixApply',_fqCfg:'fqApply',_qnCfg:'qnApply',_srCfg:'srApply',_tlCfg:'tlApply',_fbCfg:'fbApply',_bcCfg:'bcApply',_ckCfg:'ckApply',_irCfg:'irApply',_fmCfg:'fmApply',_caCfg:'caApply',_ctCfg:'ctApply',_crCfg:'crApply',_hxCfg:'hxApply',_rtCfg:'rtApply',_b2Cfg:'b2Apply',_dgCfg:'dgApply',_ggCfg:'ggApply',_ssCfg:'ssApply',_vcCfg:'vcApply',_igCfg:'igApply',_wcCfg:'wcApply',_hgCfg:'hgApply',_gsCfg:'gsApply',_hzCfg:'hzApply',_sqCfg:'sqApply',_rbCfg:'rbApply',_tgCfg:'tgApply',_skCfg:'skApply',_scCfg:'scApply',_vlCfg:'vlApply',_wlCfg:'wlApply',_nxCfg:'nxApply',_cnCfg:'cnApply',_snCfg:'snApply',_tkCfg:'tkApply',_ltCfg:'ltApply',_cdCfg:'cdApply',_nmCfg:'nmApply',_qrCfg:'qrApply',_dvCfg:'dvApply',_bdCfg:'bdApply'}[def.cfg];   /* 261112 수정 — 카운트다운 · 숫자 카운터 · QR · 구분선 · 게시판이 빠져 모바일에서 고친 값이 PC 화면에도 그려졌다 */   /* 260922 수정 */
       var orig=window[name]; if(typeof orig!=='function') return;
       var wrapped=function(blk){
         if(blk && MV_TARGET==='mobile' && blk===mvTargetBlk && blk._mvBase) mvReconcile(blk);
