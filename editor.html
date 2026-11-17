@@ -2777,10 +2777,7 @@
   .nx-v{display:inline-block;text-align:left;}
   .nx-unit{font-size:var(--nxus,20px);line-height:1;margin-left:.14em;padding-bottom:.02em;text-transform:uppercase;letter-spacing:-.01em;}   /* 261113 수정 — 단위 · 기호를 한 자리(숫자 뒤 · 아래 맞춤 · 단위 크기)로 통일. .6em 상한 삭제 */
   .nx-sup{display:none !important;}   /* 261113 — 위첨자 자리 안 씀(기호도 .nx-unit 에) */
-  @keyframes nxPop{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}   /* 261113 추가 — 항목이 나타나며 숫자가 올라간다(미리보기 · 게시 · 편집 「다시 재생」) */
-  .nx-item.nx-wait{opacity:0;}
-  .nx-item.nx-pop{animation:nxPop .7s cubic-bezier(.2,.7,.2,1) both;}
-  @media (prefers-reduced-motion:reduce){ .nx-item.nx-pop{animation:none;} .nx-item.nx-wait{opacity:1;} }
+  /* 261116 삭제 — 숫자 항목이 나타나는 움직임(nxPop · 페이드인) : 숫자 올라가기만 남긴다 */
   .nx-unit:empty,.nx-sup:empty{display:none;}
   .nx-lb{margin:18px 0 0;font-size:var(--nxls);font-weight:500;line-height:1.2;letter-spacing:-.03em;color:var(--nxtc);word-break:keep-all;}
   .nx-lb:empty{display:none;}
@@ -6819,12 +6816,45 @@
   /* 260904 수정 — 기준 화면 1440px: 사이트는 항상 1440 폭으로 레이아웃되고, 작업 영역 폭에 맞춰 zoom 으로 축소/확대된다
      (Studio 의 1440 캔버스 매너). 비율은 #stage 폭을 재서 JS 가 --site-zoom 에 넣는다. vw 단위는 cqw(컨테이너 기준)로 대체 */
   html.ui-rail{--canvas-gutter:40px;}  /* 캔버스 좌우 작업대(회색) 여백 */
-  html.ui-rail .site{width:1440px;margin-left:auto;margin-right:auto;zoom:var(--site-zoom,1);container-type:inline-size;
+  html.ui-rail .site{width:var(--site-base,1440px);margin-left:auto;margin-right:auto;zoom:var(--site-zoom,1);container-type:inline-size;   /* 261116 수정(시안) — 1440 고정 → 실제 브라우저 폭으로 그리고, 남은 공간에 맞춰 줄인다(게시 화면과 같은 배치) */
     margin-top:0;  /* 261019 수정 — 위 여백은 고정 띠(.tb-band) */
     box-shadow:0 0 0 1px #E5E7EB,0 0 36px rgba(20,24,32,.17);}  /* 261021 수정 — 0 8px 28px(아래로 치우침) → 0 0 36px: 사방 고르게, 위쪽 여백까지 번지게(시안 기준 가장자리 약 9% · 30px 폭) · 좌우 여백 위에 놓인 캔버스처럼 테두리+그림자 · 261006 수정 — var(--border) → 편집기 색 고정: 사이트 테마가 --border 를 사이트 선 색(어두운 모드 #32363A)으로 덮어써 캔버스 둘레에 어두운 1px 띠가 생겼고, 그 띠 때문에 헤더·블록의 녹색 외곽선이 「1px 안쪽」으로 보였다 */
   html.ui-rail .stage{padding-bottom:48px;}
   html.ui-rail.mview .stage{padding-bottom:0;}   /* 261106 추가 — 미리보기 창 · 모바일 편집 화면에서는 편집용 아래 여백이 푸터 밑 흰 띠로 보여 없앤다 (PC 편집 화면은 그대로) */
   html.ui-rail .stage{overflow-x:hidden;}
+  /* 261116 수정(시안) — 「실제 크기」: 패널이 작업 영역을 밀지 않고 위에 덮인다(작업 영역은 아이콘 줄 오른쪽 전체 고정) · 가로 스크롤 없음. 모바일 편집 중에는 쓰지 않는다 */
+  /* 261116 추가(시안) — 편집용 플로팅 버튼(블록 톱니 · 블록 이름표 · + · 헤더 톱니)은 캔버스가 줄어도 고유 크기 그대로(사이트 배율을 되돌림) */
+  html.ui-rail:not(.mview) #stage .site .blk > .gear-fab,html.ui-rail:not(.mview) #stage .site .blk > .tag-badge,html.ui-rail:not(.mview) #stage .site .addbar,html.ui-rail:not(.mview) #stage .site .site-hd > .hd-gear{zoom:calc(1 / var(--site-zoom,1));}
+  html.ui-rail.cz-100:not(.mview) .site-hd > .hd-gear{right:18px;width:39px;height:39px;}   /* 실제 크기: 캔버스 옆 여백이 없어 헤더 톱니는 헤더 안쪽으로 — 블록 톱니와 같은 크기 · 자리(39px · 오른쪽 18px) */
+  html.ui-rail.cz-100:not(.mview) .site-hd > .hd-gear svg{width:23px;height:23px;}
+  html.ui-rail.cz-100 body:not(.mview-on) .stage{left:calc(var(--app-gutter,0px) + var(--rail-w))!important;right:0!important;overflow-x:hidden;}
+  /* 261116 추가(시안) — 보기 비율 칩: PC · 모바일 전환 옆. 「지금 비율 · 100%로 보기」 → 누르면 100% / 다시 누르면 화면에 맞춤 */
+  .tb-mode .tb-zsep{width:1px;height:16px;margin:0 4px;background:var(--border-2,#D5D9E0);flex:none;}
+  html.ui-rail .tb-mode button.tb-zoom{width:auto;padding:0 10px;gap:6px;font:inherit;font-size:12px;font-weight:600;white-space:nowrap;color:var(--ink-2);}
+  html.ui-rail .tb-mode button.tb-zoom .ico{width:15px;height:15px;stroke-width:1.9;}
+  .tb-zoom .zi-shr{display:none;} .tb-zoom.on .zi-exp{display:none;} .tb-zoom.on .zi-shr{display:inline-block;}   /* 꺼짐 ⤢(실제 크기로) · 켜짐 ⤡(다시 맞춤) */
+  .tb-zoom .zl{font-weight:600;}
+  html.ui-rail .tb-mode button.tb-zoom.dis{opacity:.4;cursor:default;background:transparent;box-shadow:none;}   /* 261116 추가 — 모바일 편집 중 */
+  html.ui-rail .tb-mode button.tb-zoom.dis:hover{background:transparent;color:var(--ink-2);}
+  html.ui-rail .tb-mode button.tb-zoom.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(20,24,32,.12);}
+  html.ui-rail .tb-mode button.tb-zoom.on,html.ui-rail .tb-mode button.tb-zoom.on .ico{color:var(--green-text);}
+  /* 261116 추가 — PC 아이콘 롤오버 메뉴(화면 맞춤 / 실제 크기) · 열 때 0.2초 · 닫을 때 0.15초 유예(지나가다 번쩍이지 않게) · 아래로 붙여 모바일 아이콘을 가리지 않는다 */
+  .tb-pcw{position:relative;display:inline-flex;}
+  .tb-zm{position:absolute;left:50%;top:100%;padding-top:6px;z-index:5;opacity:0;visibility:hidden;transform:translate(-50%,-4px);transition:opacity .12s ease .15s,transform .12s ease .15s,visibility 0s linear .27s;}
+  .tb-pcw:hover .tb-zm,.tb-pcw:has(:focus-visible) .tb-zm{opacity:1;visibility:visible;transform:translate(-50%,0);transition:opacity .14s ease .2s,transform .14s ease .2s,visibility 0s linear .2s;}
+  .tb-zm-in{display:flex;flex-direction:column;gap:3px;min-width:184px;padding:4px;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 6px 18px rgba(20,24,32,.14);}
+  html.ui-rail .tb-mode .tb-zm button{display:flex;align-items:flex-start;justify-content:flex-start;gap:8px;width:100%;height:auto;padding:8px 10px;border-radius:7px;background:transparent;box-shadow:none;color:var(--ink-2);font:inherit;font-size:13px;font-weight:600;text-align:left;white-space:nowrap;}
+  html.ui-rail .tb-mode .tb-zm button:hover{background:color-mix(in srgb,var(--green-soft) 60%,#fff);color:var(--ink);}   /* 261116 수정 — 회색 → 지금 모드(옅은 그린)보다 한 단 연한 그린: 같은 색 계열이라 부딪히지 않고, 같은 진하기가 아니라 선택과 헷갈리지 않는다 */
+  html.ui-rail .tb-mode .tb-zm button .zm-ck{width:15px;height:15px;margin-top:1px;flex:none;visibility:hidden;color:var(--green-text);}
+  html.ui-rail .tb-mode .tb-zm button.on,html.ui-rail .tb-mode .tb-zm button.on:hover{color:var(--ink);background:var(--green-soft);}   /* 261116 추가 — 지금 모드는 옅은 그린 면 + 체크 */
+  html.ui-rail .tb-mode .tb-zm button.on .zm-ck{visibility:visible;}
+  .tb-zm-hd{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:6px 10px 8px;margin-bottom:1px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;}
+  .tb-zm-key{display:inline-flex;align-items:center;font-size:var(--fs-xs);font-weight:500;color:var(--ink-2s);}   /* 261116 수정 — 툴팁 둘째 줄(.pgtip-sub)과 같은 색 · 크기 */
+  .tb-zm-key .pgtip-kbd{margin-left:6px;top:0;}   /* 261116 수정 — 키 글자색은 툴팁 키(.pgtip-kbd #4B5058) 그대로 */
+  .tb-zm .zm-t small{display:block;margin-top:2px;font-size:11px;font-weight:500;color:#9AA0AA;}
+  /* 상태 표시 — 실제 크기로 볼 때만 PC 아이콘 오른쪽 위에 작은 점(화면 맞춤은 기본값이라 표시 없음 · 모바일 편집 중엔 적용되지 않으니 숨김) */
+  html.ui-rail .tb-pcw > button{position:relative;}
+  html.cz-100 body:not(.mview-on) .tb-pcw > button::after{content:"";position:absolute;top:4px;right:5px;width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 1.5px var(--bg-3);}
   html.ui-rail.mview .site{margin-top:0;min-height:100vh;box-shadow:none;width:auto;zoom:1;}
   html.ui-rail body.bset-open .stage{right:var(--bset-w);}
   html.ui-rail body.mview-on .stage,html.ui-rail body.mview-on.bset-open .stage{right:var(--mpane-w);}
@@ -6916,6 +6946,28 @@
   html.ui-rail .bset{transition:transform .22s cubic-bezier(.4,0,.2,1),right .34s cubic-bezier(.4,0,.2,1),box-shadow .34s;}
   html.ui-rail body.mview-on .bset{transition:transform .22s cubic-bezier(.4,0,.2,1),right .34s cubic-bezier(.4,0,.2,1),box-shadow .34s,visibility 0s linear .22s;}
   html.ui-rail body.mview-on .bset.show{transition:transform .22s cubic-bezier(.4,0,.2,1),right .34s cubic-bezier(.4,0,.2,1),box-shadow .34s,visibility 0s;}
+  /* 261116 수정(시안) — 「실제 크기」일 때만 블록설정을 사이트 위에 떠 있는 팝업으로(위 · 아래 · 오른쪽 12px · 둥근 모서리 · 그림자). 화면에 맞춤은 기존처럼 오른쪽에서 밀고 들어오는 패널. 나타나는 움직임은 그대로 */
+  html.ui-rail.cz-100 body:not(.mview-on) .bset{top:calc(var(--band-h) + 12px);bottom:12px;right:calc(var(--app-gutter,0px) + var(--stage-sb,0px) + 12px);   /* 261116 수정 — 오른쪽 12px 은 편집 화면 세로 스크롤바 안쪽 기준(스크롤바 폭만큼 더) */border:1px solid var(--border);border-radius:16px;
+    box-shadow:0 18px 48px rgba(20,24,32,.16),0 2px 8px rgba(20,24,32,.06);transform:translateX(calc(100% + 120px));   /* 261116 수정 — +40px 이면 닫혀 대기 중인 팝업들(상단 메뉴 · 효과 등)의 그림자가 화면 오른쪽 끝에 연한 회색 띠로 번졌다 */
+    clip-path:inset(-80px 0 -80px -80px);}   /* 261116 수정 — 그림자가 팝업 오른쪽 12px 틈에 번져 얼룩처럼 보였다 → 오른쪽 그림자만 잘라 낸다(왼쪽 · 위 · 아래는 그대로) */
+  html.ui-rail.cz-100 body:not(.mview-on) .bset.show{transform:none;}
+  html.ui-rail.cz-100 body.bset-open:not(.mview-on) #mvTab{right:calc(var(--app-gutter,0px) + var(--mpane-w) + var(--stage-sb,0px) + 12px + var(--bset-w));}   /* 261116 추가(시안) — 모바일 편집 손잡이: 팝업 왼쪽 끝에 붙인다 */
+  html.ui-rail.cz-100 body:not(.mview-on) .stage{scrollbar-width:none;}   /* 261116 추가(시안) — 실제 크기: 세로 스크롤바 자리(작업대 바탕)가 팝업 오른쪽에 연한 띠로 보여 스크롤바를 숨기고 사이트를 화면 끝까지(휠 · 트랙패드 스크롤은 그대로) */
+  html.ui-rail.cz-100 body:not(.mview-on) .stage::-webkit-scrollbar{width:0;height:0;}
+  /* 261116 추가(시안) — 블록설정 등 설정 패널(.bset) 안 스크롤: 기본 스크롤바(9px)가 생기는 순간 패널 내용이 왼쪽으로 밀렸다
+     → 기본 스크롤바를 숨기고(자리 0), 내용이 길 때만 오른쪽 끝에 떠 있는 스크롤바(.osb)를 겹친다 */
+  .bset .bset-b,.bset .bset-fixed{scrollbar-width:none;}
+  .bset .bset-b::-webkit-scrollbar,.bset .bset-fixed::-webkit-scrollbar{width:0;height:0;}
+  .osb{position:absolute;z-index:30;width:12px;pointer-events:none;opacity:0;transition:opacity .25s ease;}
+  .osb.on{pointer-events:auto;}
+  .osb.show,.osb.drag,.osb.on:hover{opacity:1;transition:opacity .12s ease;}
+  .osb i{position:absolute;right:3px;top:0;width:5px;min-height:28px;border-radius:5px;background:rgba(20,24,32,.24);transition:width .12s ease,background .12s ease;}
+  .osb:hover i,.osb.drag i{width:7px;background:rgba(20,24,32,.42);}
+  /* 261116 수정(시안) — 실제 크기에서 블록설정(또는 상단 메뉴 설정)을 연 동안: 고른 블록만 뚫린 검정 오버레이(#czFocus)를 편집 화면 위에 깐다.
+     오버레이가 다른 블록 · 메뉴의 마우스 반응(hover · 글 상자 · 클릭)을 막고, 오버레이를 누르면 설정 패널이 닫힌다. 휠은 편집 화면 스크롤로 넘긴다 */
+  #czFocus{position:fixed;z-index:190;   /* 261116 수정 — 205 → 190: 좌측 사이드패널(195)까지 덮어 패널이 어둡게 보였다 */display:none;background:rgba(0,0,0,.32);cursor:default;}
+  #czFocus.on{display:block;animation:czIn .18s ease;}
+  @keyframes czIn{from{opacity:0;}to{opacity:1;}}
   /* 헤더의 PC/모바일 세그먼트·안내바는 패널이 자리를 잡은 뒤 부드럽게 나타난다 (툭 튀어나오지 않게) */
   html.ui-rail body.mview-on .bset-dev{animation:bsetDevIn .22s .18s cubic-bezier(.2,0,.2,1) both;}
   html.ui-rail body.mview-on .bset.mv-target-mobile .bset-devbar{animation:bsetDevIn .22s cubic-bezier(.2,0,.2,1) both;}
@@ -7509,6 +7561,41 @@
   html.ui-rail .bset .soft-off{font-size:var(--fs-sm);}               /* 항목 도구(Alt·URL) 11 → 12 */
   html.ui-rail .bset .act{font-size:var(--fs-sm);gap:5px;}            /* 하단 액션바 11 → 12 (가장 작던 곳) */
 </style>
+<style>
+  /* ══ 261116 추가 — 「실제 크기」: 블록설정 팝업 좌우 이동 + 설정창에서 연 보관함을 같은 팝업 매너로
+     · 설정창 머리(.bset-h)를 잡고 좌우로만 끈다. 오른쪽에서 떨어진 거리 = --bs-off (JS) · 머리 더블클릭 = 원래 자리
+     · 보관함(#panelLib.rside)은 설정창과 같은 높이 · 둥근 모서리 · 테두리 · 그림자, 12px 띄워 옆에.
+       설정창이 화면 오른쪽 절반이면 왼쪽에, 왼쪽 절반(body.bs-left)이면 오른쪽에 뜬다
+     · --bs-r = 설정창 오른쪽 끝에서 화면 오른쪽까지 거리 */
+  html.ui-rail.cz-100{--bs-r:calc(var(--app-gutter,0px) + var(--stage-sb,0px) + 12px + var(--bs-off,0px));--lib-w:332px;}
+  html.ui-rail.cz-100 body:not(.mview-on) .bset{right:var(--bs-r);}
+  html.ui-rail.cz-100 body:not(.mview-on){--canvas-top:0px;}   /* 261116 수정 — 실제 크기는 좌우 여백이 없으니 위 작업대 여백(--canvas-top 20px)도 0. padding-top 만 지웠더니 고정 헤더의 top(-여백)이 남아 스크롤 때 헤더가 20px 위로 밀리고 그 틈으로 블록이 비쳤다 → 변수째 0 으로(위 여백 · 고정 헤더 · 좌측 메뉴 · 회색 줄이 함께 맞는다) */
+  html.ui-rail.cz-100 body:not(.mview-on):not(.bs-left) .bset:not(.show){transform:translateX(calc(100% + 120px + var(--bs-off,0px)));}   /* 닫혀 대기 중인 다른 설정창(푸터 · 상단 메뉴 등)도 같은 자리를 쓰므로, 끌어 옮긴 만큼 더 밀어 화면 밖에 둔다(전엔 끌면 닫힌 창들이 화면 안으로 들어와 겹쳐 보였다) */
+  html.ui-rail.cz-100 body:not(.mview-on) .bset-h{cursor:move;}
+  html.ui-rail.cz-100 body:not(.mview-on) .bset-h button,html.ui-rail.cz-100 body:not(.mview-on) .bset-h select{cursor:pointer;}
+  html.ui-rail.cz-100 body.bs-drag .bset,html.ui-rail.cz-100 body.bs-drag #panelLib.rside,html.ui-rail.cz-100 body.bs-drag #mvTab{transition:none!important;}
+  html.ui-rail.cz-100 body.bs-drag,html.ui-rail.cz-100 body.bs-drag *{cursor:move!important;user-select:none;}
+  /* 왼쪽 절반에 둔 설정창: 화면 오른쪽 끝까지 미끄러져 나가지 않고 제자리에서 흐려지며 닫힌다 */
+  html.ui-rail.cz-100 body.bs-left:not(.mview-on) .bset{transition:transform .22s cubic-bezier(.4,0,.2,1),opacity .18s ease,visibility 0s linear .22s;}
+  html.ui-rail.cz-100 body.bs-left:not(.mview-on) .bset:not(.show){transform:translateX(-16px);opacity:0;visibility:hidden;}
+  html.ui-rail.cz-100 body.bs-left:not(.mview-on) .bset.show{transition:transform .22s cubic-bezier(.4,0,.2,1),opacity .18s ease,visibility 0s;}
+  /* 보관함 — 설정창과 같은 팝업 */
+  html.ui-rail.cz-100 body:not(.mview-on) #panelLib.rside{top:calc(var(--band-h) + 12px)!important;bottom:12px;height:auto;width:var(--lib-w);right:calc(var(--bs-r) + var(--bset-w) + 12px);
+    border:1px solid var(--border);border-radius:16px;overflow:hidden;clip-path:none;box-shadow:0 18px 48px rgba(20,24,32,.16),0 2px 8px rgba(20,24,32,.06);
+    transform:translateX(calc(100% + 12px + var(--bset-w) + var(--bs-r) + 120px));transition:transform .22s cubic-bezier(.4,0,.2,1),visibility 0s linear .22s;}
+  /* ↑ 오른쪽 절반: 설정창 뒤에서 왼쪽으로 밀려 나오고, 닫힐 때는 설정창과 같은 길이 · 곡선으로 함께 오른쪽 밖으로(한 덩어리처럼) */
+  html.ui-rail.cz-100 body:not(.mview-on):not(.bs-left):has(#panelLib.rside) .bset:not(.show){transform:translateX(calc(var(--bset-w) + 12px + var(--lib-w) + var(--bs-r) + 120px));}
+  /* ↑ 보관함이 옆에 있을 때 설정창도 보관함과 같은 거리를 움직인다(같은 길이 · 같은 곡선 → 둘이 붙은 채 함께 나간다) */
+  html.ui-rail.cz-100 body.bs-left:not(.mview-on) #panelLib.rside{right:calc(var(--bs-r) - 12px - var(--lib-w));opacity:0;transform:translateX(-16px);transition:transform .22s cubic-bezier(.4,0,.2,1),opacity .18s ease,visibility 0s linear .22s;}
+  /* ↑ 왼쪽 절반: 설정창과 똑같이 제자리에서 흐려지며(16px) 열리고 닫힌다 */
+  html.ui-rail.cz-100 body:not(.mview-on) #panelLib.rside.show{opacity:1;transform:none;transition:transform .22s cubic-bezier(.4,0,.2,1),opacity .18s ease,visibility 0s;}
+  html.ui-rail.cz-100 body:not(.mview-on) #panelLib.rside .panel-x .ico{transform:none;}
+  html.ui-rail.cz-100 body:not(.mview-on):not(.bs-left) #panelLib.rside .panel-x .ico{transform:scaleX(-1);}
+  /* 모바일 편집 손잡이: 오른쪽 절반이면 팝업(보관함이 열려 있으면 보관함) 왼쪽 끝 · 왼쪽 절반이면 원래 자리(화면 오른쪽 끝) */
+  html.ui-rail.cz-100 body.bset-open:not(.mview-on):not(.mv-switching) #mvTab{right:calc(var(--mpane-w) + var(--bs-r) + var(--bset-w));}
+  html.ui-rail.cz-100 body.bset-open.lib-r:not(.mview-on):not(.mv-switching):not(.bs-left) #mvTab{right:calc(var(--mpane-w) + var(--bs-r) + var(--bset-w) + 12px + var(--lib-w));}
+  html.ui-rail.cz-100 body.bset-open.bs-left:not(.mview-on):not(.mv-switching) #mvTab,html.ui-rail.cz-100 body.bset-open.lib-r.bs-left:not(.mview-on):not(.mv-switching) #mvTab{right:calc(var(--app-gutter,0px) + var(--mpane-w));}
+</style>
 </head>
 <body>
 
@@ -7522,7 +7609,16 @@
   </nav>
     <!-- 260902 추가 — 편집모드 전환 (PC / 모바일) -->
 <div class="tb-mode" id="tbMode" role="tablist" aria-label="편집모드 전환">
-  <button type="button" class="on pg-tip" data-tip="PC 화면 편집" data-key="1" data-mode="pc" aria-label="PC 화면 편집" onclick="mvSetMode('pc')"><svg class="ico" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+  <span class="tb-pcw" id="tbPcw">   <!-- 261116 수정 — 문구: 화면에 맞춤 / 실제 크기 · 「실제 크기」 버튼을 밖에서 빼고 PC 아이콘 롤오버 메뉴(화면 맞춤 / 실제 크기)로. 클릭은 그대로 PC 전환 -->
+  <button type="button" class="on" data-key="1" data-mode="pc" aria-label="PC 화면 편집" aria-haspopup="menu" onclick="mvSetMode('pc')"><svg class="ico" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+  <div class="tb-zm" id="tbZoom" role="menu" aria-label="PC 화면 보기 크기">
+    <div class="tb-zm-in">
+      <div class="tb-zm-hd" aria-hidden="true"><span>PC 화면 편집</span><span class="tb-zm-key">단축키<kbd class="pgtip-kbd">1</kbd></span></div>   <!-- 261116 추가 — 툴팁 대신 메뉴 머리에 이름 · 단축키(모바일 툴팁과 같은 정보) -->
+      <button type="button" role="menuitemradio" data-z="fit" aria-checked="true" class="on" onclick="clZoomSet(false)"><svg class="ico zm-ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="zm-t">화면에 맞춤<small>남는 폭에 맞춰 펼쳐요 · 본문 폭보다 좁을 때만 줄여요</small></span></button>
+      <button type="button" role="menuitemradio" data-z="full" aria-checked="false" onclick="clZoomSet(true)"><svg class="ico zm-ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="zm-t">실제 크기<small>게시 화면 크기 · 패널이 일부를 가릴 수 있어요</small></span></button>
+    </div>
+  </div>
+</span>
   <button type="button" class="pg-tip" data-tip="모바일 화면 편집" data-key="2" data-mode="mobile" aria-label="모바일 화면 편집" onclick="mvSetMode('mobile')"><svg class="ico" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/></svg></button>
 </div>
   <!-- ══════ 상단 툴바 ══════ -->
@@ -14544,7 +14640,7 @@
             <div class="mtk-hint">항목 2~6개. 줄마다 숫자 · 단위 · 기호 · 설명입니다. 「단위 · 기호」 칸의 글자(예: Years · + · %)는 모두 숫자 뒤 같은 자리에 작게 붙습니다. 단위 · 기호는 숫자 폰트를 따르고, 단위 크기는 「기본 글자 › 단위 크기」에서 정합니다. 숫자에 쉼표를 넣으면(1,300) 올라가는 동안에도 쉼표가 붙고, 소수점은 입력한 자리까지 보입니다. 손잡이를 끌어 순서를 바꿉니다.</div>
             <div class="sline" style="margin-top:10px;"><span class="lbl">숫자 올라가기</span><button type="button" class="sw on" id="nxCount" onclick="nxSw(this,'count')"></button></div>
             <div class="srow" id="nxDurRow"><span class="k">시간</span><input class="rng" type="range" id="nxDur" min="400" max="4000" step="100" value="1800"><span class="v" id="nxDurV">1800ms</span></div>
-            <div class="mtk-hint">미리보기 · 게시 화면에서 항목이 화면에 들어올 때 나타나며 0 부터 올라갑니다. 편집 화면은 숫자가 다 보이고, 「다시 재생」을 누르면 같은 움직임을 미리 봅니다.</div>
+            <div class="mtk-hint">편집 · 미리보기 · 게시 화면 모두 스크롤해 항목이 화면에 들어올 때 숫자가 0 부터 올라갑니다. 「다시 재생」을 누르면 다시 볼 수 있습니다.</div>
           </div></div>
         </div>
         <!-- 261112 수정 — 텍스트 블록 설정과 같은 구성: 글(타이틀 · 소개 글)은 캔버스에서 쓰고, 설정창은 켜고 끄기 · 「기본 글자」(블록 글의 기본값 · 툴바로 바꾼 글자가 먼저) · 「높이·여백」 · 「배경」 -->
@@ -23562,13 +23658,16 @@
     var list=[]; try{ list=[].slice.call(document.querySelectorAll('.blk:hover, .blk.sel')); }catch(e){ list=[].slice.call(document.querySelectorAll('.blk.sel')); }
     var tb=document.querySelector('.tb-actions'), tbb=(tb&&getComputedStyle(tb).position==='fixed')?tb.getBoundingClientRect():null;
     var hdEl=st.querySelector(':scope > .site > .site-hd'), hdb=null; if(hdEl){ var hcs=getComputedStyle(hdEl); if(hdEl.classList.contains('hd-stick')||hcs.position==='sticky'||hcs.position==='fixed'){ var hr=hdEl.getBoundingClientRect(); if(hr.top<=sr.top+1 && hr.height) hdb=hr; } if(!hdb && hdEl.parentNode.classList.contains('hd-overlap')){ var hr2=hdEl.getBoundingClientRect(); if(hr2.height && hr2.bottom>sr.top) hdb=hr2; } }   /* 261020 수정 — 겹치기: 헤더(z 119)가 첫 블록 위를 덮어 톱니 자리 클릭을 헤더가 가져갔다 → 겹친 헤더도 피할 영역으로 보고 톱니를 헤더 아래로 내린다 */   /* 우측 상단에 떠 있는 작업 버튼(사이트 게시 등) 아래로 피한다 */
+    var tw=st.querySelector('.tabmenu-list-wrap.tm-stuck'), twb=tw?tw.getBoundingClientRect():null; if(twb && !twb.height) twb=null;
     list.forEach(function(blk){
       var r=blk.getBoundingClientRect(), vt=sr.top;
-      if(tbb && tbb.height && tbb.left<r.right-18*z && tbb.right>r.right-57*z && tbb.bottom>vt) vt=Math.max(vt, tbb.bottom+8);
-      if(hdb && hdb.bottom>vt && hdb.left<r.right && hdb.right>r.left && blk.parentNode===hdEl.parentNode) vt=Math.max(vt, hdb.bottom+8);   /* 260930 추가 — 화면 위에 고정된 상단 메뉴(플로팅) 아래로도 피한다: 헤더(z 120)가 버튼(z 6)을 덮어 윗부분이 잘려 보였다 */
+      var zg=(document.documentElement.classList.contains('ui-rail') && !window.CL_MVIEW)?1:z;   /* 261116 — 톱니가 고유 크기(배율 되돌림)면 위치도 화면 px 로 */
+      if(tbb && tbb.height && tbb.left<r.right-18*zg && tbb.right>r.right-57*zg && tbb.bottom>vt) vt=Math.max(vt, tbb.bottom+8);
+      if(hdb && hdb.bottom>vt && hdb.left<r.right && hdb.right>r.left && !hdEl.contains(blk) && hdEl.parentNode.contains(blk)) vt=Math.max(vt, hdb.bottom+8);   /* 261116 수정 — 「헤더와 같은 부모」 → 「사이트 안 블록이면」: 탭메뉴 페이지의 블록은 탭메뉴 안에 들어 있어 헤더 피하기가 빠졌다 */
+      if(twb && twb.bottom>vt && twb.left<r.right && twb.right>r.left && !blk.contains(tw)) vt=Math.max(vt, twb.bottom+8);   /* 261116 추가 — 위에 붙은 탭 줄(.tm-stuck · fixed) 아래로도 피한다: 탭 줄이 톱니를 덮어 롤오버해도 안 보였다 */   /* 260930 추가 — 화면 위에 고정된 상단 메뉴(플로팅) 아래로도 피한다: 헤더(z 120)가 버튼(z 6)을 덮어 윗부분이 잘려 보였다 */
       var over=vt-r.top;   /* 블록 위쪽이 보이는 영역 밖으로 나간 양(화면 px) */
       if(over<=0){ blk.style.removeProperty('--gear-top'); return; }
-      var maxTop=r.height/z-39-14, top=Math.min(maxTop, 14+over/z);
+      var maxTop=r.height/zg-39-14, top=Math.min(maxTop, 14+over/zg);
       blk.style.setProperty('--gear-top', Math.max(14,Math.round(top))+'px');
     });
   }
@@ -25867,7 +25966,7 @@
   /* 261112 추가 — 고정 타이틀 숫자(masstigegov.com 「We Stay For The Results.」 참조 · 글만)를 TEXT01 로 맨 앞에. 기존 TEXT01~18 은 TEXT02~19 로 한 칸씩 민다
      (새로 추가하는 텍스트 블록은 이 줄 아래에 같은 꼴로 한 줄씩 더한다 — 나중에 넣은 것이 01. 미리보기 영상 · 썸네일 파일명은 번호와 무관하게 그대로. 고정 카드(기본 텍스트)는 계속 맨 앞) */
   (function(){ var L=BA_CARDS_TEXT; L.forEach(function(c){ var m=/^TEXT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='TEXT'+(n<10?'0':'')+n; });
-    L.unshift({no:1, kind:'stickstat', label:'TEXT01', ar:'800/450', img:ED_IMG+'ba/stickstat-2.jpg', vid:'ba/stickstat-2'}); })();
+    L.unshift({no:1, kind:'stickstat', label:'TEXT01', ar:'800/450', img:ED_IMG+'ba/stickstat-5.jpg', vid:'ba/stickstat-5'}); })();
   /* 261117 추가 — 연혁 타임라인(연도가 멈춘 채 그 해의 줄들이 지나가고, 가운데 선이 스크롤만큼 그라데이션으로 채워지는 연혁)을 TEXT01 로 맨 앞에. 기존 TEXT01-19 는 TEXT02-20 으로 한 칸씩 민다
      (사진형으로 컨텐츠 CONTENT01 에 넣었다가, 사진을 뺀 목록형으로 바꾸며 글만 있는 블록이 되어 텍스트 「목록」 탭(인덱스 리스트 · FAQ · QnA 옆)으로 옮겼다 · 썸네일 = 실제 블록 정지컷) */
   (function(){ var L=BA_CARDS_TEXT; L.forEach(function(c){ var m=/^TEXT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='TEXT'+(n<10?'0':'')+n; });
@@ -48401,7 +48500,7 @@ global.PolyFX = API;
     blk.querySelectorAll('.nx-item').forEach(function(el,i){
       var it=c.items[i]||{};
       var v=el.querySelector('.nx-v'), u=el.querySelector('.nx-unit'), sp=el.querySelector('.nx-sup'), lb=el.querySelector('.nx-lb');
-      if(v && !el._nxRun){ v.textContent=String(it.v==null?'':it.v); v.style.minWidth=''; }
+      if(v && !el._nxRun && !el._nxArm){ v.textContent=String(it.v==null?'':it.v); v.style.minWidth=''; }   /* 261116 수정 — 카운팅 대기 중(_nxArm · 0)인 항목은 다시 그릴 때 최종값으로 덮지 않는다 */
       if(u) u.textContent=String(it.u||'').trim()+String(it.s||'').trim();   /* 261113 수정 — 단위 · 기호를 같은 자리에 이어서 */
       if(sp) sp.textContent='';
       if(lb) lb.textContent=String(it.l||'').trim()?it.l:'';
@@ -48428,13 +48527,13 @@ global.PolyFX = API;
   function nxArm(blk){
     var c=nxCfg(blk); if(c.count===false) return;
     var els=[].slice.call(blk.querySelectorAll('.nx-item'));
-    els.forEach(function(el){ var it=c.items[+el.getAttribute('data-i')], v=el.querySelector('.nx-v'); if(!it||!v) return; var P=nxParse(it.v); if(P.ok){ v.textContent=nxFmt(P,0); el._nxArm=true; el.classList.remove('nx-pop'); el.classList.add('nx-wait'); } });   /* 261113 — 보이기 전에는 숨겨 두었다가 나타나며 올라간다 */
-    if(!window.IntersectionObserver){ els.forEach(function(el){ el.classList.remove('nx-wait'); nxRunItem(blk,el); }); return; }
-    if(!nxIO) nxIO=new IntersectionObserver(function(es){ es.forEach(function(e){ var el=e.target; if(e.isIntersecting && el._nxArm){ el._nxArm=false; try{ nxIO.unobserve(el); }catch(x){} el.classList.remove('nx-wait'); el.classList.add('nx-pop'); var b=el.closest('.blk'); if(b) nxRunItem(b,el); } }); },{threshold:.4});
+    els.forEach(function(el){ var it=c.items[+el.getAttribute('data-i')], v=el.querySelector('.nx-v'); if(!it||!v) return; var P=nxParse(it.v); if(P.ok){ v.textContent=nxFmt(P,0); el._nxArm=true; } });   /* 261116 수정 — 숨기지 않고 0 으로만 둔다 */
+    if(!window.IntersectionObserver){ els.forEach(function(el){ nxRunItem(blk,el); }); return; }
+    if(!nxIO) nxIO=new IntersectionObserver(function(es){ es.forEach(function(e){ var el=e.target; if(e.isIntersecting && el._nxArm){ el._nxArm=false; try{ nxIO.unobserve(el); }catch(x){} var b=el.closest('.blk'); if(b) nxRunItem(b,el); } }); },{threshold:.4});
     els.forEach(function(el){ if(el._nxArm) nxIO.observe(el); });
   }
-  function nxInit(blk){ if(!blk) return; nxApply(blk); if(window.CL_MVIEW) nxArm(blk); }   /* 261113 수정 — 편집 화면은 숫자를 다 보이게(최종값). 미리보기 · 게시 · 모바일 화면은 보일 때 나타나며 올라간다 */
-  /* 261113 수정 — 「다시 재생」: 화면 밖 항목도 기다리지 않고, 항목마다 0.18초 차이로 나타나며 0 부터 올라간다 */
+  function nxInit(blk){ if(!blk) return; nxApply(blk); nxArm(blk); }   /* 261116 수정 — 편집 · 미리보기 · 게시 · 모바일 화면 모두 스크롤해 항목이 보일 때 숫자가 0 부터 올라간다 */
+  /* 261116 수정 — 「다시 재생」: 화면 밖 항목도 기다리지 않고, 항목마다 0.18초 차이로 숫자가 0 부터 다시 올라간다 */
   function nxReplay(){
     if(!nxCurBlk) return; var blk=nxCurBlk, c=nxCfg(blk), tok=(blk._nxRp=(blk._nxRp||0)+1);
     blk.querySelectorAll('.nx-item').forEach(function(el){ el._nxSeq=(el._nxSeq||0)+1; el._nxRun=false; el._nxArm=false; });
@@ -48442,8 +48541,7 @@ global.PolyFX = API;
     blk.querySelectorAll('.nx-item').forEach(function(el,i){
       var it=c.items[+el.getAttribute('data-i')], v=el.querySelector('.nx-v'), P=nxParse(it&&it.v);
       if(v && P.ok && c.count!==false) v.textContent=nxFmt(P,0);
-      el.classList.remove('nx-pop'); el.classList.add('nx-wait'); void el.offsetWidth;
-      setTimeout(function(){ if(blk._nxRp!==tok) return; el.classList.remove('nx-wait'); el.classList.add('nx-pop'); nxRunItem(blk,el); }, 120+i*180);
+      setTimeout(function(){ if(blk._nxRp!==tok) return; nxRunItem(blk,el); }, 120+i*180);   /* 261116 수정 — 나타나는 움직임 없이 숫자만 0 부터 다시 */
     });
   }
   /* 복제 시 설정 승계 + 재초기화 (모바일 미리보기 사본 포함) */
@@ -58267,7 +58365,7 @@ global.PolyFX = API;
       [].forEach.call(blk.querySelectorAll('.vl-list > .vl-row'),function(r,ri){ r._aosI=ri+1; vlo.push(r); }); return vlo.length?vlo:[blk]; }
     /* 261112 추가 — 고정 타이틀 숫자(stickstat): 타이틀 → 소개 글 → 숫자 항목 하나하나 */
     if(kind==='stickstat'){ var nxo=[], nh=blk.querySelector('.nx-head'), nd=blk.querySelector('.nx-wrap[data-desc="1"] .nx-desc'); if(nh){ nh._aosI=0; nxo.push(nh); } if(nd){ nd._aosI=1; nxo.push(nd); }
-      [].forEach.call(blk.querySelectorAll('.nx-list > .nx-item'),function(r,ri){ r._aosI=ri+(nd?2:1); nxo.push(r); }); return nxo.length?nxo:[blk]; }
+      /* 261116 수정 — 숫자 항목은 페이드인 없이 숫자 올라가기만(공통 스크롤 효과 대상에서 뺌) */ return nxo.length?nxo:[blk]; }
     if(kind==='tiltgal'){ var tgs=blk.querySelectorAll('.tg-rot > .tg-slide'); return tgs.length?[].slice.call(tgs):[blk]; }
     /* 261008 추가 — 그리드 갤러리 2: 칸 하나하나가 오브젝트(이미지 블록과 같다). 타이틀 고정 배치는 왼쪽 글 상자가 먼저 나온다 — 고정(sticky)은 바깥 상자가 쥐고 있어 안쪽 상자를 움직여도 풀리지 않는다 */
     if(kind==='gridgal'){ var ggo=[], ggs=blk.querySelector('.gg-wrap[data-layout="side"] .gg-side-in'); if(ggs) ggo.push(ggs); [].forEach.call(blk.querySelectorAll('.gg-grid > .gg-cell'),function(x){ ggo.push(x); }); return ggo.length?ggo:[blk]; }
@@ -64882,7 +64980,7 @@ global.PolyFX = API;
       document.body.classList.toggle('mview-on', on);
       /* 260904 수정 — 옮겨 둔 블록설정 패널이 모바일 미리보기 밑에 깔리지 않게 범위 안으로 되돌린다 */
       if(typeof bsetReclamp==='function'){ bsetReclamp(); setTimeout(bsetReclamp, 380); }
-      document.querySelectorAll('#tbMode button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-mode')===m); });
+      document.querySelectorAll('#tbMode button[data-mode]').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-mode')===m); });   /* 261116 수정 — [data-mode] 만(롤오버 메뉴 항목 제외)
       /* 261020 추가 — 블록설정창이 열린 채 편집 모드를 바꾸면 설정창의 대상(PC/모바일 세그먼트)도 따라간다.
          전엔 모바일 편집으로 바꿔도 세그먼트가 PC 로 남아, 바꾼 값이 PC 에 들어갔다. PC 로 돌아오면 PC 대상으로(모바일 덧값에 보이지 않게 쓰는 일 방지) */
       (function(){ var bs=document.getElementById('bset'), sel=document.querySelector('#stage .blk.sel');
@@ -67483,8 +67581,31 @@ function ftApplyRemote(html,site){
     if(window.CL_MVIEW) return;
     if(!document.documentElement.classList.contains('ui-rail')) return;
     var BASE=1440, st=document.getElementById('stage'), root=document.documentElement;
+    /* 261116 추가(시안) — 기준 폭 = 실제 브라우저 폭(이 창으로 사이트를 열었을 때의 폭). 「100%로 보기」(html.cz-100)면 줄이지 않는다 */
+    function zoomChip(z,full){ var m=document.getElementById('tbZoom'); if(!m) return;   /* 261116 수정 — 롤오버 메뉴의 선택 표시만 맞춘다(상태 점은 CSS: html.cz-100) */
+      m.querySelectorAll('[data-z]').forEach(function(x){ var on=(x.getAttribute('data-z')==='full')===root.classList.contains('cz-100'); x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false'); }); }
+    window.clZoomSet=function(full){ root.classList.toggle('cz-100',!!full); last='';   /* 261116 추가 — 메뉴에서 고름. 모바일 편집 중이면 PC 로 전환하며 그 크기로 */
+      if(document.body.classList.contains('mview-on')){ if(window.mvSetMode) mvSetMode('pc'); } else fit();
+      var a=document.activeElement; if(a && a.closest && a.closest('#tbZoom')) a.blur(); };
+    window.clZoomToggle=function(){ window.clZoomSet(!root.classList.contains('cz-100')); };
     if(!st) return;
-    var last='', lastZ='';
+    var last='', lastZ='', cwBase=0;
+    /* 261117 추가 — 화면에 맞춤 = 반응형 + 하한: 캔버스는 남는 폭 그대로 그리고(배율 1), 「본문 폭 + PC 좌우 여백 × 2」보다 좁을 때만 그 폭으로 그려 줄인다.
+       본문 폭 이상이면 「기본」 블록의 배치가 게시 화면과 같고 블록 분기점(최대 1024)도 넘지 않는다. 좌측 메뉴형이면 메뉴 폭을 더한다 */
+    function cwMin(){ var site=st.querySelector(':scope > .site'), L=(typeof SITE_LAYOUT!=='undefined')?SITE_LAYOUT:{}, pw=+L.pw||1180, pc=(L.pc==null)?48:+L.pc, m=pw+2*pc;
+      if(site && site.getAttribute('data-hd-type')==='side' && getComputedStyle(site).display==='grid'){ var hd=site.querySelector(':scope > .site-hd'); m+=(hd && hd.offsetWidth)||240; }
+      return Math.max(1025,Math.round(m)); }
+    /* 261117 추가 — 패널이 움직이는 중이면 transition 의 끝값으로 「도착했을 때의 폭」을 미리 안다(left · right 키프레임). 매 프레임 다시 배치하지 않기 위해 */
+    function stageTo(cs){ var L=parseFloat(cs.left)||0, R=parseFloat(cs.right)||0, mv=false;
+      try{ (st.getAnimations?st.getAnimations():[]).forEach(function(a){ var pr=a.transitionProperty; if(pr!=='left' && pr!=='right') return; var kf=a.effect && a.effect.getKeyframes && a.effect.getKeyframes(); if(!kf || !kf.length) return; var v=pxOf(pr,kf[kf.length-1][pr], cs.position); if(isNaN(v)) return; mv=true; if(pr==='left') L=v; else R=v; }); }catch(e){}
+      return {L:L,R:R,mv:mv}; }
+    /* 키프레임 끝값은 calc(372px + max(0px, 50% - 960px)) 같은 글이라 같은 자리에 둔 보이지 않는 측정 상자로 px 로 바꾼다 */
+    var probe=null, pxMemo={};
+    function pxOf(pr,val,pos){ if(val==null) return NaN; var n=+String(val).replace(/px$/,''); if(!isNaN(n) && /^-?[\d.]+(px)?$/.test(String(val).trim())) return n;
+      var k=pr+'|'+val+'|'+window.innerWidth; if(k in pxMemo) return pxMemo[k];
+      if(!probe){ probe=document.createElement('div'); probe.setAttribute('aria-hidden','true'); probe.style.cssText='visibility:hidden;pointer-events:none;width:0;height:0;'; st.parentNode.insertBefore(probe,st); }
+      probe.style.position=pos||'fixed'; probe.style.left=''; probe.style.right=''; probe.style[pr]=val;
+      var v=parseFloat(getComputedStyle(probe)[pr]); pxMemo={}; pxMemo[k]=v; return v; }
     function fit(){
       if(window._mvMotionFitFreeze) return;
       var cs=getComputedStyle(st);
@@ -67492,15 +67613,26 @@ function ftApplyRemote(html,site){
       var sb=st.offsetWidth-st.clientWidth;               /* 세로 스크롤바 폭 */
       var w=window.innerWidth-L-R-sb; if(w<=0) return;
       var g=parseFloat(getComputedStyle(root).getPropertyValue('--canvas-gutter'))||40;
-      var z=Math.min(1,(w-g*2)/BASE); if(z<0.2) z=0.2;
+      var full=root.classList.contains('cz-100') && !document.body.classList.contains('mview-on');   /* 모바일 편집 중에는 늘 화면에 맞춤 */
+      var rw=parseFloat(getComputedStyle(root).getPropertyValue('--rail-w'))||56, ag=Math.max(0,(window.innerWidth-1920)/2);   /* --app-gutter(최대 1920 앱 틀 양옆 여백)와 같은 값 */
+      if(full){ BASE=Math.max(1024,Math.round(window.innerWidth-ag-rw-sb)); cwBase=0; }   /* 261116 수정(시안) — 실제 크기: 기준 폭 = 패널이 모두 닫혔을 때의 작업 영역 폭(가로 스크롤 없음) */
+      else {   /* 261117 수정 — 화면에 맞춤: 줄이기만 하던 방식 → 남는 폭에 맞춰 펼치고, 하한(cwMin)보다 좁을 때만 줄인다 */
+        var mn=cwMin(), to=stageTo(cs), tw=window.innerWidth-to.L-to.R-sb, tb=Math.max(mn,Math.floor(tw-g*2));
+        if(tb>mn && ((Math.round(tw)-tb)%2)!==0) tb-=1;   /* 좌우 여백이 정수 px 가 되게(261006 과 같은 이유) */
+        /* 움직이는 중: 좁아지는 쪽은 처음에 한 번 바꾸고(배율 1 유지 · 여백만 줄어든다), 넓어지는 쪽은 멈춘 뒤 한 번 바꾼다(가는 동안 줄어 보이지 않게) */
+        BASE=(to.mv && cwBase)?Math.min(cwBase,tb):tb; cwBase=BASE;
+      }
+      var z=full?1:Math.min(1,(w-g*2)/BASE); if(z<0.2) z=0.2;
+      if(full) g=0;
       /* 261006 추가 — 캔버스 폭을 정수 px 로, 좌우 여백도 정수가 되게(폭의 홀짝을 창 폭과 맞춤) 배율을 양자화한다.
          소수 px 가장자리는 안티에일리어싱으로 바깥 1px 가 배경색 띠로 남아, 헤더·블록의 안쪽 외곽선이 「1px 안으로 들어간」 것처럼 보였다 */
-      var W=Math.floor(BASE*z); if(((Math.round(w)-W)%2)!==0) W-=1; if(W>0) z=W/BASE;
+      if(!full && z<1){ var W=Math.floor(BASE*z); if(((Math.round(w)-W)%2)!==0) W-=1; if(W>0) z=W/BASE; }   /* 261117 수정 — 줄일 때만(배율 1 이면 폭이 이미 정수) */
+      zoomChip(z,full);
       var gr=Math.max(0,(w-BASE*z)/2);                     /* 캔버스 우측 여백 */
-      var key=[w,z.toFixed(6),R,sb].join('|'); if(key===last && !window._mvPcAnchor) return; last=key;
+      var key=[w,z.toFixed(6),R,sb,BASE].join('|'); if(key===last && !window._mvPcAnchor) return; last=key;
       /* 260919 추가 — 배율이 바뀌면(패널 여닫이 등) 캔버스 내용 높이가 함께 늘고 줄어, scrollTop 이 그대로여도 보던 자리가 엉뚱한 곳으로 밀렸다.
          기준 블록(화면에 보이는 선택 블록, 없으면 화면 가운데 블록)에서 '화면 가운데가 걸친 지점'을 기억해 두고, 배율 적용 뒤 같은 지점이 같은 높이에 오도록 스크롤을 보정한다 */
-      var zs=z.toFixed(6), anc=null, ancF=0, cy=0;
+      var zs=z.toFixed(6)+'|'+BASE, anc=null, ancF=0, cy=0;   /* 261117 수정 — 배율뿐 아니라 캔버스 폭이 바뀔 때도(전체 폭 블록 높이가 달라진다) 보던 자리를 지킨다 */
       var openingAnchor=window._mvPcAnchor;
       if(openingAnchor && openingAnchor.element){
         /* 선택된 블록이나 축소 후 hit-test가 아닌, 열기 직전 보던 블록을 유지한다. */
@@ -67514,6 +67646,7 @@ function ftApplyRemote(html,site){
         if(anc && r0.height>0) ancF=(cy-r0.top)/r0.height; else anc=null;
       }
       lastZ=zs;
+      if(root.style.getPropertyValue('--site-base')!==BASE+'px') root.style.setProperty('--site-base',BASE+'px');   /* 261117 수정 — 보던 자리를 잰 뒤에 폭을 바꾼다(전: 먼저 바꿔 새 배치에서 재고 있었다) */
       root.style.setProperty('--site-zoom',z.toFixed(6));   /* 261006 수정 — 4자리 → 6자리(1440×배율이 정수에서 0.01px 안에 들게) */
       if(anc){ var r1=anc.getBoundingClientRect(), dy=(r1.top+ancF*r1.height)-cy; if(Math.abs(dy)>0.5) st.scrollTop+=dy; }
       if(openingAnchor && openingAnchor.top) st.scrollTop=0;
@@ -67539,7 +67672,72 @@ function ftApplyRemote(html,site){
     }
     st.addEventListener('scroll',syncPcHeader,{passive:true});
     window.clFitSite=fit;   /* 261016 추가 — 화면 전환(View Transition) 안에서 배율을 바로 맞추려고 */
-    function loop(){ fit(); syncPcHeader(); requestAnimationFrame(loop); }
+    /* 261116 추가(시안) — 설정 패널 안 떠 있는 스크롤바(.osb): 열린 패널의 스크롤 영역마다 하나씩, 패널(.bset) 위에 겹친다 */
+    var osbDrag=null;
+    function osbMake(sc,host){
+      var o=document.createElement('div'); o.className='osb'; o.setAttribute('aria-hidden','true'); o.innerHTML='<i></i>'; host.appendChild(o);
+      var th=o.firstChild, t=0;
+      o._peek=function(){ o.classList.add('show'); clearTimeout(t); t=setTimeout(function(){ o.classList.remove('show'); },1000); };
+      sc.addEventListener('scroll',function(){ if(o.classList.contains('on')) o._peek(); },{passive:true});
+      sc.addEventListener('mousemove',function(e){ var r=sc.getBoundingClientRect(); if(r.right-e.clientX<20 && o.classList.contains('on')) o._peek(); });
+      th.addEventListener('mousedown',function(e){ e.preventDefault(); e.stopPropagation(); osbDrag={sc:sc,o:o,y:e.clientY,top:sc.scrollTop}; o.classList.add('drag'); });
+      o.addEventListener('mousedown',function(e){ if(e.target!==o) return; e.preventDefault(); e.stopPropagation(); var r=o.getBoundingClientRect(), h=th.offsetHeight; sc.scrollTop=(e.clientY-r.top-h/2)/Math.max(1,sc.clientHeight-h)*(sc.scrollHeight-sc.clientHeight); });
+      sc._osb=o; return o;
+    }
+    window.addEventListener('mousemove',function(e){ if(!osbDrag) return; var sc=osbDrag.sc, h=osbDrag.o.firstChild.offsetHeight, k=(sc.scrollHeight-sc.clientHeight)/Math.max(1,sc.clientHeight-h); sc.scrollTop=osbDrag.top+(e.clientY-osbDrag.y)*k; });
+    window.addEventListener('mouseup',function(){ if(osbDrag){ osbDrag.o.classList.remove('drag'); osbDrag.o._peek(); osbDrag=null; } });
+    function osbSync(){
+      document.querySelectorAll('.bset .bset-b,.bset .bset-fixed').forEach(function(sc){
+        if(!sc.offsetParent){ if(sc._osb) sc._osb.classList.remove('on','show'); return; }
+        var host=sc.closest('.bset'); if(!host) return;
+        var o=sc._osb||osbMake(sc,host), ch=sc.clientHeight, sh=sc.scrollHeight, can=sh>ch+1;
+        o.classList.toggle('on',can); if(!can){ o.classList.remove('show'); return; }
+        var hr=host.getBoundingClientRect(), r=sc.getBoundingClientRect(), bl=host.clientLeft||0, bt=host.clientTop||0;
+        var th=Math.max(28,Math.round(ch*ch/sh)), tt=Math.round((ch-th)*sc.scrollTop/Math.max(1,sh-ch));
+        var key=[r.top-hr.top,r.right-hr.left,ch,th,tt].join('|'); if(o._k===key) return; o._k=key;
+        o.style.top=(r.top-hr.top-bt)+'px'; o.style.left=(r.right-hr.left-bl-12)+'px'; o.style.height=ch+'px';
+        o.firstChild.style.height=th+'px'; o.firstChild.style.transform='translateY('+tt+'px)';
+      });
+    }
+    /* 261116 추가(시안) — 실제 크기 포커스 오버레이 */
+    var cz=document.createElement('div'); cz.id='czFocus'; cz.setAttribute('aria-hidden','true'); document.body.appendChild(cz);
+    var czKey='';
+    function czClose(e){ if(e){ e.preventDefault(); e.stopPropagation(); } if(typeof closeBset==='function') closeBset(); if(typeof hdClose==='function'){ var d=document.getElementById('hdDock'); if(d && d.classList.contains('show')) hdClose(); } }
+    cz.addEventListener('pointerdown',function(e){ e.preventDefault(); e.stopPropagation(); },true);
+    cz.addEventListener('click',czClose,true);
+    cz.addEventListener('wheel',function(e){ st.scrollTop+=e.deltaY; e.preventDefault(); },{passive:false});
+    function czSync(){
+      var bs=document.getElementById('bset'), hdk=document.getElementById('hdDock');
+      var hdOn=!!(hdk && hdk.classList.contains('show')), bsOn=!!(bs && bs.classList.contains('show'));
+      var tgt=hdOn?st.querySelector(':scope > .site > .site-hd'):(bsOn?st.querySelector('.site .blk.sel'):null);
+      var on=root.classList.contains('cz-100') && !document.body.classList.contains('mview-on') && !!tgt;
+      if(!on){ if(cz.classList.contains('on')){ cz.classList.remove('on'); czKey=''; } return; }
+      var r=st.getBoundingClientRect();
+      /* 261116 수정 — 뚫을 자리: 고른 블록 + 그 블록 경계에 걸친 + 버튼(반이 오버레이에 덮였다). 고정 헤더 아래로 자른다(블록이 헤더 밑으로 올라가면 구멍이 헤더 위에 드러났다) */
+      var hd=hdOn?null:st.querySelector(':scope > .site > .site-hd'), cut=0;
+      if(hd){ var hr=hd.getBoundingClientRect(), hp=getComputedStyle(hd).position; if((hp==='sticky'||hp==='fixed') && hr.height) cut=hr.bottom-r.top; }
+      var t=tgt.getBoundingClientRect(), bx1=Math.max(0,t.left-r.left), bx2=Math.min(r.width,t.right-r.left), by1=Math.max(0,cut,t.top-r.top), by2=Math.min(r.height,t.bottom-r.top);
+      var p=function(x,y){ return x.toFixed(1)+'px '+y.toFixed(1)+'px'; }, path='0 0, 100% 0, 100% 100%, 0 100%, 0 0', key=[r.left,r.top,r.width,r.height];
+      function hole(pts){ if(pts.length<3) return; path+=', '+pts.map(function(q){ return p(q[0],q[1]); }).join(', ')+', '+p(pts[0][0],pts[0][1])+', 0 0'; pts.forEach(function(q){ key.push(q[0],q[1]); }); }
+      if(bx2>bx1 && by2>by1) hole([[bx1,by1],[bx2,by1],[bx2,by2],[bx1,by2]]);
+      /* + 버튼: 블록 바깥으로 나온 부분만, 둥근 모양 그대로 뚫는다(블록 구멍과 겹치지 않게) */
+      if(!hdOn) st.querySelectorAll(':scope > .site > .addbar.show .addbtn').forEach(function(b){
+        var q=b.getBoundingClientRect(); if(!q.width||!q.height) return;
+        var x1=q.left-r.left, x2=q.right-r.left, y1=q.top-r.top, y2=q.bottom-r.top, rad=Math.min(q.height/2,q.width/2,parseFloat(getComputedStyle(b).borderTopLeftRadius)||0);
+        function arc(cx,cy,a0,a1){ var o=[]; for(var k=0;k<=6;k++){ var a=(a0+(a1-a0)*k/6)*Math.PI/180; o.push([cx+rad*Math.cos(a),cy+rad*Math.sin(a)]); } return o; }
+        function clampY(pts,lo,hi){ return pts.map(function(v){ return [Math.max(0,Math.min(r.width,v[0])),Math.max(lo,Math.min(hi,v[1]))]; }); }
+        var full=arc(x2-rad,y1+rad,-90,0).concat(arc(x2-rad,y2-rad,0,90),arc(x1+rad,y2-rad,90,180),arc(x1+rad,y1+rad,180,270));   /* 버튼 테두리(시계 방향) */
+        var lo=Math.max(0,cut), hi=r.height, inBlk=(bx2>bx1 && by2>by1);
+        if(!inBlk){ hole(clampY(full,lo,hi)); return; }
+        if(y1<by1) hole(clampY(full,lo,Math.min(hi,by1)));   /* 블록 위로 나온 부분 */
+        if(y2>by2) hole(clampY(full,Math.max(lo,by2),hi));   /* 블록 아래로 나온 부분 */
+      });
+      key=key.map(Math.round).join('|'); if(key===czKey && cz.classList.contains('on')) return; czKey=key;
+      cz.style.left=r.left+'px'; cz.style.top=r.top+'px'; cz.style.width=r.width+'px'; cz.style.height=r.height+'px';
+      cz.style.clipPath='polygon(evenodd, '+path+')';   /* 뚫린 곳은 마우스도 통과 */
+      cz.classList.add('on');
+    }
+    function loop(){ fit(); syncPcHeader(); osbSync(); czSync(); requestAnimationFrame(loop); }
     if(window.ResizeObserver){ new ResizeObserver(fit).observe(st); }
     window.addEventListener('resize',fit);
     fit(); requestAnimationFrame(loop);
@@ -69547,6 +69745,39 @@ function ghvDemo(blk){
   });
   function boot(){ bar(); var m='pc'; try{ m=sessionStorage.getItem('clPvMode')||'pc'; }catch(x){} if(m==='mobile') setMode('mobile'); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+})();
+</script>
+<script>
+/* 261116 추가 — 「실제 크기」 설정창(블록설정 · 상단 메뉴 · 푸터 등 .bset 팝업) 좌우 끌기 (설명은 위 CSS 주석) · 261116 수정 — #bset 만 → 떠 있는 모든 설정창 */
+(function(){
+  var root=document.documentElement, drag=null;
+  function on(){ return root.classList.contains('ui-rail') && root.classList.contains('cz-100') && !document.body.classList.contains('mview-on'); }
+  function num(v){ return parseFloat(getComputedStyle(root).getPropertyValue(v))||0; }
+  function stageBox(){ var st=document.getElementById('stage'); return st?st.getBoundingClientRect():{left:0,right:window.innerWidth}; }
+  function base(){ return num('--app-gutter')+num('--stage-sb')+12; }
+  function curPanel(){ var a=document.querySelectorAll('.bset.show:not(.inline)'); return a.length?a[a.length-1]:null; }
+  function setOff(o,panel){
+    panel=panel||curPanel(); var w=panel?panel.offsetWidth:num('--bset-w'), r=stageBox();
+    var mx=Math.max(0,(window.innerWidth-base())-(r.left+12)-w);
+    o=Math.max(0,Math.min(mx,o)); root.style.setProperty('--bs-off',Math.round(o)+'px');
+    document.body.classList.toggle('bs-left', o>0 && (window.innerWidth-base()-o-w/2) < (r.left+r.right)/2);
+    return o;
+  }
+  function headOf(e){ var h=e.target.closest && e.target.closest('.bset-h'); if(!h) return null; var p=h.closest('.bset'); if(!p || !p.classList.contains('show') || p.classList.contains('inline')) return null;
+    if(e.target.closest('button,select,input,a,label,.bset-dev')) return null; return {h:h,p:p}; }
+  document.addEventListener('pointerdown',function(e){
+    if(e.button!==0 || !on()) return; var t=headOf(e); if(!t) return;
+    drag={x:e.clientX, o:num('--bs-off'), h:t.h, p:t.p};
+    document.body.classList.add('bs-drag'); t.p.classList.add('dragging');
+    try{ t.h.setPointerCapture(e.pointerId); }catch(x){}
+    e.preventDefault();
+  });
+  document.addEventListener('pointermove',function(e){ if(drag) setOff(drag.o-(e.clientX-drag.x),drag.p); });
+  function end(e){ if(!drag) return; var d=drag; drag=null; document.body.classList.remove('bs-drag'); d.p.classList.remove('dragging'); try{ d.h.releasePointerCapture(e.pointerId); }catch(x){} }
+  window.addEventListener('pointerup',end,true); window.addEventListener('pointercancel',end,true);
+  window.addEventListener('blur',function(){ if(drag){ drag.p.classList.remove('dragging'); drag=null; document.body.classList.remove('bs-drag'); } });
+  document.addEventListener('dblclick',function(e){ if(!on()) return; var t=headOf(e); if(t) setOff(0,t.p); });
+  window.addEventListener('resize',function(){ if(num('--bs-off')) setOff(num('--bs-off')); });
 })();
 </script>
 </body>
