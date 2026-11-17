@@ -4940,6 +4940,7 @@
   :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:6px !important;}
   :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.sline,.sline + :is([style*="display:none"],[style*="display: none"])) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:4px !important;}
   :is(#bsetRich) #rtOvHint{margin-top:10px !important;}   /* 261117 수정 — 「기본 글자」 안내는 바로 위 칸이 아니라 섹션 전체 설명이라 10px 띄운다(전: 숨은 「따로 정한 값」 줄 규칙이 걸려 글자색 줄에 2px 로 붙었다) */
+  #rtAlignR{display:none !important;}   /* 261117 추가 — 정렬 ↺ 숨김: 정렬 아이콘을 누르면 툴바로 따로 바꾼 정렬까지 지우고 통일하므로(rtAlign → rtOvStrip) 하는 일이 겹쳤다 · 마크업 · 함수는 그대로(팀장님 코드) */
   :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) .srow:has(> .mt-seg) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:-6px !important;}
   /* 260906 추가 — 안내문 첫 문장(핵심)은 살짝 진하게, 뒤 문장(부연)은 연하게 */
   .mtk-hint .lead,.tx-hint .lead,.dd-note .lead,.cfx-note .lead{color:var(--ink-2s);font-weight:600;}
