@@ -1,3 +1,7 @@
 _src/
 _fetch.ps1
 _src_urls.txt
+node_modules/
+Claude outputs/
+editor.html
+handover-*.md
