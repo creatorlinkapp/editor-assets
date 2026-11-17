@@ -2895,7 +2895,7 @@
   #bset #tlItemList .tl-caps{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
   #bset #tlItemList .tl-caps .tl-tin{grid-column:1 / -1;}
   /* ══════════════════════════════════════════════════════════════════
-     261117 추가 — 흐르는 띠 블록 (TEXT01 · kind flowband · 접두어 fb)
+     261117 추가 — 흐르는 띠 블록 (CONTENT01 · kind flowband · 접두어 fb)
      · 줄(.fb-row) 안의 트랙(.fb-track)이 묶음(.fb-set)을 여러 벌 이어 붙여 -50% 까지 흐른다(애니메이션 길이 · 방향은 JS)
      ══════════════════════════════════════════════════════════════════ */
   @keyframes fbmq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -2905,7 +2905,7 @@
   @media (hover:none){ .blk.sel.fb-blk::before{opacity:1;} }
   #baGrid .ba-card[data-kind="flowband"]{border-radius:var(--r-xl);}
   .fb-wrap{position:relative;width:100%;overflow:hidden;background:var(--fbbg);color:var(--fbtc);container-type:inline-size;padding:var(--fbpv,96px) 0;
-    --fbbg:#ffffff;--fbtc:#222222;--fbmc:#90909a;--fbcb:#f7f7f9;--fbpc:#d1e8a0;--fbsc:#b8925a;--fbgap:20px;--fblh:40px;--fbts:56px;--fbih:260px;--fbir:14px;--fbch:300px;--fbtts:40px;}
+    --fbbg:#ffffff;--fbtc:#222222;--fbmc:#90909a;--fbcb:#f7f7f9;--fbpc:#d1e8a0;--fbsc:#b8925a;--fbgap:20px;--fbts:56px;--fbih:260px;--fbir:14px;--fbch:300px;--fbtts:40px;}
   .fb-head{max-width:var(--site-pw,1180px);margin:0 auto 48px;padding:0 var(--site-px,48px);text-align:center;}
   .fb-wrap[data-head="off"] .fb-head,.fb-wrap[data-head="0"] .fb-head{display:none;}
   .fb-wrap[data-head="1"] .fb-head:has(.fb-tt.is-empty){margin-bottom:28px;}
@@ -2929,11 +2929,6 @@
   .fb-wrap[data-pause="1"] .fb-row:hover .fb-track{animation-play-state:paused !important;}
   .fb-set{display:flex;align-items:center;gap:var(--fbgap);padding-right:var(--fbgap);flex:none;}
   .fb-it{flex:none;}
-  /* 로고 */
-  .fb-lg img{display:block;height:var(--fblh);width:auto;}
-  .fb-wrap[data-gray="1"] .fb-lg img{filter:grayscale(1);opacity:.55;transition:filter .2s,opacity .2s;}
-  .fb-wrap[data-gray="1"] .fb-lg:hover img{filter:none;opacity:1;}
-  .fb-wrap[data-t="logo"] .fb-set{gap:calc(var(--fbgap) * 3);padding-right:calc(var(--fbgap) * 3);}
   /* 문구 */
   .fb-tx{font-size:var(--fbts);font-weight:800;letter-spacing:-.03em;line-height:1.2;white-space:nowrap;}
   .fb-wrap[data-outline="1"] .fb-tx:nth-child(4n+3){color:transparent;-webkit-text-stroke:1.5px var(--fbtc);}
@@ -2964,7 +2959,7 @@
   @media (prefers-reduced-motion:reduce){ .fb-row{overflow-x:auto;} }
   #bset #fbItemList .mt-imgrow{align-items:center;}
   #bset #fbItemList .mt-imgdrag,#bset #fbItemList .mt-imgthumb,#bset #fbItemList .mt-imgdel{margin-top:0;}
-  #bset #fbItemList:is([data-t="logo"],[data-t="image"],[data-t="cap"]) .vc-caps > input:first-of-type{display:none;}
+  #bset #fbItemList:is([data-t="image"],[data-t="cap"]) .vc-caps > input:first-of-type{display:none;}
   #bset #fbItemList .fb-rvcaps{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
   #bset #fbItemList .fb-rvcaps .fb-rvt{grid-column:1 / -1;}
   #bset #fbItemList .fb-star{height:var(--h-ui);border:1px solid var(--line);border-radius:var(--r-sm);background:var(--bg-1,#fff);font-size:12px;color:var(--ink);letter-spacing:1px;padding:0 6px;}
@@ -14521,14 +14516,13 @@
         </div>
 
       </div>
-      <!-- 261117 추가 — 흐르는 띠 블록 설정 (TEXT01 · 접두어 fb) -->
+      <!-- 261117 추가 — 흐르는 띠 블록 설정 (CONTENT01 · 접두어 fb) -->
       <div id="bsetFlowBand" style="display:none;">
 
         <div class="fld sfold open" id="fbTypeAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">종류<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body" style="max-height:none;overflow:visible"><div class="acc-in">
             <div class="mt-seg" id="fbTypeSeg">
-              <button type="button" class="mt-seg-b" data-m="logo" onclick="fbType('logo')">로고</button>
               <button type="button" class="mt-seg-b" data-m="text" onclick="fbType('text')">문구</button>
               <button type="button" class="mt-seg-b" data-m="image" onclick="fbType('image')">이미지</button>
               <button type="button" class="mt-seg-b active" data-m="review" onclick="fbType('review')">후기</button>
@@ -14586,9 +14580,6 @@
         <div class="fld sfold" id="fbShapeAcc">
           <div class="fld-h fold-h" onclick="smAcc(this)">모양<span class="fold-r"><svg class="fold-cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
           <div class="acc-body"><div class="acc-in">
-            <div class="srow" data-fbt="logo"><span class="k">로고 높이</span><input class="rng" type="range" id="fbLh" min="24" max="96" step="2" value="40"><span class="v" id="fbLhV">40px</span></div>
-            <div class="sline" data-fbt="logo"><span class="lbl">흑백으로 보이기</span><button type="button" class="sw on" id="fbGray" onclick="fbSw(this,'gray')"></button></div>
-            <div class="tx-hint" data-fbt="logo">켜면 로고가 흐린 흑백으로 흐르다가 마우스를 올린 로고만 원래 색으로 보입니다.</div>
             <div class="srow" data-fbt="text"><span class="k">글자 크기</span><input class="rng" type="range" id="fbTs" min="24" max="120" step="2" value="56"><span class="v" id="fbTsV">56px</span></div>
             <div class="sline" data-fbt="text"><span class="lbl">속이 빈 글자 섞기</span><button type="button" class="sw on" id="fbOutline" onclick="fbSw(this,'outline')"></button></div>
             <div class="srow" data-fbt="text" style="margin:12px 0 6px;"><span class="k">사이 기호</span></div>
@@ -25971,9 +25962,6 @@
      (사진형으로 컨텐츠 CONTENT01 에 넣었다가, 사진을 뺀 목록형으로 바꾸며 글만 있는 블록이 되어 텍스트 「목록」 탭(인덱스 리스트 · FAQ · QnA 옆)으로 옮겼다 · 썸네일 = 실제 블록 정지컷) */
   (function(){ var L=BA_CARDS_TEXT; L.forEach(function(c){ var m=/^TEXT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='TEXT'+(n<10?'0':'')+n; });
     L.unshift({no:1, kind:'timeline', label:'TEXT01', ar:'800/480', img:ED_IMG+'ba/timeline-5.jpg', vid:'ba/timeline-5'}); })();
-  /* 261117 추가 — 흐르는 띠(로고 · 문구 · 이미지 · 후기 카드 / 캡처를 한 블록에서 종류만 바꿔 흘린다)를 TEXT01 로 맨 앞에. 기존 TEXT01-20 은 TEXT02-21 로 한 칸씩 민다 */
-  (function(){ var L=BA_CARDS_TEXT; L.forEach(function(c){ var m=/^TEXT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='TEXT'+(n<10?'0':'')+n; });
-    L.unshift({no:1, kind:'flowband', label:'TEXT01', ar:'800/415', img:ED_IMG+'ba/flowband-2.jpg'}); })();
   var BA_MOTO_THUMB=ED_IMG+'ba/image01-6.jpg';   /* 260918 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙) */
   var BA_IMG2_THUMB='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBUODAsLDBkSEw8VHhsgHx4bHR0hJTApISMtJB0dKjkqLTEzNjY2ICg7Pzo0PjA1NjP/2wBDAQkJCQwLDBgODhgzIh0iMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzP/wAARCAC1AuADASIAAhEBAxEB/8QAHAABAAEFAQEAAAAAAAAAAAAAAAMBAgQFBgcI/8QATxAAAQMCAwMGCgQMAgoDAQAAAQACAwQRBRIhBhMxIkFRYXGRFBYyUoGTobHB0QcVU1UjMzRCQ2JjcnOSsuElwiQmNmR0gqKz8PEXRVQ1/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APf0REBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEWlxPa3AcGrPBMQxKKnnyh+Rwdex4HQdSw/8A5B2V++qfud8kHTIubG3+yx4YzB3O+Sr4+7Ln/wC4g7nfJB0aLnG7ebMOvbGIDY2OjvkrvHnZr73g7nfJB0KLn/HjZr72h7nfJU8edmvveDud8kHQoue8edmfveDud8lTx62Z+94O53yQdEi53x62Z+94O53yVfHrZn73g7nfJB0KLnvHnZr72h7nfJU8etmS4t+t4LgAkWdz+hB0SLnvHnZr73g7nfJU8etmR/8Abwdzvkg6JFznj5sx97wdzvknj5sx98Qdzvkg6NFzw262ZPDF4O53yUjds9nncMUhPod8kG9RaZu1WBv8nEYj6D8lKNo8IPCuj7j8kG0Ras7RYSHsYa2PM8kNFjrYX6FKMaw48KpncUGeiwfrjD//ANLO4p9b0H/6WdxQZyLGp6+lq5CyCZr3AXIF+CyUBFRzg0Ek2AVm/i88IJEUfhEXnhN/F54QSIo9/F54TfxeeEEiKPfxeeE38XnhBIij38XnhN/F54QSIo/CIvPCp4RF54QSoovCIfPCeEw/aBBKii8Jh+0Cp4VB9oEEyKHwqD7QJ4VB9oEEyKHwuD7QJ4XB9oEEyKHwuD7QJ4XB9oEEyKHwuD7QJ4XB9oEEyKHwuD7QJ4XB9oEEyKHwqD7QKYG4uEBEWmrtq8DwyskpKzEYoZ47ZmOBuLi45ugoNyi53x72Z+94O53yTx72Y++IO53yQdEi5zx82Y++IO53yTx82Y++IO53yQdGi5zx92X++IO53yVPH3Zf74g7nfJB0iLm/H7Zf74g7nfJPH7Zf74g7nfJB0iLm/H7Zf74g7nfJV8fdl/viDud8kHRouc8fdl/viDud8k8fdl/viDud8kHRoudG3ezB4YvB3O+Sr49bM/e8Hc75IOhRc749bM/e8Hc75J497Mfe8Hc75IOiRc7497Mfe8Hc75J497MffEHc75IOiRc7497MffEHc75J497M/e8Hc75IOiRc7497M/e8Hc75J497Mfe8Hc75IOiRc7497MffEHc75J4+bMffEHc75IOiRc54+bMffEHc75LY4XtBhWNulbh1bHUGIAvDAeTe9uI6ig2SIiAiIgIiICIiDwz6VW321P/AAsfvcuNbGetdv8ASg2+2ZP+6x+9y5JkaCNsanbGVKyLqWSyHqQYVNESJP4jllCJSUkOkun6V3vWY2HqQYO6KoYStjuepV8HvzINXuCVXcdS2e46k3HUg1m4V4p1sRT9SkbTHoQawQHoKjZTE1kw18hn+ZbttN1KKKn/AMQn0/Rx/wCZBgeCdSoaTqW7FN1Khp0GhdRnoVhpD0Fb80ttUFNfmQaaKksthBT8BZZraYdCnjgtzILYIbWWwij4K2KLqWbFHbmQQPj/ANNoP33/ANBW1ZGsKZv+nUH8R/8AQVtWMQRtj1Um7FlO2PqVwjQZOAR5a6U/s/iF0S0uDty1Un7nxW6QRz/iH9i15Kz6n8nf2LXIK3S6tuiC66XVqqgrdLoiAiaKuiCioVdoqWQWIr7BU0QWKiksmVBEVRSloVLBBHYlMpUuiIIw0quUq9VugjyJlUlwiCPKllIqILbaLbs8hvYtUVtmeQ3sQVXie3pHjpX3/Z/0NXti8Q2/I8da8dUf9DUHPZWHpVpjbzaqy6rmIQWmMHmKtMR5iVJvCq7zqQQboq0xkdKyc46FXMCEGJlTKszK3oCZB5oQYdlUDtWUYb8ysMBQRiyvDGnnVfByr20z+YoLmRN6QrzArWwSj80qQMfcXuB2II/ByeAJVjoXDi0rcQti3Q5Rujog7gQg0uS3MrS0dC2xpSeYKw0RPMg1eVMp6VsX0WXUgqIwNHOe5BhWKpYrM3Tek9yoWNQYdilisss6kyHoCDEsV6R9En5Ti37kXvcuBLOlq9C+igWqcV0tyIve5B6ciIgIiICIiAiIg8Y+kxmbbEn/AHaP3uXLRxLsPpGbfa4n/do/e5c1HGgpHF1LKZEqxsWUyNBi0cWk2n6Z/vWY2LqVKGPkzfx3+9ZzY0GMIVduepZQYrhGgxNz1KogueCzBHdSNiQYYphZSCC3Ms4RK7doMEQa8FFFD/iVSP2cf+ZbPdqCGP8AxSqH7OL/ADoKbnTgqbi6zt3om76kGDuOpU3HUs/dqm7QYQhUjYrcyyd2pGx2CCyOOyyo2XVrG6rJjagxp2WrsP8A4j/+2Vto2cFrqgf6dh38V/8A23LaxhBIGK8RqRjdFfZBNhrMtQ8/q/FbRYFAPwzv3VnoIqn8nf2LWkrZVP5O/sWtQUuUumiIKXS5VUugXVdVS6XQVul1bdLoLrqt1aiC66XVt0uguuqXVLogJdFQoF0uqJZBW6pdUKhmmbCzM655g0cXHoCCGsxnD8OqIoKyrjgklBcwPvYgcdVZS49hdbuRBXQF8xsyMus8n93jzLlNp6N1TjdE+Yue9sD5HRskLeSHC7Wnpt3lYDMKpqfHsKrqZ1QaaWpyxNMmos2/xQel5kzLXx1ThyQd5YatPJePRzqeOdkhs13KHFp0I9CDIvotwzyG9i0mZbtn4tvYEFy8f23ohNtdWvI45P6AvYF5Tti97dqaw35Nmf0hByv1WE+qu1Z2aQ2ILh2jiOpXgShpOY9Vwg14wrt7lccJFtA4LYgyCxFyD+qVeBJxLi0dYQar6pd0XT6qd5hW3aHOF7kNHEnS6o6OUtu12g50Gp+qj5hVfqs9Dlsnsma6xfccepWvbMw63twvcIMEYa7murhh7+j2LMO/FyCQOY3uFdafLm9HFBh/V8nmq9uHv5x7FkuMzbZtCevigdObjUc+jroI/q91rcPQqjDXdLu5TN3ua28eRz2Ck/CWBEjjrqgxfq54VwoH9B7llfhBa7zrzkFGveQ78I4W0Nygx/AX9BVBRPHUskOfbRz7250zvueU42/VQY/gTzzoKF3/AIFI57g0OvyexWufI1wBcONrEWQWHDw7iPYrThTD+apBM7MRfXqRtQ49AHOSUEX1TH5qfVLPN9imMrvPuRzApvX2BzaFBB9Us832Ltfo9pG0s1fZtszWe9y5EySXI5Q7Quw2Bc509fmJ8mPQi3O5B3CIiAiIgIiICIiDyX6Qm32rJ/3eP3uXOxsXTbfi+1J/4dnxXPxtQSRsWUxisjaspjUEFA3kz/8AESe9ZwasahHJn/4iT3rNDUFoarwxXBqla1BY1ilaxVDVKGoLQxXBivAVwCCPIsaBg+tqsfsov862AasKnex2PV0Qdy2wQki3MS+yDKyKhYpyxMiCANTKpsuiplQRhquyq7Kq2QUa3VTs0UYV7Sgiqfy3Dv4zv+25beNeebS7VVuF7YYRhkNHBJHK9jmyPc65LrsI06Lr0OPQoMtnBVKjDlddBmUJ/DO/dWetdh5/Du/dWxQQ1WlLJ2LVZltKz8kk7Fp7oJLqt1FdLlBLdFFcpmQSXRR3KrcoLrpdW2KrZBddVuo0QSXVbhRKt0El0zKO6XQSXVLqO6ZutBJcKmZWXCjlnZC27rm5sGjUuPQEF80zImF7+HCwFyT0DrWL5OapqCGkA2F9Ix8+k+hULgy9RUkBw0a0aht+YdJKoM0rt5MLBurI/N46npPuQczjtQG7RYdNUNdHDu3B1m3c1mYAk9HwCYrBFR47hZhkDYZKtrjEByWvItcdFxzdV+dZOLSEbVYe1rGvc+nlYGu4a6a9S1+KwyYdLhtIRngbXRywzc9rBpaesaW6j1IOxdCx4Ae0OA6VG+mcQA12YDgJNbdh4hTF+vpTOLIMcyTwgkh1tfK5Y7xqO5dVEbwsP6oXOF+h9K6SP8UzsCC5eHbf1Eke22IiOR4Ld2SL2bbI1e4rxzb6moqjamtE0oa8ZCQ7NbyG9BQcXBjzmG8s8gY42aQCLrIZtGYw575tL6OEZ9GvOUjwvDY5iWSgOIyhxbp1ajgn1LTPB3hYNNHAaC3OdUCPaWUOLnOIYeGZvx6Fc7aeZgIe+ONxOjQM9x7LLVzRUGroq+ORpGUNu8FvoULIMOmeGyV25jGh3jDb0WQb6Pa0cq8rGtFuMXFG7WB0ha18RvoHZCB2FaJ1Bh8TQ5tfvorfmRh2vQATcHuU9NQYaImyOqXwM8+aIgdmlwT6UG6GP1ohu51NZ2rdOKtbjtU4gCUZjxvlssQYHDM8O8LjMJGYOeSS4X425ljSYbhsZOXEoXMtZuS5t1HTVBtvGGZ77BwbYkG7SbdxVX4zUyRt3T2cbuIFr68OK11PQ4bM7LT1jnPPQywHabLKGBOe4shr2s10HG/oQZD8ZnjcWlpzk3GZ2UXPX0IMUqnAte1+8tYlp1HZ3LEhomMc4eG0zpb2dcWAPPpfisqCCBrHTeFREs4xxyZvSgOxetaW5WSCMkXAa7Tp5lKzFnkuLoxyXclou2x6CTZI8ObO4HKxjGi5dIwC/TZSSYYbSGliZkcbvtM4nTpFiUFv1046lhc02s1hcbW96vdjLBkkALmebz+33KH6llfKGwsqC3i2wyj3KQ7P4hG8CRj3ki4bI5rPRcHVAOLhsrmRROLSOSLk6n06K/6z8HY1xgkA4Ag8/YeKkkoq5rWyOoI3ZQA3LMDY9HBBDiDuVHQOBLtQ/lenoQYwxeolcWyNywk2tkNifZZT+HwSNAZHKxrdLDX0dnWr5I6nM4Ph3b28eJFzw0sQoRTV8hc18FO53AGOQtNum1kGQaosvG0NyiwuCbjqUnhlO0DeOLXc7SeCjiw7EWRvbKxzTxMoYSO3Q6qlNh1SKg7ufPmAuTGST1noQSDEI3RNcAefU3VxqpAASIbaEgXuO26imwuqDX5oxIxx1awOBHcsCfCJ3lzIzGxw5zIXX7xdBtBUMyZnHKHHkkuXZ/R/K189cxobyWR8DfncvOxs3VQsZIJwM5s103J1tzDm7l3P0Y4ZVUNRic1ROJGytjDWhxNrF3dxQeioiICIiAiIgIiIPLNvBfag/wABnxWhjaug26H+s5/gM+K0cYQTxtWSwKFgWQ0IIqAcif8A4iT+pZwC1+EytnhqHNBs2qmbr1OK2bQgBqlaFQBXhBc0K8BWhSNQAFI1t1RoUjRqgBq0WH1dPLt1jFK14MrKSnu3szX/AKm963VbWQ4dQT1tQ4NhgYXuPUOb4LwzA9p5aLbZuN1DiGzzO8IH6jzr3adyD3zKqZVIwtewOaQ5rhcEcCOlVLUEOVWlqmyqhCCGytKkcFGUFFe0qNXNKDk9qaFs22uyVQS0f6S5hueOXlhegRHQLxf6R8bfT7XYaIXa4c1sunnF2b3Ad69go6qOqp4qiI3jlYHtPURcIM4FXZlCHKuZBscNN53/ALvxWzWpwo3qX/ufFbZBBWfkknYtMtzW/kcnYtJdBddVuo7qt0F10Vl+tLoJEurLpmQXPkbGxz3ENa0XJPABY8WJUc72siqoXud5LWu1Ol9PQsbFpb4bVMH2Li7ssdPStDSQQw1uGyNhYxped1I0Wc5uQ3zdd/Yg7DMmZQtkvYHj71dmCCTMqZlbmCpmCC/MqFytzBMwQLpdWPkYwFziGjpJWO+oc9t2ndR88juPoB+PcgllnyHI0Z5CLho956Asdz90/M8mWocNAOYdXQOtWtcSMsAyNdqZH6l3XY8e0q9sbY2kgG5PKcdSe0oLQHF+8lIdJrYDg3jw+akLzr6fisafEaKnBM1XTx28+Vo6etamo212dpSRJi0BIBJEd3+4IIcZjjn2io2TSOiAppHCRpsWEEEEdhWHjFTJPS0rqtxZVwVkOaMCwykaG3OD8OpafFNucEfjtFXR7+ohjYWAMjsS48LXWr2m26gxOKB8eFVEMkErDvZD5Q45eHAkXCD10vOcjr+Kpn0Xlc30jY7KGPioKGnZKeS6WS55+YnqWqqtstoq6CeOXFaWDL+ZFGbv0voQPbdB7UHkg8/FdXF+JZ+6Pcvlmqx+ukjaJ9pK10eUh7WAttyea5F9V9O4Sc2D0RzF14GanieSEGYvEdvtl8TxPbTEKmOsjgpnmMtudTZjRza8QvblxOP0UJxqeZtPE6d2XluOvkgIPOKLZuWAuElaK1zrWje7gernWU7ZXE543tvS00bydSAbfJdmIZGBspLeSfJbE0e0qyeKOdgL3xPcLkGQtACDzyLYJ0VQGSVtO9hNi2Jjy49yyHfR9VRBwigppWlpsXNDCOvW+q7ijfLnayGaGQcLMdw7isyTD5Zg51Y9pP5rWONh3oPPodhaam5VTJDmLeVk1t7B7FtZdnqllPusMMjYstnXfnJ6x0arqDhkD3WiB3nnkX06L8yq+iaKeTlOMjLg2HDtAQcANh8REhfLi08Mo5QzuDnHp04rI8TnwPEkkrDI46O8GY4nt01XWUs9VA0gUDsg8uYvAB9lytg2pi3LnSU5LhawYC4n2IOGk2bkooszYJZDm8ptIxvtupKfDad9icKmc4m5fKxrXdlgV1dVUZwGy0wgv5Odwb8VhvEDWsdlzOHAb69j6D8UGlkwuCnj5GHxtY784x5yOkED5rYU2GxupHTNpqbI08psbcjmn02W3Y5kznx11ZDy9fB43glw9PwWviqHNqXwUFO9sY4PdEXEH3IMKasAbmpsHZKW6lrpG5u3nUEBlxN7IajZt/KPJkZOCW+m/BdAxtFHEI5pmxTuF7k2IN+j5qCrayJpfEa2V9/xkMd8x5yCEFrNmI4oxI+tqo3AXDPCPJ9FlbGymgnc2KsqZ5C2wjLg4N7C4aLIdi0c8DGlkhJb+MuGuHt0V8MUspEIZUkjW4fGDbp4oLTVUdLC2OrMjZR5wFx6W6LHp56Od0jRHIGcXlu8OnUbW9C2oD3NLHtDpGC2paT7+Kimp6kQtk5Lpb3DnNNmj0IMUQUxa9rqKeKPNmGRzxm057FYJioIJWxvErQSTZ04J15rcVvvBG1MLb2zkC/lEE+lYL6OejmaGvia69hfle/mQYDoaTfNdSSzNYOLRI5wd1Wt8VmUoMrrsMxiOmaRhu3rN1sqN9c8OZUQNkiI5LmPyHu6FHX1TaB2XwaaaIaiRtSeSecW4oI2Ruvy5mlrtCXEi3ZcWCSwNzB4pZ6k+fEQ6/bdT0uKtrIskFPJm52vOYBSGGumcWmbJbyd2B7RayDTvFLvjDNg9W1gPlmnY/N6Ab+xdZs1BTU8lQynI1a0ltgCBcrV09Ni0DXb18MjOgANJ7lucCjlFTUySxMjc5rdA4OJ48Tf4IN4iIgIiICIiAiIg8w26/2mP8BnxWijW926/wBpj/AZ8VoWIMthWQwgC5NgOJWLGue2o2op6KhmoqWUSVcjSwlhuIweJJ6epBs9kMQhxChrHxX0rZSQehxuD3LpAvINj8dbgGIObOSaSoaBJl1yEcCvWqWphqoWzU8rJY3DRzDcIMgaK4FWXVQUEoKkaVCCpGlBO1SAgAknQalQtKlaA4FruB0KDxzbjbV2OyeAUWZmHRuuSdDM4c56B0D0ribhZ+M0MmG4vVUcoIfDK5vaL6HustfYoPT/AKO9uHxPp8BxHM+Nzgymm4lhPBp6ujoXrOVfP/0f4fJiG2eHNa0lsMm+kPQ1uvvsF9C5boIS1RuCyS1ROagxXKNyneFA4ILCUDhz6DpVHLUbSV/1bs7X1INnNiLWfvHQe9B4rtHiH1ptFX1l7tkmdl/dGg9gXsH0b4r4fsjTxudeSkcYHdg1b7D7F4YeJXe/RXifg+MVOHudZlTHmaP1m/2JQe0tkV2dYjJNFdnQbnBnXqpB+p8Vu1z+AuzVsv8AD+IXQIMev0opexaHMt1i00cGGTyyvaxjW6ucbAahczJXU0TXPfPG1rSA45hoTwugzMyjnqI6eF0srsjG8SeZW71twMw14arCxOS9PlFiA5pIPPqEGZT1kNWxz4JA8NNjpax4qbMVp8OlySVAJcTnHlcTyRx61sxICLgoJblWPlyNva5OgHSVY+YMHSeYDiVrqnFKanJM9VBG7gS54s3qHSUF2KPIwyrYDdxjcXu9HD/zmWCLCpw9zSDmluW2tuzlOnV2LX4ntThHgE8EVVvHvYQMjC7XrK09TtrSiohkpaWofu5M0hkIaHmxF+rig9BBIGlrdBVwqcnl3t1/NedO27xWodloqCG/DktdKfYqGt21rgN3HVsH7OnEftKD0htXA423jQegmyxKzG6OjYCZRI83s2Mhx9PQvPTsvtXXkmpklseO+qwPYCVhVOEVuzdQI5XwOknZm5BLrAG2t7IOvft9T0z2isijjva7GucXgHnta3tUD/pLw1zQYaerdrbSK599l5hjU081e578jnZQLlq67YLZjD8dwieoxA1BfHPka2OTI21gejpJQZtR9I8nJdTYS4uIu2SqmBPG2gHBaqb6QcYMh0oYS023jgZD6Ob2Lv4NjNnIBphjJD0yvc8nvK2EODYTTficMoo7c4gb8kHkTtrNoq67RilRfmFNCOPo1VrqHH8TJzUuO1QJFi/M0dfMvbWlsYswBo6GiyGTpN0HibdidoXsDvF9xPOJZm3PoLvgs2h+j3aOdjXyQUFEQ4nLKQ53/SDp6V68ZAqGQIPEMf2XrsJxClpZ6l1RI+9S99JGS6Ng8ogG1yALrG2nwOjw2Gnlw/Fp8SLgySaURDdxMd5BJudTzArvNp62qptu8MfQxNlq30zooWvNmhzswBPUOPoWj2qwebZbZaoooneE0VbJE98paGuZO03PD81wBsOayDo6L6MtnmQxve2smLmgnNUFo4dDQFs4NgtmYOGERSHpme6T3lbqilzUFM6/GJh/6Qp8/Wg18Gz+D0v4jCKCMjnbTsv7l3cIAgjAFgGjQdi5XPoV1UX4ln7oQXrz7azFJsNxeZzRnvlAZfhyRqdL+1egrhMdp21G0dS6WSExR5bxuiv+aOJv8EHKsxGsrZo2z0MgiDr54481uy9z7V0kOG4Y55kfG2SR3Eu04c1lI+OknpjE8s3LtLNflv3WWrmwLKXyUtVM2PLyYYdCf+a+qDoM0kLWMpoohEOYD/0sWdouZamJr7G5FnOA7Lmy02GR10GIup9xOyIaGaWfOOwA8/YFv5IX1EBjeZMnPclmbt6kGDFi5lsyip4ugN3tj3WCzKefE55OWyniY0WdrmIPeueiwetirRvaMSNLtXNlLtOgcLLcSVUdHSNEjH0eZ1vIBJ676+1BkSYnLSvIrIoww3yuLw0m3HQlYsuLUbcpZMHhwscmUZepajHKHe0hdU14kaW5oxPM2MnsGXX0rDwTZuqOWc7mmiIvGJAXFw6DY6BB00mC4ZjcDJnRxukGmd3LIHRcH4rGn2Tp422pafNl/bubf26LZwvqKSMRFjXMA4xNsOvRRTsNYRu/CY3N1LmMynsBKDUSYC9seabCpHEHk7uozAD0G6hoZqTDS8x09UXnTNZ5y31tqTZdFAK+FjIjMZf15W8odVhx9i02PYk+irxFWyxikcAQ19E95J5zmB9yDFMwlkMhoag3dfNyQ0DrPAdylONYWMgmr2QAa7pjwLfy8e9Z9PhWCYvSufSmKRt7FzCSQeu5uqfV0GCbuWGKiZTRMJmlkiLpD02AQSQAVYaYI31EbxmAy5QRzanRbKCppoqa0r6eC2jm71oseglalm1eG1pNNvGhr+TZ7XBp6ieZZLdm8KlYwGgiDG8oAE+++qDPmpIMRpgwPjdCdQ9rs2vV/wC1hx4dHBI1lJVSNa2+bl3se6ymbBBhUG7pYjFBzhjS51+m3OsKOikvNVzz0tXKPIbl3TW+m51QZdPVNNQYHYgZyQRuywAH/mGqzGUpJa6Swyk2YAXD2rBdRRVlvDadpygWzm5PpHHtWRVz1UFC40/gxcxugkcWtAHSdeZBky1TG8hsErnE5dIzZvWT0dYWD4HG2XK+kjcCbl7ZiD3cVj4ZI+vg/CSU7oXDlbiTPbqv/wClM/DMNpInVDaczObwBc469SDJpqeJkhjYWFnHIcxIV9Q+SIjdRAxN8o3y5ey65+TaB02eGOingfwYW2kIPW3RXUdVjM1QTEaR4LdHyQPDj2j+6DfujfJGS2oJvrySPYVmYBFNHU1Rkke9pa3LmLTbj0Lh6nbOOjq30FVRN37DZ4Y7dgm/EAm66vZDG2YrLWMbTTQGLKTvDcG9+Hcg6pERAREQEREBERB5ht1/tMf4DPitCxb3br/aY/wGfFaFiDncTwraTEHvYytgbAScrA8sFuuwWn8Q8ad+fR+tPyXoTFkMKDzdv0f439pR+tPyWxoNkNp6B+emrqWF36srtfYu9aVM0oIcMZXR0LG4jNHLUjynRiwWYCrLq4ILwpGqIKRqCZqnYoWqdgQavEtkcDxusFXX0IlnyhpcHubcDhex1Vjfo+2ULMv1ND2533/qW/YFkMCDWYLsxg+APlfhlE2B8oAe7MXEgc2pW5AVAqoLXKFwUzlE5BjvCgcFkPUD0ED1qsawmnxvDzRVL5WxFwcd26xNltHlY73WQcYfo0wPX8PW+sb8lmYVsPhGE18NbTyVZmidmaXSi3dZdA5+qt3nWgz2yqTeaLXNlUm+QdJs27NXy/wviF065HZR+bEpv4PxC65Bz+2/+xuJ/wAIf1BeJNLsro85yudcgc5Xt22wvsbiY/ZD+oLw4tN0GQZpzM1zpZM7bBpJ4W4LJjq5Q/NJUSckGxzG4/8ACsEPdYNur4o3PLr6jKUG4h2qdSQuaIzLI51yXO0tbh0qGfazF5rintADwLRc95WtMQia2wF9eCqEGwpqPEMZeBPjrWOdxY57iT6BYLZ02xFC7lTV8s5vru2taL9upWgbcEHVZENVUQhzY5nsDuIa4gFBvcS2ZwiiwmplZC8yNbo98rjbUC9uCx24TSwV+GCSjiZGKkCAGJv4RmV1zJ0u8n38brGqcVqZKI05lZJEQ0OuNeKnhxGOpqaAGRrntqRuwHXyNsbj28UHbNkyCzbNHQNE3vSVhiQ9KrvEGXvVw22z82J01vsP8xXXZ1yG09pcTaHC+WIe8oOCxBt6h3oXoP0aOyYHVD9uP6QuJrI2mqeMo4cF2GwDslFVxjhnabegoO73qoZVi50zlBk71U3qxs6pn60GSZVbvetY+frVhltx50HK49A2v22po3zug3dIZGzA23bhch3YCtVtDWz47s3V1FY/dvpBGI4G3AcXEXlN+Yjh0K7aKcTbWsbFu5nCJjd26TK1xvctJ+Cg2unrpcNbJW0MFM4fgw+Oa5cOOW3OL69SD0bDZv8ADKTX9Cz+kLK3y0eCVkVRg1I+ORrwImtNjwNuC2IegzN9odeZdrB+Ij/dHuXn5foV6BT/AJNF+4PcgkXFY5QQux2eoAY2Z2UF7hm5hwF12q5XGXbvEZpC1zw2xIbxGg70GjrsBpcRA313OHOHFtuyyxYMNqIoxT00dTDDHe7SWkHp6+5biOSOoaHs3jQfO0Urp2MaS6UWbzNBNu5BqPqrCBG0SUTi7id2x1wekWCyzgw8DAw2V9FJe+9fHvHkdGpWwppBUR7xrnBtyNQQVhY5ikeF0L6gMfO7yQxBpqnEcbwepip3iCu3hIDg8Nd6dAAunpXVEtOTPEIi4asz3I9IXnODAVGKOqX4fFEwv5ckLngC+ugde/DivQ4J88DbONraXac3pvzoOc2iwkRFooCIZpQS+aeQltvNBN7FTRbRUdFQxHEJ4RUZbmOOTea9VtVvnRx1MT43wh7HCzmv4H0FaR2yeFQFwjomlx1BzWI7OYIM6gxKLFaNkwa+GzrZBJYjtt7lkVsD6mJscb25SeUXa2HxWnqKh9FTCKJzKYMsLzOa0gc/RrZXYbtDS4riJo6ON8+6beSRxLQ0Xtfhqg30UTYYwG8lo7Fp2UNZO+WJ9W99K8kltXSsf3EG1vQt1ZvOLdSxYq2nfWvo+EzBc3jda3aRY96CzDsMw7Csz6KERmQcotccp7ATYLIrKaHFaB8FTE4Md1i4PSCFz/1LNhGKGtjxaoGH3Ln0jY8wN+YWBsOxbalmo5byxSzMaTqHtLWk9hAQaql2VhwmY1lPiNWGRDO+MWJcBra/FaqX6SKdk4a+ikZDfVwnGbttZdk6IyNGWbd2Nw6PQqCekLjHI2KHO0+WA3ldosgyKaY1MMU7Z35HtDmtJuCDwNiFBWUlS6pjkhbTTU7j+EiewNt+sDznqsrfCqnwndTU0fTvIpWnvabH3rWY79dVEEcWE1DIXi+fOw5j0WNiAg301G2shaHTyU8g54XgOHVcDgoqh7cOp7Pp6mqaBY7thlc7tXHUNXtfQ10FPWxeEQuBzOcASP8AmHxXSw4hiTt492FxSAeQYqoEuHpAsgmZg1BVAVIw2SnfJZxAkdE4HrDToVi1GMVWFRk1TIaUMkyAyte5kg5iC03v2rNOMUTJmw1FQynnIH4OUgcff6Fll8U7CwuhkBGgIDh3c6DEwXaCjxsSNhkY+WMAva1rgBfozC5WZJh0Uzcz+VJY2kOjteyyxY8Khp52VLKSlbOB5ccbo7n0Hh1LLqYfDISyVoykEFoJFwg1rcDeX2qq/wANjOhjqYWO06jbRZmx1FR0eI4iyjkkADWB0L2Wyau4dXyWqpA3B5Hx09BXy5z5DiXBvW0np6LrptncQNbNUg0tVDkDdZ4st730HTZBv0REBERAREQEREHl+3R/1mP8BnxWgYVvdvD/AKzn+Az4rn2FBlsKnYViscp2uQZLSpQ5Y7XKQFBOCrwVCCrw5BMFK3RQNKmagnYVkMKxmrIjQZUayGrGYp2oJbqt1ZdLoKuKjcriVG4oI3rGkKneVjSFBBIViyOU8hWJK5BE86qIvsj3KFzkEwk61XerFz2VDIg67Yx+bFKgfsf8wXbLgdhXZsXqR+w/zBd8g1O08DanZythcSA5liRx4heXO2epje80ncF6tj3/APEqv3PiFwWnQO5BpRs5TA6TSdwVTs/GwHLUSajzQtzp0BUdl80INK3AGPHKqXkA87ArvF6IH8e/+ULcNt0KunQEGo+omfbu/lCp9Rt+1d/KtxcdCobIObrcCnsXx1mVo/N3QJ77rDbhFWJYf8RcCHck7ryT08V1Uwa5hBGnQsURtzCwGnWgyqV9VFAGzytmkHF4blv6FP4RJbyW96ibwCu0QXPqJixwY1gdbQk3suOxLDsckqN7LiMD3OHFtPYD0XXXXCx5o2PfcjmQeeVOFYkXuLp2OPORGRf2rebM0mL0r3SRVcDYs43kb4dXDqN9FupqOKR2ouei5WTRwMp2FrRa+pQZ/hbvsx/MqeGO+z/6lCSrCUGQK0n9H/1Khrf2f/UsYlWlyDKNX+pb/mWpxp2LVUUTcKrIqR7XEvdIzPcW0tposkuPSoy5B5ziWDYtTV4jnrqd7peUZAw2usWuwjEKan30tZDI1vNlJPtXb4nG2aVrnC5HArAqYBNFu33LTzIL8CwvHqSKF8ONUzaZ7myOi3BN+nsNl2wqL35QXPUBkip2R3GVosAs4PPSg2fhPJPKHBenUpvSwn9RvuXjxecp1PBev0f5FB/Db7ggnXJ43DnxKdzpHsGmrTYjkjnXWLgcdxCmO0tXRjfyTNDczGNJAu0dVudBqTV7wvpcOfVOBN3VT35hfoBcNfQthSUUjKdolqJnPz3c6wNx0cFLTYfBEbxQiIm17NA/89CzfxQtlv1nVBfv8rctx1DmXCYoMdxarNDXUcbmauiED+HpzX711km6dVBzqd5ktYPDLC3bwCxqyohoLmCnLXubypAxxv1F4Bsgx8GwBmGYfAyad7KkEuID7jMTpYE29i2EE1eauOOWljDNS+QSgkDs5ytO7DJsSMVVUvjoXx23UjpnSXHWHW9q3VDRCOqLmVmduW2Vrr5j0no9CDZTzOiaDkfbzgtNtBjMGG0GeSSUvLSGsa3U6dPNZbKUxNc25dcei61OOQwTUkkpEQqYo3OgdIwuDHW42HH0IPN6bCMRxHK+kgqZY5HWdIGDLa9icx4r0nDKGi2bwpsbAWAm73Ehz5HHpI4nqC57ZXaI4kwQT1dM2dg0ghY9psOex0Uu1eEiup4qwYgaMwm7pLggdBOo16LdKDcN2moKiB0oiqxC0G8ppnBot12WJhmKUuJzSvoJ52PbynsLXEHmB5QHcFdhVfvKKBoq4Zy1oaJQCS/mvZQYlHtY2o3tB9VyUwdoLua4joN+dBbPt3S0t2ywVpLDZztwRr28FiN2losYY6Gmr5G7x4zMqWC4HQ0ge3Va+rxbGYKyI1c8YeG2bC2qFO5oPnscS0rcYFjkdbM2mnwxlNKG/jGFkjD2EIMmPDsVla04fjrWRsGkboGyC/72hWyp340HMZJFSsA0klc++frDQNFO7I2zWGCwHAG3u0UVRVmla4+WbXDLHlenggsnxnDKacGWaLfB+7DhGM1+jpWzhqWTt8p1gbXc3JquQdtdSSPdFURSwSB5YGxR7xzj0gt4elbeLEmmoip4YauQvaDnkjIb06uI49SDfkg8kuZyhwLuKxDS01DC/wAHghhBOYtjbZpPWAtXNiVNT1cYdHGZG3sXh2ZvZcLPgxGOra5jRE92XlRteHEDrQYlTS4XjkIFXT09UYyWtOQOLD8OxYlHs9R0MT6aGjkMDxq+SYi3ULWt6FsmunponOpoRG06iPchuvoVWOM7WDFIYo3nURteDfrsdUGNT0sdK9vg7XNDRxM0jgO0Eraw1MmrnGM/u3Chmiinh/BSuY1psWsfb4KB9NBC0lsjpMou0MOo7elBsTWtt5JPYVs8AqoKiWobE5+Zgbma4WtxXMQyh87Ip7ve/WMRsJA7XDRdDs3SzQVVa+Rzd28NyDJYjjxPOg6JERAREQEREBERBwm1ey+K4tjhqqSOIxbprbukym4vfT0rUt2Ixwfoqf139l6iiDzNuxeNj9FB67+ykbsdjI/Rwet/svSEQedjZHGB+jh9b/ZXjZPFx+jh9b/Zegog4EbK4t9nD61XDZbFR+jh9Yu8RBwzdmcUH6OL1ilbs5iQ/Mi9Yu0RBx7dn8RHFkfrFMzA69vFkf8AOuqRBzjcHrBxaz+dSDC6sfms/mW/RBovqyq81n8yfVlV5rP5lvUQaE4XV+az+ZWHCaw/ms/nXQog5p2DVp4NZ/OoXYFXngyP+ddWiDjH7O4keDIvWLHk2XxV3COH1i7tEHnjtksXPCOH1v8AZRu2Pxk/o4PW/wBl6OiDzU7G419lB67+ysOxmN/ZQeu/svTUQchsns/iOE4jNNWMjax8OUZJM2twV16IgwsWppKvC6iCEAyPbZtzYcVyXixinmResXdIg4bxYxTzIvWKnivivmResXdIg4UbL4p5kXrFXxYxTzIvWLuUQcN4sYp9nF6xU8WMV+zh9Yu6RBwTtlsWI0jh9b/ZWDZLFQdWQ+t/svQEQcGNl8VH5kXrFXxXxTzIvWLu0QcJ4r4r5kXrFG/ZTFT+ZD61d+iDzs7IYuTfJD61Xs2TxZv5kPrf7L0FEHAHZTFvs4fWq07J4v8AZw+tXoKIPPTsli/2cPrf7K07I4x9nD63+y9ERB5ydj8YP6OH1o+SsOx2M/ZQetHyXpKIPK59hcckN2w0/rv7LFd9HuPuP4mm9cPkvXkQeV0+w2OxtAdHBp+2/sskbGY19nB67+y9LRB5p4mY1Y/g4OH2v9l6NTMdHSxMd5TWAG3SApUQFzuI4VXVOJSyxtjMRtlu+x4BdEiDlBgFbbKWRAdTrq4YHXM/NY8cwDwF1KIOS+oa5xLnU8NugyZj8lr5dm8dhqhUUz2vBLQYXygNYOfLpoT8F3qIOFxTZTFcTMULzSilJPhDHjMZB0A307VnQbPVFDTsgpaaJsbQGhoktYBdYiDmTgdTLHymZD0CW4WnxrZHGq+nEVFWupnX1cJdD1EAX9q75EHneCbC4hhFE+IysqJZDd7pXXaeoDmCuqNlsabTyhtHh9QXkgxGQhrm9Bvp7F6EiDz3DNkMUw+7hBRjzGttdg6LrbR4FiOa72RAnnY+w9I511iIOTm2eqasFlRSwPtwc4gg+iy17tjZYqxtXBRRtlvY7ufKCOscF3iIOSl2bqXtLmxtEltPwmix6PZnE4onMqTFKS4nQ2HtJXaog42XZyviaXUcFKyQ9g7za5WN9R482VjHQscSOVNFOGtB6Mp1K7tEHl20GxW01U+OfDaotka2zo31Nmv+XtWTguy2Pw0b2YlTQGUjUxVN8/bpovSEQeb0mxGJwVrZGySeDkHNDPOJDfms7iAoMT2JxaYsNNSRiZjszJm1OUs/mzL09EHAU+ye0NOGBuJCWMEZo58rtOexAW5bgdYw5WiJrXDlEcb9i6ZEHKU2A1lM9wETCwXLeUBx4nQLdYZRS0rpHSG2cDk3vbitiiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIg/9k=';   /* 260919 추가 — 이미지 블록(IMAGE02) · 카드 썸네일(실제 블록 스크린샷, 인라인). 서버에 ba/image02.jpg 를 올리면 ED_IMG+'ba/image02.jpg' 로 바꾼다 */
   var BA_BC_THUMB=ED_IMG+'ba/image03.jpg';   /* 260930 교체 — 미리보기 영상 첫 프레임 (썸네일=영상 첫 컷 규칙). 예전 SVG 그림은 없앴다 */
@@ -26289,6 +26277,10 @@
      (새로 추가하는 컨텐츠 블록은 이 줄 아래에 같은 꼴로 한 줄씩 더한다 — 나중에 넣은 것이 01. 썸네일 파일명은 번호와 무관하게 그대로) */
   (function(){ var L=BA_CARDS_CONTENT; L.forEach(function(c){ var m=/^CONTENT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='CONTENT'+(n<10?'0':'')+n; });
     L.unshift({no:1, kind:'worklist', label:'CONTENT01', ar:'800/480', img:ED_IMG+'ba/worklist-8.jpg', vid:'ba/worklist-7', grp:'목록'}); })();   /* 261113 수정 — 썸네일 비율을 실제 블록 비율(1440×738 · 위아래 여백만 5px씩 덜어냄)과 같게 800/450 → 800/410 */
+  /* 261117 추가 — 흐르는 띠(후기 카드 · 캡처 / 문구 / 이미지를 종류만 바꿔 옆으로 흘린다)를 CONTENT01 로 맨 앞에. 기존 CONTENT01-76 은 CONTENT02-77 로 한 칸씩 민다
+     (텍스트 TEXT01 에 넣었다가, 후기 · 이미지처럼 글과 사진을 함께 담는 블록이라 컨텐츠로 옮겼다 · 로고 종류는 슬라이드쇼 SLIDE09 와 겹쳐 뺐다) */
+  (function(){ var L=BA_CARDS_CONTENT; L.forEach(function(c){ var m=/^CONTENT([0-9]+)$/.exec(c.label||''); if(!m) return; var n=+m[1]+1; c.no=n; c.label='CONTENT'+(n<10?'0':'')+n; });
+    L.unshift({no:1, kind:'flowband', label:'CONTENT01', ar:'800/415', img:ED_IMG+'ba/flowband-2.jpg'}); })();
   /* 260919 추가 — 버튼 카테고리 카드. 한 가지 블록(fxbutton)을 효과별 시작값(BT_PRESETS)으로 넣는다.
      썸네일 이미지 대신 실제 버튼을 그린다(live) → 카드에 올리면 효과가 그대로 재생된다. 다른 카테고리처럼 슬라이드쇼 카드로 남는 자리를 채우지 않는다(nofill) */
   var BA_CARDS_BUTTON=['invert','roll','line','fill','arrow','wide','flip','scramble','magnet','slide','shine','lift','bracket','swap','expand','glow',
@@ -26368,10 +26360,10 @@
   BA_CARDS_SLIDE=BA_CARDS_SLIDE.filter(function(c){ return c.tag==='3D'; }).concat(BA_CARDS_SLIDE.filter(function(c){ return c.tag!=='3D'; }));   /* 261016 수정 — 카드 슬라이드(SLIDE10~14) 제거 */
   /* 261014 추가 — 카드 grp(위 탭 거르기). 키 = kind 또는 kind/preset. 갤러리·게시판·컨택트는 카드 목록이 이미 grp/tag 를 갖고 있어 여기 없다 */
   var BA_GRP={
-    content:{ bookflip2:'3D', stackcard:'스크롤', beforeafter:'', worklist:'목록' },   /* 261111 추가 — 마우스 따라오는 이미지 목록 = 목록 탭 */
+    content:{ bookflip2:'3D', stackcard:'스크롤', beforeafter:'', worklist:'목록', flowband:'목록' },   /* 261111 추가 — 마우스 따라오는 이미지 목록 = 목록 탭 */
     slide:{ stripgal:'3D', cardring:'3D', bookflip2:'3D', scene1:'와이드', scene2:'와이드', scene3:'와이드', photo1:'기본', multi4:'기본', logoflow:'기본', sqcar:'기본' },   /* 261109 추가 — 스퀴즈 캐러셀 */
     form:{ basic:'문의', gray:'문의', message:'문의', info:'정보 수집', personal:'정보 수집', company:'정보 수집', customer:'정보 수집', meeting:'신청', order:'신청', survey:'신청' },
-    text:{ cred:'기본', timeline:'목록', flowband:'목록', stickstat:'모션', smeartext:'모션', polytext:'모션', typetext:'모션', arctext:'모션', risetext:'모션', scrollread:'모션', idxlist:'목록', faqacc:'목록', qnaacc:'목록' },
+    text:{ cred:'기본', timeline:'목록', stickstat:'모션', smeartext:'모션', polytext:'모션', typetext:'모션', arctext:'모션', risetext:'모션', scrollread:'모션', idxlist:'목록', faqacc:'목록', qnaacc:'목록' },
     image:{ rbstat:'이미지', imggrid:'이미지', 'imggrid/video':'동영상', 'imggrid/yt1':'동영상', 'imggrid/yt2':'동영상', 'imggrid/shorts3':'동영상', 'cred/vtext':'동영상', 'cred/bgvid':'동영상', 'imggrid/logo5':'로고', 'imggrid/logo5d':'로고' },   /* 261028 삭제 — moto3d · crumple 은 히어로 섹션(grp 를 옮길 때 직접 준다) */
     button:{ invert:'채움', fill:'채움', wipe:'채움', bgrow:'채움', highlight:'채움', fade:'채움',
              line:'선', cline:'선', bracket:'선', ring:'선', dot:'선', round:'선', circle:'채움',
@@ -26597,7 +26589,7 @@
   SM_KIND.valuelist='이미지 전환 목록';   /* 261111 추가 — CONTENT01 */
   SM_KIND.worklist='마우스 따라오는 이미지 목록';
   SM_KIND.timeline='연혁 타임라인';
-  SM_KIND.flowband='흐르는 띠';   /* 261117 추가 — TEXT01 */
+  SM_KIND.flowband='흐르는 띠';   /* 261117 추가 — CONTENT01 */
   SM_KIND.stickstat='고정 타이틀 숫자';   /* 261112 추가 — TEXT01 */   /* 261111 추가 — 마우스 따라오는 이미지 목록(CONTENT01) */
   SM_KIND.cnblk='컨텐츠';   /* 261022 추가 — 컨텐츠 블록 */
   function bsetSync(blk){
@@ -26632,7 +26624,7 @@
     var isFq=(kindAttr==='faqacc');   /* 260923 추가 — FAQ 아코디언 */
     var isQn=(kindAttr==='qnaacc');   /* 260923 추가 — QnA 아코디언 */
     var isTl=(kindAttr==='timeline');
-    var isFb=(kindAttr==='flowband');   /* 261117 추가 — 연혁 타임라인(TEXT01) */
+    var isFb=(kindAttr==='flowband');   /* 261117 추가 — 흐르는 띠(CONTENT01) */
     var isSr=(kindAttr==='scrollread');   /* 260923 추가 — 스크롤 문장 등장 */
     var isBc=(kindAttr==='beforeafter');   /* 260923 추가 — 이전·이후 비교 */
     var isCk=(kindAttr==='crumple');   /* 260923 추가 — 구김 이미지(IMAGE04) */
@@ -45054,49 +45046,37 @@ global.PolyFX = API;
   window.tlCapInput=tlCapInput; window.tlItemAddRow=tlItemAddRow; window.tlItemDel=tlItemDel; window.tlItemReorder=tlItemReorder;
 
   /* ══════════════════════════════════════════════════════════════════
-     261117 추가 — 흐르는 띠 블록 (TEXT01 · kind flowband · 접두어 fb · cfg _fbCfg)
-     · 한 블록 · 내용 종류 4가지(type): 로고 · 문구 · 이미지 · 후기(rs: 카드형 card / 캡처형 cap)
+     261117 추가 — 흐르는 띠 블록 (CONTENT01 · kind flowband · 접두어 fb · cfg _fbCfg)
+     · 한 블록 · 내용 종류 3가지(type): 문구 · 이미지 · 후기(rs: 카드형 card / 캡처형 cap)
      · 움직임(속도 px/초 · 방향 · 줄 수 · 간격 · 양 끝 흐림 · 마우스 올리면 멈춤)은 모든 종류 공통
-     · 종류마다 항목 목록을 따로 가진다(logos · texts · imgs · reviews · caps) — 종류를 바꿔도 다른 종류 내용이 남는다
+     · 종류마다 항목 목록을 따로 가진다(texts · imgs · reviews · caps) — 종류를 바꿔도 다른 종류 내용이 남는다
      · 줄은 항목 묶음을 화면 폭보다 길게 되풀이한 뒤 두 벌 이어 붙이고 -50% 까지 흘린다(끊김 없이). 길이는 그릴 때 잰다
      · 작은 제목 · 제목은 캔버스에서 바로 고친다(연혁 타임라인과 같은 방식)
      ══════════════════════════════════════════════════════════════════ */
   var FB_DEF={
     type:'review', rs:'card', head:true, eyebrow:'REVIEW', title:'벌써 1,200개의 후기가 쌓였어요',
     rows:2, dir:'left', spd:40, gap:20, fade:true, pause:true,
-    lh:40, gray:true, ts:56, outline:true, sep:'✦', ih:260, ir:14, ch:300, tts:40,
+    ts:56, outline:true, sep:'✦', ih:260, ir:14, ch:300, tts:40,
     bg:'#ffffff', tc:'#222222', mc:'#90909a', cb:'#f7f7f9', pc:'#d1e8a0', sc:'#b8925a',
     pv:96,
-    logos:[], texts:[], imgs:[], reviews:[], caps:[]
+    texts:[], imgs:[], reviews:[], caps:[]
   };
   /* 종류를 바꿀 때 제목을 직접 고친 적이 없으면 그 종류에 어울리는 제목으로 */
   var FB_HEAD={
-    logo:  [false,'함께한 브랜드',''],   /* 로고는 제목 없이 띠만(켜면 작은 제목 한 줄) */
     text:  [false,'',''],
     image: [false,'SELECTED WORKS','브랜드의 첫인상을 만드는 작업들'],
     rv:    [true,'REVIEW','벌써 1,200개의 후기가 쌓였어요'],
     cap:   [true,'REAL REVIEW','고객님이 직접 보내 주신 이야기']
   };
-  var FB_KEY={logo:'logos', text:'texts', image:'imgs', rv:'reviews', cap:'caps'};
-  /* 종류마다 줄 수 기본값 — 캡처 · 사진은 한 줄, 로고 · 문구 · 후기 카드는 두 줄(서로 반대로). 직접 바꾸면(rowsEdited) 그 값을 유지 */
-  var FB_ROWS={logo:2, text:2, image:1, rv:2, cap:1};
+  var FB_KEY={text:'texts', image:'imgs', rv:'reviews', cap:'caps'};
+  /* 종류마다 줄 수 기본값 — 캡처 · 사진은 한 줄, 문구 · 후기 카드는 두 줄(서로 반대로). 직접 바꾸면(rowsEdited) 그 값을 유지 */
+  var FB_ROWS={text:2, image:1, rv:2, cap:1};
   var FB_MAX=20, FB_MIN=1;
   var fbCurBlk=null, fbBound=false;
   var FB_REDUCE=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  /* 견본 — 로고는 가상의 브랜드 글자 로고(SVG), 후기 캡처는 대화 · 리뷰 모양을 그린 SVG(실제로는 사용자가 캡처 이미지를 올린다) */
+  /* 견본 — 후기 캡처는 대화 · 리뷰 모양을 그린 SVG(실제로는 사용자가 캡처 이미지를 올린다) */
   function fbSvg(w,h,body){ return 'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">'+body+'</svg>'); }
   var FB_FF="Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
-  function fbLogo(icon,word,w,thin){ return fbSvg(w,40,(icon||'')+'<text x="'+(icon?44:0)+'" y="28" font-family="'+FB_FF+'" font-size="'+(thin?20:24)+'" font-weight="'+(thin?500:800)+'" letter-spacing="'+(thin?3:-0.5)+'" fill="#222">'+word+'</text>'); }
-  var FB_SAMPLE_LOGOS=[
-    fbLogo('<circle cx="16" cy="20" r="12" fill="none" stroke="#222" stroke-width="3"/><circle cx="16" cy="20" r="5" fill="#222"/>','Nova',110),
-    fbLogo('<path d="M4 32L16 8l12 24z" fill="#222"/>','PEAK',120),
-    fbLogo('','MAISON LUMI',176,1),
-    fbLogo('<rect x="4" y="8" width="11" height="11" rx="2" fill="#222"/><rect x="18" y="8" width="11" height="11" rx="5.5" fill="#222"/><rect x="4" y="22" width="11" height="11" rx="5.5" fill="#222"/><rect x="18" y="22" width="11" height="11" rx="2" fill="#222"/>','blocks',134),
-    fbLogo('<path d="M4 20c5-11 19-11 24 0-5 11-19 11-24 0z" fill="none" stroke="#222" stroke-width="3"/>','Orbit',118),
-    fbLogo('','HAEON',96,1),
-    fbLogo('<path d="M16 5l3.6 8.6 9.4.6-7.2 6 2.3 9.1L16 24.3l-8.1 5 2.3-9.1-7.2-6 9.4-.6z" fill="#222"/>','Stella',126),
-    fbLogo('<path d="M6 32V8h9a8 8 0 010 16H6" fill="none" stroke="#222" stroke-width="3.4"/>','Plain.',118)
-  ];
   var FB_SAMPLE_TEXTS=['사진 한 장으로 남기는 오늘','STUDIO B','예약 오픈','SINCE 2019'];
   var FB_IMG='https://images.unsplash.com/', FB_IQ='?w=900&h=600&fit=crop&q=75';
   /* 이미지 견본 — 브랜딩 포트폴리오(Behance 썸네일) 느낌: 굵은 색 바탕 + 큰 로고 · 타이포 · 마스코트 · 패키지.
@@ -45146,7 +45126,6 @@ global.PolyFX = API;
   function fbCfg(blk){
     if(!blk._fbCfg){
       var c=JSON.parse(JSON.stringify(FB_DEF));
-      c.logos=FB_SAMPLE_LOGOS.map(function(s){ return {src:s}; });
       c.texts=FB_SAMPLE_TEXTS.map(function(t){ return {t:t}; });
       c.imgs=FB_SAMPLE_IMGS.map(function(s){ return {src:s}; });
       c.reviews=FB_SAMPLE_REVIEWS.map(function(r){ return {s:5, t:r[0], n:r[1], m:r[2]}; });
@@ -45155,20 +45134,20 @@ global.PolyFX = API;
     }
     var c2=blk._fbCfg;
     Object.keys(FB_DEF).forEach(function(k){ if(c2[k]==null) c2[k]=Array.isArray(FB_DEF[k])?[]:FB_DEF[k]; });
-    ['logos','texts','imgs','reviews','caps'].forEach(function(k){ if(!Array.isArray(c2[k])) c2[k]=[]; });
+    if(c2.type==='logo') c2.type='review';   /* 로고 종류는 뺐다 — 로고 흐름은 슬라이드쇼 SLIDE09 */
+    ['texts','imgs','reviews','caps'].forEach(function(k){ if(!Array.isArray(c2[k])) c2[k]=[]; });
     if(c2.ebH==null) c2.ebH=tlTxH(c2.eyebrow);
     if(c2.titleH==null) c2.titleH=tlTxH(c2.title);
     return c2;
   }
   function fbBlockHTML(){
-    return '<span class="tag-badge">텍스트</span>'+SM_GEAR
+    return '<span class="tag-badge">컨텐츠</span>'+SM_GEAR
       +'<div class="fb-wrap"><div class="fb-head"><div class="fb-eb"></div><h2 class="fb-tt"></h2></div><div class="fb-rows"></div></div>';
   }
   function fbAttr(s){ return _mtAttr(s); }
   /* 항목 하나 → HTML */
   function fbItemH(c,tk,it){
     it=it||{};
-    if(tk==='logo') return it.src?'<span class="fb-it fb-lg"><img src="'+fbAttr(it.src)+'" alt="" draggable="false"></span>':'';
     if(tk==='image') return it.src?'<span class="fb-it fb-im"><img src="'+fbAttr(it.src)+'" alt="" draggable="false" loading="lazy"></span>':'';
     if(tk==='cap') return it.src?'<span class="fb-it fb-cap"><img src="'+fbAttr(it.src)+'" alt="" draggable="false" loading="lazy"></span>':'';
     if(tk==='text'){ var t=String(it.t||'').trim(); if(!t) return ''; return '<span class="fb-it fb-tx">'+rsEsc(t)+'</span>'+(c.sep?'<span class="fb-sep" aria-hidden="true">'+rsEsc(c.sep)+'</span>':''); }
@@ -45177,7 +45156,7 @@ global.PolyFX = API;
       +'<span class="fb-q">'+rsEsc(it.t||'')+'</span>'
       +'<span class="fb-who"><span class="fb-av">'+rsEsc(nm.charAt(0)||'·')+'</span><span><b>'+rsEsc(nm)+'</b><em>'+rsEsc(it.m||'')+'</em></span></span></span>';
   }
-  /* 줄마다 항목 나누기 — 후기(카드 · 캡처)는 두 줄이면 번갈아 나누고, 로고 · 문구 · 이미지는 둘째 줄을 거꾸로 */
+  /* 줄마다 항목 나누기 — 후기(카드 · 캡처)는 두 줄이면 번갈아 나누고, 문구 · 이미지는 둘째 줄을 거꾸로 */
   function fbRowItems(c,tk,items){
     var rows=(+c.rows===2)?2:1; if(rows===1) return [items];
     if((tk==='rv'||tk==='cap') && items.length>=4) return [items.filter(function(x,i){ return i%2===0; }), items.filter(function(x,i){ return i%2===1; })];
@@ -45248,12 +45227,11 @@ global.PolyFX = API;
     blk.style.paddingTop='0'; blk.style.paddingBottom='0'; blk.style.paddingLeft='0'; blk.style.paddingRight='0';
     var s=wrap.style, tk=fbTKey(c), pv=txNum(c.pv,96);
     [['--fbbg',c.bg||'#ffffff'],['--fbtc',c.tc||'#222222'],['--fbmc',c.mc||'#90909a'],['--fbcb',c.cb||'#f7f7f9'],['--fbpc',c.pc||'#d1e8a0'],['--fbsc',c.sc||'#b8925a'],
-     ['--fbgap',txNum(c.gap,20)+'px'],['--fblh',txNum(c.lh,40)+'px'],['--fbts',txNum(c.ts,56)+'px'],['--fbih',txNum(c.ih,260)+'px'],['--fbir',txNum(c.ir,14)+'px'],
+     ['--fbgap',txNum(c.gap,20)+'px'],['--fbts',txNum(c.ts,56)+'px'],['--fbih',txNum(c.ih,260)+'px'],['--fbir',txNum(c.ir,14)+'px'],
      ['--fbch',txNum(c.ch,300)+'px'],['--fbtts',txNum(c.tts,40)+'px'],['--fbpv',pv+'px'],['--fbpvm',Math.round(pv*0.66)+'px']].forEach(function(q){ s.setProperty(q[0],q[1]); });
     wrap.setAttribute('data-t',tk);
     wrap.setAttribute('data-fade',c.fade===false?'0':'1');
     wrap.setAttribute('data-pause',c.pause===false?'0':'1');
-    wrap.setAttribute('data-gray',c.gray===false?'0':'1');
     wrap.setAttribute('data-outline',c.outline===false?'0':'1');
     var hasHd=(c.head!==false) && !!(String(c.eyebrow||'').trim()||String(c.title||'').trim());
     wrap.setAttribute('data-head',(c.head===false)?'off':(hasHd?'1':'0'));
@@ -45271,7 +45249,7 @@ global.PolyFX = API;
     try{ clone._fbCfg=JSON.parse(JSON.stringify(fbCfg(src))); }catch(e){ clone._fbCfg=null; }
     setTimeout(function(){ fbInit(clone); },0);
   }
-  /* ── 텍스트 카드 → 흐르는 띠 블록 삽입 ── */
+  /* ── 컨텐츠 카드 → 흐르는 띠 블록 삽입 ── */
   function baInsertFlowBand(card){
     var stage=document.getElementById('stage');
     var site=stage?stage.querySelector('.site'):null;
@@ -45281,7 +45259,7 @@ global.PolyFX = API;
     blk.setAttribute('data-block','flowband');
     blk.setAttribute('onclick','selectBlock(this)');
     blk.innerHTML=fbBlockHTML();
-    blk._mvOv={tts:26, ts:32, lh:30, ih:180, ch:240, gap:14, pv:64, spd:30};   /* 모바일 시작값 — 글자 · 높이 · 간격을 줄이고 조금 느리게 */
+    blk._mvOv={tts:26, ts:32, ih:180, ch:240, gap:14, pv:64, spd:30};   /* 모바일 시작값 — 글자 · 높이 · 간격을 줄이고 조금 느리게 */
     var addbar=document.createElement('div');
     addbar.className='addbar';
     addbar.innerHTML='<button class="addbtn" onclick="event.stopPropagation();openBlockAdd(this)"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>';
@@ -45309,7 +45287,7 @@ global.PolyFX = API;
   function fbRs(m){ if(!fbCurBlk) return; var c=fbCfg(fbCurBlk); c.rs=(m==='cap')?'cap':'card'; fbType('review'); }
   function fbSeg(key,m,id){ fbSegSync(id,m); if(key==='rows' && fbCurBlk) fbCfg(fbCurBlk).rowsEdited=true; fbUpd(key,(key==='rows')?+m:m); }
   function fbTxt(key,v){ if(!fbCurBlk) return; var c=fbCfg(fbCurBlk); c[key]=v; c[key==='eyebrow'?'ebH':'titleH']=tlTxH(v); c.headEdited=true; fbApply(fbCurBlk); }
-  /* 고른 종류에 맞는 칸만 보이게 — data-fbt="logo text image rv cap" */
+  /* 고른 종류에 맞는 칸만 보이게 — data-fbt="text image rv cap" */
   function fbRowsSync(){
     if(!fbCurBlk) return; var c=fbCfg(fbCurBlk), tk=fbTKey(c);
     document.querySelectorAll('#bsetFlowBand [data-fbt]').forEach(function(el){ el.style.display=(' '+el.getAttribute('data-fbt')+' ').indexOf(' '+tk+' ')>=0?'':'none'; });
@@ -45322,7 +45300,7 @@ global.PolyFX = API;
     if(!fbCurBlk) return;
     var c=fbCfg(fbCurBlk), tk=fbTKey(c), arr=c[FB_KEY[tk]];
     var list=document.getElementById('fbItemList'); if(!list) return;
-    var dis=(arr.length<=FB_MIN), img=(tk==='logo'||tk==='image'||tk==='cap');
+    var dis=(arr.length<=FB_MIN), img=(tk==='image'||tk==='cap');
     list.setAttribute('data-t',tk);
     list.innerHTML=arr.map(function(it,i){
       it=it||{}; var del='<button type="button" class="mt-imgdel" onclick="fbItemDel('+i+')" title="삭제" aria-label="삭제"'+(dis?' disabled':'')+'>'+FB_DEL+'</button>';
@@ -45342,7 +45320,7 @@ global.PolyFX = API;
     if(add){ add.disabled=(arr.length>=FB_MAX); add.setAttribute('onclick',img?'blkListPick(\'fb\',this)':'fbItemAddRow()'); }
     if(up) up.style.display=img?'':'none';
     var hint=document.getElementById('fbItemHint');
-    if(hint) hint.textContent={logo:'로고는 배경이 투명한 PNG · SVG 가 잘 어울립니다. 썸네일을 누르면 보관함에서 바꿉니다.',text:'문구 사이에는 「모양」의 기호가 들어갑니다.',image:'높이는 같고 폭은 사진 비율대로 흐릅니다.',rv:'후기 글은 3줄까지 보이고 넘치면 줄여 보입니다.',cap:'캡처 속 이름 · 프로필 사진 같은 개인정보는 가리고 올려 주세요. 높이는 같고 폭은 캡처 비율대로 흐릅니다.'}[tk]||'';
+    if(hint) hint.textContent={text:'문구 사이에는 「모양」의 기호가 들어갑니다.',image:'높이는 같고 폭은 사진 비율대로 흐릅니다.',rv:'후기 글은 3줄까지 보이고 넘치면 줄여 보입니다.',cap:'캡처 속 이름 · 프로필 사진 같은 개인정보는 가리고 올려 주세요. 높이는 같고 폭은 캡처 비율대로 흐릅니다.'}[tk]||'';
     if(typeof clBindSortable==='function') clBindSortable(list,'.mt-imgrow','.mt-imgdrag',fbItemReorder);
   }
   function fbArr(){ var c=fbCfg(fbCurBlk); return c[FB_KEY[fbTKey(c)]]; }
@@ -45370,9 +45348,9 @@ global.PolyFX = API;
     if(from<0||from>=a.length||to<0||to>=a.length) return;
     var m=a.splice(from,1)[0]; a.splice(to,0,m); fbItemRender(); fbApply(fbCurBlk);
   }
-  var FB_RNG=[['fbSpd','spd',''],['fbGap','gap','px'],['fbLh','lh','px'],['fbTs','ts','px'],['fbIh','ih','px'],['fbIr','ir','px'],['fbCh','ch','px'],['fbTts','tts','px'],['fbPv','pv','px']];
+  var FB_RNG=[['fbSpd','spd',''],['fbGap','gap','px'],['fbTs','ts','px'],['fbIh','ih','px'],['fbIr','ir','px'],['fbCh','ch','px'],['fbTts','tts','px'],['fbPv','pv','px']];
   var FB_COL=[['fbBg','bg'],['fbTc','tc'],['fbMc','mc'],['fbCb','cb'],['fbPc','pc'],['fbSc','sc']];
-  var FB_SW=[['fbHead','head'],['fbFade','fade'],['fbPause','pause'],['fbGray','gray'],['fbOutline','outline']];
+  var FB_SW=[['fbHead','head'],['fbFade','fade'],['fbPause','pause'],['fbOutline','outline']];
   function fbBuildBset(){
     if(fbBound) return; fbBound=true;
     FB_RNG.forEach(function(r){ var el=document.getElementById(r[0]); if(!el) return;
@@ -45388,7 +45366,7 @@ global.PolyFX = API;
     fbSegSync('fbRowsSeg',String(+c.rows===2?2:1)); fbSegSync('fbDirSeg',c.dir==='right'?'right':'left'); fbSegSync('fbSepSeg',c.sep||'');
     set('fbEb',c.eyebrow||''); set('fbTt',c.title||'');
     var mo=(typeof window.mvTarget==='function' && window.mvTarget()==='mobile');
-    [['fbTs',mo?18:24,mo?56:120],['fbTts',mo?18:24,mo?40:72],['fbLh',mo?18:24,mo?60:96],['fbIh',mo?100:140,mo?320:480],['fbCh',mo?160:200,mo?360:480]].forEach(function(q){ var el=document.getElementById(q[0]); if(el){ el.min=q[1]; el.max=q[2]; } });
+    [['fbTs',mo?18:24,mo?56:120],['fbTts',mo?18:24,mo?40:72],['fbIh',mo?100:140,mo?320:480],['fbCh',mo?160:200,mo?360:480]].forEach(function(q){ var el=document.getElementById(q[0]); if(el){ el.min=q[1]; el.max=q[2]; } });
     FB_RNG.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=c[r[1]]+r[2]; });
     FB_COL.forEach(function(r){ set(r[0],c[r[1]]); var o=document.getElementById(r[0]+'V'); if(o) o.textContent=smHex(c[r[1]]); });
     FB_SW.forEach(function(r){ var el=document.getElementById(r[0]); if(el) el.classList.toggle('on', c[r[1]]!==false); });
@@ -63936,7 +63914,7 @@ global.PolyFX = API;
       qnaacc      :{cfg:'_qnCfg', apply:function(b){ qnApply(b); }},   /* 260923 추가 — QnA 아코디언 */
       scrollread  :{cfg:'_srCfg', apply:function(b){ srApply(b); }},
       timeline    :{cfg:'_tlCfg', apply:function(b){ tlApply(b); }},
-      flowband    :{cfg:'_fbCfg', apply:function(b){ fbApply(b); }},   /* 261117 추가 — 연혁 타임라인(TEXT01) */   /* 260923 추가 — 스크롤 문장 등장 */
+      flowband    :{cfg:'_fbCfg', apply:function(b){ fbApply(b); }},   /* 261117 추가 — 흐르는 띠(CONTENT01) */   /* 260923 추가 — 스크롤 문장 등장 */
       beforeafter :{cfg:'_bcCfg', apply:function(b){ bcApply(b); }},   /* 260923 추가 — 이전·이후 비교 */
       imgring     :{cfg:'_irCfg', apply:function(b){ irApply(b); }},   /* 260923 추가 — 3D 이미지 링 */
       crumple     :{cfg:'_ckCfg', apply:function(b){ ckApply(b); }},   /* 260923 추가 — 구김 이미지 */
@@ -64469,7 +64447,7 @@ global.PolyFX = API;
       qnaacc      :{},
       scrollread  :{},
       timeline    :{},
-      flowband    :{logos:1, imgs:1, caps:1},
+      flowband    :{imgs:1, caps:1},
       imgring     :{imgMode:1, theme:1, kw:1, imgs:1, caps:1, gt:1, posts:1},   /* 260923 추가 — 3D 이미지 링 · 이미지(모드·주제·키워드·목록)는 PC·모바일 공유, 링·움직임·배경·여백은 기기별 */
       crumple     :{items:1},   /* 260923 추가 — 구김 이미지 · 컨텐츠 목록은 PC·모바일 공유 */
       beforeafter :{before:1, after:1, link1:1, bst:1},   /* 261006 수정 — 버튼 스타일도 공유 */   /* 260923 추가 — 이전·이후 비교 · 이미지 두 장과 버튼 링크는 PC·모바일 공유 */
@@ -64520,8 +64498,8 @@ global.PolyFX = API;
       faqacc   :{items:1, cnt:1, eyebrow:1, title:1},   /* 260923 추가 */
       qnaacc   :{items:1, cnt:1, title:1},   /* 260923 추가 — QnA 아코디언 */
       scrollread:{text:1},   /* 260923 추가 */
-      timeline :{items:1, eyebrow:1, title:1, ebH:1, titleH:1},
-      flowband :{texts:1, reviews:1, eyebrow:1, title:1, ebH:1, titleH:1},   /* 261117 추가 — 연혁 타임라인: 항목(날짜 · 내용 · 사진) · 제목은 PC · 모바일 공유(「모바일 문구 따로」를 켜면 분리) */
+      timeline :{items:1, eyebrow:1, title:1, ebH:1, titleH:1},   /* 261117 추가 — 연혁 타임라인: 항목(날짜 · 내용 · 사진) · 제목은 PC · 모바일 공유(「모바일 문구 따로」를 켜면 분리) */
+      flowband :{texts:1, reviews:1, eyebrow:1, title:1, ebH:1, titleH:1},   /* 261117 추가 — 흐르는 띠: 문구 · 후기 글 · 제목은 PC · 모바일 공유 */
       beforeafter:{labB:1, labA:1, title:1, body:1, titleH:1, bodyH:1, btn1:1, actH:1},
       valuelist:{title:1, titleH:1}   /* 261111 추가 — 이미지 전환 목록 타이틀: PC·모바일 공유(「모바일 문구 따로」를 켜면 분리) */   /* 260923 추가 — 이전·이후 비교 */
     };
