@@ -45277,11 +45277,18 @@ global.PolyFX = API;
   function fbSegSync(id,m){ var seg=document.getElementById(id); if(!seg) return; seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===String(m)); }); }
   function fbSw(btn,key){ if(!btn) return; btn.classList.toggle('on'); fbUpd(key, btn.classList.contains('on')); fbRowsSync(); }
   function fbType(m){
-    if(!fbCurBlk) return; var c=fbCfg(fbCurBlk);
+    if(!fbCurBlk) return; var blk=fbCurBlk, c=fbCfg(blk);
     c.type=m; var tk=fbTKey(c);
     if(!c.headEdited){ var d=FB_HEAD[tk]; c.head=d[0]; c.eyebrow=d[1]; c.title=d[2]; c.ebH=tlTxH(d[1]); c.titleH=tlTxH(d[2]); }
     if(!c.rowsEdited) c.rows=FB_ROWS[tk];
-    fbApply(fbCurBlk); fbFillBset();
+    /* 종류가 PC · 모바일 공통이므로 종류별 기본값(제목 표시 · 줄 수)도 양쪽에 같이 넣는다 — 모바일 탭에서 바꿔도 PC 가 따라오고, PC 에서 바꿔도 모바일이 따라온다 */
+    var mo=(typeof window.mvTarget==='function' && window.mvTarget()==='mobile'), ov=blk._mvOv;
+    [['head',!c.headEdited],['rows',!c.rowsEdited]].forEach(function(q){ if(!q[1]) return; if(ov) delete ov[q[0]]; if(mo && blk._mvBase) blk._mvBase[q[0]]=c[q[0]]; });
+    fbApply(blk);
+    /* 패널은 모바일 값 정리(fbApply 안) 뒤에 채운다. 모바일 탭이면 모바일 값을 얹어 「보고 있는 값」으로 채우고 되돌린다 */
+    if(mo && ov && Object.keys(ov).length){ var keep={}; Object.keys(ov).forEach(function(k){ keep[k]=(k in c)?c[k]:undefined; c[k]=JSON.parse(JSON.stringify(ov[k])); });
+      try{ fbFillBset(); } finally { Object.keys(keep).forEach(function(k){ if(keep[k]===undefined) delete c[k]; else c[k]=keep[k]; }); } }
+    else fbFillBset();
   }
   function fbRs(m){ if(!fbCurBlk) return; var c=fbCfg(fbCurBlk); c.rs=(m==='cap')?'cap':'card'; fbType('review'); }
   function fbSeg(key,m,id){ fbSegSync(id,m); if(key==='rows' && fbCurBlk) fbCfg(fbCurBlk).rowsEdited=true; fbUpd(key,(key==='rows')?+m:m); }
