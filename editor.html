@@ -4936,6 +4936,11 @@
   .b2-stage.b2-livestage .b2-nav{display:none;}
   #b2LiveBar .lb{color:var(--green-text,#1f7a45);}
   .tx-hint{font-size:var(--fs-sm);line-height:1.55;color:var(--ink-3);margin-top:8px;}
+  /* 261117 추가 — 텍스트 블록 설정창 안내 문구: 위 칸과 6px(블록마다 6 · 7 · 8 · 10px 이던 것). 스위치 줄은 아래 안쪽 여백 2px 을 빼 4px, 칸 버튼 줄은 아래 12px 을 당겨 -6px. TEXT01(고정 타이틀 숫자)은 팀원 작업 중이라 뺀다 */
+  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:6px !important;}
+  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) :is(.sline,.sline + :is([style*="display:none"],[style*="display: none"])) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:4px !important;}
+  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) .rt-typo-ov + :is(.tx-hint,.mtk-hint){margin-top:-4px !important;}   /* 위 줄 아래 여백 10px 과 겹쳐 6px */
+  :is(#bsetRich,#bsetPoly,#bsetArc,#bsetRise,#bsetScrollRead,#bsetSmear,#bsetType,#bsetIdx,#bsetFaq,#bsetQna) .srow:has(> .mt-seg) + :is(.tx-hint,.mtk-hint):not([id="rtHHint"]){margin-top:-6px !important;}
   /* 260906 추가 — 안내문 첫 문장(핵심)은 살짝 진하게, 뒤 문장(부연)은 연하게 */
   .mtk-hint .lead,.tx-hint .lead,.dd-note .lead,.cfx-note .lead{color:var(--ink-2s);font-weight:600;}
   /* 블록설정: 직접 입력 리스트 (URL + 제목/카테고리 캡션 · 드래그 정렬) */
@@ -42660,7 +42665,7 @@ global.PolyFX = API;
     seg.querySelectorAll('.mt-seg-b').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-m')===m); });
   }
   function axArc(m){ if(!axCurBlk) return; axCfg(axCurBlk).arc=m; axSegSync('axArcSeg',m); axApply(axCurBlk); }
-  function axDir(m){ if(!axCurBlk) return; axCfg(axCurBlk).dir=m; axSegSync('axDirSeg',m); }
+  function axDir(m){ if(!axCurBlk) return; axCfg(axCurBlk).dir=m; axSegSync('axDirSeg',m); axApply(axCurBlk,false); }   /* 261117 수정 — axApply 를 거쳐야 모바일 탭 값이 따로 저장된다(전: PC 방향까지 바뀌었다) · 방향은 다시 그리지 않음(AX_NORE) */
   function axMode(m){
     if(!axCurBlk) return;
     axCfg(axCurBlk).mode=m; axSegSync('axModeSeg',m); axModeRows(m);
