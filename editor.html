@@ -63649,7 +63649,7 @@ global.PolyFX = API;
     function pvOpen(){
       mvBind();
       if(pvWin && !pvWin.closed){ try{ pvWin.focus(); }catch(x){} pvSync(true); pvmSync(true); return; }
-      var u=null; try{ u=new URL(location.href); u.hash='clpreview'; }catch(x){ u=null; }
+      var u=null; try{ u=new URL(location.href); u.searchParams.set('pv',String(Date.now())); u.hash='clpreview'; }catch(x){ u=null; }   /* 261117 수정 — 주소에 매번 다른 pv 값을 붙여 연다: 편집기를 새로고침한 뒤 열린 채 남은 미리보기 창(clPreview)을 다시 쓰면 같은 주소라 새로 불러오지 않아 예전 화면(새 블록이 비어 보임)이 남았다 */
       if(!u || !/^(https?|file):$/.test(u.protocol)){ if(typeof clToast==='function') clToast('이 환경에서는 미리보기 창을 열 수 없습니다.'); return; }
       var w=null; try{ w=(window.clWinOpen||window.open)(u.href,'clPreview'); }catch(x){ w=null; }
       if(!w){ if(typeof clToast==='function') clToast('팝업이 막혀 있습니다. 이 사이트의 팝업을 허용해 주세요.'); return; }
