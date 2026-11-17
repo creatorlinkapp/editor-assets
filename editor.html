@@ -63404,6 +63404,20 @@ global.PolyFX = API;
       var cfg=blk[def.cfg], base=blk._mvBase; if(!cfg) return false;
       var type=blk.getAttribute('data-block')||'';
       var ov=blk._mvOv||(blk._mvOv={}), changed=false;
+      /* 261117 추가 — 모바일 탭에서 바꾸기 직전에 cfg 를 「보고 있던 값」(PC + 모바일)으로 맞춰 두었으면(mvSwapIn) 그 값과 비교한다.
+         전: PC 값과만 비교해서, 모바일 값을 PC 와 같은 값으로 되돌리면(스위치 껐다 켜기 등) 바뀐 게 없다고 보고 모바일 값이 그대로 남았다 */
+      if(blk._mvM){ var M=blk._mvM; delete blk._mvM;
+        Object.keys(cfg).concat(Object.keys(M)).filter(function(k,i,a){ return a.indexOf(k)===i; }).forEach(function(k){
+          var nv=(k in cfg)?JSON.stringify(cfg[k]):undefined, mv=(k in M)?JSON.stringify(M[k]):undefined, bv=(k in base)?JSON.stringify(base[k]):undefined;
+          if(nv===mv){ if(k in ov){ if(bv===undefined) delete cfg[k]; else cfg[k]=JSON.parse(bv); } return; }   /* 안 건드림 → PC 값으로 되돌려 둠 */
+          changed=true;
+          if(mvIsShared(blk,type,k)){ if(nv===undefined) delete base[k]; else base[k]=JSON.parse(nv); delete ov[k]; return; }   /* 공유 → PC 에도 */
+          if(nv===bv) delete ov[k]; else if(nv!==undefined) ov[k]=JSON.parse(nv);   /* PC 와 같아지면 모바일 값을 지운다 */
+          if(bv===undefined) delete cfg[k]; else cfg[k]=JSON.parse(bv);
+        });
+        if(changed) mvDevSync(blk);
+        return changed;
+      }
       Object.keys(cfg).forEach(function(k){
         var nv=JSON.stringify(cfg[k]), bv=(k in base)?JSON.stringify(base[k]):undefined;
         if(nv===bv) return;
@@ -63479,6 +63493,7 @@ global.PolyFX = API;
     window.mvBsetTarget=mvBsetTarget; window.mvResetOverrides=mvResetOverrides;
     window.mvTarget=function(){ return MV_TARGET; };
 
+    var mvApplyName={};   /* 261117 추가 — cfg 키 → Apply 이름 */
     /* Apply 가로채기 — 모든 설정 변경은 xxApply 로 모이므로 여기서 한 번만 갈라 놓으면 된다 */
     Object.keys(MV_TYPES).forEach(function(type){
       var def=MV_TYPES[type];
@@ -63488,8 +63503,21 @@ global.PolyFX = API;
         if(blk && MV_TARGET==='mobile' && blk===mvTargetBlk && blk._mvBase) mvReconcile(blk);
         return orig.apply(this, arguments);
       };
-      wrapped.__orig=orig; window[name]=wrapped;
+      wrapped.__orig=orig; window[name]=wrapped; mvApplyName[def.cfg]=name;
     });
+    /* 261117 추가 — 모바일 탭 설정창을 누르기 직전(click · input · change 잡기 단계): cfg 에 모바일 값을 얹어 「보고 있던 값」으로 맞춘다.
+       설정 함수가 값을 쓴 뒤 Apply(가로채기)에서 mvReconcile 이 이 값과 비교해 모바일 값을 남기거나(PC 와 다르면) 지운다(PC 와 같으면). Apply 를 부르지 않는 설정 함수는 바로 뒤(마이크로태스크)에 정리 */
+    function mvSwapIn(e){
+      if(MV_TARGET!=='mobile') return; var bs=document.getElementById('bset'); if(!bs || !e.target || !bs.contains(e.target)) return;
+      if(e.target.closest && e.target.closest('#bsetDev')) return;
+      var blk=mvTargetBlk; if(!blk || !blk._mvBase || blk._mvM) return;
+      var def=mvDefOf(blk); if(!def) return; var cfg=blk[def.cfg]; if(!cfg) return;
+      var ov=blk._mvOv||{}, ks=Object.keys(ov); if(!ks.length) return;   /* 모바일 값이 없으면 보고 있는 값 = PC 값이라 지금 방식 그대로 */
+      ks.forEach(function(k){ cfg[k]=mvClone(ov[k]); });
+      blk._mvM=mvClone(cfg);
+      Promise.resolve().then(function(){ if(!blk._mvM) return; var ch=mvReconcile(blk); var an=mvApplyName[def.cfg]; if(ch && an && typeof window[an]==='function') try{ window[an](blk); }catch(x){} try{ mvKick(0); }catch(x){} });
+    }
+    ['click','input','change'].forEach(function(t){ document.addEventListener(t,mvSwapIn,true); });
     /* 설정창 채우기 가로채기 — 대상이 모바일이면 합친 값으로 */
     (function(){
       var orig=window.bsetSync; if(typeof orig!=='function') return;
